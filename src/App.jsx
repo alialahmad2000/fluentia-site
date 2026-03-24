@@ -1079,7 +1079,14 @@ ${goal?`الهدف: ${goal}\n`:""}المصدر: ${src}`;
           <p style={{fontSize:"11px",color:"#556677",marginBottom:"20px"}}>دفع شهري · بدون التزام</p>
 
           <div className="pricing-cards-row" style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:"10px"}}>
-            {/* طلاقة — HIGHLIGHTED (first in grid for RTL: top-right on mobile) */}
+            {/* أساس */}
+            <div style={{borderRadius:"16px",padding:"16px 12px",background:"rgba(255,255,255,0.015)",border:"1px solid rgba(102,119,136,0.2)",textAlign:"center"}}>
+              <div style={{fontSize:"14px",fontWeight:800,color:"#fff",marginBottom:"6px"}}>باقة أساس</div>
+              <div style={{marginBottom:"6px"}}><span style={{fontFamily:"'Playfair Display',serif",fontSize:"18px",fontWeight:900,color:"#fff"}}>٧٥٠</span> <span style={{fontSize:"11px",color:"#556677"}}>ر.س/شهرياً</span></div>
+              <div style={{fontSize:"11px",color:"#8899aa",lineHeight:1.7}}>8 ساعات تدريب · 7 طلاب كحد أقصى</div>
+            </div>
+
+            {/* طلاقة — HIGHLIGHTED */}
             <div style={{borderRadius:"16px",padding:"16px 12px",background:"rgba(56,189,248,0.04)",border:"1px solid rgba(56,189,248,0.3)",textAlign:"center",transform:"scale(1.03)"}}>
               <div style={{background:"#38bdf8",color:"#060e1c",fontSize:"10px",fontWeight:700,padding:"3px 10px",borderRadius:"100px",display:"inline-block",marginBottom:"8px"}}>⭐ الأنسب</div>
               <div style={{fontSize:"14px",fontWeight:800,color:"#fff",marginBottom:"6px"}}>باقة طلاقة</div>
@@ -1093,13 +1100,6 @@ ${goal?`الهدف: ${goal}\n`:""}المصدر: ${src}`;
               <div style={{fontSize:"14px",fontWeight:800,color:"#fff",marginBottom:"6px"}}>باقة تميّز</div>
               <div style={{marginBottom:"6px"}}><span style={{fontFamily:"'Playfair Display',serif",fontSize:"18px",fontWeight:900,color:"#fbbf24"}}>١,٥٠٠</span> <span style={{fontSize:"11px",color:"#556677"}}>ر.س/شهرياً</span></div>
               <div style={{fontSize:"11px",color:"#8899aa",lineHeight:1.7}}>4 حصص فردية · تقرير أسبوعي · متابعة مكثفة</div>
-            </div>
-
-            {/* أساس */}
-            <div style={{borderRadius:"16px",padding:"16px 12px",background:"rgba(255,255,255,0.015)",border:"1px solid rgba(102,119,136,0.2)",textAlign:"center"}}>
-              <div style={{fontSize:"14px",fontWeight:800,color:"#fff",marginBottom:"6px"}}>باقة أساس</div>
-              <div style={{marginBottom:"6px"}}><span style={{fontFamily:"'Playfair Display',serif",fontSize:"18px",fontWeight:900,color:"#fff"}}>٧٥٠</span> <span style={{fontSize:"11px",color:"#556677"}}>ر.س/شهرياً</span></div>
-              <div style={{fontSize:"11px",color:"#8899aa",lineHeight:1.7}}>8 ساعات تدريب · 7 طلاب كحد أقصى</div>
             </div>
 
             {/* IELTS */}
