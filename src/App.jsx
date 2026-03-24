@@ -917,6 +917,7 @@ function StartPage(){
   const [name,setName]=React.useState("");
   const [phone,setPhone]=React.useState("");
   const [path,setPath]=React.useState("");
+  const [pkg,setPkg]=React.useState("");
   const [goal,setGoal]=React.useState("");
   const [errors,setErrors]=React.useState({});
   const [submitted,setSubmitted]=React.useState(false);
@@ -927,13 +928,27 @@ function StartPage(){
     setUtm({source:p.get("utm_source")||"",medium:p.get("utm_medium")||"",campaign:p.get("utm_campaign")||"",content:p.get("utm_content")||""});
   },[]);
 
-  const valid=name.trim().length>=2 && /^05\d{8}$/.test(phone) && path;
+  const pkgData=[
+    {name:"أساس",price:"٧٥٠",color:"rgba(102,119,136",accent:"#667788"},
+    {name:"طلاقة",price:"١,١٠٠",color:"rgba(56,189,248",accent:"#38bdf8"},
+    {name:"تميّز",price:"١,٥٠٠",color:"rgba(251,191,36",accent:"#fbbf24"},
+    {name:"IELTS",price:"٢,٠٠٠",color:"rgba(239,68,68",accent:"#ef4444"}
+  ];
+
+  // Auto-select IELTS package when IELTS path chosen
+  React.useEffect(()=>{
+    if(path==="IELTS"){setPkg("IELTS");}
+    else if(pkg==="IELTS"){setPkg("");}
+  },[path]);
+
+  const valid=name.trim().length>=2 && /^05\d{8}$/.test(phone) && path && pkg;
 
   function validate(){
     const e={};
     if(name.trim().length<2) e.name="الاسم لازم يكون حرفين على الأقل";
     if(!/^05\d{8}$/.test(phone)) e.phone="رقم الجوال لازم يبدأ بـ 05 ويكون 10 أرقام";
     if(!path) e.path="اختر المسار";
+    if(!pkg) e.pkg="اختر الباقة";
     setErrors(e);
     return Object.keys(e).length===0;
   }
@@ -942,10 +957,12 @@ function StartPage(){
     e.preventDefault();
     if(!validate()) return;
     const src=utm.source?`${utm.source} / ${utm.campaign||""}`.trim():"إعلان جوجل";
+    const pkgInfo=pkgData.find(p=>p.name===pkg);
     const msg=`السلام عليكم، أبي أحجز لقاء مبدئي مجاني
 الاسم: ${name}
 الجوال: ${phone}
 المسار: ${path}
+الباقة: ${pkg} (${pkgInfo?pkgInfo.price:""}  ر.س)
 ${goal?`الهدف: ${goal}\n`:""}المصدر: ${src}`;
     window.open("https://wa.me/966558669974?text="+encodeURIComponent(msg),"_blank");
     setSubmitted(true);
@@ -1024,6 +1041,23 @@ ${goal?`الهدف: ${goal}\n`:""}المصدر: ${src}`;
             {errors.path&&<div style={errStyle}>{errors.path}</div>}
           </div>
 
+          {/* Package */}
+          <div style={{marginBottom:"16px"}}>
+            <label style={labelStyle}>الباقة المفضلة</label>
+            <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:"8px"}} className="start-pkg-grid">
+              {pkgData.map(p=>{
+                const isIelts=p.name==="IELTS";
+                const disabled=path==="IELTS"?!isIelts:isIelts&&path;
+                const active=pkg===p.name;
+                return(<button type="button" key={p.name} disabled={disabled} onClick={()=>!disabled&&setPkg(p.name)} style={{padding:"12px 8px",borderRadius:"12px",border:active?`1px solid ${p.color},0.5)`:"1px solid rgba(255,255,255,0.08)",background:active?`${p.color},0.08)`:"rgba(255,255,255,0.04)",textAlign:"center",cursor:disabled?"not-allowed":"pointer",opacity:disabled?0.35:1,fontFamily:"'Tajawal',sans-serif",transition:"all 0.2s"}}>
+                  <div style={{fontSize:"13px",fontWeight:700,color:active?p.accent:"#fff"}}>{p.name}</div>
+                  <div style={{fontSize:"11px",color:active?"#94a3b8":"#667788",marginTop:"2px"}}>{p.price} ر.س</div>
+                </button>);
+              })}
+            </div>
+            {errors.pkg&&<div style={errStyle}>{errors.pkg}</div>}
+          </div>
+
           {/* Goal */}
           <div style={{marginBottom:"24px"}}>
             <label style={labelStyle}>الهدف <span style={{fontWeight:400,color:"#64748b"}}>(اختياري)</span></label>
@@ -1061,8 +1095,9 @@ ${goal?`الهدف: ${goal}\n`:""}المصدر: ${src}`;
             </div>
 
             {/* تميّز */}
-            <div style={{borderRadius:"16px",padding:"20px 16px",background:"rgba(255,255,255,0.015)",border:"1px solid rgba(251,191,36,0.15)",textAlign:"center",transition:"border-color 0.2s"}}>
-              <div style={{fontSize:"16px",fontWeight:800,color:"#fff",marginBottom:"8px"}}>باقة تميّز</div>
+            <div style={{borderRadius:"16px",padding:"20px 16px",background:"rgba(255,255,255,0.015)",border:"1px solid rgba(251,191,36,0.15)",textAlign:"center",transition:"border-color 0.2s",transform:"scale(1.01)",position:"relative"}}>
+              <span style={{position:"absolute",top:"-10px",left:"50%",transform:"translateX(-50%)",background:"rgba(251,191,36,0.15)",color:"#fbbf24",fontSize:"11px",fontWeight:700,padding:"4px 12px",borderRadius:"100px",whiteSpace:"nowrap"}}>🚀 الأفضل</span>
+              <div style={{fontSize:"16px",fontWeight:800,color:"#fff",marginBottom:"8px",marginTop:"6px"}}>باقة تميّز</div>
               <div style={{marginBottom:"8px"}}><span style={{fontFamily:"'Playfair Display',serif",fontSize:"20px",fontWeight:900,color:"#fbbf24"}}>١,٥٠٠</span> <span style={{fontSize:"11px",color:"#556677"}}>ر.س/شهرياً</span></div>
               <div style={{fontSize:"11px",color:"#8899aa",lineHeight:1.7}}>4 حصص فردية · تقرير أسبوعي · متابعة مكثفة</div>
             </div>
@@ -1080,6 +1115,11 @@ ${goal?`الهدف: ${goal}\n`:""}المصدر: ${src}`;
         </div>
 
         <style>{`
+          @media(max-width:500px){
+            .start-pkg-grid{
+              grid-template-columns:repeat(2,1fr)!important;
+            }
+          }
           @media(max-width:768px){
             .start-pricing-grid{
               display:flex!important;
