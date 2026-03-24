@@ -983,7 +983,7 @@ ${goal?`الهدف: ${goal}\n`:""}المصدر: ${src}`;
   const pillBtnStyle=(active)=>({padding:"10px 20px",borderRadius:"100px",border:active?"2px solid #38bdf8":"1px solid rgba(255,255,255,0.15)",background:active?"rgba(56,189,248,0.15)":"rgba(255,255,255,0.03)",color:active?"#38bdf8":"#94a3b8",fontWeight:active?700:500,fontSize:"14px",cursor:"pointer",fontFamily:"'Tajawal',sans-serif",transition:"all 0.2s"});
 
   return(
-    <div style={{minHeight:"100vh",background:"#060e1c",color:"#fff",direction:"rtl",fontFamily:"'Tajawal',sans-serif"}}>
+    <div style={{minHeight:"100vh",background:"#060e1c",color:"#fff",direction:"rtl",fontFamily:"'Tajawal',sans-serif",width:"100%",margin:0,padding:0,overflowX:"hidden"}}>
       <style>{glow}{pulse}{fadeIn}{waPulse}</style>
 
       {/* MINI NAV */}
@@ -1078,7 +1078,7 @@ ${goal?`الهدف: ${goal}\n`:""}المصدر: ${src}`;
           <p style={{fontSize:"13px",fontWeight:600,color:"#8899aa",marginBottom:"4px"}}>الباقات تبدأ من ٧٥٠ ر.س/شهرياً</p>
           <p style={{fontSize:"11px",color:"#556677",marginBottom:"20px"}}>دفع شهري · بدون التزام</p>
 
-          <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:"12px"}} className="start-pricing-grid">
+          <div className="pricing-cards-row" style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:"12px",paddingTop:"14px"}}>
             {/* أساس */}
             <div style={{borderRadius:"16px",padding:"20px 16px",background:"rgba(255,255,255,0.015)",border:"1px solid rgba(102,119,136,0.2)",textAlign:"center",transition:"border-color 0.2s"}}>
               <div style={{fontSize:"16px",fontWeight:800,color:"#fff",marginBottom:"8px"}}>باقة أساس</div>
@@ -1120,19 +1120,23 @@ ${goal?`الهدف: ${goal}\n`:""}المصدر: ${src}`;
               grid-template-columns:repeat(2,1fr)!important;
             }
           }
+          .pricing-cards-row{
+            scrollbar-width:none;
+          }
+          .pricing-cards-row::-webkit-scrollbar{display:none;}
           @media(max-width:768px){
-            .start-pricing-grid{
+            .pricing-cards-row{
               display:flex!important;
               overflow-x:auto!important;
               scroll-snap-type:x mandatory!important;
-              gap:12px!important;
-              padding-bottom:8px;
               -webkit-overflow-scrolling:touch;
+              gap:12px!important;
+              padding:14px 20px 16px!important;
             }
-            .start-pricing-grid>div{
-              min-width:200px!important;
-              scroll-snap-align:start;
-              flex-shrink:0;
+            .pricing-cards-row>div{
+              min-width:220px!important;
+              flex:0 0 auto;
+              scroll-snap-align:center;
             }
           }
         `}</style>
