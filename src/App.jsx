@@ -1039,6 +1039,64 @@ ${goal?`الهدف: ${goal}\n`:""}المصدر: ${src}`;
           <p style={{textAlign:"center",fontSize:"13px",color:"#64748b",marginTop:"12px"}}>أو تواصل مباشرة: <a href="tel:+966558669974" style={{color:"#7dd3fc",textDecoration:"none",direction:"ltr",unicodeBidi:"embed"}}>0558669974</a></p>
         </form>
 
+        {/* PRICING CARDS */}
+        <div style={{marginTop:"32px",textAlign:"center"}}>
+          <p style={{fontSize:"13px",fontWeight:600,color:"#8899aa",marginBottom:"4px"}}>الباقات تبدأ من ٧٥٠ ر.س/شهرياً</p>
+          <p style={{fontSize:"11px",color:"#556677",marginBottom:"20px"}}>دفع شهري · بدون التزام</p>
+
+          <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:"12px"}} className="start-pricing-grid">
+            {/* أساس */}
+            <div style={{borderRadius:"16px",padding:"20px 16px",background:"rgba(255,255,255,0.015)",border:"1px solid rgba(102,119,136,0.2)",textAlign:"center",transition:"border-color 0.2s"}}>
+              <div style={{fontSize:"16px",fontWeight:800,color:"#fff",marginBottom:"8px"}}>باقة أساس</div>
+              <div style={{marginBottom:"8px"}}><span style={{fontFamily:"'Playfair Display',serif",fontSize:"20px",fontWeight:900,color:"#fff"}}>٧٥٠</span> <span style={{fontSize:"11px",color:"#556677"}}>ر.س/شهرياً</span></div>
+              <div style={{fontSize:"11px",color:"#8899aa",lineHeight:1.7}}>8 ساعات تدريب · 7 طلاب كحد أقصى</div>
+            </div>
+
+            {/* طلاقة — HIGHLIGHTED */}
+            <div style={{borderRadius:"16px",padding:"20px 16px",background:"rgba(56,189,248,0.04)",border:"1px solid rgba(56,189,248,0.3)",textAlign:"center",transform:"scale(1.03)",transition:"border-color 0.2s",position:"relative"}}>
+              <span style={{position:"absolute",top:"-10px",left:"50%",transform:"translateX(-50%)",background:"#38bdf8",color:"#060e1c",fontSize:"11px",fontWeight:700,padding:"3px 12px",borderRadius:"100px",whiteSpace:"nowrap"}}>⭐ الأنسب</span>
+              <div style={{fontSize:"16px",fontWeight:800,color:"#fff",marginBottom:"8px",marginTop:"6px"}}>باقة طلاقة</div>
+              <div style={{marginBottom:"8px"}}><span style={{fontFamily:"'Playfair Display',serif",fontSize:"20px",fontWeight:900,color:"#fff"}}>١,١٠٠</span> <span style={{fontSize:"11px",color:"#556677"}}>ر.س/شهرياً</span></div>
+              <div style={{fontSize:"11px",color:"#8899aa",lineHeight:1.7}}>متابعة يومية · حصة فردية · محتوى مسجل</div>
+            </div>
+
+            {/* تميّز */}
+            <div style={{borderRadius:"16px",padding:"20px 16px",background:"rgba(255,255,255,0.015)",border:"1px solid rgba(251,191,36,0.15)",textAlign:"center",transition:"border-color 0.2s"}}>
+              <div style={{fontSize:"16px",fontWeight:800,color:"#fff",marginBottom:"8px"}}>باقة تميّز</div>
+              <div style={{marginBottom:"8px"}}><span style={{fontFamily:"'Playfair Display',serif",fontSize:"20px",fontWeight:900,color:"#fbbf24"}}>١,٥٠٠</span> <span style={{fontSize:"11px",color:"#556677"}}>ر.س/شهرياً</span></div>
+              <div style={{fontSize:"11px",color:"#8899aa",lineHeight:1.7}}>4 حصص فردية · تقرير أسبوعي · متابعة مكثفة</div>
+            </div>
+
+            {/* IELTS */}
+            <div style={{borderRadius:"16px",padding:"20px 16px",background:"rgba(255,255,255,0.015)",border:"1px solid rgba(239,68,68,0.12)",textAlign:"center",transition:"border-color 0.2s"}}>
+              <div style={{fontSize:"16px",fontWeight:800,color:"#fff",marginBottom:"8px"}}>دورة IELTS</div>
+              <div style={{marginBottom:"8px"}}><span style={{fontFamily:"'Playfair Display',serif",fontSize:"20px",fontWeight:900,color:"#ef4444"}}>٢,٠٠٠</span> <span style={{fontSize:"11px",color:"#556677"}}>ر.س/شهرياً</span></div>
+              <div style={{fontSize:"11px",color:"#8899aa",lineHeight:1.7}}>تدريب مكثف · اختبارات تجريبية · حصص فردية</div>
+              <div style={{fontSize:"10px",color:"#556677",marginTop:"6px"}}>يُنصح بأساس متين</div>
+            </div>
+          </div>
+
+          <a href="/#pricing" style={{display:"inline-block",marginTop:"16px",fontSize:"12px",color:"#38bdf8",fontWeight:600,textDecoration:"none"}}>← شوف المقارنة الكاملة</a>
+        </div>
+
+        <style>{`
+          @media(max-width:768px){
+            .start-pricing-grid{
+              display:flex!important;
+              overflow-x:auto!important;
+              scroll-snap-type:x mandatory!important;
+              gap:12px!important;
+              padding-bottom:8px;
+              -webkit-overflow-scrolling:touch;
+            }
+            .start-pricing-grid>div{
+              min-width:200px!important;
+              scroll-snap-align:start;
+              flex-shrink:0;
+            }
+          }
+        `}</style>
+
         {/* SOCIAL PROOF STRIP */}
         <div style={{display:"flex",justifyContent:"center",gap:"24px",flexWrap:"wrap",marginTop:"32px",paddingTop:"24px",borderTop:"1px solid rgba(255,255,255,0.06)"}}>
           {[["+100","طالب وطالبة"],["⭐ 4.9","تقييم"],["🔥 3","مسارات متخصصة"]].map(([num,label])=>(
