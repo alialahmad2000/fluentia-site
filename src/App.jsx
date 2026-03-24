@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 
 /* ─── WhatsApp ─── */
 const WA_BASE = "https://wa.me/966558669974?text=";
@@ -236,7 +237,7 @@ function RegForm({pkg:initPkg,path:initPath,onClose}){
 }
 
 /* ─── Main ─── */
-export default function App(){
+function HomePage(){
   const[hC,setHC]=useState(null);const[scr,setScr]=useState(false);const[tI,setTI]=useState(0);const[fO,setFO]=useState(null);const[prob,setProb]=useState(null);const sRef=useRef(null);
   const[showQuiz,setShowQuiz]=useState(false);const[showReg,setShowReg]=useState(null);
   const[dark,setDark]=useState(true);const[mobileMenu,setMobileMenu]=useState(false);
@@ -907,3 +908,180 @@ section+section::before{content:'';display:block;height:1px;background:linear-gr
 
 </div>{/* end theme container */}
 </div>)}
+
+/* ═══════════════════════════════════════════════════════════════
+   START PAGE — /start — Google Ads Campaign Landing Page
+   ═══════════════════════════════════════════════════════════════ */
+
+function StartPage(){
+  const [name,setName]=React.useState("");
+  const [phone,setPhone]=React.useState("");
+  const [path,setPath]=React.useState("");
+  const [goal,setGoal]=React.useState("");
+  const [errors,setErrors]=React.useState({});
+  const [submitted,setSubmitted]=React.useState(false);
+  const [utm,setUtm]=React.useState({});
+
+  React.useEffect(()=>{
+    const p=new URLSearchParams(window.location.search);
+    setUtm({source:p.get("utm_source")||"",medium:p.get("utm_medium")||"",campaign:p.get("utm_campaign")||"",content:p.get("utm_content")||""});
+  },[]);
+
+  const valid=name.trim().length>=2 && /^05\d{8}$/.test(phone) && path;
+
+  function validate(){
+    const e={};
+    if(name.trim().length<2) e.name="الاسم لازم يكون حرفين على الأقل";
+    if(!/^05\d{8}$/.test(phone)) e.phone="رقم الجوال لازم يبدأ بـ 05 ويكون 10 أرقام";
+    if(!path) e.path="اختر المسار";
+    setErrors(e);
+    return Object.keys(e).length===0;
+  }
+
+  function handleSubmit(e){
+    e.preventDefault();
+    if(!validate()) return;
+    const src=utm.source?`${utm.source} / ${utm.campaign||""}`.trim():"إعلان جوجل";
+    const msg=`السلام عليكم، أبي أحجز لقاء مبدئي مجاني
+الاسم: ${name}
+الجوال: ${phone}
+المسار: ${path}
+${goal?`الهدف: ${goal}\n`:""}المصدر: ${src}`;
+    window.open("https://wa.me/966558669974?text="+encodeURIComponent(msg),"_blank");
+    setSubmitted(true);
+  }
+
+  const paths=["تأسيس","تطوير","IELTS"];
+  const goals=["أكاديمي","وظيفة","IELTS","تطوير شخصي"];
+
+  const glow=`@keyframes startGlow{0%,100%{box-shadow:0 0 20px rgba(56,189,248,0.15),0 0 60px rgba(56,189,248,0.05)}50%{box-shadow:0 0 30px rgba(56,189,248,0.25),0 0 80px rgba(56,189,248,0.1)}}`;
+  const pulse=`@keyframes startPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.02)}}`;
+  const fadeIn=`@keyframes startFadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}`;
+  const waPulse=`@keyframes waFloat{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}`;
+
+  const cardStyle={background:"rgba(255,255,255,0.03)",border:"1px solid rgba(56,189,248,0.12)",borderRadius:"16px",padding:"20px",textAlign:"center"};
+  const labelStyle={display:"block",fontSize:"14px",fontWeight:600,color:"#e2e8f0",marginBottom:"8px",fontFamily:"'Tajawal',sans-serif"};
+  const inputStyle={width:"100%",padding:"14px 16px",borderRadius:"12px",border:"1px solid rgba(56,189,248,0.2)",background:"rgba(255,255,255,0.05)",color:"#fff",fontSize:"16px",fontFamily:"'Tajawal',sans-serif",outline:"none",boxSizing:"border-box",direction:"rtl"};
+  const errStyle={color:"#ef4444",fontSize:"12px",marginTop:"4px",fontFamily:"'Tajawal',sans-serif"};
+  const pillBtnStyle=(active)=>({padding:"10px 20px",borderRadius:"100px",border:active?"2px solid #38bdf8":"1px solid rgba(255,255,255,0.15)",background:active?"rgba(56,189,248,0.15)":"rgba(255,255,255,0.03)",color:active?"#38bdf8":"#94a3b8",fontWeight:active?700:500,fontSize:"14px",cursor:"pointer",fontFamily:"'Tajawal',sans-serif",transition:"all 0.2s"});
+
+  return(
+    <div style={{minHeight:"100vh",background:"#060e1c",color:"#fff",direction:"rtl",fontFamily:"'Tajawal',sans-serif"}}>
+      <style>{glow}{pulse}{fadeIn}{waPulse}</style>
+
+      {/* MINI NAV */}
+      <nav style={{position:"fixed",top:0,left:0,right:0,zIndex:1000,background:"rgba(6,14,28,0.85)",backdropFilter:"blur(12px)",borderBottom:"1px solid rgba(56,189,248,0.08)",padding:"12px 24px",display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+        <Link to="/" style={{textDecoration:"none",display:"flex",alignItems:"center",gap:"8px"}}>
+          <span style={{fontFamily:"'Playfair Display',serif",fontSize:"22px",fontWeight:700,color:"#38bdf8"}}>F</span>
+          <span style={{fontSize:"16px",fontWeight:600,color:"#e2e8f0"}}>Fluentia</span>
+        </Link>
+        <Link to="/" style={{fontSize:"13px",color:"#7dd3fc",textDecoration:"none",fontWeight:500}}>الصفحة الرئيسية →</Link>
+      </nav>
+
+      {/* HERO + FORM */}
+      <div style={{maxWidth:"540px",margin:"0 auto",padding:"80px 20px 40px",animation:"startFadeIn 0.6s ease-out"}}>
+
+        {/* Badge */}
+        <div style={{display:"inline-block",background:"linear-gradient(135deg,rgba(251,191,36,0.15),rgba(251,191,36,0.05))",border:"1px solid rgba(251,191,36,0.3)",borderRadius:"100px",padding:"6px 18px",marginBottom:"20px"}}>
+          <span style={{fontSize:"13px",fontWeight:600,color:"#fbbf24"}}>إعلان خاص — مقاعد محدودة</span>
+        </div>
+
+        {/* Headline */}
+        <h1 style={{fontFamily:"'Playfair Display',serif",fontSize:"clamp(28px,6vw,42px)",fontWeight:700,color:"#fff",marginBottom:"12px",lineHeight:1.3}}>ابدأ رحلتك مع <span style={{color:"#38bdf8"}}>Fluentia</span></h1>
+        <p style={{fontSize:"17px",color:"#94a3b8",marginBottom:"24px",lineHeight:1.6}}>لقاء مبدئي مجاني مع المدرب · بدون أي التزام</p>
+
+        {/* Quick Pills */}
+        <div style={{display:"flex",flexWrap:"wrap",gap:"10px",marginBottom:"32px",justifyContent:"center"}}>
+          {[["🎓","مدربون سعوديون"],["👥","٧ طلاب كحد أقصى"],["📱","كلاسات لايف أونلاين"]].map(([icon,text])=>(
+            <span key={text} style={{background:"rgba(255,255,255,0.04)",border:"1px solid rgba(255,255,255,0.08)",borderRadius:"100px",padding:"8px 16px",fontSize:"13px",color:"#cbd5e1",display:"flex",alignItems:"center",gap:"6px"}}>{icon} {text}</span>
+          ))}
+        </div>
+
+        {/* FORM CARD */}
+        <form onSubmit={handleSubmit} id="start-form" data-page="start" style={{background:"rgba(255,255,255,0.03)",border:"1px solid rgba(56,189,248,0.15)",borderRadius:"20px",padding:"28px 24px",animation:"startGlow 3s ease-in-out infinite"}}>
+          <h2 style={{fontSize:"18px",fontWeight:700,color:"#e2e8f0",marginBottom:"24px",textAlign:"center",lineHeight:1.5}}>سجّل الحين — نتواصل معك خلال ٢٤ ساعة</h2>
+
+          {/* Name */}
+          <div style={{marginBottom:"16px"}}>
+            <label style={labelStyle}>الاسم</label>
+            <input type="text" value={name} onChange={e=>setName(e.target.value)} placeholder="اسمك الأول" required style={inputStyle}/>
+            {errors.name&&<div style={errStyle}>{errors.name}</div>}
+          </div>
+
+          {/* Phone */}
+          <div style={{marginBottom:"16px"}}>
+            <label style={labelStyle}>رقم الجوال</label>
+            <input type="tel" value={phone} onChange={e=>setPhone(e.target.value.replace(/\D/g,"").slice(0,10))} placeholder="05xxxxxxxx" required style={{...inputStyle,direction:"ltr",textAlign:"right"}}/>
+            {errors.phone&&<div style={errStyle}>{errors.phone}</div>}
+          </div>
+
+          {/* Path */}
+          <div style={{marginBottom:"16px"}}>
+            <label style={labelStyle}>المسار</label>
+            <div style={{display:"flex",gap:"10px",flexWrap:"wrap",justifyContent:"center"}}>
+              {paths.map(p=><button type="button" key={p} onClick={()=>setPath(p)} style={pillBtnStyle(path===p)}>{p}</button>)}
+            </div>
+            {errors.path&&<div style={errStyle}>{errors.path}</div>}
+          </div>
+
+          {/* Goal */}
+          <div style={{marginBottom:"24px"}}>
+            <label style={labelStyle}>الهدف <span style={{fontWeight:400,color:"#64748b"}}>(اختياري)</span></label>
+            <div style={{display:"flex",gap:"8px",flexWrap:"wrap",justifyContent:"center"}}>
+              {goals.map(g=><button type="button" key={g} onClick={()=>setGoal(goal===g?"":g)} style={pillBtnStyle(goal===g)}>{g}</button>)}
+            </div>
+          </div>
+
+          {/* Submit */}
+          <button type="submit" id="start-submit-btn" data-action="submit-lead" data-tracking="google-ads-start" disabled={!valid} style={{width:"100%",padding:"16px",borderRadius:"14px",border:"none",background:valid?"linear-gradient(135deg,#38bdf8,#0ea5e9)":"rgba(56,189,248,0.2)",color:valid?"#fff":"#64748b",fontSize:"17px",fontWeight:700,cursor:valid?"pointer":"not-allowed",fontFamily:"'Tajawal',sans-serif",transition:"all 0.3s",animation:valid?"startPulse 2s ease-in-out infinite":"none"}}>احجز لقاءك المجاني ←</button>
+
+          {submitted&&<p style={{textAlign:"center",fontSize:"14px",color:"#4ade80",marginTop:"16px"}}>تم الإرسال! نتواصل معك قريباً إن شاء الله 🎉</p>}
+          <p style={{textAlign:"center",fontSize:"13px",color:"#64748b",marginTop:"12px"}}>أو تواصل مباشرة: <a href="tel:+966558669974" style={{color:"#7dd3fc",textDecoration:"none",direction:"ltr",unicodeBidi:"embed"}}>0558669974</a></p>
+        </form>
+
+        {/* SOCIAL PROOF STRIP */}
+        <div style={{display:"flex",justifyContent:"center",gap:"24px",flexWrap:"wrap",marginTop:"32px",paddingTop:"24px",borderTop:"1px solid rgba(255,255,255,0.06)"}}>
+          {[["+100","طالب وطالبة"],["⭐ 4.9","تقييم"],["🔥 3","مسارات متخصصة"]].map(([num,label])=>(
+            <div key={label} style={{textAlign:"center"}}>
+              <div style={{fontSize:"18px",fontWeight:700,color:"#38bdf8"}}>{num}</div>
+              <div style={{fontSize:"12px",color:"#64748b"}}>{label}</div>
+            </div>
+          ))}
+        </div>
+
+        {/* 3 FEATURE CARDS */}
+        <div style={{display:"grid",gridTemplateColumns:"1fr",gap:"12px",marginTop:"32px"}}>
+          {[
+            ["👨‍🏫","مدربون سعوديون متخصصون","مو أجانب، مو ذكاء اصطناعي. مدرب يفهمك ويتابعك يومياً"],
+            ["📊","نظام تعلّم ذكي","منصة حديثة تتابع تقدمك بالأرقام"],
+            ["🎯","نتائج مضمونة","الجوهرة: من صفر إلى قراءة بطلاقة في ٦ شهور"]
+          ].map(([icon,title,desc])=>(
+            <div key={title} style={cardStyle}>
+              <div style={{fontSize:"24px",marginBottom:"8px"}}>{icon}</div>
+              <div style={{fontSize:"15px",fontWeight:700,color:"#e2e8f0",marginBottom:"4px"}}>{title}</div>
+              <div style={{fontSize:"13px",color:"#94a3b8",lineHeight:1.5}}>{desc}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* FLOATING WHATSAPP */}
+      <a href={"https://wa.me/966558669974?text="+encodeURIComponent("السلام عليكم، أبي أحجز لقاء مبدئي مجاني (إعلان جوجل)")} target="_blank" rel="noopener noreferrer" style={{position:"fixed",bottom:"22px",left:"22px",zIndex:999,width:"56px",height:"56px",borderRadius:"50%",background:"linear-gradient(135deg,#25D366,#128C7E)",display:"flex",alignItems:"center",justifyContent:"center",color:"#fff",fontSize:"24px",boxShadow:"0 4px 15px rgba(37,211,102,0.3)",animation:"waFloat 2s infinite"}}>💬</a>
+    </div>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   APP ROUTER
+   ═══════════════════════════════════════════════════════════════ */
+
+export default function App(){
+  return(
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/start" element={<StartPage />} />
+      </Routes>
+    </BrowserRouter>
+  );
+}
