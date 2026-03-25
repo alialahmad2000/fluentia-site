@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Link, useLocation } from "react-router-dom";
 
 /* ─── WhatsApp ─── */
 const WA_BASE = "https://wa.me/966558669974?text=";
@@ -964,6 +964,15 @@ function StartPage(){
 المسار: ${path}
 الباقة: ${pkg} (${pkgInfo?pkgInfo.price:""}  ر.س)
 ${goal?`الهدف: ${goal}\n`:""}المصدر: ${src}`;
+    if (window.gtag) {
+      window.gtag('event', 'generate_lead', {
+        event_category: 'form',
+        event_label: 'start_page_form',
+        path: path,
+        package: pkg,
+        source: 'google_ads',
+      });
+    }
     window.open("https://wa.me/966558669974?text="+encodeURIComponent(msg),"_blank");
     setSubmitted(true);
   }
@@ -1164,13 +1173,29 @@ ${goal?`الهدف: ${goal}\n`:""}المصدر: ${src}`;
    APP ROUTER
    ═══════════════════════════════════════════════════════════════ */
 
+function AppRoutes(){
+  const location = useLocation();
+
+  useEffect(() => {
+    if (window.gtag) {
+      window.gtag('config', 'G-19G2SJ1WYL', {
+        page_path: location.pathname,
+      });
+    }
+  }, [location]);
+
+  return(
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/start" element={<StartPage />} />
+    </Routes>
+  );
+}
+
 export default function App(){
   return(
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/start" element={<StartPage />} />
-      </Routes>
+      <AppRoutes />
     </BrowserRouter>
   );
 }
