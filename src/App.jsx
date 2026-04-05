@@ -130,6 +130,13 @@ function RegForm({pkg:initPkg,path:initPath,onClose}){
     // Auto-save to Google Sheets (silent)
     try{const sheetData={...form,utm,date:new Date().toLocaleString("ar-SA")};
     fetch("https://script.google.com/macros/s/YOUR_SHEET_ID/exec",{method:"POST",mode:"no-cors",headers:{"Content-Type":"application/json"},body:JSON.stringify(sheetData)}).catch(()=>{})}catch(e){}
+    // TikTok Pixel: track form submission as conversion
+    if(window.ttq){
+      window.ttq.track('SubmitForm',{content_name:'fluentia_registration',content_category:form.path||'general',value:form.pkg||'unknown',description:form.goal||''});
+      window.ttq.track('CompleteRegistration',{content_name:'fluentia_lead',content_category:form.path||'general'});
+    }
+    // Google Analytics event
+    if(window.gtag){window.gtag('event','generate_lead',{event_category:'registration',event_label:form.path||'general',value:1})}
     window.open(buildWA(form,utm),"_blank");onClose()};
   const pickPath=(p)=>{u("path",p);setStep(2)};
   const pickPkg=(p)=>{u("pkg",p);setStep(3)};
@@ -926,6 +933,8 @@ function StartPage(){
   React.useEffect(()=>{
     const p=new URLSearchParams(window.location.search);
     setUtm({source:p.get("utm_source")||"",medium:p.get("utm_medium")||"",campaign:p.get("utm_campaign")||"",content:p.get("utm_content")||""});
+    // TikTok Pixel: fire PageView for SPA route
+    if(window.ttq) window.ttq.page();
   },[]);
 
   const pkgData=[
@@ -972,6 +981,11 @@ ${goal?`الهدف: ${goal}\n`:""}المصدر: ${src}`;
         package: pkg,
         source: 'google_ads',
       });
+    }
+    // TikTok Pixel: track form submission as conversion
+    if(window.ttq){
+      window.ttq.track('SubmitForm',{content_name:'fluentia_registration',content_category:path||'general',value:pkg||'unknown',description:goal||''});
+      window.ttq.track('CompleteRegistration',{content_name:'fluentia_lead',content_category:path||'general'});
     }
     window.open("https://wa.me/966558669974?text="+encodeURIComponent(msg),"_blank");
     setSubmitted(true);
