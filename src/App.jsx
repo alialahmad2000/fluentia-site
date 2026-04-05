@@ -150,7 +150,7 @@ function RegForm({pkg:initPkg,path:initPath,onClose}){
     fetch("https://script.google.com/macros/s/YOUR_SHEET_ID/exec",{method:"POST",mode:"no-cors",headers:{"Content-Type":"application/json"},body:JSON.stringify(sheetData)}).catch(()=>{})}catch(e){}
     // TikTok Pixel: track form submission as conversion
     if(window.ttq){
-      window.ttq.track('SubmitForm',{content_name:'fluentia_registration',content_category:form.path||'general',value:form.pkg||'unknown',description:form.goal||''});
+      window.ttq.track('Lead',{content_name:'fluentia_registration',content_category:form.path||'general',value:form.pkg||'unknown',description:form.goal||''});
       window.ttq.track('CompleteRegistration',{content_name:'fluentia_lead',content_category:form.path||'general'});
     }
     // Google Analytics event
@@ -1001,7 +1001,7 @@ ${goal?`الهدف: ${goal}\n`:""}المصدر: ${src}`;
     }
     // TikTok Pixel: track form submission as conversion
     if(window.ttq){
-      window.ttq.track('SubmitForm',{content_name:'fluentia_registration',content_category:path||'general',value:pkg||'unknown',description:goal||''});
+      window.ttq.track('Lead',{content_name:'fluentia_registration',content_category:path||'general',value:pkg||'unknown',description:goal||''});
       window.ttq.track('CompleteRegistration',{content_name:'fluentia_lead',content_category:path||'general'});
     }
     window.open("https://wa.me/966558669974?text="+encodeURIComponent(msg),"_blank");
