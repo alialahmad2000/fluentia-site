@@ -110,7 +110,7 @@ function Quiz({onClose}){
             <div style={{padding:"16px",borderRadius:"14px",background:"var(--sky-bg)",border:"1px solid var(--sky-b)",marginBottom:"20px"}}>
               <p style={{fontSize:"13px",color:"var(--t2)",lineHeight:1.8}}>هذا تقييم مبدئي. في لقائك المجاني مع المدرب بنحدد مستواك بدقة ونرسم لك خطة واضحة.</p>
             </div>
-            <a href={WA_BASE+encodeURIComponent(`السلام عليكم، سويت اختبار تحديد المستوى\nالنتيجة: ${result.lv}\nالمسار المقترح: ${result.rec}\nأبي أحجز لقاء مبدئي مجاني`)} target="_blank" rel="noopener noreferrer" style={{display:"inline-block",background:SKY,color:"#060e1c",padding:"14px 32px",borderRadius:"60px",fontSize:"15px",fontWeight:800}}>احجز لقاءك المجاني ←</a>
+            <a href={WA_BASE+encodeURIComponent(`السلام عليكم، سويت اختبار تحديد المستوى\nالنتيجة: ${result.lv}\nالمسار المقترح: ${result.rec}\nأبي أحجز لقاء مبدئي مجاني`)} target="_blank" rel="noopener noreferrer" onClick={()=>{if(window.gtag)window.gtag('event','conversion',{'send_to':'AW-9314838750','value':1.0,'currency':'SAR'})}} style={{display:"inline-block",background:SKY,color:"#060e1c",padding:"14px 32px",borderRadius:"60px",fontSize:"15px",fontWeight:800}}>احجز لقاءك المجاني ←</a>
           </div>
         )}
       </div>
@@ -130,6 +130,7 @@ function RegForm({pkg:initPkg,path:initPath,onClose}){
     // Auto-save to Google Sheets (silent)
     try{const sheetData={...form,utm,date:new Date().toLocaleString("ar-SA")};
     fetch("https://script.google.com/macros/s/YOUR_SHEET_ID/exec",{method:"POST",mode:"no-cors",headers:{"Content-Type":"application/json"},body:JSON.stringify(sheetData)}).catch(()=>{})}catch(e){}
+    if(window.gtag){window.gtag('event','conversion',{'send_to':'AW-9314838750','value':1.0,'currency':'SAR'})}
     window.open(buildWA(form,utm),"_blank");onClose()};
   const pickPath=(p)=>{u("path",p);setStep(2)};
   const pickPkg=(p)=>{u("pkg",p);setStep(3)};
@@ -972,6 +973,7 @@ ${goal?`الهدف: ${goal}\n`:""}المصدر: ${src}`;
         package: pkg,
         source: 'google_ads',
       });
+      window.gtag('event', 'conversion', {'send_to': 'AW-9314838750', 'value': 1.0, 'currency': 'SAR'});
     }
     window.open("https://wa.me/966558669974?text="+encodeURIComponent(msg),"_blank");
     setSubmitted(true);
@@ -1168,7 +1170,7 @@ ${goal?`الهدف: ${goal}\n`:""}المصدر: ${src}`;
       </div>
 
       {/* FLOATING WHATSAPP */}
-      <a href={"https://wa.me/966558669974?text="+encodeURIComponent("السلام عليكم، أبي أحجز لقاء مبدئي مجاني (إعلان جوجل)")} target="_blank" rel="noopener noreferrer" style={{position:"fixed",bottom:"22px",left:"22px",zIndex:999,width:"56px",height:"56px",borderRadius:"50%",background:"linear-gradient(135deg,#25D366,#128C7E)",display:"flex",alignItems:"center",justifyContent:"center",color:"#fff",fontSize:"24px",boxShadow:"0 4px 15px rgba(37,211,102,0.3)",animation:"waFloat 2s infinite"}}>💬</a>
+      <a href={"https://wa.me/966558669974?text="+encodeURIComponent("السلام عليكم، أبي أحجز لقاء مبدئي مجاني (إعلان جوجل)")} target="_blank" rel="noopener noreferrer" onClick={()=>{if(window.gtag)window.gtag('event','conversion',{'send_to':'AW-9314838750','value':1.0,'currency':'SAR'})}} style={{position:"fixed",bottom:"22px",left:"22px",zIndex:999,width:"56px",height:"56px",borderRadius:"50%",background:"linear-gradient(135deg,#25D366,#128C7E)",display:"flex",alignItems:"center",justifyContent:"center",color:"#fff",fontSize:"24px",boxShadow:"0 4px 15px rgba(37,211,102,0.3)",animation:"waFloat 2s infinite"}}>💬</a>
     </div>
   );
 }
