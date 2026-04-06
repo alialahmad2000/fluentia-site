@@ -1,9 +1,27 @@
 import React, { useState, useEffect, useRef } from "react";
 import { BrowserRouter, Routes, Route, Link, useLocation } from "react-router-dom";
 
+/* ─── UTM Source ─── */
+const UTM_MAP = {
+  'tiktok': 'تيك توك',
+  'google': 'إعلان جوجل',
+  'instagram': 'انستقرام',
+  'twitter': 'تويتر',
+  'snapchat': 'سناب شات',
+  'facebook': 'فيسبوك',
+  'whatsapp': 'واتساب',
+  'telegram': 'تيليجرام',
+  'organic': 'بحث مباشر',
+};
+const getSource = () => {
+  const params = new URLSearchParams(window.location.search);
+  const utm = params.get('utm_source') || sessionStorage.getItem('utm_source');
+  return UTM_MAP[utm?.toLowerCase()] || 'مباشر';
+};
+
 /* ─── WhatsApp ─── */
 const WA_BASE = "https://wa.me/966558669974?text=";
-const buildWA = (data, utm) => WA_BASE + encodeURIComponent(
+const buildWA = (data) => WA_BASE + encodeURIComponent(
   `السلام عليكم، أبي أحجز لقاء مبدئي مجاني\n` +
   `الاسم: ${data.name || "—"}\n` +
   `العمر: ${data.age || "—"}\n` +
@@ -13,7 +31,7 @@ const buildWA = (data, utm) => WA_BASE + encodeURIComponent(
   (data.startDate ? `موعد البداية: ${data.startDate}\n` : "") +
   (data.ieltsTarget ? `الدرجة المستهدفة IELTS: ${data.ieltsTarget}\n` : "") +
   (data.level ? `مستوى تقريبي: ${data.level}\n` : "") +
-  (utm ? `المصدر: ${utm}\n` : "")
+  `المصدر: ${getSource()}`
 );
 const WA = WA_BASE + encodeURIComponent("السلام عليكم، أبي أحجز لقاء مبدئي مجاني مع المدرب");
 const WA_OFF = WA_BASE + encodeURIComponent("أبي أستفيد من عرض الـ20%");
@@ -110,7 +128,7 @@ function Quiz({onClose}){
             <div style={{padding:"16px",borderRadius:"14px",background:"var(--sky-bg)",border:"1px solid var(--sky-b)",marginBottom:"20px"}}>
               <p style={{fontSize:"13px",color:"var(--t2)",lineHeight:1.8}}>هذا تقييم مبدئي. في لقائك المجاني مع المدرب بنحدد مستواك بدقة ونرسم لك خطة واضحة.</p>
             </div>
-            <a href={WA_BASE+encodeURIComponent(`السلام عليكم، سويت اختبار تحديد المستوى\nالنتيجة: ${result.lv}\nالمسار المقترح: ${result.rec}\nأبي أحجز لقاء مبدئي مجاني`)} target="_blank" rel="noopener noreferrer" onClick={()=>{if(window.gtag)window.gtag('event','conversion',{'send_to':'AW-9314838750','value':1.0,'currency':'SAR'})}} style={{display:"inline-block",background:SKY,color:"#060e1c",padding:"14px 32px",borderRadius:"60px",fontSize:"15px",fontWeight:800}}>احجز لقاءك المجاني ←</a>
+            <a href={WA_BASE+encodeURIComponent(`السلام عليكم، سويت اختبار تحديد المستوى\nالنتيجة: ${result.lv}\nالمسار المقترح: ${result.rec}\nأبي أحجز لقاء مبدئي مجاني\nالمصدر: ${getSource()}`)} target="_blank" rel="noopener noreferrer" onClick={()=>{if(window.gtag)window.gtag('event','conversion',{'send_to':'AW-9314838750','value':1.0,'currency':'SAR'})}} style={{display:"inline-block",background:SKY,color:"#060e1c",padding:"14px 32px",borderRadius:"60px",fontSize:"15px",fontWeight:800}}>احجز لقاءك المجاني ←</a>
           </div>
         )}
       </div>
@@ -126,12 +144,18 @@ function RegForm({pkg:initPkg,path:initPath,onClose}){
   const u=(k,v)=>setForm({...form,[k]:v});
   // Save to Google Sheets + open WhatsApp
   const send=()=>{if(!form.name){alert("اكتب اسمك");return}
-    const utm=new URLSearchParams(window.location.search).get("utm_source")||"";
+    const utmRaw=new URLSearchParams(window.location.search).get("utm_source")||sessionStorage.getItem("utm_source")||"";
     // Auto-save to Google Sheets (silent)
-    try{const sheetData={...form,utm,date:new Date().toLocaleString("ar-SA")};
+    try{const sheetData={...form,utm:utmRaw,date:new Date().toLocaleString("ar-SA")};
     fetch("https://script.google.com/macros/s/YOUR_SHEET_ID/exec",{method:"POST",mode:"no-cors",headers:{"Content-Type":"application/json"},body:JSON.stringify(sheetData)}).catch(()=>{})}catch(e){}
-    if(window.gtag){window.gtag('event','conversion',{'send_to':'AW-9314838750','value':1.0,'currency':'SAR'})}
-    window.open(buildWA(form,utm),"_blank");onClose()};
+    // TikTok Pixel: track form submission as conversion
+    if(window.ttq){
+      window.ttq.track('Lead',{content_name:'fluentia_registration',content_category:form.path||'general',value:form.pkg||'unknown',description:form.goal||''});
+      window.ttq.track('CompleteRegistration',{content_name:'fluentia_lead',content_category:form.path||'general'});
+    }
+    // Google Analytics + Ads conversion
+    if(window.gtag){window.gtag('event','generate_lead',{event_category:'registration',event_label:form.path||'general',value:1});window.gtag('event','conversion',{'send_to':'AW-9314838750','value':1.0,'currency':'SAR'})}
+    window.open(buildWA(form),"_blank");onClose()};
   const pickPath=(p)=>{u("path",p);setStep(2)};
   const pickPkg=(p)=>{u("pkg",p);setStep(3)};
   const qPick=(pts)=>{const ns=qScore+pts;setQScore(ns);if(qStep<quizQs.length-1)setQStep(qStep+1);else{setQDone(true);const lv=getLevel(ns);setForm(f=>({...f,level:lv.lv}));}};
@@ -277,9 +301,8 @@ function HomePage(){
   const lastScrollRef=useRef(0);
   useEffect(()=>{const h=()=>{const curr=window.scrollY;if(lastScrollRef.current-curr>200&&curr>500&&!exitShownRef.current){exitShownRef.current=true;setShowExit(true)}lastScrollRef.current=curr};window.addEventListener("scroll",h);return()=>window.removeEventListener("scroll",h)},[]);
   useEffect(()=>{const h=()=>{let current="";navSections.forEach(s=>{const el=document.getElementById(s.id);if(el&&window.scrollY>=el.offsetTop-300)current=s.id});setActiveSection(current)};window.addEventListener("scroll",h);return()=>window.removeEventListener("scroll",h)},[]);
-  // UTM tracking
-  const getUTM=()=>{try{const p=new URLSearchParams(window.location.search);return p.get("utm_source")||""}catch(e){return""}};
-  const utmSource=getUTM();
+  // Preserve UTM across SPA navigation
+  useEffect(()=>{const p=new URLSearchParams(window.location.search).get("utm_source");if(p)sessionStorage.setItem("utm_source",p)},[]);
 
   return(
 <div style={{minHeight:"100vh",overflowX:"hidden",direction:"rtl"}}>
@@ -927,6 +950,8 @@ function StartPage(){
   React.useEffect(()=>{
     const p=new URLSearchParams(window.location.search);
     setUtm({source:p.get("utm_source")||"",medium:p.get("utm_medium")||"",campaign:p.get("utm_campaign")||"",content:p.get("utm_content")||""});
+    // TikTok Pixel: fire PageView for SPA route
+    if(window.ttq) window.ttq.page();
   },[]);
 
   const pkgData=[
@@ -957,7 +982,7 @@ function StartPage(){
   function handleSubmit(e){
     e.preventDefault();
     if(!validate()) return;
-    const src=utm.source?`${utm.source} / ${utm.campaign||""}`.trim():"إعلان جوجل";
+    const src=getSource();
     const pkgInfo=pkgData.find(p=>p.name===pkg);
     const msg=`السلام عليكم، أبي أحجز لقاء مبدئي مجاني
 الاسم: ${name}
@@ -974,6 +999,11 @@ ${goal?`الهدف: ${goal}\n`:""}المصدر: ${src}`;
         source: 'google_ads',
       });
       window.gtag('event', 'conversion', {'send_to': 'AW-9314838750', 'value': 1.0, 'currency': 'SAR'});
+    }
+    // TikTok Pixel: track form submission as conversion
+    if(window.ttq){
+      window.ttq.track('Lead',{content_name:'fluentia_registration',content_category:path||'general',value:pkg||'unknown',description:goal||''});
+      window.ttq.track('CompleteRegistration',{content_name:'fluentia_lead',content_category:path||'general'});
     }
     window.open("https://wa.me/966558669974?text="+encodeURIComponent(msg),"_blank");
     setSubmitted(true);
