@@ -34,7 +34,6 @@ const buildWA = (data) => WA_BASE + encodeURIComponent(
   `المصدر: ${getSource()}`
 );
 const WA = WA_BASE + encodeURIComponent("السلام عليكم، أبي أحجز لقاء مبدئي مجاني مع المدرب");
-const WA_OFF = WA_BASE + encodeURIComponent("أبي أستفيد من عرض الـ20%");
 const TT = "https://www.tiktok.com/@fluentia_";
 const IG = "https://www.instagram.com/fluentia__";
 
@@ -52,20 +51,26 @@ const reviews = [
   { n: "ليان", r: "جامعة الملك سعود", t: "نتعلم كل المهارات الأربع والشرح بالقرامر ماشي خطوه بخطوه والفعاليات رهيبة!", tag: "القرامر" },
   { n: "الهنوف", r: "English Level 2", t: "فرق كبير بين مستواي بالبداية واللحين! متابعة دائماً والمجموعة بسيطة.", tag: "تقدم سريع" },
   { n: "هوازن", r: "دورة IELTS", t: "الدكتور علي يتميّز بأسلوبه الراقي والمحفّز. مثال في المهنية والتمكن العلمي.", tag: "IELTS" },
-  { n: "فيصل", r: "جامعة الملك سعود", t: "الأنشطة والألعاب ومشروعات السبيكنج والكلاسات الخصوصيه. جزيل الشكر!", tag: "سبيكنج" },
   { n: "مها", r: "طالبة تمريض", t: "كتاب الـGrammar رهيب! والمصطلحات مره كويسه. بإذن الله نهكر اللغه!", tag: "القرامر" },
-  { n: "لمى", r: "جامعة الملك عبدالعزيز", t: "القرامر والأزمنة للحين أتذكرها! والأكسنت حلو ويعلمنا نطق الكلمات صح.", tag: "النطق" },
 ];
 const pkgs = [
-  { id:1, nm:"أساس", sub:"للتطوير بوتيرة مريحة", pr:750, rv:1050, pop:false, prem:false, seats:5, save:"29", f:[
-    {t:"8 ساعات تدريب شهرياً",ok:1},{t:"7 طلاب كحد أقصى",ok:1},{t:"مجتمع تيليجرام داعم",ok:1},{t:"تقييم شهري",ok:1},{t:"مواد تعليمية مختارة بعناية",ok:1},{t:"مدربك يتابعك يومياً",ok:0},{t:"محتوى مسجل ترجعله أي وقت",ok:0},{t:"حصص فردية وجهاً لوجه",ok:0},{t:"تقرير تقدّم بالأرقام",ok:0}
-  ]},
-  { id:2, nm:"طلاقة", sub:"الأنسب للتأسيس والتطوير", pr:1100, rv:1600, pop:true, prem:false, seats:3, save:"31", f:[
-    {t:"8 ساعات تدريب شهرياً",ok:1},{t:"7 طلاب كحد أقصى",ok:1},{t:"مجتمع تيليجرام داعم",ok:1},{t:"تقييم كل أسبوعين — ضعف التقدم",ok:1,hl:1},{t:"مواد شاملة + تمارين تفاعلية",ok:1,hl:1},{t:"مدربك يصحح أخطاءك يومياً",ok:1,hl:1},{t:"دروس مسجلة ترجعلها أي وقت",ok:1,hl:1},{t:"حصة فردية شهرية مع مدربك",ok:1,hl:1},{t:"تقرير شهري — تشوف تطورك بالأرقام",ok:1,hl:1}
-  ]},
-  { id:3, nm:"تميّز", sub:"الباقة الأقوى — لمن يريد الأفضل", pr:1500, rv:2200, pop:false, prem:true, seats:2, save:"32", f:[
-    {t:"8 ساعات تدريب شهرياً",ok:1},{t:"7 طلاب كحد أقصى",ok:1},{t:"مجتمع تيليجرام داعم",ok:1},{t:"تقييم أسبوعي — 4× أسرع تقدماً",ok:1,hl:1},{t:"مواد حصرية + بنك أسئلة كامل",ok:1,hl:1},{t:"متابعة مكثفة + ملاحظات شخصية يومياً",ok:1,hl:1},{t:"مكتبة دروس مسجلة غير محدودة",ok:1,hl:1},{t:"حصة فردية كل أسبوع مع مدربك",ok:1,hl:1},{t:"تقرير أسبوعي + خطة تطوير شخصية",ok:1,hl:1}
-  ]},
+  // ═══ القسم 1: للبداية والمرونة ═══
+  { id:1, section:"starter", nm:"التعلم الذاتي", sub:"للتعلم بوتيرتك الخاصة", pr:500, pop:false, prem:false, seats:null, f:[
+    {t:"وصول كامل للمنصة التعليمية",ok:1,hl:1},{t:"جميع التسجيلات والدروس المسجلة",ok:1,hl:1},{t:"المنهج الكامل + المواد التعليمية",ok:1},{t:"التمارين والأنشطة التفاعلية",ok:1},{t:"اختبارات قياس المستوى",ok:1},{t:"كلاسات لايف جماعية",ok:0},{t:"متابعة مع مدرب",ok:0},{t:"حصص فردية",ok:0}
+  ], cta:"اشترك الآن", note:"وصول فوري للمنصة"},
+  { id:2, section:"starter", nm:"أساس", sub:"للبداية مع الكلاسات الجماعية", pr:750, pop:false, prem:false, seats:5, f:[
+    {t:"8 كلاسات جماعية شهرياً",sub:"ساعة - ساعتين لكل كلاس",ok:1,hl:1},{t:"وصول كامل للمنصة التعليمية",ok:1},{t:"7 طلاب كحد أقصى",ok:1},{t:"التمارين والأنشطة التفاعلية",ok:1},{t:"مجتمع تيليجرام داعم",ok:1},{t:"تقييم شهري",ok:1},{t:"متابعة يومية مع المدرب",ok:0},{t:"حصص فردية",ok:0}
+  ], cta:"ابدأ مجاناً", note:"لقاء مبدئي مجاني"},
+  // ═══ القسم 2: للجدية والتمكّن ═══
+  { id:3, section:"serious", nm:"طلاقة", sub:"نتائج حقيقية بتكلفة معقولة", pr:1100, pop:false, prem:false, seats:3, f:[
+    {t:"8 كلاسات جماعية شهرياً",ok:1},{t:"7 طلاب كحد أقصى",ok:1},{t:"مواد شاملة + تمارين تفاعلية",ok:1},{t:"تقييم كل أسبوعين",sub:"ضعف التقدم",ok:1,hl:1},{t:"مدربك يصحح أخطاءك يومياً",ok:1,hl:1},{t:"دروس مسجلة ترجعلها أي وقت",ok:1,hl:1},{t:"حصة فردية شهرية مع مدربك",ok:1,hl:1},{t:"تقرير شهري — تشوف تطورك بالأرقام",ok:1,hl:1}
+  ], cta:"ابدأ مجاناً", note:"لقاء مبدئي مجاني"},
+  { id:4, section:"serious", nm:"تميّز", sub:"نتائج مكثفة وسريعة", pr:1500, pop:true, prem:false, seats:2, f:[
+    {t:"8 كلاسات جماعية شهرياً",ok:1},{t:"7 طلاب كحد أقصى",ok:1},{t:"مواد حصرية + بنك أسئلة كامل",ok:1},{t:"تقييم أسبوعي",sub:"4× أسرع تقدماً",ok:1,hl:1},{t:"متابعة مكثفة + ملاحظات شخصية يومياً",ok:1,hl:1},{t:"مكتبة دروس مسجلة غير محدودة",ok:1,hl:1},{t:"4 حصص فردية شهرياً",sub:"حصة كل أسبوع",ok:1,hl:1},{t:"تقرير أسبوعي + خطة تطوير شخصية",ok:1,hl:1}
+  ], cta:"ابدأ مجاناً", note:"لقاء مبدئي مجاني"},
+  { id:5, section:"serious", nm:"التدريب الشخصي المباشر", sub:"الأفضل إطلاقاً — VIP", pr:"1,800 - 2,000", priceNote:"حسب المدرب المختار", pop:false, prem:true, seats:1, f:[
+    {t:"كل مميزات باقة تميّز",ok:1},{t:"حصص فردية غير محدودة",sub:"المدرب يعطيك حسب حاجتك",ok:1,hl:1},{t:"مدرب شخصي مخصص لك",ok:1,hl:1},{t:"تواصل مباشر مع مدربك 24/7",ok:1,hl:1},{t:"تدريب على مقابلات العمل بالإنجليزي",ok:1,hl:1},{t:"تدريب على العروض التقديمية",ok:1,hl:1},{t:"تدريب على التحدث أمام الجمهور",ok:1,hl:1},{t:"خطة دراسية شخصية حسب هدفك",ok:1,hl:1}
+  ], cta:"ابدأ مجاناً", note:"لقاء مبدئي مجاني"},
 ];
 const fqs = [
   {q:"وش اللقاء المبدئي المجاني؟",a:"لقاء مباشر مع المدرب — نفهم مستواك وأهدافك وشخصيتك. وأنت تتعرف على أسلوب المدرب. بناءً عليه نقرر مع بعض إذا Fluentia المكان الصح لك."},
@@ -73,9 +78,6 @@ const fqs = [
   {q:"هل أقدر أدخل IELTS مباشرة؟",a:"دورة IELTS مصممة لمن عنده أساس متين. إذا مستواك مبتدئ ننصحك تبدأ بالتأسيس أو التطوير أولاً — وبعدها تنتقل لـ IELTS بجاهزية كاملة."},
   {q:"كم عدد الطلاب بالكلاس؟",a:"حد أقصى 7 طلاب فقط. مو 20 أو 30 مثل المعاهد الثانية."},
   {q:"جربت دورات قبل وما استفدت — ليش عندكم بيختلف؟",a:"لأننا ندرس كل طالب بشكل فردي، نفهم شخصيته، ونحطه بالقروب اللي يناسبه. المدرب يتابعك يومياً. والمحتوى مصمم بعناية علمية."},
-  {q:"أقدر أتعلم من اليوتيوب ببلاش — ليش أدفع؟",a:"لو اليوتيوب يكفي كان الكل يتكلم إنجليزي. المشكلة مو بالمحتوى — المشكلة بالمتابعة والتصحيح والالتزام والبيئة."},
-  {q:"هل أقدر أغير الباقة؟",a:"نعم! الدفع شهري بدون أي التزام."},
-  {q:"هل المدربين سعوديين؟",a:"نعم، جميع مدربينا سعوديون متخصصون."},
 ];
 const quizQs = [
   {type:"self",q:"كيف تقيّم مستواك الحالي بالإنجليزي؟",opts:[{t:"ما أعرف شيء تقريباً",pts:0},{t:"أعرف كلمات بس ما أكوّن جمل",pts:1},{t:"أتكلم شوي بس أتلعثم",pts:2},{t:"أفهم وأتكلم لكن القرامر ضعيف",pts:3}]},
@@ -91,7 +93,7 @@ function getLevel(score){if(score<=4)return{lv:"مبتدئ",rec:"تأسيس",col
 function useVis(th=0.1){const r=useRef(null);const[v,setV]=useState(false);useEffect(()=>{const e=r.current;if(!e)return;const o=new IntersectionObserver(([x])=>{if(x.isIntersecting)setV(true)},{threshold:th});o.observe(e);return()=>o.disconnect()},[th]);return[r,v]}
 function Reveal({children,d=0,y=50,style={}}){const[r,v]=useVis();return React.createElement("div",{ref:r,style:{opacity:v?1:0,transform:v?"translateY(0)":`translateY(${y}px)`,transition:`all 0.8s cubic-bezier(0.16,1,0.3,1) ${d}s`,...style}},children)}
 function NumUp({target,suffix=""}){const[r,v]=useVis();const[val,setVal]=useState(0);useEffect(()=>{if(!v)return;let s=0;const step=Math.max(1,Math.floor(target/40));const id=setInterval(()=>{s+=step;if(s>=target){setVal(target);clearInterval(id)}else setVal(s)},30);return()=>clearInterval(id)},[v,target]);return React.createElement("span",{ref:r},val+suffix)}
-function useCD(td){const[t,setT]=useState({d:0,h:0,m:0,s:0});useEffect(()=>{const tick=()=>{const diff=new Date(td)-new Date();if(diff<=0)return;setT({d:Math.floor(diff/864e5),h:Math.floor((diff%864e5)/36e5),m:Math.floor((diff%36e5)/6e4),s:Math.floor((diff%6e4)/1e3)})};tick();const i=setInterval(tick,1000);return()=>clearInterval(i)},[td]);return t}
+
 
 /* ─── Quiz Component ─── */
 function Quiz({onClose}){
@@ -169,9 +171,11 @@ function RegForm({pkg:initPkg,path:initPath,onClose}){
     {id:"IELTS",icon:"📙",title:"IELTS",desc:"تدريب مكثف على الاختبار",recPkg:"دورة IELTS (2,000 ر.س)",color:GOLD,warn:"ينصح بأساس متين قبل الدخول"},
   ];
   const pkgOpts=form.path==="IELTS"?[{nm:"IELTS",pr:"2,000",desc:"تدريب مكثف + اختبارات تجريبية + حصص فردية",color:"#ef4444"}]:[
-    {nm:"أساس",pr:"750",desc:"8 حصص شهرياً — للتطوير بوتيرة مريحة",color:"#667788",loss:"بدون متابعة يومية · بدون محتوى مسجل · بدون حصص فردية"},
-    {nm:"طلاقة",pr:"1,100",desc:"متابعة يومية + حصة فردية + محتوى مسجل",color:SKY,pop:true,badge:"الأنسب لك"},
-    {nm:"تميّز",pr:"1,500",desc:"4 حصص فردية + تقرير أسبوعي + متابعة مكثفة",color:GOLD,badge2:"👑 الأقوى على الإطلاق"},
+    {nm:"التعلم الذاتي",pr:"500",desc:"منصة كاملة + تسجيلات + منهج",color:"#64748b"},
+    {nm:"أساس",pr:"750",desc:"8 كلاسات + منصة",color:"#64748b"},
+    {nm:"طلاقة",pr:"1,100",desc:"+ متابعة يومية + حصة فردية شهرية",color:SKY},
+    {nm:"تميّز",pr:"1,500",desc:"+ 4 حصص فردية شهرياً",color:GOLD,pop:true,badge:"⭐ الأكثر طلباً"},
+    {nm:"التدريب الشخصي المباشر",pr:"1,800-2,000",desc:"VIP · حصص غير محدودة",color:"#a855f7",badge2:"💎 VIP"},
   ];
   return(
     <div style={{position:"fixed",inset:0,zIndex:2000,background:"rgba(6,14,28,0.95)",backdropFilter:"blur(20px)",display:"flex",alignItems:"center",justifyContent:"center",padding:"20px"}} onClick={onClose}>
@@ -282,27 +286,18 @@ function HomePage(){
     {n:"بندر",c:"جدة",g:"m"},{n:"العنود",c:"الرياض",g:"f"},{n:"ماجد",c:"مكة",g:"m"},{n:"رهف",c:"الخبر",g:"f"},
     {n:"يزيد",c:"الرياض",g:"m"},{n:"أصايل",c:"جدة",g:"f"},{n:"راكان",c:"الدمام",g:"m"},{n:"غادة",c:"مكة",g:"f"},
   ];
-  const[dl]=useState(()=>{const d=new Date();d.setDate(d.getDate()+3);return d.toISOString()});
-  const cd=useCD(dl);const p2=n=>String(n).padStart(2,"0");
   useEffect(()=>{const h=()=>{setScr(window.scrollY>60);setScrollY(window.scrollY);const docH=document.documentElement.scrollHeight-window.innerHeight;setScrollPct(docH>0?(window.scrollY/docH)*100:0)};window.addEventListener("scroll",h);const mm=(e)=>setMousePos({x:e.clientX,y:e.clientY});window.addEventListener("mousemove",mm);return()=>{window.removeEventListener("scroll",h);window.removeEventListener("mousemove",mm)}},[]);
   useEffect(()=>{const i=setInterval(()=>setTI(p=>(p+1)%reviews.length),5000);return()=>clearInterval(i)},[]);
   useEffect(()=>{const c=sRef.current;if(!c||!c.children[tI])return;const ch=c.children[tI];c.scrollTo({left:ch.offsetLeft-c.offsetWidth/2+ch.offsetWidth/2,behavior:"smooth"})},[tI]);
   useEffect(()=>{const t1=setTimeout(()=>{setSpShow(true);setTimeout(()=>setSpShow(false),5000)},30000);const iv=setInterval(()=>{setSpIdx(p=>(p+1)%spData.length);setSpShow(true);setTimeout(()=>setSpShow(false),5000)},50000);return()=>{clearTimeout(t1);clearInterval(iv)}},[]);
-  // Dynamic tab title
-  useEffect(()=>{const origTitle="Fluentia Academy — تكلّم إنجليزي بطلاقة";const onBlur=()=>{document.title="🔥 ارجع! العرض ينتهي قريباً"};const onFocus=()=>{document.title=origTitle};window.addEventListener("blur",onBlur);window.addEventListener("focus",onFocus);return()=>{window.removeEventListener("blur",onBlur);window.removeEventListener("focus",onFocus)}},[]);
   const mx={maxWidth:"1200px",margin:"0 auto",padding:"0 28px"};
-  const smartCTA = scrollY < 800 ? "احجز لقاءك المجاني ←" : scrollY < 2000 ? "جرّبت قبل وما نفع؟ جرّب معنا ←" : scrollY < 4000 ? "اختر باقتك وابدأ ←" : "لسا متردد؟ اللقاء مجاني ←";
+  const smartCTA = scrollY < 1500 ? "احجز لقاءك المجاني ←" : scrollY < 3000 ? "اختر باقتك وابدأ ←" : "لسا متردد؟ اللقاء مجاني ←";
   const openReg=(pkg,path)=>setShowReg({pkg,path});
   const goPrice=()=>{const el=document.getElementById("pricing");if(el)el.scrollIntoView({behavior:"smooth"})};
   // Section navigation
   const navSections=[{id:"problem",label:"هل هذا أنت؟"},{id:"personas",label:"لمن الدورة"},{id:"different",label:"ليش مختلفين"},{id:"reviews",label:"آراء الطلاب"},{id:"journey",label:"رحلتك معنا"},{id:"paths",label:"المسارات"},{id:"pricing",label:"الباقات"},{id:"faq",label:"أسئلة شائعة"}];
   const[activeSection,setActiveSection]=useState("");
   const[showSections,setShowSections]=useState(false);
-  const[showExit,setShowExit]=useState(false);const exitShownRef=useRef(false);
-  useEffect(()=>{const h=(e)=>{if(e.clientY<10&&!exitShownRef.current){exitShownRef.current=true;setShowExit(true)}};window.addEventListener("mouseout",h);return()=>window.removeEventListener("mouseout",h)},[]);
-  // Mobile: detect quick scroll up
-  const lastScrollRef=useRef(0);
-  useEffect(()=>{const h=()=>{const curr=window.scrollY;if(lastScrollRef.current-curr>200&&curr>500&&!exitShownRef.current){exitShownRef.current=true;setShowExit(true)}lastScrollRef.current=curr};window.addEventListener("scroll",h);return()=>window.removeEventListener("scroll",h)},[]);
   useEffect(()=>{const h=()=>{let current="";navSections.forEach(s=>{const el=document.getElementById(s.id);if(el&&window.scrollY>=el.offsetTop-300)current=s.id});setActiveSection(current)};window.addEventListener("scroll",h);return()=>window.removeEventListener("scroll",h)},[]);
   // Preserve UTM across SPA navigation
   useEffect(()=>{const p=new URLSearchParams(window.location.search).get("utm_source");if(p)sessionStorage.setItem("utm_source",p)},[]);
@@ -423,18 +418,6 @@ section+section::before{content:'';display:block;height:1px;background:linear-gr
 {showQuiz&&<Quiz onClose={()=>setShowQuiz(false)}/>}
 {showReg&&<RegForm pkg={showReg.pkg} path={showReg.path} onClose={()=>setShowReg(null)}/>}
 
-{/* EXIT INTENT POPUP */}
-{showExit&&<div style={{position:"fixed",inset:0,zIndex:3000,background:"rgba(6,14,28,0.95)",backdropFilter:"blur(20px)",display:"flex",alignItems:"center",justifyContent:"center",padding:"20px"}} onClick={()=>setShowExit(false)}>
-  <div style={{background:"var(--popup)",border:"2px solid var(--sky-b)",borderRadius:"24px",padding:"40px 32px",maxWidth:"420px",width:"100%",textAlign:"center",position:"relative",boxShadow:"0 30px 80px rgba(0,0,0,0.4)"}} onClick={e=>e.stopPropagation()}>
-    <button onClick={()=>setShowExit(false)} style={{position:"absolute",top:"16px",left:"16px",background:"none",border:"none",color:"var(--t3)",fontSize:"22px",cursor:"pointer"}}>✕</button>
-    <div style={{fontSize:"48px",marginBottom:"16px"}}>⏳</div>
-    <h3 style={{fontFamily:"'Playfair Display',serif",fontSize:"24px",fontWeight:900,color:"var(--t1)",marginBottom:"12px"}}>قبل لا تطلع!</h3>
-    <p style={{color:"var(--t2)",fontSize:"14px",lineHeight:1.8,marginBottom:"8px"}}>اكتشف مستواك بالإنجليزي بـ <strong style={{color:SKY}}>دقيقتين</strong> فقط — مجاناً.</p>
-    <p style={{color:"var(--t3)",fontSize:"12px",marginBottom:"24px"}}>6 أسئلة سريعة + نتيجة فورية + المسار الأنسب لك</p>
-    <button onClick={()=>{setShowExit(false);setShowQuiz(true)}} style={{width:"100%",padding:"14px",borderRadius:"14px",background:SKY,color:"#060e1c",fontSize:"16px",fontWeight:800,border:"none",cursor:"pointer",fontFamily:"'Tajawal',sans-serif",marginBottom:"10px",boxShadow:"0 0 30px rgba(56,189,248,0.15)"}}>ابدأ الاختبار المجاني ←</button>
-    <button onClick={()=>{setShowExit(false);goPrice()}} style={{width:"100%",padding:"12px",borderRadius:"14px",background:"var(--card)",border:"1px solid var(--card-b)",color:"var(--t2)",fontSize:"14px",fontWeight:600,cursor:"pointer",fontFamily:"'Tajawal',sans-serif"}}>أو شوف الباقات والأسعار ↓</button>
-  </div>
-</div>}
 
 {/* PROGRESS BAR */}
 <div style={{position:"fixed",top:0,left:0,right:0,zIndex:9990,height:"3px",background:"transparent",pointerEvents:"none"}}><div style={{height:"100%",width:scrollPct+"%",background:`linear-gradient(90deg,${SKY},${SKY_L},${GOLD})`,borderRadius:"0 4px 4px 0",transition:"width 0.1s",boxShadow:"0 0 10px var(--progress-shadow)"}}/></div>
@@ -444,8 +427,7 @@ section+section::before{content:'';display:block;height:1px;background:linear-gr
 
 {/* STICKY CTA */}
 {scr&&<div style={{position:"fixed",top:"56px",left:0,right:0,zIndex:998,background:"var(--sticky-bg)",backdropFilter:"var(--glass-blur) saturate(1.5)",borderBottom:"1px solid var(--glass-b)",padding:"8px 20px",animation:"stickyIn 0.3s",display:"flex",alignItems:"center",justifyContent:"center",gap:"16px",flexWrap:"wrap"}}>
-  <span style={{fontSize:"13px",color:"var(--t2)",fontWeight:600}}>🔥 خصم 20% لأول 5 مشتركين</span>
-  <div style={{display:"flex",gap:"3px",direction:"ltr"}}>{[{v:cd.d,l:"د"},{v:cd.h,l:"س"},{v:cd.m,l:"د"},{v:cd.s,l:"ث"}].map((u,i)=>(<span key={i} style={{fontSize:"13px",fontWeight:800,color:SKY,fontFamily:"'Playfair Display',serif"}}>{p2(u.v)}{i<3?":":""}</span>))}</div>
+  <span style={{fontSize:"13px",color:"var(--t2)",fontWeight:600}}>لقاء مبدئي مجاني · 5 باقات تبدأ من 500 ر.س</span>
   <button onClick={goPrice} style={{background:SKY,color:"#060e1c",padding:"6px 18px",borderRadius:"100px",fontSize:"12px",fontWeight:800,border:"none",cursor:"pointer",fontFamily:"'Tajawal',sans-serif",transition:"all 0.3s"}}>{smartCTA}</button>
 </div>}
 
@@ -455,15 +437,6 @@ section+section::before{content:'';display:block;height:1px;background:linear-gr
   <div><div style={{fontSize:"12px",color:"var(--t1)",fontWeight:700}}>{spData[spIdx].n} من {spData[spIdx].c}</div><div style={{fontSize:"10px",color:SKY}}>{spData[spIdx].g==="f"?"توها سجّلت":"توه سجّل"} — قبل {[3,7,12,18,25,8,15,22,5,11,20,9,14,6,17,10,23,4,16,19][spIdx]} دقيقة</div></div>
 </div>
 
-{/* 1. OFFER STRIP */}
-<div style={{background:SKY,padding:"10px 20px",textAlign:"center",position:"relative",zIndex:1001,overflow:"hidden"}}>
-  <div style={{position:"absolute",inset:0,background:"linear-gradient(90deg,transparent,rgba(255,255,255,0.25),transparent)",animation:"textShine 2s linear infinite",backgroundSize:"200% 100%"}}/>
-  <div style={{display:"flex",alignItems:"center",justifyContent:"center",gap:"14px",flexWrap:"wrap",position:"relative"}}>
-    <span style={{fontSize:"14px",fontWeight:800,color:"#060e1c"}}>🔥 خصم 20% لأول 5 مشتركين</span>
-    <div style={{display:"flex",gap:"4px",direction:"ltr"}}>{[{v:cd.d,l:"د"},{v:cd.h,l:"س"},{v:cd.m,l:"د"},{v:cd.s,l:"ث"}].map((u,i)=>(<div key={i} style={{background:"#060e1c",borderRadius:"6px",padding:"2px 8px",textAlign:"center",minWidth:"36px"}}><span style={{fontSize:"15px",fontWeight:900,color:SKY,fontFamily:"'Playfair Display',serif"}}>{p2(u.v)}</span><span style={{fontSize:"8px",color:"#667",marginRight:"2px"}}>{u.l}</span></div>))}</div>
-    <a href={WA_OFF} target="_blank" rel="noopener noreferrer" style={{background:"#060e1c",color:SKY,padding:"4px 16px",borderRadius:"100px",fontSize:"12px",fontWeight:800}}>سجّل →</a>
-  </div>
-</div>
 
 {/* 2. NAV */}
 <nav style={{position:"sticky",top:0,zIndex:1000,background:scr?"var(--nav-bg)":"transparent",backdropFilter:scr?"var(--glass-blur) saturate(1.5)":"none",borderBottom:scr?"1px solid var(--glass-b)":"none",transition:"all 0.5s",padding:"14px 28px"}}>
@@ -638,7 +611,7 @@ section+section::before{content:'';display:block;height:1px;background:linear-gr
 <section style={{padding:"80px 28px"}}><div style={{...mx,maxWidth:"900px"}}><Reveal><div style={{borderRadius:"20px",overflow:"hidden",border:"1px solid var(--sky-b)"}}>
   <div style={{background:"var(--sky-bg)",padding:"18px",textAlign:"center"}}><span style={{fontFamily:"'Playfair Display',serif",fontSize:"18px",fontWeight:900,color:"var(--t1)"}}>Fluentia مقابل <span style={{color:RED}}>المعاهد التقليدية</span></span></div>
   <div style={{padding:"4px"}}>{[
-    {f:"السعر",us:"750 — 1,500",them:"2,000 — 7,000+"},{f:"عدد الطلاب",us:"7 كحد أقصى",them:"15 — 30"},{f:"متابعة يومية",us:"✓ مباشرة",them:"✕"},{f:"المدرب",us:"سعودي متخصص",them:"غالباً غير سعودي"},{f:"فهم الشخصية",us:"✓ تقييم + قروب مناسب",them:"✕ عشوائي"},{f:"حصص فردية",us:"✓ مشمولة",them:"200+ ريال إضافي"},{f:"الالتزام",us:"شهري",them:"فصلي/سنوي"},
+    {f:"السعر",us:"500 — 2,000",them:"2,000 — 7,000+"},{f:"عدد الطلاب",us:"7 كحد أقصى",them:"15 — 30"},{f:"متابعة يومية",us:"✓ مباشرة",them:"✕"},{f:"المدرب",us:"سعودي متخصص",them:"غالباً غير سعودي"},{f:"فهم الشخصية",us:"✓ تقييم + قروب مناسب",them:"✕ عشوائي"},{f:"حصص فردية",us:"✓ مشمولة",them:"200+ ريال إضافي"},{f:"الالتزام",us:"شهري",them:"فصلي/سنوي"},
   ].map((r,i)=>(<div key={i} style={{display:"grid",gridTemplateColumns:"1.2fr 1fr 1fr",gap:"4px",padding:"11px 14px",background:i%2===0?"var(--card)":"transparent",borderRadius:"6px"}}><div style={{fontSize:"12px",color:"var(--t2)",fontWeight:600}}>{r.f}</div><div style={{fontSize:"12px",color:SKY,fontWeight:700,textAlign:"center"}}>{r.us}</div><div style={{fontSize:"12px",color:RED,textAlign:"center",opacity:0.6}}>{r.them}</div></div>))}</div>
 </div></Reveal></div></section>
 
@@ -673,28 +646,6 @@ section+section::before{content:'';display:block;height:1px;background:linear-gr
   </div>
 </div></section>
 
-{/* 10.6 تكلفة الحصة */}
-<section style={{padding:"40px 28px"}}><div style={{...mx,maxWidth:"800px"}}><Reveal>
-  <div style={{background:"var(--sky-bg)",border:"1px solid var(--sky-b)",borderRadius:"20px",padding:"32px 28px"}}>
-    <div style={{textAlign:"center",marginBottom:"24px"}}><div style={{fontSize:"16px",color:"var(--t1)",fontWeight:700}}>تكلفة الحصة الواحدة بكل باقة</div></div>
-    <div style={{display:"flex",justifyContent:"center",gap:"20px",flexWrap:"wrap"}}>
-      {[
-        {name:"أساس",total:750,sessions:8,color:"var(--t3)"},
-        {name:"طلاقة",total:1100,sessions:9,color:SKY,pop:true},
-        {name:"تميّز",total:1500,sessions:12,color:GOLD},
-      ].map((b,i)=>(
-        <div key={i} style={{textAlign:"center",padding:"18px 24px",borderRadius:"16px",background:b.pop?"var(--sky-bg)":"var(--card)",border:b.pop?"1px solid var(--sky-b)":"1px solid var(--card-b)",minWidth:"140px"}}>
-          <div style={{fontSize:"12px",color:b.color,fontWeight:700,marginBottom:"8px"}}>باقة {b.name}</div>
-          <div style={{fontFamily:"'Playfair Display',serif",fontSize:"32px",fontWeight:900,color:"var(--t1)",lineHeight:1}}>{Math.round(b.total/b.sessions)}</div>
-          <div style={{fontSize:"11px",color:"var(--t3)",marginTop:"4px"}}>ريال / الحصة</div>
-          <div style={{fontSize:"10px",color:"var(--t4)",marginTop:"4px"}}>{b.sessions} حصة شهرياً</div>
-        </div>))}
-    </div>
-    <div style={{textAlign:"center",marginTop:"20px",color:"var(--t3)",fontSize:"13px"}}>
-      * الحصة الخصوصية عند معلم خاص = <span style={{color:RED,fontWeight:700}}>200+ ريال</span> — عندنا تبدأ من <span style={{color:SKY,fontWeight:700}}>94 ريال</span>
-    </div>
-  </div>
-</Reveal></div></section>
 
 {/* 11. آراء الطلاب */}
 <section id="reviews" style={{padding:"80px 0",overflow:"hidden"}}>
@@ -739,22 +690,6 @@ section+section::before{content:'';display:block;height:1px;background:linear-gr
     </div></Reveal>))}
 </div></section>
 
-{/* 12.5 تخيّل نفسك */}
-<section style={{padding:"80px 28px",position:"relative",overflow:"hidden"}}>
-  <div style={{position:"absolute",inset:0,background:`radial-gradient(ellipse at center,var(--glow),transparent 60%)`,pointerEvents:"none"}}/>
-  <div style={{...mx,maxWidth:"700px",textAlign:"center",position:"relative"}}>
-    <Reveal><span style={{fontFamily:"'Playfair Display',serif",fontSize:"clamp(26px,4vw,40px)",fontWeight:900,color:"var(--t1)"}}>تخيّل نفسك بعد <span style={{color:"#a78bfa"}}>6 شهور</span>...</span></Reveal>
-    <div style={{marginTop:"40px",display:"flex",flexDirection:"column",gap:"16px"}}>
-      {[{text:"تدخل مقابلة شغل بالإنجليزي — بثقة كاملة",icon:"💼",d:0.1},{text:"تفتح إيميل بالإنجليزي — وتفهمه من أول مرة",icon:"📧",d:0.2},{text:"صديقك يتكلم إنجليزي — وأنت ترد عليه بطلاقة",icon:"🗣️",d:0.3},{text:"تقدّم على وظيفة أحلامك — وأنت جاهز",icon:"🚀",d:0.4},{text:"تسافر وتتكلم مع أي أحد — بدون خوف",icon:"✈️",d:0.5}].map((item,i)=>(
-        <Reveal key={i} d={item.d}><div style={{display:"flex",alignItems:"center",gap:"16px",padding:"18px 24px",borderRadius:"16px",background:"var(--card)",border:"1px solid var(--card-b)",transition:"all 0.4s"}} onMouseEnter={e=>{e.currentTarget.style.background="var(--sky-bg)";e.currentTarget.style.borderColor="var(--sky-b)";e.currentTarget.style.transform="translateX(-8px)"}} onMouseLeave={e=>{e.currentTarget.style.background="var(--card)";e.currentTarget.style.borderColor="var(--card-b)";e.currentTarget.style.transform="translateX(0)"}}>
-          <span style={{fontSize:"28px",flexShrink:0}}>{item.icon}</span>
-          <span style={{fontSize:"16px",color:"var(--t1)",fontWeight:600,lineHeight:1.6}}>{item.text}</span>
-        </div></Reveal>))}
-    </div>
-    <Reveal d={0.6}><p style={{marginTop:"32px",color:SKY,fontSize:"15px",fontWeight:700,marginBottom:"16px"}}>كل هذا يبدأ بلقاء مبدئي مجاني — بدون التزام ✦</p>
-    <button onClick={goPrice} style={{display:"inline-flex",alignItems:"center",gap:"6px",background:SKY,color:"#060e1c",padding:"12px 28px",borderRadius:"60px",fontSize:"14px",fontWeight:800,border:"none",cursor:"pointer",fontFamily:"'Tajawal',sans-serif"}}>اختر باقتك وابدأ ←</button></Reveal>
-  </div>
-</section>
 
 {/* 13. رحلتك معنا */}
 <section id="journey" style={{padding:"80px 28px"}}><div style={{...mx,maxWidth:"750px"}}>
@@ -813,71 +748,98 @@ section+section::before{content:'';display:block;height:1px;background:linear-gr
 </div></section>
 
 {/* 16. PRICING */}
-<section id="pricing" style={{padding:"80px 28px"}}><div style={mx}>
-  <Reveal><div style={{textAlign:"center",marginBottom:"12px"}}><span style={{fontFamily:"'Playfair Display',serif",fontSize:"clamp(28px,4vw,44px)",fontWeight:900,color:"var(--t1)"}}>اختر <span style={{color:SKY}}>باقتك</span></span></div>
-  <p style={{textAlign:"center",color:"var(--t3)",fontSize:"13px",marginBottom:"10px"}}>لقاء مبدئي مجاني · دفع شهري · بدون التزام</p>
-  <div style={{textAlign:"center",marginBottom:"44px"}}><span style={{display:"inline-block",padding:"5px 16px",borderRadius:"100px",background:"var(--sky-bg)",border:"1px solid var(--sky-b)",color:SKY_L,fontSize:"11px",fontWeight:600}}>📅 الكورسات تبدأ مع بداية كل شهر ميلادي — تقدر تنضم بأي وقت</span></div></Reveal>
-  <div style={{display:"flex",flexWrap:"wrap",justifyContent:"center",gap:"14px",alignItems:"stretch"}}>
-    {pkgs.map((pk,idx)=>{const isH=hC===pk.id,isP=pk.pop,isPr=pk.prem;const ac=isP?SKY:isPr?GOLD:"var(--t3)";return(
-      <Reveal key={pk.id} d={idx*0.1} style={{flex:"1 1 280px",maxWidth:"340px",minWidth:"260px",display:"flex"}}>
-        <div onMouseEnter={()=>setHC(pk.id)} onMouseLeave={()=>setHC(null)} style={{width:"100%",borderRadius:"20px",overflow:"hidden",background:isP?"var(--glass)":isPr?"var(--glass)":"var(--glass)",backdropFilter:"var(--glass-blur)",border:isP?"2px solid "+SKY+"44":isPr?"2px solid "+GOLD+"33":"1px solid var(--glass-b)",transform:isP?"scale(1.03)":isH?"scale(1.02)":"scale(1)",transition:"all 0.4s",boxShadow:isP?"0 25px 60px rgba(56,189,248,0.06), 0 0 0 1px rgba(56,189,248,0.1)":isPr?"0 25px 60px rgba(251,191,36,0.04)":isH?"0 15px 40px var(--shadow)":"none",animation:isP?"rgbBorder 4s ease-in-out infinite":isPr?"rgbBorder 4s ease-in-out infinite 2s":"none",display:"flex",flexDirection:"column"}}>
-          {isP&&<div style={{background:SKY,color:"#060e1c",textAlign:"center",padding:"9px",fontSize:"11px",fontWeight:800,letterSpacing:"2px"}}>⭐ الأنسب لك</div>}
-          {isPr&&<div style={{background:`linear-gradient(135deg,${GOLD},#d97706)`,color:"#060e1c",textAlign:"center",padding:"9px",fontSize:"11px",fontWeight:800}}>👑 الباقة الأقوى على الإطلاق</div>}
-          <div style={{padding:"26px 22px",flex:1,display:"flex",flexDirection:"column"}}>
-            <div style={{fontSize:"10px",fontWeight:700,color:ac,marginBottom:"3px"}}>{pk.sub}</div>
-            <h3 style={{fontSize:"24px",fontWeight:900,color:"var(--t1)",marginBottom:"4px"}}>باقة {pk.nm}</h3>
-            <span style={{display:"inline-block",width:"fit-content",marginBottom:"12px",fontSize:"10px",fontWeight:700,color:RED,background:"rgba(239,68,68,0.1)",padding:"3px 8px",borderRadius:"100px"}}>باقي {pk.seats} مقاعد</span>
-            <div style={{display:"flex",alignItems:"baseline",gap:"4px",marginBottom:"3px"}}><span style={{fontSize:"14px",color:"var(--t3)",textDecoration:"line-through"}}>{pk.rv.toLocaleString()}</span><span style={{fontSize:"10px",color:"var(--t4)"}}>القيمة الحقيقية</span></div>
-            <div style={{display:"flex",alignItems:"baseline",gap:"6px",marginBottom:"20px",paddingBottom:"16px",borderBottom:"1px solid var(--card-b)"}}>
-              <span style={{fontFamily:"'Playfair Display',serif",fontSize:"38px",fontWeight:900,color:"var(--t1)",lineHeight:1}}>{pk.pr.toLocaleString()}</span>
-              <span style={{color:"var(--t3)",fontSize:"11px"}}>ر.س/شهرياً</span>
-              <span style={{fontSize:"10px",color:GREEN,fontWeight:700,marginRight:"auto"}}>وفّر {pk.save}%</span>
-            </div>
-            <div style={{flex:1,marginBottom:"18px"}}>{pk.f.map((ft,i)=>(<div key={i} style={{display:"flex",alignItems:"center",gap:"8px",marginBottom:"8px",opacity:ft.ok?1:0.4}}><span style={{fontSize:"12px",color:ft.ok?(ft.hl?ac:GREEN):RED}}>{ft.ok?"✓":"✗"}</span><span style={{fontSize:"12px",color:ft.ok?"var(--t2)":"var(--t4)",fontWeight:ft.hl?600:300,textDecoration:ft.ok?"none":"line-through"}}>{ft.t}</span></div>))}</div>
-            {!isP&&!isPr&&<div style={{padding:"8px 12px",borderRadius:"10px",background:"rgba(239,68,68,0.04)",border:"1px solid rgba(239,68,68,0.08)",marginBottom:"12px"}}><div style={{fontSize:"10px",color:RED,opacity:0.7}}>⚠ بدون متابعة يومية · بدون محتوى مسجل · بدون حصص فردية</div></div>}
-            <button onClick={()=>openReg("","")} style={{display:"block",textAlign:"center",width:"100%",padding:"13px",borderRadius:"14px",fontSize:"14px",fontWeight:800,background:isP?SKY:isPr?GOLD:"var(--card-h)",color:isP||isPr?"#060e1c":"var(--t2)",border:"none",cursor:"pointer",fontFamily:"'Tajawal',sans-serif"}}>احجز لقاءك المجاني ←</button>
-            <div style={{textAlign:"center",marginTop:"6px",color:"var(--t3)",fontSize:"10px",lineHeight:1.5}}>لقاء مبدئي مجاني مع المدرب</div>
-          </div>
-        </div>
-      </Reveal>)})}
-    {/* IELTS */}
-    <Reveal d={0.3} style={{flex:"1 1 280px",maxWidth:"340px",minWidth:"260px",display:"flex"}}>
-      <div style={{width:"100%",borderRadius:"20px",overflow:"hidden",background:"var(--glass)",backdropFilter:"var(--glass-blur)",border:"1px solid rgba(251,191,36,0.15)",display:"flex",flexDirection:"column"}}>
-        <div style={{background:`linear-gradient(135deg,${RED},#dc2626)`,color:"#fff",textAlign:"center",padding:"9px",fontSize:"11px",fontWeight:800,letterSpacing:"1px"}}>🎯 مسار IELTS المتخصص</div>
+{(()=>{
+  const C={sk:SKY,sl:SKY_L,gd:GOLD,nd:"var(--bg2)",nb:"var(--bg)"};
+  const renderPackageCard=(pk,idx)=>{const isH=hC===pk.id,isP=pk.pop,isPr=pk.prem;const ac=isP?C.sk:isPr?C.gd:"var(--t3)";const isStarter=pk.section==="starter";return(
+    <Reveal key={pk.id} d={idx*0.08} style={{flex:isStarter?"1 1 320px":"1 1 300px",maxWidth:isStarter?"380px":"340px",minWidth:"260px",display:"flex"}}>
+      <div onMouseEnter={()=>setHC(pk.id)} onMouseLeave={()=>setHC(null)} style={{width:"100%",borderRadius:"20px",overflow:"hidden",background:"var(--glass)",backdropFilter:"var(--glass-blur)",border:isP?"2px solid "+C.sk+"44":isPr?"2px solid "+C.gd+"33":"1px solid var(--glass-b)",transform:isP?"scale(1.04)":isH?"scale(1.02)":"scale(1)",transition:"all 0.4s",boxShadow:isP?"0 25px 60px rgba(56,189,248,0.06), 0 0 0 1px rgba(56,189,248,0.1)":isPr?"0 25px 60px rgba(251,191,36,0.04)":isH?"0 15px 40px var(--shadow)":"none",animation:isP?"rgbBorder 4s ease-in-out infinite":isPr?"rgbBorder 4s ease-in-out infinite 2s":"none",display:"flex",flexDirection:"column"}}>
+        {isP&&<div style={{background:C.sk,color:"#060e1c",textAlign:"center",padding:"9px",fontSize:"11px",fontWeight:800,letterSpacing:"2px"}}>⭐ الأكثر طلباً ⭐</div>}
+        {isPr&&<div style={{background:`linear-gradient(135deg,${C.gd},#d97706)`,color:"#060e1c",textAlign:"center",padding:"9px",fontSize:"11px",fontWeight:800}}>💎 الأفضل إطلاقاً · VIP 💎</div>}
         <div style={{padding:"26px 22px",flex:1,display:"flex",flexDirection:"column"}}>
-          <div style={{fontSize:"10px",fontWeight:700,color:RED,marginBottom:"3px"}}>تدريب مكثف على الاختبار</div>
-          <h3 style={{fontSize:"24px",fontWeight:900,color:"var(--t1)",marginBottom:"4px"}}>دورة IELTS</h3>
-          <div style={{display:"flex",alignItems:"baseline",gap:"4px",marginBottom:"3px"}}><span style={{fontSize:"14px",color:"var(--t3)",textDecoration:"line-through"}}>3,000</span><span style={{fontSize:"10px",color:"var(--t4)"}}>القيمة الحقيقية</span></div>
+          <div style={{fontSize:"10px",fontWeight:700,color:ac,marginBottom:"3px"}}>{pk.sub}</div>
+          <h3 style={{fontSize:"22px",fontWeight:900,color:"var(--t1)",marginBottom:"4px"}}>{pk.nm}</h3>
+          {pk.seats&&<span style={{display:"inline-block",width:"fit-content",marginBottom:"12px",fontSize:"10px",fontWeight:700,color:RED,background:"rgba(239,68,68,0.1)",padding:"3px 8px",borderRadius:"100px"}}>باقي {pk.seats} مقاعد</span>}
           <div style={{display:"flex",alignItems:"baseline",gap:"6px",marginBottom:"20px",paddingBottom:"16px",borderBottom:"1px solid var(--card-b)"}}>
-            <span style={{fontFamily:"'Playfair Display',serif",fontSize:"38px",fontWeight:900,color:"var(--t1)",lineHeight:1}}>2,000</span>
-            <span style={{color:"var(--t3)",fontSize:"11px"}}>ر.س/شهرياً</span>
-            <span style={{fontSize:"10px",color:GREEN,fontWeight:700,marginRight:"auto"}}>وفّر 33%</span>
+            {typeof pk.pr==='string'?(<><span style={{fontSize:"32px",fontWeight:800,color:"#f8fafc",lineHeight:1}}>{pk.pr}</span><span style={{color:"#94a3b8",fontSize:"14px"}}>ر.س / شهرياً</span></>):(<><span style={{fontFamily:"'Playfair Display',serif",fontSize:"42px",fontWeight:900,color:"var(--t1)",lineHeight:1}}>{pk.pr.toLocaleString()}</span><span style={{color:"var(--t3)",fontSize:"15px"}}>ريال / شهرياً</span></>)}
           </div>
-          <div style={{flex:1,marginBottom:"18px"}}>{["تدريب مباشر مع المدرب على المهارات الأربع","استراتيجيات حل الأسئلة وإدارة الوقت","اختبارات تجريبية أصعب من الاختبار الحقيقي","تدريب متكرر لين تتأكد من تجاوز درجتك المستهدفة","حصص فردية مكثفة + متابعة يومية","تقارير أسبوعية بتقدمك"].map((ft,i)=>(<div key={i} style={{display:"flex",alignItems:"center",gap:"8px",marginBottom:"8px"}}><span style={{fontSize:"12px",color:GOLD}}>✓</span><span style={{fontSize:"12px",color:"var(--t2)",fontWeight:600}}>{ft}</span></div>))}</div>
-          <div style={{padding:"10px",borderRadius:"10px",background:"rgba(251,191,36,0.04)",border:"1px solid rgba(251,191,36,0.1)",marginBottom:"14px"}}><p style={{fontSize:"11px",color:GOLD,lineHeight:1.7}}>⚠️ يُنصح بأساس متين قبل الدخول. إذا مستواك مبتدئ ابدأ بالتأسيس أو التطوير أولاً.</p></div>
-          <button onClick={()=>openReg("","")} style={{display:"block",textAlign:"center",width:"100%",padding:"13px",borderRadius:"14px",fontSize:"14px",fontWeight:800,background:`linear-gradient(135deg,${RED},#dc2626)`,color:"#fff",border:"none",cursor:"pointer",fontFamily:"'Tajawal',sans-serif"}}>احجز لقاءك المجاني — IELTS ←</button>
+          {pk.priceNote&&<div style={{fontSize:"11px",color:"#64748b",marginTop:"-14px",marginBottom:"14px"}}>* {pk.priceNote}</div>}
+          <div style={{flex:1,marginBottom:"18px"}}>{pk.f.map((ft,i)=>(<div key={i} style={{display:"flex",alignItems:"flex-start",gap:"8px",marginBottom:"8px",opacity:ft.ok?1:0.4}}>
+            <span style={{fontSize:"12px",color:ft.ok?(ft.hl?ac:GREEN):RED,flexShrink:0,marginTop:"2px"}}>{ft.ok?"✓":"✗"}</span>
+            <div><span style={{fontSize:"12px",color:ft.ok?"var(--t2)":"var(--t4)",fontWeight:ft.hl?600:300,textDecoration:ft.ok?"none":"line-through"}}>{ft.t}</span>{ft.sub&&<div style={{fontSize:"10px",color:ft.hl?ac:"var(--t4)",marginTop:"1px"}}>{ft.sub}</div>}</div>
+          </div>))}</div>
+          <button onClick={()=>openReg(pk.nm,"")} style={{display:"block",textAlign:"center",width:"100%",padding:"13px",borderRadius:"14px",fontSize:"14px",fontWeight:800,background:isP?C.sk:isPr?C.gd:"var(--card-h)",color:isP||isPr?"#060e1c":"var(--t2)",border:"none",cursor:"pointer",fontFamily:"'Tajawal',sans-serif"}}>{pk.cta||"ابدأ مجاناً"}</button>
+          <div style={{textAlign:"center",marginTop:"6px",color:"var(--t3)",fontSize:"10px",lineHeight:1.5}}>{pk.note}</div>
         </div>
       </div>
+    </Reveal>)};
+  return(
+<section id="pricing" style={{padding:"80px 28px",background:`linear-gradient(180deg,${C.nd},${C.nb})`}}>
+  <div style={mx}>
+    <Reveal>
+      <div style={{textAlign:"center",marginBottom:"48px"}}>
+        <span style={{fontFamily:"'Playfair Display',serif",fontSize:"clamp(30px,5vw,48px)",fontWeight:900,color:"#fff",display:"block",marginBottom:"10px"}}>اختر <span style={{color:C.sk}}>باقتك</span></span>
+        <p style={{color:"#778899",fontSize:"15px",maxWidth:"520px",marginInline:"auto",lineHeight:1.7}}>5 باقات في قسمين — اختر اللي يناسب وضعك وهدفك</p>
+      </div>
     </Reveal>
-  </div>
-  {/* Comparison */}
-  <Reveal d={0.3}><div style={{maxWidth:"750px",margin:"44px auto 0",padding:"28px 32px",borderRadius:"24px",background:"var(--sky-bg)",border:"2px solid var(--sky-b)",animation:"borderGlow 4s ease-in-out infinite"}}>
-    <div style={{fontSize:"18px",fontWeight:800,color:"var(--t1)",marginBottom:"16px",textAlign:"center"}}>💡 ليش باقة <span style={{color:SKY}}>طلاقة</span> هي الخيار الأذكى؟</div>
-    <div style={{fontSize:"15px",color:"var(--t2)",lineHeight:2,textAlign:"center",marginBottom:"16px"}}>مقابل <span style={{color:SKY,fontWeight:800,fontSize:"18px"}}>350 ريال</span> فقط زيادة عن أساس:</div>
-    <div style={{display:"flex",flexWrap:"wrap",justifyContent:"center",gap:"8px",marginBottom:"18px"}}>{["متابعة يومية","محتوى مسجل","حصة فردية","تقييم كل أسبوعين","تقرير تقدّم"].map((item,i)=>(<span key={i} style={{padding:"6px 14px",borderRadius:"100px",background:"var(--card)",border:"1px solid var(--sky-b)",color:SKY_L,fontSize:"12px",fontWeight:600}}>✓ {item}</span>))}</div>
-    <div style={{textAlign:"center",fontSize:"16px",color:"var(--t1)",fontWeight:700}}>كل ميزة بأقل من <span style={{color:SKY,fontSize:"20px"}}>٧٠ ريال</span></div>
-    <div style={{textAlign:"center",marginTop:"18px"}}><button onClick={goPrice} style={{display:"inline-flex",alignItems:"center",gap:"6px",background:SKY,color:"#060e1c",padding:"12px 28px",borderRadius:"60px",fontSize:"14px",fontWeight:800,border:"none",cursor:"pointer",fontFamily:"'Tajawal',sans-serif"}}>اختر باقتك الآن ←</button></div>
-  </div></Reveal>
 
-  {/* Trust & Guarantee */}
-  <Reveal d={0.4}><div style={{maxWidth:"750px",margin:"28px auto 0",display:"flex",justifyContent:"center",gap:"24px",flexWrap:"wrap"}}>
-    {[
-      {icon:"🤝",text:"اللقاء المبدئي مجاني — شوف بنفسك وقرر"},
-      {icon:"📅",text:"دفع شهري — بدون عقود أو التزامات"},
-      {icon:"↔️",text:"غيّر باقتك أي وقت — مرونة كاملة"},
-    ].map((t,i)=>(<div key={i} style={{display:"flex",alignItems:"center",gap:"8px"}}><span style={{fontSize:"16px"}}>{t.icon}</span><span style={{fontSize:"12px",color:"var(--t3)",fontWeight:500}}>{t.text}</span></div>))}
-  </div></Reveal>
-</div></section>
+    {/* ─── القسم الأول: للبداية والمرونة ─── */}
+    <Reveal><div style={{textAlign:"right",maxWidth:"1100px",margin:"0 auto 20px"}}>
+      <div style={{display:"inline-flex",alignItems:"center",gap:"10px",padding:"6px 16px",borderRadius:"100px",background:"rgba(148,163,184,0.08)",border:"1px solid rgba(148,163,184,0.15)"}}>
+        <span style={{width:"6px",height:"6px",borderRadius:"50%",background:"#94a3b8"}}/>
+        <span style={{fontSize:"13px",fontWeight:700,color:"#cbd5e1"}}>للبداية والمرونة</span>
+      </div>
+    </div></Reveal>
+    <div style={{display:"flex",flexWrap:"wrap",justifyContent:"center",gap:"18px",maxWidth:"1100px",margin:"0 auto 56px",alignItems:"stretch"}}>
+      {pkgs.filter(p=>p.section==="starter").map((pk,idx)=>renderPackageCard(pk,idx))}
+    </div>
+
+    {/* ─── القسم الثاني: للجدية والتمكّن ─── */}
+    <Reveal><div style={{textAlign:"right",maxWidth:"1100px",margin:"0 auto 20px"}}>
+      <div style={{display:"inline-flex",alignItems:"center",gap:"10px",padding:"6px 16px",borderRadius:"100px",background:"rgba(56,189,248,0.08)",border:"1px solid rgba(56,189,248,0.2)"}}>
+        <span style={{width:"6px",height:"6px",borderRadius:"50%",background:C.sk}}/>
+        <span style={{fontSize:"13px",fontWeight:700,color:C.sl}}>للجدية والتمكّن</span>
+      </div>
+    </div></Reveal>
+    <div style={{display:"flex",flexWrap:"wrap",justifyContent:"center",gap:"18px",maxWidth:"1200px",margin:"0 auto",alignItems:"stretch"}}>
+      {pkgs.filter(p=>p.section==="serious").map((pk,idx)=>renderPackageCard(pk,idx))}
+    </div>
+
+    {/* ─── IELTS ─── */}
+    <div style={{display:"flex",justifyContent:"center",marginTop:"32px"}}>
+      <Reveal d={0.2} style={{flex:"0 1 400px",display:"flex"}}>
+        <div style={{width:"100%",borderRadius:"20px",overflow:"hidden",background:"var(--glass)",backdropFilter:"var(--glass-blur)",border:"1px solid rgba(239,68,68,0.2)",display:"flex",flexDirection:"column"}}>
+          <div style={{background:`linear-gradient(135deg,${RED},#dc2626)`,color:"#fff",textAlign:"center",padding:"9px",fontSize:"11px",fontWeight:800,letterSpacing:"1px"}}>🎯 مسار IELTS المتخصص</div>
+          <div style={{padding:"26px 22px",flex:1,display:"flex",flexDirection:"column"}}>
+            <h3 style={{fontSize:"22px",fontWeight:900,color:"var(--t1)",marginBottom:"4px"}}>دورة IELTS</h3>
+            <div style={{display:"flex",alignItems:"baseline",gap:"6px",marginBottom:"20px",paddingBottom:"16px",borderBottom:"1px solid var(--card-b)"}}>
+              <span style={{fontFamily:"'Playfair Display',serif",fontSize:"38px",fontWeight:900,color:"var(--t1)",lineHeight:1}}>2,000</span>
+              <span style={{color:"var(--t3)",fontSize:"11px"}}>ر.س/شهرياً</span>
+            </div>
+            <div style={{flex:1,marginBottom:"18px"}}>{["تدريب مباشر على المهارات الأربع","استراتيجيات حل الأسئلة وإدارة الوقت","اختبارات تجريبية مكثفة","حصص فردية + متابعة يومية","تقارير أسبوعية بتقدمك"].map((ft,i)=>(<div key={i} style={{display:"flex",alignItems:"center",gap:"8px",marginBottom:"8px"}}><span style={{fontSize:"12px",color:GOLD}}>✓</span><span style={{fontSize:"12px",color:"var(--t2)",fontWeight:600}}>{ft}</span></div>))}</div>
+            <div style={{padding:"10px",borderRadius:"10px",background:"rgba(251,191,36,0.04)",border:"1px solid rgba(251,191,36,0.1)",marginBottom:"14px"}}><p style={{fontSize:"11px",color:GOLD,lineHeight:1.7}}>⚠️ يُنصح بأساس متين قبل الدخول.</p></div>
+            <button onClick={()=>openReg("IELTS","IELTS")} style={{display:"block",textAlign:"center",width:"100%",padding:"13px",borderRadius:"14px",fontSize:"14px",fontWeight:800,background:`linear-gradient(135deg,${RED},#dc2626)`,color:"#fff",border:"none",cursor:"pointer",fontFamily:"'Tajawal',sans-serif"}}>احجز لقاءك المجاني — IELTS ←</button>
+          </div>
+        </div>
+      </Reveal>
+    </div>
+
+    {/* ─── مقارنة مختصرة ─── */}
+    <Reveal d={0.2}><div style={{maxWidth:"900px",margin:"56px auto 0",display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(280px,1fr))",gap:"16px"}}>
+      <div style={{background:"rgba(56,189,248,0.04)",border:"1px solid rgba(56,189,248,0.15)",borderRadius:"16px",padding:"22px 24px"}}>
+        <div style={{fontSize:"13px",color:C.sk,fontWeight:700,marginBottom:"6px"}}>🌟 ليش تميّز هي الأكثر طلباً؟</div>
+        <p style={{color:"#aabbcc",fontSize:"13px",lineHeight:1.8,margin:0}}>لأنها توازن مثالي — نتائج مكثفة بسعر معقول. 4 حصص فردية مجدولة شهرياً + متابعة أسبوعية = تقدم ملموس في أقل وقت.</p>
+      </div>
+      <div style={{background:"rgba(251,191,36,0.04)",border:"1px solid rgba(251,191,36,0.2)",borderRadius:"16px",padding:"22px 24px"}}>
+        <div style={{fontSize:"13px",color:C.gd,fontWeight:700,marginBottom:"6px"}}>💎 ليش التدريب الشخصي المباشر هي الأفضل إطلاقاً؟</div>
+        <p style={{color:"#aabbcc",fontSize:"13px",lineHeight:1.8,margin:0}}>تختار مدربك بنفسك، حصص فردية غير محدودة بوتيرة عالية، تدريب على مقابلات العمل والعروض والتحدث أمام الجمهور. للي يبي نتائج سريعة لأهداف محددة.</p>
+      </div>
+    </div></Reveal>
+
+    {/* Bottom note */}
+    <div style={{textAlign:"center",marginTop:"36px",color:"#667788",fontSize:"13px"}}>جميع الباقات: دفع شهري بدون التزام · إمكانية تغيير الباقة في أي وقت</div>
+  </div>
+</section>
+)})()}
 
 {/* 17. FAQ */}
 <section id="faq" style={{padding:"80px 28px"}}><div style={{...mx,maxWidth:"680px"}}>
