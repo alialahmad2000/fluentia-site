@@ -95,42 +95,209 @@ function Reveal({children,d=0,y=50,style={}}){const[r,v]=useVis();return React.c
 function NumUp({target,suffix=""}){const[r,v]=useVis();const[val,setVal]=useState(0);useEffect(()=>{if(!v)return;let s=0;const step=Math.max(1,Math.floor(target/40));const id=setInterval(()=>{s+=step;if(s>=target){setVal(target);clearInterval(id)}else setVal(s)},30);return()=>clearInterval(id)},[v,target]);return React.createElement("span",{ref:r},val+suffix)}
 
 
-/* ─── Quiz Component ─── */
-function Quiz({onClose}){
-  const[step,setStep]=useState(0);const[score,setScore]=useState(0);const[done,setDone]=useState(false);
-  const pick=(pts)=>{const ns=score+pts;setScore(ns);if(step<quizQs.length-1)setStep(step+1);else setDone(true)};
-  const result=getLevel(score);
-  const labels={self:"تقييم ذاتي",grammar:"قرامر",reading:"فهم نص",situation:"موقف حياتي"};
-  return(
+/* ─── Adaptive CEFR Placement Test ─── */
+const questionBank = {
+  preA1: [
+    { skill: "vocab", q: "What does \"book\" mean in Arabic?", opts: [{ t: "قلم", correct: false },{ t: "كتاب", correct: true },{ t: "باب", correct: false },{ t: "كرسي", correct: false }] },
+    { skill: "vocab", q: "Choose the color:", opts: [{ t: "Table", correct: false },{ t: "Blue", correct: true },{ t: "Run", correct: false },{ t: "Big", correct: false }] },
+    { skill: "grammar", q: "I ___ a student.", opts: [{ t: "are", correct: false },{ t: "is", correct: false },{ t: "am", correct: true },{ t: "be", correct: false }] },
+  ],
+  A1: [
+    { skill: "grammar", q: "She ___ to school every day.", opts: [{ t: "go", correct: false },{ t: "goes", correct: true },{ t: "going", correct: false },{ t: "gone", correct: false }] },
+    { skill: "grammar", q: "They ___ from Saudi Arabia.", opts: [{ t: "is", correct: false },{ t: "am", correct: false },{ t: "are", correct: true },{ t: "be", correct: false }] },
+    { skill: "vocab", q: "What's the opposite of \"hot\"?", opts: [{ t: "warm", correct: false },{ t: "cold", correct: true },{ t: "big", correct: false },{ t: "fast", correct: false }] },
+    { skill: "context", q: "Someone says \"How are you?\" — what do you reply?", opts: [{ t: "I am 25 years old.", correct: false },{ t: "My name is Ali.", correct: false },{ t: "I'm fine, thanks.", correct: true },{ t: "Yes, please.", correct: false }] },
+  ],
+  A2: [
+    { skill: "grammar", q: "Yesterday I ___ to the market with my friend.", opts: [{ t: "go", correct: false },{ t: "goes", correct: false },{ t: "went", correct: true },{ t: "going", correct: false }] },
+    { skill: "grammar", q: "This car is ___ than that one.", opts: [{ t: "fast", correct: false },{ t: "faster", correct: true },{ t: "fastest", correct: false },{ t: "more fast", correct: false }] },
+    { skill: "vocab", q: "\"I was exhausted after the trip\" means I was very:", opts: [{ t: "happy", correct: false },{ t: "hungry", correct: false },{ t: "tired", correct: true },{ t: "angry", correct: false }] },
+    { skill: "context", q: "You're late for a meeting. What's the best thing to say?", opts: [{ t: "Hi, I late. Bye.", correct: false },{ t: "Sorry I'm late, there was traffic.", correct: true },{ t: "Traffic bad too much.", correct: false },{ t: "Late me yes sorry.", correct: false }] },
+  ],
+  B1: [
+    { skill: "grammar", q: "I ___ lived in Riyadh for 5 years.", opts: [{ t: "am", correct: false },{ t: "was", correct: false },{ t: "have", correct: true },{ t: "did", correct: false }] },
+    { skill: "grammar", q: "If it rains tomorrow, I ___ at home.", opts: [{ t: "stay", correct: false },{ t: "will stay", correct: true },{ t: "stayed", correct: false },{ t: "would stay", correct: false }] },
+    { skill: "reading", q: "\"Sarah decided to postpone the meeting due to her illness.\" — Sarah:", opts: [{ t: "cancelled the meeting forever", correct: false },{ t: "moved the meeting to another time", correct: true },{ t: "went to the meeting sick", correct: false },{ t: "didn't attend because of work", correct: false }] },
+    { skill: "vocab", q: "Choose the best word: \"Despite the rain, we ___ our trip.\"", opts: [{ t: "cancelled", correct: false },{ t: "enjoyed", correct: true },{ t: "forgot", correct: false },{ t: "bought", correct: false }] },
+  ],
+  B2: [
+    { skill: "grammar", q: "The report ___ by the manager yesterday.", opts: [{ t: "was written", correct: true },{ t: "wrote", correct: false },{ t: "is writing", correct: false },{ t: "has written", correct: false }] },
+    { skill: "grammar", q: "If I ___ more time, I would travel the world.", opts: [{ t: "have", correct: false },{ t: "had", correct: true },{ t: "will have", correct: false },{ t: "would have", correct: false }] },
+    { skill: "reading", q: "\"The policy was implemented despite widespread opposition from the public.\" — The policy was:", opts: [{ t: "cancelled because people disagreed", correct: false },{ t: "applied even though many people disagreed", correct: true },{ t: "popular with everyone", correct: false },{ t: "discussed but not enforced", correct: false }] },
+    { skill: "vocab", q: "\"She tends to procrastinate before important deadlines.\" — She usually:", opts: [{ t: "works hard early", correct: false },{ t: "delays doing things", correct: true },{ t: "forgets deadlines", correct: false },{ t: "asks for help", correct: false }] },
+  ],
+  C1: [
+    { skill: "grammar", q: "Rarely ___ such dedication in a young employee.", opts: [{ t: "I have seen", correct: false },{ t: "have I seen", correct: true },{ t: "I saw", correct: false },{ t: "did I see", correct: false }] },
+    { skill: "reading", q: "\"Had the board anticipated the market downturn, they would have diversified their portfolio.\" — This means:", opts: [{ t: "The board predicted the downturn and diversified", correct: false },{ t: "The board failed to predict the downturn and didn't diversify", correct: true },{ t: "The board is currently diversifying", correct: false },{ t: "Diversification caused the downturn", correct: false }] },
+    { skill: "vocab", q: "\"His argument was compelling but ultimately flawed.\" — The argument was:", opts: [{ t: "boring and wrong", correct: false },{ t: "convincing but had mistakes", correct: true },{ t: "perfect and accepted", correct: false },{ t: "rejected immediately", correct: false }] },
+    { skill: "context", q: "In a formal email declining a job offer, which phrase is most appropriate?", opts: [{ t: "No thanks, I don't want it.", correct: false },{ t: "After careful consideration, I must respectfully decline.", correct: true },{ t: "I changed my mind, sorry.", correct: false },{ t: "Maybe next time, not now.", correct: false }] },
+  ],
+};
+
+const CEFR_ORDER = ["preA1", "A1", "A2", "B1", "B2", "C1"];
+
+const CEFR_TO_FLUENTIA = {
+  preA1: { level: "L0", name: "ما قبل الخطوة الأولى", track: "تأسيس", cefr: "Pre-A1", altLevel: "L1", altName: "الخطوة الأولى" },
+  A1:    { level: "L1", name: "الخطوة الأولى",        track: "تأسيس", cefr: "A1",     altLevel: "L2", altName: "بداية الثقة" },
+  A2:    { level: "L2", name: "بداية الثقة",           track: "تأسيس", cefr: "A2",     altLevel: "L1", altName: "الخطوة الأولى" },
+  B1:    { level: "L3", name: "صار يتكلم",             track: "تطوير", cefr: "B1",     altLevel: "L2", altName: "بداية الثقة" },
+  B2:    { level: "L4", name: "ثقة كاملة",             track: "تطوير", cefr: "B2",     altLevel: "L3", altName: "صار يتكلم" },
+  C1:    { level: "L5", name: "جاهز للعالم",           track: "تطوير متقدم", cefr: "C1", altLevel: "L4", altName: "ثقة كاملة" },
+};
+
+function pickQuestion(level, seenIds) {
+  const questions = questionBank[level] || [];
+  const unseen = questions.filter((_, i) => !seenIds.has(`${level}_${i}`));
+  if (unseen.length === 0) return null;
+  const q = unseen[Math.floor(Math.random() * unseen.length)];
+  const idx = questions.indexOf(q);
+  return { ...q, level, id: `${level}_${idx}` };
+}
+
+function nextLevel(history) {
+  if (history.length === 0) return "A2";
+  const last = history[history.length - 1];
+  const lastIdx = CEFR_ORDER.indexOf(last.level);
+  const climbing = history.every(h => h.correct);
+  if (climbing) {
+    if (lastIdx >= CEFR_ORDER.length - 1) return null;
+    return CEFR_ORDER[lastIdx + 1];
+  }
+  const descending = history.every(h => !h.correct);
+  if (descending) {
+    if (lastIdx <= 0) return null;
+    return CEFR_ORDER[lastIdx - 1];
+  }
+  const levelCounts = {};
+  history.forEach(h => { levelCounts[h.level] = (levelCounts[h.level] || 0) + 1; });
+  if (levelCounts[last.level] >= 2) return null;
+  return last.level;
+}
+
+function calculatePlacement(history) {
+  const levelStats = {};
+  history.forEach(h => {
+    if (!levelStats[h.level]) levelStats[h.level] = { correct: 0, total: 0 };
+    levelStats[h.level].total++;
+    if (h.correct) levelStats[h.level].correct++;
+  });
+  let finalCefr = "preA1";
+  for (let i = CEFR_ORDER.length - 1; i >= 0; i--) {
+    const level = CEFR_ORDER[i];
+    const stats = levelStats[level];
+    if (stats && stats.correct / stats.total >= 0.5) { finalCefr = level; break; }
+  }
+  if (!history.some(h => h.correct)) finalCefr = "preA1";
+  const skills = { grammar: { c: 0, t: 0 }, vocab: { c: 0, t: 0 }, reading: { c: 0, t: 0 }, context: { c: 0, t: 0 } };
+  history.forEach(h => { if (skills[h.skill]) { skills[h.skill].t++; if (h.correct) skills[h.skill].c++; } });
+  const skillNames = { grammar: "القواعد", vocab: "المفردات", reading: "فهم النص", context: "السياق" };
+  const strengths = [], weaknesses = [];
+  Object.keys(skills).forEach(k => {
+    const s = skills[k]; if (s.t === 0) return;
+    const ratio = s.c / s.t;
+    if (ratio >= 0.6) strengths.push(skillNames[k]);
+    else if (ratio < 0.5) weaknesses.push(skillNames[k]);
+  });
+  return { cefr: finalCefr, fluentia: CEFR_TO_FLUENTIA[finalCefr], strengths, weaknesses, totalQuestions: history.length, correctAnswers: history.filter(h => h.correct).length };
+}
+
+/* ─── Adaptive Quiz Component ─── */
+function Quiz({ onClose }) {
+  const [history, setHistory] = useState([]);
+  const [currentQ, setCurrentQ] = useState(() => pickQuestion("A2", new Set()));
+  const [done, setDone] = useState(false);
+  const [result, setResult] = useState(null);
+
+  const seenIds = new Set(history.map(h => h.id));
+  const skillLabels = { grammar: "قواعد", vocab: "مفردات", reading: "فهم نص", context: "سياق" };
+
+  const handleAnswer = (opt) => {
+    const newHistoryItem = { level: currentQ.level, skill: currentQ.skill, correct: opt.correct, id: currentQ.id };
+    const newHistory = [...history, newHistoryItem];
+    setHistory(newHistory);
+    const maxQuestions = 10, minQuestions = 6;
+    let nextLvl = nextLevel(newHistory);
+    const shouldStop = newHistory.length >= maxQuestions || (newHistory.length >= minQuestions && nextLvl === null) || nextLvl === null;
+    if (shouldStop) { setResult(calculatePlacement(newHistory)); setDone(true); return; }
+    const newSeenIds = new Set(newHistory.map(h => h.id));
+    let nextQ = pickQuestion(nextLvl, newSeenIds);
+    if (!nextQ) { for (const alt of CEFR_ORDER) { nextQ = pickQuestion(alt, newSeenIds); if (nextQ) break; } }
+    if (!nextQ || newHistory.length >= maxQuestions) { setResult(calculatePlacement(newHistory)); setDone(true); return; }
+    setCurrentQ(nextQ);
+  };
+
+  const estimatedTotal = 8;
+  const progressPct = Math.min(100, Math.round(((history.length + 1) / estimatedTotal) * 100));
+
+  const buildResultWA = () => {
+    if (!result) return "";
+    const f = result.fluentia;
+    const strengthsText = result.strengths.length > 0 ? result.strengths.join(" · ") : "متوازن";
+    const weaknessesText = result.weaknesses.length > 0 ? result.weaknesses.join(" · ") : "—";
+    const msg =
+      `السلام عليكم، سويت اختبار تحديد المستوى في موقعكم\n\n` +
+      `النتيجة:\n` +
+      `• المستوى الأنسب: ${f.cefr} · ${f.level} (${f.name})\n` +
+      `• المستوى البديل: ${f.altLevel} (${f.altName})\n` +
+      `• المسار: ${f.track}\n` +
+      `• نقاط القوة: ${strengthsText}\n` +
+      `• يحتاج تحسين في: ${weaknessesText}\n\n` +
+      `أبي أحجز لقاء مبدئي مجاني`;
+    return WA_BASE + encodeURIComponent(msg);
+  };
+
+  return (
     <div style={{position:"fixed",inset:0,zIndex:2000,background:"rgba(6,14,28,0.95)",backdropFilter:"blur(20px)",display:"flex",alignItems:"center",justifyContent:"center",padding:"20px"}} onClick={onClose}>
-      <div style={{background:"var(--popup)",border:"1px solid var(--card-b)",borderRadius:"24px",padding:"36px 28px",maxWidth:"500px",width:"100%",maxHeight:"90vh",overflowY:"auto",position:"relative"}} onClick={e=>e.stopPropagation()}>
+      <div style={{background:"var(--popup)",border:"1px solid rgba(56,189,248,0.15)",borderRadius:"24px",padding:"36px 28px",maxWidth:"520px",width:"100%",maxHeight:"90vh",overflowY:"auto",position:"relative"}} onClick={e=>e.stopPropagation()}>
         <button onClick={onClose} style={{position:"absolute",top:"16px",left:"16px",background:"none",border:"none",color:"var(--t3)",fontSize:"24px",cursor:"pointer"}}>✕</button>
-        {!done?(
+
+        {!done ? (
           <div>
-            <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:"24px"}}>
-              <span style={{fontSize:"13px",color:SKY,fontWeight:700}}>اكتشف مستواك</span>
-              <span style={{fontSize:"12px",color:"var(--t3)"}}>{step+1} / {quizQs.length}</span>
+            <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:"12px"}}>
+              <span style={{fontSize:"13px",color:SKY,fontWeight:700}}>اختبار ذكي لتحديد مستواك</span>
+              <span style={{fontSize:"11px",color:"#556677"}}>سؤال {history.length + 1}</span>
             </div>
-            <div style={{background:"var(--card)",borderRadius:"100px",height:"4px",marginBottom:"24px"}}><div style={{width:((step+1)/quizQs.length*100)+"%",height:"100%",background:SKY,borderRadius:"100px",transition:"width 0.4s"}}/></div>
-            <div style={{display:"inline-block",padding:"3px 10px",borderRadius:"100px",background:"var(--sky-bg)",color:SKY,fontSize:"11px",fontWeight:700,marginBottom:"12px"}}>{labels[quizQs[step].type]}</div>
-            <p style={{fontSize:"16px",fontWeight:700,color:"var(--t1)",lineHeight:1.7,marginBottom:"24px",whiteSpace:"pre-line"}}>{quizQs[step].q}</p>
+            <div style={{background:"rgba(255,255,255,0.04)",borderRadius:"100px",height:"4px",marginBottom:"10px"}}>
+              <div style={{width:progressPct+"%",height:"100%",background:SKY,borderRadius:"100px",transition:"width 0.4s"}}/>
+            </div>
+            <div style={{fontSize:"10px",color:"#556677",marginBottom:"20px",lineHeight:1.6}}>الاختبار يتكيّف مع إجاباتك — كل سؤال يعتمد على السابق لتحديد مستواك بدقة</div>
+            <div style={{display:"inline-block",padding:"3px 10px",borderRadius:"100px",background:"rgba(56,189,248,0.08)",color:SKY,fontSize:"11px",fontWeight:700,marginBottom:"12px"}}>{skillLabels[currentQ.skill]}</div>
+            <p style={{fontSize:"16px",fontWeight:700,color:"#fff",lineHeight:1.7,marginBottom:"24px",whiteSpace:"pre-line",direction:currentQ.q.match(/[a-zA-Z]/)?"ltr":"rtl",textAlign:currentQ.q.match(/[a-zA-Z]/)?"left":"right"}}>{currentQ.q}</p>
             <div style={{display:"flex",flexDirection:"column",gap:"10px"}}>
-              {quizQs[step].opts.map((o,i)=>(
-                <button key={i} onClick={()=>pick(o.pts)} style={{background:"var(--card)",border:"1px solid var(--card-b)",borderRadius:"14px",padding:"14px 18px",textAlign:"right",color:"var(--t2)",fontSize:"14px",cursor:"pointer",transition:"all 0.3s",fontFamily:"'Tajawal',sans-serif"}} onMouseEnter={e=>{e.currentTarget.style.background="var(--sky-bg)";e.currentTarget.style.borderColor="var(--sky-b)"}} onMouseLeave={e=>{e.currentTarget.style.background="var(--card)";e.currentTarget.style.borderColor="var(--card-b)"}}>{o.t}</button>
+              {currentQ.opts.map((o,i)=>(
+                <button key={i} onClick={()=>handleAnswer(o)} style={{background:"rgba(255,255,255,0.03)",border:"1px solid rgba(255,255,255,0.06)",borderRadius:"14px",padding:"14px 18px",textAlign:o.t.match(/[a-zA-Z]/)?"left":"right",direction:o.t.match(/[a-zA-Z]/)?"ltr":"rtl",color:"#ccd",fontSize:"14px",cursor:"pointer",transition:"all 0.3s",fontFamily:"'Tajawal',sans-serif"}} onMouseEnter={e=>{e.currentTarget.style.background="rgba(56,189,248,0.06)";e.currentTarget.style.borderColor="rgba(56,189,248,0.2)"}} onMouseLeave={e=>{e.currentTarget.style.background="rgba(255,255,255,0.03)";e.currentTarget.style.borderColor="rgba(255,255,255,0.06)"}}>{o.t}</button>
               ))}
             </div>
           </div>
-        ):(
+        ) : (
           <div style={{textAlign:"center"}}>
-            <div style={{fontSize:"48px",marginBottom:"16px"}}>📊</div>
-            <div style={{fontSize:"14px",color:"var(--t3)",marginBottom:"8px"}}>مستواك التقريبي</div>
-            <div style={{fontSize:"32px",fontWeight:900,color:result.color,marginBottom:"8px",fontFamily:"'Playfair Display',serif"}}>{result.lv}</div>
-            <div style={{fontSize:"14px",color:"var(--t2)",marginBottom:"6px"}}>المسار المقترح: <span style={{color:SKY,fontWeight:700}}>{result.rec}</span></div>
-            <div style={{fontSize:"13px",color:"var(--t3)",marginBottom:"24px"}}>الباقة الأنسب: <span style={{color:GOLD,fontWeight:700}}>{result.pkg}</span></div>
-            <div style={{padding:"16px",borderRadius:"14px",background:"var(--sky-bg)",border:"1px solid var(--sky-b)",marginBottom:"20px"}}>
-              <p style={{fontSize:"13px",color:"var(--t2)",lineHeight:1.8}}>هذا تقييم مبدئي. في لقائك المجاني مع المدرب بنحدد مستواك بدقة ونرسم لك خطة واضحة.</p>
+            <div style={{fontSize:"42px",marginBottom:"12px"}}>🎯</div>
+            <div style={{fontSize:"13px",color:"#889",marginBottom:"6px"}}>مستواك التقريبي</div>
+            <div style={{fontSize:"36px",fontWeight:900,color:SKY,marginBottom:"4px",fontFamily:"'Playfair Display',serif"}}>{result.fluentia.cefr}</div>
+            <div style={{fontSize:"14px",color:"#aab",marginBottom:"4px"}}>{result.fluentia.level} · {result.fluentia.name}</div>
+            <div style={{fontSize:"12px",color:"#778899",marginBottom:"20px"}}>مسار <span style={{color:GOLD,fontWeight:700}}>{result.fluentia.track}</span></div>
+
+            <div style={{padding:"12px 16px",borderRadius:"12px",background:"rgba(148,163,184,0.06)",border:"1px solid rgba(148,163,184,0.12)",marginBottom:"16px"}}>
+              <div style={{fontSize:"11px",color:"#778899",marginBottom:"2px"}}>المستوى البديل (إذا المجموعة الأنسب غير متاحة)</div>
+              <div style={{fontSize:"13px",color:"#cbd5e1",fontWeight:600}}>{result.fluentia.altLevel} · {result.fluentia.altName}</div>
             </div>
-            <a href={WA_BASE+encodeURIComponent(`السلام عليكم، سويت اختبار تحديد المستوى\nالنتيجة: ${result.lv}\nالمسار المقترح: ${result.rec}\nأبي أحجز لقاء مبدئي مجاني\nالمصدر: ${getSource()}`)} target="_blank" rel="noopener noreferrer" onClick={()=>{if(window.gtag)window.gtag('event','conversion',{'send_to':'AW-9314838750','value':1.0,'currency':'SAR'})}} style={{display:"inline-block",background:SKY,color:"#060e1c",padding:"14px 32px",borderRadius:"60px",fontSize:"15px",fontWeight:800}}>احجز لقاءك المجاني ←</a>
+
+            <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"10px",marginBottom:"20px"}}>
+              <div style={{padding:"12px",borderRadius:"12px",background:"rgba(74,222,128,0.05)",border:"1px solid rgba(74,222,128,0.15)",textAlign:"right"}}>
+                <div style={{fontSize:"11px",color:"#4ade80",fontWeight:700,marginBottom:"4px"}}>✓ نقاط القوة</div>
+                <div style={{fontSize:"12px",color:"#aab",lineHeight:1.6}}>{result.strengths.length > 0 ? result.strengths.join(" · ") : "متوازن"}</div>
+              </div>
+              <div style={{padding:"12px",borderRadius:"12px",background:"rgba(251,191,36,0.05)",border:"1px solid rgba(251,191,36,0.15)",textAlign:"right"}}>
+                <div style={{fontSize:"11px",color:GOLD,fontWeight:700,marginBottom:"4px"}}>○ تحتاج تحسين</div>
+                <div style={{fontSize:"12px",color:"#aab",lineHeight:1.6}}>{result.weaknesses.length > 0 ? result.weaknesses.join(" · ") : "—"}</div>
+              </div>
+            </div>
+
+            <div style={{padding:"14px",borderRadius:"12px",background:"rgba(56,189,248,0.04)",border:"1px solid rgba(56,189,248,0.1)",marginBottom:"20px"}}>
+              <p style={{fontSize:"12px",color:"#aab",lineHeight:1.8,margin:0}}>هذا تقييم مبدئي بناءً على {result.totalQuestions} أسئلة. في لقائك المجاني مع المدرب بنحدد مستواك بدقة أكبر ونرسم لك خطة واضحة.</p>
+            </div>
+
+            <a href={buildResultWA()} target="_blank" rel="noopener noreferrer" onClick={()=>{if(window.gtag)window.gtag('event','conversion',{'send_to':'AW-9314838750','value':1.0,'currency':'SAR'})}} style={{display:"inline-block",background:SKY,color:"#060e1c",padding:"14px 32px",borderRadius:"60px",fontSize:"15px",fontWeight:800,fontFamily:"'Tajawal',sans-serif"}}>احجز لقاءك المجاني ←</a>
           </div>
         )}
       </div>
