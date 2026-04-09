@@ -148,10 +148,13 @@ function RegForm({pkg:initPkg,path:initPath,onClose}){
     // Auto-save to Google Sheets (silent)
     try{const sheetData={...form,utm:utmRaw,date:new Date().toLocaleString("ar-SA")};
     fetch("https://script.google.com/macros/s/YOUR_SHEET_ID/exec",{method:"POST",mode:"no-cors",headers:{"Content-Type":"application/json"},body:JSON.stringify(sheetData)}).catch(()=>{})}catch(e){}
-    // TikTok Pixel: track form submission as conversion
+    // TikTok Pixel: track form submission as conversion (both pixels)
     if(window.ttq){
-      window.ttq.track('Lead',{content_name:'fluentia_registration',content_category:form.path||'general',value:form.pkg||'unknown',description:form.goal||''});
-      window.ttq.track('CompleteRegistration',{content_name:'fluentia_lead',content_category:form.path||'general'});
+      const eventId=`lead_${Date.now()}_${Math.random().toString(36).substring(2,9)}`;
+      window.ttq.track('Lead',{content_name:'Fluentia Registration',content_category:form.path||'general',value:750,currency:'SAR',event_id:eventId});
+      window.ttq.track('CompleteRegistration',{content_name:'Fluentia Registration',content_category:form.path||'general',value:750,currency:'SAR',event_id:eventId});
+      const v3=window.ttq.instance('D7BMERRC77UFLDKDQICG');
+      if(v3){v3.track('Lead',{content_name:'Fluentia Registration',content_category:form.path||'general',value:750,currency:'SAR',event_id:eventId});v3.track('CompleteRegistration',{content_name:'Fluentia Registration',content_category:form.path||'general',value:750,currency:'SAR',event_id:eventId});}
     }
     // Google Analytics + Ads conversion
     if(window.gtag){window.gtag('event','generate_lead',{event_category:'registration',event_label:form.path||'general',value:1});window.gtag('event','conversion',{'send_to':'AW-9314838750','value':1.0,'currency':'SAR'})}
@@ -950,8 +953,8 @@ function StartPage(){
   React.useEffect(()=>{
     const p=new URLSearchParams(window.location.search);
     setUtm({source:p.get("utm_source")||"",medium:p.get("utm_medium")||"",campaign:p.get("utm_campaign")||"",content:p.get("utm_content")||""});
-    // TikTok Pixel: fire PageView for SPA route
-    if(window.ttq) window.ttq.page();
+    // TikTok Pixel: fire PageView for SPA route (both pixels)
+    if(window.ttq){window.ttq.page();var v3=window.ttq.instance('D7BMERRC77UFLDKDQICG');if(v3)v3.page();}
   },[]);
 
   const pkgData=[
@@ -1000,10 +1003,13 @@ ${goal?`الهدف: ${goal}\n`:""}المصدر: ${src}`;
       });
       window.gtag('event', 'conversion', {'send_to': 'AW-9314838750', 'value': 1.0, 'currency': 'SAR'});
     }
-    // TikTok Pixel: track form submission as conversion
+    // TikTok Pixel: track form submission as conversion (both pixels)
     if(window.ttq){
-      window.ttq.track('Lead',{content_name:'fluentia_registration',content_category:path||'general',value:pkg||'unknown',description:goal||''});
-      window.ttq.track('CompleteRegistration',{content_name:'fluentia_lead',content_category:path||'general'});
+      const eventId=`lead_${Date.now()}_${Math.random().toString(36).substring(2,9)}`;
+      window.ttq.track('Lead',{content_name:'Fluentia Registration',content_category:path||'general',value:750,currency:'SAR',event_id:eventId});
+      window.ttq.track('CompleteRegistration',{content_name:'Fluentia Registration',content_category:path||'general',value:750,currency:'SAR',event_id:eventId});
+      const v3=window.ttq.instance('D7BMERRC77UFLDKDQICG');
+      if(v3){v3.track('Lead',{content_name:'Fluentia Registration',content_category:path||'general',value:750,currency:'SAR',event_id:eventId});v3.track('CompleteRegistration',{content_name:'Fluentia Registration',content_category:path||'general',value:750,currency:'SAR',event_id:eventId});}
     }
     window.open("https://wa.me/966558669974?text="+encodeURIComponent(msg),"_blank");
     setSubmitted(true);
