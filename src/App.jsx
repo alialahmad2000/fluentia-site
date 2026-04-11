@@ -310,6 +310,7 @@ function RegForm({pkg:initPkg,path:initPath,onClose}){
     if(window.ttq){
       try{
         const eventId=`lead_${Date.now()}_${Math.random().toString(36).substring(2,9)}`;
+        window.ttq.track('SubmitForm',{content_type:'lead_form',content_name:'Fluentia Free Consultation',content_category:form.path||'general',value:750,currency:'SAR',event_id:eventId});
         window.ttq.track('Lead',{content_name:'Fluentia Registration',content_category:form.path||'general',value:750,currency:'SAR',event_id:eventId});
         window.ttq.track('CompleteRegistration',{content_name:'Fluentia Registration',content_category:form.path||'general',value:750,currency:'SAR',event_id:eventId});
       }catch(e){console.error('TikTok pixel error:',e)}
@@ -1110,6 +1111,7 @@ ${goal?`الهدف: ${goal}\n`:""}المصدر: ${src}`;
     if(window.ttq){
       try{
         const eventId=`lead_${Date.now()}_${Math.random().toString(36).substring(2,9)}`;
+        window.ttq.track('SubmitForm',{content_type:'lead_form',content_name:'Fluentia Free Consultation',content_category:path||'general',value:750,currency:'SAR',event_id:eventId});
         window.ttq.track('Lead',{content_name:'Fluentia Registration',content_category:path||'general',value:750,currency:'SAR',event_id:eventId});
         window.ttq.track('CompleteRegistration',{content_name:'Fluentia Registration',content_category:path||'general',value:750,currency:'SAR',event_id:eventId});
       }catch(e){console.error('TikTok pixel error:',e)}
