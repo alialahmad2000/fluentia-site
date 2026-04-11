@@ -79,16 +79,6 @@ const fqs = [
   {q:"كم عدد الطلاب بالكلاس؟",a:"حد أقصى 7 طلاب فقط. مو 20 أو 30 مثل المعاهد الثانية."},
   {q:"جربت دورات قبل وما استفدت — ليش عندكم بيختلف؟",a:"لأننا ندرس كل طالب بشكل فردي، نفهم شخصيته، ونحطه بالقروب اللي يناسبه. المدرب يتابعك يومياً. والمحتوى مصمم بعناية علمية."},
 ];
-const quizQs = [
-  {type:"self",q:"كيف تقيّم مستواك الحالي بالإنجليزي؟",opts:[{t:"ما أعرف شيء تقريباً",pts:0},{t:"أعرف كلمات بس ما أكوّن جمل",pts:1},{t:"أتكلم شوي بس أتلعثم",pts:2},{t:"أفهم وأتكلم لكن القرامر ضعيف",pts:3}]},
-  {type:"grammar",q:"She _____ to the gym every morning.",opts:[{t:"go",pts:0},{t:"goes",pts:2},{t:"going",pts:1},{t:"gone",pts:0}]},
-  {type:"grammar",q:'I _____ English for two years now.',opts:[{t:"study",pts:0},{t:"studied",pts:1},{t:"have been studying",pts:3},{t:"am study",pts:0}]},
-  {type:"reading",q:'"The meeting has been postponed until next week due to unforeseen circumstances."\n\nوش معنى الجملة؟',opts:[{t:"الاجتماع تم إلغاؤه نهائياً",pts:0},{t:"الاجتماع تأجل للأسبوع الجاي لظروف غير متوقعة",pts:3},{t:"الاجتماع بيكون اليوم",pts:0},{t:"ما فهمت الجملة",pts:0}]},
-  {type:"situation",q:'أنت بمقابلة شغل والمدير سألك:\n"Tell me about yourself."\nوش تقدر تقول؟',opts:[{t:"ما أعرف أجاوب",pts:0},{t:'أقول "My name is... I am..."',pts:1},{t:"أتكلم بجمل بسيطة بس أتلعثم",pts:2},{t:"أعطي إجابة واضحة ومرتبة",pts:3}]},
-  {type:"self",q:"لو أحد كلمك إنجليزي بالشارع — وش تسوي؟",opts:[{t:"أتوتر وما أرد",pts:0},{t:"أفهم شوي بس ما أقدر أرد",pts:1},{t:"أفهم وأرد بكلمات بسيطة",pts:2},{t:"أفهم وأرد بجمل واضحة",pts:3}]},
-];
-function getLevel(score){if(score<=4)return{lv:"مبتدئ",rec:"تأسيس",color:"#ef4444",pkg:"طلاقة أو تميّز"};if(score<=9)return{lv:"متوسط",rec:"تطوير",color:GOLD,pkg:"طلاقة أو تميّز"};return{lv:"متقدم",rec:"IELTS أو تطوير متقدم",color:"#4ade80",pkg:"تميّز أو IELTS"}}
-
 /* ─── Hooks ─── */
 function useVis(th=0.1){const r=useRef(null);const[v,setV]=useState(false);useEffect(()=>{const e=r.current;if(!e)return;const o=new IntersectionObserver(([x])=>{if(x.isIntersecting)setV(true)},{threshold:th});o.observe(e);return()=>o.disconnect()},[th]);return[r,v]}
 function Reveal({children,d=0,y=50,style={}}){const[r,v]=useVis();return React.createElement("div",{ref:r,style:{opacity:v?1:0,transform:v?"translateY(0)":`translateY(${y}px)`,transition:`all 0.8s cubic-bezier(0.16,1,0.3,1) ${d}s`,...style}},children)}
@@ -309,7 +299,6 @@ function Quiz({ onClose }) {
 function RegForm({pkg:initPkg,path:initPath,onClose}){
   const[step,setStep]=useState(initPath&&initPkg?3:initPath?2:initPkg?2:1);
   const[form,setForm]=useState({name:"",age:"",goal:"",ieltsTarget:"",path:initPath||"",pkg:initPkg||"",level:"",startDate:""});
-  const[doQuiz,setDoQuiz]=useState(false);const[qStep,setQStep]=useState(0);const[qScore,setQScore]=useState(0);const[qDone,setQDone]=useState(false);
   const u=(k,v)=>setForm({...form,[k]:v});
   // Save to Google Sheets + open WhatsApp
   const send=()=>{if(!form.name){alert("اكتب اسمك");return}
@@ -330,8 +319,6 @@ function RegForm({pkg:initPkg,path:initPath,onClose}){
     window.open(buildWA(form),"_blank");onClose()};
   const pickPath=(p)=>{u("path",p);setStep(2)};
   const pickPkg=(p)=>{u("pkg",p);setStep(3)};
-  const qPick=(pts)=>{const ns=qScore+pts;setQScore(ns);if(qStep<quizQs.length-1)setQStep(qStep+1);else{setQDone(true);const lv=getLevel(ns);setForm(f=>({...f,level:lv.lv}));}};
-  const labels={self:"تقييم ذاتي",grammar:"قرامر",reading:"فهم نص",situation:"موقف حياتي"};
   const paths=[
     {id:"تأسيس",icon:"📗",title:"تأسيس",desc:"من الصفر — بناء أساس متين",recPkg:"طلاقة أو تميّز",color:SKY},
     {id:"تطوير",icon:"📘",title:"تطوير",desc:"عندك أساس — تبي ترفع مستواك",recPkg:"طلاقة أو تميّز",color:SKY_L},
@@ -410,21 +397,8 @@ function RegForm({pkg:initPkg,path:initPath,onClose}){
             </div>
           </div>
 
-          {/* Optional Quiz */}
-          {!doQuiz&&!form.level&&(<div style={{marginBottom:"14px",padding:"14px",borderRadius:"14px",background:"var(--sky-bg)",border:"1px solid var(--sky-b)"}}>
-            <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
-              <div><div style={{fontSize:"13px",fontWeight:700,color:SKY}}>📊 اختبر مستواك (اختياري)</div><div style={{fontSize:"11px",color:"var(--t3)",marginTop:"2px"}}>6 أسئلة سريعة — يساعدنا نحدد مستواك بدقة</div></div>
-              <button onClick={()=>setDoQuiz(true)} style={{background:SKY,color:"#060e1c",padding:"6px 14px",borderRadius:"100px",fontSize:"11px",fontWeight:800,border:"none",cursor:"pointer",fontFamily:"'Tajawal',sans-serif",whiteSpace:"nowrap"}}>ابدأ</button>
-            </div>
-          </div>)}
           {form.level&&(<div style={{marginBottom:"14px",padding:"12px",borderRadius:"12px",background:"rgba(74,222,128,0.06)",border:"1px solid rgba(74,222,128,0.15)"}}>
             <div style={{fontSize:"12px",color:"#4ade80",fontWeight:700}}>✓ مستواك التقريبي: {form.level}</div>
-          </div>)}
-          {doQuiz&&!qDone&&(<div style={{marginBottom:"14px",padding:"16px",borderRadius:"14px",background:"var(--sky-bg)",border:"1px solid var(--sky-b)"}}>
-            <div style={{display:"flex",justifyContent:"space-between",marginBottom:"10px"}}><span style={{fontSize:"11px",color:SKY,fontWeight:700}}>{labels[quizQs[qStep].type]}</span><span style={{fontSize:"10px",color:"var(--t4)"}}>{qStep+1}/{quizQs.length}</span></div>
-            <div style={{background:"var(--card)",borderRadius:"100px",height:"3px",marginBottom:"12px"}}><div style={{width:((qStep+1)/quizQs.length*100)+"%",height:"100%",background:SKY,borderRadius:"100px",transition:"width 0.3s"}}/></div>
-            <p style={{fontSize:"13px",fontWeight:600,color:"var(--t1)",lineHeight:1.6,marginBottom:"12px",whiteSpace:"pre-line"}}>{quizQs[qStep].q}</p>
-            <div style={{display:"flex",flexDirection:"column",gap:"6px"}}>{quizQs[qStep].opts.map((o,i)=>(<button key={i} onClick={()=>qPick(o.pts)} style={{background:"var(--card)",border:"1px solid var(--card-b)",borderRadius:"10px",padding:"10px 14px",textAlign:"right",color:"var(--t2)",fontSize:"12px",cursor:"pointer",fontFamily:"'Tajawal',sans-serif"}}>{o.t}</button>))}</div>
           </div>)}
 
           <button onClick={send} style={{width:"100%",padding:"14px",borderRadius:"14px",background:SKY,color:"#060e1c",fontSize:"16px",fontWeight:800,border:"none",cursor:"pointer",marginTop:"6px",fontFamily:"'Tajawal',sans-serif"}}>أرسل عبر واتساب ←</button>
