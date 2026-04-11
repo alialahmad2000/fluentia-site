@@ -1329,6 +1329,24 @@ function AppRoutes(){
     }
   }, [location]);
 
+  useEffect(() => {
+    // Fire TikTok ViewContent on initial page load (upper-funnel signal)
+    if (typeof window !== 'undefined' && window.ttq) {
+      try {
+        window.ttq.track('ViewContent', {
+          content_name: 'Fluentia Landing Page',
+          content_category: 'education',
+          content_type: 'product',
+          content_id: 'fluentia_landing',
+          currency: 'SAR',
+          value: 750,
+        });
+      } catch (e) {
+        console.error('TikTok ViewContent error:', e);
+      }
+    }
+  }, []); // empty dependency array = fire once on mount
+
   return(
     <Routes>
       <Route path="/" element={<HomePage />} />
