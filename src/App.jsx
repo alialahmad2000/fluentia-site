@@ -1,6 +1,10 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, lazy, Suspense } from "react";
 import { BrowserRouter, Routes, Route, Link, useLocation } from "react-router-dom";
 import { getStoredRef, getVisitorId } from './utils/affiliateTracking';
+
+const PartnersLanding = lazy(() => import('./pages/partners/PartnersLanding'));
+const PartnersSubmitted = lazy(() => import('./pages/partners/PartnersSubmitted'));
+const PartnersTerms = lazy(() => import('./pages/partners/PartnersTerms'));
 
 /* ─── UTM Source ─── */
 const UTM_MAP = {
@@ -1406,6 +1410,9 @@ function AppRoutes(){
     <Routes>
       <Route path="/" element={<HomePage />} />
       <Route path="/start" element={<StartPage />} />
+      <Route path="/partners" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#060e1c'}} />}><PartnersLanding /></Suspense>} />
+      <Route path="/partners/submitted" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#060e1c'}} />}><PartnersSubmitted /></Suspense>} />
+      <Route path="/partners/terms" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#060e1c'}} />}><PartnersTerms /></Suspense>} />
     </Routes>
   );
 }
