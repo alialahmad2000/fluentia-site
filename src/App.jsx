@@ -307,14 +307,16 @@ function RegForm({pkg:initPkg,path:initPath,onClose}){
     try{const sheetData={...form,utm:utmRaw,date:new Date().toLocaleString("ar-SA")};
     fetch("https://script.google.com/macros/s/YOUR_SHEET_ID/exec",{method:"POST",mode:"no-cors",headers:{"Content-Type":"application/json"},body:JSON.stringify(sheetData)}).catch(()=>{})}catch(e){}
     // TikTok Pixel: track form submission as conversion
+    const eventId=`lead_${Date.now()}_${Math.random().toString(36).substring(2,9)}`;
     if(window.ttq){
       try{
-        const eventId=`lead_${Date.now()}_${Math.random().toString(36).substring(2,9)}`;
         window.ttq.track('SubmitForm',{content_name:'Fluentia Free Consultation',content_category:form.path||'general',value:750,currency:'SAR',event_id:eventId});
         window.ttq.track('Lead',{content_name:'Fluentia Registration',content_category:form.path||'general',value:750,currency:'SAR',event_id:eventId});
         window.ttq.track('CompleteRegistration',{content_name:'Fluentia Registration',content_category:form.path||'general',value:750,currency:'SAR',event_id:eventId});
       }catch(e){console.error('TikTok pixel error:',e)}
     }
+    // TikTok Events API (server-side, non-blocking)
+    try{['Lead','CompleteRegistration'].forEach(ev=>fetch('https://nmjexpuycmqcxuxljier.supabase.co/functions/v1/tiktok-events-api',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({event_name:ev,event_id:eventId,external_id:form.name||'',url:window.location.href,user_agent:navigator.userAgent,value:750,currency:'SAR'})}).then(r=>r.json()).then(r=>console.log('[TikTok Events API]',ev,r)).catch(()=>{}))}catch(e){}
     // Google Analytics + Ads conversion
     if(window.gtag){window.gtag('event','generate_lead',{event_category:'registration',event_label:form.path||'general',value:1});window.gtag('event','conversion',{'send_to':'AW-9314838750','value':1.0,'currency':'SAR'})}
     window.open(buildWA(form),"_blank");onClose()};
@@ -1108,14 +1110,16 @@ ${goal?`الهدف: ${goal}\n`:""}المصدر: ${src}`;
       window.gtag('event', 'conversion', {'send_to': 'AW-9314838750', 'value': 1.0, 'currency': 'SAR'});
     }
     // TikTok Pixel: track form submission as conversion
+    const eventId=`lead_${Date.now()}_${Math.random().toString(36).substring(2,9)}`;
     if(window.ttq){
       try{
-        const eventId=`lead_${Date.now()}_${Math.random().toString(36).substring(2,9)}`;
         window.ttq.track('SubmitForm',{content_name:'Fluentia Free Consultation',content_category:path||'general',value:750,currency:'SAR',event_id:eventId});
         window.ttq.track('Lead',{content_name:'Fluentia Registration',content_category:path||'general',value:750,currency:'SAR',event_id:eventId});
         window.ttq.track('CompleteRegistration',{content_name:'Fluentia Registration',content_category:path||'general',value:750,currency:'SAR',event_id:eventId});
       }catch(e){console.error('TikTok pixel error:',e)}
     }
+    // TikTok Events API (server-side, non-blocking)
+    try{['Lead','CompleteRegistration'].forEach(ev=>fetch('https://nmjexpuycmqcxuxljier.supabase.co/functions/v1/tiktok-events-api',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({event_name:ev,event_id:eventId,phone:phone,external_id:phone,url:window.location.href,user_agent:navigator.userAgent,value:750,currency:'SAR'})}).then(r=>r.json()).then(r=>console.log('[TikTok Events API]',ev,r)).catch(()=>{}))}catch(e){}
     window.open("https://wa.me/966558669974?text="+encodeURIComponent(msg),"_blank");
     setSubmitted(true);
   }
