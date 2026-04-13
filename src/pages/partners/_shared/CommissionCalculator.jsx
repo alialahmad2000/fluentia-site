@@ -12,6 +12,16 @@ const THEMES = {
     inputBorder: 'rgba(63,63,70,1)',
     numberFont: "'JetBrains Mono', monospace",
   },
+  'dark-blue': {
+    bg: 'rgba(255,255,255,0.03)',
+    border: 'rgba(255,255,255,0.1)',
+    text: '#FAFAFA',
+    muted: '#94A3B8',
+    accent: '#38bdf8',
+    inputBg: 'rgba(255,255,255,0.06)',
+    inputBorder: 'rgba(255,255,255,0.15)',
+    numberFont: "'JetBrains Mono', monospace",
+  },
   gradient: {
     bg: 'rgba(255,255,255,0.08)',
     border: 'rgba(255,255,255,0.15)',

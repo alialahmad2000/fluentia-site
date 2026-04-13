@@ -12,6 +12,14 @@ const THEMES = {
     muted: '#A1A1AA',
     accent: '#D4AF37',
   },
+  'dark-blue': {
+    cardBg: 'rgba(255,255,255,0.03)',
+    border: 'rgba(255,255,255,0.1)',
+    hoverBorder: 'rgba(56,189,248,0.3)',
+    text: '#FAFAFA',
+    muted: '#cbd5e1',
+    accent: '#38bdf8',
+  },
   gradient: {
     cardBg: 'rgba(255,255,255,0.06)',
     border: 'rgba(255,255,255,0.1)',
@@ -35,7 +43,7 @@ export default function FAQList({ theme = 'dark-gold' }) {
   const [open, setOpen] = useState(null);
 
   return (
-    <div style={{ maxWidth: '640px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+    <div style={{ maxWidth: '720px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '12px' }}>
       {faqData.map((item, i) => {
         const isOpen = open === i;
         return (
