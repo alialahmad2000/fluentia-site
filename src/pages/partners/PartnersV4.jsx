@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { motion, useReducedMotion, AnimatePresence } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import {
   Handshake, Link2, Share2, Wallet, TrendingUp, ShieldCheck,
   Users, Target, Star, ArrowLeft, Check, ChevronDown,
@@ -36,8 +36,8 @@ function Logo() {
 /* ──── Section wrapper — generous padding ──── */
 function Section({ id, children, className = '', style = {} }) {
   return (
-    <section id={id} className={className} style={{ padding: '96px 28px', ...style }}>
-      <div style={{ maxWidth: '1100px', margin: '0 auto' }}>{children}</div>
+    <section id={id} className={className} style={{ padding: '96px 28px', position: 'relative', ...style }}>
+      <div style={{ maxWidth: '1100px', margin: '0 auto', position: 'relative', zIndex: 10 }}>{children}</div>
     </section>
   );
 }
@@ -81,7 +81,6 @@ function SectionHeading({ eyebrow, children, subtitle }) {
 /* ═══════════════════════════════════════════════ */
 export default function PartnersV4() {
   const prefersReducedMotion = useReducedMotion();
-  const animDuration = prefersReducedMotion ? 0 : undefined;
 
   /* Load fonts */
   useEffect(() => {
@@ -108,79 +107,108 @@ export default function PartnersV4() {
   ];
 
   return (
-    <div dir="rtl" style={{ fontFamily: "'Tajawal', sans-serif", color: T1, minHeight: '100vh', position: 'relative', overflowX: 'hidden' }}>
+    <div dir="rtl" style={{ fontFamily: "'Tajawal', sans-serif", color: T1, minHeight: '100vh', position: 'relative', overflowX: 'hidden', background: BG }}>
 
-      {/* ══════ ANIMATED BACKGROUND ══════ */}
-      <div aria-hidden="true" style={{ position: 'fixed', inset: 0, zIndex: -1, overflow: 'hidden', pointerEvents: 'none' }}>
-        {/* base navy */}
-        <div style={{ position: 'absolute', inset: 0, background: BG }} />
+      {/* ══════════════════════════════════════════════════════════ */}
+      {/* HERO SECTION — animated background INSIDE it (absolute)  */}
+      {/* ══════════════════════════════════════════════════════════ */}
+      <section style={{ minHeight: '92vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '80px 28px 40px', position: 'relative', overflow: 'hidden', background: BG }}>
 
-        {/* Animated mesh blobs — no blend mode, pure additive via opacity */}
-        <motion.div
-          style={{
-            position: 'absolute', width: '700px', height: '700px', borderRadius: '50%',
-            filter: 'blur(120px)',
-            background: 'radial-gradient(circle, rgba(56,189,248,0.45) 0%, rgba(56,189,248,0) 65%)',
-            top: '-100px', right: '-150px',
-          }}
-          animate={prefersReducedMotion ? {} : {
-            x: [0, 120, -60, 0],
-            y: [0, 80, 40, 0],
-            scale: [1, 1.1, 0.95, 1],
-          }}
-          transition={{ duration: 22, repeat: Infinity, ease: 'easeInOut' }}
-        />
+        {/* ========== ANIMATED BACKGROUND (absolute z-0 inside hero) ========== */}
+        <div aria-hidden="true" style={{ position: 'absolute', inset: 0, zIndex: 0, overflow: 'hidden', pointerEvents: 'none' }}>
 
-        <motion.div
-          style={{
-            position: 'absolute', width: '800px', height: '800px', borderRadius: '50%',
-            filter: 'blur(130px)',
-            background: 'radial-gradient(circle, rgba(14,165,233,0.35) 0%, rgba(14,165,233,0) 65%)',
-            top: '20%', left: '-200px',
-          }}
-          animate={prefersReducedMotion ? {} : {
-            x: [0, 100, -40, 0],
-            y: [0, -60, 80, 0],
-            scale: [1, 1.05, 1.1, 1],
-          }}
-          transition={{ duration: 28, repeat: Infinity, ease: 'easeInOut' }}
-        />
+          {/* Blob 1 — sky-blue, top-right */}
+          <motion.div
+            style={{
+              position: 'absolute', width: '720px', height: '720px', borderRadius: '50%',
+              top: '-150px', right: '-180px',
+              background: 'radial-gradient(circle, rgba(56,189,248,0.55) 0%, rgba(56,189,248,0.12) 40%, rgba(56,189,248,0) 70%)',
+              filter: 'blur(90px)',
+              willChange: 'transform',
+            }}
+            animate={prefersReducedMotion ? {} : {
+              x: [0, 120, -40, 0],
+              y: [0, 80, 30, 0],
+              scale: [1, 1.1, 0.95, 1],
+            }}
+            transition={{ duration: 24, repeat: Infinity, ease: 'easeInOut' }}
+          />
 
-        <motion.div
-          style={{
-            position: 'absolute', width: '600px', height: '600px', borderRadius: '50%',
-            filter: 'blur(140px)',
-            background: 'radial-gradient(circle, rgba(99,102,241,0.3) 0%, rgba(99,102,241,0) 65%)',
-            bottom: '-150px', left: '30%',
-          }}
-          animate={prefersReducedMotion ? {} : {
-            x: [0, -80, 60, 0],
-            y: [0, -40, -80, 0],
-          }}
-          transition={{ duration: 26, repeat: Infinity, ease: 'easeInOut' }}
-        />
+          {/* Blob 2 — deeper blue, middle-left */}
+          <motion.div
+            style={{
+              position: 'absolute', width: '820px', height: '820px', borderRadius: '50%',
+              top: '25%', left: '-240px',
+              background: 'radial-gradient(circle, rgba(14,165,233,0.45) 0%, rgba(14,165,233,0.10) 40%, rgba(14,165,233,0) 70%)',
+              filter: 'blur(100px)',
+              willChange: 'transform',
+            }}
+            animate={prefersReducedMotion ? {} : {
+              x: [0, 90, -30, 0],
+              y: [0, -50, 70, 0],
+              scale: [1, 1.05, 1.08, 1],
+            }}
+            transition={{ duration: 30, repeat: Infinity, ease: 'easeInOut' }}
+          />
 
-        {/* subtle grain/noise for premium texture */}
-        <div
-          style={{
-            position: 'absolute', inset: 0, opacity: 0.03,
-            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' /%3E%3C/svg%3E")`,
-          }}
-        />
+          {/* Blob 3 — indigo, bottom-center */}
+          <motion.div
+            style={{
+              position: 'absolute', width: '640px', height: '640px', borderRadius: '50%',
+              bottom: '-180px', left: '28%',
+              background: 'radial-gradient(circle, rgba(99,102,241,0.40) 0%, rgba(99,102,241,0.10) 40%, rgba(99,102,241,0) 70%)',
+              filter: 'blur(110px)',
+              willChange: 'transform',
+            }}
+            animate={prefersReducedMotion ? {} : {
+              x: [0, -70, 50, 0],
+              y: [0, -30, -60, 0],
+            }}
+            transition={{ duration: 28, repeat: Infinity, ease: 'easeInOut' }}
+          />
 
-        {/* vignette at bottom for depth */}
-        <div
-          style={{
-            position: 'absolute', insetInline: 0, bottom: 0, height: '33%',
-            background: 'linear-gradient(to top, rgba(6,14,28,0.8), transparent)',
-            pointerEvents: 'none',
-          }}
-        />
-      </div>
+          {/* Blob 4 — extra accent, sky (top-left for symmetry) */}
+          <motion.div
+            style={{
+              position: 'absolute', width: '500px', height: '500px', borderRadius: '50%',
+              top: '10%', left: '15%',
+              background: 'radial-gradient(circle, rgba(125,211,252,0.30) 0%, rgba(125,211,252,0) 65%)',
+              filter: 'blur(80px)',
+              willChange: 'transform',
+            }}
+            animate={prefersReducedMotion ? {} : {
+              x: [0, 60, -40, 0],
+              y: [0, 40, -50, 0],
+            }}
+            transition={{ duration: 26, repeat: Infinity, ease: 'easeInOut' }}
+          />
 
-      {/* ══════ HERO ══════ */}
-      <section style={{ minHeight: '92vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '80px 28px 40px', position: 'relative' }}>
-        <div style={{ maxWidth: '900px', width: '100%', textAlign: 'center', margin: '0 auto' }}>
+          {/* Grain overlay for premium film texture */}
+          <div
+            style={{
+              position: 'absolute', inset: 0, opacity: 0.04, mixBlendMode: 'overlay',
+              backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' /%3E%3C/svg%3E")`,
+            }}
+          />
+
+          {/* Bottom fade into next section */}
+          <div
+            style={{
+              position: 'absolute', left: 0, right: 0, bottom: 0, height: '128px',
+              background: `linear-gradient(to bottom, transparent, ${BG})`,
+              pointerEvents: 'none',
+            }}
+          />
+        </div>
+        {/* ========== end animated BG ========== */}
+
+        {/* TEMPORARY DEBUG — remove after verify */}
+        <div style={{ position: 'absolute', top: '16px', left: '16px', zIndex: 50, fontSize: '12px', background: 'rgba(239,68,68,0.8)', color: '#fff', padding: '4px 8px', borderRadius: '6px' }}>
+          BG_ACTIVE_{new Date().getSeconds()}
+        </div>
+
+        {/* ========== HERO CONTENT (above BG at z-10) ========== */}
+        <div style={{ maxWidth: '900px', width: '100%', textAlign: 'center', margin: '0 auto', position: 'relative', zIndex: 10 }}>
 
           {/* Logo — forced LTR */}
           <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} style={{ marginBottom: '56px' }}>
@@ -282,114 +310,153 @@ export default function PartnersV4() {
         </div>
       </section>
 
-      {/* ══════ HOW IT WORKS ══════ */}
-      <Section id="how-it-works">
-        <SectionHeading eyebrow="آلية العمل" subtitle="أربع خطوات بسيطة لتبدأ رحلتك كشريك">
-          كيف يعمل البرنامج؟
-        </SectionHeading>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '24px' }}>
-          {steps.map((step, i) => (
-            <motion.div
-              key={i}
-              initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-60px' }}
-              custom={i} variants={fadeUp}
-              style={{
-                background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)',
-                borderRadius: '20px', padding: '32px 24px', textAlign: 'center',
-                transition: 'border-color 0.3s, background 0.3s',
-              }}
-              onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(56,189,248,0.4)'; e.currentTarget.style.background = 'rgba(255,255,255,0.07)'; }}
-              onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)'; e.currentTarget.style.background = 'rgba(255,255,255,0.04)'; }}
-            >
-              {/* Number circle — sky-blue */}
-              <div style={{
-                width: 64, height: 64, borderRadius: '50%', margin: '0 auto 16px',
-                border: '2px solid rgba(56,189,248,0.4)', background: 'rgba(56,189,248,0.1)',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                fontSize: '28px', fontWeight: 900, color: SKY, fontFamily: 'Tajawal',
-              }}>
-                {step.num}
-              </div>
-              {/* Icon */}
-              <step.icon size={28} color={SKY} style={{ margin: '0 auto 12px', display: 'block' }} />
-              <h3 style={{ fontFamily: 'Tajawal', fontWeight: 700, fontSize: '18px', color: T1, marginBottom: '8px' }}>
-                {step.title}
-              </h3>
-              <p style={{ fontFamily: 'Tajawal', fontSize: '14px', color: T2, lineHeight: 1.7 }}>
-                {step.desc}
-              </p>
-            </motion.div>
-          ))}
+      {/* ══════════════════════════════════════════════════════════ */}
+      {/* REST OF PAGE — with subtle ambient background             */}
+      {/* ══════════════════════════════════════════════════════════ */}
+      <div style={{ position: 'relative' }}>
+
+        {/* Subtle ambient BG for middle sections */}
+        <div aria-hidden="true" style={{ position: 'absolute', inset: 0, overflow: 'hidden', pointerEvents: 'none', zIndex: 0 }}>
+          <motion.div
+            style={{
+              position: 'absolute', width: '900px', height: '900px', borderRadius: '50%',
+              top: '30%', right: '-300px',
+              background: 'radial-gradient(circle, rgba(56,189,248,0.15) 0%, rgba(56,189,248,0) 60%)',
+              filter: 'blur(140px)',
+              willChange: 'transform',
+            }}
+            animate={prefersReducedMotion ? {} : {
+              x: [0, -60, 40, 0],
+              y: [0, 80, -40, 0],
+            }}
+            transition={{ duration: 40, repeat: Infinity, ease: 'easeInOut' }}
+          />
+          <motion.div
+            style={{
+              position: 'absolute', width: '700px', height: '700px', borderRadius: '50%',
+              top: '60%', left: '-200px',
+              background: 'radial-gradient(circle, rgba(99,102,241,0.12) 0%, rgba(99,102,241,0) 60%)',
+              filter: 'blur(140px)',
+              willChange: 'transform',
+            }}
+            animate={prefersReducedMotion ? {} : {
+              x: [0, 50, -30, 0],
+              y: [0, -40, 60, 0],
+            }}
+            transition={{ duration: 36, repeat: Infinity, ease: 'easeInOut' }}
+          />
         </div>
-      </Section>
 
-      {/* ══════ COMMISSION CALCULATOR ══════ */}
-      <Section id="calculator">
-        <SectionHeading eyebrow="حاسبة العمولة" subtitle="حرّك المؤشر لمعرفة دخلك الشهري والسنوي">
-          احسب دخلك المتوقع
-        </SectionHeading>
-        <CommissionCalculator theme="dark-blue" />
-      </Section>
+        {/* ══════ HOW IT WORKS ══════ */}
+        <Section id="how-it-works">
+          <SectionHeading eyebrow="آلية العمل" subtitle="أربع خطوات بسيطة لتبدأ رحلتك كشريك">
+            كيف يعمل البرنامج؟
+          </SectionHeading>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '24px' }}>
+            {steps.map((step, i) => (
+              <motion.div
+                key={i}
+                initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-60px' }}
+                custom={i} variants={fadeUp}
+                style={{
+                  background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)',
+                  borderRadius: '20px', padding: '32px 24px', textAlign: 'center',
+                  transition: 'border-color 0.3s, background 0.3s',
+                }}
+                onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(56,189,248,0.4)'; e.currentTarget.style.background = 'rgba(255,255,255,0.07)'; }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)'; e.currentTarget.style.background = 'rgba(255,255,255,0.04)'; }}
+              >
+                {/* Number circle — sky-blue */}
+                <div style={{
+                  width: 64, height: 64, borderRadius: '50%', margin: '0 auto 16px',
+                  border: '2px solid rgba(56,189,248,0.4)', background: 'rgba(56,189,248,0.1)',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  fontSize: '28px', fontWeight: 900, color: SKY, fontFamily: 'Tajawal',
+                }}>
+                  {step.num}
+                </div>
+                {/* Icon */}
+                <step.icon size={28} color={SKY} style={{ margin: '0 auto 12px', display: 'block' }} />
+                <h3 style={{ fontFamily: 'Tajawal', fontWeight: 700, fontSize: '18px', color: T1, marginBottom: '8px' }}>
+                  {step.title}
+                </h3>
+                <p style={{ fontFamily: 'Tajawal', fontSize: '14px', color: T2, lineHeight: 1.7 }}>
+                  {step.desc}
+                </p>
+              </motion.div>
+            ))}
+          </div>
+        </Section>
 
-      {/* ══════ WHY FLUENTIA ══════ */}
-      <Section id="why">
-        <SectionHeading eyebrow="لماذا نحن" subtitle="ثلاثة أسباب تجعل الترويج لطلاقة أسهل">
-          لماذا Fluentia؟
-        </SectionHeading>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px' }}>
-          {whyCards.map((card, i) => (
-            <motion.div
-              key={i}
-              initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-60px' }}
-              custom={i} variants={fadeUp}
-              style={{
-                background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)',
-                borderRadius: '20px', padding: '36px 28px',
-                transition: 'border-color 0.3s, transform 0.3s, background 0.3s',
-              }}
-              onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(56,189,248,0.4)'; e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.background = 'rgba(255,255,255,0.07)'; }}
-              onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)'; e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.background = 'rgba(255,255,255,0.04)'; }}
-            >
-              <div style={{
-                width: 56, height: 56, borderRadius: '16px',
-                background: 'rgba(56,189,248,0.1)', border: '1px solid rgba(56,189,248,0.2)',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                marginBottom: '16px',
-              }}>
-                <card.icon size={28} color={SKY} strokeWidth={2} />
-              </div>
-              <h3 style={{ fontFamily: 'Tajawal', fontWeight: 700, fontSize: '18px', color: T1, marginBottom: '8px' }}>
-                {card.title}
-              </h3>
-              <p style={{ fontFamily: 'Tajawal', fontSize: '14px', color: T2, lineHeight: 1.7 }}>
-                {card.desc}
-              </p>
-            </motion.div>
-          ))}
-        </div>
-      </Section>
+        {/* ══════ COMMISSION CALCULATOR ══════ */}
+        <Section id="calculator">
+          <SectionHeading eyebrow="حاسبة العمولة" subtitle="حرّك المؤشر لمعرفة دخلك الشهري والسنوي">
+            احسب دخلك المتوقع
+          </SectionHeading>
+          <CommissionCalculator theme="dark-blue" />
+        </Section>
 
-      {/* ══════ FAQ ══════ */}
-      <Section id="faq">
-        <SectionHeading eyebrow="أسئلة شائعة" subtitle="إجابات على أكثر الأسئلة تكراراً">
-          الأسئلة الشائعة
-        </SectionHeading>
-        <FAQList theme="dark-blue" />
-      </Section>
+        {/* ══════ WHY FLUENTIA ══════ */}
+        <Section id="why">
+          <SectionHeading eyebrow="لماذا نحن" subtitle="ثلاثة أسباب تجعل الترويج لطلاقة أسهل">
+            لماذا Fluentia؟
+          </SectionHeading>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px' }}>
+            {whyCards.map((card, i) => (
+              <motion.div
+                key={i}
+                initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-60px' }}
+                custom={i} variants={fadeUp}
+                style={{
+                  background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)',
+                  borderRadius: '20px', padding: '36px 28px',
+                  transition: 'border-color 0.3s, transform 0.3s, background 0.3s',
+                }}
+                onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(56,189,248,0.4)'; e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.background = 'rgba(255,255,255,0.07)'; }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)'; e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.background = 'rgba(255,255,255,0.04)'; }}
+              >
+                <div style={{
+                  width: 56, height: 56, borderRadius: '16px',
+                  background: 'rgba(56,189,248,0.1)', border: '1px solid rgba(56,189,248,0.2)',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  marginBottom: '16px',
+                }}>
+                  <card.icon size={28} color={SKY} strokeWidth={2} />
+                </div>
+                <h3 style={{ fontFamily: 'Tajawal', fontWeight: 700, fontSize: '18px', color: T1, marginBottom: '8px' }}>
+                  {card.title}
+                </h3>
+                <p style={{ fontFamily: 'Tajawal', fontSize: '14px', color: T2, lineHeight: 1.7 }}>
+                  {card.desc}
+                </p>
+              </motion.div>
+            ))}
+          </div>
+        </Section>
 
-      {/* ══════ APPLICATION FORM ══════ */}
-      <Section id="apply" style={{ padding: '96px 28px 60px' }}>
-        <SectionHeading eyebrow="انضم الآن" subtitle="العملية سريعة — دقيقتين فقط">
-          قدّم طلبك الآن
-        </SectionHeading>
-        <div style={{
-          maxWidth: '640px', margin: '0 auto',
-          background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.1)',
-          borderRadius: '24px', padding: '32px',
-        }}>
-          <ApplicationForm theme="dark-blue" />
-        </div>
-      </Section>
+        {/* ══════ FAQ ══════ */}
+        <Section id="faq">
+          <SectionHeading eyebrow="أسئلة شائعة" subtitle="إجابات على أكثر الأسئلة تكراراً">
+            الأسئلة الشائعة
+          </SectionHeading>
+          <FAQList theme="dark-blue" />
+        </Section>
+
+        {/* ══════ APPLICATION FORM ══════ */}
+        <Section id="apply" style={{ padding: '96px 28px 60px' }}>
+          <SectionHeading eyebrow="انضم الآن" subtitle="العملية سريعة — دقيقتين فقط">
+            قدّم طلبك الآن
+          </SectionHeading>
+          <div style={{
+            maxWidth: '640px', margin: '0 auto',
+            background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.1)',
+            borderRadius: '24px', padding: '32px',
+          }}>
+            <ApplicationForm theme="dark-blue" />
+          </div>
+        </Section>
+
+      </div>
 
       {/* ══════ FOOTER CTA ══════ */}
       <section style={{ padding: '60px 28px', textAlign: 'center', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
