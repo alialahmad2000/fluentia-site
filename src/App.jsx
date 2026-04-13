@@ -5,6 +5,9 @@ import { getStoredRef, getVisitorId } from './utils/affiliateTracking';
 const PartnersLanding = lazy(() => import('./pages/partners/PartnersLanding'));
 const PartnersSubmitted = lazy(() => import('./pages/partners/PartnersSubmitted'));
 const PartnersTerms = lazy(() => import('./pages/partners/PartnersTerms'));
+const PartnersV1 = lazy(() => import('./pages/partners/PartnersV1'));
+const PartnersV2 = lazy(() => import('./pages/partners/PartnersV2'));
+const PartnersV3 = lazy(() => import('./pages/partners/PartnersV3'));
 
 /* ─── UTM Source ─── */
 const UTM_MAP = {
@@ -641,6 +644,7 @@ section+section::before{content:'';display:block;height:1px;background:linear-gr
     <div className="desktop-nav" style={{display:"flex",alignItems:"center",gap:"16px"}}>
       <a href="#pricing" style={{color:"var(--t2)",fontSize:"13px",fontWeight:500}}>الباقات</a>
       <button onClick={()=>setShowQuiz(true)} style={{color:"var(--t2)",fontSize:"13px",fontWeight:500,background:"none",border:"none",cursor:"pointer",fontFamily:"'Tajawal',sans-serif"}}>اختبر مستواك</button>
+      <a href="/partners" style={{display:"flex",alignItems:"center",gap:"6px",color:"#D4AF37",fontSize:"13px",fontWeight:600,fontFamily:"'Tajawal',sans-serif"}}>🤝 كن شريكاً <span style={{fontSize:"10px",background:"rgba(212,175,55,0.15)",color:"#D4AF37",padding:"2px 8px",borderRadius:"100px"}}>جديد</span></a>
       <button onClick={()=>setDark(!dark)} style={{background:"var(--card)",border:"1px solid var(--card-b)",borderRadius:"50%",width:"32px",height:"32px",cursor:"pointer",fontSize:"16px",display:"flex",alignItems:"center",justifyContent:"center",transition:"all 0.3s"}}>{dark?"☀️":"🌙"}</button>
       <a href="https://app.fluentia.academy" target="_blank" rel="noopener noreferrer" style={{color:"var(--t2)",fontSize:"13px",fontWeight:500,padding:"6px 14px",borderRadius:"100px",border:"1px solid var(--card-b)",transition:"all 0.3s"}}>دخول الطلاب</a>
       <button onClick={goPrice} style={{background:SKY,color:"#060e1c",padding:"8px 20px",borderRadius:"100px",fontSize:"13px",fontWeight:800,border:"none",cursor:"pointer",fontFamily:"'Tajawal',sans-serif"}}>احجز لقاءك المجاني</button>
@@ -656,6 +660,7 @@ section+section::before{content:'';display:block;height:1px;background:linear-gr
     <a href="#pricing" onClick={()=>setMobileMenu(false)} style={{color:"var(--t2)",fontSize:"15px",fontWeight:600,padding:"8px 0",borderBottom:"1px solid var(--card-b)"}}>الباقات والأسعار</a>
     <button onClick={()=>{setShowQuiz(true);setMobileMenu(false)}} style={{color:"var(--t2)",fontSize:"15px",fontWeight:600,background:"none",border:"none",cursor:"pointer",fontFamily:"'Tajawal',sans-serif",padding:"8px 0",borderBottom:"1px solid var(--card-b)",textAlign:"right"}}>📊 اختبر مستواك</button>
     <a href="https://app.fluentia.academy" target="_blank" rel="noopener noreferrer" style={{color:"var(--t2)",fontSize:"15px",fontWeight:500,padding:"8px 0",borderBottom:"1px solid var(--card-b)",textAlign:"right",display:"block"}}>دخول الطلاب</a>
+    <a href="/partners" onClick={()=>setMobileMenu(false)} style={{display:"flex",alignItems:"center",gap:"8px",color:"#D4AF37",fontSize:"15px",fontWeight:600,padding:"8px 0",borderBottom:"1px solid var(--card-b)",fontFamily:"'Tajawal',sans-serif"}}>🤝 كن شريكاً <span style={{fontSize:"10px",background:"rgba(212,175,55,0.15)",color:"#D4AF37",padding:"2px 8px",borderRadius:"100px"}}>جديد</span></a>
     <button onClick={()=>{goPrice();setMobileMenu(false)}} style={{background:SKY,color:"#060e1c",padding:"12px 20px",borderRadius:"14px",fontSize:"15px",fontWeight:800,border:"none",cursor:"pointer",fontFamily:"'Tajawal',sans-serif",marginTop:"4px"}}>احجز لقاءك المجاني ←</button>
   </div>
 </nav>
@@ -1056,10 +1061,29 @@ section+section::before{content:'';display:block;height:1px;background:linear-gr
   </Reveal>
 </section>
 
+{/* PARTNERS BANNER */}
+<section style={{position:"relative",padding:"60px 28px",overflow:"hidden",background:"linear-gradient(135deg,#92400e,#b45309,#d97706)"}}>
+  <div style={{position:"absolute",inset:0,opacity:0.1,backgroundImage:"radial-gradient(circle at 20% 50%, white 0%, transparent 50%), radial-gradient(circle at 80% 50%, white 0%, transparent 50%)"}}/>
+  <div style={{...mx,position:"relative",textAlign:"center",color:"#fff"}}>
+    <div style={{display:"inline-flex",alignItems:"center",gap:"8px",background:"rgba(255,255,255,0.15)",backdropFilter:"blur(8px)",padding:"6px 16px",borderRadius:"100px",fontSize:"13px",marginBottom:"16px",fontFamily:"'Tajawal',sans-serif"}}>
+      <span>✨</span><span>برنامج جديد</span>
+    </div>
+    <h2 style={{fontSize:"clamp(26px,5vw,46px)",fontWeight:900,marginBottom:"12px",fontFamily:"'Tajawal',sans-serif",lineHeight:1.2}}>اربح 100 ريال عن كل طالب</h2>
+    <p style={{fontSize:"clamp(15px,2.5vw,20px)",color:"rgba(255,255,255,0.9)",marginBottom:"28px",maxWidth:"550px",marginInline:"auto",lineHeight:1.7,fontFamily:"'Tajawal',sans-serif"}}>انضم لبرنامج شركاء طلاقة. شارك رابطك الخاص واحصل على عمولة شهرية عن كل طالب ينضم عبرك.</p>
+    <a href="/partners" style={{display:"inline-flex",alignItems:"center",gap:"8px",background:"#fff",color:"#92400e",fontWeight:800,padding:"14px 32px",borderRadius:"100px",fontSize:"16px",boxShadow:"0 10px 40px rgba(0,0,0,0.2)",transition:"transform 0.2s",fontFamily:"'Tajawal',sans-serif"}} onMouseEnter={e=>e.currentTarget.style.transform="scale(1.05)"} onMouseLeave={e=>e.currentTarget.style.transform="scale(1)"}>اعرف أكثر عن البرنامج ←</a>
+  </div>
+</section>
+
 {/* FOOTER */}
-<footer style={{padding:"22px 28px",borderTop:"1px solid var(--divider)",background:"var(--bg2)"}}><div style={{...mx,display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:"10px"}}>
+<footer style={{padding:"22px 28px",borderTop:"1px solid var(--divider)",background:"var(--bg2)"}}><div style={{...mx,display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:"16px"}}>
   <span style={{fontFamily:"'Playfair Display',serif",fontSize:"18px",fontWeight:900,color:"var(--t1)"}}><span style={{color:SKY}}>F</span>luentia</span>
-  <div style={{display:"flex",gap:"16px",alignItems:"center"}}><a href={TT} target="_blank" rel="noopener noreferrer" style={{color:"var(--t3)",fontSize:"11px"}}>TikTok</a><a href={IG} target="_blank" rel="noopener noreferrer" style={{color:"var(--t3)",fontSize:"11px"}}>Instagram</a>{visitors&&<span style={{color:"var(--t4)",fontSize:"9px",direction:"ltr"}}>👁 {visitors.toLocaleString()}</span>}<span style={{color:"var(--t4)",fontSize:"10px"}}>© 2026</span></div>
+  <div style={{display:"flex",gap:"16px",alignItems:"center",flexWrap:"wrap"}}>
+    <a href="/partners" style={{color:"#D4AF37",fontSize:"12px",fontWeight:600,fontFamily:"'Tajawal',sans-serif"}}>برنامج الشركاء</a>
+    <a href="/partners/terms" style={{color:"var(--t3)",fontSize:"11px",fontFamily:"'Tajawal',sans-serif"}}>شروط الشركاء</a>
+    <a href="https://app.fluentia.academy/partner" target="_blank" rel="noopener noreferrer" style={{color:"var(--t3)",fontSize:"11px",fontFamily:"'Tajawal',sans-serif"}}>دخول الشركاء</a>
+    <span style={{width:"1px",height:"14px",background:"var(--divider)"}}/>
+    <a href={TT} target="_blank" rel="noopener noreferrer" style={{color:"var(--t3)",fontSize:"11px"}}>TikTok</a><a href={IG} target="_blank" rel="noopener noreferrer" style={{color:"var(--t3)",fontSize:"11px"}}>Instagram</a>{visitors&&<span style={{color:"var(--t4)",fontSize:"9px",direction:"ltr"}}>👁 {visitors.toLocaleString()}</span>}<span style={{color:"var(--t4)",fontSize:"10px"}}>© 2026</span>
+  </div>
 </div></footer>
 
 {/* BACK TO TOP */}
@@ -1413,6 +1437,9 @@ function AppRoutes(){
       <Route path="/partners" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#060e1c'}} />}><PartnersLanding /></Suspense>} />
       <Route path="/partners/submitted" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#060e1c'}} />}><PartnersSubmitted /></Suspense>} />
       <Route path="/partners/terms" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#060e1c'}} />}><PartnersTerms /></Suspense>} />
+      <Route path="/partners/v1" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#0A0A0A'}} />}><PartnersV1 /></Suspense>} />
+      <Route path="/partners/v2" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#1a0533'}} />}><PartnersV2 /></Suspense>} />
+      <Route path="/partners/v3" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#fff'}} />}><PartnersV3 /></Suspense>} />
     </Routes>
   );
 }
