@@ -70,7 +70,7 @@ export default function FAQList({ theme = 'dark-gold' }) {
                 >
                   <div style={{
                     padding: '0 20px 16px', fontSize: '14px', lineHeight: 1.8,
-                    color: t.muted, fontFamily: 'Tajawal',
+                    color: t.muted, fontFamily: 'Tajawal', whiteSpace: 'pre-line',
                   }}>
                     {item.a}
                   </div>
