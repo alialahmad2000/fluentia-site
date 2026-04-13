@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { BrowserRouter, Routes, Route, Link, useLocation } from "react-router-dom";
+import { getStoredRef, getVisitorId } from './utils/affiliateTracking';
 
 /* ─── UTM Source ─── */
 const UTM_MAP = {
@@ -44,6 +45,50 @@ const GOLD = "#fbbf24";
 const NAVY = "#1a2d50";
 const RED = "#ef4444";
 const GREEN = "#4ade80";
+
+/* ─── Save Lead to Supabase (with affiliate attribution) ─── */
+const SUPABASE_URL = 'https://nmjexpuycmqcxuxljier.supabase.co';
+const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5tamV4cHV5Y21xY3h1eGxqaWVyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMxMjU2MTgsImV4cCI6MjA4ODcwMTYxOH0.Lznjnw2Pmrr04tFjQD6hRfWp-12JlRagZaCmo59KG8A';
+
+async function saveLead({ name, phone, email, path, pkg, goal, source }) {
+  try {
+    const refCode = getStoredRef();
+    let affiliateId = null;
+    if (refCode) {
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/affiliates?ref_code=eq.${refCode}&status=eq.approved&select=id&limit=1`, {
+        headers: { apikey: SUPABASE_ANON, Authorization: `Bearer ${SUPABASE_ANON}` }
+      });
+      const affs = await res.json();
+      if (affs?.[0]?.id) affiliateId = affs[0].id;
+    }
+    const p = new URLSearchParams(window.location.search);
+    await fetch(`${SUPABASE_URL}/rest/v1/leads`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        apikey: SUPABASE_ANON,
+        Authorization: `Bearer ${SUPABASE_ANON}`,
+        Prefer: 'return=minimal',
+      },
+      body: JSON.stringify({
+        name: name || null,
+        phone: phone || null,
+        email: email || null,
+        path: path || null,
+        pkg: pkg || null,
+        goal: goal || null,
+        source: source || null,
+        utm_source: p.get('utm_source') || null,
+        utm_medium: p.get('utm_medium') || null,
+        utm_campaign: p.get('utm_campaign') || null,
+        ref_code: refCode || null,
+        affiliate_id: affiliateId,
+        first_click_at: refCode ? new Date().toISOString() : null,
+        visitor_id: getVisitorId(),
+      }),
+    });
+  } catch (e) { /* silent — don't break the form */ }
+}
 
 /* ─── Data ─── */
 const reviews = [
@@ -319,6 +364,8 @@ function RegForm({pkg:initPkg,path:initPath,onClose}){
     try{['Lead','CompleteRegistration'].forEach(ev=>fetch('https://nmjexpuycmqcxuxljier.supabase.co/functions/v1/tiktok-events-api',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({event_name:ev,event_id:eventId,external_id:form.name||'',url:window.location.href,user_agent:navigator.userAgent,value:750,currency:'SAR'})}).then(r=>r.json()).then(r=>console.log('[TikTok Events API]',ev,r)).catch(()=>{}))}catch(e){}
     // Google Analytics + Ads conversion
     if(window.gtag){window.gtag('event','generate_lead',{event_category:'registration',event_label:form.path||'general',value:1});window.gtag('event','conversion',{'send_to':'AW-9314838750','value':1.0,'currency':'SAR'})}
+    // Save lead to Supabase (with affiliate attribution, non-blocking)
+    saveLead({name:form.name,phone:null,email:null,path:form.path,pkg:form.pkg,goal:form.goal,source:utmRaw||'regform'});
     window.open(buildWA(form),"_blank");onClose()};
   const pickPath=(p)=>{u("path",p);setStep(2)};
   const pickPkg=(p)=>{u("pkg",p);setStep(3)};
@@ -1120,6 +1167,8 @@ ${goal?`الهدف: ${goal}\n`:""}المصدر: ${src}`;
     }
     // TikTok Events API (server-side, non-blocking)
     try{['Lead','CompleteRegistration'].forEach(ev=>fetch('https://nmjexpuycmqcxuxljier.supabase.co/functions/v1/tiktok-events-api',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({event_name:ev,event_id:eventId,phone:phone,external_id:phone,url:window.location.href,user_agent:navigator.userAgent,value:750,currency:'SAR'})}).then(r=>r.json()).then(r=>console.log('[TikTok Events API]',ev,r)).catch(()=>{}))}catch(e){}
+    // Save lead to Supabase (with affiliate attribution, non-blocking)
+    saveLead({name,phone,email:null,path,pkg,goal,source:utm.source||'start_page'});
     window.open("https://wa.me/966558669974?text="+encodeURIComponent(msg),"_blank");
     setSubmitted(true);
   }
