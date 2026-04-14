@@ -116,40 +116,36 @@ export default function PartnersV4() {
         <div aria-hidden="true" style={{ position: 'absolute', inset: 0, zIndex: 0, overflow: 'hidden', pointerEvents: 'none' }}>
 
           {/* Blob 1 — sky top-right */}
-          <motion.div
-            initial={{ x: 0, y: 0 }}
-            className="absolute -top-40 -right-40 w-[720px] h-[720px] rounded-full blur-3xl opacity-50"
-            style={{ background: 'radial-gradient(circle, rgba(56,189,248,0.8) 0%, rgba(56,189,248,0) 65%)' }}
-            animate={{ x: [0, 120, -40, 0], y: [0, 80, 30, 0] }}
-            transition={{ duration: 22, repeat: Infinity, ease: 'easeInOut' }}
-          />
+          <div style={{
+            position: 'absolute', top: '-160px', right: '-160px', width: 720, height: 720,
+            borderRadius: '50%', opacity: 0.5, filter: 'blur(48px)',
+            background: 'radial-gradient(circle, rgba(56,189,248,0.8) 0%, rgba(56,189,248,0) 65%)',
+            animation: 'v4blob1 22s ease-in-out infinite', zIndex: 0,
+          }} />
 
           {/* Blob 2 — cyan middle-left */}
-          <motion.div
-            initial={{ x: 0, y: 0 }}
-            className="absolute top-1/4 -left-60 w-[820px] h-[820px] rounded-full blur-3xl opacity-40"
-            style={{ background: 'radial-gradient(circle, rgba(14,165,233,0.8) 0%, rgba(14,165,233,0) 65%)' }}
-            animate={{ x: [0, 90, -30, 0], y: [0, -50, 70, 0] }}
-            transition={{ duration: 28, repeat: Infinity, ease: 'easeInOut' }}
-          />
+          <div style={{
+            position: 'absolute', top: '25%', left: '-240px', width: 820, height: 820,
+            borderRadius: '50%', opacity: 0.4, filter: 'blur(48px)',
+            background: 'radial-gradient(circle, rgba(14,165,233,0.8) 0%, rgba(14,165,233,0) 65%)',
+            animation: 'v4blob2 28s ease-in-out infinite', zIndex: 0,
+          }} />
 
           {/* Blob 3 — indigo bottom-center */}
-          <motion.div
-            initial={{ x: 0, y: 0 }}
-            className="absolute -bottom-44 left-1/3 w-[640px] h-[640px] rounded-full blur-3xl opacity-35"
-            style={{ background: 'radial-gradient(circle, rgba(99,102,241,0.8) 0%, rgba(99,102,241,0) 65%)' }}
-            animate={{ x: [0, -70, 50, 0], y: [0, -30, -60, 0] }}
-            transition={{ duration: 26, repeat: Infinity, ease: 'easeInOut' }}
-          />
+          <div style={{
+            position: 'absolute', bottom: '-176px', left: '33%', width: 640, height: 640,
+            borderRadius: '50%', opacity: 0.35, filter: 'blur(48px)',
+            background: 'radial-gradient(circle, rgba(99,102,241,0.8) 0%, rgba(99,102,241,0) 65%)',
+            animation: 'v4blob3 26s ease-in-out infinite', zIndex: 0,
+          }} />
 
           {/* Blob 4 — light sky top-left */}
-          <motion.div
-            initial={{ x: 0, y: 0 }}
-            className="absolute top-10 left-1/4 w-[500px] h-[500px] rounded-full blur-3xl opacity-30"
-            style={{ background: 'radial-gradient(circle, rgba(125,211,252,0.7) 0%, rgba(125,211,252,0) 65%)' }}
-            animate={{ x: [0, 60, -40, 0], y: [0, 40, -50, 0] }}
-            transition={{ duration: 24, repeat: Infinity, ease: 'easeInOut' }}
-          />
+          <div style={{
+            position: 'absolute', top: '40px', left: '25%', width: 500, height: 500,
+            borderRadius: '50%', opacity: 0.3, filter: 'blur(48px)',
+            background: 'radial-gradient(circle, rgba(125,211,252,0.7) 0%, rgba(125,211,252,0) 65%)',
+            animation: 'v4blob4 24s ease-in-out infinite', zIndex: 0,
+          }} />
 
           {/* Grain overlay for premium film texture */}
           <div
@@ -280,20 +276,18 @@ export default function PartnersV4() {
 
         {/* Subtle ambient BG for middle sections */}
         <div aria-hidden="true" style={{ position: 'absolute', inset: 0, overflow: 'hidden', pointerEvents: 'none', zIndex: 0 }}>
-          <motion.div
-            initial={{ x: 0, y: 0 }}
-            className="absolute top-[30%] -right-72 w-[900px] h-[900px] rounded-full blur-3xl opacity-15"
-            style={{ background: 'radial-gradient(circle, rgba(56,189,248,0.8) 0%, rgba(56,189,248,0) 60%)' }}
-            animate={{ x: [0, -60, 40, 0], y: [0, 80, -40, 0] }}
-            transition={{ duration: 40, repeat: Infinity, ease: 'easeInOut' }}
-          />
-          <motion.div
-            initial={{ x: 0, y: 0 }}
-            className="absolute top-[60%] -left-48 w-[700px] h-[700px] rounded-full blur-3xl opacity-[0.12]"
-            style={{ background: 'radial-gradient(circle, rgba(99,102,241,0.8) 0%, rgba(99,102,241,0) 60%)' }}
-            animate={{ x: [0, 50, -30, 0], y: [0, -40, 60, 0] }}
-            transition={{ duration: 36, repeat: Infinity, ease: 'easeInOut' }}
-          />
+          <div style={{
+            position: 'absolute', top: '30%', right: '-288px', width: 900, height: 900,
+            borderRadius: '50%', opacity: 0.15, filter: 'blur(48px)',
+            background: 'radial-gradient(circle, rgba(56,189,248,0.8) 0%, rgba(56,189,248,0) 60%)',
+            animation: 'v4blob5 40s ease-in-out infinite',
+          }} />
+          <div style={{
+            position: 'absolute', top: '60%', left: '-192px', width: 700, height: 700,
+            borderRadius: '50%', opacity: 0.12, filter: 'blur(48px)',
+            background: 'radial-gradient(circle, rgba(99,102,241,0.8) 0%, rgba(99,102,241,0) 60%)',
+            animation: 'v4blob6 36s ease-in-out infinite',
+          }} />
         </div>
 
         {/* ══════ HOW IT WORKS ══════ */}
@@ -423,6 +417,48 @@ export default function PartnersV4() {
         @keyframes pulse {
           0%, 100% { opacity: 1; }
           50% { opacity: 0.4; }
+        }
+        @keyframes v4blob1 {
+          0%   { transform: translate(0, 0); }
+          25%  { transform: translate(120px, 80px); }
+          50%  { transform: translate(-40px, 30px); }
+          75%  { transform: translate(60px, -20px); }
+          100% { transform: translate(0, 0); }
+        }
+        @keyframes v4blob2 {
+          0%   { transform: translate(0, 0); }
+          25%  { transform: translate(90px, -50px); }
+          50%  { transform: translate(-30px, 70px); }
+          75%  { transform: translate(50px, 20px); }
+          100% { transform: translate(0, 0); }
+        }
+        @keyframes v4blob3 {
+          0%   { transform: translate(0, 0); }
+          25%  { transform: translate(-70px, -30px); }
+          50%  { transform: translate(50px, -60px); }
+          75%  { transform: translate(-20px, -10px); }
+          100% { transform: translate(0, 0); }
+        }
+        @keyframes v4blob4 {
+          0%   { transform: translate(0, 0); }
+          25%  { transform: translate(60px, 40px); }
+          50%  { transform: translate(-40px, -50px); }
+          75%  { transform: translate(30px, -10px); }
+          100% { transform: translate(0, 0); }
+        }
+        @keyframes v4blob5 {
+          0%   { transform: translate(0, 0); }
+          25%  { transform: translate(-60px, 80px); }
+          50%  { transform: translate(40px, -40px); }
+          75%  { transform: translate(-20px, 30px); }
+          100% { transform: translate(0, 0); }
+        }
+        @keyframes v4blob6 {
+          0%   { transform: translate(0, 0); }
+          25%  { transform: translate(50px, -40px); }
+          50%  { transform: translate(-30px, 60px); }
+          75%  { transform: translate(20px, 10px); }
+          100% { transform: translate(0, 0); }
         }
       `}</style>
     </div>
