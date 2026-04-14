@@ -45,12 +45,12 @@ function Section({ id, children, className = '', style = {} }) {
 /* ──── Unified section heading with eyebrow ──── */
 function SectionHeading({ eyebrow, children, subtitle }) {
   return (
-    <div style={{ textAlign: 'center', marginBottom: '64px' }}>
+    <div style={{ textAlign: 'center', marginBottom: '64px', maxWidth: '640px', margin: '0 auto 64px' }}>
       {eyebrow && (
         <motion.div
           initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }}
           variants={fadeUp}
-          style={{ fontSize: '14px', fontWeight: 600, color: SKY, letterSpacing: '0.05em', marginBottom: '12px', fontFamily: 'Tajawal' }}
+          style={{ fontSize: '12px', fontWeight: 700, color: SKY, letterSpacing: '0.2em', marginBottom: '12px', fontFamily: 'Tajawal', textTransform: 'uppercase' }}
         >
           {eyebrow}
         </motion.div>
@@ -60,7 +60,7 @@ function SectionHeading({ eyebrow, children, subtitle }) {
         variants={fadeUp}
         style={{
           fontFamily: 'Tajawal', fontWeight: 900, fontSize: 'clamp(32px, 5vw, 48px)',
-          color: T1, marginBottom: subtitle ? '16px' : '0',
+          color: T1, marginBottom: subtitle ? '20px' : '0', lineHeight: 1.15,
         }}
       >
         {children}
@@ -69,7 +69,7 @@ function SectionHeading({ eyebrow, children, subtitle }) {
         <motion.p
           initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }}
           variants={fadeUp} custom={1}
-          style={{ fontSize: '18px', color: T2, maxWidth: '640px', margin: '0 auto', lineHeight: 1.7, fontFamily: 'Tajawal' }}
+          style={{ fontSize: '18px', color: 'rgba(255,255,255,0.7)', maxWidth: '640px', margin: '0 auto', lineHeight: 1.7, fontFamily: 'Tajawal' }}
         >
           {subtitle}
         </motion.p>
@@ -115,72 +115,59 @@ export default function PartnersV4() {
         {/* ========== ANIMATED BACKGROUND (absolute z-0 inside hero) ========== */}
         <div aria-hidden="true" style={{ position: 'absolute', inset: 0, zIndex: 0, overflow: 'hidden', pointerEvents: 'none' }}>
 
-          {/* ── Animated mesh gradient (V2's secret weapon, blue palette) ── */}
+          {/* ── Animated mesh gradient (blue palette, toned down) ── */}
           <div className="v4-hero-mesh" style={{ position: 'absolute', inset: 0, zIndex: 0 }} />
 
-          {/* Dark overlay for readability (matches V2) */}
-          <div style={{ position: 'absolute', inset: 0, zIndex: 1, background: 'rgba(6,14,28,0.35)' }} />
-
-          {/* ── 6 Amplified blobs with mix-blend-mode: screen ── */}
+          {/* ── 4 Calibrated blobs — soft-light blend, alpha 0.45 ── */}
 
           {/* Blob 1 — sky top-right */}
           <div style={{
-            position: 'absolute', top: '-200px', right: '-200px', width: 900, height: 900,
-            borderRadius: '50%', filter: 'blur(80px)',
-            background: 'radial-gradient(circle, rgba(56,189,248,0.85) 0%, rgba(56,189,248,0.3) 40%, rgba(56,189,248,0) 70%)',
-            mixBlendMode: 'screen', animation: 'v4blob1 18s ease-in-out infinite',
+            position: 'absolute', top: '-200px', right: '-200px', width: 720, height: 720,
+            borderRadius: '50%', filter: 'blur(90px)',
+            background: 'radial-gradient(circle, rgba(56,189,248,0.45) 0%, rgba(56,189,248,0) 70%)',
+            mixBlendMode: 'soft-light', animation: 'v4blob1 22s ease-in-out infinite',
             willChange: 'transform', zIndex: 2,
           }} />
 
           {/* Blob 2 — cyan middle-left */}
           <div style={{
-            position: 'absolute', top: '20%', left: '-280px', width: 950, height: 950,
-            borderRadius: '50%', filter: 'blur(80px)',
-            background: 'radial-gradient(circle, rgba(14,165,233,0.85) 0%, rgba(14,165,233,0.3) 40%, rgba(14,165,233,0) 70%)',
-            mixBlendMode: 'screen', animation: 'v4blob2 22s ease-in-out infinite',
+            position: 'absolute', top: '20%', left: '-280px', width: 820, height: 820,
+            borderRadius: '50%', filter: 'blur(90px)',
+            background: 'radial-gradient(circle, rgba(14,165,233,0.45) 0%, rgba(14,165,233,0) 70%)',
+            mixBlendMode: 'soft-light', animation: 'v4blob2 28s ease-in-out infinite',
             willChange: 'transform', zIndex: 2,
           }} />
 
           {/* Blob 3 — indigo bottom-center */}
           <div style={{
-            position: 'absolute', bottom: '-220px', left: '30%', width: 850, height: 850,
-            borderRadius: '50%', filter: 'blur(80px)',
-            background: 'radial-gradient(circle, rgba(99,102,241,0.8) 0%, rgba(99,102,241,0.25) 40%, rgba(99,102,241,0) 70%)',
-            mixBlendMode: 'screen', animation: 'v4blob3 26s ease-in-out infinite',
+            position: 'absolute', bottom: '-220px', left: '30%', width: 640, height: 640,
+            borderRadius: '50%', filter: 'blur(90px)',
+            background: 'radial-gradient(circle, rgba(99,102,241,0.45) 0%, rgba(99,102,241,0) 70%)',
+            mixBlendMode: 'soft-light', animation: 'v4blob3 26s ease-in-out infinite',
             willChange: 'transform', zIndex: 2,
           }} />
 
-          {/* Blob 4 — light sky top-left */}
+          {/* Blob 4 — bright blue top-left */}
           <div style={{
-            position: 'absolute', top: '-60px', left: '15%', width: 700, height: 700,
-            borderRadius: '50%', filter: 'blur(80px)',
-            background: 'radial-gradient(circle, rgba(125,211,252,0.8) 0%, rgba(125,211,252,0.25) 40%, rgba(125,211,252,0) 70%)',
-            mixBlendMode: 'screen', animation: 'v4blob4 30s ease-in-out infinite',
+            position: 'absolute', top: '-60px', left: '15%', width: 500, height: 500,
+            borderRadius: '50%', filter: 'blur(90px)',
+            background: 'radial-gradient(circle, rgba(59,130,246,0.45) 0%, rgba(59,130,246,0) 70%)',
+            mixBlendMode: 'soft-light', animation: 'v4blob4 24s ease-in-out infinite',
             willChange: 'transform', zIndex: 2,
           }} />
 
-          {/* Blob 5 — bright blue middle-right */}
-          <div style={{
-            position: 'absolute', top: '40%', right: '-100px', width: 800, height: 800,
-            borderRadius: '50%', filter: 'blur(80px)',
-            background: 'radial-gradient(circle, rgba(59,130,246,0.8) 0%, rgba(59,130,246,0.25) 40%, rgba(59,130,246,0) 70%)',
-            mixBlendMode: 'screen', animation: 'v4blob5 24s ease-in-out infinite',
-            willChange: 'transform', zIndex: 2,
-          }} />
-
-          {/* Blob 6 — electric cyan center */}
-          <div style={{
-            position: 'absolute', top: '30%', left: '40%', width: 650, height: 650,
-            borderRadius: '50%', filter: 'blur(80px)',
-            background: 'radial-gradient(circle, rgba(34,211,238,0.75) 0%, rgba(34,211,238,0.2) 40%, rgba(34,211,238,0) 70%)',
-            mixBlendMode: 'screen', animation: 'v4blob6 28s ease-in-out infinite',
-            willChange: 'transform', zIndex: 2,
-          }} />
+          {/* ── Navy overlay — re-establishes brand color over blobs ── */}
+          <div
+            style={{
+              position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 3,
+              background: 'linear-gradient(180deg, rgba(6,14,28,0.35) 0%, rgba(6,14,28,0.15) 50%, rgba(6,14,28,0.55) 100%)',
+            }}
+          />
 
           {/* Grain overlay for premium film texture */}
           <div
             style={{
-              position: 'absolute', inset: 0, opacity: 0.04, mixBlendMode: 'overlay', zIndex: 3,
+              position: 'absolute', inset: 0, opacity: 0.04, mixBlendMode: 'overlay', zIndex: 4,
               backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' /%3E%3C/svg%3E")`,
             }}
           />
@@ -188,7 +175,7 @@ export default function PartnersV4() {
           {/* Bottom fade into next section */}
           <div
             style={{
-              position: 'absolute', left: 0, right: 0, bottom: 0, height: '128px', zIndex: 4,
+              position: 'absolute', left: 0, right: 0, bottom: 0, height: '128px', zIndex: 5,
               background: `linear-gradient(to bottom, transparent, ${BG})`,
               pointerEvents: 'none',
             }}
@@ -204,22 +191,23 @@ export default function PartnersV4() {
             <Logo />
           </motion.div>
 
-          {/* Status chip — sky-blue */}
+          {/* Status chip — frosted glass for any BG */}
           <motion.div
             initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
             style={{
               display: 'inline-flex', alignItems: 'center', gap: '8px',
               padding: '6px 16px', borderRadius: '999px',
-              background: 'rgba(56,189,248,0.1)', border: '1px solid rgba(56,189,248,0.3)',
-              color: '#7dd3fc', fontSize: '14px', fontWeight: 500, marginBottom: '40px',
-              backdropFilter: 'blur(8px)',
+              background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(56,189,248,0.4)',
+              color: '#bae6fd', fontSize: '14px', fontWeight: 500, marginBottom: '40px',
+              backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)',
+              boxShadow: '0 4px 24px rgba(56,189,248,0.1)',
             }}
           >
-            <span style={{ width: 6, height: 6, borderRadius: '50%', background: SKY, display: 'inline-block', animation: 'pulse 2s infinite' }} />
+            <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#7dd3fc', display: 'inline-block', animation: 'pulse 2s infinite', boxShadow: '0 0 6px rgba(125,211,252,0.5)' }} />
             برنامج الشركاء مفتوح الآن
           </motion.div>
 
-          {/* Title — white with sky-blue highlight */}
+          {/* Title — white with sky-300 highlight + navy textShadow */}
           <motion.h1
             initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15, duration: 0.7 }}
             style={{
@@ -227,20 +215,29 @@ export default function PartnersV4() {
               fontSize: 'clamp(40px, 9vw, 84px)', fontWeight: 900, lineHeight: 1.1,
               color: '#FFFFFF',
               fontFamily: "'Tajawal', sans-serif",
+              textShadow: '0 2px 40px rgba(6,14,28,0.4)',
             }}
           >
-            كن شريكاً في<br /><span style={{ color: SKY }}>أكاديمية طلاقة</span>
+            كن شريكاً في<br />
+            <span style={{
+              color: '#7dd3fc',
+              textShadow: '0 2px 30px rgba(56,189,248,0.3)',
+            }}>
+              أكاديمية طلاقة
+            </span>
           </motion.h1>
 
-          {/* Subtitle */}
+          {/* Subtitle — bright white for readability */}
           <motion.p
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.35 }}
             style={{
               textAlign: 'center', margin: '0 auto 48px', maxWidth: '600px',
-              fontSize: 'clamp(16px, 3vw, 20px)', lineHeight: 1.7, color: T2,
+              fontSize: 'clamp(16px, 3vw, 20px)', lineHeight: 1.7,
+              color: 'rgba(255,255,255,0.9)',
+              filter: 'drop-shadow(0 1px 2px rgba(0,0,0,0.3))',
             }}
           >
-            اربح <span style={{ color: SKY, fontWeight: 700 }}>100 ريال</span> عن كل طالب ينضم عبر رابطك الخاص.
+            اربح <span style={{ color: '#7dd3fc', fontWeight: 700 }}>100 ريال</span> عن كل طالب ينضم عبر رابطك الخاص.
             <br />
             دفع شهري. شفافية كاملة.
           </motion.p>
@@ -299,26 +296,31 @@ export default function PartnersV4() {
         </div>
       </section>
 
-      {/* ══════════════════════════════════════════════════════════ */}
-      {/* REST OF PAGE — with subtle ambient background             */}
-      {/* ══════════════════════════════════════════════════════════ */}
-      <div style={{ position: 'relative' }}>
+      {/* ═══════ Transition band: animated hero → solid body ═══════ */}
+      <div
+        aria-hidden="true"
+        style={{
+          height: '128px', pointerEvents: 'none',
+          background: `linear-gradient(to bottom, transparent, ${BG})`,
+        }}
+      />
 
-        {/* Subtle ambient BG for middle sections */}
-        <div aria-hidden="true" style={{ position: 'absolute', inset: 0, overflow: 'hidden', pointerEvents: 'none', zIndex: 0 }}>
+      {/* ══════════════════════════════════════════════════════════ */}
+      {/* REST OF PAGE — solid navy base + subtle static ambient    */}
+      {/* ══════════════════════════════════════════════════════════ */}
+      <div style={{ position: 'relative', background: BG }}>
+
+        {/* Static ambient glow for depth — NOT animated, low alpha */}
+        <div aria-hidden="true" style={{ position: 'absolute', inset: 0, overflow: 'hidden', pointerEvents: 'none', zIndex: 0, opacity: 0.4 }}>
           <div style={{
-            position: 'absolute', top: '25%', right: '-300px', width: 1000, height: 1000,
-            borderRadius: '50%', filter: 'blur(80px)',
-            background: 'radial-gradient(circle, rgba(56,189,248,0.5) 0%, rgba(56,189,248,0.15) 40%, rgba(56,189,248,0) 65%)',
-            mixBlendMode: 'screen', animation: 'v4blob5 40s ease-in-out infinite',
-            willChange: 'transform',
+            position: 'absolute', top: '20%', right: '-400px', width: 1000, height: 1000,
+            borderRadius: '50%', filter: 'blur(120px)',
+            background: 'radial-gradient(circle, rgba(56,189,248,0.15) 0%, rgba(56,189,248,0) 60%)',
           }} />
           <div style={{
-            position: 'absolute', top: '55%', left: '-250px', width: 900, height: 900,
-            borderRadius: '50%', filter: 'blur(80px)',
-            background: 'radial-gradient(circle, rgba(99,102,241,0.5) 0%, rgba(99,102,241,0.15) 40%, rgba(99,102,241,0) 65%)',
-            mixBlendMode: 'screen', animation: 'v4blob6 36s ease-in-out infinite',
-            willChange: 'transform',
+            position: 'absolute', bottom: '10%', left: '-300px', width: 800, height: 800,
+            borderRadius: '50%', filter: 'blur(120px)',
+            background: 'radial-gradient(circle, rgba(99,102,241,0.12) 0%, rgba(99,102,241,0) 60%)',
           }} />
         </div>
 
@@ -334,28 +336,30 @@ export default function PartnersV4() {
                 initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-60px' }}
                 custom={i} variants={fadeUp}
                 style={{
-                  background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)',
-                  borderRadius: '20px', padding: '32px 24px', textAlign: 'center',
-                  transition: 'border-color 0.3s, background 0.3s',
+                  background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)',
+                  borderRadius: '24px', padding: '32px 24px', textAlign: 'center',
+                  transition: 'border-color 0.3s, background 0.3s, transform 0.3s, box-shadow 0.3s',
                 }}
-                onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(56,189,248,0.4)'; e.currentTarget.style.background = 'rgba(255,255,255,0.07)'; }}
-                onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)'; e.currentTarget.style.background = 'rgba(255,255,255,0.04)'; }}
+                onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(56,189,248,0.4)'; e.currentTarget.style.background = 'rgba(255,255,255,0.06)'; e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.boxShadow = '0 20px 40px rgba(56,189,248,0.1)'; }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)'; e.currentTarget.style.background = 'rgba(255,255,255,0.04)'; e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; }}
               >
-                {/* Number circle — sky-blue */}
+                {/* Icon circle — sky-blue */}
                 <div style={{
-                  width: 64, height: 64, borderRadius: '50%', margin: '0 auto 16px',
-                  border: '2px solid rgba(56,189,248,0.4)', background: 'rgba(56,189,248,0.1)',
+                  width: 56, height: 56, borderRadius: '16px', margin: '0 auto 20px',
+                  border: '1px solid rgba(56,189,248,0.3)', background: 'rgba(56,189,248,0.15)',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  fontSize: '28px', fontWeight: 900, color: SKY, fontFamily: 'Tajawal',
+                  transition: 'background 0.3s',
                 }}>
-                  {step.num}
+                  <step.icon size={28} color="#7dd3fc" strokeWidth={2} />
                 </div>
-                {/* Icon */}
-                <step.icon size={28} color={SKY} style={{ margin: '0 auto 12px', display: 'block' }} />
+                {/* Step number */}
+                <div style={{ fontSize: '14px', fontWeight: 700, color: SKY, marginBottom: '8px', fontFamily: 'Tajawal' }}>
+                  الخطوة {step.num}
+                </div>
                 <h3 style={{ fontFamily: 'Tajawal', fontWeight: 700, fontSize: '18px', color: T1, marginBottom: '8px' }}>
                   {step.title}
                 </h3>
-                <p style={{ fontFamily: 'Tajawal', fontSize: '14px', color: T2, lineHeight: 1.7 }}>
+                <p style={{ fontFamily: 'Tajawal', fontSize: '14px', color: 'rgba(255,255,255,0.7)', lineHeight: 1.7 }}>
                   {step.desc}
                 </p>
               </motion.div>
@@ -383,25 +387,25 @@ export default function PartnersV4() {
                 initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-60px' }}
                 custom={i} variants={fadeUp}
                 style={{
-                  background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)',
-                  borderRadius: '20px', padding: '36px 28px',
-                  transition: 'border-color 0.3s, transform 0.3s, background 0.3s',
+                  background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)',
+                  borderRadius: '24px', padding: '36px 28px',
+                  transition: 'border-color 0.3s, transform 0.3s, background 0.3s, box-shadow 0.3s',
                 }}
-                onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(56,189,248,0.4)'; e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.background = 'rgba(255,255,255,0.07)'; }}
-                onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)'; e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.background = 'rgba(255,255,255,0.04)'; }}
+                onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(56,189,248,0.4)'; e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.background = 'rgba(255,255,255,0.06)'; e.currentTarget.style.boxShadow = '0 20px 40px rgba(56,189,248,0.1)'; }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)'; e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.background = 'rgba(255,255,255,0.04)'; e.currentTarget.style.boxShadow = 'none'; }}
               >
                 <div style={{
                   width: 56, height: 56, borderRadius: '16px',
-                  background: 'rgba(56,189,248,0.1)', border: '1px solid rgba(56,189,248,0.2)',
+                  background: 'rgba(56,189,248,0.15)', border: '1px solid rgba(56,189,248,0.3)',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  marginBottom: '16px',
+                  marginBottom: '20px', transition: 'background 0.3s',
                 }}>
-                  <card.icon size={28} color={SKY} strokeWidth={2} />
+                  <card.icon size={28} color="#7dd3fc" strokeWidth={2} />
                 </div>
                 <h3 style={{ fontFamily: 'Tajawal', fontWeight: 700, fontSize: '18px', color: T1, marginBottom: '8px' }}>
                   {card.title}
                 </h3>
-                <p style={{ fontFamily: 'Tajawal', fontSize: '14px', color: T2, lineHeight: 1.7 }}>
+                <p style={{ fontFamily: 'Tajawal', fontSize: '14px', color: 'rgba(255,255,255,0.7)', lineHeight: 1.7 }}>
                   {card.desc}
                 </p>
               </motion.div>
@@ -424,8 +428,9 @@ export default function PartnersV4() {
           </SectionHeading>
           <div style={{
             maxWidth: '640px', margin: '0 auto',
-            background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.1)',
+            background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)',
             borderRadius: '24px', padding: '32px',
+            backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)',
           }}>
             <ApplicationForm theme="dark-blue" />
           </div>
@@ -434,7 +439,7 @@ export default function PartnersV4() {
       </div>
 
       {/* ══════ FOOTER CTA ══════ */}
-      <section style={{ padding: '60px 28px', textAlign: 'center', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+      <section style={{ padding: '60px 28px', textAlign: 'center', borderTop: '1px solid rgba(255,255,255,0.06)', background: BG }}>
         <p style={{ fontFamily: 'Tajawal', fontSize: '14px', color: T2, marginBottom: '12px' }}>
           بالانضمام أنت توافق على{' '}
           <a href="/partners/terms" style={{ color: SKY, textDecoration: 'underline' }}>شروط وأحكام برنامج الشركاء</a>.
@@ -452,9 +457,9 @@ export default function PartnersV4() {
         }
         .v4-hero-mesh {
           background:
-            radial-gradient(ellipse 80% 60% at 20% 30%, #0ea5e9 0%, transparent 55%),
-            radial-gradient(ellipse 70% 50% at 80% 20%, #3b82f6 0%, transparent 55%),
-            radial-gradient(ellipse 60% 55% at 50% 80%, #06b6d4 0%, transparent 55%);
+            radial-gradient(ellipse 80% 60% at 20% 30%, rgba(14,165,233,0.4) 0%, transparent 55%),
+            radial-gradient(ellipse 70% 50% at 80% 20%, rgba(59,130,246,0.35) 0%, transparent 55%),
+            radial-gradient(ellipse 60% 55% at 50% 80%, rgba(6,182,212,0.3) 0%, transparent 55%);
           background-size: 200% 200%, 200% 200%, 200% 200%;
           animation: v4meshRotate 12s ease-in-out infinite;
         }
@@ -491,20 +496,6 @@ export default function PartnersV4() {
           25%  { transform: translate3d(100px, 70px, 0) scale(1.1); }
           50%  { transform: translate3d(-70px, -80px, 0) scale(0.95); }
           75%  { transform: translate3d(50px, -20px, 0) scale(1.08); }
-          100% { transform: translate3d(0, 0, 0) scale(1); }
-        }
-        @keyframes v4blob5 {
-          0%   { transform: translate3d(0, 0, 0) scale(1); }
-          25%  { transform: translate3d(-90px, 110px, 0) scale(1.06); }
-          50%  { transform: translate3d(60px, -60px, 0) scale(0.94); }
-          75%  { transform: translate3d(-30px, 50px, 0) scale(1.04); }
-          100% { transform: translate3d(0, 0, 0) scale(1); }
-        }
-        @keyframes v4blob6 {
-          0%   { transform: translate3d(0, 0, 0) scale(1); }
-          25%  { transform: translate3d(80px, -60px, 0) scale(1.08); }
-          50%  { transform: translate3d(-50px, 90px, 0) scale(0.96); }
-          75%  { transform: translate3d(30px, 20px, 0) scale(1.03); }
           100% { transform: translate3d(0, 0, 0) scale(1); }
         }
       `}</style>
