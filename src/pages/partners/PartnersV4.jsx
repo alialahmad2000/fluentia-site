@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import {
   Handshake, Link2, Share2, Wallet, TrendingUp, ShieldCheck,
   Users, Target, Star, ArrowLeft, Check, ChevronDown,
@@ -80,8 +80,6 @@ function SectionHeading({ eyebrow, children, subtitle }) {
 
 /* ═══════════════════════════════════════════════ */
 export default function PartnersV4() {
-  const prefersReducedMotion = useReducedMotion();
-
   /* Load fonts */
   useEffect(() => {
     if (!document.getElementById('v4-fonts')) {
@@ -117,70 +115,40 @@ export default function PartnersV4() {
         {/* ========== ANIMATED BACKGROUND (absolute z-0 inside hero) ========== */}
         <div aria-hidden="true" style={{ position: 'absolute', inset: 0, zIndex: 0, overflow: 'hidden', pointerEvents: 'none' }}>
 
-          {/* Blob 1 — sky-blue, top-right */}
+          {/* Blob 1 — sky top-right */}
           <motion.div
-            style={{
-              position: 'absolute', width: '720px', height: '720px', borderRadius: '50%',
-              top: '-150px', right: '-180px',
-              background: 'radial-gradient(circle, rgba(56,189,248,0.55) 0%, rgba(56,189,248,0.12) 40%, rgba(56,189,248,0) 70%)',
-              filter: 'blur(90px)',
-              willChange: 'transform',
-            }}
-            animate={prefersReducedMotion ? {} : {
-              x: [0, 120, -40, 0],
-              y: [0, 80, 30, 0],
-              scale: [1, 1.1, 0.95, 1],
-            }}
-            transition={{ duration: 24, repeat: Infinity, ease: 'easeInOut' }}
+            initial={{ x: 0, y: 0 }}
+            className="absolute -top-40 -right-40 w-[720px] h-[720px] rounded-full blur-3xl opacity-50"
+            style={{ background: 'radial-gradient(circle, rgba(56,189,248,0.8) 0%, rgba(56,189,248,0) 65%)' }}
+            animate={{ x: [0, 120, -40, 0], y: [0, 80, 30, 0] }}
+            transition={{ duration: 22, repeat: Infinity, ease: 'easeInOut' }}
           />
 
-          {/* Blob 2 — deeper blue, middle-left */}
+          {/* Blob 2 — cyan middle-left */}
           <motion.div
-            style={{
-              position: 'absolute', width: '820px', height: '820px', borderRadius: '50%',
-              top: '25%', left: '-240px',
-              background: 'radial-gradient(circle, rgba(14,165,233,0.45) 0%, rgba(14,165,233,0.10) 40%, rgba(14,165,233,0) 70%)',
-              filter: 'blur(100px)',
-              willChange: 'transform',
-            }}
-            animate={prefersReducedMotion ? {} : {
-              x: [0, 90, -30, 0],
-              y: [0, -50, 70, 0],
-              scale: [1, 1.05, 1.08, 1],
-            }}
-            transition={{ duration: 30, repeat: Infinity, ease: 'easeInOut' }}
-          />
-
-          {/* Blob 3 — indigo, bottom-center */}
-          <motion.div
-            style={{
-              position: 'absolute', width: '640px', height: '640px', borderRadius: '50%',
-              bottom: '-180px', left: '28%',
-              background: 'radial-gradient(circle, rgba(99,102,241,0.40) 0%, rgba(99,102,241,0.10) 40%, rgba(99,102,241,0) 70%)',
-              filter: 'blur(110px)',
-              willChange: 'transform',
-            }}
-            animate={prefersReducedMotion ? {} : {
-              x: [0, -70, 50, 0],
-              y: [0, -30, -60, 0],
-            }}
+            initial={{ x: 0, y: 0 }}
+            className="absolute top-1/4 -left-60 w-[820px] h-[820px] rounded-full blur-3xl opacity-40"
+            style={{ background: 'radial-gradient(circle, rgba(14,165,233,0.8) 0%, rgba(14,165,233,0) 65%)' }}
+            animate={{ x: [0, 90, -30, 0], y: [0, -50, 70, 0] }}
             transition={{ duration: 28, repeat: Infinity, ease: 'easeInOut' }}
           />
 
-          {/* Blob 4 — extra accent, sky (top-left for symmetry) */}
+          {/* Blob 3 — indigo bottom-center */}
           <motion.div
-            style={{
-              position: 'absolute', width: '500px', height: '500px', borderRadius: '50%',
-              top: '10%', left: '15%',
-              background: 'radial-gradient(circle, rgba(125,211,252,0.30) 0%, rgba(125,211,252,0) 65%)',
-              filter: 'blur(80px)',
-              willChange: 'transform',
-            }}
-            animate={prefersReducedMotion ? {} : {
-              x: [0, 60, -40, 0],
-              y: [0, 40, -50, 0],
-            }}
+            initial={{ x: 0, y: 0 }}
+            className="absolute -bottom-44 left-1/3 w-[640px] h-[640px] rounded-full blur-3xl opacity-35"
+            style={{ background: 'radial-gradient(circle, rgba(99,102,241,0.8) 0%, rgba(99,102,241,0) 65%)' }}
+            animate={{ x: [0, -70, 50, 0], y: [0, -30, -60, 0] }}
             transition={{ duration: 26, repeat: Infinity, ease: 'easeInOut' }}
+          />
+
+          {/* Blob 4 — light sky top-left */}
+          <motion.div
+            initial={{ x: 0, y: 0 }}
+            className="absolute top-10 left-1/4 w-[500px] h-[500px] rounded-full blur-3xl opacity-30"
+            style={{ background: 'radial-gradient(circle, rgba(125,211,252,0.7) 0%, rgba(125,211,252,0) 65%)' }}
+            animate={{ x: [0, 60, -40, 0], y: [0, 40, -50, 0] }}
+            transition={{ duration: 24, repeat: Infinity, ease: 'easeInOut' }}
           />
 
           {/* Grain overlay for premium film texture */}
@@ -202,12 +170,7 @@ export default function PartnersV4() {
         </div>
         {/* ========== end animated BG ========== */}
 
-        {/* TEMPORARY DEBUG — remove after verify */}
-        <div style={{ position: 'absolute', top: '16px', left: '16px', zIndex: 50, fontSize: '12px', background: 'rgba(239,68,68,0.8)', color: '#fff', padding: '4px 8px', borderRadius: '6px' }}>
-          BG_ACTIVE_{new Date().getSeconds()}
-        </div>
-
-        {/* ========== HERO CONTENT (above BG at z-10) ========== */}
+{/* ========== HERO CONTENT (above BG at z-10) ========== */}
         <div style={{ maxWidth: '900px', width: '100%', textAlign: 'center', margin: '0 auto', position: 'relative', zIndex: 10 }}>
 
           {/* Logo — forced LTR */}
@@ -318,31 +281,17 @@ export default function PartnersV4() {
         {/* Subtle ambient BG for middle sections */}
         <div aria-hidden="true" style={{ position: 'absolute', inset: 0, overflow: 'hidden', pointerEvents: 'none', zIndex: 0 }}>
           <motion.div
-            style={{
-              position: 'absolute', width: '900px', height: '900px', borderRadius: '50%',
-              top: '30%', right: '-300px',
-              background: 'radial-gradient(circle, rgba(56,189,248,0.15) 0%, rgba(56,189,248,0) 60%)',
-              filter: 'blur(140px)',
-              willChange: 'transform',
-            }}
-            animate={prefersReducedMotion ? {} : {
-              x: [0, -60, 40, 0],
-              y: [0, 80, -40, 0],
-            }}
+            initial={{ x: 0, y: 0 }}
+            className="absolute top-[30%] -right-72 w-[900px] h-[900px] rounded-full blur-3xl opacity-15"
+            style={{ background: 'radial-gradient(circle, rgba(56,189,248,0.8) 0%, rgba(56,189,248,0) 60%)' }}
+            animate={{ x: [0, -60, 40, 0], y: [0, 80, -40, 0] }}
             transition={{ duration: 40, repeat: Infinity, ease: 'easeInOut' }}
           />
           <motion.div
-            style={{
-              position: 'absolute', width: '700px', height: '700px', borderRadius: '50%',
-              top: '60%', left: '-200px',
-              background: 'radial-gradient(circle, rgba(99,102,241,0.12) 0%, rgba(99,102,241,0) 60%)',
-              filter: 'blur(140px)',
-              willChange: 'transform',
-            }}
-            animate={prefersReducedMotion ? {} : {
-              x: [0, 50, -30, 0],
-              y: [0, -40, 60, 0],
-            }}
+            initial={{ x: 0, y: 0 }}
+            className="absolute top-[60%] -left-48 w-[700px] h-[700px] rounded-full blur-3xl opacity-[0.12]"
+            style={{ background: 'radial-gradient(circle, rgba(99,102,241,0.8) 0%, rgba(99,102,241,0) 60%)' }}
+            animate={{ x: [0, 50, -30, 0], y: [0, -40, 60, 0] }}
             transition={{ duration: 36, repeat: Infinity, ease: 'easeInOut' }}
           />
         </div>
