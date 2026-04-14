@@ -115,42 +115,72 @@ export default function PartnersV4() {
         {/* ========== ANIMATED BACKGROUND (absolute z-0 inside hero) ========== */}
         <div aria-hidden="true" style={{ position: 'absolute', inset: 0, zIndex: 0, overflow: 'hidden', pointerEvents: 'none' }}>
 
+          {/* ── Animated mesh gradient (V2's secret weapon, blue palette) ── */}
+          <div className="v4-hero-mesh" style={{ position: 'absolute', inset: 0, zIndex: 0 }} />
+
+          {/* Dark overlay for readability (matches V2) */}
+          <div style={{ position: 'absolute', inset: 0, zIndex: 1, background: 'rgba(6,14,28,0.35)' }} />
+
+          {/* ── 6 Amplified blobs with mix-blend-mode: screen ── */}
+
           {/* Blob 1 — sky top-right */}
           <div style={{
-            position: 'absolute', top: '-160px', right: '-160px', width: 720, height: 720,
-            borderRadius: '50%', opacity: 0.5, filter: 'blur(48px)',
-            background: 'radial-gradient(circle, rgba(56,189,248,0.8) 0%, rgba(56,189,248,0) 65%)',
-            animation: 'v4blob1 22s ease-in-out infinite', zIndex: 0,
+            position: 'absolute', top: '-200px', right: '-200px', width: 900, height: 900,
+            borderRadius: '50%', filter: 'blur(80px)',
+            background: 'radial-gradient(circle, rgba(56,189,248,0.85) 0%, rgba(56,189,248,0.3) 40%, rgba(56,189,248,0) 70%)',
+            mixBlendMode: 'screen', animation: 'v4blob1 18s ease-in-out infinite',
+            willChange: 'transform', zIndex: 2,
           }} />
 
           {/* Blob 2 — cyan middle-left */}
           <div style={{
-            position: 'absolute', top: '25%', left: '-240px', width: 820, height: 820,
-            borderRadius: '50%', opacity: 0.4, filter: 'blur(48px)',
-            background: 'radial-gradient(circle, rgba(14,165,233,0.8) 0%, rgba(14,165,233,0) 65%)',
-            animation: 'v4blob2 28s ease-in-out infinite', zIndex: 0,
+            position: 'absolute', top: '20%', left: '-280px', width: 950, height: 950,
+            borderRadius: '50%', filter: 'blur(80px)',
+            background: 'radial-gradient(circle, rgba(14,165,233,0.85) 0%, rgba(14,165,233,0.3) 40%, rgba(14,165,233,0) 70%)',
+            mixBlendMode: 'screen', animation: 'v4blob2 22s ease-in-out infinite',
+            willChange: 'transform', zIndex: 2,
           }} />
 
           {/* Blob 3 — indigo bottom-center */}
           <div style={{
-            position: 'absolute', bottom: '-176px', left: '33%', width: 640, height: 640,
-            borderRadius: '50%', opacity: 0.35, filter: 'blur(48px)',
-            background: 'radial-gradient(circle, rgba(99,102,241,0.8) 0%, rgba(99,102,241,0) 65%)',
-            animation: 'v4blob3 26s ease-in-out infinite', zIndex: 0,
+            position: 'absolute', bottom: '-220px', left: '30%', width: 850, height: 850,
+            borderRadius: '50%', filter: 'blur(80px)',
+            background: 'radial-gradient(circle, rgba(99,102,241,0.8) 0%, rgba(99,102,241,0.25) 40%, rgba(99,102,241,0) 70%)',
+            mixBlendMode: 'screen', animation: 'v4blob3 26s ease-in-out infinite',
+            willChange: 'transform', zIndex: 2,
           }} />
 
           {/* Blob 4 — light sky top-left */}
           <div style={{
-            position: 'absolute', top: '40px', left: '25%', width: 500, height: 500,
-            borderRadius: '50%', opacity: 0.3, filter: 'blur(48px)',
-            background: 'radial-gradient(circle, rgba(125,211,252,0.7) 0%, rgba(125,211,252,0) 65%)',
-            animation: 'v4blob4 24s ease-in-out infinite', zIndex: 0,
+            position: 'absolute', top: '-60px', left: '15%', width: 700, height: 700,
+            borderRadius: '50%', filter: 'blur(80px)',
+            background: 'radial-gradient(circle, rgba(125,211,252,0.8) 0%, rgba(125,211,252,0.25) 40%, rgba(125,211,252,0) 70%)',
+            mixBlendMode: 'screen', animation: 'v4blob4 30s ease-in-out infinite',
+            willChange: 'transform', zIndex: 2,
+          }} />
+
+          {/* Blob 5 — bright blue middle-right */}
+          <div style={{
+            position: 'absolute', top: '40%', right: '-100px', width: 800, height: 800,
+            borderRadius: '50%', filter: 'blur(80px)',
+            background: 'radial-gradient(circle, rgba(59,130,246,0.8) 0%, rgba(59,130,246,0.25) 40%, rgba(59,130,246,0) 70%)',
+            mixBlendMode: 'screen', animation: 'v4blob5 24s ease-in-out infinite',
+            willChange: 'transform', zIndex: 2,
+          }} />
+
+          {/* Blob 6 — electric cyan center */}
+          <div style={{
+            position: 'absolute', top: '30%', left: '40%', width: 650, height: 650,
+            borderRadius: '50%', filter: 'blur(80px)',
+            background: 'radial-gradient(circle, rgba(34,211,238,0.75) 0%, rgba(34,211,238,0.2) 40%, rgba(34,211,238,0) 70%)',
+            mixBlendMode: 'screen', animation: 'v4blob6 28s ease-in-out infinite',
+            willChange: 'transform', zIndex: 2,
           }} />
 
           {/* Grain overlay for premium film texture */}
           <div
             style={{
-              position: 'absolute', inset: 0, opacity: 0.04, mixBlendMode: 'overlay',
+              position: 'absolute', inset: 0, opacity: 0.04, mixBlendMode: 'overlay', zIndex: 3,
               backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' /%3E%3C/svg%3E")`,
             }}
           />
@@ -158,7 +188,7 @@ export default function PartnersV4() {
           {/* Bottom fade into next section */}
           <div
             style={{
-              position: 'absolute', left: 0, right: 0, bottom: 0, height: '128px',
+              position: 'absolute', left: 0, right: 0, bottom: 0, height: '128px', zIndex: 4,
               background: `linear-gradient(to bottom, transparent, ${BG})`,
               pointerEvents: 'none',
             }}
@@ -277,16 +307,18 @@ export default function PartnersV4() {
         {/* Subtle ambient BG for middle sections */}
         <div aria-hidden="true" style={{ position: 'absolute', inset: 0, overflow: 'hidden', pointerEvents: 'none', zIndex: 0 }}>
           <div style={{
-            position: 'absolute', top: '30%', right: '-288px', width: 900, height: 900,
-            borderRadius: '50%', opacity: 0.15, filter: 'blur(48px)',
-            background: 'radial-gradient(circle, rgba(56,189,248,0.8) 0%, rgba(56,189,248,0) 60%)',
-            animation: 'v4blob5 40s ease-in-out infinite',
+            position: 'absolute', top: '25%', right: '-300px', width: 1000, height: 1000,
+            borderRadius: '50%', filter: 'blur(80px)',
+            background: 'radial-gradient(circle, rgba(56,189,248,0.5) 0%, rgba(56,189,248,0.15) 40%, rgba(56,189,248,0) 65%)',
+            mixBlendMode: 'screen', animation: 'v4blob5 40s ease-in-out infinite',
+            willChange: 'transform',
           }} />
           <div style={{
-            position: 'absolute', top: '60%', left: '-192px', width: 700, height: 700,
-            borderRadius: '50%', opacity: 0.12, filter: 'blur(48px)',
-            background: 'radial-gradient(circle, rgba(99,102,241,0.8) 0%, rgba(99,102,241,0) 60%)',
-            animation: 'v4blob6 36s ease-in-out infinite',
+            position: 'absolute', top: '55%', left: '-250px', width: 900, height: 900,
+            borderRadius: '50%', filter: 'blur(80px)',
+            background: 'radial-gradient(circle, rgba(99,102,241,0.5) 0%, rgba(99,102,241,0.15) 40%, rgba(99,102,241,0) 65%)',
+            mixBlendMode: 'screen', animation: 'v4blob6 36s ease-in-out infinite',
+            willChange: 'transform',
           }} />
         </div>
 
@@ -418,47 +450,62 @@ export default function PartnersV4() {
           0%, 100% { opacity: 1; }
           50% { opacity: 0.4; }
         }
+        .v4-hero-mesh {
+          background:
+            radial-gradient(ellipse 80% 60% at 20% 30%, #0ea5e9 0%, transparent 55%),
+            radial-gradient(ellipse 70% 50% at 80% 20%, #3b82f6 0%, transparent 55%),
+            radial-gradient(ellipse 60% 55% at 50% 80%, #06b6d4 0%, transparent 55%);
+          background-size: 200% 200%, 200% 200%, 200% 200%;
+          animation: v4meshRotate 12s ease-in-out infinite;
+        }
+        @keyframes v4meshRotate {
+          0%   { background-position: 0% 50%, 100% 50%, 50% 100%; }
+          25%  { background-position: 100% 0%, 0% 100%, 50% 0%; }
+          50%  { background-position: 100% 100%, 50% 0%, 0% 50%; }
+          75%  { background-position: 0% 100%, 100% 0%, 100% 50%; }
+          100% { background-position: 0% 50%, 100% 50%, 50% 100%; }
+        }
         @keyframes v4blob1 {
-          0%   { transform: translate(0, 0); }
-          25%  { transform: translate(120px, 80px); }
-          50%  { transform: translate(-40px, 30px); }
-          75%  { transform: translate(60px, -20px); }
-          100% { transform: translate(0, 0); }
+          0%   { transform: translate3d(0, 0, 0) scale(1); }
+          25%  { transform: translate3d(180px, 120px, 0) scale(1.1); }
+          50%  { transform: translate3d(-60px, 40px, 0) scale(0.95); }
+          75%  { transform: translate3d(100px, -30px, 0) scale(1.05); }
+          100% { transform: translate3d(0, 0, 0) scale(1); }
         }
         @keyframes v4blob2 {
-          0%   { transform: translate(0, 0); }
-          25%  { transform: translate(90px, -50px); }
-          50%  { transform: translate(-30px, 70px); }
-          75%  { transform: translate(50px, 20px); }
-          100% { transform: translate(0, 0); }
+          0%   { transform: translate3d(0, 0, 0) scale(1); }
+          25%  { transform: translate3d(140px, -80px, 0) scale(1.08); }
+          50%  { transform: translate3d(-50px, 100px, 0) scale(0.92); }
+          75%  { transform: translate3d(80px, 30px, 0) scale(1.05); }
+          100% { transform: translate3d(0, 0, 0) scale(1); }
         }
         @keyframes v4blob3 {
-          0%   { transform: translate(0, 0); }
-          25%  { transform: translate(-70px, -30px); }
-          50%  { transform: translate(50px, -60px); }
-          75%  { transform: translate(-20px, -10px); }
-          100% { transform: translate(0, 0); }
+          0%   { transform: translate3d(0, 0, 0) scale(1); }
+          25%  { transform: translate3d(-120px, -50px, 0) scale(1.12); }
+          50%  { transform: translate3d(80px, -90px, 0) scale(0.9); }
+          75%  { transform: translate3d(-40px, -20px, 0) scale(1.06); }
+          100% { transform: translate3d(0, 0, 0) scale(1); }
         }
         @keyframes v4blob4 {
-          0%   { transform: translate(0, 0); }
-          25%  { transform: translate(60px, 40px); }
-          50%  { transform: translate(-40px, -50px); }
-          75%  { transform: translate(30px, -10px); }
-          100% { transform: translate(0, 0); }
+          0%   { transform: translate3d(0, 0, 0) scale(1); }
+          25%  { transform: translate3d(100px, 70px, 0) scale(1.1); }
+          50%  { transform: translate3d(-70px, -80px, 0) scale(0.95); }
+          75%  { transform: translate3d(50px, -20px, 0) scale(1.08); }
+          100% { transform: translate3d(0, 0, 0) scale(1); }
         }
         @keyframes v4blob5 {
-          0%   { transform: translate(0, 0); }
-          25%  { transform: translate(-60px, 80px); }
-          50%  { transform: translate(40px, -40px); }
-          75%  { transform: translate(-20px, 30px); }
-          100% { transform: translate(0, 0); }
+          0%   { transform: translate3d(0, 0, 0) scale(1); }
+          25%  { transform: translate3d(-90px, 110px, 0) scale(1.06); }
+          50%  { transform: translate3d(60px, -60px, 0) scale(0.94); }
+          75%  { transform: translate3d(-30px, 50px, 0) scale(1.04); }
+          100% { transform: translate3d(0, 0, 0) scale(1); }
         }
         @keyframes v4blob6 {
-          0%   { transform: translate(0, 0); }
-          25%  { transform: translate(50px, -40px); }
-          50%  { transform: translate(-30px, 60px); }
-          75%  { transform: translate(20px, 10px); }
-          100% { transform: translate(0, 0); }
+          0%   { transform: translate3d(0, 0, 0) scale(1); }
+          25%  { transform: translate3d(80px, -60px, 0) scale(1.08); }
+          50%  { transform: translate3d(-50px, 90px, 0) scale(0.96); }
+          75%  { transform: translate3d(30px, 20px, 0) scale(1.03); }
+          100% { transform: translate3d(0, 0, 0) scale(1); }
         }
       `}</style>
     </div>
