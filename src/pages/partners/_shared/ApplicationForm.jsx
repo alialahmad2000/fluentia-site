@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import supabase from '../../../utils/supabase';
-import { CheckCircle2, AlertCircle, Loader2, Send } from 'lucide-react';
+import { CheckCircle2, AlertCircle, Loader2, Send, ChevronDown } from 'lucide-react';
 
 const THEMES = {
   'dark-gold': {
@@ -105,37 +105,123 @@ export default function ApplicationForm({ theme = 'dark-gold' }) {
     setSubmitError('');
     if (!validate()) return;
     setSubmitting(true);
-    const refCode = form.ref_code.toUpperCase().trim().replace(/[^A-Z0-9]/g, '');
 
-    const { data: existingCode } = await supabase.from('affiliates').select('id').eq('ref_code', refCode).maybeSingle();
-    if (existingCode) { setSubmitError('الكود مستخدم من شخص آخر، اختر كود مختلف'); setSubmitting(false); return; }
+    try {
+      const refCode = form.ref_code.toUpperCase().trim().replace(/[^A-Z0-9]/g, '');
+      const email = form.email.trim().toLowerCase();
+      const phoneClean = form.phone.replace(/\s+/g, '').trim();
 
-    const phoneClean = form.phone.replace(/\s/g, '');
-    const { data: dup } = await supabase.from('affiliates').select('id').or(`phone.eq.${phoneClean},email.eq.${form.email.trim().toLowerCase()}`).in('status', ['pending', 'approved']).maybeSingle();
-    if (dup) { setSubmitError('يوجد طلب سابق بهذا الرقم/الإيميل، راسلنا على الواتساب للمتابعة'); setSubmitting(false); return; }
+      // ── ref_code uniqueness ──
+      const { data: existingCode, error: codeCheckError } = await supabase
+        .from('affiliates')
+        .select('id')
+        .eq('ref_code', refCode)
+        .maybeSingle();
+      if (codeCheckError) {
+        console.error('[affiliate] code check error:', codeCheckError);
+        setSubmitError(`خطأ في التحقق من الكود: ${codeCheckError.message}`);
+        setSubmitting(false);
+        return;
+      }
+      if (existingCode) {
+        setSubmitError('الكود مستخدم من شخص آخر، اختر كود مختلف');
+        setSubmitting(false);
+        return;
+      }
 
-    const social_handles = {};
-    if (form.twitter.trim()) social_handles.twitter = form.twitter.trim();
-    if (form.instagram.trim()) social_handles.instagram = form.instagram.trim();
-    if (form.tiktok.trim()) social_handles.tiktok = form.tiktok.trim();
+      // ── email duplicate (separate query — avoids .or() pitfalls when
+      // one field might be empty or contain special chars) ──
+      const { data: existingEmail, error: emailCheckError } = await supabase
+        .from('affiliates')
+        .select('id, status')
+        .eq('email', email)
+        .in('status', ['pending', 'approved'])
+        .maybeSingle();
+      if (emailCheckError) {
+        console.error('[affiliate] email check error:', emailCheckError);
+        // Non-fatal — continue; the DB unique constraint is the real guard.
+      }
+      if (existingEmail) {
+        setSubmitError('يوجد طلب سابق بهذا الإيميل، راسلنا على الواتساب للمتابعة');
+        setSubmitting(false);
+        return;
+      }
 
-    const { error: insertError } = await supabase.from('affiliates').insert({
-      full_name: form.full_name.trim(),
-      phone: phoneClean,
-      email: form.email.trim().toLowerCase(),
-      city: form.city.trim(),
-      ref_code: refCode,
-      social_handles,
-      followers_count: form.followers_count ? parseInt(form.followers_count, 10) : null,
-      motivation: form.motivation.trim(),
-      source: form.source,
-      status: 'pending',
-      terms_accepted_at: new Date().toISOString(),
-    });
+      // ── phone duplicate ──
+      const { data: existingPhone, error: phoneCheckError } = await supabase
+        .from('affiliates')
+        .select('id, status')
+        .eq('phone', phoneClean)
+        .in('status', ['pending', 'approved'])
+        .maybeSingle();
+      if (phoneCheckError) {
+        console.error('[affiliate] phone check error:', phoneCheckError);
+      }
+      if (existingPhone) {
+        setSubmitError('يوجد طلب سابق بهذا الرقم، راسلنا على الواتساب للمتابعة');
+        setSubmitting(false);
+        return;
+      }
 
-    setSubmitting(false);
-    if (insertError) { setSubmitError('حدث خطأ، حاول مرة ثانية'); return; }
-    window.location.href = `/partners/submitted?name=${encodeURIComponent(form.full_name.trim())}`;
+      const social_handles = {};
+      if (form.twitter.trim()) social_handles.twitter = form.twitter.trim();
+      if (form.instagram.trim()) social_handles.instagram = form.instagram.trim();
+      if (form.tiktok.trim()) social_handles.tiktok = form.tiktok.trim();
+
+      const payload = {
+        full_name: form.full_name.trim(),
+        phone: phoneClean,
+        email,
+        city: form.city.trim(),
+        ref_code: refCode,
+        social_handles,
+        followers_count: form.followers_count ? parseInt(form.followers_count, 10) : null,
+        motivation: form.motivation.trim(),
+        source: form.source,
+        status: 'pending',
+        terms_accepted_at: new Date().toISOString(),
+      };
+
+      console.log('[affiliate] inserting payload:', payload);
+
+      const { data: inserted, error: insertError } = await supabase
+        .from('affiliates')
+        .insert(payload)
+        .select()
+        .single();
+
+      if (insertError) {
+        console.error('[affiliate] INSERT FAILED:', insertError);
+        console.error('[affiliate] error details:', {
+          message: insertError.message,
+          details: insertError.details,
+          hint: insertError.hint,
+          code: insertError.code,
+        });
+
+        const msg = (insertError.message || '').toLowerCase();
+        if (insertError.code === '23505') {
+          setSubmitError('الكود أو الإيميل أو الرقم مستخدم مسبقاً');
+        } else if (insertError.code === '42501' || msg.includes('rls') || msg.includes('policy') || msg.includes('permission')) {
+          setSubmitError('خطأ في صلاحيات النظام، راسلنا على الواتساب');
+        } else if (insertError.code === '23502') {
+          setSubmitError(`حقل مطلوب ناقص: ${insertError.details || insertError.message}`);
+        } else if (insertError.code === '23514') {
+          setSubmitError(`قيمة غير صحيحة: ${insertError.details || insertError.message}`);
+        } else {
+          setSubmitError(`خطأ: ${insertError.message}`);
+        }
+        setSubmitting(false);
+        return;
+      }
+
+      console.log('[affiliate] INSERT SUCCESS:', inserted);
+      window.location.href = `/partners/submitted?name=${encodeURIComponent(form.full_name.trim())}`;
+    } catch (unexpected) {
+      console.error('[affiliate] UNEXPECTED ERROR:', unexpected);
+      setSubmitError(`خطأ غير متوقع: ${unexpected?.message || 'راسلنا على الواتساب'}`);
+      setSubmitting(false);
+    }
   };
 
   const inputStyle = {
@@ -193,13 +279,42 @@ export default function ApplicationForm({ theme = 'dark-gold' }) {
         {/* Source */}
         <div>
           <label style={labelStyle}>من وين سمعت عنا؟</label>
-          <select value={form.source} onChange={e => set('source', e.target.value)} style={{ ...inputStyle, cursor: 'pointer' }}>
-            <option value="">اختر...</option>
-            <option value="صديق">صديق</option>
-            <option value="سوشال ميديا">سوشال ميديا</option>
-            <option value="إعلان">إعلان</option>
-            <option value="غير ذلك">غير ذلك</option>
-          </select>
+          <div style={{ position: 'relative' }}>
+            <select
+              value={form.source}
+              onChange={e => set('source', e.target.value)}
+              style={{
+                ...inputStyle,
+                cursor: 'pointer',
+                // `colorScheme: 'dark'` forces Chrome/Edge to render the popup
+                // with a dark theme, otherwise it defaults to OS colors and
+                // the options can appear white-on-white on light-mode OSes.
+                colorScheme: 'dark',
+                appearance: 'none',
+                WebkitAppearance: 'none',
+                MozAppearance: 'none',
+                // Add space for the chevron on the logical end (left in RTL).
+                paddingInlineEnd: '40px',
+              }}
+            >
+              <option value="" style={{ background: '#0f172a', color: '#ffffff' }}>اختر...</option>
+              <option value="صديق" style={{ background: '#0f172a', color: '#ffffff' }}>صديق</option>
+              <option value="سوشال ميديا" style={{ background: '#0f172a', color: '#ffffff' }}>سوشال ميديا</option>
+              <option value="إعلان" style={{ background: '#0f172a', color: '#ffffff' }}>إعلان</option>
+              <option value="غير ذلك" style={{ background: '#0f172a', color: '#ffffff' }}>غير ذلك</option>
+            </select>
+            <ChevronDown
+              size={18}
+              style={{
+                position: 'absolute',
+                insetInlineStart: '14px',
+                top: '50%',
+                transform: 'translateY(-50%)',
+                color: t.muted,
+                pointerEvents: 'none',
+              }}
+            />
+          </div>
           {errors.source && <p style={errorStyle}>{errors.source}</p>}
         </div>
 
