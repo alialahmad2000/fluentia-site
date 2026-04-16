@@ -1,65 +1,11 @@
 import { useState } from 'react';
 import supabase from '../../../utils/supabase';
-import { CheckCircle2, AlertCircle, Loader2, Send, ChevronDown } from 'lucide-react';
+import { CheckCircle2, AlertCircle, Loader2, Send } from 'lucide-react';
 
-const THEMES = {
-  'dark-gold': {
-    bg: '#0A0A0A',
-    cardBg: 'rgba(39,39,42,0.5)',
-    border: 'rgba(63,63,70,1)',
-    focusRing: 'rgba(212,175,55,0.4)',
-    text: '#FAFAFA',
-    muted: '#A1A1AA',
-    inputBg: 'rgba(24,24,27,1)',
-    btnBg: 'linear-gradient(135deg,#D4AF37,#C9A961)',
-    btnText: '#000',
-    errorText: '#f87171',
-    accent: '#D4AF37',
-  },
-  'dark-blue': {
-    bg: 'transparent',
-    cardBg: 'transparent',
-    border: 'rgba(255,255,255,0.15)',
-    focusRing: 'rgba(56,189,248,0.3)',
-    text: '#FAFAFA',
-    muted: '#94A3B8',
-    inputBg: 'rgba(255,255,255,0.06)',
-    btnBg: '#0ea5e9',
-    btnText: '#fff',
-    errorText: '#f87171',
-    accent: '#38bdf8',
-  },
-  gradient: {
-    bg: 'transparent',
-    cardBg: 'rgba(255,255,255,0.08)',
-    border: 'rgba(255,255,255,0.15)',
-    focusRing: 'rgba(139,92,246,0.5)',
-    text: '#fff',
-    muted: 'rgba(255,255,255,0.7)',
-    inputBg: 'rgba(255,255,255,0.06)',
-    btnBg: 'linear-gradient(135deg,#7C3AED,#3B82F6)',
-    btnText: '#fff',
-    errorText: '#fca5a5',
-    accent: '#8B5CF6',
-  },
-  clean: {
-    bg: '#fff',
-    cardBg: '#fff',
-    border: '#E5E7EB',
-    focusRing: 'rgba(14,165,233,0.3)',
-    text: '#111827',
-    muted: '#6B7280',
-    inputBg: '#F9FAFB',
-    btnBg: 'linear-gradient(135deg,#0EA5E9,#0284C7)',
-    btnText: '#fff',
-    errorText: '#EF4444',
-    accent: '#0EA5E9',
-  },
-};
-
-export default function ApplicationForm({ theme = 'dark-gold' }) {
-  const t = THEMES[theme] || THEMES['dark-gold'];
-
+// The `theme` prop is kept for call-site backward compatibility but the
+// redesigned form is locked to the dark-sky palette used on /partners.
+// eslint-disable-next-line no-unused-vars
+export default function ApplicationForm({ theme: _theme }) {
   const [form, setForm] = useState({
     full_name: '', phone: '', email: '', city: '', ref_code: '',
     twitter: '', instagram: '', tiktok: '',
@@ -89,7 +35,7 @@ export default function ApplicationForm({ theme = 'dark-gold' }) {
     const phoneClean = form.phone.replace(/\s/g, '');
     if (!/^(\+966|05)\d{8}$/.test(phoneClean)) e.phone = 'رقم سعودي غير صحيح';
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) e.email = 'إيميل غير صحيح';
-    if (!form.city.trim()) e.city = 'مطلوب';
+    // city is now optional per redesign
     if (!/^[A-Za-z0-9]{4,12}$/.test(form.ref_code)) e.ref_code = 'من 4 إلى 12 حرف/رقم إنجليزي فقط';
     if (refCodeStatus === 'taken') e.ref_code = 'الكود مستخدم، اختر كود آخر';
     if (!form.twitter.trim() && !form.instagram.trim() && !form.tiktok.trim()) e.social = 'أدخل حساب واحد على الأقل';
@@ -172,7 +118,7 @@ export default function ApplicationForm({ theme = 'dark-gold' }) {
         full_name: form.full_name.trim(),
         phone: phoneClean,
         email,
-        city: form.city.trim(),
+        city: form.city.trim() || null,
         ref_code: refCode,
         social_handles,
         followers_count: form.followers_count ? parseInt(form.followers_count, 10) : null,
@@ -224,143 +170,276 @@ export default function ApplicationForm({ theme = 'dark-gold' }) {
     }
   };
 
-  const inputStyle = {
-    width: '100%', padding: '12px 16px', borderRadius: '12px', fontSize: '14px',
-    outline: 'none', background: t.inputBg, color: t.text,
-    border: `1px solid ${t.border}`, fontFamily: 'Tajawal', transition: 'border-color 0.2s',
-  };
-
-  const labelStyle = { display: 'block', fontSize: '14px', fontWeight: 600, marginBottom: '6px', color: t.text, fontFamily: 'Tajawal' };
-  const errorStyle = { color: t.errorText, fontSize: '12px', marginTop: '4px', fontFamily: 'Tajawal' };
+  // Shared Tailwind chains (kept as constants to avoid 30-line className soup on every input).
+  const inputClass =
+    'w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-white ' +
+    'placeholder:text-white/25 focus:border-sky-400 focus:bg-white/10 ' +
+    'focus:ring-2 focus:ring-sky-500/20 focus:outline-none transition-all';
+  const labelClass = 'block text-sm font-medium text-white/80 mb-1.5';
+  const optionalTag = <span className="text-white/30 text-xs font-normal">(اختياري)</span>;
+  const errorLine = (msg) =>
+    msg ? <p className="text-red-300 text-xs mt-1">{msg}</p> : null;
 
   return (
-    <form onSubmit={handleSubmit} noValidate style={{ fontFamily: 'Tajawal' }}>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-        <Field label="الاسم الكامل" value={form.full_name} onChange={v => set('full_name', v)} error={errors.full_name} placeholder="مثال: محمد العتيبي" {...{ inputStyle, labelStyle, errorStyle }} />
-        <Field label="الجوال" value={form.phone} onChange={v => set('phone', v)} error={errors.phone} placeholder="05XXXXXXXX" dir="ltr" {...{ inputStyle, labelStyle, errorStyle }} />
-        <Field label="الإيميل" value={form.email} onChange={v => set('email', v)} error={errors.email} placeholder="email@example.com" dir="ltr" type="email" {...{ inputStyle, labelStyle, errorStyle }} />
-        <Field label="المدينة" value={form.city} onChange={v => set('city', v)} error={errors.city} placeholder="مثال: الرياض" {...{ inputStyle, labelStyle, errorStyle }} />
+    <form
+      onSubmit={handleSubmit}
+      noValidate
+      dir="rtl"
+      className="font-[Tajawal] space-y-8"
+    >
+      {/* ═══ GROUP 1: Basic Info ═══ */}
+      <div>
+        <div className="flex items-center gap-2 mb-5">
+          <span className="flex items-center justify-center w-7 h-7 rounded-full bg-sky-500/20 text-sky-400 text-sm font-bold">١</span>
+          <h3 className="text-lg font-bold text-white">معلوماتك الأساسية</h3>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {/* Full name */}
+          <div>
+            <label className={labelClass}>الاسم الكامل</label>
+            <input
+              type="text"
+              value={form.full_name}
+              onChange={e => set('full_name', e.target.value)}
+              placeholder="مثال: محمد العتيبي"
+              className={`${inputClass} text-right`}
+            />
+            {errorLine(errors.full_name)}
+          </div>
+
+          {/* Phone */}
+          <div>
+            <label className={labelClass}>الجوال</label>
+            <input
+              type="tel"
+              value={form.phone}
+              onChange={e => set('phone', e.target.value)}
+              placeholder="05XXXXXXXX"
+              dir="ltr"
+              className={`${inputClass} text-right`}
+            />
+            {errorLine(errors.phone)}
+          </div>
+
+          {/* Email */}
+          <div>
+            <label className={labelClass}>الإيميل</label>
+            <input
+              type="email"
+              value={form.email}
+              onChange={e => set('email', e.target.value)}
+              placeholder="email@example.com"
+              dir="ltr"
+              className={`${inputClass} text-right`}
+            />
+            {errorLine(errors.email)}
+          </div>
+
+          {/* City — optional */}
+          <div>
+            <label className={labelClass}>
+              المدينة {optionalTag}
+            </label>
+            <input
+              type="text"
+              value={form.city}
+              onChange={e => set('city', e.target.value)}
+              placeholder="مثال: الرياض"
+              className={`${inputClass} text-right`}
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* ═══ GROUP 2: Social ═══ */}
+      <div>
+        <div className="flex items-center gap-2 mb-2">
+          <span className="flex items-center justify-center w-7 h-7 rounded-full bg-sky-500/20 text-sky-400 text-sm font-bold">٢</span>
+          <h3 className="text-lg font-bold text-white">حسابات التواصل</h3>
+        </div>
+        <p className="text-white/40 text-sm mb-5 mr-9">حساب واحد على الأقل مطلوب — عشان نعرف جمهورك</p>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div>
+            <label className="block text-xs font-medium text-white/60 mb-1.5">Twitter / X</label>
+            <input
+              type="text"
+              value={form.twitter}
+              onChange={e => set('twitter', e.target.value)}
+              placeholder="@username"
+              dir="ltr"
+              className={`${inputClass} text-right`}
+            />
+          </div>
+          <div>
+            <label className="block text-xs font-medium text-white/60 mb-1.5">Instagram</label>
+            <input
+              type="text"
+              value={form.instagram}
+              onChange={e => set('instagram', e.target.value)}
+              placeholder="@username"
+              dir="ltr"
+              className={`${inputClass} text-right`}
+            />
+          </div>
+          <div>
+            <label className="block text-xs font-medium text-white/60 mb-1.5">TikTok</label>
+            <input
+              type="text"
+              value={form.tiktok}
+              onChange={e => set('tiktok', e.target.value)}
+              placeholder="@username"
+              dir="ltr"
+              className={`${inputClass} text-right`}
+            />
+          </div>
+        </div>
+        {errorLine(errors.social)}
+
+        <div className="mt-4">
+          <label className={labelClass}>
+            مجموع المتابعين تقريباً {optionalTag}
+          </label>
+          <input
+            type="number"
+            value={form.followers_count}
+            onChange={e => set('followers_count', e.target.value)}
+            placeholder="مثال: 5000"
+            dir="ltr"
+            className={`${inputClass} md:w-1/2 text-right`}
+          />
+        </div>
+      </div>
+
+      {/* ═══ GROUP 3: Final ═══ */}
+      <div>
+        <div className="flex items-center gap-2 mb-2">
+          <span className="flex items-center justify-center w-7 h-7 rounded-full bg-sky-500/20 text-sky-400 text-sm font-bold">٣</span>
+          <h3 className="text-lg font-bold text-white">الأخير!</h3>
+        </div>
+        <p className="text-white/40 text-sm mb-5 mr-9">اختر كودك الفريد واكتب لنا ليش تبي تنضم</p>
 
         {/* Ref code */}
-        <div>
-          <label style={labelStyle}>الكود المطلوب (ref_code)</label>
-          <div style={{ position: 'relative' }}>
-            <input value={form.ref_code} onChange={e => { const v = e.target.value.replace(/[^A-Za-z0-9]/g, '').toUpperCase(); set('ref_code', v); }} onBlur={() => checkRefCode(form.ref_code)} maxLength={12} style={inputStyle} placeholder="مثال: AHMED10" dir="ltr" onFocus={e => { e.target.style.borderColor = t.accent; }} onBlurCapture={e => { e.target.style.borderColor = t.border; }} />
-            {refCodeStatus === 'checking' && <Loader2 size={16} style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', color: t.accent, animation: 'spin 1s linear infinite' }} />}
-            {refCodeStatus === 'available' && <CheckCircle2 size={16} style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', color: '#4ade80' }} />}
-            {refCodeStatus === 'taken' && <AlertCircle size={16} style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', color: '#f87171' }} />}
+        <div className="mb-4">
+          <label className={labelClass}>كود الإحالة الخاص فيك</label>
+          <div className="relative md:w-1/2">
+            <input
+              type="text"
+              value={form.ref_code}
+              onChange={e => {
+                const v = e.target.value.replace(/[^A-Za-z0-9]/g, '').toUpperCase().slice(0, 12);
+                set('ref_code', v);
+              }}
+              onBlur={() => checkRefCode(form.ref_code)}
+              placeholder="مثال: AHMED10"
+              dir="ltr"
+              maxLength={12}
+              minLength={4}
+              className={`${inputClass} font-mono tracking-wider uppercase text-right pl-10`}
+            />
+            {refCodeStatus === 'checking' && (
+              <Loader2 size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-sky-400 animate-spin" />
+            )}
+            {refCodeStatus === 'available' && (
+              <CheckCircle2 size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-green-400" />
+            )}
+            {refCodeStatus === 'taken' && (
+              <AlertCircle size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-red-400" />
+            )}
           </div>
-          <p style={{ fontSize: '12px', marginTop: '4px', color: t.muted }}>من 4 إلى 12 حرف/رقم إنجليزي فقط</p>
-          {refCodeStatus === 'taken' && <p style={errorStyle}>الكود مستخدم، اختر كود آخر</p>}
-          {errors.ref_code && <p style={errorStyle}>{errors.ref_code}</p>}
+          <p className="text-white/30 text-xs mt-1.5">
+            من 4 إلى 12 حرف/رقم إنجليزي — هذا الكود يظهر في رابطك:{' '}
+            <span className="text-sky-400/60 font-mono">
+              fluentia.academy/?ref=
+              <span className="text-sky-300">{form.ref_code || '...'}</span>
+            </span>
+          </p>
+          {errorLine(errors.ref_code)}
         </div>
-
-        {/* Social */}
-        <div>
-          <label style={labelStyle}>حسابات التواصل الاجتماعي (حساب واحد على الأقل)</label>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-            <input value={form.twitter} onChange={e => set('twitter', e.target.value)} style={inputStyle} placeholder="Twitter / X" dir="ltr" />
-            <input value={form.instagram} onChange={e => set('instagram', e.target.value)} style={inputStyle} placeholder="Instagram" dir="ltr" />
-            <input value={form.tiktok} onChange={e => set('tiktok', e.target.value)} style={inputStyle} placeholder="TikTok" dir="ltr" />
-          </div>
-          {errors.social && <p style={errorStyle}>{errors.social}</p>}
-        </div>
-
-        <Field label={<>تقريباً كم يبلغ مجموع متابعيك؟ <span style={{ fontWeight: 400, color: t.muted }}>(اختياري)</span></>} value={form.followers_count} onChange={v => set('followers_count', v)} placeholder="مثال: 5000" dir="ltr" type="number" {...{ inputStyle, labelStyle, errorStyle }} />
 
         {/* Motivation */}
-        <div>
-          <label style={labelStyle}>ليش تبي تنضم لبرنامج شركاء طلاقة؟</label>
-          <textarea value={form.motivation} onChange={e => set('motivation', e.target.value)} rows={4} style={{ ...inputStyle, resize: 'none' }} placeholder="اكتب هنا... (20 إلى 500 حرف)" />
-          <p style={{ fontSize: '12px', marginTop: '4px', color: t.muted }}>{form.motivation.length}/500</p>
-          {errors.motivation && <p style={errorStyle}>{errors.motivation}</p>}
+        <div className="mb-4">
+          <label className={labelClass}>ليش تبي تنضم لبرنامج شركاء طلاقة؟</label>
+          <textarea
+            value={form.motivation}
+            onChange={e => set('motivation', e.target.value)}
+            rows={3}
+            maxLength={500}
+            placeholder="مثال: عندي جمهور مهتم بتطوير الذات وتعلم اللغات..."
+            className={`${inputClass} resize-none text-right`}
+          />
+          <p className="text-white/30 text-xs mt-1 text-left">{form.motivation.length}/500</p>
+          {errorLine(errors.motivation)}
         </div>
 
         {/* Source */}
-        <div>
-          <label style={labelStyle}>من وين سمعت عنا؟</label>
-          <div style={{ position: 'relative' }}>
-            <select
-              value={form.source}
-              onChange={e => set('source', e.target.value)}
-              style={{
-                ...inputStyle,
-                cursor: 'pointer',
-                // `colorScheme: 'dark'` forces Chrome/Edge to render the popup
-                // with a dark theme, otherwise it defaults to OS colors and
-                // the options can appear white-on-white on light-mode OSes.
-                colorScheme: 'dark',
-                appearance: 'none',
-                WebkitAppearance: 'none',
-                MozAppearance: 'none',
-                // Add space for the chevron on the logical end (left in RTL).
-                paddingInlineEnd: '40px',
-              }}
-            >
-              <option value="" style={{ background: '#0f172a', color: '#ffffff' }}>اختر...</option>
-              <option value="صديق" style={{ background: '#0f172a', color: '#ffffff' }}>صديق</option>
-              <option value="سوشال ميديا" style={{ background: '#0f172a', color: '#ffffff' }}>سوشال ميديا</option>
-              <option value="إعلان" style={{ background: '#0f172a', color: '#ffffff' }}>إعلان</option>
-              <option value="غير ذلك" style={{ background: '#0f172a', color: '#ffffff' }}>غير ذلك</option>
-            </select>
-            <ChevronDown
-              size={18}
-              style={{
-                position: 'absolute',
-                insetInlineStart: '14px',
-                top: '50%',
-                transform: 'translateY(-50%)',
-                color: t.muted,
-                pointerEvents: 'none',
-              }}
-            />
-          </div>
-          {errors.source && <p style={errorStyle}>{errors.source}</p>}
+        <div className="mb-6">
+          <label className={labelClass}>من وين سمعت عنا؟</label>
+          <select
+            value={form.source}
+            onChange={e => set('source', e.target.value)}
+            className={`${inputClass} md:w-1/2 cursor-pointer appearance-none text-right`}
+            style={{ colorScheme: 'dark' }}
+          >
+            <option value="" style={{ background: '#0f172a', color: '#94a3b8' }}>اختر...</option>
+            <option value="صديق" style={{ background: '#0f172a', color: '#fff' }}>صديق</option>
+            <option value="سوشال ميديا" style={{ background: '#0f172a', color: '#fff' }}>سوشال ميديا</option>
+            <option value="إعلان" style={{ background: '#0f172a', color: '#fff' }}>إعلان</option>
+            <option value="غير ذلك" style={{ background: '#0f172a', color: '#fff' }}>غير ذلك</option>
+          </select>
+          {errorLine(errors.source)}
         </div>
 
         {/* Terms */}
-        <div>
-          <label style={{ display: 'flex', alignItems: 'flex-start', gap: '12px', cursor: 'pointer' }}>
-            <input type="checkbox" checked={form.terms_accepted} onChange={e => set('terms_accepted', e.target.checked)} style={{ marginTop: '4px', accentColor: t.accent, width: 16, height: 16 }} />
-            <span style={{ fontSize: '14px', color: t.muted }}>
-              أوافق على{' '}
-              <a href="/partners/terms" target="_blank" rel="noopener noreferrer" style={{ color: t.accent, textDecoration: 'underline' }}>الشروط والأحكام</a>
-            </span>
-          </label>
-          {errors.terms_accepted && <p style={errorStyle}>{errors.terms_accepted}</p>}
-        </div>
-
-        {submitError && (
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '12px 16px', borderRadius: '12px', background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.3)', fontSize: '14px', color: t.errorText }}>
-            <AlertCircle size={16} style={{ flexShrink: 0 }} />
-            {submitError}
-          </div>
-        )}
-
-        <button type="submit" disabled={submitting} style={{
-          width: '100%', padding: '14px', borderRadius: '12px', fontWeight: 700, fontSize: '16px',
-          cursor: submitting ? 'not-allowed' : 'pointer', opacity: submitting ? 0.6 : 1,
-          background: t.btnBg, color: t.btnText, border: 'none', fontFamily: 'Tajawal',
-          display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
-          transition: 'transform 0.2s', transform: 'scale(1)',
-        }}
-          onMouseEnter={e => { if (!submitting) e.currentTarget.style.transform = 'scale(1.02)'; }}
-          onMouseLeave={e => { e.currentTarget.style.transform = 'scale(1)'; }}
-        >
-          {submitting ? <Loader2 size={20} style={{ animation: 'spin 1s linear infinite' }} /> : <><Send size={16} /> قدّم طلبي</>}
-        </button>
+        <label className="flex items-center gap-3 cursor-pointer select-none">
+          <input
+            type="checkbox"
+            checked={form.terms_accepted}
+            onChange={e => set('terms_accepted', e.target.checked)}
+            className="w-5 h-5 rounded border-white/20 bg-white/5 text-sky-500 focus:ring-sky-500/30 cursor-pointer accent-sky-500"
+          />
+          <span className="text-white/70 text-sm">
+            أوافق على{' '}
+            <a href="/partners/terms" target="_blank" rel="noopener noreferrer" className="text-sky-400 hover:text-sky-300 underline underline-offset-2">
+              الشروط والأحكام
+            </a>
+          </span>
+        </label>
+        {errorLine(errors.terms_accepted)}
       </div>
-      <style>{`@keyframes spin { to { transform: rotate(360deg) } }`}</style>
-    </form>
-  );
-}
 
-function Field({ label, value, onChange, error, placeholder, dir, type = 'text', inputStyle, labelStyle, errorStyle }) {
-  return (
-    <div>
-      <label style={labelStyle}>{label}</label>
-      <input type={type} value={value} onChange={e => onChange(e.target.value)} style={inputStyle} placeholder={placeholder} dir={dir} />
-      {error && <p style={errorStyle}>{error}</p>}
-    </div>
+      {/* ═══ ERROR ═══ */}
+      {submitError && (
+        <div className="bg-red-500/10 border border-red-500/30 rounded-xl px-4 py-3 flex items-center gap-2 text-red-300 text-sm">
+          <AlertCircle size={16} className="flex-shrink-0" />
+          <span>{submitError}</span>
+        </div>
+      )}
+
+      {/* ═══ SUBMIT ═══ */}
+      <button
+        type="submit"
+        disabled={submitting}
+        className="w-full bg-sky-500 hover:bg-sky-400 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:bg-sky-500 text-white font-bold py-4 rounded-xl transition-all shadow-lg shadow-sky-500/20 hover:shadow-sky-500/40 hover:scale-[1.01] flex items-center justify-center gap-2 text-lg"
+      >
+        {submitting ? (
+          <>
+            <Loader2 size={20} className="animate-spin" />
+            جاري التقديم...
+          </>
+        ) : (
+          <>
+            قدّم طلبي
+            <Send size={20} />
+          </>
+        )}
+      </button>
+
+      {/* ═══ REASSURANCE ═══ */}
+      <p className="text-center text-white/40 text-sm">
+        ✓ نراجع طلبك خلال 48 ساعة ونراسلك على الإيميل
+      </p>
+    </form>
   );
 }
