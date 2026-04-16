@@ -426,14 +426,7 @@ export default function PartnersLanding() {
           <SectionHeading eyebrow="انضم الآن" subtitle="العملية سريعة — دقيقتين فقط">
             قدّم طلبك الآن
           </SectionHeading>
-          <div style={{
-            maxWidth: '640px', margin: '0 auto',
-            background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)',
-            borderRadius: '24px', padding: '32px',
-            backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)',
-          }}>
-            <ApplicationForm theme="dark-blue" />
-          </div>
+          <ApplicationForm theme="dark-blue" />
         </Section>
 
       </div>
