@@ -31,6 +31,24 @@ export const IG_URL = 'https://www.instagram.com/fluentia__';
 export const SUPABASE_URL = 'https://nmjexpuycmqcxuxljier.supabase.co';
 export const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5tamV4cHV5Y21xY3h1eGxqaWVyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMxMjU2MTgsImV4cCI6MjA4ODcwMTYxOH0.Lznjnw2Pmrr04tFjQD6hRfWp-12JlRagZaCmo59KG8A';
 
+/**
+ * Normalize a Saudi phone to strict E.164: `+966XXXXXXXXX` (13 chars total).
+ * Handles: `0XXXXXXXXX`, `XXXXXXXXX`, `966XXXXXXXXX`, `+966XXXXXXXXX`,
+ * with or without spaces / dashes. Returns empty string for empty input.
+ * Callers should guard on `isValidE164SA()` before sending to ad platforms.
+ */
+export function normalizePhoneSA(phone) {
+  if (!phone) return '';
+  const digits = String(phone).replace(/\D/g, '');
+  if (digits.startsWith('966')) return '+' + digits;
+  if (digits.startsWith('0'))   return '+966' + digits.substring(1);
+  return '+966' + digits;
+}
+
+export function isValidE164SA(e164) {
+  return /^\+966[0-9]{9}$/.test(e164);
+}
+
 export async function saveLead({ name, phone, email, path, pkg, goal, source }) {
   try {
     const refCode = getStoredRef();
@@ -107,11 +125,18 @@ export async function fireLeadTracking({ name, phone, path, pkg, pkgPrice, goal,
   }
 
   // 2. TikTok Pixel (client-side)
+  // EMQ requires phone in strict E.164 (+966XXXXXXXXX, 13 chars) and
+  // identify() MUST fire before any track() calls so the hashed phone is
+  // attached to subsequent events.
+  const phoneE164 = normalizePhoneSA(phone);
+  const phoneValid = isValidE164SA(phoneE164);
+  // Debug (visible in prod — helps validate EMQ via browser console):
+  console.log('[TikTok EMQ] phone', { original: phone, e164: phoneE164, valid: phoneValid });
+
   if (typeof window !== 'undefined' && window.ttq) {
     try {
-      if (phone) {
-        // EMQ: convert SA local 05XXXXXXXX to E.164 +9665XXXXXXXX
-        window.ttq.identify({ phone_number: '+966' + phone.replace(/^0/, '') });
+      if (phoneValid) {
+        window.ttq.identify({ phone_number: phoneE164 });
       }
       const payload = {
         content_name:     'Fluentia Free Consultation',
@@ -128,6 +153,8 @@ export async function fireLeadTracking({ name, phone, path, pkg, pkgPrice, goal,
   }
 
   // 3. TikTok Events API (server-side, non-blocking)
+  // Send phone in E.164 so server-side hashing matches the pixel's hashed phone
+  // (pixel + server dedup on event_id AND match on hashed phone for higher EMQ).
   try {
     ['Lead', 'CompleteRegistration'].forEach(ev =>
       fetch(`${SUPABASE_URL}/functions/v1/tiktok-events-api`, {
@@ -136,8 +163,8 @@ export async function fireLeadTracking({ name, phone, path, pkg, pkgPrice, goal,
         body: JSON.stringify({
           event_name:  ev,
           event_id:    eventId,
-          phone,
-          external_id: phone,
+          phone:       phoneValid ? phoneE164 : phone,
+          external_id: phoneValid ? phoneE164 : phone,
           url:         window.location.href,
           user_agent:  navigator.userAgent,
           value:       pkgPrice,
