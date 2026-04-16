@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, lazy, Suspense } from "react";
 import { BrowserRouter, Routes, Route, Link, useLocation } from "react-router-dom";
 import { getStoredRef, getVisitorId } from './utils/affiliateTracking';
+import { fireTikTokLeadEvents, fireTikTokViewContent } from './lib/tiktokPixel';
 import CookieBanner from './components/CookieBanner';
 
 const PartnersLanding = lazy(() => import('./pages/partners/PartnersLanding'));
@@ -355,21 +356,24 @@ function RegForm({pkg:initPkg,path:initPath,onClose}){
   const[form,setForm]=useState({name:"",age:"",goal:"",ieltsTarget:"",path:initPath||"",pkg:initPkg||"",level:"",startDate:""});
   const u=(k,v)=>setForm({...form,[k]:v});
   // Save to Google Sheets + open WhatsApp
-  const send=()=>{if(!form.name){alert("اكتب اسمك");return}
+  const send=async()=>{if(!form.name){alert("اكتب اسمك");return}
     const utmRaw=new URLSearchParams(window.location.search).get("utm_source")||sessionStorage.getItem("utm_source")||"";
     // Auto-save to Google Sheets (silent)
     try{const sheetData={...form,utm:utmRaw,date:new Date().toLocaleString("ar-SA")};
     fetch("https://script.google.com/macros/s/YOUR_SHEET_ID/exec",{method:"POST",mode:"no-cors",headers:{"Content-Type":"application/json"},body:JSON.stringify(sheetData)}).catch(()=>{})}catch(e){}
-    // TikTok Pixel: track form submission as conversion
+    // TikTok Pixel — unified helper (SHA-256 hashing + identify-before-track).
+    // Note: main RegForm does not collect phone/email — the helper will simply
+    // fire events without user_data in that case. All /start submissions do
+    // carry phone and get full EMQ via fireLeadTracking in utils/tracking.js.
     const eventId=`lead_${Date.now()}_${Math.random().toString(36).substring(2,9)}`;
-    if(window.ttq){
-      try{
-        // Note: main RegForm does not collect phone/email — no identify() fields available for EMQ here
-        window.ttq.track('SubmitForm',{content_name:'Fluentia Free Consultation',content_category:form.path||'general',value:750,currency:'SAR',event_id:eventId,content_id:'fluentia_lead_form'});
-        window.ttq.track('Lead',{content_name:'Fluentia Registration',content_category:form.path||'general',value:750,currency:'SAR',event_id:eventId,content_id:'fluentia_lead_form'});
-        window.ttq.track('CompleteRegistration',{content_name:'Fluentia Registration',content_category:form.path||'general',value:750,currency:'SAR',event_id:eventId,content_id:'fluentia_lead_form'});
-      }catch(e){console.error('TikTok pixel error:',e)}
-    }
+    await fireTikTokLeadEvents({
+      value:750,
+      currency:'SAR',
+      contentName:'Fluentia Registration',
+      contentCategory:form.path||'general',
+      contentId:'fluentia_lead_form',
+      eventIdBase:eventId,
+    });
     // TikTok Events API (server-side, non-blocking)
     try{['Lead','CompleteRegistration'].forEach(ev=>fetch('https://nmjexpuycmqcxuxljier.supabase.co/functions/v1/tiktok-events-api',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({event_name:ev,event_id:eventId,external_id:form.name||'',url:window.location.href,user_agent:navigator.userAgent,value:750,currency:'SAR'})}).then(r=>r.json()).then(r=>console.log('[TikTok Events API]',ev,r)).catch(()=>{}))}catch(e){}
     // Google Analytics + Ads conversion
@@ -1174,21 +1178,10 @@ function AppRoutes(){
   }, [location]);
 
   useEffect(() => {
-    // Fire TikTok ViewContent on initial page load (upper-funnel signal)
-    if (typeof window !== 'undefined' && window.ttq) {
-      try {
-        window.ttq.track('ViewContent', {
-          content_name: 'Fluentia Landing Page',
-          content_category: 'education',
-          content_type: 'product',
-          content_id: 'fluentia_landing',
-          currency: 'SAR',
-          value: 750,
-        });
-      } catch (e) {
-        console.error('TikTok ViewContent error:', e);
-      }
-    }
+    // Fire TikTok ViewContent on initial page load (upper-funnel signal).
+    // No PII at this stage — goes through the helper so all ttq.track
+    // calls in src/ live in src/lib/tiktokPixel.js.
+    fireTikTokViewContent();
   }, []); // empty dependency array = fire once on mount
 
   return(

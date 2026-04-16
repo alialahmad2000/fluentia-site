@@ -4,6 +4,7 @@
  * can both call exactly the same code path — never duplicate tracking logic.
  */
 import { getStoredRef, getVisitorId } from './affiliateTracking';
+import { fireTikTokLeadEvents } from '../lib/tiktokPixel';
 
 export const UTM_MAP = {
   tiktok:    'تيك توك',
@@ -124,33 +125,26 @@ export async function fireLeadTracking({ name, phone, path, pkg, pkgPrice, goal,
     } catch (e) { console.error('GA4 error:', e); }
   }
 
-  // 2. TikTok Pixel (client-side)
-  // EMQ requires phone in strict E.164 (+966XXXXXXXXX, 13 chars) and
-  // identify() MUST fire before any track() calls so the hashed phone is
-  // attached to subsequent events.
+  // 2. TikTok Pixel (client-side) — via shared helper which:
+  //    - SHA-256 hashes phone/email/external_id
+  //    - Calls identify() BEFORE any track()
+  //    - Injects user_data inline via context.user on every track() call
+  //    See src/lib/tiktokPixel.js for details.
   const phoneE164 = normalizePhoneSA(phone);
   const phoneValid = isValidE164SA(phoneE164);
   // Debug (visible in prod — helps validate EMQ via browser console):
   console.log('[TikTok EMQ] phone', { original: phone, e164: phoneE164, valid: phoneValid });
 
-  if (typeof window !== 'undefined' && window.ttq) {
-    try {
-      if (phoneValid) {
-        window.ttq.identify({ phone_number: phoneE164 });
-      }
-      const payload = {
-        content_name:     'Fluentia Free Consultation',
-        content_category: path || 'general',
-        content_id:       'fluentia_lead_form',
-        value:            pkgPrice,
-        currency:         'SAR',
-        event_id:         eventId,
-      };
-      window.ttq.track('SubmitForm',          payload);
-      window.ttq.track('Lead',                { ...payload, content_name: 'Fluentia Registration' });
-      window.ttq.track('CompleteRegistration',{ ...payload, content_name: 'Fluentia Registration' });
-    } catch (e) { console.error('TikTok pixel error:', e); }
-  }
+  await fireTikTokLeadEvents({
+    phone,
+    externalId: phoneValid ? phoneE164 : phone,
+    value: pkgPrice,
+    currency: 'SAR',
+    contentName: 'Fluentia Registration',
+    contentCategory: path || 'general',
+    contentId: 'fluentia_lead_form',
+    eventIdBase: eventId,
+  });
 
   // 3. TikTok Events API (server-side, non-blocking)
   // Send phone in E.164 so server-side hashing matches the pixel's hashed phone
