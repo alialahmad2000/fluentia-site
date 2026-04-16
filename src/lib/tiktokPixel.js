@@ -7,47 +7,26 @@
 // regress silently on future edits.
 
 /**
- * Normalize phone to E.164 format for Saudi Arabia.
- * Input variations: "0583662000", "583662000", "+966583662000",
- * "966583662000", "00966583662000"
- * Output: "+966XXXXXXXXX" (13 chars)
+ * Normalize a Saudi phone to strict E.164: "+966XXXXXXXXX" (exactly 13 chars,
+ * Saudi mobile → 9 digits starting with 5 after country code).
+ *
+ * Accepts (and normalizes):
+ *   "0583456789", "583456789", "966583456789", "+966583456789",
+ *   "00966583456789", "+966 58 345 6789"
+ *
+ * Returns "" for anything that isn't a valid Saudi mobile. The empty string
+ * causes `buildTikTokUserData` to skip the phone field entirely — preferable
+ * to sending a garbage hash that TikTok silently rejects (EMQ regression).
  */
 export function normalizePhoneE164(rawPhone) {
   if (!rawPhone) return '';
-  // Strip all non-digits
   let digits = String(rawPhone).replace(/\D/g, '');
-
-  // Strip leading international prefix 00 if present (00966... -> 966...)
-  if (digits.startsWith('00966')) digits = digits.slice(2);
-
-  // Already has country code
-  if (digits.startsWith('966') && digits.length === 12) {
-    return '+' + digits;
-  }
-
-  // Starts with 0 (local format: 05XX...)
-  if (digits.startsWith('0') && digits.length === 10) {
-    return '+966' + digits.slice(1);
-  }
-
-  // Starts with 5, 9 digits (5XX...)
-  if (digits.startsWith('5') && digits.length === 9) {
-    return '+966' + digits;
-  }
-
-  // Fallback: if it's 9 digits, assume Saudi mobile missing country code
-  if (digits.length === 9) {
-    return '+966' + digits;
-  }
-
-  // If it already has + and looks valid, return as-is
-  if (String(rawPhone).startsWith('+') && digits.length >= 11) {
-    return '+' + digits;
-  }
-
-  // Unknown format — return as-is prefixed with + (TikTok will reject if
-  // invalid, but try — raw string will still surface in diagnostics).
-  return '+' + digits;
+  if (digits.startsWith('00'))  digits = digits.slice(2);  // 00966 → 966
+  if (digits.startsWith('966')) digits = digits.slice(3);  // strip country code
+  if (digits.startsWith('0'))   digits = digits.slice(1);  // strip domestic 0
+  // Saudi mobile MSISDN: exactly 9 digits starting with 5
+  if (digits.length !== 9 || !digits.startsWith('5')) return '';
+  return '+966' + digits;
 }
 
 /**
