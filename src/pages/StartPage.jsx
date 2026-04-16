@@ -628,10 +628,20 @@ export default function StartPage() {
                     <select
                       value={pkgId}
                       onChange={e => setPkgId(e.target.value)}
-                      style={{ ...inputStyle, appearance: 'auto', cursor: 'pointer' }}
+                      style={{
+                        ...inputStyle,
+                        appearance: 'auto',
+                        cursor: 'pointer',
+                        colorScheme: 'dark',
+                        backgroundColor: '#0d1a2d',
+                      }}
                     >
                       {PACKAGES.map(p => (
-                        <option key={p.id} value={p.id}>
+                        <option
+                          key={p.id}
+                          value={p.id}
+                          style={{ background: '#0d1a2d', color: '#f8fafc' }}
+                        >
                           {p.name} — {p.price} ر.س/شهرياً
                         </option>
                       ))}
