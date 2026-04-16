@@ -363,9 +363,10 @@ function RegForm({pkg:initPkg,path:initPath,onClose}){
     const eventId=`lead_${Date.now()}_${Math.random().toString(36).substring(2,9)}`;
     if(window.ttq){
       try{
-        window.ttq.track('SubmitForm',{content_name:'Fluentia Free Consultation',content_category:form.path||'general',value:750,currency:'SAR',event_id:eventId});
-        window.ttq.track('Lead',{content_name:'Fluentia Registration',content_category:form.path||'general',value:750,currency:'SAR',event_id:eventId});
-        window.ttq.track('CompleteRegistration',{content_name:'Fluentia Registration',content_category:form.path||'general',value:750,currency:'SAR',event_id:eventId});
+        // Note: main RegForm does not collect phone/email — no identify() fields available for EMQ here
+        window.ttq.track('SubmitForm',{content_name:'Fluentia Free Consultation',content_category:form.path||'general',value:750,currency:'SAR',event_id:eventId,content_id:'fluentia_lead_form'});
+        window.ttq.track('Lead',{content_name:'Fluentia Registration',content_category:form.path||'general',value:750,currency:'SAR',event_id:eventId,content_id:'fluentia_lead_form'});
+        window.ttq.track('CompleteRegistration',{content_name:'Fluentia Registration',content_category:form.path||'general',value:750,currency:'SAR',event_id:eventId,content_id:'fluentia_lead_form'});
       }catch(e){console.error('TikTok pixel error:',e)}
     }
     // TikTok Events API (server-side, non-blocking)
@@ -1189,9 +1190,11 @@ ${goal?`الهدف: ${goal}\n`:""}المصدر: ${src}`;
     const eventId=`lead_${Date.now()}_${Math.random().toString(36).substring(2,9)}`;
     if(window.ttq){
       try{
-        window.ttq.track('SubmitForm',{content_name:'Fluentia Free Consultation',content_category:path||'general',value:750,currency:'SAR',event_id:eventId});
-        window.ttq.track('Lead',{content_name:'Fluentia Registration',content_category:path||'general',value:750,currency:'SAR',event_id:eventId});
-        window.ttq.track('CompleteRegistration',{content_name:'Fluentia Registration',content_category:path||'general',value:750,currency:'SAR',event_id:eventId});
+        // Identify user for TikTok Enhanced Matching (EMQ fix) — convert SA local 05XXXXXXXX to E.164 +9665XXXXXXXX
+        if(phone){window.ttq.identify({phone_number:'+966'+phone.replace(/^0/,'')});}
+        window.ttq.track('SubmitForm',{content_name:'Fluentia Free Consultation',content_category:path||'general',value:750,currency:'SAR',event_id:eventId,content_id:'fluentia_lead_form'});
+        window.ttq.track('Lead',{content_name:'Fluentia Registration',content_category:path||'general',value:750,currency:'SAR',event_id:eventId,content_id:'fluentia_lead_form'});
+        window.ttq.track('CompleteRegistration',{content_name:'Fluentia Registration',content_category:path||'general',value:750,currency:'SAR',event_id:eventId,content_id:'fluentia_lead_form'});
       }catch(e){console.error('TikTok pixel error:',e)}
     }
     // TikTok Events API (server-side, non-blocking)
