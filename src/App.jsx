@@ -5,10 +5,6 @@ import { getStoredRef, getVisitorId } from './utils/affiliateTracking';
 const PartnersLanding = lazy(() => import('./pages/partners/PartnersLanding'));
 const PartnersSubmitted = lazy(() => import('./pages/partners/PartnersSubmitted'));
 const PartnersTerms = lazy(() => import('./pages/partners/PartnersTerms'));
-const PartnersV1 = lazy(() => import('./pages/partners/PartnersV1'));
-const PartnersV2 = lazy(() => import('./pages/partners/PartnersV2'));
-const PartnersV3 = lazy(() => import('./pages/partners/PartnersV3'));
-const PartnersV4 = lazy(() => import('./pages/partners/PartnersV4'));
 const StartPage = lazy(() => import('./pages/StartPage'));
 
 /* ─── UTM Source ─── */
@@ -1161,10 +1157,6 @@ function AppRoutes(){
       <Route path="/partners" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#060e1c'}} />}><PartnersLanding /></Suspense>} />
       <Route path="/partners/submitted" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#060e1c'}} />}><PartnersSubmitted /></Suspense>} />
       <Route path="/partners/terms" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#060e1c'}} />}><PartnersTerms /></Suspense>} />
-      <Route path="/partners/v1" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#0A0A0A'}} />}><PartnersV1 /></Suspense>} />
-      <Route path="/partners/v2" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#1a0533'}} />}><PartnersV2 /></Suspense>} />
-      <Route path="/partners/v3" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#fff'}} />}><PartnersV3 /></Suspense>} />
-      <Route path="/partners/v4" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#060e1c'}} />}><PartnersV4 /></Suspense>} />
     </Routes>
   );
 }

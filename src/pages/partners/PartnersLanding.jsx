@@ -1,945 +1,504 @@
-import { useState, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import {
-  ClipboardCheck,
-  Link2,
-  Share2,
-  Banknote,
-  TrendingUp,
-  Tag,
-  Star,
-  ChevronDown,
-  ChevronUp,
-  Send,
-  ArrowDown,
-  Users,
-  Calculator,
-  HelpCircle,
-  FileText,
-  CheckCircle2,
-  AlertCircle,
-  Loader2,
+  Handshake, Link2, Share2, Wallet, TrendingUp, ShieldCheck,
+  Users, Target, Star, ArrowLeft, Check, ChevronDown,
 } from 'lucide-react';
-import supabase from '../../utils/supabase';
+import ApplicationForm from './_shared/ApplicationForm';
+import FAQList from './_shared/FAQList';
+import CommissionCalculator from './_shared/CommissionCalculator';
 
+/* ──── Brand tokens — blue/white only, NO GOLD ──── */
+const BG = '#060e1c';
+const SKY = '#38bdf8';
+const T1 = '#f8fafc';
+const T2 = '#94A3B8';
+
+/* ──── Shared animation variants ──── */
 const fadeUp = {
-  hidden: { opacity: 0, y: 30 },
+  hidden: { opacity: 0, y: 32 },
   visible: (i = 0) => ({
-    opacity: 1,
-    y: 0,
-    transition: { delay: i * 0.12, duration: 0.5, ease: 'easeOut' },
+    opacity: 1, y: 0,
+    transition: { delay: i * 0.1, duration: 0.6, ease: [0.16, 1, 0.3, 1] },
   }),
 };
 
-const stagger = {
-  visible: { transition: { staggerChildren: 0.12 } },
-};
-
-/* ─────────── Section Heading ─────────── */
-function SectionHeading({ icon: Icon, children, id }) {
+/* ──── Inline Logo — forced LTR to prevent RTL letter reversal ──── */
+function Logo() {
   return (
-    <motion.h2
-      id={id}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, margin: '-60px' }}
-      variants={fadeUp}
-      className="flex items-center justify-center gap-3 text-3xl md:text-4xl font-bold mb-10"
-      style={{ color: 'var(--text-primary)', fontFamily: 'Tajawal' }}
-    >
-      {Icon && <Icon className="w-7 h-7 text-sky-400 shrink-0" />}
-      {children}
-    </motion.h2>
+    <span dir="ltr" className="inline-block" style={{ fontFamily: "'Playfair Display', serif" }}>
+      <span style={{ fontSize: '28px', fontWeight: 900, color: SKY }}>F</span>
+      <span style={{ fontSize: '20px', fontWeight: 700, color: '#e2e8f0' }}>luentia</span>
+    </span>
   );
 }
 
-/* ─────────── FAQ Item ─────────── */
-function FAQItem({ q, a, open, toggle }) {
+/* ──── Section wrapper — generous padding ──── */
+function Section({ id, children, className = '', style = {} }) {
   return (
-    <motion.div
-      variants={fadeUp}
-      className="border rounded-xl overflow-hidden"
-      style={{
-        borderColor: 'var(--border-subtle)',
-        background: 'var(--surface-raised)',
-      }}
-    >
-      <button
-        onClick={toggle}
-        className="w-full flex items-center justify-between gap-4 px-5 py-4 text-right cursor-pointer"
-        style={{ color: 'var(--text-primary)', fontFamily: 'Tajawal' }}
-      >
-        <span className="font-semibold text-base md:text-lg leading-relaxed">
-          {q}
-        </span>
-        {open ? (
-          <ChevronUp className="w-5 h-5 shrink-0 text-sky-400" />
-        ) : (
-          <ChevronDown className="w-5 h-5 shrink-0 text-sky-400" />
-        )}
-      </button>
-      {open && (
+    <section id={id} className={className} style={{ padding: '96px 28px', position: 'relative', ...style }}>
+      <div style={{ maxWidth: '1100px', margin: '0 auto', position: 'relative', zIndex: 10 }}>{children}</div>
+    </section>
+  );
+}
+
+/* ──── Unified section heading with eyebrow ──── */
+function SectionHeading({ eyebrow, children, subtitle }) {
+  return (
+    <div style={{ textAlign: 'center', marginBottom: '64px', maxWidth: '640px', margin: '0 auto 64px' }}>
+      {eyebrow && (
         <motion.div
-          initial={{ opacity: 0, height: 0 }}
-          animate={{ opacity: 1, height: 'auto' }}
-          exit={{ opacity: 0, height: 0 }}
-          className="px-5 pb-4 text-sm md:text-base leading-relaxed"
-          style={{ color: 'var(--text-muted)', fontFamily: 'Tajawal' }}
+          initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }}
+          variants={fadeUp}
+          style={{ fontSize: '12px', fontWeight: 700, color: SKY, letterSpacing: '0.2em', marginBottom: '12px', fontFamily: 'Tajawal', textTransform: 'uppercase' }}
         >
-          {a}
+          {eyebrow}
         </motion.div>
       )}
-    </motion.div>
+      <motion.h2
+        initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }}
+        variants={fadeUp}
+        style={{
+          fontFamily: 'Tajawal', fontWeight: 900, fontSize: 'clamp(32px, 5vw, 48px)',
+          color: T1, marginBottom: subtitle ? '20px' : '0', lineHeight: 1.15,
+        }}
+      >
+        {children}
+      </motion.h2>
+      {subtitle && (
+        <motion.p
+          initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }}
+          variants={fadeUp} custom={1}
+          style={{ fontSize: '18px', color: 'rgba(255,255,255,0.7)', maxWidth: '640px', margin: '0 auto', lineHeight: 1.7, fontFamily: 'Tajawal' }}
+        >
+          {subtitle}
+        </motion.p>
+      )}
+    </div>
   );
 }
 
-/* ═══════════════════════════════════════
-   Main Component
-   ═══════════════════════════════════════ */
+/* ═══════════════════════════════════════════════ */
 export default function PartnersLanding() {
-  const navigate = useNavigate();
+  /* Load fonts */
+  useEffect(() => {
+    if (!document.getElementById('partner-fonts')) {
+      const link = document.createElement('link');
+      link.id = 'partner-fonts';
+      link.rel = 'stylesheet';
+      link.href = 'https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&family=Playfair+Display:wght@700;900&display=swap';
+      document.head.appendChild(link);
+    }
+  }, []);
 
-  /* ── Commission calculator ── */
-  const [students, setStudents] = useState(10);
-
-  /* ── FAQ ── */
-  const [openFAQ, setOpenFAQ] = useState(null);
-  const faqData = [
-    {
-      q: 'متى أستلم عمولتي؟',
-      a: 'أول كل شهر، عن مبيعات الشهر الماضي (بعد 14 يوم من أول دفعة كفترة حماية).',
-    },
-    {
-      q: 'هل ممكن أكون طالب ومسوّق معاً؟',
-      a: 'لا، لتجنب تعارض المصالح.',
-    },
-    {
-      q: 'هل أقدر أروّج في جوجل ادز؟',
-      a: 'ممنوع المزايدة على كلمة "فلوينشا" أو "طلاقة" (حماية العلامة).',
-    },
-    {
-      q: 'كم أقل مبلغ للصرف؟',
-      a: '200 ريال، ما نقصها يترحّل للشهر الجاي.',
-    },
-    {
-      q: 'هل أستطيع متابعة أدائي؟',
-      a: 'نعم، لوحة تحكم مباشرة فيها كل النقرات والمبيعات.',
-    },
-    {
-      q: 'إذا استرد الطالب فلوسه؟',
-      a: 'تُلغى العمولة.',
-    },
-    {
-      q: 'كم مدة تتبع الرابط؟',
-      a: '30 يوم (لو ضغط اليوم وسجّل بعد 25 يوم ينحسب لك).',
-    },
-    {
-      q: 'هل أحتاج سجل تجاري؟',
-      a: 'لا.',
-    },
-    {
-      q: 'كيف الدفع؟',
-      a: 'تحويل بنكي (IBAN) أو STC Pay.',
-    },
-    {
-      q: 'متى تُحتسب المبيعة؟',
-      a: 'فقط بعد أول دفعة من الطالب، مو مجرد تسجيل.',
-    },
+  const steps = [
+    { num: '١', icon: Handshake, title: 'قدّم طلب الانضمام', desc: 'املأ نموذجاً بسيطاً في دقيقتين.' },
+    { num: '٢', icon: Link2, title: 'احصل على رابطك الفريد', desc: 'بعد الموافقة، يصلك رابط خاص + QR.' },
+    { num: '٣', icon: Share2, title: 'شاركه في حساباتك', desc: 'صور، ستوريز، فيديوهات، خاصة.' },
+    { num: '٤', icon: Wallet, title: 'اربح 100 ريال لكل طالب', desc: 'دفع شهري مباشر لحسابك البنكي.' },
   ];
 
-  /* ── Form state ── */
-  const [form, setForm] = useState({
-    full_name: '',
-    phone: '',
-    email: '',
-    city: '',
-    ref_code: '',
-    twitter: '',
-    instagram: '',
-    tiktok: '',
-    followers_count: '',
-    motivation: '',
-    source: '',
-    terms_accepted: false,
-  });
-  const [errors, setErrors] = useState({});
-  const [refCodeStatus, setRefCodeStatus] = useState(null); // null | 'checking' | 'available' | 'taken'
-  const [submitting, setSubmitting] = useState(false);
-  const [submitError, setSubmitError] = useState('');
-  const applyRef = useRef(null);
+  const whyCards = [
+    { icon: Target, title: 'منتج مطلوب', desc: 'طلب متزايد على تعلم الإنجليزي في السعودية — سوق ضخم ومتنامي.' },
+    { icon: Wallet, title: 'أسعار تنافسية', desc: 'باقات تبدأ من 500 ريال — سهل الإقناع مقارنة بالمعاهد التقليدية.' },
+    { icon: Star, title: 'سمعة قوية', desc: 'تقييمات حقيقية وطلاب سعداء — المنتج يبيع نفسه.' },
+  ];
 
-  const set = (field, value) => {
-    setForm((prev) => ({ ...prev, [field]: value }));
-    setErrors((prev) => ({ ...prev, [field]: '' }));
-    if (field === 'ref_code') setRefCodeStatus(null);
-  };
-
-  /* ── Ref code uniqueness check ── */
-  const checkRefCode = async (code) => {
-    if (!code || code.length < 4) return;
-    setRefCodeStatus('checking');
-    const { data } = await supabase
-      .from('affiliates')
-      .select('id')
-      .eq('ref_code', code)
-      .maybeSingle();
-    setRefCodeStatus(data ? 'taken' : 'available');
-  };
-
-  /* ── Validate ── */
-  const validate = () => {
-    const e = {};
-    if (!form.full_name.trim()) e.full_name = 'مطلوب';
-    // Saudi phone: +966XXXXXXXXX or 05XXXXXXXX
-    const phoneClean = form.phone.replace(/\s/g, '');
-    if (!/^(\+966|05)\d{8}$/.test(phoneClean)) e.phone = 'رقم سعودي غير صحيح';
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) e.email = 'إيميل غير صحيح';
-    if (!form.city.trim()) e.city = 'مطلوب';
-    if (!/^[A-Za-z0-9]{4,12}$/.test(form.ref_code))
-      e.ref_code = 'من 4 إلى 12 حرف/رقم إنجليزي فقط';
-    if (refCodeStatus === 'taken') e.ref_code = 'الكود مستخدم، اختر كود آخر';
-    if (!form.twitter.trim() && !form.instagram.trim() && !form.tiktok.trim())
-      e.social = 'أدخل حساب واحد على الأقل';
-    if (form.motivation.trim().length < 20 || form.motivation.trim().length > 500)
-      e.motivation = 'من 20 إلى 500 حرف';
-    if (!form.source) e.source = 'مطلوب';
-    if (!form.terms_accepted) e.terms_accepted = 'يجب الموافقة على الشروط';
-    setErrors(e);
-    return Object.keys(e).length === 0;
-  };
-
-  /* ── Submit ── */
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setSubmitError('');
-    if (!validate()) return;
-    setSubmitting(true);
-
-    const refCode = form.ref_code.toUpperCase();
-
-    // Check ref_code uniqueness one more time
-    const { data: existingCode } = await supabase
-      .from('affiliates')
-      .select('id')
-      .eq('ref_code', refCode)
-      .maybeSingle();
-    if (existingCode) {
-      setSubmitError('الكود مستخدم من شخص آخر، اختر كود مختلف');
-      setSubmitting(false);
-      return;
-    }
-
-    // Check duplicate phone/email
-    const phoneClean = form.phone.replace(/\s/g, '');
-    const { data: existingPhone } = await supabase
-      .from('affiliates')
-      .select('id')
-      .eq('phone', phoneClean)
-      .in('status', ['pending', 'approved'])
-      .maybeSingle();
-    if (existingPhone) {
-      setSubmitError(
-        'يوجد طلب سابق بهذا الرقم، راسلنا على الواتساب إذا تبي متابعة'
-      );
-      setSubmitting(false);
-      return;
-    }
-
-    const { data: existingEmail } = await supabase
-      .from('affiliates')
-      .select('id')
-      .eq('email', form.email.trim().toLowerCase())
-      .in('status', ['pending', 'approved'])
-      .maybeSingle();
-    if (existingEmail) {
-      setSubmitError(
-        'يوجد طلب سابق بهذا الرقم، راسلنا على الواتساب إذا تبي متابعة'
-      );
-      setSubmitting(false);
-      return;
-    }
-
-    const social_handles = {};
-    if (form.twitter.trim()) social_handles.twitter = form.twitter.trim();
-    if (form.instagram.trim()) social_handles.instagram = form.instagram.trim();
-    if (form.tiktok.trim()) social_handles.tiktok = form.tiktok.trim();
-
-    const { error } = await supabase.from('affiliates').insert({
-      full_name: form.full_name.trim(),
-      phone: phoneClean,
-      email: form.email.trim().toLowerCase(),
-      city: form.city.trim(),
-      ref_code: refCode,
-      social_handles,
-      followers_count: form.followers_count
-        ? parseInt(form.followers_count, 10)
-        : null,
-      motivation: form.motivation.trim(),
-      source: form.source,
-      status: 'pending',
-      terms_accepted_at: new Date().toISOString(),
-    });
-
-    setSubmitting(false);
-    if (error) {
-      setSubmitError('حدث خطأ، حاول مرة ثانية');
-      return;
-    }
-    navigate(
-      `/partners/submitted?name=${encodeURIComponent(form.full_name.trim())}`
-    );
-  };
-
-  /* ── Smooth scroll helper ── */
-  const scrollTo = (id) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
-  };
-
-  /* ── Shared input styles ── */
-  const inputClass =
-    'w-full rounded-xl px-4 py-3 text-sm md:text-base outline-none transition-colors focus:ring-2 focus:ring-sky-500/40 placeholder:text-gray-500';
-  const inputStyle = {
-    background: 'var(--surface-base)',
-    color: 'var(--text-primary)',
-    border: '1px solid var(--border-subtle)',
-    fontFamily: 'Tajawal',
-  };
-
-  /* ═══════════════════════════════════════
-     Render
-     ═══════════════════════════════════════ */
   return (
-    <div
-      dir="rtl"
-      className="min-h-screen overflow-x-hidden"
-      style={{
-        background: 'var(--surface-base)',
-        fontFamily: 'Tajawal',
-        color: 'var(--text-primary)',
-      }}
-    >
-      {/* ───────── HERO ───────── */}
-      <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
-        {/* Gradient background */}
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              'radial-gradient(ellipse 80% 60% at 50% 20%, rgba(56,189,248,0.12) 0%, transparent 70%), radial-gradient(ellipse 60% 50% at 80% 80%, rgba(56,189,248,0.06) 0%, transparent 60%)',
-          }}
-        />
-        {/* Grid overlay */}
-        <div
-          className="absolute inset-0 opacity-[0.04]"
-          style={{
-            backgroundImage:
-              'linear-gradient(var(--border-subtle) 1px, transparent 1px), linear-gradient(90deg, var(--border-subtle) 1px, transparent 1px)',
-            backgroundSize: '60px 60px',
-          }}
-        />
+    <div dir="rtl" style={{ fontFamily: "'Tajawal', sans-serif", color: T1, minHeight: '100vh', position: 'relative', overflowX: 'hidden', background: BG }}>
 
-        <div className="relative z-10 max-w-3xl mx-auto px-6 text-center">
-          <motion.h1
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7 }}
-            className="text-4xl sm:text-5xl md:text-6xl font-extrabold leading-tight mb-6"
-            style={{ color: 'var(--text-primary)' }}
-          >
-            كن شريكاً في أكاديمية طلاقة
-          </motion.h1>
+      {/* ══════════════════════════════════════════════════════════ */}
+      {/* HERO SECTION — animated background INSIDE it (absolute)  */}
+      {/* ══════════════════════════════════════════════════════════ */}
+      <section style={{ minHeight: '92vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '80px 28px 40px', position: 'relative', overflow: 'hidden', background: BG }}>
 
-          <motion.p
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.15 }}
-            className="text-lg md:text-xl leading-relaxed mb-10 max-w-2xl mx-auto"
-            style={{ color: 'var(--text-muted)' }}
-          >
-            اربح 100 ريال عن كل طالب ينضم عبر رابطك الخاص. دفع شهري. شفافية
-            كاملة.
-          </motion.p>
+        {/* ========== ANIMATED BACKGROUND (absolute z-0 inside hero) ========== */}
+        <div aria-hidden="true" style={{ position: 'absolute', inset: 0, zIndex: 0, overflow: 'hidden', pointerEvents: 'none' }}>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-4"
-          >
-            <button
-              onClick={() => scrollTo('apply')}
-              className="px-8 py-3.5 rounded-xl font-bold text-base cursor-pointer transition-transform hover:scale-105 active:scale-95"
-              style={{
-                background: 'linear-gradient(135deg, #38bdf8, #0ea5e9)',
-                color: '#0c1222',
-              }}
-            >
-              قدّم الآن
-            </button>
-            <button
-              onClick={() => scrollTo('how')}
-              className="px-8 py-3.5 rounded-xl font-bold text-base cursor-pointer transition-transform hover:scale-105 active:scale-95 border"
-              style={{
-                borderColor: 'var(--border-subtle)',
-                color: 'var(--text-primary)',
-                background: 'transparent',
-              }}
-            >
-              كيف يعمل البرنامج؟
-            </button>
+          {/* ── Animated mesh gradient (blue palette, toned down) ── */}
+          <div className="partner-hero-mesh" style={{ position: 'absolute', inset: 0, zIndex: 0 }} />
+
+          {/* ── 4 Calibrated blobs — soft-light blend, alpha 0.45 ── */}
+
+          {/* Blob 1 — sky top-right */}
+          <div style={{
+            position: 'absolute', top: '-200px', right: '-200px', width: 720, height: 720,
+            borderRadius: '50%', filter: 'blur(90px)',
+            background: 'radial-gradient(circle, rgba(56,189,248,0.45) 0%, rgba(56,189,248,0) 70%)',
+            mixBlendMode: 'soft-light', animation: 'partnerblob1 22s ease-in-out infinite',
+            willChange: 'transform', zIndex: 2,
+          }} />
+
+          {/* Blob 2 — cyan middle-left */}
+          <div style={{
+            position: 'absolute', top: '20%', left: '-280px', width: 820, height: 820,
+            borderRadius: '50%', filter: 'blur(90px)',
+            background: 'radial-gradient(circle, rgba(14,165,233,0.45) 0%, rgba(14,165,233,0) 70%)',
+            mixBlendMode: 'soft-light', animation: 'partnerblob2 28s ease-in-out infinite',
+            willChange: 'transform', zIndex: 2,
+          }} />
+
+          {/* Blob 3 — indigo bottom-center */}
+          <div style={{
+            position: 'absolute', bottom: '-220px', left: '30%', width: 640, height: 640,
+            borderRadius: '50%', filter: 'blur(90px)',
+            background: 'radial-gradient(circle, rgba(99,102,241,0.45) 0%, rgba(99,102,241,0) 70%)',
+            mixBlendMode: 'soft-light', animation: 'partnerblob3 26s ease-in-out infinite',
+            willChange: 'transform', zIndex: 2,
+          }} />
+
+          {/* Blob 4 — bright blue top-left */}
+          <div style={{
+            position: 'absolute', top: '-60px', left: '15%', width: 500, height: 500,
+            borderRadius: '50%', filter: 'blur(90px)',
+            background: 'radial-gradient(circle, rgba(59,130,246,0.45) 0%, rgba(59,130,246,0) 70%)',
+            mixBlendMode: 'soft-light', animation: 'partnerblob4 24s ease-in-out infinite',
+            willChange: 'transform', zIndex: 2,
+          }} />
+
+          {/* ── Navy overlay — re-establishes brand color over blobs ── */}
+          <div
+            style={{
+              position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 3,
+              background: 'linear-gradient(180deg, rgba(6,14,28,0.35) 0%, rgba(6,14,28,0.15) 50%, rgba(6,14,28,0.55) 100%)',
+            }}
+          />
+
+          {/* Grain overlay for premium film texture */}
+          <div
+            style={{
+              position: 'absolute', inset: 0, opacity: 0.04, mixBlendMode: 'overlay', zIndex: 4,
+              backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' /%3E%3C/svg%3E")`,
+            }}
+          />
+
+          {/* Bottom fade into next section */}
+          <div
+            style={{
+              position: 'absolute', left: 0, right: 0, bottom: 0, height: '128px', zIndex: 5,
+              background: `linear-gradient(to bottom, transparent, ${BG})`,
+              pointerEvents: 'none',
+            }}
+          />
+        </div>
+        {/* ========== end animated BG ========== */}
+
+{/* ========== HERO CONTENT (above BG at z-10) ========== */}
+        <div style={{ maxWidth: '900px', width: '100%', textAlign: 'center', margin: '0 auto', position: 'relative', zIndex: 10 }}>
+
+          {/* Logo — forced LTR */}
+          <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} style={{ marginBottom: '56px' }}>
+            <Logo />
           </motion.div>
 
+          {/* Status chip — frosted glass for any BG */}
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.2, duration: 1 }}
-            className="mt-16"
+            initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
+            style={{
+              display: 'inline-flex', alignItems: 'center', gap: '8px',
+              padding: '6px 16px', borderRadius: '999px',
+              background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(56,189,248,0.4)',
+              color: '#bae6fd', fontSize: '14px', fontWeight: 500, marginBottom: '40px',
+              backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)',
+              boxShadow: '0 4px 24px rgba(56,189,248,0.1)',
+            }}
           >
-            <ArrowDown className="w-5 h-5 mx-auto text-sky-400 animate-bounce" />
+            <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#7dd3fc', display: 'inline-block', animation: 'pulse 2s infinite', boxShadow: '0 0 6px rgba(125,211,252,0.5)' }} />
+            برنامج الشركاء مفتوح الآن
+          </motion.div>
+
+          {/* Title — white with sky-300 highlight + navy textShadow */}
+          <motion.h1
+            initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15, duration: 0.7 }}
+            style={{
+              textAlign: 'center', margin: '0 auto 24px', maxWidth: '100%',
+              fontSize: 'clamp(40px, 9vw, 84px)', fontWeight: 900, lineHeight: 1.1,
+              color: '#FFFFFF',
+              fontFamily: "'Tajawal', sans-serif",
+              textShadow: '0 2px 40px rgba(6,14,28,0.4)',
+            }}
+          >
+            كن شريكاً في<br />
+            <span style={{
+              color: '#7dd3fc',
+              textShadow: '0 2px 30px rgba(56,189,248,0.3)',
+            }}>
+              أكاديمية طلاقة
+            </span>
+          </motion.h1>
+
+          {/* Subtitle — bright white for readability */}
+          <motion.p
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.35 }}
+            style={{
+              textAlign: 'center', margin: '0 auto 48px', maxWidth: '600px',
+              fontSize: 'clamp(16px, 3vw, 20px)', lineHeight: 1.7,
+              color: 'rgba(255,255,255,0.9)',
+              filter: 'drop-shadow(0 1px 2px rgba(0,0,0,0.3))',
+            }}
+          >
+            اربح <span style={{ color: '#7dd3fc', fontWeight: 700 }}>100 ريال</span> عن كل طالب ينضم عبر رابطك الخاص.
+            <br />
+            دفع شهري. شفافية كاملة.
+          </motion.p>
+
+          {/* CTA pair */}
+          <motion.div
+            initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }}
+            style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', justifyContent: 'center', alignItems: 'center' }}
+          >
+            <a
+              href="#apply"
+              style={{
+                display: 'inline-flex', alignItems: 'center', gap: '8px',
+                background: '#0ea5e9',
+                color: '#FFFFFF', fontWeight: 700, fontSize: '17px',
+                padding: '14px 32px', borderRadius: '999px',
+                textDecoration: 'none', transition: 'transform 0.2s, box-shadow 0.2s',
+                boxShadow: '0 8px 32px rgba(14,165,233,0.3)',
+              }}
+              onMouseEnter={e => { e.currentTarget.style.transform = 'scale(1.05)'; e.currentTarget.style.boxShadow = '0 8px 32px rgba(14,165,233,0.5)'; }}
+              onMouseLeave={e => { e.currentTarget.style.transform = 'scale(1)'; e.currentTarget.style.boxShadow = '0 8px 32px rgba(14,165,233,0.3)'; }}
+            >
+              قدّم الآن
+              <ArrowLeft size={20} />
+            </a>
+            <a
+              href="#how-it-works"
+              style={{
+                display: 'inline-flex', alignItems: 'center', gap: '8px',
+                border: '2px solid rgba(255,255,255,0.2)', color: 'rgba(255,255,255,0.9)',
+                fontWeight: 700, fontSize: '17px',
+                padding: '12px 32px', borderRadius: '999px',
+                textDecoration: 'none', transition: 'background 0.2s, border-color 0.2s',
+                background: 'transparent',
+              }}
+              onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.05)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.4)'; }}
+              onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.2)'; }}
+            >
+              كيف يعمل البرنامج؟
+            </a>
+          </motion.div>
+
+          {/* Hero bottom divider */}
+          <div style={{ marginTop: '64px' }}>
+            <div style={{ height: '1px', maxWidth: '200px', margin: '0 auto', background: 'linear-gradient(90deg, transparent, rgba(56,189,248,0.3), transparent)' }} />
+          </div>
+
+          {/* Scroll hint */}
+          <motion.div
+            animate={{ y: [0, 8, 0] }}
+            transition={{ duration: 2, repeat: Infinity }}
+            style={{ marginTop: '24px', color: T2, opacity: 0.4 }}
+          >
+            <ChevronDown size={28} style={{ margin: '0 auto', display: 'block' }} />
           </motion.div>
         </div>
       </section>
 
-      {/* ───────── HOW IT WORKS ───────── */}
-      <section className="py-20 px-6">
-        <SectionHeading icon={Share2} id="how">
-          كيف يعمل البرنامج
-        </SectionHeading>
-
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: '-40px' }}
-          variants={stagger}
-          className="max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
-        >
-          {[
-            {
-              icon: ClipboardCheck,
-              title: 'قدّم طلب الانضمام',
-              desc: '2 دقيقة',
-              step: 1,
-            },
-            {
-              icon: Link2,
-              title: 'احصل على رابطك الفريد + QR',
-              desc: 'بعد الموافقة',
-              step: 2,
-            },
-            {
-              icon: Share2,
-              title: 'شاركه في حساباتك',
-              desc: 'صور، ستوريز، فيديوهات',
-              step: 3,
-            },
-            {
-              icon: Banknote,
-              title: 'اربح 100 ريال عن كل طالب ينضم',
-              desc: '+ دفع شهري',
-              step: 4,
-            },
-          ].map(({ icon: Icon, title, desc, step }) => (
-            <motion.div
-              key={step}
-              variants={fadeUp}
-              custom={step - 1}
-              className="relative rounded-2xl p-6 text-center border"
-              style={{
-                background: 'var(--surface-raised)',
-                borderColor: 'var(--border-subtle)',
-              }}
-            >
-              <div className="w-10 h-10 rounded-full flex items-center justify-center mx-auto mb-4 text-sm font-bold bg-sky-500/15 text-sky-400">
-                {step}
-              </div>
-              <Icon className="w-8 h-8 mx-auto mb-3 text-sky-400" />
-              <h3
-                className="font-bold text-base md:text-lg mb-1"
-                style={{ color: 'var(--text-primary)' }}
-              >
-                {title}
-              </h3>
-              <p
-                className="text-sm"
-                style={{ color: 'var(--text-muted)' }}
-              >
-                {desc}
-              </p>
-            </motion.div>
-          ))}
-        </motion.div>
-      </section>
-
-      {/* ───────── COMMISSION CALCULATOR ───────── */}
-      <section className="py-20 px-6">
-        <SectionHeading icon={Calculator}>
-          احسب أرباحك
-        </SectionHeading>
-
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={fadeUp}
-          className="max-w-xl mx-auto rounded-2xl p-8 border text-center"
-          style={{
-            background: 'var(--surface-raised)',
-            borderColor: 'var(--border-subtle)',
-          }}
-        >
-          <label
-            className="block text-base md:text-lg font-semibold mb-6"
-            style={{ color: 'var(--text-primary)' }}
-          >
-            كم طالب تقدر تجيب شهرياً؟
-          </label>
-
-          <input
-            type="range"
-            min={1}
-            max={100}
-            value={students}
-            onChange={(e) => setStudents(Number(e.target.value))}
-            className="w-full mb-2 accent-sky-500"
-          />
-
-          <div className="flex items-center justify-center gap-3 mb-8">
-            <input
-              type="number"
-              min={1}
-              max={100}
-              value={students}
-              onChange={(e) => {
-                const v = Math.max(1, Math.min(100, Number(e.target.value) || 1));
-                setStudents(v);
-              }}
-              className="w-20 rounded-lg px-3 py-2 text-center text-lg font-bold outline-none focus:ring-2 focus:ring-sky-500/40"
-              style={{
-                background: 'var(--surface-base)',
-                color: 'var(--text-primary)',
-                border: '1px solid var(--border-subtle)',
-              }}
-            />
-            <span style={{ color: 'var(--text-muted)' }}>طالب</span>
-          </div>
-
-          <motion.div
-            key={students}
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-          >
-            <p
-              className="text-4xl md:text-5xl font-extrabold mb-1"
-              style={{ color: 'var(--accent-sky, #38bdf8)' }}
-            >
-              {(students * 100).toLocaleString('ar-SA')} ريال
-            </p>
-            <p className="text-sm" style={{ color: 'var(--text-muted)' }}>
-              شهرياً
-            </p>
-          </motion.div>
-
-          <div
-            className="mt-4 pt-4 border-t"
-            style={{ borderColor: 'var(--border-subtle)' }}
-          >
-            <p
-              className="text-2xl font-bold"
-              style={{ color: 'var(--text-primary)' }}
-            >
-              {(students * 1200).toLocaleString('ar-SA')} ريال
-            </p>
-            <p className="text-sm" style={{ color: 'var(--text-muted)' }}>
-              سنوياً
-            </p>
-          </div>
-        </motion.div>
-      </section>
-
-      {/* ───────── WHY FLUENTIA ───────── */}
-      <section className="py-20 px-6">
-        <SectionHeading icon={Star}>
-          لماذا طلاقة
-        </SectionHeading>
-
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={stagger}
-          className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6"
-        >
-          {[
-            {
-              icon: TrendingUp,
-              title: 'منتج مطلوب',
-              desc: 'طلب متزايد على تعلم الإنجليزي',
-            },
-            {
-              icon: Tag,
-              title: 'أسعار تنافسية',
-              desc: 'تبدأ من 500 ريال',
-            },
-            {
-              icon: Star,
-              title: 'سمعة قوية',
-              desc: 'تقييمات حقيقية من طلاب فعليين',
-            },
-          ].map(({ icon: Icon, title, desc }, i) => (
-            <motion.div
-              key={title}
-              variants={fadeUp}
-              custom={i}
-              className="rounded-2xl p-6 border text-center"
-              style={{
-                background: 'var(--surface-raised)',
-                borderColor: 'var(--border-subtle)',
-              }}
-            >
-              <Icon className="w-9 h-9 mx-auto mb-4 text-sky-400" />
-              <h3
-                className="font-bold text-lg mb-2"
-                style={{ color: 'var(--text-primary)' }}
-              >
-                {title}
-              </h3>
-              <p className="text-sm" style={{ color: 'var(--text-muted)' }}>
-                {desc}
-              </p>
-            </motion.div>
-          ))}
-        </motion.div>
-      </section>
-
-      {/* ───────── FAQ ───────── */}
-      <section className="py-20 px-6">
-        <SectionHeading icon={HelpCircle}>
-          الأسئلة الشائعة
-        </SectionHeading>
-
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={stagger}
-          className="max-w-2xl mx-auto flex flex-col gap-3"
-        >
-          {faqData.map((item, i) => (
-            <FAQItem
-              key={i}
-              q={item.q}
-              a={item.a}
-              open={openFAQ === i}
-              toggle={() => setOpenFAQ(openFAQ === i ? null : i)}
-            />
-          ))}
-        </motion.div>
-      </section>
-
-      {/* ───────── APPLICATION FORM ───────── */}
-      <section id="apply" className="py-20 px-6" ref={applyRef}>
-        <SectionHeading icon={FileText}>
-          قدّم طلبك الآن
-        </SectionHeading>
-
-        <motion.form
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={fadeUp}
-          onSubmit={handleSubmit}
-          className="max-w-2xl mx-auto rounded-2xl p-6 md:p-10 border space-y-5"
-          style={{
-            background: 'var(--surface-raised)',
-            borderColor: 'var(--border-subtle)',
-          }}
-          noValidate
-        >
-          {/* الاسم الكامل */}
-          <div>
-            <label className="block text-sm font-semibold mb-1.5" style={{ color: 'var(--text-primary)' }}>
-              الاسم الكامل
-            </label>
-            <input
-              type="text"
-              value={form.full_name}
-              onChange={(e) => set('full_name', e.target.value)}
-              className={inputClass}
-              style={inputStyle}
-              placeholder="مثال: محمد العتيبي"
-            />
-            {errors.full_name && (
-              <p className="text-red-400 text-xs mt-1">{errors.full_name}</p>
-            )}
-          </div>
-
-          {/* الجوال */}
-          <div>
-            <label className="block text-sm font-semibold mb-1.5" style={{ color: 'var(--text-primary)' }}>
-              الجوال
-            </label>
-            <input
-              type="text"
-              value={form.phone}
-              onChange={(e) => set('phone', e.target.value)}
-              className={inputClass}
-              style={inputStyle}
-              placeholder="05XXXXXXXX"
-              dir="ltr"
-            />
-            {errors.phone && (
-              <p className="text-red-400 text-xs mt-1">{errors.phone}</p>
-            )}
-          </div>
-
-          {/* الإيميل */}
-          <div>
-            <label className="block text-sm font-semibold mb-1.5" style={{ color: 'var(--text-primary)' }}>
-              الإيميل
-            </label>
-            <input
-              type="email"
-              value={form.email}
-              onChange={(e) => set('email', e.target.value)}
-              className={inputClass}
-              style={inputStyle}
-              placeholder="email@example.com"
-              dir="ltr"
-            />
-            {errors.email && (
-              <p className="text-red-400 text-xs mt-1">{errors.email}</p>
-            )}
-          </div>
-
-          {/* المدينة */}
-          <div>
-            <label className="block text-sm font-semibold mb-1.5" style={{ color: 'var(--text-primary)' }}>
-              المدينة
-            </label>
-            <input
-              type="text"
-              value={form.city}
-              onChange={(e) => set('city', e.target.value)}
-              className={inputClass}
-              style={inputStyle}
-              placeholder="مثال: الرياض"
-            />
-            {errors.city && (
-              <p className="text-red-400 text-xs mt-1">{errors.city}</p>
-            )}
-          </div>
-
-          {/* الكود المطلوب */}
-          <div>
-            <label className="block text-sm font-semibold mb-1.5" style={{ color: 'var(--text-primary)' }}>
-              الكود المطلوب (ref_code)
-            </label>
-            <div className="relative">
-              <input
-                type="text"
-                value={form.ref_code}
-                onChange={(e) => {
-                  const v = e.target.value.replace(/[^A-Za-z0-9]/g, '').toUpperCase();
-                  set('ref_code', v);
-                }}
-                onBlur={() => checkRefCode(form.ref_code)}
-                maxLength={12}
-                className={inputClass}
-                style={inputStyle}
-                placeholder="مثال: AHMED10"
-                dir="ltr"
-              />
-              {refCodeStatus === 'checking' && (
-                <Loader2 className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-sky-400 animate-spin" />
-              )}
-              {refCodeStatus === 'available' && (
-                <CheckCircle2 className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-green-400" />
-              )}
-              {refCodeStatus === 'taken' && (
-                <AlertCircle className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-red-400" />
-              )}
-            </div>
-            <p className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>
-              من 4 إلى 12 حرف/رقم إنجليزي فقط
-            </p>
-            {refCodeStatus === 'taken' && (
-              <p className="text-red-400 text-xs mt-1">الكود مستخدم، اختر كود آخر</p>
-            )}
-            {errors.ref_code && (
-              <p className="text-red-400 text-xs mt-1">{errors.ref_code}</p>
-            )}
-          </div>
-
-          {/* حسابات التواصل الاجتماعي */}
-          <div>
-            <label className="block text-sm font-semibold mb-1.5" style={{ color: 'var(--text-primary)' }}>
-              حسابات التواصل الاجتماعي (حساب واحد على الأقل)
-            </label>
-            <div className="space-y-2">
-              <input
-                type="text"
-                value={form.twitter}
-                onChange={(e) => set('twitter', e.target.value)}
-                className={inputClass}
-                style={inputStyle}
-                placeholder="Twitter / X"
-                dir="ltr"
-              />
-              <input
-                type="text"
-                value={form.instagram}
-                onChange={(e) => set('instagram', e.target.value)}
-                className={inputClass}
-                style={inputStyle}
-                placeholder="Instagram"
-                dir="ltr"
-              />
-              <input
-                type="text"
-                value={form.tiktok}
-                onChange={(e) => set('tiktok', e.target.value)}
-                className={inputClass}
-                style={inputStyle}
-                placeholder="TikTok"
-                dir="ltr"
-              />
-            </div>
-            {errors.social && (
-              <p className="text-red-400 text-xs mt-1">{errors.social}</p>
-            )}
-          </div>
-
-          {/* عدد المتابعين */}
-          <div>
-            <label className="block text-sm font-semibold mb-1.5" style={{ color: 'var(--text-primary)' }}>
-              تقريباً كم يبلغ مجموع متابعيك؟{' '}
-              <span className="font-normal" style={{ color: 'var(--text-muted)' }}>
-                (اختياري)
-              </span>
-            </label>
-            <input
-              type="number"
-              value={form.followers_count}
-              onChange={(e) => set('followers_count', e.target.value)}
-              className={inputClass}
-              style={inputStyle}
-              placeholder="مثال: 5000"
-              dir="ltr"
-            />
-          </div>
-
-          {/* الدافع */}
-          <div>
-            <label className="block text-sm font-semibold mb-1.5" style={{ color: 'var(--text-primary)' }}>
-              ليش تبي تنضم لبرنامج شركاء طلاقة؟
-            </label>
-            <textarea
-              value={form.motivation}
-              onChange={(e) => set('motivation', e.target.value)}
-              rows={4}
-              className={inputClass + ' resize-none'}
-              style={inputStyle}
-              placeholder="اكتب هنا... (20 إلى 500 حرف)"
-            />
-            <p className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>
-              {form.motivation.length}/500
-            </p>
-            {errors.motivation && (
-              <p className="text-red-400 text-xs mt-1">{errors.motivation}</p>
-            )}
-          </div>
-
-          {/* مصدر */}
-          <div>
-            <label className="block text-sm font-semibold mb-1.5" style={{ color: 'var(--text-primary)' }}>
-              من وين سمعت عنا؟
-            </label>
-            <select
-              value={form.source}
-              onChange={(e) => set('source', e.target.value)}
-              className={inputClass + ' cursor-pointer'}
-              style={inputStyle}
-            >
-              <option value="">اختر...</option>
-              <option value="صديق">صديق</option>
-              <option value="سوشال ميديا">سوشال ميديا</option>
-              <option value="إعلان">إعلان</option>
-              <option value="غير ذلك">غير ذلك</option>
-            </select>
-            {errors.source && (
-              <p className="text-red-400 text-xs mt-1">{errors.source}</p>
-            )}
-          </div>
-
-          {/* الشروط */}
-          <div>
-            <label className="flex items-start gap-3 cursor-pointer">
-              <input
-                type="checkbox"
-                checked={form.terms_accepted}
-                onChange={(e) => set('terms_accepted', e.target.checked)}
-                className="mt-1 accent-sky-500 w-4 h-4"
-              />
-              <span className="text-sm" style={{ color: 'var(--text-muted)' }}>
-                أوافق على{' '}
-                <a
-                  href="/partners/terms"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="underline text-sky-400 hover:text-sky-300"
-                >
-                  الشروط والأحكام
-                </a>
-              </span>
-            </label>
-            {errors.terms_accepted && (
-              <p className="text-red-400 text-xs mt-1">{errors.terms_accepted}</p>
-            )}
-          </div>
-
-          {/* Submit error */}
-          {submitError && (
-            <div className="flex items-center gap-2 bg-red-500/10 border border-red-500/30 rounded-xl px-4 py-3 text-sm text-red-400">
-              <AlertCircle className="w-4 h-4 shrink-0" />
-              {submitError}
-            </div>
-          )}
-
-          {/* Submit button */}
-          <button
-            type="submit"
-            disabled={submitting}
-            className="w-full py-3.5 rounded-xl font-bold text-base cursor-pointer transition-transform hover:scale-[1.02] active:scale-95 disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-            style={{
-              background: 'linear-gradient(135deg, #38bdf8, #0ea5e9)',
-              color: '#0c1222',
-            }}
-          >
-            {submitting ? (
-              <Loader2 className="w-5 h-5 animate-spin" />
-            ) : (
-              <>
-                <Send className="w-4 h-4" />
-                قدّم طلبي
-              </>
-            )}
-          </button>
-        </motion.form>
-      </section>
-
-      {/* ───────── Footer strip ───────── */}
-      <footer
-        className="py-8 text-center text-sm border-t"
+      {/* ═══════ Transition band: animated hero → solid body ═══════ */}
+      <div
+        aria-hidden="true"
         style={{
-          borderColor: 'var(--border-subtle)',
-          color: 'var(--text-muted)',
-          fontFamily: 'Tajawal',
+          height: '128px', pointerEvents: 'none',
+          background: `linear-gradient(to bottom, transparent, ${BG})`,
         }}
-      >
-        أكاديمية طلاقة &mdash; برنامج الشركاء
-      </footer>
+      />
+
+      {/* ══════════════════════════════════════════════════════════ */}
+      {/* REST OF PAGE — solid navy base + subtle static ambient    */}
+      {/* ══════════════════════════════════════════════════════════ */}
+      <div style={{ position: 'relative', background: BG }}>
+
+        {/* Static ambient glow for depth — NOT animated, low alpha */}
+        <div aria-hidden="true" style={{ position: 'absolute', inset: 0, overflow: 'hidden', pointerEvents: 'none', zIndex: 0, opacity: 0.4 }}>
+          <div style={{
+            position: 'absolute', top: '20%', right: '-400px', width: 1000, height: 1000,
+            borderRadius: '50%', filter: 'blur(120px)',
+            background: 'radial-gradient(circle, rgba(56,189,248,0.15) 0%, rgba(56,189,248,0) 60%)',
+          }} />
+          <div style={{
+            position: 'absolute', bottom: '10%', left: '-300px', width: 800, height: 800,
+            borderRadius: '50%', filter: 'blur(120px)',
+            background: 'radial-gradient(circle, rgba(99,102,241,0.12) 0%, rgba(99,102,241,0) 60%)',
+          }} />
+        </div>
+
+        {/* ══════ HOW IT WORKS ══════ */}
+        <Section id="how-it-works">
+          <SectionHeading eyebrow="آلية العمل" subtitle="أربع خطوات بسيطة لتبدأ رحلتك كشريك">
+            كيف يعمل البرنامج؟
+          </SectionHeading>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '24px' }}>
+            {steps.map((step, i) => (
+              <motion.div
+                key={i}
+                initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-60px' }}
+                custom={i} variants={fadeUp}
+                style={{
+                  background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)',
+                  borderRadius: '24px', padding: '32px 24px', textAlign: 'center',
+                  transition: 'border-color 0.3s, background 0.3s, transform 0.3s, box-shadow 0.3s',
+                }}
+                onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(56,189,248,0.4)'; e.currentTarget.style.background = 'rgba(255,255,255,0.06)'; e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.boxShadow = '0 20px 40px rgba(56,189,248,0.1)'; }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)'; e.currentTarget.style.background = 'rgba(255,255,255,0.04)'; e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; }}
+              >
+                {/* Icon circle — sky-blue */}
+                <div style={{
+                  width: 56, height: 56, borderRadius: '16px', margin: '0 auto 20px',
+                  border: '1px solid rgba(56,189,248,0.3)', background: 'rgba(56,189,248,0.15)',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  transition: 'background 0.3s',
+                }}>
+                  <step.icon size={28} color="#7dd3fc" strokeWidth={2} />
+                </div>
+                {/* Step number */}
+                <div style={{ fontSize: '14px', fontWeight: 700, color: SKY, marginBottom: '8px', fontFamily: 'Tajawal' }}>
+                  الخطوة {step.num}
+                </div>
+                <h3 style={{ fontFamily: 'Tajawal', fontWeight: 700, fontSize: '18px', color: T1, marginBottom: '8px' }}>
+                  {step.title}
+                </h3>
+                <p style={{ fontFamily: 'Tajawal', fontSize: '14px', color: 'rgba(255,255,255,0.7)', lineHeight: 1.7 }}>
+                  {step.desc}
+                </p>
+              </motion.div>
+            ))}
+          </div>
+        </Section>
+
+        {/* ══════ COMMISSION CALCULATOR ══════ */}
+        <Section id="calculator">
+          <SectionHeading eyebrow="حاسبة العمولة" subtitle="حرّك المؤشر لمعرفة دخلك الشهري والسنوي">
+            احسب دخلك المتوقع
+          </SectionHeading>
+          <CommissionCalculator theme="dark-blue" />
+        </Section>
+
+        {/* ══════ WHY FLUENTIA ══════ */}
+        <Section id="why">
+          <SectionHeading eyebrow="لماذا نحن" subtitle="ثلاثة أسباب تجعل الترويج لطلاقة أسهل">
+            لماذا Fluentia؟
+          </SectionHeading>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px' }}>
+            {whyCards.map((card, i) => (
+              <motion.div
+                key={i}
+                initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-60px' }}
+                custom={i} variants={fadeUp}
+                style={{
+                  background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)',
+                  borderRadius: '24px', padding: '36px 28px',
+                  transition: 'border-color 0.3s, transform 0.3s, background 0.3s, box-shadow 0.3s',
+                }}
+                onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(56,189,248,0.4)'; e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.background = 'rgba(255,255,255,0.06)'; e.currentTarget.style.boxShadow = '0 20px 40px rgba(56,189,248,0.1)'; }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)'; e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.background = 'rgba(255,255,255,0.04)'; e.currentTarget.style.boxShadow = 'none'; }}
+              >
+                <div style={{
+                  width: 56, height: 56, borderRadius: '16px',
+                  background: 'rgba(56,189,248,0.15)', border: '1px solid rgba(56,189,248,0.3)',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  marginBottom: '20px', transition: 'background 0.3s',
+                }}>
+                  <card.icon size={28} color="#7dd3fc" strokeWidth={2} />
+                </div>
+                <h3 style={{ fontFamily: 'Tajawal', fontWeight: 700, fontSize: '18px', color: T1, marginBottom: '8px' }}>
+                  {card.title}
+                </h3>
+                <p style={{ fontFamily: 'Tajawal', fontSize: '14px', color: 'rgba(255,255,255,0.7)', lineHeight: 1.7 }}>
+                  {card.desc}
+                </p>
+              </motion.div>
+            ))}
+          </div>
+        </Section>
+
+        {/* ══════ FAQ ══════ */}
+        <Section id="faq">
+          <SectionHeading eyebrow="أسئلة شائعة" subtitle="إجابات على أكثر الأسئلة تكراراً">
+            الأسئلة الشائعة
+          </SectionHeading>
+          <FAQList theme="dark-blue" />
+        </Section>
+
+        {/* ══════ APPLICATION FORM ══════ */}
+        <Section id="apply" style={{ padding: '96px 28px 60px' }}>
+          <SectionHeading eyebrow="انضم الآن" subtitle="العملية سريعة — دقيقتين فقط">
+            قدّم طلبك الآن
+          </SectionHeading>
+          <div style={{
+            maxWidth: '640px', margin: '0 auto',
+            background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)',
+            borderRadius: '24px', padding: '32px',
+            backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)',
+          }}>
+            <ApplicationForm theme="dark-blue" />
+          </div>
+        </Section>
+
+      </div>
+
+      {/* ══════ FOOTER CTA ══════ */}
+      <section style={{ padding: '60px 28px', textAlign: 'center', borderTop: '1px solid rgba(255,255,255,0.06)', background: BG }}>
+        <p style={{ fontFamily: 'Tajawal', fontSize: '14px', color: T2, marginBottom: '12px' }}>
+          بالانضمام أنت توافق على{' '}
+          <a href="/partners/terms" style={{ color: SKY, textDecoration: 'underline' }}>شروط وأحكام برنامج الشركاء</a>.
+        </p>
+        <p style={{ fontFamily: 'Tajawal', fontSize: '13px', color: 'rgba(255,255,255,0.25)' }}>
+          &copy; {new Date().getFullYear()} Fluentia Academy
+        </p>
+      </section>
+
+      {/* ══════ Global keyframes ══════ */}
+      <style>{`
+        @keyframes pulse {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0.4; }
+        }
+        .partner-hero-mesh {
+          background:
+            radial-gradient(ellipse 80% 60% at 20% 30%, rgba(14,165,233,0.4) 0%, transparent 55%),
+            radial-gradient(ellipse 70% 50% at 80% 20%, rgba(59,130,246,0.35) 0%, transparent 55%),
+            radial-gradient(ellipse 60% 55% at 50% 80%, rgba(6,182,212,0.3) 0%, transparent 55%);
+          background-size: 200% 200%, 200% 200%, 200% 200%;
+          animation: partnerMeshRotate 12s ease-in-out infinite;
+        }
+        @keyframes partnerMeshRotate {
+          0%   { background-position: 0% 50%, 100% 50%, 50% 100%; }
+          25%  { background-position: 100% 0%, 0% 100%, 50% 0%; }
+          50%  { background-position: 100% 100%, 50% 0%, 0% 50%; }
+          75%  { background-position: 0% 100%, 100% 0%, 100% 50%; }
+          100% { background-position: 0% 50%, 100% 50%, 50% 100%; }
+        }
+        @keyframes partnerblob1 {
+          0%   { transform: translate3d(0, 0, 0) scale(1); }
+          25%  { transform: translate3d(180px, 120px, 0) scale(1.1); }
+          50%  { transform: translate3d(-60px, 40px, 0) scale(0.95); }
+          75%  { transform: translate3d(100px, -30px, 0) scale(1.05); }
+          100% { transform: translate3d(0, 0, 0) scale(1); }
+        }
+        @keyframes partnerblob2 {
+          0%   { transform: translate3d(0, 0, 0) scale(1); }
+          25%  { transform: translate3d(140px, -80px, 0) scale(1.08); }
+          50%  { transform: translate3d(-50px, 100px, 0) scale(0.92); }
+          75%  { transform: translate3d(80px, 30px, 0) scale(1.05); }
+          100% { transform: translate3d(0, 0, 0) scale(1); }
+        }
+        @keyframes partnerblob3 {
+          0%   { transform: translate3d(0, 0, 0) scale(1); }
+          25%  { transform: translate3d(-120px, -50px, 0) scale(1.12); }
+          50%  { transform: translate3d(80px, -90px, 0) scale(0.9); }
+          75%  { transform: translate3d(-40px, -20px, 0) scale(1.06); }
+          100% { transform: translate3d(0, 0, 0) scale(1); }
+        }
+        @keyframes partnerblob4 {
+          0%   { transform: translate3d(0, 0, 0) scale(1); }
+          25%  { transform: translate3d(100px, 70px, 0) scale(1.1); }
+          50%  { transform: translate3d(-70px, -80px, 0) scale(0.95); }
+          75%  { transform: translate3d(50px, -20px, 0) scale(1.08); }
+          100% { transform: translate3d(0, 0, 0) scale(1); }
+        }
+      `}</style>
     </div>
   );
 }
