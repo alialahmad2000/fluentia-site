@@ -175,6 +175,47 @@ export async function fireTikTokLeadEvents({
 }
 
 /**
+ * Fire Lead + SubmitForm for redirect-style conversion pages (e.g. /w
+ * TikTok→WhatsApp click-to-DM landing). No user PII is available at this
+ * stage — TikTok auto-enriches with cookie/IP/UA, so EMQ won't be 0 but
+ * won't be boosted by hashed phone/email either.
+ *
+ * Intentionally does NOT fire CompleteRegistration (nothing has been
+ * registered at redirect time) to avoid inflating CR counts.
+ */
+export function fireTikTokRedirectEvents({
+  contentName = 'WhatsApp Redirect',
+  contentId = 'fluentia_whatsapp_redirect',
+  contentCategory = 'lead_gen',
+  contentType = 'product',
+  value = 1100,
+  currency = 'SAR',
+} = {}) {
+  if (typeof window === 'undefined' || !window.ttq) return null;
+  try {
+    const eventId = `waredirect_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
+    const baseProps = {
+      content_name: contentName,
+      content_category: contentCategory,
+      content_id: contentId,
+      content_type: contentType,
+      value,
+      currency,
+      event_id: eventId,
+    };
+    window.ttq.track('Lead', baseProps, { event_id: eventId });
+    window.ttq.track('SubmitForm', baseProps, { event_id: eventId });
+    if (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.DEV) {
+      console.log('[TikTok] Redirect events fired (Lead + SubmitForm)', { eventId });
+    }
+    return eventId;
+  } catch (e) {
+    if (typeof console !== 'undefined') console.error('[TikTok] redirect events failed:', e);
+    return null;
+  }
+}
+
+/**
  * Fire upper-funnel ViewContent event on page load.
  * No PII is expected at this stage — kept here so src/ has zero raw ttq.track
  * calls outside this helper.

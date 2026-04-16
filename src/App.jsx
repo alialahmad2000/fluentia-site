@@ -11,6 +11,7 @@ const StartPage = lazy(() => import('./pages/StartPage'));
 const AboutPage = lazy(() => import('./pages/AboutPage'));
 const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
 const TermsOfService = lazy(() => import('./pages/TermsOfService'));
+const WhatsAppRedirect = lazy(() => import('./pages/WhatsAppRedirect'));
 
 /* ─── UTM Source ─── */
 const UTM_MAP = {
@@ -1194,6 +1195,7 @@ function AppRoutes(){
       <Route path="/about" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#060e1c'}} />}><AboutPage /></Suspense>} />
       <Route path="/privacy" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#060e1c'}} />}><PrivacyPolicy /></Suspense>} />
       <Route path="/terms" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#060e1c'}} />}><TermsOfService /></Suspense>} />
+      <Route path="/w" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#0a1225'}} />}><WhatsAppRedirect /></Suspense>} />
     </Routes>
   );
 }
