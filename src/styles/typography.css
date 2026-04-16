@@ -1,0 +1,29 @@
+/* Fluentia typography baseline — rem-based scale, 17px body default */
+:root {
+  --font-body: 'Tajawal', 'Segoe UI', -apple-system, sans-serif;
+  --font-display: 'Playfair Display', Georgia, serif;
+  --fs-xs:   0.875rem;    /* 14px — minimum for fine print */
+  --fs-sm:   1rem;        /* 16px — body minimum */
+  --fs-base: 1.0625rem;   /* 17px — body default */
+  --fs-md:   1.125rem;    /* 18px — body large */
+  --fs-lg:   1.25rem;     /* 20px */
+  --fs-xl:   1.5rem;      /* 24px */
+  --fs-2xl:  2rem;        /* 32px */
+  --fs-3xl:  3rem;        /* 48px */
+  --fs-4xl:  4.5rem;      /* 72px — hero */
+  --lh-tight:   1.25;
+  --lh-normal:  1.6;
+  --lh-relaxed: 1.8;
+}
+
+html { font-size: 100%; }          /* respect user browser setting */
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--fs-base);        /* 17px default */
+  line-height: var(--lh-relaxed);
+  color: #f8fafc;
+  background: #060e1c;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}

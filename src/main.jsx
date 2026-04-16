@@ -1,6 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
+import { HelmetProvider } from 'react-helmet-async'
 import './index.css'
+import './styles/typography.css'
 import App from './App.jsx'
 import { captureRefFromUrl } from './utils/affiliateTracking'
 
@@ -9,6 +11,8 @@ captureRefFromUrl()
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <App />
+    <HelmetProvider>
+      <App />
+    </HelmetProvider>
   </React.StrictMode>,
 )

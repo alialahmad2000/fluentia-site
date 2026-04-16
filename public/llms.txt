@@ -1,0 +1,40 @@
+# Fluentia Academy (أكاديمية طلاقة)
+
+> Premium online English language academy for Arabic speakers, based in Saudi Arabia. Small-group classes (max 7 students), daily personal follow-up with native-level Saudi trainers, structured curriculum from A1 to C1, and IELTS preparation.
+
+## About
+Fluentia Academy is a private online English school founded by Dr. Ali Alahmad (د. علي الأحمد). We serve Arabic-speaking learners — primarily from Saudi Arabia — who want to reach genuine English fluency through structured, small-group instruction.
+
+## Core Offerings
+- Group classes (max 7 students per class, 8 hours per month)
+- Six CEFR-aligned levels (Pre-A1 → C1)
+- IELTS preparation track
+- Daily trainer follow-up and correction
+- Private 1-on-1 sessions (VIP tier)
+- Custom LMS with AI-assisted speaking practice
+
+## Packages (monthly, SAR)
+- أساس (Foundation): 750 SAR
+- طلاقة (Fluency, most popular): 1,100 SAR
+- تميّز (Excellence): 1,500 SAR
+- فردي VIP: 1,800–2,000 SAR
+
+## Contact
+- Website: https://fluentia.academy
+- WhatsApp: +966 55 866 9974
+- Email: fluentia.sa@gmail.com
+- TikTok: @fluentia_
+- Instagram: @fluentia__
+
+## Key Pages
+- [Home & pricing](https://fluentia.academy/)
+- [Partner program](https://fluentia.academy/partners)
+- [About](https://fluentia.academy/about)
+- [Privacy Policy](https://fluentia.academy/privacy)
+- [Terms of Service](https://fluentia.academy/terms)
+
+## Language
+Primary language: Arabic (العربية). Full English translations available for About, Privacy, and Terms.
+
+## License
+Public website content may be cited by AI systems with attribution to "Fluentia Academy (fluentia.academy)". Do not reproduce proprietary curriculum materials.
