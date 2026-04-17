@@ -57,9 +57,11 @@ export async function buildTikTokUserData({ email, phone, externalId }) {
   const normalizedEmail = normalizeEmail(email);
   const normalizedPhone = normalizePhoneE164(phone);
 
-  const hashedEmail = normalizedEmail ? await sha256(normalizedEmail) : undefined;
-  const hashedPhone = normalizedPhone ? await sha256(normalizedPhone) : undefined;
-  const hashedExternalId = externalId ? await sha256(String(externalId).toLowerCase()) : undefined;
+  const [hashedEmail, hashedPhone, hashedExternalId] = await Promise.all([
+    normalizedEmail ? sha256(normalizedEmail) : undefined,
+    normalizedPhone ? sha256(normalizedPhone) : undefined,
+    externalId ? sha256(String(externalId).toLowerCase()) : undefined,
+  ]);
 
   const userData = {};
   if (hashedEmail) userData.email = hashedEmail;
@@ -115,7 +117,7 @@ export async function fireTikTokLeadEvents({
         hasEmail: !!userData.email,
         hasPhone: !!userData.phone_number,
         hasExternalId: !!userData.external_id,
-        normalizedPhone: normalizePhoneE164(phone),
+        normalizedPhone: normalizePhoneE164(phone),  // already computed above, but DEV-only so negligible
       });
     }
 
@@ -203,8 +205,9 @@ export function fireTikTokRedirectEvents({
       currency,
       event_id: eventId,
     };
-    window.ttq.track('Lead', baseProps, { event_id: eventId });
-    window.ttq.track('SubmitForm', baseProps, { event_id: eventId });
+    const eventOptions = { event_id: eventId, context: {} };
+    window.ttq.track('Lead', baseProps, eventOptions);
+    window.ttq.track('SubmitForm', baseProps, eventOptions);
     if (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.DEV) {
       console.log('[TikTok] Redirect events fired (Lead + SubmitForm)', { eventId });
     }

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef, useMemo } from 'react';
 import { fireTikTokRedirectEvents } from '../lib/tiktokPixel';
 
 /**
@@ -80,10 +80,19 @@ function fireTracking() {
 }
 
 export default function WhatsAppRedirect() {
-  useEffect(() => {
+  const firedRef = useRef(false);
+  const waURL = useMemo(() => buildWhatsAppURL(), []);
+
+  function fireTrackingOnce() {
+    if (firedRef.current) return;
+    firedRef.current = true;
     fireTracking();
+  }
+
+  useEffect(() => {
+    fireTrackingOnce();
     const timer = setTimeout(() => {
-      window.location.replace(buildWhatsAppURL());
+      window.location.replace(waURL);
     }, 1500);
     return () => clearTimeout(timer);
   }, []);
@@ -155,8 +164,8 @@ export default function WhatsAppRedirect() {
 
       {/* Manual fallback (also works with JS disabled) */}
       <a
-        href={buildWhatsAppURL()}
-        onClick={fireTracking}
+        href={waURL}
+        onClick={fireTrackingOnce}
         style={{
           color: '#f8fafc',
           fontSize: '14px',
