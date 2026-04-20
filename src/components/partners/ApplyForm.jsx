@@ -154,75 +154,87 @@ export default function ApplyForm() {
     <form onSubmit={handleSubmit} className="space-y-5" dir="rtl" noValidate>
 
       {/* Row 1: name + phone */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <Field label="الاسم الكامل" required error={errors.full_name}>
-          <TextInput
-            value={form.full_name}
-            onChange={set('full_name')}
-            placeholder="محمد عبدالله الأحمد"
-            error={errors.full_name}
-          />
-        </Field>
-        <Field label="رقم الجوال" required error={errors.phone} hint="يبدأ بـ 05 أو +966">
-          <TextInput
-            value={form.phone}
-            onChange={set('phone')}
-            placeholder="05xxxxxxxx"
-            type="tel"
-            inputMode="numeric"
-            error={errors.phone}
-          />
-        </Field>
+      <div className="flex flex-col md:flex-row" style={{ gap: '1rem', rowGap: '1.25rem' }}>
+        <div className="flex-1 min-w-0">
+          <Field label="الاسم الكامل" required error={errors.full_name}>
+            <TextInput
+              value={form.full_name}
+              onChange={set('full_name')}
+              placeholder="محمد عبدالله الأحمد"
+              error={errors.full_name}
+            />
+          </Field>
+        </div>
+        <div className="flex-1 min-w-0">
+          <Field label="رقم الجوال" required error={errors.phone} hint="يبدأ بـ 05 أو +966">
+            <TextInput
+              value={form.phone}
+              onChange={set('phone')}
+              placeholder="05xxxxxxxx"
+              type="tel"
+              inputMode="numeric"
+              error={errors.phone}
+            />
+          </Field>
+        </div>
       </div>
 
       {/* Row 2: email + city */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <Field label="الإيميل" required error={errors.email}>
-          <TextInput
-            value={form.email}
-            onChange={set('email')}
-            placeholder="you@example.com"
-            type="email"
-            error={errors.email}
-          />
-        </Field>
-        <Field label="المدينة" error={errors.city}>
-          <TextInput
-            value={form.city}
-            onChange={set('city')}
-            placeholder="الرياض"
-            error={errors.city}
-          />
-        </Field>
+      <div className="flex flex-col md:flex-row" style={{ gap: '1rem', rowGap: '1.25rem' }}>
+        <div className="flex-1 min-w-0">
+          <Field label="الإيميل" required error={errors.email}>
+            <TextInput
+              value={form.email}
+              onChange={set('email')}
+              placeholder="you@example.com"
+              type="email"
+              error={errors.email}
+            />
+          </Field>
+        </div>
+        <div className="flex-1 min-w-0">
+          <Field label="المدينة" error={errors.city}>
+            <TextInput
+              value={form.city}
+              onChange={set('city')}
+              placeholder="الرياض"
+              error={errors.city}
+            />
+          </Field>
+        </div>
       </div>
 
       {/* Row 3: ref_code + audience_size */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <Field
-          label="كود الإحالة الخاص بك"
-          required
-          error={errors.ref_code}
-          hint="4-16 حرف/رقم إنجليزي — سيُعرض في رابطك"
-        >
-          <TextInput
-            value={form.ref_code}
-            onChange={(e) =>
-              setForm(f => ({ ...f, ref_code: e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '') }))
-            }
-            placeholder="AHMAD25"
+      <div className="flex flex-col md:flex-row" style={{ gap: '1rem', rowGap: '1.25rem' }}>
+        <div className="flex-1 min-w-0">
+          <Field
+            label="كود الإحالة الخاص بك"
+            required
             error={errors.ref_code}
-          />
-        </Field>
-        <Field label="تقريباً كم متابع لديك إجمالاً؟" error={errors.audience_size} hint="اختياري — رقم فقط">
-          <TextInput
-            value={form.audience_size}
-            onChange={set('audience_size')}
-            placeholder="5000"
-            type="number"
-            inputMode="numeric"
-            error={errors.audience_size}
-          />
-        </Field>
+            hint="4-16 حرف/رقم إنجليزي — سيُعرض في رابطك"
+          >
+            <TextInput
+              value={form.ref_code}
+              onChange={(e) =>
+                setForm(f => ({ ...f, ref_code: e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '') }))
+              }
+              placeholder="AHMAD25"
+              error={errors.ref_code}
+            />
+          </Field>
+        </div>
+        <div className="flex-1 min-w-0">
+          <Field label="تقريباً كم متابع لديك إجمالاً؟" error={errors.audience_size} hint="اختياري — رقم فقط">
+            <TextInput
+              value={form.audience_size}
+              onChange={set('audience_size')}
+              placeholder="5000"
+              type="number"
+              inputMode="numeric"
+              error={errors.audience_size}
+            />
+          </Field>
+        </div>
       </div>
 
       {/* Socials */}
@@ -233,19 +245,29 @@ export default function ApplyForm() {
         <p className="text-sm text-right" style={{ color: 'rgba(255,255,255,0.60)' }}>
           حساباتك على التواصل الاجتماعي (اختياري)
         </p>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <Field label="تويتر / X">
-            <TextInput value={form.twitter} onChange={set('twitter')} placeholder="@handle" />
-          </Field>
-          <Field label="انستغرام">
-            <TextInput value={form.instagram} onChange={set('instagram')} placeholder="@handle" />
-          </Field>
-          <Field label="تيك توك">
-            <TextInput value={form.tiktok} onChange={set('tiktok')} placeholder="@handle" />
-          </Field>
-          <Field label="سناب شات">
-            <TextInput value={form.snapchat} onChange={set('snapchat')} placeholder="@handle" />
-          </Field>
+        <div className="flex flex-col md:flex-row" style={{ gap: '1rem', rowGap: '1.25rem' }}>
+          <div className="flex-1 min-w-0">
+            <Field label="تويتر / X">
+              <TextInput value={form.twitter} onChange={set('twitter')} placeholder="@handle" />
+            </Field>
+          </div>
+          <div className="flex-1 min-w-0">
+            <Field label="انستغرام">
+              <TextInput value={form.instagram} onChange={set('instagram')} placeholder="@handle" />
+            </Field>
+          </div>
+        </div>
+        <div className="flex flex-col md:flex-row" style={{ gap: '1rem', rowGap: '1.25rem' }}>
+          <div className="flex-1 min-w-0">
+            <Field label="تيك توك">
+              <TextInput value={form.tiktok} onChange={set('tiktok')} placeholder="@handle" />
+            </Field>
+          </div>
+          <div className="flex-1 min-w-0">
+            <Field label="سناب شات">
+              <TextInput value={form.snapchat} onChange={set('snapchat')} placeholder="@handle" />
+            </Field>
+          </div>
         </div>
       </div>
 
@@ -265,7 +287,7 @@ export default function ApplyForm() {
               ? 'border-red-400/50'
               : 'border-white/10 hover:border-white/20 focus:border-amber-400/40',
           ].join(' ')}
-          style={{ colorScheme: 'dark' }}
+          style={{ colorScheme: 'dark', textAlign: 'right', unicodeBidi: 'plaintext' }}
         />
       </Field>
 

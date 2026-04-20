@@ -35,7 +35,7 @@ export function TextInput({ value, onChange, placeholder, type = 'text', error, 
           ? 'border-red-400/50'
           : 'border-white/10 hover:border-white/20 focus:border-amber-400/40',
       ].join(' ')}
-      style={{ colorScheme: 'dark' }}
+      style={{ colorScheme: 'dark', textAlign: 'right', unicodeBidi: 'plaintext' }}
       {...props}
     />
   );
