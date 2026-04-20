@@ -4,7 +4,7 @@ import {
   Handshake, Link2, Share2, Wallet, TrendingUp, ShieldCheck,
   Users, Target, Star, ArrowLeft, Check, ChevronDown,
 } from 'lucide-react';
-import ApplicationForm from './_shared/ApplicationForm';
+import ApplyForm from '../../components/partners/ApplyForm';
 import FAQList from './_shared/FAQList';
 import CommissionCalculator from './_shared/CommissionCalculator';
 
@@ -426,7 +426,9 @@ export default function PartnersLanding() {
           <SectionHeading eyebrow="انضم الآن" subtitle="العملية سريعة — دقيقتين فقط">
             قدّم طلبك الآن
           </SectionHeading>
-          <ApplicationForm theme="dark-blue" />
+          <div className="max-w-2xl mx-auto">
+            <ApplyForm />
+          </div>
         </Section>
 
       </div>
