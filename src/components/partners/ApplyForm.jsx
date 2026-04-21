@@ -82,41 +82,48 @@ export default function ApplyForm() {
     setSubmitting(true);
 
     try {
-      const res = await fetch(
-        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/submit-affiliate-application`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            apikey: import.meta.env.VITE_SUPABASE_ANON_KEY,
-          },
-          body: JSON.stringify({
-            full_name: form.full_name.trim(),
-            email: form.email.trim().toLowerCase(),
-            phone: form.phone.trim().replace(/\s+/g, ''),
-            city: form.city.trim() || null,
-            audience_size: form.audience_size ? parseInt(form.audience_size, 10) : null,
-            heard_from: form.heard_from,
-            reason: form.why_join.trim(),
-            twitter: form.twitter.trim() || null,
-            instagram: form.instagram.trim() || null,
-            tiktok: form.tiktok.trim() || null,
-            snapchat: form.snapchat.trim() || null,
-            honeypot: form.honeypot,
-          }),
-        }
-      );
-      const data = await res.json();
+      let res, text, data;
+      try {
+        res = await fetch(
+          `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/submit-affiliate-application`,
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              apikey: import.meta.env.VITE_SUPABASE_ANON_KEY,
+              Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
+            },
+            body: JSON.stringify({
+              full_name: form.full_name.trim(),
+              email: form.email.trim().toLowerCase(),
+              phone: form.phone.trim().replace(/\s+/g, ''),
+              city: form.city.trim() || null,
+              audience_size: form.audience_size ? parseInt(form.audience_size, 10) : null,
+              heard_from: form.heard_from,
+              reason: form.why_join.trim(),
+              twitter: form.twitter.trim() || null,
+              instagram: form.instagram.trim() || null,
+              tiktok: form.tiktok.trim() || null,
+              snapchat: form.snapchat.trim() || null,
+              honeypot: form.honeypot,
+            }),
+          }
+        );
+      } catch (networkErr) {
+        throw new Error(`فشل الاتصال بالخادم: ${networkErr.message}`);
+      }
+
+      text = await res.text();
+      console.log('[ApplyForm] status', res.status, 'body', text);
+
+      try {
+        data = JSON.parse(text);
+      } catch {
+        throw new Error(`الخادم رجّع ردًا غير متوقع (HTTP ${res.status}). تواصل مع الدعم.`);
+      }
 
       if (!res.ok || !data.success) {
-        const errMsg = data.error || 'فشل إرسال الطلب';
-        if (res.status === 409) {
-          setErrors({ _general: errMsg });
-        } else {
-          setErrors({ _general: errMsg });
-        }
-        setSubmitting(false);
-        return;
+        throw new Error(data.error || `فشل الإرسال (HTTP ${res.status})`);
       }
 
       setSuccess(true);
@@ -124,8 +131,8 @@ export default function ApplyForm() {
       const code = encodeURIComponent(data.ref_code || '');
       window.location.href = `/partners/submitted?name=${name}&code=${code}`;
     } catch (err) {
-      console.error('[affiliate-apply] exception:', err);
-      setErrors({ _general: 'خطأ غير متوقع، حاول مرة أخرى' });
+      console.error('[ApplyForm] submit failed:', err);
+      setErrors({ _general: err?.message ? `خطأ: ${err.message}` : 'خطأ غير متوقع، حاول مرة أخرى' });
       setSubmitting(false);
     }
   }
