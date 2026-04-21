@@ -24,8 +24,6 @@ export function getSource() {
   return UTM_MAP[utm?.toLowerCase()] || 'مباشر';
 }
 
-export const WA_BASE = 'https://wa.me/966558669974?text=';
-export const WA_DEFAULT = WA_BASE + encodeURIComponent('السلام عليكم، أبي أحجز لقاء مبدئي مجاني مع المدرب');
 export const TT_URL = 'https://www.tiktok.com/@fluentia_';
 export const IG_URL = 'https://www.instagram.com/fluentia__';
 

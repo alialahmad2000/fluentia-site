@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Link } from 'react-router-dom';
-import { fireLeadTracking, getSource, WA_BASE } from '../utils/tracking';
+import { fireLeadTracking, getSource } from '../utils/tracking';
+import { buildWhatsAppUrl } from '../lib/whatsapp';
 
 /* ═══════════════════════════════════════════════════════════════
    DESIGN TOKENS (shared with future main landing redesign)
@@ -314,7 +315,7 @@ export default function StartPage() {
         goal,
         utm,
       });
-      window.open(WA_BASE + encodeURIComponent(msg), '_blank');
+      window.open(buildWhatsAppUrl(msg), '_blank');
 
       setSubmitted(true);
     } catch (err) {
@@ -331,7 +332,7 @@ export default function StartPage() {
     }
     const src = getSource();
     const msg = `السلام عليكم، أبي أحجز لقاء مبدئي مجاني\nالمصدر: ${src}`;
-    window.open(WA_BASE + encodeURIComponent(msg), '_blank');
+    window.open(buildWhatsAppUrl(msg), '_blank');
   };
 
   /* ═══════════════════════════════════════════════════════════

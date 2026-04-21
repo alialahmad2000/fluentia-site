@@ -1,4 +1,5 @@
 import React from 'react';
+import { buildWhatsAppUrl, WA_MESSAGES } from '../lib/whatsapp';
 import { Helmet } from 'react-helmet-async';
 import LegalLayout from './_shared/LegalLayout';
 
@@ -295,7 +296,7 @@ export default function AboutPage() {
       <H2>تواصل معنا</H2>
       <P>
         للاستفسار أو حجز لقاء مبدئي مجاني مع المدرب، تواصل معنا على{' '}
-        <a href="https://wa.me/966558669974" style={{ color: '#38bdf8', textDecoration: 'none' }}>
+        <a href={buildWhatsAppUrl(WA_MESSAGES.general)} target="_blank" rel="noopener noreferrer" style={{ color: '#38bdf8', textDecoration: 'none' }}>
           واتساب: +966 55 866 9974
         </a>{' '}
         أو عبر البريد الإلكتروني{' '}

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, lazy, Suspense } from "react";
 import { BrowserRouter, Routes, Route, Link, useLocation } from "react-router-dom";
 import { getStoredRef, getVisitorId } from './utils/affiliateTracking';
+import { buildWhatsAppUrl, WA_MESSAGES } from './lib/whatsapp';
 import { fireTikTokLeadEvents, fireTikTokViewContent } from './lib/tiktokPixel';
 import CookieBanner from './components/CookieBanner';
 
@@ -32,8 +33,7 @@ const getSource = () => {
 };
 
 /* ─── WhatsApp ─── */
-const WA_BASE = "https://wa.me/966558669974?text=";
-const buildWA = (data) => WA_BASE + encodeURIComponent(
+const buildWA = (data) => buildWhatsAppUrl(
   `السلام عليكم، أبي أحجز لقاء مبدئي مجاني\n` +
   `الاسم: ${data.name || "—"}\n` +
   `العمر: ${data.age || "—"}\n` +
@@ -45,7 +45,6 @@ const buildWA = (data) => WA_BASE + encodeURIComponent(
   (data.level ? `مستوى تقريبي: ${data.level}\n` : "") +
   `المصدر: ${getSource()}`
 );
-const WA = WA_BASE + encodeURIComponent("السلام عليكم، أبي أحجز لقاء مبدئي مجاني مع المدرب");
 const TT = "https://www.tiktok.com/@fluentia_";
 const IG = "https://www.instagram.com/fluentia__";
 
@@ -289,7 +288,7 @@ function Quiz({ onClose }) {
       `• نقاط القوة: ${strengthsText}\n` +
       `• يحتاج تحسين في: ${weaknessesText}\n\n` +
       `أبي أحجز لقاء مبدئي مجاني`;
-    return WA_BASE + encodeURIComponent(msg);
+    return buildWhatsAppUrl(msg);
   };
 
   return (
@@ -1114,7 +1113,7 @@ section+section::before{content:'';display:block;height:1px;background:linear-gr
       <div>
         <div style={{fontSize:"0.875rem",fontWeight:800,color:"var(--t2)",marginBottom:"10px",fontFamily:"'Tajawal',sans-serif"}}>تواصل</div>
         <ul style={{listStyle:"none",padding:0,margin:0,display:"flex",flexDirection:"column",gap:"8px"}}>
-          <li><a href={WA} target="_blank" rel="noopener noreferrer" style={{color:"var(--t3)",fontSize:"0.875rem",textDecoration:"none",fontFamily:"'Tajawal',sans-serif"}}>WhatsApp</a></li>
+          <li><a href={buildWhatsAppUrl(WA_MESSAGES.general)} target="_blank" rel="noopener noreferrer" style={{color:"var(--t3)",fontSize:"0.875rem",textDecoration:"none",fontFamily:"'Tajawal',sans-serif"}}>WhatsApp</a></li>
           <li><a href="mailto:fluentia.sa@gmail.com" style={{color:"var(--t3)",fontSize:"0.875rem",textDecoration:"none",fontFamily:"'Tajawal',sans-serif"}}>fluentia.sa@gmail.com</a></li>
           <li><a href={TT} target="_blank" rel="noopener noreferrer" style={{color:"var(--t3)",fontSize:"0.875rem",textDecoration:"none"}}>TikTok</a></li>
           <li><a href={IG} target="_blank" rel="noopener noreferrer" style={{color:"var(--t3)",fontSize:"0.875rem",textDecoration:"none"}}>Instagram</a></li>
@@ -1151,13 +1150,13 @@ section+section::before{content:'';display:block;height:1px;background:linear-gr
 
 {/* MINI CHAT */}
 <div style={{position:"fixed",bottom:"80px",left:"22px",zIndex:999,display:"flex",alignItems:"center",gap:"8px",opacity:scrollY>400?1:0,transform:scrollY>400?"translateX(0)":"translateX(-20px)",transition:"all 0.4s",pointerEvents:scrollY>400?"auto":"none"}}>
-  <a href={WA} target="_blank" rel="noopener noreferrer" style={{background:"var(--glass)",backdropFilter:"var(--glass-blur)",border:"1px solid var(--glass-b)",borderRadius:"100px",padding:"8px 16px",fontSize:"0.875rem",color:"var(--t1)",fontWeight:600,boxShadow:"0 4px 15px var(--shadow)",display:"flex",alignItems:"center",gap:"6px",fontFamily:"'Tajawal',sans-serif"}}>
+  <a href={buildWhatsAppUrl(WA_MESSAGES.general)} target="_blank" rel="noopener noreferrer" style={{background:"var(--glass)",backdropFilter:"var(--glass-blur)",border:"1px solid var(--glass-b)",borderRadius:"100px",padding:"8px 16px",fontSize:"0.875rem",color:"var(--t1)",fontWeight:600,boxShadow:"0 4px 15px var(--shadow)",display:"flex",alignItems:"center",gap:"6px",fontFamily:"'Tajawal',sans-serif"}}>
     <span style={{fontSize:"1rem"}}>💬</span> محتاج مساعدة؟
   </a>
 </div>
 
 {/* FLOATING WA */}
-<a href={WA} target="_blank" rel="noopener noreferrer" style={{position:"fixed",bottom:"22px",left:"22px",zIndex:999,width:"52px",height:"52px",borderRadius:"50%",background:"linear-gradient(135deg,#25D366,#128C7E)",display:"flex",alignItems:"center",justifyContent:"center",color:"#fff",fontSize:"1.375rem",animation:"pulse2 2s infinite"}}>💬</a>
+<a href={buildWhatsAppUrl(WA_MESSAGES.general)} target="_blank" rel="noopener noreferrer" style={{position:"fixed",bottom:"22px",left:"22px",zIndex:999,width:"52px",height:"52px",borderRadius:"50%",background:"linear-gradient(135deg,#25D366,#128C7E)",display:"flex",alignItems:"center",justifyContent:"center",color:"#fff",fontSize:"1.375rem",animation:"pulse2 2s infinite"}}>💬</a>
 
 </div>{/* end theme container */}
 </div>)}
