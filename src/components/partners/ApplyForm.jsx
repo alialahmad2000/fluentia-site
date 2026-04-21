@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { supabase } from '../../utils/supabase';
 import { Field, TextInput } from './Field';
 import { CustomDropdown } from './CustomDropdown';
 import { Loader2, AlertCircle } from 'lucide-react';
@@ -13,7 +12,6 @@ const HEARD_FROM_OPTIONS = [
 
 const PHONE_RE = /^(\+966|05)\d{8}$/;
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const REF_CODE_RE = /^[A-Z0-9]{4,16}$/;
 
 function SectionHeader({ title, subtitle }) {
   return (
@@ -36,7 +34,6 @@ export default function ApplyForm() {
     email: '',
     phone: '',
     city: '',
-    ref_code: '',
     twitter: '',
     instagram: '',
     tiktok: '',
@@ -45,6 +42,7 @@ export default function ApplyForm() {
     why_join: '',
     heard_from: '',
     terms_accepted: false,
+    honeypot: '',
   });
   const [errors, setErrors] = useState({});
   const [submitting, setSubmitting] = useState(false);
@@ -65,10 +63,6 @@ export default function ApplyForm() {
     const phoneClean = form.phone.trim().replace(/\s+/g, '');
     if (!PHONE_RE.test(phoneClean))
       er.phone = 'رقم الجوال يبدأ بـ 05 أو +966 ويتكون من 10 أرقام';
-    if (!form.ref_code.trim())
-      er.ref_code = 'اختر كود الإحالة الخاص بك';
-    else if (!REF_CODE_RE.test(form.ref_code.trim().toUpperCase()))
-      er.ref_code = 'الكود: حروف إنجليزية وأرقام فقط (4-16 خانة)';
     if (form.audience_size && isNaN(parseInt(form.audience_size, 10)))
       er.audience_size = 'أدخل رقماً صحيحاً';
     if (!form.why_join.trim() || form.why_join.trim().length < 10)
@@ -88,71 +82,50 @@ export default function ApplyForm() {
     setSubmitting(true);
 
     try {
-      const payload = {
-        full_name: form.full_name.trim(),
-        email: form.email.trim().toLowerCase(),
-        phone: form.phone.trim().replace(/\s+/g, ''),
-        city: form.city.trim() || null,
-        ref_code: form.ref_code.trim().toUpperCase(),
-        status: 'pending',
-        social_handles: {
-          twitter:   form.twitter.trim()   || '',
-          instagram: form.instagram.trim() || '',
-          tiktok:    form.tiktok.trim()    || '',
-          snapchat:  form.snapchat.trim()  || '',
-        },
-        audience_size: form.audience_size ? parseInt(form.audience_size, 10) : null,
-        why_join: form.why_join.trim(),
-        heard_from: form.heard_from,
-        terms_accepted_at: new Date().toISOString(),
-      };
-
-      console.log('[affiliate-apply] payload =', payload);
-
-      // Do NOT use .select().single() — SELECT policy blocks anon from reading back the row.
-      const { error } = await supabase
-        .from('affiliates')
-        .insert(payload);
-
-      if (error) {
-        console.error('[affiliate-apply] insert error:', error);
-
-        if (error.code === '23505') {
-          const msg = (error.message || '').toLowerCase();
-          if (msg.includes('ref_code'))
-            setErrors({ ref_code: 'هذا الكود مستخدم — جرّب كود آخر' });
-          else if (msg.includes('email'))
-            setErrors({ email: 'يوجد طلب سابق بنفس الإيميل' });
-          else
-            setErrors({ _general: 'طلب مكرر — تواصل معنا على الواتساب' });
-          setSubmitting(false);
-          return;
+      const res = await fetch(
+        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/submit-affiliate-application`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            apikey: import.meta.env.VITE_SUPABASE_ANON_KEY,
+          },
+          body: JSON.stringify({
+            full_name: form.full_name.trim(),
+            email: form.email.trim().toLowerCase(),
+            phone: form.phone.trim().replace(/\s+/g, ''),
+            city: form.city.trim() || null,
+            audience_size: form.audience_size ? parseInt(form.audience_size, 10) : null,
+            heard_from: form.heard_from,
+            reason: form.why_join.trim(),
+            twitter: form.twitter.trim() || null,
+            instagram: form.instagram.trim() || null,
+            tiktok: form.tiktok.trim() || null,
+            snapchat: form.snapchat.trim() || null,
+            honeypot: form.honeypot,
+          }),
         }
+      );
+      const data = await res.json();
 
-        if (error.code === '42501') {
-          setErrors({ _general: 'خطأ في صلاحيات قاعدة البيانات — تم إبلاغ الفريق التقني' });
-          setSubmitting(false);
-          return;
+      if (!res.ok || !data.success) {
+        const errMsg = data.error || 'فشل إرسال الطلب';
+        if (res.status === 409) {
+          setErrors({ _general: errMsg });
+        } else {
+          setErrors({ _general: errMsg });
         }
-
-        if (error.code === '23502') {
-          setErrors({ _general: `حقل مطلوب ناقص: ${error.details || error.message}` });
-          setSubmitting(false);
-          return;
-        }
-
-        setErrors({ _general: `خطأ غير متوقع: ${error.message || 'حاول مرة ثانية'}` });
         setSubmitting(false);
         return;
       }
 
       setSuccess(true);
       const name = encodeURIComponent(form.full_name.trim());
-      const code = encodeURIComponent(form.ref_code.trim().toUpperCase());
+      const code = encodeURIComponent(data.ref_code || '');
       window.location.href = `/partners/submitted?name=${name}&code=${code}`;
     } catch (err) {
       console.error('[affiliate-apply] exception:', err);
-      setErrors({ _general: 'خطأ غير متوقع، حاول مرة ثانية' });
+      setErrors({ _general: 'خطأ غير متوقع، حاول مرة أخرى' });
       setSubmitting(false);
     }
   }
@@ -172,6 +145,18 @@ export default function ApplyForm() {
       noValidate
       className="mx-auto w-full max-w-2xl space-y-10"
     >
+      {/* Honeypot — hidden from humans, catches bots */}
+      <input
+        type="text"
+        name="honeypot"
+        value={form.honeypot}
+        onChange={set('honeypot')}
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+        style={{ position: 'absolute', left: '-9999px', width: '1px', height: '1px', opacity: 0 }}
+      />
+
       {/* ═══════════ Section 1 — Personal Info ═══════════ */}
       <section className="space-y-6">
         <SectionHeader title="معلوماتك الشخصية" subtitle="كيف نتواصل معك" />
@@ -197,16 +182,7 @@ export default function ApplyForm() {
 
       {/* ═══════════ Section 2 — Marketing Profile ═══════════ */}
       <section className="space-y-6">
-        <SectionHeader title="بياناتك التسويقية" subtitle="معلومات عن جمهورك وكودك" />
-
-        <Field label="كود الإحالة الخاص بك" required error={errors.ref_code} hint="4-16 حرف/رقم إنجليزي — سيُعرض في رابطك">
-          <TextInput
-            value={form.ref_code}
-            onChange={(e) => setForm(f => ({ ...f, ref_code: e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '') }))}
-            placeholder="AHMAD25"
-            error={errors.ref_code}
-          />
-        </Field>
+        <SectionHeader title="بياناتك التسويقية" subtitle="معلومات عن جمهورك" />
 
         <Field label="تقريباً كم متابع لديك إجمالاً؟" error={errors.audience_size} hint="اختياري — رقم فقط">
           <TextInput value={form.audience_size} onChange={set('audience_size')} placeholder="5000" type="number" inputMode="numeric" error={errors.audience_size} />
@@ -215,7 +191,7 @@ export default function ApplyForm() {
 
       <SectionDivider />
 
-      {/* ═══════════ Section 3 — Socials (optional, clearly grouped) ═══════════ */}
+      {/* ═══════════ Section 3 — Socials (optional) ═══════════ */}
       <section className="space-y-6">
         <SectionHeader title="حساباتك على السوشال" subtitle="اختياري — ساعدنا نفهم قنواتك" />
 
