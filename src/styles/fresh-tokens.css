@@ -1,0 +1,347 @@
+/* ═══════════════════════════════════════════════════════════════
+   FLUENTIA PREMIUM — MODERN CINEMATIC DESIGN SYSTEM
+   Inspired by: Masterclass, Linear, Vercel
+   Premium · Tech-Forward · Conversion-Driven
+   ═══════════════════════════════════════════════════════════════ */
+
+:root {
+  /* ─── COLORS ─────────────────────────────────────────────────── */
+
+  /* Foundational backgrounds — deep navy with warmth */
+  --f-bg-base:       #0a0e1a;   /* deepest, hero background */
+  --f-bg-raised:     #0f1525;   /* elevated surfaces, cards */
+  --f-bg-subtle:     #131b2e;   /* subtle differentiation */
+  --f-bg-overlay:    rgba(10, 14, 26, 0.8);  /* modal/overlay */
+
+  /* Amber gold — primary accent. Warmer than pure gold */
+  --f-amber:         #fbbf24;   /* primary accent — CTAs, highlights */
+  --f-amber-bright:  #fcd34d;   /* hover state */
+  --f-amber-deep:    #d97706;   /* pressed/active */
+  --f-amber-glow:    rgba(251, 191, 36, 0.2);  /* glow effects */
+  --f-amber-soft:    rgba(251, 191, 36, 0.08); /* subtle backgrounds */
+
+  /* Cyan — secondary accent for info, links, badges */
+  --f-cyan:          #22d3ee;
+  --f-cyan-bright:   #67e8f9;
+  --f-cyan-soft:     rgba(34, 211, 238, 0.1);
+
+  /* Text — soft white spectrum */
+  --f-text-primary:  #f8fafc;   /* main text */
+  --f-text-secondary:#cbd5e1;   /* secondary text */
+  --f-text-muted:    #94a3b8;   /* captions, meta */
+  --f-text-dim:      #64748b;   /* disabled, watermarks */
+
+  /* Borders — subtle, premium */
+  --f-border-subtle:  rgba(248, 250, 252, 0.06);
+  --f-border-default: rgba(248, 250, 252, 0.1);
+  --f-border-strong:  rgba(251, 191, 36, 0.3);
+
+  /* Status colors — minimal use */
+  --f-success: #10b981;
+  --f-error:   #ef4444;
+
+  /* ─── TYPOGRAPHY ─────────────────────────────────────────────── */
+
+  --f-font-display: 'Tajawal', 'Readex Pro Variable', -apple-system, sans-serif;
+  --f-font-body:    'Readex Pro Variable', 'Tajawal', -apple-system, sans-serif;
+  --f-font-num:     'Inter Variable', ui-monospace, monospace;
+
+  /* Type scale — modern SaaS proportions */
+  --f-text-xs:    12px;
+  --f-text-sm:    14px;
+  --f-text-base:  16px;
+  --f-text-lg:    18px;
+  --f-text-xl:    20px;
+  --f-text-2xl:   24px;
+  --f-text-3xl:   30px;
+  --f-text-4xl:   36px;
+  --f-text-5xl:   48px;
+  --f-text-6xl:   60px;
+  --f-text-7xl:   72px;
+  --f-text-8xl:   88px;
+
+  /* Line heights */
+  --f-leading-none:    1;
+  --f-leading-tight:   1.15;
+  --f-leading-snug:    1.3;
+  --f-leading-normal:  1.5;
+  --f-leading-relaxed: 1.7;
+
+  /* Letter spacing */
+  --f-tracking-tighter: -0.04em;
+  --f-tracking-tight:   -0.02em;
+  --f-tracking-normal:  0;
+  --f-tracking-wide:    0.04em;
+  --f-tracking-wider:   0.08em;
+  --f-tracking-widest:  0.16em;
+
+  /* Font weights — Tajawal supports full range */
+  --f-weight-light:    300;
+  --f-weight-regular:  400;
+  --f-weight-medium:   500;
+  --f-weight-semibold: 600;
+  --f-weight-bold:     700;
+  --f-weight-extrabold:800;
+  --f-weight-black:    900;
+
+  /* ─── SPACING — 8px base scale ───────────────────────────────── */
+
+  --f-space-1:  4px;
+  --f-space-2:  8px;
+  --f-space-3:  12px;
+  --f-space-4:  16px;
+  --f-space-5:  20px;
+  --f-space-6:  24px;
+  --f-space-8:  32px;
+  --f-space-10: 40px;
+  --f-space-12: 48px;
+  --f-space-16: 64px;
+  --f-space-20: 80px;
+  --f-space-24: 96px;
+  --f-space-32: 128px;
+  --f-space-40: 160px;
+
+  /* ─── CONTAINERS ─────────────────────────────────────────────── */
+
+  --f-container-sm: 640px;
+  --f-container-md: 768px;
+  --f-container-lg: 1024px;
+  --f-container-xl: 1280px;
+  --f-container-2xl: 1440px;
+
+  /* ─── RADIUS ─────────────────────────────────────────────────── */
+
+  --f-radius-sm:   6px;
+  --f-radius-md:   10px;
+  --f-radius-lg:   14px;
+  --f-radius-xl:   20px;
+  --f-radius-2xl:  28px;
+  --f-radius-pill: 9999px;
+
+  /* ─── SHADOWS — premium depth ────────────────────────────────── */
+
+  --f-shadow-sm:   0 1px 3px rgba(0,0,0,0.3);
+  --f-shadow-md:   0 4px 12px rgba(0,0,0,0.4);
+  --f-shadow-lg:   0 12px 32px rgba(0,0,0,0.5);
+  --f-shadow-xl:   0 24px 64px rgba(0,0,0,0.6);
+  --f-shadow-glow: 0 0 80px var(--f-amber-glow);
+
+  /* ─── MOTION — modern, snappy but not rushed ─────────────────── */
+
+  --f-ease-out:        cubic-bezier(0.22, 1, 0.36, 1);
+  --f-ease-in-out:     cubic-bezier(0.65, 0, 0.35, 1);
+  --f-ease-spring:     cubic-bezier(0.5, 1.5, 0.5, 1);
+
+  --f-dur-instant:  150ms;
+  --f-dur-fast:     250ms;
+  --f-dur-base:     400ms;
+  --f-dur-slow:     700ms;
+  --f-dur-slower:   1000ms;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   GLOBAL RESET + BASE
+   ═══════════════════════════════════════════════════════════════ */
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  background: var(--f-bg-base);
+  color: var(--f-text-primary);
+  font-family: var(--f-font-body);
+  font-size: var(--f-text-base);
+  line-height: var(--f-leading-relaxed);
+  font-feature-settings: "kern", "liga", "calt";
+  direction: rtl;
+  overflow-x: hidden;
+}
+
+/* Western numerals always — premium standard */
+.f-num {
+  font-family: var(--f-font-num);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+  direction: ltr;
+  display: inline-block;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   TYPOGRAPHY UTILITIES
+   ═══════════════════════════════════════════════════════════════ */
+
+.f-display {
+  font-family: var(--f-font-display);
+  font-weight: var(--f-weight-extrabold);
+  letter-spacing: var(--f-tracking-tight);
+  line-height: var(--f-leading-tight);
+}
+
+.f-h1 { font-size: clamp(40px, 7vw, var(--f-text-8xl)); }
+.f-h2 { font-size: clamp(32px, 5vw, var(--f-text-6xl)); }
+.f-h3 { font-size: clamp(24px, 3.5vw, var(--f-text-4xl)); }
+.f-h4 { font-size: clamp(20px, 2.5vw, var(--f-text-3xl)); }
+
+.f-eyebrow {
+  font-family: var(--f-font-body);
+  font-size: var(--f-text-xs);
+  letter-spacing: var(--f-tracking-widest);
+  text-transform: uppercase;
+  color: var(--f-amber);
+  font-weight: var(--f-weight-semibold);
+}
+
+.f-lead {
+  font-size: clamp(16px, 1.5vw, var(--f-text-xl));
+  line-height: var(--f-leading-relaxed);
+  color: var(--f-text-secondary);
+  font-weight: var(--f-weight-regular);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   LAYOUT UTILITIES
+   ═══════════════════════════════════════════════════════════════ */
+
+.f-container {
+  max-width: var(--f-container-xl);
+  margin: 0 auto;
+  padding: 0 var(--f-space-6);
+}
+
+.f-container-md {
+  max-width: var(--f-container-md);
+  margin: 0 auto;
+  padding: 0 var(--f-space-6);
+}
+
+.f-section {
+  padding: var(--f-space-32) 0;
+  position: relative;
+}
+
+@media (max-width: 768px) {
+  .f-section { padding: var(--f-space-20) 0; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   BUTTONS — premium CTA system
+   ═══════════════════════════════════════════════════════════════ */
+
+.f-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--f-space-2);
+  padding: var(--f-space-4) var(--f-space-8);
+  border-radius: var(--f-radius-pill);
+  font-family: var(--f-font-body);
+  font-size: var(--f-text-base);
+  font-weight: var(--f-weight-semibold);
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  transition: all var(--f-dur-fast) var(--f-ease-out);
+  position: relative;
+  overflow: hidden;
+}
+
+.f-btn-primary {
+  background: var(--f-amber);
+  color: var(--f-bg-base);
+  box-shadow: 0 8px 24px var(--f-amber-glow);
+}
+
+.f-btn-primary:hover {
+  background: var(--f-amber-bright);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px var(--f-amber-glow);
+}
+
+.f-btn-secondary {
+  background: transparent;
+  color: var(--f-text-primary);
+  border: 1px solid var(--f-border-default);
+}
+
+.f-btn-secondary:hover {
+  border-color: var(--f-amber);
+  color: var(--f-amber);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   CARDS — premium elevated surfaces
+   ═══════════════════════════════════════════════════════════════ */
+
+.f-card {
+  background: var(--f-bg-raised);
+  border: 1px solid var(--f-border-default);
+  border-radius: var(--f-radius-xl);
+  padding: var(--f-space-8);
+  transition: all var(--f-dur-base) var(--f-ease-out);
+}
+
+.f-card:hover {
+  border-color: var(--f-border-strong);
+  transform: translateY(-4px);
+  box-shadow: var(--f-shadow-lg);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   ATMOSPHERIC EFFECTS
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Subtle grid background — tech-feel */
+.f-grid-bg {
+  background-image:
+    linear-gradient(var(--f-border-subtle) 1px, transparent 1px),
+    linear-gradient(90deg, var(--f-border-subtle) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+
+/* Radial gradient glow */
+.f-glow-amber {
+  background: radial-gradient(circle at 50% 50%, var(--f-amber-soft), transparent 70%);
+}
+
+/* Noise texture overlay — adds premium grain */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.015;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Section divider */
+.f-divider {
+  width: 60px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--f-amber), transparent);
+  border-radius: var(--f-radius-pill);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   ACCESSIBILITY
+   ═══════════════════════════════════════════════════════════════ */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Focus styles */
+*:focus-visible {
+  outline: 2px solid var(--f-amber);
+  outline-offset: 2px;
+  border-radius: var(--f-radius-sm);
+}

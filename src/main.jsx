@@ -1,10 +1,19 @@
-import '@fontsource/cormorant-garamond/400.css';
-import '@fontsource/cormorant-garamond/400-italic.css';
-import '@fontsource/cormorant-garamond/500.css';
-import '@fontsource/cormorant-garamond/600.css';
+// Tajawal — Arabic display + body
+import '@fontsource/tajawal/300.css';
+import '@fontsource/tajawal/400.css';
+import '@fontsource/tajawal/500.css';
+import '@fontsource/tajawal/700.css';
+import '@fontsource/tajawal/800.css';
+import '@fontsource/tajawal/900.css';
+
+// Readex Pro — Arabic body fallback + variable axis
 import '@fontsource-variable/readex-pro';
+
+// Inter — Latin numbers + technical labels
 import '@fontsource-variable/inter';
-import './styles/premium-tokens.css';
+
+// Premium design tokens
+import './styles/fresh-tokens.css';
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { HelmetProvider } from 'react-helmet-async'
