@@ -20,7 +20,11 @@
     "tailwindcss": "^4.2.2"
   },
   "devDependencies": {
+    "@fontsource-variable/inter": "^5.2.8",
+    "@fontsource-variable/readex-pro": "^5.2.11",
+    "@fontsource/cormorant-garamond": "^5.2.11",
     "@vitejs/plugin-react": "^4.2.0",
+    "dotenv": "^17.4.2",
     "vite": "^5.0.0"
   }
 }
