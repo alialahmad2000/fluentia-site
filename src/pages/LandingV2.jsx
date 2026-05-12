@@ -3,16 +3,21 @@ import {
   Section,
   EyebrowLabel,
   SectionHeading,
-  PrimaryCTA,
-  SecondaryCTA,
   Reveal,
 } from "../components/landing";
+import HeroSection from "./landing-v2/HeroSection";
+import SocialProofSection from "./landing-v2/SocialProofSection";
+import ProblemSection from "./landing-v2/ProblemSection";
 
+/**
+ * LandingV2 — Modern Cinematic landing page.
+ * Sections 01–03 built in LP-2 (Hero, Social Proof, Problem).
+ * Remaining sections (04–10) are LP-1 skeleton placeholders until LP-3/4/5.
+ */
 export default function LandingV2() {
-  const sections = [
-    { id: "hero", num: "01", label: "Hero", title: "بطل الصفحة", note: "LP-2 — Hero + LMS Mockup + dual CTAs" },
-    { id: "social-proof", num: "02", label: "Social Proof", title: "أرقام تثبت إن النظام يشتغل", note: "LP-2 — Stats bar (طلاب، كلمات، وحدات، AI feedback)" },
-    { id: "problem", num: "03", label: "The Problem", title: "ليش معاهد الإنجليزي تفشل مع البالغين السعوديين", note: "LP-2 — Story-driven, 3 sub-problems" },
+  // ALL HOOKS AT TOP — React #310 (this component has no hooks but the rule stands)
+
+  const placeholders = [
     { id: "solution", num: "04", label: "The Solution", title: "ثلاث ركائز تصنع الفرق", note: "LP-3 — Method + Trainer + Platform" },
     { id: "product", num: "05", label: "Product Showcase", title: "نظام تعليمي بحجم منتج سيليكون فالي", note: "LP-3 — Bento grid: Speaking AI, Vocab Mastery, IELTS Lab..." },
     { id: "method", num: "06", label: "The Method", title: "خمس قواعد تعلّم لا يفهمها أحد غيرنا", note: "LP-3 — 5 pillars" },
@@ -24,10 +29,11 @@ export default function LandingV2() {
 
   return (
     <div className="lp-scope">
-      {/* Dev banner (visible only while skeleton is at /v2) */}
+      {/* Dev banner */}
       <div
         style={{
-          background: "linear-gradient(90deg, var(--lp-amber), var(--lp-amber-bright))",
+          background:
+            "linear-gradient(90deg, var(--lp-amber), var(--lp-amber-bright))",
           color: "#0a0e1a",
           textAlign: "center",
           padding: "10px 16px",
@@ -37,11 +43,16 @@ export default function LandingV2() {
           letterSpacing: "0.05em",
         }}
       >
-        🚧 LANDING V2 — SKELETON (LP-1) · المحتوى الحقيقي في LP-2 → LP-5 · سيستبدل / في LP-5
+        🚧 LANDING V2 — LP-2 (Hero + Social Proof + Problem live) · سيستبدل / في LP-5
       </div>
 
-      {sections.map((s, idx) => (
-        <Section key={s.id} id={s.id} raised={idx % 2 === 1}>
+      <HeroSection />
+      <SocialProofSection />
+      <ProblemSection />
+
+      {/* Remaining sections — placeholders for LP-3/4/5 */}
+      {placeholders.map((s, idx) => (
+        <Section key={s.id} id={s.id} raised={idx % 2 === 0}>
           <Container>
             <Reveal>
               <EyebrowLabel>
@@ -49,7 +60,7 @@ export default function LandingV2() {
                 <span style={{ opacity: 0.5 }}>•</span>
                 <span>{s.label}</span>
               </EyebrowLabel>
-              <SectionHeading size={idx === 0 ? "display" : "h1"}>{s.title}</SectionHeading>
+              <SectionHeading>{s.title}</SectionHeading>
               <p
                 style={{
                   marginTop: "var(--lp-space-lg)",
@@ -60,7 +71,6 @@ export default function LandingV2() {
               >
                 {s.note}
               </p>
-              {/* Amber gradient divider */}
               <div
                 style={{
                   marginTop: "var(--lp-space-2xl)",
@@ -70,20 +80,6 @@ export default function LandingV2() {
                   borderRadius: 3,
                 }}
               />
-              {/* Demo CTAs only in section 01 to verify pill rendering */}
-              {idx === 0 && (
-                <div
-                  style={{
-                    marginTop: "var(--lp-space-2xl)",
-                    display: "flex",
-                    gap: "var(--lp-space-md)",
-                    flexWrap: "wrap",
-                  }}
-                >
-                  <PrimaryCTA href="#cta">احجز لقاء مبدئي مجاني ←</PrimaryCTA>
-                  <SecondaryCTA href="#pricing">شوف الباقات</SecondaryCTA>
-                </div>
-              )}
             </Reveal>
           </Container>
         </Section>
