@@ -11,6 +11,7 @@ import PricingSection from "./landing-v2/PricingSection";
 import StoriesSection from "./landing-v2/StoriesSection";
 import FAQSection from "./landing-v2/FAQSection";
 import FounderSection from "./landing-v2/FounderSection";
+import MoreThanLanguageSection from "./landing-v2/MoreThanLanguageSection";
 import FinalCTASection from "./landing-v2/FinalCTASection";
 import LandingFooter from "./landing-v2/LandingFooter";
 import LeadFormModal from "./landing-v2/LeadFormModal";
@@ -35,6 +36,7 @@ export default function LandingV2() {
       <StoriesSection />
       <FAQSection />
       <FounderSection />
+      <MoreThanLanguageSection />
       <FinalCTASection />
       <LandingFooter />
       <LeadFormModal />

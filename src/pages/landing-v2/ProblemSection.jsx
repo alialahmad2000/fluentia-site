@@ -22,6 +22,13 @@ const ICONS = {
       <path d="M12 3v3M12 18v3M3 12h3M18 12h3" />
     </svg>
   ),
+  doubt: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+      <circle cx="12" cy="12" r="9" />
+      <path d="M9 9c0-1.7 1.3-3 3-3s3 1.3 3 3c0 1.7-1.3 2.5-3 3v1.5" strokeLinecap="round" />
+      <circle cx="12" cy="17" r="0.7" fill="currentColor" stroke="none" />
+    </svg>
+  ),
 };
 
 export default function ProblemSection() {
@@ -68,7 +75,7 @@ export default function ProblemSection() {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(3, 1fr)",
+            gridTemplateColumns: "repeat(2, 1fr)",
             gap: "var(--lp-space-lg)",
             marginBottom: "var(--lp-space-2xl)",
           }}
