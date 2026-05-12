@@ -337,3 +337,83 @@ export const STORIES = {
     },
   ],
 };
+
+export const NAV = {
+  brand: { en: "Fluentia", ar: "طلاقة" },
+  links: [
+    { label: "المنهج", href: "#solution" },
+    { label: "المنصة", href: "#product" },
+    { label: "الباقات", href: "#pricing" },
+    { label: "القصص", href: "#stories" },
+  ],
+  studentLogin: { label: "دخول الطلاب", href: "https://app.fluentia.academy" },
+  primaryCTA: { label: "ابدأ مجاناً" },
+};
+
+export const FOUNDER = {
+  eyebrow: "كلمة المؤسس",
+  headline: "بنيت هذه الأكاديمية لأنني كنت طالباً سيئاً جداً في الإنجليزي.",
+  paragraphs: [
+    "أنا د. علي الأحمد. طبيب ممارس قبل أن أكون مؤسس Fluentia.",
+    "تعلّمت الإنجليزي مرّتين: مرة في المدرسة (وفشلت)، ومرّة وأنا أدرس الطب وأحتاجه فعلياً للحياة، للقراءة، للتواصل مع زملاء عالميين. الفرق بين المحاولتين كان كل شي.",
+    "في الطب، تعلّمت إن الفهم يأتي من ثلاثة: نموذج واضح (المنهج)، ممارسة منظّمة، ومتابعة شخصية. هذه الثلاثة غائبة في معظم معاهد الإنجليزي. الطالب يحفظ قواعد بدون نموذج، يمارس عشوائياً، ولا يلقى من يصحّح له.",
+    "بنيت Fluentia لتعامل اللغة كما يعامل الطبّ الجسد: بمنهجية، بدقّة، بشخصية. كل قرار في النظام مأخوذ من ملاحظة طالب حقيقي يحاول أن يتعلّم — وليس من قائمة features في عرض تقديمي.",
+    "إن قرّرت تجرّب، تواصل معي مباشرة في اللقاء المبدئي. أنا لن أبيعك. سأشوف وين أنت، وأقول لك بأمانة إن كانت Fluentia تناسبك أو لا.",
+  ],
+  signature: {
+    name: "د. علي الأحمد",
+    title: "مؤسس Fluentia · طبيب ممارس",
+  },
+};
+
+export const FINAL_CTA = {
+  eyebrow: "ابدأ اليوم",
+  headline: "خذ أوّل خطوة. اللقاء المبدئي مجاني.",
+  sub: "بعد دقائق من تعبئة النموذج، تكلّم مع مدرّب Fluentia عبر WhatsApp. لا التزام. لا ضغط بيع. مجرد محادثة لتحديد ما يناسبك.",
+  primaryCTA: "احجز لقاءً مبدئياً مجانياً",
+};
+
+export const FORM = {
+  title: "احجز لقاءً مبدئياً مجانياً",
+  sub: "ٱملأ النموذج ⬇️ — سننتقل بك فوراً إلى محادثة WhatsApp مع المدرّب.",
+  fields: {
+    name: { label: "اسمك", placeholder: "مثال: علي الأحمد" },
+    phone: { label: "جوّالك", placeholder: "5XXXXXXXX", prefix: "+966" },
+    tier: { label: "أيش يهمّك؟" },
+    goal: { label: "هدفك (اختياري)", placeholder: "مثال: تطوير الإنجليزي للعمل / IELTS / السفر" },
+  },
+  tierOptions: [
+    { value: "l1_group", label: "الجماعي · 1,200 ر.س / شهر", price: 1200 },
+    { value: "l2_excellence", label: "تميّز · 2,200 ر.س / شهر", price: 2200, recommended: true },
+    { value: "l3_private", label: "الفردي · 6,000 ر.س / شهر", price: 6000 },
+    { value: "l3a_ielts", label: "ضمان IELTS · 25,000 ر.س / 12 أسبوع", price: 25000 },
+    { value: "unsure", label: "مو متأكد — أبي استشارة", price: 0 },
+  ],
+  submitLabel: "أرسل وتواصل عبر WhatsApp ←",
+  privacy: "بالضغط أنت توافق على تواصلنا معك للحجز فقط. لا رسائل تسويقية.",
+  errors: {
+    nameRequired: "الاسم مطلوب",
+    phoneRequired: "الجوّال مطلوب",
+    phoneInvalid: "صيغة الجوّال غير صحيحة. مثال: 5XXXXXXXX",
+  },
+};
+
+export const FOOTER = {
+  tagline: "أكاديمية إنجليزي للراشدين السعوديين، مبنية على منهج علمي ومنصة تعلّم بحجم منتج عالمي.",
+  contact: {
+    whatsapp: "+966 55 866 9974",
+    waLink: "https://wa.me/966558669974",
+    email: "hi@fluentia.academy",
+  },
+  social: [
+    { label: "TikTok", href: "https://www.tiktok.com/@fluentia_" },
+    { label: "Instagram", href: "https://www.instagram.com/fluentia__" },
+  ],
+  links: [
+    { label: "المنهج", href: "#solution" },
+    { label: "الباقات", href: "#pricing" },
+    { label: "القصص", href: "#stories" },
+    { label: "دخول الطلاب", href: "https://app.fluentia.academy" },
+  ],
+  copyright: "© 2026 Fluentia Academy · طلاقة. كل الحقوق محفوظة.",
+};

@@ -372,11 +372,11 @@ function TierCard({ tier }) {
 
       {/* CTA */}
       {hero ? (
-        <PrimaryCTA href="#cta" style={{ width: "100%", justifyContent: "center" }}>
+        <PrimaryCTA data-open-form="true" data-tier={tier.id} style={{ width: "100%", justifyContent: "center" }}>
           {tier.ctaLabel} ←
         </PrimaryCTA>
       ) : (
-        <SecondaryCTA href="#cta" style={{ width: "100%", justifyContent: "center" }}>
+        <SecondaryCTA data-open-form="true" data-tier={tier.id} style={{ width: "100%", justifyContent: "center" }}>
           {tier.ctaLabel}
         </SecondaryCTA>
       )}
@@ -535,7 +535,7 @@ function IELTSCard({ ielts }) {
           ))}
         </ul>
 
-        <PrimaryCTA href="#cta">{ielts.ctaLabel} ←</PrimaryCTA>
+        <PrimaryCTA data-open-form="true" data-tier="l3a_ielts">{ielts.ctaLabel} ←</PrimaryCTA>
       </div>
 
       {/* RIGHT — guarantee callout */}

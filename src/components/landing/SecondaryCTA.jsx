@@ -1,9 +1,10 @@
-export default function SecondaryCTA({ href, onClick, children, style }) {
+export default function SecondaryCTA({ href, onClick, children, style, ...rest }) {
   const Tag = href ? "a" : "button";
   return (
     <Tag
       href={href}
       onClick={onClick}
+      {...rest}
       style={{
         display: "inline-flex",
         alignItems: "center",

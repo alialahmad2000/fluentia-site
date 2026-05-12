@@ -1189,7 +1189,8 @@ function AppRoutes(){
   return(
     <Routes>
       <Route path="/v2" element={<LandingV2 />} />
-      <Route path="/" element={<HomePage />} />
+      <Route path="/legacy" element={<HomePage />} />
+      <Route path="/" element={<LandingV2 />} />
       <Route path="/start" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#0A0A0A'}} />}><StartPage /></Suspense>} />
       <Route path="/partners" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#060e1c'}} />}><PartnersLanding /></Suspense>} />
       <Route path="/partners/submitted" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#060e1c'}} />}><PartnersSubmitted /></Suspense>} />

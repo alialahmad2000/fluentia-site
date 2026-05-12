@@ -106,7 +106,7 @@ export default function HeroSection() {
                   marginBottom: "var(--lp-space-2xl)",
                 }}
               >
-                <PrimaryCTA href="#cta">{HERO.primaryCTA} ←</PrimaryCTA>
+                <PrimaryCTA data-open-form="true">{HERO.primaryCTA} ←</PrimaryCTA>
                 <SecondaryCTA href="#pricing">{HERO.secondaryCTA}</SecondaryCTA>
               </div>
 
