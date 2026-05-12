@@ -11,17 +11,17 @@ import ProblemSection from "./landing-v2/ProblemSection";
 import SolutionSection from "./landing-v2/SolutionSection";
 import ProductShowcaseSection from "./landing-v2/ProductShowcaseSection";
 import MethodSection from "./landing-v2/MethodSection";
+import PricingSection from "./landing-v2/PricingSection";
+import StoriesSection from "./landing-v2/StoriesSection";
 
 /**
  * LandingV2 — Modern Cinematic landing page.
- * Sections 01–06 built. Sections 07–10 are LP-4/5 territory.
+ * Sections 01–08 built. Sections 09–10 are LP-5 territory.
  */
 export default function LandingV2() {
-  // ALL HOOKS AT TOP — React #310 (no hooks here, but the rule stands)
+  // ALL HOOKS AT TOP — React #310
 
   const placeholders = [
-    { id: "pricing", num: "07", label: "Pricing", title: "اختر مسارك", note: "LP-4 — V3: الجماعي 1,200 · تميّز 2,200 · الفردي 6,000 · IELTS 25,000/12wk" },
-    { id: "stories", num: "08", label: "Stories", title: "قصص طلاب حقيقيين", note: "LP-4 — هوازن، الجوهرة، منار" },
     { id: "founder", num: "09", label: "Founder Note", title: "كلمة من د. علي", note: "LP-5 — Physician → Founder story" },
     { id: "cta", num: "10", label: "Final CTA", title: "ابدأ رحلتك اليوم", note: "LP-5 — لقاء مبدئي مجاني + WhatsApp + Footer" },
   ];
@@ -41,7 +41,7 @@ export default function LandingV2() {
           letterSpacing: "0.05em",
         }}
       >
-        🚧 LANDING V2 — LP-3 (Sections 01–06 live) · سيستبدل / في LP-5
+        🚧 LANDING V2 — LP-4 (Sections 01–08 live) · سيستبدل / في LP-5
       </div>
 
       <HeroSection />
@@ -50,6 +50,8 @@ export default function LandingV2() {
       <SolutionSection />
       <ProductShowcaseSection />
       <MethodSection />
+      <PricingSection />
+      <StoriesSection />
 
       {placeholders.map((s, idx) => (
         <Section key={s.id} id={s.id} raised={idx % 2 === 0}>
