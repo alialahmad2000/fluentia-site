@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { FORM } from "./content";
+import { FORM, REGISTRATION, getRegistrationStatus } from "./content";
 import { fireTikTokLeadEvents, normalizePhoneE164 } from "../../lib/tiktokPixel";
 import { saveLead } from "../../utils/tracking";
 
@@ -50,13 +50,13 @@ function buildWhatsAppMessage({ name, phone, tierLabel, goal, utm }) {
   return lines.join("\n");
 }
 
-function fireGA4Lead({ tier, tierPrice }) {
+function fireGA4Lead({ tier, tierPrice, contentId }) {
   if (typeof window === "undefined" || !window.gtag) return;
   try {
     window.gtag("event", "generate_lead", {
       value: tierPrice || 0,
       currency: "SAR",
-      form_id: FORM_CONTENT_ID,
+      form_id: contentId || FORM_CONTENT_ID,
       tier_id: tier,
     });
   } catch (e) {
@@ -125,6 +125,16 @@ export default function LeadFormModal() {
 
   if (!open) return null;
 
+  // Status-aware copy
+  const regStatus = getRegistrationStatus();
+  const isWaitlist = regStatus !== "open";
+  const titleCopy = isWaitlist ? "احجز مقعدك للنافذة القادمة" : FORM.title;
+  const subCopy = isWaitlist
+    ? `النافذة القادمة: ٢٣-٢٧ مايو · ${REGISTRATION.nextWindow.cohortStartLabel} · سنتواصل معك يوم ٢٣ لإكمال الحجز.`
+    : FORM.sub;
+  const submitCopy = isWaitlist ? "أرسل واحجز للنافذة القادمة ←" : FORM.submitLabel;
+  const formContentId = isWaitlist ? "fluentia_waitlist_v2" : "fluentia_lead_form_v2";
+
   const close = () => setOpen(false);
   const onBackdropClick = (e) => {
     if (e.target === e.currentTarget) close();
@@ -158,12 +168,12 @@ export default function LeadFormModal() {
       currency: "SAR",
       contentName: "Fluentia Registration",
       contentCategory: tier || "general",
-      contentId: FORM_CONTENT_ID,
+      contentId: formContentId,
       eventIdBase: eventId,
     });
 
     // 2. GA4 generate_lead
-    fireGA4Lead({ tier, tierPrice });
+    fireGA4Lead({ tier, tierPrice, contentId: formContentId });
 
     // 3. Supabase lead persistence (non-blocking)
     saveLead({
@@ -271,8 +281,32 @@ export default function LeadFormModal() {
             lineHeight: 1.2,
           }}
         >
-          {FORM.title}
+          {titleCopy}
         </h3>
+
+        {/* Waitlist mode pill */}
+        {isWaitlist && (
+          <div
+            style={{
+              paddingBlock: 8,
+              paddingInline: 12,
+              background: "rgba(251,191,36,0.08)",
+              border: "1px solid var(--lp-border-amber)",
+              borderRadius: "var(--lp-radius-tight)",
+              color: "var(--lp-amber-bright)",
+              fontFamily: "var(--lp-font-display)",
+              fontSize: "var(--lp-caption)",
+              fontWeight: 700,
+              marginBottom: "var(--lp-space-sm)",
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 6,
+            }}
+          >
+            🔒 التسجيل مقفل حالياً
+          </div>
+        )}
+
         <p
           style={{
             fontSize: "var(--lp-body-s)",
@@ -282,7 +316,7 @@ export default function LeadFormModal() {
             lineHeight: 1.5,
           }}
         >
-          {FORM.sub}
+          {subCopy}
         </p>
 
         <form onSubmit={onSubmit} noValidate>
@@ -401,7 +435,7 @@ export default function LeadFormModal() {
               e.currentTarget.style.transform = "translateY(0)";
             }}
           >
-            {submitting ? "جاري الإرسال…" : FORM.submitLabel}
+            {submitting ? "جاري الإرسال…" : submitCopy}
           </button>
 
           <p

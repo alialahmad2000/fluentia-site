@@ -1,3 +1,4 @@
+import RegistrationStatusBanner from "./landing-v2/RegistrationStatusBanner";
 import LandingHeader from "./landing-v2/LandingHeader";
 import HeroSection from "./landing-v2/HeroSection";
 import SocialProofSection from "./landing-v2/SocialProofSection";
@@ -19,6 +20,7 @@ import LeadFormModal from "./landing-v2/LeadFormModal";
 export default function LandingV2() {
   return (
     <div className="lp-scope">
+      <RegistrationStatusBanner />
       <LandingHeader />
       <HeroSection />
       <SocialProofSection />

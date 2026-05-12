@@ -1,7 +1,29 @@
 import { Container, EyebrowLabel, Reveal, PrimaryCTA } from "../../components/landing";
-import { FINAL_CTA } from "./content";
+import { FINAL_CTA, REGISTRATION, getRegistrationStatus } from "./content";
 
 export default function FinalCTASection() {
+  const status = getRegistrationStatus();
+  const copy = status === "open"
+    ? {
+        eyebrow: "آخر فرصة",
+        headline: "النافذة مفتوحة الآن — لا تفوّتها.",
+        sub: `التسجيل يُغلق ٢٧ مايو · المقاعد محدودة لكل باقة. اضغط أدناه لتعبئة النموذج والتواصل مع المدرّب فوراً.`,
+        cta: "احجز مقعدك الآن",
+      }
+    : status === "closed_before"
+    ? {
+        eyebrow: "النافذة القادمة قريباً",
+        headline: "كل مقاعد هذا الشهر ممتلئة — احجز مكانك للنافذة القادمة.",
+        sub: `النافذة القادمة: ٢٣-٢٧ مايو · ${REGISTRATION.nextWindow.cohortStartLabel} · سنتواصل معك يوم الافتتاح لإكمال الحجز.`,
+        cta: "احجز للنافذة القادمة",
+      }
+    : {
+        eyebrow: FINAL_CTA.eyebrow,
+        headline: FINAL_CTA.headline,
+        sub: FINAL_CTA.sub,
+        cta: FINAL_CTA.primaryCTA,
+      };
+
   return (
     <section
       id="cta"
@@ -34,7 +56,7 @@ export default function FinalCTASection() {
         <Reveal>
           <div style={{ textAlign: "center", maxWidth: "var(--lp-max-w-text)", marginInline: "auto" }}>
             <div style={{ display: "inline-flex" }}>
-              <EyebrowLabel>{FINAL_CTA.eyebrow}</EyebrowLabel>
+              <EyebrowLabel>{copy.eyebrow}</EyebrowLabel>
             </div>
             <h2
               style={{
@@ -48,7 +70,7 @@ export default function FinalCTASection() {
                 marginBottom: "var(--lp-space-lg)",
               }}
             >
-              {FINAL_CTA.headline}
+              {copy.headline}
             </h2>
             <p
               style={{
@@ -59,13 +81,13 @@ export default function FinalCTASection() {
                 marginBottom: "var(--lp-space-2xl)",
               }}
             >
-              {FINAL_CTA.sub}
+              {copy.sub}
             </p>
             <PrimaryCTA
               data-open-form="true"
               style={{ fontSize: "var(--lp-body-l)", paddingBlock: 18, paddingInline: 36 }}
             >
-              {FINAL_CTA.primaryCTA} ←
+              {copy.cta} ←
             </PrimaryCTA>
           </div>
         </Reveal>

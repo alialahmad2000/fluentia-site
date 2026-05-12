@@ -134,12 +134,30 @@ export default function LandingFooter() {
           style={{
             paddingTop: "var(--lp-space-lg)",
             borderTop: "1px solid var(--lp-border-subtle)",
-            fontSize: "var(--lp-caption)",
-            color: "var(--lp-text-faint)",
-            textAlign: "center",
           }}
         >
-          {FOOTER.copyright}
+          <div
+            style={{
+              marginBottom: "var(--lp-space-md)",
+              fontSize: "var(--lp-caption)",
+              color: "var(--lp-amber-bright)",
+              textAlign: "center",
+              fontFamily: "var(--lp-font-display)",
+              fontWeight: 600,
+              letterSpacing: "0.04em",
+            }}
+          >
+            🗓️ التسجيل بنوافذ محدّدة · ١٠ مقاعد لكل نافذة · النافذة القادمة: ٢٣-٢٧ مايو
+          </div>
+          <div
+            style={{
+              fontSize: "var(--lp-caption)",
+              color: "var(--lp-text-faint)",
+              textAlign: "center",
+            }}
+          >
+            {FOOTER.copyright}
+          </div>
         </div>
       </Container>
 

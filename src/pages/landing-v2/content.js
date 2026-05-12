@@ -417,3 +417,52 @@ export const FOOTER = {
   ],
   copyright: "© 2026 Fluentia Academy · طلاقة. كل الحقوق محفوظة.",
 };
+
+// ────────────────────────────────────────────────────────────
+// Registration / cohort scarcity system
+// All scarcity state lives here. Edit dates + seat counts here only.
+// Status is computed AUTOMATICALLY from `nextWindow` dates — no manual flipping.
+// ────────────────────────────────────────────────────────────
+export const REGISTRATION = {
+  nextWindow: {
+    opens: "2026-05-23T08:00:00+03:00",
+    closes: "2026-05-27T23:59:59+03:00",
+    cohortStartLabel: "يونيو ٢٠٢٦",
+  },
+
+  tiers: {
+    l1_group:      { available: 10, total: 10, label: "الجماعي" },
+    l2_excellence: { available: 10, total: 10, label: "تميّز" },
+    l3_private:    { available: 3,  total: 3,  label: "الفردي" },
+    l3a_ielts:     { available: 2,  total: 2,  label: "IELTS" },
+  },
+
+  history: [],
+
+  whyClose:
+    "نفتح ٤ نوافذ تسجيل في السنة فقط — ١٠ مقاعد لكل باقة — لنضمن متابعة شخصية حقيقية لكل طالب. هذا تعهّدنا، مو خدعة تسويقية.",
+};
+
+export function getRegistrationStatus(now = new Date()) {
+  const opens = new Date(REGISTRATION.nextWindow.opens);
+  const closes = new Date(REGISTRATION.nextWindow.closes);
+  if (now < opens) return "closed_before";
+  if (now <= closes) return "open";
+  return "closed_after";
+}
+
+export function getTotalAvailable() {
+  const t = REGISTRATION.tiers;
+  return t.l1_group.available + t.l2_excellence.available + t.l3_private.available;
+}
+
+export const TRUSTED_BY = {
+  label: "بين طلابنا",
+  items: [
+    "وزارة الداخلية",
+    "وزارة التجارة",
+    "وزارة العدل",
+    "القطاع الخاص",
+    "القطاع الطبي",
+  ],
+};

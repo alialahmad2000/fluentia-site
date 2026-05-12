@@ -1,5 +1,6 @@
 import { Container, EyebrowLabel, Reveal } from "../../components/landing";
 import { SOCIAL_PROOF } from "./content";
+import TrustBar from "./TrustBar";
 
 export default function SocialProofSection() {
   return (
@@ -32,6 +33,11 @@ export default function SocialProofSection() {
               {SOCIAL_PROOF.headline}
             </h2>
           </div>
+        </Reveal>
+
+        {/* Trust bar — institutional social proof */}
+        <Reveal delay={0.05}>
+          <TrustBar />
         </Reveal>
 
         {/* Stats row */}

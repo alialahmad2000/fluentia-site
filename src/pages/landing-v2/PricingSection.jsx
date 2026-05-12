@@ -1,5 +1,5 @@
 import { Container, EyebrowLabel, Reveal, PrimaryCTA, SecondaryCTA } from "../../components/landing";
-import { PRICING } from "./content";
+import { PRICING, REGISTRATION, getRegistrationStatus } from "./content";
 
 export default function PricingSection() {
   return (
@@ -86,6 +86,40 @@ export default function PricingSection() {
           </div>
         </Reveal>
 
+        {/* WhyClose — principled scarcity explanation */}
+        <Reveal delay={0.15}>
+          <div
+            style={{
+              maxWidth: "var(--lp-max-w-narrow)",
+              marginInline: "auto",
+              marginBottom: "var(--lp-space-2xl)",
+              paddingBlock: "var(--lp-space-lg)",
+              paddingInline: "var(--lp-space-xl)",
+              background: "linear-gradient(135deg, rgba(251,191,36,0.06), transparent)",
+              border: "1px solid var(--lp-border-amber)",
+              borderRadius: "var(--lp-radius-lg)",
+              textAlign: "center",
+              position: "relative",
+            }}
+          >
+            <span style={{ display: "inline-block", fontSize: 22, marginBottom: "var(--lp-space-sm)" }}>
+              📜
+            </span>
+            <p
+              style={{
+                fontFamily: "var(--lp-font-display)",
+                fontSize: "var(--lp-body-l)",
+                fontWeight: 600,
+                color: "var(--lp-text-strong)",
+                lineHeight: 1.6,
+                margin: 0,
+              }}
+            >
+              {REGISTRATION.whyClose}
+            </p>
+          </div>
+        </Reveal>
+
         {/* 3 monthly tiers */}
         <div
           style={{
@@ -97,16 +131,24 @@ export default function PricingSection() {
           }}
           className="lp-pricing-grid"
         >
-          {PRICING.tiers.map((tier, i) => (
-            <Reveal key={tier.id} delay={i * 0.1}>
-              <TierCard tier={tier} />
-            </Reveal>
-          ))}
+          {PRICING.tiers.map((tier, i) => {
+            const t = REGISTRATION.tiers[tier.id];
+            const status = getRegistrationStatus();
+            return (
+              <Reveal key={tier.id} delay={i * 0.1}>
+                <TierCard tier={tier} availability={t} regStatus={status} />
+              </Reveal>
+            );
+          })}
         </div>
 
         {/* IELTS card */}
         <Reveal delay={0.3}>
-          <IELTSCard ielts={PRICING.ielts} />
+          <IELTSCard
+            ielts={PRICING.ielts}
+            availability={REGISTRATION.tiers.l3a_ielts}
+            regStatus={getRegistrationStatus()}
+          />
         </Reveal>
 
         {/* Pricing footer */}
@@ -158,7 +200,7 @@ export default function PricingSection() {
 // Monthly tier card
 // ────────────────────────────────────────────────────────────
 
-function TierCard({ tier }) {
+function TierCard({ tier, availability, regStatus }) {
   const hero = !!tier.isHero;
   return (
     <article
@@ -194,7 +236,10 @@ function TierCard({ tier }) {
         }
       }}
     >
-      {/* Badge */}
+      {/* Availability badge */}
+      <AvailabilityBadge availability={availability} regStatus={regStatus} />
+
+      {/* Hero badge */}
       {tier.badge && (
         <div
           style={{
@@ -370,16 +415,27 @@ function TierCard({ tier }) {
           ))}
       </ul>
 
-      {/* CTA */}
-      {hero ? (
-        <PrimaryCTA data-open-form="true" data-tier={tier.id} style={{ width: "100%", justifyContent: "center" }}>
-          {tier.ctaLabel} ←
-        </PrimaryCTA>
-      ) : (
-        <SecondaryCTA data-open-form="true" data-tier={tier.id} style={{ width: "100%", justifyContent: "center" }}>
-          {tier.ctaLabel}
-        </SecondaryCTA>
-      )}
+      {/* CTA — dynamic based on availability */}
+      {(() => {
+        const isFull = availability && availability.available === 0;
+        const ctaLabel = isFull
+          ? regStatus === "closed_before"
+            ? "احجز للنافذة القادمة"
+            : regStatus === "open"
+            ? "ممتلئة — انضم لقائمة الانتظار"
+            : "احجز اهتمامك"
+          : tier.ctaLabel;
+        const props = {
+          "data-open-form": "true",
+          "data-tier": tier.id,
+          style: { width: "100%", justifyContent: "center" },
+        };
+        return hero ? (
+          <PrimaryCTA {...props}>{ctaLabel} ←</PrimaryCTA>
+        ) : (
+          <SecondaryCTA {...props}>{ctaLabel}</SecondaryCTA>
+        );
+      })()}
     </article>
   );
 }
@@ -388,7 +444,7 @@ function TierCard({ tier }) {
 // IELTS card (wide, 2-col)
 // ────────────────────────────────────────────────────────────
 
-function IELTSCard({ ielts }) {
+function IELTSCard({ ielts, availability, regStatus }) {
   return (
     <article
       style={{
@@ -426,6 +482,10 @@ function IELTSCard({ ielts }) {
           }}
         >
           🎯 {ielts.badge}
+        </div>
+
+        <div style={{ marginTop: 8, marginBottom: "var(--lp-space-md)" }}>
+          <AvailabilityBadge availability={availability} regStatus={regStatus} />
         </div>
 
         <h3
@@ -535,7 +595,19 @@ function IELTSCard({ ielts }) {
           ))}
         </ul>
 
-        <PrimaryCTA data-open-form="true" data-tier="l3a_ielts">{ielts.ctaLabel} ←</PrimaryCTA>
+        {(() => {
+          const isFull = availability && availability.available === 0;
+          const label = isFull
+            ? regStatus === "closed_before"
+              ? "احجز للنافذة القادمة"
+              : "ممتلئة — قائمة الانتظار"
+            : ielts.ctaLabel;
+          return (
+            <PrimaryCTA data-open-form="true" data-tier="l3a_ielts">
+              {label} ←
+            </PrimaryCTA>
+          );
+        })()}
       </div>
 
       {/* RIGHT — guarantee callout */}
@@ -622,5 +694,70 @@ function IELTSCard({ ielts }) {
         }
       `}</style>
     </article>
+  );
+}
+
+// ────────────────────────────────────────────────────────────
+// Availability badge subcomponent
+// ────────────────────────────────────────────────────────────
+
+function AvailabilityBadge({ availability, regStatus }) {
+  if (!availability) return null;
+  const { available, total } = availability;
+
+  let bg, border, color, label;
+  if (regStatus === "closed_before") {
+    bg = "rgba(251,191,36,0.10)";
+    border = "var(--lp-border-amber)";
+    color = "var(--lp-amber-bright)";
+    label = `${available} مقاعد للنافذة القادمة`;
+  } else if (available === 0) {
+    bg = "rgba(239,68,68,0.10)";
+    border = "rgba(239,68,68,0.35)";
+    color = "#f87171";
+    label = `ممتلئة · ${total}/${total} مأخوذ`;
+  } else if (available <= Math.ceil(total / 2)) {
+    bg = "rgba(251,191,36,0.10)";
+    border = "var(--lp-border-amber)";
+    color = "var(--lp-amber-bright)";
+    label = `${available} مقاعد متبقية فقط`;
+  } else {
+    bg = "rgba(74,222,128,0.10)";
+    border = "rgba(74,222,128,0.30)";
+    color = "var(--lp-success)";
+    label = `${available} مقعد متاح`;
+  }
+
+  return (
+    <div
+      style={{
+        display: "inline-flex",
+        alignItems: "center",
+        gap: 6,
+        paddingBlock: 5,
+        paddingInline: 10,
+        background: bg,
+        border: `1px solid ${border}`,
+        borderRadius: "var(--lp-radius-pill)",
+        color,
+        fontFamily: "var(--lp-font-display)",
+        fontSize: 10,
+        fontWeight: 700,
+        letterSpacing: "0.04em",
+        marginBottom: "var(--lp-space-md)",
+        fontVariantNumeric: "tabular-nums",
+      }}
+    >
+      <span
+        style={{
+          width: 6,
+          height: 6,
+          borderRadius: "50%",
+          background: color,
+          flexShrink: 0,
+        }}
+      />
+      {label}
+    </div>
   );
 }
