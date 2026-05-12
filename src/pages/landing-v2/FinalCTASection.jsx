@@ -12,10 +12,10 @@ export default function FinalCTASection() {
       }
     : status === "closed_before"
     ? {
-        eyebrow: "النافذة القادمة قريباً",
-        headline: "كل مقاعد هذا الشهر ممتلئة — احجز مكانك للنافذة القادمة.",
-        sub: `النافذة القادمة: ٢٣-٢٧ مايو · ${REGISTRATION.nextWindow.cohortStartLabel} · سنتواصل معك يوم الافتتاح لإكمال الحجز.`,
-        cta: "احجز للنافذة القادمة",
+        eyebrow: "فترة التسجيل القادمة قريباً",
+        headline: "كل مقاعد هذا الشهر ممتلئة — احجز مكانك للفترة القادمة.",
+        sub: `فترة التسجيل القادمة: ٢٣-٢٧ مايو · ${REGISTRATION.nextWindow.cohortStartLabel} · سنتواصل معك يوم الافتتاح لإكمال الحجز.`,
+        cta: "احجز للفترة القادمة",
       }
     : {
         eyebrow: FINAL_CTA.eyebrow,

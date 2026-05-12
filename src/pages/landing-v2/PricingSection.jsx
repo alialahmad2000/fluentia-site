@@ -86,38 +86,24 @@ export default function PricingSection() {
           </div>
         </Reveal>
 
-        {/* WhyClose — principled scarcity explanation */}
-        <Reveal delay={0.15}>
-          <div
+        {/* WhyClose — quiet italic line */}
+        <Reveal delay={0.12}>
+          <p
             style={{
-              maxWidth: "var(--lp-max-w-narrow)",
-              marginInline: "auto",
-              marginBottom: "var(--lp-space-2xl)",
-              paddingBlock: "var(--lp-space-lg)",
-              paddingInline: "var(--lp-space-xl)",
-              background: "linear-gradient(135deg, rgba(251,191,36,0.06), transparent)",
-              border: "1px solid var(--lp-border-amber)",
-              borderRadius: "var(--lp-radius-lg)",
+              fontFamily: "var(--lp-font-display)",
+              fontSize: "var(--lp-body-s)",
+              fontStyle: "italic",
+              color: "var(--lp-text-muted)",
               textAlign: "center",
-              position: "relative",
+              margin: 0,
+              marginBottom: "var(--lp-space-2xl)",
+              letterSpacing: "0.02em",
+              maxWidth: "var(--lp-max-w-text)",
+              marginInline: "auto",
             }}
           >
-            <span style={{ display: "inline-block", fontSize: 22, marginBottom: "var(--lp-space-sm)" }}>
-              📜
-            </span>
-            <p
-              style={{
-                fontFamily: "var(--lp-font-display)",
-                fontSize: "var(--lp-body-l)",
-                fontWeight: 600,
-                color: "var(--lp-text-strong)",
-                lineHeight: 1.6,
-                margin: 0,
-              }}
-            >
-              {REGISTRATION.whyClose}
-            </p>
-          </div>
+            — {REGISTRATION.whyClose} —
+          </p>
         </Reveal>
 
         {/* 3 monthly tiers */}
@@ -201,7 +187,13 @@ export default function PricingSection() {
 // ────────────────────────────────────────────────────────────
 
 function TierCard({ tier, availability, regStatus }) {
-  const hero = !!tier.isHero;
+  // Resolve variant with backward-compat fallback
+  const variant = tier.variant || (tier.isHero ? "hero" : "standard");
+  const isHero = variant === "hero";
+  const isExclusive = variant === "exclusive";
+  // keep legacy 'hero' local var for className
+  const hero = isHero;
+
   return (
     <article
       className={hero ? "lp-tier-hero" : ""}
@@ -209,35 +201,78 @@ function TierCard({ tier, availability, regStatus }) {
         height: "100%",
         position: "relative",
         padding: "var(--lp-space-xl)",
-        background: hero
+        background: isHero
           ? "linear-gradient(180deg, rgba(251,191,36,0.08), rgba(251,191,36,0.02) 60%, var(--lp-bg-elevated))"
+          : isExclusive
+          ? "linear-gradient(180deg, #060912 0%, #0a0e1a 100%)"
           : "var(--lp-bg-elevated)",
-        border: hero
+        border: isHero
           ? "2px solid var(--lp-amber)"
+          : isExclusive
+          ? "1px solid rgba(180, 83, 9, 0.4)"
           : "1px solid var(--lp-border-subtle)",
         borderRadius: "var(--lp-radius-lg)",
         display: "flex",
         flexDirection: "column",
-        boxShadow: hero ? "var(--lp-shadow-amber)" : "none",
-        transform: hero ? "scale(1.04)" : "scale(1)",
+        boxShadow: isHero
+          ? "var(--lp-shadow-amber)"
+          : isExclusive
+          ? "inset 0 1px 0 rgba(180, 83, 9, 0.15), 0 10px 40px rgba(0,0,0,0.4)"
+          : "none",
+        transform: isHero ? "scale(1.04)" : "scale(1)",
         transition:
           "transform var(--lp-dur-med) var(--lp-ease), border-color var(--lp-dur-med) var(--lp-ease), box-shadow var(--lp-dur-med) var(--lp-ease)",
       }}
       onMouseEnter={(e) => {
-        if (!hero) {
-          e.currentTarget.style.transform = "translateY(-4px)";
+        if (isHero) return;
+        e.currentTarget.style.transform = "translateY(-4px)";
+        if (isExclusive) {
+          e.currentTarget.style.borderColor = "rgba(217, 119, 6, 0.7)";
+          e.currentTarget.style.boxShadow =
+            "inset 0 1px 0 rgba(180, 83, 9, 0.25), 0 20px 60px rgba(0,0,0,0.6), 0 0 40px rgba(180, 83, 9, 0.15)";
+        } else {
           e.currentTarget.style.borderColor = "var(--lp-border-amber)";
         }
       }}
       onMouseLeave={(e) => {
-        if (!hero) {
-          e.currentTarget.style.transform = "scale(1)";
+        if (isHero) return;
+        e.currentTarget.style.transform = "scale(1)";
+        if (isExclusive) {
+          e.currentTarget.style.borderColor = "rgba(180, 83, 9, 0.4)";
+          e.currentTarget.style.boxShadow =
+            "inset 0 1px 0 rgba(180, 83, 9, 0.15), 0 10px 40px rgba(0,0,0,0.4)";
+        } else {
           e.currentTarget.style.borderColor = "var(--lp-border-subtle)";
         }
       }}
     >
       {/* Availability badge */}
       <AvailabilityBadge availability={availability} regStatus={regStatus} />
+
+      {/* Audience pill — exclusive variant only */}
+      {isExclusive && tier.audienceLabel && (
+        <div
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: 6,
+            paddingBlock: 4,
+            paddingInline: 10,
+            background: "rgba(180, 83, 9, 0.10)",
+            border: "1px solid rgba(180, 83, 9, 0.30)",
+            borderRadius: "var(--lp-radius-pill)",
+            color: "#d97706",
+            fontFamily: "var(--lp-font-display)",
+            fontSize: 10,
+            fontWeight: 700,
+            letterSpacing: "0.06em",
+            marginBottom: "var(--lp-space-md)",
+            width: "fit-content",
+          }}
+        >
+          💼 {tier.audienceLabel}
+        </div>
+      )}
 
       {/* Hero badge */}
       {tier.badge && (
@@ -266,19 +301,36 @@ function TierCard({ tier, availability, regStatus }) {
 
       {/* Name + tagline */}
       <div style={{ marginBottom: "var(--lp-space-lg)" }}>
-        <h3
-          style={{
-            fontFamily: "var(--lp-font-display)",
-            fontSize: "var(--lp-h2)",
-            fontWeight: 900,
-            color: "var(--lp-text-strong)",
-            lineHeight: 1.1,
-            margin: 0,
-            marginBottom: "var(--lp-space-sm)",
-          }}
-        >
-          {tier.name}
-        </h3>
+        <div style={{ position: "relative", display: "inline-block", marginBottom: 12 }}>
+          <h3
+            style={{
+              fontFamily: "var(--lp-font-display)",
+              fontSize: "var(--lp-h2)",
+              fontWeight: 900,
+              color: "var(--lp-text-strong)",
+              lineHeight: 1.1,
+              margin: 0,
+              letterSpacing: isExclusive ? "0.01em" : "-0.01em",
+            }}
+          >
+            {tier.name}
+          </h3>
+          {isExclusive && (
+            <span
+              aria-hidden
+              style={{
+                position: "absolute",
+                bottom: -6,
+                insetInlineStart: 0,
+                width: 48,
+                height: 2,
+                background:
+                  "linear-gradient(90deg, #d97706, rgba(180, 83, 9, 0.2) 70%, transparent)",
+                borderRadius: 2,
+              }}
+            />
+          )}
+        </div>
         <p
           style={{
             fontSize: "var(--lp-body)",
@@ -299,8 +351,10 @@ function TierCard({ tier, availability, regStatus }) {
           gap: "var(--lp-space-sm)",
           marginBottom: "var(--lp-space-lg)",
           paddingBottom: "var(--lp-space-lg)",
-          borderBottom: hero
+          borderBottom: isHero
             ? "1px solid var(--lp-border-amber)"
+            : isExclusive
+            ? "1px solid rgba(180, 83, 9, 0.25)"
             : "1px solid var(--lp-border-subtle)",
         }}
       >
@@ -309,7 +363,11 @@ function TierCard({ tier, availability, regStatus }) {
           style={{
             fontSize: "clamp(2.5rem, 5vw, 3.25rem)",
             fontWeight: 900,
-            color: hero ? "var(--lp-amber-bright)" : "var(--lp-text-strong)",
+            color: isHero
+              ? "var(--lp-amber-bright)"
+              : isExclusive
+              ? "#d97706"
+              : "var(--lp-text-strong)",
             lineHeight: 1,
             letterSpacing: "-0.02em",
             fontVariantNumeric: "tabular-nums",
@@ -415,25 +473,69 @@ function TierCard({ tier, availability, regStatus }) {
           ))}
       </ul>
 
-      {/* CTA — dynamic based on availability */}
+      {/* CTA — dynamic based on availability + variant */}
       {(() => {
         const isFull = availability && availability.available === 0;
         const ctaLabel = isFull
           ? regStatus === "closed_before"
-            ? "احجز للنافذة القادمة"
+            ? "احجز للفترة القادمة"
             : regStatus === "open"
             ? "ممتلئة — انضم لقائمة الانتظار"
             : "احجز اهتمامك"
           : tier.ctaLabel;
-        const props = {
+        const baseProps = {
           "data-open-form": "true",
           "data-tier": tier.id,
-          style: { width: "100%", justifyContent: "center" },
         };
-        return hero ? (
-          <PrimaryCTA {...props}>{ctaLabel} ←</PrimaryCTA>
-        ) : (
-          <SecondaryCTA {...props}>{ctaLabel}</SecondaryCTA>
+
+        if (isHero) {
+          return (
+            <PrimaryCTA {...baseProps} style={{ width: "100%", justifyContent: "center" }}>
+              {ctaLabel} ←
+            </PrimaryCTA>
+          );
+        }
+
+        if (isExclusive) {
+          return (
+            <button
+              type="button"
+              {...baseProps}
+              style={{
+                width: "100%",
+                paddingBlock: 14,
+                paddingInline: 20,
+                background: "transparent",
+                color: "#d97706",
+                fontFamily: "var(--lp-font-display)",
+                fontSize: "var(--lp-body)",
+                fontWeight: 700,
+                border: "1px solid rgba(180, 83, 9, 0.5)",
+                borderRadius: "var(--lp-radius-pill)",
+                cursor: "pointer",
+                transition:
+                  "background var(--lp-dur-fast) var(--lp-ease), border-color var(--lp-dur-fast) var(--lp-ease), color var(--lp-dur-fast) var(--lp-ease)",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = "rgba(180, 83, 9, 0.10)";
+                e.currentTarget.style.borderColor = "rgba(217, 119, 6, 0.8)";
+                e.currentTarget.style.color = "#fbbf24";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = "transparent";
+                e.currentTarget.style.borderColor = "rgba(180, 83, 9, 0.5)";
+                e.currentTarget.style.color = "#d97706";
+              }}
+            >
+              {ctaLabel} ←
+            </button>
+          );
+        }
+
+        return (
+          <SecondaryCTA {...baseProps} style={{ width: "100%", justifyContent: "center" }}>
+            {ctaLabel}
+          </SecondaryCTA>
         );
       })()}
     </article>
@@ -599,7 +701,7 @@ function IELTSCard({ ielts, availability, regStatus }) {
           const isFull = availability && availability.available === 0;
           const label = isFull
             ? regStatus === "closed_before"
-              ? "احجز للنافذة القادمة"
+              ? "احجز للفترة القادمة"
               : "ممتلئة — قائمة الانتظار"
             : ielts.ctaLabel;
           return (
@@ -710,7 +812,7 @@ function AvailabilityBadge({ availability, regStatus }) {
     bg = "rgba(251,191,36,0.10)";
     border = "var(--lp-border-amber)";
     color = "var(--lp-amber-bright)";
-    label = `${available} مقاعد للنافذة القادمة`;
+    label = `${available} مقاعد لفترة التسجيل القادمة`;
   } else if (available === 0) {
     bg = "rgba(239,68,68,0.10)";
     border = "rgba(239,68,68,0.35)";

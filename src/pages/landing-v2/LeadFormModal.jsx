@@ -128,11 +128,11 @@ export default function LeadFormModal() {
   // Status-aware copy
   const regStatus = getRegistrationStatus();
   const isWaitlist = regStatus !== "open";
-  const titleCopy = isWaitlist ? "احجز مقعدك للنافذة القادمة" : FORM.title;
+  const titleCopy = isWaitlist ? "احجز مقعدك للفترة القادمة" : FORM.title;
   const subCopy = isWaitlist
-    ? `النافذة القادمة: ٢٣-٢٧ مايو · ${REGISTRATION.nextWindow.cohortStartLabel} · سنتواصل معك يوم ٢٣ لإكمال الحجز.`
+    ? `فترة التسجيل القادمة: ٢٣-٢٧ مايو · ${REGISTRATION.nextWindow.cohortStartLabel} · سنتواصل معك يوم ٢٣ لإكمال الحجز.`
     : FORM.sub;
-  const submitCopy = isWaitlist ? "أرسل واحجز للنافذة القادمة ←" : FORM.submitLabel;
+  const submitCopy = isWaitlist ? "أرسل واحجز للفترة القادمة ←" : FORM.submitLabel;
   const formContentId = isWaitlist ? "fluentia_waitlist_v2" : "fluentia_lead_form_v2";
 
   const close = () => setOpen(false);

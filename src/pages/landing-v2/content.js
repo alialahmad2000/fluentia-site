@@ -222,6 +222,7 @@ export const PRICING = {
     {
       id: "l1_group",
       name: "الجماعي",
+      variant: "standard",
       tagline: "ابدأ رحلتك مع مجموعة طموحة.",
       price: 1200,
       priceSuffix: "ر.س / شهرياً",
@@ -242,6 +243,7 @@ export const PRICING = {
     {
       id: "l2_excellence",
       name: "تميّز",
+      variant: "hero",
       tagline: "كل الجماعي + متابعة شخصية حقيقية.",
       price: 2200,
       priceSuffix: "ر.س / شهرياً",
@@ -260,17 +262,19 @@ export const PRICING = {
     {
       id: "l3_private",
       name: "الفردي",
-      tagline: "كل حصصك ١:١ مع د. علي — مرونة كاملة.",
+      variant: "exclusive",
+      audienceLabel: "للمهنيين ورواد الأعمال",
+      tagline: "حصص فردية بحت مع د. علي — مرونة كاملة، خصوصية تامة.",
       price: 6000,
       priceSuffix: "ر.س / شهرياً",
-      ctaLabel: "احجز استشارة مع د. علي",
+      ctaLabel: "تواصل لاستشارة خاصة",
       features: [
         { text: "كل الحصص ١:١ مع د. علي شخصياً", bold: true },
-        { text: "مرونة كاملة في الجدول الزمني", bold: true },
-        { text: "منهج مفصّل لأهدافك وحياتك", bold: false },
+        { text: "مرونة كاملة في الجدول الزمني (تناسب جدول المهنيين)", bold: true },
+        { text: "منهج مفصّل لأهدافك وحياتك المهنية", bold: false },
         { text: "تواصل مباشر بدون وسطاء", bold: false },
-        { text: "أولوية مطلقة في الجدولة", bold: false },
-        { text: "عدد محدود من المقاعد", bold: false },
+        { text: "خصوصية تامة — لا مجموعات، لا مشاركة هوية", bold: false },
+        { text: "٣ مقاعد فقط لكل فترة تسجيل", bold: false },
       ],
     },
   ],
@@ -428,6 +432,8 @@ export const REGISTRATION = {
     opens: "2026-05-23T08:00:00+03:00",
     closes: "2026-05-27T23:59:59+03:00",
     cohortStartLabel: "يونيو ٢٠٢٦",
+    windowLabel: "فترة التسجيل القادمة",
+    shortLabel: "الفترة القادمة",
   },
 
   tiers: {
@@ -439,8 +445,7 @@ export const REGISTRATION = {
 
   history: [],
 
-  whyClose:
-    "نفتح ٤ نوافذ تسجيل في السنة فقط — ١٠ مقاعد لكل باقة — لنضمن متابعة شخصية حقيقية لكل طالب. هذا تعهّدنا، مو خدعة تسويقية.",
+  whyClose: "مقاعد محدودة لكل فترة تسجيل · لضمان متابعة شخصية حقيقية لكل طالب.",
 };
 
 export function getRegistrationStatus(now = new Date()) {
