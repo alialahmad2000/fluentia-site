@@ -1,0 +1,129 @@
+/* ============================================================
+ * Fluentia Landing — Modern Cinematic Design System (FINAL)
+ * Used by /v2 (LandingV2), /start, /w
+ * Scope: .lp-scope (apply to wrapper to avoid leaking to legacy /)
+ * ============================================================ */
+
+.lp-scope {
+  /* ─── Color tokens ─────────────────────────────────────── */
+  /* Surfaces */
+  --lp-bg-base: #0a0e1a;
+  --lp-bg-raised: #131826;
+  --lp-bg-elevated: #1c2333;
+  --lp-bg-overlay: rgba(10, 14, 26, 0.85);
+
+  /* Brand */
+  --lp-amber: #fbbf24;
+  --lp-amber-bright: #fcd34d;
+  --lp-amber-deep: #b45309;
+  --lp-amber-glow: rgba(251, 191, 36, 0.25);
+
+  /* Text */
+  --lp-text-strong: #f8fafc;
+  --lp-text: rgba(248, 250, 252, 0.92);
+  --lp-text-muted: rgba(248, 250, 252, 0.65);
+  --lp-text-faint: rgba(248, 250, 252, 0.4);
+
+  /* Borders */
+  --lp-border-subtle: rgba(248, 250, 252, 0.08);
+  --lp-border-bold: rgba(248, 250, 252, 0.15);
+  --lp-border-amber: rgba(251, 191, 36, 0.3);
+
+  /* Status */
+  --lp-success: #4ade80;
+  --lp-danger: #ef4444;
+
+  /* ─── Typography ───────────────────────────────────────── */
+  --lp-font-display: 'Tajawal', 'Inter', system-ui, sans-serif;
+  --lp-font-body: 'Readex Pro', 'Tajawal', system-ui, sans-serif;
+  --lp-font-num: 'Inter', 'Tajawal', monospace;
+
+  --lp-display-1: clamp(2.5rem, 8vw, 4.5rem);
+  --lp-display-2: clamp(2rem, 6vw, 3.5rem);
+  --lp-h1: clamp(1.75rem, 5vw, 2.75rem);
+  --lp-h2: clamp(1.5rem, 4vw, 2.25rem);
+  --lp-h3: clamp(1.25rem, 3vw, 1.75rem);
+  --lp-body-l: 1.125rem;
+  --lp-body: 1rem;
+  --lp-body-s: 0.875rem;
+  --lp-caption: 0.75rem;
+
+  /* ─── Spacing ──────────────────────────────────────────── */
+  --lp-space-xs: 4px;
+  --lp-space-sm: 8px;
+  --lp-space-md: 16px;
+  --lp-space-lg: 24px;
+  --lp-space-xl: 32px;
+  --lp-space-2xl: 48px;
+  --lp-space-3xl: 64px;
+  --lp-space-4xl: 96px;
+  --lp-space-section: clamp(64px, 10vw, 120px);
+
+  /* ─── Radii ────────────────────────────────────────────── */
+  --lp-radius-tight: 8px;
+  --lp-radius-card: 16px;
+  --lp-radius-lg: 24px;
+  --lp-radius-pill: 999px;
+
+  /* ─── Shadows ──────────────────────────────────────────── */
+  --lp-shadow-card: 0 10px 40px rgba(0, 0, 0, 0.3);
+  --lp-shadow-card-hover: 0 20px 60px rgba(0, 0, 0, 0.5);
+  --lp-shadow-amber: 0 0 40px var(--lp-amber-glow);
+  --lp-shadow-amber-strong: 0 8px 32px rgba(251, 191, 36, 0.35);
+
+  /* ─── Motion ───────────────────────────────────────────── */
+  --lp-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --lp-dur-fast: 0.2s;
+  --lp-dur-med: 0.4s;
+  --lp-dur-slow: 0.7s;
+
+  /* ─── Layout ───────────────────────────────────────────── */
+  --lp-max-w: 1200px;
+  --lp-max-w-narrow: 880px;
+  --lp-max-w-text: 720px;
+}
+
+/* ─── Base styles inside scope ──────────────────────────── */
+.lp-scope {
+  background: var(--lp-bg-base);
+  color: var(--lp-text);
+  font-family: var(--lp-font-body);
+  font-size: var(--lp-body);
+  line-height: 1.6;
+  direction: rtl;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+}
+
+.lp-scope * {
+  box-sizing: border-box;
+}
+
+/* Headings use display font */
+.lp-scope h1,
+.lp-scope h2,
+.lp-scope h3,
+.lp-scope h4 {
+  font-family: var(--lp-font-display);
+  color: var(--lp-text-strong);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+/* Numerals use Inter for tabular precision */
+.lp-scope .lp-num {
+  font-family: var(--lp-font-num);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Respect reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .lp-scope * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

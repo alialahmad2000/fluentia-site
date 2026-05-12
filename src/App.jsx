@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, lazy, Suspense } from "react";
-import PremiumV1 from './pages/PremiumV1.jsx';
+import PremiumV1 from './pages/PremiumV1.deprecated.jsx';
+import LandingV2 from './pages/LandingV2';
 import { BrowserRouter, Routes, Route, Link, useLocation } from "react-router-dom";
 import { getStoredRef, getVisitorId } from './utils/affiliateTracking';
 import { buildWhatsAppUrl, WA_MESSAGES } from './lib/whatsapp';
@@ -1187,6 +1188,7 @@ function AppRoutes(){
 
   return(
     <Routes>
+      <Route path="/v2" element={<LandingV2 />} />
       <Route path="/" element={<HomePage />} />
       <Route path="/start" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#0A0A0A'}} />}><StartPage /></Suspense>} />
       <Route path="/partners" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#060e1c'}} />}><PartnersLanding /></Suspense>} />
