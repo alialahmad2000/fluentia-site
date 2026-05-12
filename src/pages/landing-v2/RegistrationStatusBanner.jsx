@@ -6,7 +6,7 @@ export default function RegistrationStatusBanner() {
   const [now, setNow] = useState(() => Date.now());
 
   useEffect(() => {
-    const id = setInterval(() => setNow(Date.now()), 1000);
+    const id = setInterval(() => setNow(Date.now()), 60000); // every 60s, not every 1s
     return () => clearInterval(id);
   }, []);
 
@@ -15,31 +15,31 @@ export default function RegistrationStatusBanner() {
   const closes = new Date(REGISTRATION.nextWindow.closes);
   const target = status === "closed_before" ? opens : closes;
   const diff = Math.max(0, target.getTime() - now);
-  const { days, hours, mins, secs } = breakdownMs(diff);
+  const { days, hours, mins } = breakdownMs(diff);
 
   const theme = {
     closed_before: {
-      bg: "linear-gradient(90deg, rgba(239,68,68,0.18), rgba(251,191,36,0.18))",
-      border: "rgba(239,68,68,0.4)",
-      label: "🔒 مقاعد هذا الشهر ممتلئة",
+      bg: "linear-gradient(90deg, rgba(248,250,252,0.04), rgba(251,191,36,0.10))",
+      border: "var(--lp-border-amber)",
+      label: "🔒 التسجيل مقفل حالياً",
       action: `فترة التسجيل القادمة: ٢٣-٢٧ مايو · ${REGISTRATION.nextWindow.cohortStartLabel}`,
-      ctaLabel: "احجز للفترة القادمة",
-      timerPrefix: "تفتح خلال",
+      ctaLabel: "تواصل للتسجيل القادم",
+      timerPrefix: "تفتح بعد",
     },
     open: {
-      bg: "linear-gradient(90deg, rgba(74,222,128,0.18), rgba(251,191,36,0.25))",
-      border: "rgba(251,191,36,0.5)",
-      label: "🟢 التسجيل مفتوح الآن",
-      action: `لمدة محدودة · ${REGISTRATION.nextWindow.cohortStartLabel}`,
-      ctaLabel: "احجز مقعدك الآن",
-      timerPrefix: "يُغلق خلال",
+      bg: "linear-gradient(90deg, rgba(74,222,128,0.10), rgba(251,191,36,0.15))",
+      border: "rgba(251,191,36,0.4)",
+      label: "🟢 التسجيل مفتوح",
+      action: `${REGISTRATION.nextWindow.cohortStartLabel} · مقاعد محدودة`,
+      ctaLabel: "تواصل مع المدرّب",
+      timerPrefix: "يُغلق بعد",
     },
     closed_after: {
-      bg: "linear-gradient(90deg, rgba(248,250,252,0.05), rgba(251,191,36,0.10))",
+      bg: "linear-gradient(90deg, rgba(248,250,252,0.05), rgba(251,191,36,0.05))",
       border: "rgba(248,250,252,0.15)",
       label: "🔒 التسجيل مقفل",
-      action: "فترة التسجيل القادمة قريباً — احجز اهتمامك",
-      ctaLabel: "احجز اهتمامك",
+      action: "فترة التسجيل القادمة قريباً",
+      ctaLabel: "تواصل للاستفسار",
       timerPrefix: "",
     },
   }[status];
@@ -106,7 +106,6 @@ export default function RegistrationStatusBanner() {
               days={days}
               hours={hours}
               mins={mins}
-              secs={secs}
             />
           </>
         )}
@@ -161,7 +160,7 @@ function Separator({ className }) {
   );
 }
 
-function Countdown({ prefix, days, hours, mins, secs }) {
+function Countdown({ prefix, days, hours, mins }) {
   return (
     <span
       style={{
@@ -179,7 +178,6 @@ function Countdown({ prefix, days, hours, mins, secs }) {
       <Cell n={days} label="ي" />
       <Cell n={hours} label="س" />
       <Cell n={mins} label="د" />
-      <Cell n={secs} label="ث" />
     </span>
   );
 }

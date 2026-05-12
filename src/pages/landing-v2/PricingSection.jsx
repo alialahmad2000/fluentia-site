@@ -274,31 +274,6 @@ function TierCard({ tier, availability, regStatus }) {
         </div>
       )}
 
-      {/* Hero badge */}
-      {tier.badge && (
-        <div
-          style={{
-            position: "absolute",
-            top: -14,
-            left: "50%",
-            transform: "translateX(-50%)",
-            paddingBlock: 6,
-            paddingInline: 16,
-            background: "linear-gradient(135deg, var(--lp-amber-bright), var(--lp-amber))",
-            color: "#0a0e1a",
-            fontFamily: "var(--lp-font-display)",
-            fontSize: "var(--lp-caption)",
-            fontWeight: 800,
-            letterSpacing: "0.08em",
-            borderRadius: "var(--lp-radius-pill)",
-            boxShadow: "var(--lp-shadow-amber-strong)",
-            whiteSpace: "nowrap",
-          }}
-        >
-          ⭐ {tier.badge}
-        </div>
-      )}
-
       {/* Name + tagline */}
       <div style={{ marginBottom: "var(--lp-space-lg)" }}>
         <div style={{ position: "relative", display: "inline-block", marginBottom: 12 }}>
@@ -433,44 +408,6 @@ function TierCard({ tier, availability, regStatus }) {
             <span>{f.text}</span>
           </li>
         ))}
-        {/* Missing features — strikethrough (only for الجماعي) */}
-        {tier.missing &&
-          tier.missing.map((m, k) => (
-            <li
-              key={`m-${k}`}
-              style={{
-                display: "flex",
-                alignItems: "flex-start",
-                gap: "var(--lp-space-md)",
-                color: "var(--lp-text-faint)",
-                fontSize: "var(--lp-body-s)",
-                lineHeight: 1.6,
-                textDecoration: "line-through",
-                textDecorationColor: "rgba(248,250,252,0.2)",
-              }}
-            >
-              <span
-                style={{
-                  flexShrink: 0,
-                  width: 18,
-                  height: 18,
-                  borderRadius: "50%",
-                  background: "rgba(239,68,68,0.08)",
-                  color: "var(--lp-danger)",
-                  display: "inline-flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  fontSize: 11,
-                  fontWeight: 800,
-                  marginTop: 2,
-                  opacity: 0.7,
-                }}
-              >
-                ×
-              </span>
-              <span>{m}</span>
-            </li>
-          ))}
       </ul>
 
       {/* CTA — dynamic based on availability + variant */}
@@ -725,31 +662,27 @@ function IELTSCard({ ielts, availability, regStatus }) {
           position: "relative",
         }}
       >
-        {/* Guarantee seal */}
+        {/* Quiet guarantee badge — replaces rotated seal */}
         <div
           style={{
-            position: "absolute",
-            top: -16,
-            insetInlineEnd: -16,
-            width: 72,
-            height: 72,
-            borderRadius: "50%",
-            background:
-              "linear-gradient(135deg, var(--lp-amber-bright), var(--lp-amber-deep))",
-            display: "flex",
+            display: "inline-flex",
             alignItems: "center",
-            justifyContent: "center",
-            color: "#0a0e1a",
+            gap: 6,
+            paddingBlock: 5,
+            paddingInline: 10,
+            background: "rgba(74,222,128,0.10)",
+            border: "1px solid rgba(74,222,128,0.30)",
+            borderRadius: "var(--lp-radius-pill)",
+            color: "var(--lp-success)",
             fontFamily: "var(--lp-font-display)",
-            fontWeight: 900,
-            fontSize: "var(--lp-body-s)",
-            textAlign: "center",
-            lineHeight: 1.1,
-            boxShadow: "var(--lp-shadow-amber-strong)",
-            transform: "rotate(-8deg)",
+            fontSize: 10,
+            fontWeight: 700,
+            letterSpacing: "0.06em",
+            marginBottom: "var(--lp-space-sm)",
+            width: "fit-content",
           }}
         >
-          ضمان<br />كامل
+          ✓ ضمان مكتوب
         </div>
 
         <div

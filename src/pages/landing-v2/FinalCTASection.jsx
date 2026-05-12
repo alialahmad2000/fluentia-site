@@ -5,17 +5,17 @@ export default function FinalCTASection() {
   const status = getRegistrationStatus();
   const copy = status === "open"
     ? {
-        eyebrow: "آخر فرصة",
-        headline: "النافذة مفتوحة الآن — لا تفوّتها.",
-        sub: `التسجيل يُغلق ٢٧ مايو · المقاعد محدودة لكل باقة. اضغط أدناه لتعبئة النموذج والتواصل مع المدرّب فوراً.`,
-        cta: "احجز مقعدك الآن",
+        eyebrow: "التسجيل مفتوح",
+        headline: "الفترة مفتوحة الآن.",
+        sub: `التسجيل يُغلق ٢٧ مايو · مقاعد محدودة لكل باقة. تواصل مع المدرّب لمعرفة الأنسب لك.`,
+        cta: "تواصل مع المدرّب",
       }
     : status === "closed_before"
     ? {
-        eyebrow: "فترة التسجيل القادمة قريباً",
-        headline: "كل مقاعد هذا الشهر ممتلئة — احجز مكانك للفترة القادمة.",
-        sub: `فترة التسجيل القادمة: ٢٣-٢٧ مايو · ${REGISTRATION.nextWindow.cohortStartLabel} · سنتواصل معك يوم الافتتاح لإكمال الحجز.`,
-        cta: "احجز للفترة القادمة",
+        eyebrow: "فترة التسجيل القادمة",
+        headline: "مقاعد هذا الشهر ممتلئة. الفترة القادمة قريباً.",
+        sub: `فترة التسجيل القادمة: ٢٣-٢٧ مايو · ${REGISTRATION.nextWindow.cohortStartLabel}. تواصل من الآن لنخبرك يوم الافتتاح.`,
+        cta: "تواصل للتسجيل القادم",
       }
     : {
         eyebrow: FINAL_CTA.eyebrow,
