@@ -27,15 +27,17 @@ export default function LandingHeader() {
   return (
     <header
       style={{
-        position: "fixed",
+        position: "sticky",
         top: 0,
-        insetInlineStart: 0,
-        insetInlineEnd: 0,
         zIndex: 100,
-        background: scrolled ? "rgba(10, 14, 26, 0.85)" : "transparent",
-        backdropFilter: scrolled ? "blur(16px) saturate(180%)" : "none",
-        WebkitBackdropFilter: scrolled ? "blur(16px) saturate(180%)" : "none",
-        borderBottom: scrolled ? "1px solid var(--lp-border-subtle)" : "1px solid transparent",
+        background: scrolled
+          ? "rgba(10, 14, 26, 0.92)"
+          : "rgba(10, 14, 26, 0.6)",
+        backdropFilter: "blur(16px) saturate(180%)",
+        WebkitBackdropFilter: "blur(16px) saturate(180%)",
+        borderBottom: scrolled
+          ? "1px solid var(--lp-border-subtle)"
+          : "1px solid transparent",
         transition:
           "background var(--lp-dur-med) var(--lp-ease), border-color var(--lp-dur-med) var(--lp-ease)",
       }}
