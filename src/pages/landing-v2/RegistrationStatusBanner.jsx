@@ -1,12 +1,26 @@
 import { useEffect, useState } from "react";
 import { REGISTRATION, getRegistrationStatus } from "./content";
 
+/**
+ * RegistrationStatusBanner
+ *
+ * Two completely separate layouts driven by CSS media query:
+ *  - DESKTOP (>700px): single horizontal row with all info + inline CTA pill
+ *  - MOBILE  (≤700px): compact vertical stack, 1-2 lines, NO CTA
+ *
+ * The mobile layout intentionally omits the CTA because the sticky LandingHeader
+ * already provides 'ابدأ بمحادثة' on mobile. Duplicating CTAs in the banner caused
+ * visual competition and a 'rushed/unprofessional' feel on phones.
+ *
+ * Status auto-derives from REGISTRATION.nextWindow dates (see content.js).
+ * Countdown updates every 60 seconds (LP-7 change — no ticking-seconds timebomb feel).
+ */
 export default function RegistrationStatusBanner() {
   // ALL HOOKS AT TOP — React #310
   const [now, setNow] = useState(() => Date.now());
 
   useEffect(() => {
-    const id = setInterval(() => setNow(Date.now()), 60000); // every 60s, not every 1s
+    const id = setInterval(() => setNow(Date.now()), 60000);
     return () => clearInterval(id);
   }, []);
 
@@ -17,14 +31,20 @@ export default function RegistrationStatusBanner() {
   const diff = Math.max(0, target.getTime() - now);
   const { days, hours, mins } = breakdownMs(diff);
 
+  // Theme + copy — three states
   const theme = {
     closed_before: {
       bg: "linear-gradient(90deg, rgba(248,250,252,0.04), rgba(251,191,36,0.10))",
       border: "var(--lp-border-amber)",
+      // Desktop copy (full)
       label: "🔒 التسجيل مقفل حالياً",
       action: `فترة التسجيل القادمة: ٢٣-٢٧ مايو · ${REGISTRATION.nextWindow.cohortStartLabel}`,
       ctaLabel: "تواصل للتسجيل القادم",
       timerPrefix: "تفتح بعد",
+      // Mobile copy (short)
+      mobileLine1: "🔒 التسجيل القادم: ٢٣-٢٧ مايو",
+      mobileTimerPrefix: "تفتح بعد",
+      showTimer: true,
     },
     open: {
       bg: "linear-gradient(90deg, rgba(74,222,128,0.10), rgba(251,191,36,0.15))",
@@ -33,6 +53,9 @@ export default function RegistrationStatusBanner() {
       action: `${REGISTRATION.nextWindow.cohortStartLabel} · مقاعد محدودة`,
       ctaLabel: "تواصل مع المدرّب",
       timerPrefix: "يُغلق بعد",
+      mobileLine1: "🟢 التسجيل مفتوح",
+      mobileTimerPrefix: "يُغلق بعد",
+      showTimer: true,
     },
     closed_after: {
       bg: "linear-gradient(90deg, rgba(248,250,252,0.05), rgba(251,191,36,0.05))",
@@ -41,6 +64,9 @@ export default function RegistrationStatusBanner() {
       action: "فترة التسجيل القادمة قريباً",
       ctaLabel: "تواصل للاستفسار",
       timerPrefix: "",
+      mobileLine1: "🔒 التسجيل مقفل · الفترة القادمة قريباً",
+      mobileTimerPrefix: "",
+      showTimer: false,
     },
   }[status];
 
@@ -54,23 +80,23 @@ export default function RegistrationStatusBanner() {
         borderBottom: `1px solid ${theme.border}`,
         backdropFilter: "blur(8px)",
         WebkitBackdropFilter: "blur(8px)",
-        padding: "10px clamp(12px, 4vw, 32px)",
         direction: "rtl",
       }}
     >
+      {/* ───────────── DESKTOP LAYOUT (>700px) ───────────── */}
       <div
+        className="lp-banner-desktop"
         style={{
           maxWidth: "var(--lp-max-w)",
           marginInline: "auto",
+          padding: "10px clamp(12px, 4vw, 32px)",
           display: "flex",
           alignItems: "center",
           gap: "var(--lp-space-md)",
           flexWrap: "wrap",
           justifyContent: "center",
         }}
-        className="lp-banner-row"
       >
-        {/* Status label */}
         <span
           style={{
             fontFamily: "var(--lp-font-display)",
@@ -86,7 +112,6 @@ export default function RegistrationStatusBanner() {
 
         <Separator />
 
-        {/* Action / window info */}
         <span
           style={{
             fontSize: "var(--lp-body-s)",
@@ -97,21 +122,15 @@ export default function RegistrationStatusBanner() {
           {theme.action}
         </span>
 
-        {/* Countdown — only when active */}
-        {status !== "closed_after" && (
+        {theme.showTimer && (
           <>
             <Separator />
-            <Countdown
-              prefix={theme.timerPrefix}
-              days={days}
-              hours={hours}
-              mins={mins}
-            />
+            <Countdown prefix={theme.timerPrefix} days={days} hours={hours} mins={mins} />
           </>
         )}
 
-        {/* Inline CTA */}
-        <Separator className="lp-sep-hide-mobile" />
+        <Separator />
+
         <a
           data-open-form="true"
           style={{
@@ -133,21 +152,75 @@ export default function RegistrationStatusBanner() {
         </a>
       </div>
 
+      {/* ───────────── MOBILE LAYOUT (≤700px) ───────────── */}
+      <div
+        className="lp-banner-mobile"
+        style={{
+          display: "none",
+          maxWidth: "var(--lp-max-w)",
+          marginInline: "auto",
+          padding: "7px 14px",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: 2,
+          textAlign: "center",
+        }}
+      >
+        <span
+          style={{
+            fontFamily: "var(--lp-font-display)",
+            fontSize: "12px",
+            fontWeight: 700,
+            color: "var(--lp-text-strong)",
+            letterSpacing: "0.01em",
+            lineHeight: 1.4,
+          }}
+        >
+          {theme.mobileLine1}
+        </span>
+        {theme.showTimer && (
+          <span
+            style={{
+              fontFamily: "var(--lp-font-num)",
+              fontSize: "11px",
+              fontWeight: 700,
+              color: "var(--lp-amber-bright)",
+              letterSpacing: "0.02em",
+              fontVariantNumeric: "tabular-nums",
+              lineHeight: 1.3,
+            }}
+          >
+            <span style={{ color: "var(--lp-text-muted)", fontWeight: 500, marginInlineEnd: 4 }}>
+              {theme.mobileTimerPrefix}
+            </span>
+            <MobileTimerCells days={days} hours={hours} mins={mins} />
+          </span>
+        )}
+      </div>
+
+      {/* Media query — swap layouts at 700px */}
       <style>{`
         @media (max-width: 700px) {
-          .lp-banner-row { gap: 8px !important; }
-          .lp-sep-hide-mobile { display: none !important; }
+          .lp-banner-desktop {
+            display: none !important;
+          }
+          .lp-banner-mobile {
+            display: flex !important;
+          }
         }
       `}</style>
     </div>
   );
 }
 
-function Separator({ className }) {
+// ────────────────────────────────────────────────────────────
+// Sub-components
+// ────────────────────────────────────────────────────────────
+
+function Separator() {
   return (
     <span
       aria-hidden
-      className={className}
       style={{
         width: 4,
         height: 4,
@@ -185,7 +258,13 @@ function Countdown({ prefix, days, hours, mins }) {
 function Cell({ n, label }) {
   return (
     <span style={{ display: "inline-flex", alignItems: "baseline", gap: 2 }}>
-      <span style={{ minWidth: "1.5ch", textAlign: "center", color: "var(--lp-text-strong)" }}>
+      <span
+        style={{
+          minWidth: "1.5ch",
+          textAlign: "center",
+          color: "var(--lp-text-strong)",
+        }}
+      >
         {String(n).padStart(2, "0")}
       </span>
       <span style={{ fontSize: 10, color: "var(--lp-text-muted)", fontWeight: 500 }}>
@@ -195,10 +274,33 @@ function Cell({ n, label }) {
   );
 }
 
+/** Tighter inline timer used inside the mobile banner. */
+function MobileTimerCells({ days, hours, mins }) {
+  return (
+    <span style={{ display: "inline-flex", gap: 5, alignItems: "baseline" }}>
+      <MiniCell n={days} label="ي" />
+      <MiniCell n={hours} label="س" />
+      <MiniCell n={mins} label="د" />
+    </span>
+  );
+}
+
+function MiniCell({ n, label }) {
+  return (
+    <span style={{ display: "inline-flex", alignItems: "baseline", gap: 1 }}>
+      <span style={{ color: "var(--lp-text-strong)", fontWeight: 700 }}>
+        {String(n).padStart(2, "0")}
+      </span>
+      <span style={{ fontSize: 9, color: "var(--lp-text-muted)", fontWeight: 500 }}>
+        {label}
+      </span>
+    </span>
+  );
+}
+
 function breakdownMs(ms) {
-  const days  = Math.floor(ms / 86400000);
+  const days = Math.floor(ms / 86400000);
   const hours = Math.floor((ms % 86400000) / 3600000);
-  const mins  = Math.floor((ms % 3600000) / 60000);
-  const secs  = Math.floor((ms % 60000) / 1000);
-  return { days, hours, mins, secs };
+  const mins = Math.floor((ms % 3600000) / 60000);
+  return { days, hours, mins };
 }
