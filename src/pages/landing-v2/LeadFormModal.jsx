@@ -38,11 +38,11 @@ function readUtm() {
 function buildWhatsAppMessage({ name, phone, tierLabel, goal, utm }) {
   const lines = [
     "السلام عليكم 👋",
-    "حابب أحجز لقاءً مبدئياً مجانياً.",
+    "أريد حجز لقاء مبدئي مجاني.",
     "",
     `الاسم: ${name}`,
     `الجوّال: ${phone}`,
-    `الباقة الي تهمّني: ${tierLabel}`,
+    `الباقة التي تهمّني: ${tierLabel}`,
   ];
   if (goal) lines.push(`الهدف: ${goal}`);
   if (utm.utm_source)

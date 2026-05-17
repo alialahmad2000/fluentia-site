@@ -494,13 +494,11 @@ function IELTSCard({ ielts, availability, regStatus }) {
         borderRadius: "var(--lp-radius-lg)",
         position: "relative",
         overflow: "hidden",
-        display: "grid",
-        gridTemplateColumns: "minmax(0, 1.3fr) minmax(0, 1fr)",
-        gap: "var(--lp-space-2xl)",
+        maxWidth: "var(--lp-max-w-text)",
+        marginInline: "auto",
       }}
       className="lp-ielts-card"
     >
-      {/* LEFT — name, price, features */}
       <div>
         <div
           style={{
@@ -578,16 +576,6 @@ function IELTSCard({ ielts, availability, regStatus }) {
             {ielts.priceSuffix}
           </span>
         </div>
-        <div
-          style={{
-            fontSize: "var(--lp-caption)",
-            color: "var(--lp-text-faint)",
-            marginBottom: "var(--lp-space-xl)",
-          }}
-        >
-          {ielts.pricePer}
-        </div>
-
         <ul
           style={{
             listStyle: "none",
@@ -649,81 +637,9 @@ function IELTSCard({ ielts, availability, regStatus }) {
         })()}
       </div>
 
-      {/* RIGHT — guarantee callout */}
-      <div
-        style={{
-          background: "var(--lp-bg-base)",
-          border: "1px solid var(--lp-border-amber)",
-          borderRadius: "var(--lp-radius-card)",
-          padding: "var(--lp-space-xl)",
-          display: "flex",
-          flexDirection: "column",
-          gap: "var(--lp-space-md)",
-          position: "relative",
-        }}
-      >
-        {/* Quiet guarantee badge — replaces rotated seal */}
-        <div
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: 6,
-            paddingBlock: 5,
-            paddingInline: 10,
-            background: "rgba(74,222,128,0.10)",
-            border: "1px solid rgba(74,222,128,0.30)",
-            borderRadius: "var(--lp-radius-pill)",
-            color: "var(--lp-success)",
-            fontFamily: "var(--lp-font-display)",
-            fontSize: 10,
-            fontWeight: 700,
-            letterSpacing: "0.06em",
-            marginBottom: "var(--lp-space-sm)",
-            width: "fit-content",
-          }}
-        >
-          ✓ ضمان مكتوب
-        </div>
-
-        <div
-          style={{
-            fontFamily: "var(--lp-font-display)",
-            fontSize: "var(--lp-h3)",
-            fontWeight: 800,
-            color: "var(--lp-amber-bright)",
-            lineHeight: 1.2,
-          }}
-        >
-          {ielts.guarantee.title}
-        </div>
-        <p
-          style={{
-            fontSize: "var(--lp-body)",
-            color: "var(--lp-text)",
-            lineHeight: 1.6,
-            margin: 0,
-          }}
-        >
-          {ielts.guarantee.body}
-        </p>
-        <div
-          style={{
-            marginTop: "auto",
-            paddingTop: "var(--lp-space-md)",
-            borderTop: "1px solid var(--lp-border-subtle)",
-            fontSize: "var(--lp-caption)",
-            color: "var(--lp-text-muted)",
-            lineHeight: 1.5,
-          }}
-        >
-          {ielts.guarantee.condition}
-        </div>
-      </div>
-
       <style>{`
         @media (max-width: 900px) {
           .lp-ielts-card {
-            grid-template-columns: 1fr !important;
             padding: var(--lp-space-xl) !important;
           }
         }
