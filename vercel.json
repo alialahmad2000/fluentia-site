@@ -1,4 +1,8 @@
 {
+  "redirects": [
+    { "source": "/legacy", "destination": "/", "permanent": true },
+    { "source": "/v1", "destination": "/", "permanent": true }
+  ],
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }
   ]
