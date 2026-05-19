@@ -261,6 +261,33 @@ export const PRICING = {
     },
   ],
 
+  // Student tier — full-width card, sits between main 3 tiers and IELTS card
+  // Same group, same schedule as الجماعي. Differentiation = service level only.
+  studentTier: {
+    id: "l0_student",
+    badge: "برنامج خاص · للجامعيين",
+    name: "طلابي",
+    headline: "ميزانية صديقة · للطلاب الجامعيين السعوديين",
+    tagline: "نقطة دخول للطلاب الجامعيين. نفس الكلاسات الجماعية، مع منصة أساسية.",
+    price: 750,
+    priceSuffix: "ر.س / شهرياً",
+    features: [
+      "نفس ٨ حصص جماعية شهرياً (في نفس مجموعة الجماعي)",
+      "حد أقصى ١٢ طالباً في الكلاس",
+      "منهج Fluentia كامل (٧٢ وحدة)",
+      "تسجيلات الحصص محفوظة",
+      "مجموعة WhatsApp للطلاب",
+    ],
+    // Explicit, factual differentiation — replaces strikethroughs (Naval-honest)
+    differenceNote: "الفرق عن باقة الجماعي (1,200 ر.س): متابعة شخصية من المدرّب · تقييم AI الفوري للنطق والكتابة · أدوات AI المتقدّمة في المنصة. لو تحتاج هذي الإضافات، الجماعي هو خيارك.",
+    eligibility: {
+      title: "شرط الأهلية",
+      body: "متاحة فقط لطلاب الجامعات السعودية الحاليين. سيُطلب منك إثبات (بطاقة طالب أو خطاب قبول) خلال محادثة التسجيل. الباقة ليست متاحة للموظفين أو الخريجين.",
+      note: "ليست لك؟ ابدأ من باقة الجماعي.",
+    },
+    ctaLabel: "تواصل لتقييم الأهلية",
+  },
+
   ielts: {
     badge: "برنامج خاص للـ IELTS",
     name: "IELTS",
@@ -362,6 +389,7 @@ export const FORM = {
     goal: { label: "هدفك (اختياري)", placeholder: "مثال: تطوير الإنجليزي للعمل / IELTS / السفر" },
   },
   tierOptions: [
+    { value: "l0_student", label: "طلابي · 750 ر.س / شهر · للجامعيين فقط", price: 750 },
     { value: "l1_group", label: "الجماعي · 1,200 ر.س / شهر", price: 1200 },
     { value: "l2_excellence", label: "تميّز · 2,200 ر.س / شهر", price: 2200, recommended: true },
     { value: "l3_private", label: "التدريب الفردي المكثف · 3,000 ر.س / شهر", price: 3000 },
@@ -416,6 +444,7 @@ export const REGISTRATION = {
     l2_excellence: { available: 10, total: 10, label: "تميّز" },
     l3_private:    { available: 3,  total: 3,  label: "التدريب الفردي المكثف" },
     l3a_ielts:     { available: 2,  total: 2,  label: "IELTS" },
+    l0_student:    { available: 5,  total: 5,  label: "طلابي" },
   },
 
   history: [],
@@ -487,6 +516,10 @@ export const FAQ = {
     {
       q: "هل أحتاج Fluentia فعلاً؟ ألا توجد طرق مجانية؟",
       a: "نعم، توجد طرق مجانية ممتازة — Duolingo للمفردات، YouTube للاستماع، ChatGPT للممارسة الكتابية. إذا كنت تستطيع التعلّم بنظام بنفسك، الأرجح لا تحتاج Fluentia. الفرق أن Fluentia توفّر الثلاثة معاً: نموذج علمي + ممارسة منظّمة + متابعة شخصية. اختر بناءً على نفسك، لا تحت الضغط.",
+    },
+    {
+      q: "هل أنا مؤهل لباقة 'طلابي'؟",
+      a: "إذا كنت طالباً جامعياً سعودياً حالياً (بكالوريوس أو ماجستير أو دكتوراه)، نعم — باقة طلابي مصمّمة لك. ستحضر نفس الحصص الجماعية مع طلاب الجماعي تماماً، لكن بدون متابعة شخصية من المدرّب وبدون أدوات AI. سنطلب إثباتاً بسيطاً (بطاقة طالب أو خطاب قبول) خلال محادثة التسجيل. الباقة ليست متاحة للموظفين أو الخريجين — هؤلاء يبدأون من باقة الجماعي.",
     },
     {
       q: "ما الفرق بين Fluentia و Duolingo / Cake / Cambly؟",

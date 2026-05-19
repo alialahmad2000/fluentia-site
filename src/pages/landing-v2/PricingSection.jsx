@@ -128,6 +128,17 @@ export default function PricingSection() {
           })}
         </div>
 
+        {/* Student tier card — between main 3-tier row and IELTS */}
+        <Reveal delay={0.25}>
+          <div style={{ marginBottom: "var(--lp-space-lg)" }}>
+            <StudentTierCard
+              tier={PRICING.studentTier}
+              availability={REGISTRATION.tiers.l0_student}
+              regStatus={getRegistrationStatus()}
+            />
+          </div>
+        </Reveal>
+
         {/* IELTS card */}
         <Reveal delay={0.3}>
           <IELTSCard
@@ -710,5 +721,279 @@ function AvailabilityBadge({ availability, regStatus }) {
       />
       {label}
     </div>
+  );
+}
+
+// ────────────────────────────────────────────────────────────
+// StudentTierCard — full-width card for university students.
+// Same group/schedule as الجماعي. Differentiation lives in features + differenceNote.
+// Lighter visual than الفردي's gold-exclusive variant — friendly, not flashy.
+// ────────────────────────────────────────────────────────────
+
+function StudentTierCard({ tier, availability, regStatus }) {
+  const isFull = availability && availability.available === 0;
+  const ctaLabel = isFull
+    ? regStatus === "closed_before"
+      ? "احجز للفترة القادمة"
+      : regStatus === "open"
+      ? "ممتلئة — انضم لقائمة الانتظار"
+      : "احجز اهتمامك"
+    : tier.ctaLabel;
+
+  return (
+    <article
+      className="lp-student-card"
+      style={{
+        padding: "var(--lp-space-2xl)",
+        background:
+          "linear-gradient(135deg, rgba(96,165,250,0.04) 0%, var(--lp-bg-elevated) 50%, rgba(248,250,252,0.03) 100%)",
+        border: "1px solid var(--lp-border-subtle)",
+        borderRadius: "var(--lp-radius-lg)",
+        position: "relative",
+        overflow: "hidden",
+        display: "grid",
+        gridTemplateColumns: "minmax(0, 1.4fr) minmax(0, 1fr)",
+        gap: "var(--lp-space-2xl)",
+        transition: "border-color var(--lp-dur-med) var(--lp-ease)",
+      }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.borderColor = "var(--lp-border-bold)";
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.borderColor = "var(--lp-border-subtle)";
+      }}
+    >
+      {/* LEFT — name, price, features, difference note, CTA */}
+      <div style={{ display: "flex", flexDirection: "column" }}>
+        {/* Eligibility pill */}
+        <div
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: 6,
+            paddingBlock: 6,
+            paddingInline: 12,
+            background: "var(--lp-bg-base)",
+            border: "1px solid var(--lp-border-subtle)",
+            borderRadius: "var(--lp-radius-pill)",
+            color: "var(--lp-text-strong)",
+            fontFamily: "var(--lp-font-display)",
+            fontSize: "var(--lp-caption)",
+            fontWeight: 700,
+            letterSpacing: "0.04em",
+            marginBottom: "var(--lp-space-md)",
+            width: "fit-content",
+          }}
+        >
+          🎓 {tier.badge}
+        </div>
+
+        <h3
+          style={{
+            fontFamily: "var(--lp-font-display)",
+            fontSize: "var(--lp-h2)",
+            fontWeight: 900,
+            color: "var(--lp-text-strong)",
+            lineHeight: 1.1,
+            margin: 0,
+            marginBottom: "var(--lp-space-sm)",
+          }}
+        >
+          {tier.name}
+        </h3>
+        <p
+          style={{
+            fontSize: "var(--lp-body-l)",
+            color: "var(--lp-text-muted)",
+            margin: 0,
+            marginBottom: "var(--lp-space-lg)",
+            lineHeight: 1.5,
+          }}
+        >
+          {tier.tagline}
+        </p>
+
+        {/* Availability badge */}
+        <div style={{ marginBottom: "var(--lp-space-md)" }}>
+          <AvailabilityBadge availability={availability} regStatus={regStatus} />
+        </div>
+
+        {/* Price (no per-class hint — would backfire) */}
+        <div
+          style={{
+            display: "flex",
+            alignItems: "baseline",
+            gap: "var(--lp-space-sm)",
+            marginBottom: "var(--lp-space-xl)",
+            paddingBottom: "var(--lp-space-md)",
+            borderBottom: "1px solid var(--lp-border-subtle)",
+          }}
+        >
+          <span
+            className="lp-num"
+            style={{
+              fontSize: "clamp(2.5rem, 5vw, 3.25rem)",
+              fontWeight: 900,
+              color: "var(--lp-text-strong)",
+              lineHeight: 1,
+              letterSpacing: "-0.02em",
+              fontVariantNumeric: "tabular-nums",
+            }}
+          >
+            {tier.price.toLocaleString("en")}
+          </span>
+          <span style={{ fontSize: "var(--lp-body-s)", color: "var(--lp-text-muted)" }}>
+            {tier.priceSuffix}
+          </span>
+        </div>
+
+        {/* Features — what's INCLUDED */}
+        <ul
+          style={{
+            listStyle: "none",
+            padding: 0,
+            margin: 0,
+            display: "flex",
+            flexDirection: "column",
+            gap: "var(--lp-space-sm)",
+            marginBottom: "var(--lp-space-lg)",
+          }}
+        >
+          {tier.features.map((f, i) => (
+            <li
+              key={i}
+              style={{
+                display: "flex",
+                alignItems: "flex-start",
+                gap: "var(--lp-space-md)",
+                color: "var(--lp-text-muted)",
+                fontSize: "var(--lp-body-s)",
+                lineHeight: 1.6,
+              }}
+            >
+              <span
+                style={{
+                  flexShrink: 0,
+                  width: 18,
+                  height: 18,
+                  borderRadius: "50%",
+                  background: "rgba(74,222,128,0.15)",
+                  color: "var(--lp-success)",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontSize: 11,
+                  fontWeight: 800,
+                  marginTop: 2,
+                }}
+              >
+                ✓
+              </span>
+              <span>{f}</span>
+            </li>
+          ))}
+        </ul>
+
+        {/* Difference note — honest, factual, no strikethrough */}
+        <div
+          style={{
+            paddingBlock: "var(--lp-space-md)",
+            paddingInline: "var(--lp-space-md)",
+            background: "var(--lp-bg-base)",
+            borderInlineStart: "3px solid var(--lp-border-amber)",
+            borderRadius: "var(--lp-radius-tight)",
+            marginBottom: "var(--lp-space-xl)",
+          }}
+        >
+          <p
+            style={{
+              fontSize: "var(--lp-body-s)",
+              color: "var(--lp-text-muted)",
+              lineHeight: 1.7,
+              margin: 0,
+            }}
+          >
+            <span style={{ color: "var(--lp-amber-bright)", fontWeight: 700 }}>
+              ↑ ما الذي يضيفه الجماعي:
+            </span>{" "}
+            {tier.differenceNote}
+          </p>
+        </div>
+
+        {/* CTA */}
+        <div style={{ marginTop: "auto" }}>
+          <SecondaryCTA
+            data-open-form="true"
+            data-tier={tier.id}
+            style={{ width: "auto" }}
+          >
+            {ctaLabel}
+          </SecondaryCTA>
+        </div>
+      </div>
+
+      {/* RIGHT — eligibility info box */}
+      <div
+        style={{
+          background: "var(--lp-bg-base)",
+          border: "1px solid var(--lp-border-subtle)",
+          borderRadius: "var(--lp-radius-card)",
+          padding: "var(--lp-space-xl)",
+          display: "flex",
+          flexDirection: "column",
+          gap: "var(--lp-space-md)",
+          height: "fit-content",
+        }}
+      >
+        <div
+          style={{
+            fontFamily: "var(--lp-font-display)",
+            fontSize: "var(--lp-h3)",
+            fontWeight: 800,
+            color: "var(--lp-text-strong)",
+            lineHeight: 1.2,
+            display: "flex",
+            alignItems: "center",
+            gap: 8,
+          }}
+        >
+          <span style={{ fontSize: "1.2em" }}>📋</span>
+          {tier.eligibility.title}
+        </div>
+        <p
+          style={{
+            fontSize: "var(--lp-body)",
+            color: "var(--lp-text)",
+            lineHeight: 1.7,
+            margin: 0,
+          }}
+        >
+          {tier.eligibility.body}
+        </p>
+        <div
+          style={{
+            marginTop: "auto",
+            paddingTop: "var(--lp-space-md)",
+            borderTop: "1px solid var(--lp-border-subtle)",
+            fontSize: "var(--lp-caption)",
+            color: "var(--lp-text-muted)",
+            fontStyle: "italic",
+            lineHeight: 1.5,
+          }}
+        >
+          {tier.eligibility.note}
+        </div>
+      </div>
+
+      <style>{`
+        @media (max-width: 900px) {
+          .lp-student-card {
+            grid-template-columns: 1fr !important;
+            padding: var(--lp-space-xl) !important;
+            gap: var(--lp-space-xl) !important;
+          }
+        }
+      `}</style>
+    </article>
   );
 }
