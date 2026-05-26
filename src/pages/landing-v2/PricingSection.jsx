@@ -1,6 +1,51 @@
 import { Container, EyebrowLabel, Reveal, PrimaryCTA, SecondaryCTA } from "../../components/landing";
 import { PRICING, REGISTRATION, getRegistrationStatus } from "./content";
 
+// ── Eid Al-Adha anchored-pricing bits (reuse existing tokens only) ──────────
+// Struck-through original price, shown ABOVE the current price as a quiet erasure.
+function EidAnchor({ originalPrice }) {
+  if (!originalPrice) return null;
+  return (
+    <div style={{ marginBottom: 4 }}>
+      <span
+        className="lp-num"
+        style={{
+          fontSize: "var(--lp-body-l)",
+          fontWeight: 700,
+          color: "var(--lp-text-muted)",
+          textDecoration: "line-through",
+          textDecorationColor: "var(--lp-text-muted)",
+          textDecorationThickness: "1px",
+          opacity: 0.7,
+          fontVariantNumeric: "tabular-nums",
+        }}
+      >
+        {originalPrice.toLocaleString("en")} ر.س
+      </span>
+    </div>
+  );
+}
+
+// Calm savings line below the price block, in the section's existing amber accent.
+function EidSavings({ savings, marginBottom = "var(--lp-space-lg)" }) {
+  if (!savings) return null;
+  return (
+    <div
+      style={{
+        fontFamily: "var(--lp-font-display)",
+        fontSize: 13,
+        fontWeight: 700,
+        color: "var(--lp-amber-bright)",
+        letterSpacing: "0.01em",
+        marginBottom,
+        fontVariantNumeric: "tabular-nums",
+      }}
+    >
+      ✦ خصم العيد — وفّر {savings.toLocaleString("en")} ر.س شهرياً
+    </div>
+  );
+}
+
 export default function PricingSection() {
   return (
     <section
@@ -106,6 +151,17 @@ export default function PricingSection() {
           </p>
         </Reveal>
 
+        {/* Student tier card — FIRST (Eid: lead with the most accessible offer) */}
+        <Reveal delay={0.18}>
+          <div style={{ marginBottom: "var(--lp-space-lg)" }}>
+            <StudentTierCard
+              tier={PRICING.studentTier}
+              availability={REGISTRATION.tiers.l0_student}
+              regStatus={getRegistrationStatus()}
+            />
+          </div>
+        </Reveal>
+
         {/* 3 monthly tiers */}
         <div
           style={{
@@ -127,17 +183,6 @@ export default function PricingSection() {
             );
           })}
         </div>
-
-        {/* Student tier card — between main 3-tier row and IELTS */}
-        <Reveal delay={0.25}>
-          <div style={{ marginBottom: "var(--lp-space-lg)" }}>
-            <StudentTierCard
-              tier={PRICING.studentTier}
-              availability={REGISTRATION.tiers.l0_student}
-              regStatus={getRegistrationStatus()}
-            />
-          </div>
-        </Reveal>
 
         {/* IELTS card */}
         <Reveal delay={0.3}>
@@ -330,18 +375,13 @@ function TierCard({ tier, availability, regStatus }) {
       </div>
 
       {/* Price */}
+      <EidAnchor originalPrice={tier.originalPrice} />
       <div
         style={{
           display: "flex",
           alignItems: "baseline",
           gap: "var(--lp-space-sm)",
-          marginBottom: "var(--lp-space-lg)",
-          paddingBottom: "var(--lp-space-lg)",
-          borderBottom: isHero
-            ? "1px solid var(--lp-border-amber)"
-            : isExclusive
-            ? "1px solid rgba(180, 83, 9, 0.25)"
-            : "1px solid var(--lp-border-subtle)",
+          marginBottom: "var(--lp-space-md)",
         }}
       >
         <span
@@ -370,6 +410,19 @@ function TierCard({ tier, availability, regStatus }) {
         >
           {tier.priceSuffix}
         </span>
+      </div>
+      <div
+        style={{
+          marginBottom: "var(--lp-space-lg)",
+          paddingBottom: "var(--lp-space-lg)",
+          borderBottom: isHero
+            ? "1px solid var(--lp-border-amber)"
+            : isExclusive
+            ? "1px solid rgba(180, 83, 9, 0.25)"
+            : "1px solid var(--lp-border-subtle)",
+        }}
+      >
+        <EidSavings savings={tier.savings} marginBottom={0} />
       </div>
 
       {/* Features */}
@@ -562,6 +615,7 @@ function IELTSCard({ ielts, availability, regStatus }) {
         </p>
 
         {/* Price */}
+        <EidAnchor originalPrice={ielts.originalPrice} />
         <div
           style={{
             display: "flex",
@@ -587,6 +641,7 @@ function IELTSCard({ ielts, availability, regStatus }) {
             {ielts.priceSuffix}
           </span>
         </div>
+        <EidSavings savings={ielts.savings} marginBottom="var(--lp-space-lg)" />
         <ul
           style={{
             listStyle: "none",
@@ -819,14 +874,13 @@ function StudentTierCard({ tier, availability, regStatus }) {
         </div>
 
         {/* Price (no per-class hint — would backfire) */}
+        <EidAnchor originalPrice={tier.originalPrice} />
         <div
           style={{
             display: "flex",
             alignItems: "baseline",
             gap: "var(--lp-space-sm)",
-            marginBottom: "var(--lp-space-xl)",
-            paddingBottom: "var(--lp-space-md)",
-            borderBottom: "1px solid var(--lp-border-subtle)",
+            marginBottom: "var(--lp-space-md)",
           }}
         >
           <span
@@ -845,6 +899,15 @@ function StudentTierCard({ tier, availability, regStatus }) {
           <span style={{ fontSize: "var(--lp-body-s)", color: "var(--lp-text-muted)" }}>
             {tier.priceSuffix}
           </span>
+        </div>
+        <div
+          style={{
+            marginBottom: "var(--lp-space-xl)",
+            paddingBottom: "var(--lp-space-md)",
+            borderBottom: "1px solid var(--lp-border-subtle)",
+          }}
+        >
+          <EidSavings savings={tier.savings} marginBottom={0} />
         </div>
 
         {/* Features — what's INCLUDED */}

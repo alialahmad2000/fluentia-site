@@ -739,6 +739,14 @@ export default function StartPage() {
       {/* ─── 4. PACKAGES ─── */}
       <section id="packages" style={{ padding: '24px 20px 48px', maxWidth: 1200, margin: '0 auto' }}>
         <div style={{ textAlign: 'center', marginBottom: 28 }}>
+          <div style={{
+            display: 'inline-flex', alignItems: 'center', gap: 6, marginBottom: 14,
+            padding: '6px 14px', borderRadius: 100,
+            background: 'rgba(251,191,36,0.10)', border: '1px solid rgba(251,191,36,0.28)',
+            color: T.gold, fontSize: 13, fontWeight: 700, fontFamily: FONTS.ar, letterSpacing: '0.02em',
+          }}>
+            🌙 عرض عيد الأضحى المبارك — لفترة محدودة
+          </div>
           <h2 style={{ fontFamily: FONTS.en, fontSize: 'clamp(28px, 5vw, 42px)', fontWeight: 900, color: T.white, margin: 0 }}>
             <span
               style={{
@@ -1154,6 +1162,11 @@ function PackageCard({ pkg, onClick }) {
             </span>
             <span style={{ fontSize: 12, color: T.muted }}>ر.س / شهرياً</span>
           </div>
+          {pkg.oldPrice && pkg.oldPrice > pkg.price && (
+            <div style={{ fontSize: 12.5, fontWeight: 700, color: T.gold, marginTop: 6, fontFamily: FONTS.ar }}>
+              ✦ خصم العيد — وفّر {(pkg.oldPrice - pkg.price).toLocaleString('en')} ر.س شهرياً
+            </div>
+          )}
         </div>
 
         <div style={{ height: 1, background: `linear-gradient(90deg, transparent, ${T.border}, transparent)`, margin: '10px 0 14px' }} />
