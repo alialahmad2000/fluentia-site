@@ -27,6 +27,13 @@ import "@fontsource/inter/500.css";
 import "@fontsource/inter/600.css";
 import "@fontsource/inter/700.css";
 
+// Atelier landing fonts (/atelier) — Cairo headings + Cormorant Garamond serif
+import "@fontsource/cairo/700.css";
+import "@fontsource/cairo/800.css";
+import "@fontsource/cormorant-garamond/500.css";
+import "@fontsource/cormorant-garamond/600.css";
+import "@fontsource/cormorant-garamond/500-italic.css";
+
 // Landing design tokens
 import './styles/landing-tokens.css';
 

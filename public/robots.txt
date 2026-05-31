@@ -6,6 +6,7 @@ Allow: /
 Disallow: /partners/submitted
 Disallow: /api/
 Disallow: /v2
+Disallow: /atelier
 
 # Major AI training & search bots — explicitly allowed
 User-agent: GPTBot
