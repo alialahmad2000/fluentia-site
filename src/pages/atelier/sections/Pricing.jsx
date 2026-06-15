@@ -105,7 +105,6 @@ export default function Pricing() {
   const cards = [
     PRICING.studentTier && { ...PRICING.studentTier, _k: "student" },
     ...(PRICING.tiers || []),
-    PRICING.ielts && { ...PRICING.ielts, _k: "ielts" },
   ].filter(Boolean);
 
   const eyebrow = (PRICING.eyebrow || "").replace(/^[^؀-٠A-Za-z]+/, "");

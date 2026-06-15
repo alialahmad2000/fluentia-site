@@ -193,7 +193,7 @@ export const METHOD = {
 
 export const PRICING = {
   eyebrow: "🌙 عرض عيد الأضحى المبارك — لفترة محدودة",
-  headline: "ثلاث باقات شهرية، وبرنامج IELTS منفصل.",
+  headline: "ثلاث باقات شهرية.",
   intro: "كل الباقات تبدأ بمحادثة مع المدرّب — لا تدفع شيئاً قبل أن تعرف إن هذي الأكاديمية تناسبك. اقرأ أيضاً قسم 'هل Fluentia مناسبة لك؟' قبل التواصل.",
   trust: "إلغاء بأي وقت · محادثة أولى مجانية · لا التزام طويل",
 
@@ -262,7 +262,7 @@ export const PRICING = {
     },
   ],
 
-  // Student tier — full-width card, sits between main 3 tiers and IELTS card
+  // Student tier — full-width card, sits before the main 3 tiers
   // Same group, same schedule as الجماعي. Differentiation = service level only.
   studentTier: {
     id: "l0_student",
@@ -289,24 +289,6 @@ export const PRICING = {
       body: "متاحة فقط لطلاب الجامعات السعودية الحاليين. سيُطلب منك إثبات (بطاقة طالب أو خطاب قبول) خلال محادثة التسجيل. الباقة ليست متاحة للموظفين أو الخريجين.",
       note: "ليست لك؟ ابدأ من باقة الجماعي.",
     },
-    ctaLabel: "تواصل لتقييم الأهلية",
-  },
-
-  ielts: {
-    badge: "برنامج خاص للـ IELTS",
-    name: "IELTS",
-    headline: "تدريب مخصص لاجتياز اختبار IELTS بأعلى درجة ممكنة.",
-    price: 4999,
-    originalPrice: 6999,
-    savings: 2000,
-    eidOffer: true,
-    priceSuffix: "ر.س / شهرياً",
-    features: [
-      "تدريب مكثف مع د. علي شخصياً (٣ حصص أسبوعياً)",
-      "محاكاة كاملة للامتحان مع AI feedback لكل skill",
-      "خطة مخصّصة لـ Listening · Reading · Writing · Speaking",
-      "تواصل يومي ومراجعة لكل تسجيل وكتابة",
-    ],
     ctaLabel: "تواصل لتقييم الأهلية",
   },
 
@@ -400,7 +382,6 @@ export const FORM = {
     { value: "l1_group", label: "الجماعي · 1,199 ر.س / شهر", price: 1199 },
     { value: "l2_excellence", label: "تميّز · 2,199 ر.س / شهر", price: 2199, recommended: true },
     { value: "l3_private", label: "التدريب الفردي المكثف · 2,999 ر.س / شهر", price: 2999 },
-    { value: "l3a_ielts", label: "IELTS · 4,999 ر.س / شهر", price: 4999 },
     { value: "unsure", label: "غير متأكد — أريد استشارة", price: 0 },
   ],
   submitLabel: "أرسل وانتقل إلى WhatsApp ←",
@@ -450,7 +431,6 @@ export const REGISTRATION = {
     l1_group:      { available: 10, total: 10, label: "الجماعي" },
     l2_excellence: { available: 10, total: 10, label: "تميّز" },
     l3_private:    { available: 3,  total: 3,  label: "التدريب الفردي المكثف" },
-    l3a_ielts:     { available: 2,  total: 2,  label: "IELTS" },
     l0_student:    { available: 5,  total: 5,  label: "طلابي" },
   },
 
