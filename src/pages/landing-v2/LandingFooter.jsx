@@ -147,7 +147,7 @@ export default function LandingFooter() {
               letterSpacing: "0.04em",
             }}
           >
-            🗓️ التسجيل بفترات محدّدة · ١٠ مقاعد لكل فترة · فترة التسجيل القادمة: ٢٣-٢٧ مايو
+            🗓️ تسجيل شهري · مقاعد محدودة لكل مجموعة
           </div>
           <div
             style={{

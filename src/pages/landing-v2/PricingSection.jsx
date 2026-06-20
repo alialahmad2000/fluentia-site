@@ -1,9 +1,9 @@
 import { Container, EyebrowLabel, Reveal, PrimaryCTA, SecondaryCTA } from "../../components/landing";
 import { PRICING, REGISTRATION, getRegistrationStatus } from "./content";
 
-// ── Eid Al-Adha anchored-pricing bits (reuse existing tokens only) ──────────
-// Struck-through original price, shown ABOVE the current price as a quiet erasure.
-function EidAnchor({ originalPrice }) {
+// ── Anchored-pricing bits (quiet, realistic "before" price) ─────────────────
+// Struck-through original price, shown ABOVE the current price as a soft erasure.
+function PriceAnchor({ originalPrice }) {
   if (!originalPrice) return null;
   return (
     <div style={{ marginBottom: 4 }}>
@@ -27,7 +27,7 @@ function EidAnchor({ originalPrice }) {
 }
 
 // Calm savings line below the price block, in the section's existing amber accent.
-function EidSavings({ savings, marginBottom = "var(--lp-space-lg)" }) {
+function PriceSavings({ savings, marginBottom = "var(--lp-space-lg)" }) {
   if (!savings) return null;
   return (
     <div
@@ -41,12 +41,13 @@ function EidSavings({ savings, marginBottom = "var(--lp-space-lg)" }) {
         fontVariantNumeric: "tabular-nums",
       }}
     >
-      ✦ خصم العيد — وفّر {savings.toLocaleString("en")} ر.س شهرياً
+      ✦ وفّر {savings.toLocaleString("en")} ر.س شهرياً
     </div>
   );
 }
 
 export default function PricingSection() {
+  const regStatus = getRegistrationStatus();
   return (
     <section
       id="pricing"
@@ -151,18 +152,14 @@ export default function PricingSection() {
           </p>
         </Reveal>
 
-        {/* Student tier card — FIRST (Eid: lead with the most accessible offer) */}
+        {/* Entry tier — التعلم الذاتي (wide, instant access, leads with lowest price) */}
         <Reveal delay={0.18}>
-          <div style={{ marginBottom: "var(--lp-space-lg)" }}>
-            <StudentTierCard
-              tier={PRICING.studentTier}
-              availability={REGISTRATION.tiers.l0_student}
-              regStatus={getRegistrationStatus()}
-            />
+          <div style={{ marginBottom: "var(--lp-space-2xl)" }}>
+            <EntryCard tier={PRICING.entryTier} />
           </div>
         </Reveal>
 
-        {/* 3 monthly tiers */}
+        {/* 3 monthly group tiers */}
         <div
           style={{
             display: "grid",
@@ -175,14 +172,22 @@ export default function PricingSection() {
         >
           {PRICING.tiers.map((tier, i) => {
             const t = REGISTRATION.tiers[tier.id];
-            const status = getRegistrationStatus();
             return (
               <Reveal key={tier.id} delay={i * 0.1}>
-                <TierCard tier={tier} availability={t} regStatus={status} />
+                <TierCard tier={tier} availability={t} regStatus={regStatus} />
               </Reveal>
             );
           })}
         </div>
+
+        {/* VIP tier — التدريب الفردي (wide, exclusive, price range) */}
+        <Reveal delay={0.3}>
+          <VipCard
+            tier={PRICING.vipTier}
+            availability={REGISTRATION.tiers[PRICING.vipTier.id]}
+            regStatus={regStatus}
+          />
+        </Reveal>
 
         {/* Pricing footer */}
         <Reveal delay={0.4}>
@@ -230,7 +235,7 @@ export default function PricingSection() {
 }
 
 // ────────────────────────────────────────────────────────────
-// Monthly tier card
+// Monthly tier card (3-grid: أساس / طلاقة-hero / تميّز)
 // ────────────────────────────────────────────────────────────
 
 function TierCard({ tier, availability, regStatus }) {
@@ -250,76 +255,66 @@ function TierCard({ tier, availability, regStatus }) {
         padding: "var(--lp-space-xl)",
         background: isHero
           ? "linear-gradient(180deg, rgba(251,191,36,0.08), rgba(251,191,36,0.02) 60%, var(--lp-bg-elevated))"
-          : isExclusive
-          ? "linear-gradient(180deg, #060912 0%, #0a0e1a 100%)"
           : "var(--lp-bg-elevated)",
         border: isHero
           ? "2px solid var(--lp-amber)"
-          : isExclusive
-          ? "1px solid rgba(180, 83, 9, 0.4)"
           : "1px solid var(--lp-border-subtle)",
         borderRadius: "var(--lp-radius-lg)",
         display: "flex",
         flexDirection: "column",
-        boxShadow: isHero
-          ? "var(--lp-shadow-amber)"
-          : isExclusive
-          ? "inset 0 1px 0 rgba(180, 83, 9, 0.15), 0 10px 40px rgba(0,0,0,0.4)"
-          : "none",
+        boxShadow: isHero ? "var(--lp-shadow-amber)" : "var(--lp-shadow-card)",
         transform: isHero ? "scale(1.04)" : "scale(1)",
         transition:
-          "transform var(--lp-dur-med) var(--lp-ease), border-color var(--lp-dur-med) var(--lp-ease), box-shadow var(--lp-dur-med) var(--lp-ease)",
+          "transform var(--lp-dur-fast) var(--lp-ease), border-color var(--lp-dur-fast) var(--lp-ease), box-shadow var(--lp-dur-fast) var(--lp-ease)",
       }}
       onMouseEnter={(e) => {
-        if (isHero) return;
-        e.currentTarget.style.transform = "translateY(-4px)";
-        if (isExclusive) {
-          e.currentTarget.style.borderColor = "rgba(217, 119, 6, 0.7)";
+        if (isHero) {
+          e.currentTarget.style.transform = "scale(1.04) translateY(-4px)";
           e.currentTarget.style.boxShadow =
-            "inset 0 1px 0 rgba(180, 83, 9, 0.25), 0 20px 60px rgba(0,0,0,0.6), 0 0 40px rgba(180, 83, 9, 0.15)";
-        } else {
-          e.currentTarget.style.borderColor = "var(--lp-border-amber)";
+            "0 0 60px var(--lp-amber-glow), 0 24px 60px rgba(0,0,0,0.45)";
+          return;
         }
+        e.currentTarget.style.transform = "translateY(-2px)";
+        e.currentTarget.style.boxShadow = "var(--lp-shadow-card-hover)";
+        e.currentTarget.style.borderColor = "var(--lp-border-amber)";
       }}
       onMouseLeave={(e) => {
-        if (isHero) return;
-        e.currentTarget.style.transform = "scale(1)";
-        if (isExclusive) {
-          e.currentTarget.style.borderColor = "rgba(180, 83, 9, 0.4)";
-          e.currentTarget.style.boxShadow =
-            "inset 0 1px 0 rgba(180, 83, 9, 0.15), 0 10px 40px rgba(0,0,0,0.4)";
-        } else {
-          e.currentTarget.style.borderColor = "var(--lp-border-subtle)";
+        if (isHero) {
+          e.currentTarget.style.transform = "scale(1.04)";
+          e.currentTarget.style.boxShadow = "var(--lp-shadow-amber)";
+          return;
         }
+        e.currentTarget.style.transform = "scale(1)";
+        e.currentTarget.style.boxShadow = "var(--lp-shadow-card)";
+        e.currentTarget.style.borderColor = "var(--lp-border-subtle)";
       }}
     >
-      {/* Availability badge */}
-      <AvailabilityBadge availability={availability} regStatus={regStatus} />
-
-      {/* Audience pill — exclusive variant only */}
-      {isExclusive && tier.audienceLabel && (
+      {/* "الأكثر طلباً" ribbon for the hero tier */}
+      {isHero && (
         <div
           style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: 6,
-            paddingBlock: 4,
-            paddingInline: 10,
-            background: "rgba(180, 83, 9, 0.10)",
-            border: "1px solid rgba(180, 83, 9, 0.30)",
+            position: "absolute",
+            top: 0,
+            insetInlineEnd: "var(--lp-space-xl)",
+            transform: "translateY(-50%)",
+            paddingBlock: 5,
+            paddingInline: 12,
+            background: "linear-gradient(135deg, var(--lp-amber-bright), var(--lp-amber))",
+            color: "#0a0e1a",
             borderRadius: "var(--lp-radius-pill)",
-            color: "#d97706",
             fontFamily: "var(--lp-font-display)",
-            fontSize: 10,
-            fontWeight: 700,
-            letterSpacing: "0.06em",
-            marginBottom: "var(--lp-space-md)",
-            width: "fit-content",
+            fontSize: 11,
+            fontWeight: 800,
+            letterSpacing: "0.04em",
+            boxShadow: "0 6px 18px rgba(251,191,36,0.35)",
           }}
         >
-          💼 {tier.audienceLabel}
+          ⭐ الأكثر طلباً
         </div>
       )}
+
+      {/* Availability badge */}
+      <AvailabilityBadge availability={availability} regStatus={regStatus} />
 
       {/* Name + tagline */}
       <div style={{ marginBottom: "var(--lp-space-lg)" }}>
@@ -332,26 +327,11 @@ function TierCard({ tier, availability, regStatus }) {
               color: "var(--lp-text-strong)",
               lineHeight: 1.1,
               margin: 0,
-              letterSpacing: isExclusive ? "0.01em" : "-0.01em",
+              letterSpacing: "-0.01em",
             }}
           >
             {tier.name}
           </h3>
-          {isExclusive && (
-            <span
-              aria-hidden
-              style={{
-                position: "absolute",
-                bottom: -6,
-                insetInlineStart: 0,
-                width: 48,
-                height: 2,
-                background:
-                  "linear-gradient(90deg, #d97706, rgba(180, 83, 9, 0.2) 70%, transparent)",
-                borderRadius: 2,
-              }}
-            />
-          )}
         </div>
         <p
           style={{
@@ -366,7 +346,7 @@ function TierCard({ tier, availability, regStatus }) {
       </div>
 
       {/* Price */}
-      <EidAnchor originalPrice={tier.originalPrice} />
+      <PriceAnchor originalPrice={tier.originalPrice} />
       <div
         style={{
           display: "flex",
@@ -380,11 +360,7 @@ function TierCard({ tier, availability, regStatus }) {
           style={{
             fontSize: "clamp(2.5rem, 5vw, 3.25rem)",
             fontWeight: 900,
-            color: isHero
-              ? "var(--lp-amber-bright)"
-              : isExclusive
-              ? "#d97706"
-              : "var(--lp-text-strong)",
+            color: isHero ? "var(--lp-amber-bright)" : "var(--lp-text-strong)",
             lineHeight: 1,
             letterSpacing: "-0.02em",
             fontVariantNumeric: "tabular-nums",
@@ -408,12 +384,10 @@ function TierCard({ tier, availability, regStatus }) {
           paddingBottom: "var(--lp-space-lg)",
           borderBottom: isHero
             ? "1px solid var(--lp-border-amber)"
-            : isExclusive
-            ? "1px solid rgba(180, 83, 9, 0.25)"
             : "1px solid var(--lp-border-subtle)",
         }}
       >
-        <EidSavings savings={tier.savings} marginBottom={0} />
+        <PriceSavings savings={tier.savings} marginBottom={0} />
       </div>
 
       {/* Features */}
@@ -485,42 +459,6 @@ function TierCard({ tier, availability, regStatus }) {
             <PrimaryCTA {...baseProps} style={{ width: "100%", justifyContent: "center" }}>
               {ctaLabel} ←
             </PrimaryCTA>
-          );
-        }
-
-        if (isExclusive) {
-          return (
-            <button
-              type="button"
-              {...baseProps}
-              style={{
-                width: "100%",
-                paddingBlock: 14,
-                paddingInline: 20,
-                background: "transparent",
-                color: "#d97706",
-                fontFamily: "var(--lp-font-display)",
-                fontSize: "var(--lp-body)",
-                fontWeight: 700,
-                border: "1px solid rgba(180, 83, 9, 0.5)",
-                borderRadius: "var(--lp-radius-pill)",
-                cursor: "pointer",
-                transition:
-                  "background var(--lp-dur-fast) var(--lp-ease), border-color var(--lp-dur-fast) var(--lp-ease), color var(--lp-dur-fast) var(--lp-ease)",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = "rgba(180, 83, 9, 0.10)";
-                e.currentTarget.style.borderColor = "rgba(217, 119, 6, 0.8)";
-                e.currentTarget.style.color = "#fbbf24";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = "transparent";
-                e.currentTarget.style.borderColor = "rgba(180, 83, 9, 0.5)";
-                e.currentTarget.style.color = "#d97706";
-              }}
-            >
-              {ctaLabel} ←
-            </button>
           );
         }
 
@@ -600,24 +538,14 @@ function AvailabilityBadge({ availability, regStatus }) {
 }
 
 // ────────────────────────────────────────────────────────────
-// StudentTierCard — full-width card for university students.
-// Same group/schedule as الجماعي. Differentiation lives in features + differenceNote.
-// Lighter visual than الفردي's gold-exclusive variant — friendly, not flashy.
+// EntryCard — wide card for التعلم الذاتي (platform only, instant access).
+// Friendly, light visual. Right column explains who it's for.
 // ────────────────────────────────────────────────────────────
 
-function StudentTierCard({ tier, availability, regStatus }) {
-  const isFull = availability && availability.available === 0;
-  const ctaLabel = isFull
-    ? regStatus === "closed_before"
-      ? "احجز للفترة القادمة"
-      : regStatus === "open"
-      ? "ممتلئة — انضم لقائمة الانتظار"
-      : "احجز اهتمامك"
-    : tier.ctaLabel;
-
+function EntryCard({ tier }) {
   return (
     <article
-      className="lp-student-card"
+      className="lp-wide-card"
       style={{
         padding: "var(--lp-space-2xl)",
         background:
@@ -638,9 +566,9 @@ function StudentTierCard({ tier, availability, regStatus }) {
         e.currentTarget.style.borderColor = "var(--lp-border-subtle)";
       }}
     >
-      {/* LEFT — name, price, features, difference note, CTA */}
+      {/* LEFT — name, price, features, CTA */}
       <div style={{ display: "flex", flexDirection: "column" }}>
-        {/* Eligibility pill */}
+        {/* Badge pill */}
         <div
           style={{
             display: "inline-flex",
@@ -660,7 +588,7 @@ function StudentTierCard({ tier, availability, regStatus }) {
             width: "fit-content",
           }}
         >
-          🎓 {tier.badge}
+          🚀 {tier.badge}
         </div>
 
         <h3
@@ -688,13 +616,32 @@ function StudentTierCard({ tier, availability, regStatus }) {
           {tier.tagline}
         </p>
 
-        {/* Availability badge */}
+        {/* Instant-access pill (no cohort seats — platform is on-demand) */}
         <div style={{ marginBottom: "var(--lp-space-md)" }}>
-          <AvailabilityBadge availability={availability} regStatus={regStatus} />
+          <span
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 6,
+              paddingBlock: 5,
+              paddingInline: 10,
+              background: "rgba(74,222,128,0.10)",
+              border: "1px solid rgba(74,222,128,0.30)",
+              borderRadius: "var(--lp-radius-pill)",
+              color: "var(--lp-success)",
+              fontFamily: "var(--lp-font-display)",
+              fontSize: 10,
+              fontWeight: 700,
+              letterSpacing: "0.04em",
+            }}
+          >
+            <span style={{ width: 6, height: 6, borderRadius: "50%", background: "var(--lp-success)" }} />
+            وصول فوري — تبدأ اليوم
+          </span>
         </div>
 
-        {/* Price (no per-class hint — would backfire) */}
-        <EidAnchor originalPrice={tier.originalPrice} />
+        {/* Price */}
+        <PriceAnchor originalPrice={tier.originalPrice} />
         <div
           style={{
             display: "flex",
@@ -727,10 +674,10 @@ function StudentTierCard({ tier, availability, regStatus }) {
             borderBottom: "1px solid var(--lp-border-subtle)",
           }}
         >
-          <EidSavings savings={tier.savings} marginBottom={0} />
+          <PriceSavings savings={tier.savings} marginBottom={0} />
         </div>
 
-        {/* Features — what's INCLUDED */}
+        {/* Features */}
         <ul
           style={{
             listStyle: "none",
@@ -739,7 +686,7 @@ function StudentTierCard({ tier, availability, regStatus }) {
             display: "flex",
             flexDirection: "column",
             gap: "var(--lp-space-sm)",
-            marginBottom: "var(--lp-space-lg)",
+            marginBottom: "var(--lp-space-xl)",
           }}
         >
           {tier.features.map((f, i) => (
@@ -777,45 +724,15 @@ function StudentTierCard({ tier, availability, regStatus }) {
           ))}
         </ul>
 
-        {/* Difference note — honest, factual, no strikethrough */}
-        <div
-          style={{
-            paddingBlock: "var(--lp-space-md)",
-            paddingInline: "var(--lp-space-md)",
-            background: "var(--lp-bg-base)",
-            borderInlineStart: "3px solid var(--lp-border-amber)",
-            borderRadius: "var(--lp-radius-tight)",
-            marginBottom: "var(--lp-space-xl)",
-          }}
-        >
-          <p
-            style={{
-              fontSize: "var(--lp-body-s)",
-              color: "var(--lp-text-muted)",
-              lineHeight: 1.7,
-              margin: 0,
-            }}
-          >
-            <span style={{ color: "var(--lp-amber-bright)", fontWeight: 700 }}>
-              ↑ ما الذي يضيفه الجماعي:
-            </span>{" "}
-            {tier.differenceNote}
-          </p>
-        </div>
-
         {/* CTA */}
         <div style={{ marginTop: "auto" }}>
-          <SecondaryCTA
-            data-open-form="true"
-            data-tier={tier.id}
-            style={{ width: "auto" }}
-          >
-            {ctaLabel}
+          <SecondaryCTA data-open-form="true" data-tier={tier.id} style={{ width: "auto" }}>
+            {tier.ctaLabel}
           </SecondaryCTA>
         </div>
       </div>
 
-      {/* RIGHT — eligibility info box */}
+      {/* RIGHT — who it's for */}
       <div
         style={{
           background: "var(--lp-bg-base)",
@@ -840,8 +757,8 @@ function StudentTierCard({ tier, availability, regStatus }) {
             gap: 8,
           }}
         >
-          <span style={{ fontSize: "1.2em" }}>📋</span>
-          {tier.eligibility.title}
+          <span style={{ fontSize: "1.2em" }}>🎯</span>
+          {tier.whoFor.title}
         </div>
         <p
           style={{
@@ -851,7 +768,7 @@ function StudentTierCard({ tier, availability, regStatus }) {
             margin: 0,
           }}
         >
-          {tier.eligibility.body}
+          {tier.whoFor.body}
         </p>
         <div
           style={{
@@ -864,19 +781,364 @@ function StudentTierCard({ tier, availability, regStatus }) {
             lineHeight: 1.5,
           }}
         >
-          {tier.eligibility.note}
+          {tier.whoFor.note}
         </div>
       </div>
 
       <style>{`
         @media (max-width: 900px) {
-          .lp-student-card {
+          .lp-wide-card {
             grid-template-columns: 1fr !important;
             padding: var(--lp-space-xl) !important;
             gap: var(--lp-space-xl) !important;
           }
         }
       `}</style>
+    </article>
+  );
+}
+
+// ────────────────────────────────────────────────────────────
+// VipCard — wide, dark-gold exclusive card for التدريب الفردي.
+// Price is a RANGE (no strikethrough); right column explains how it's set.
+// ────────────────────────────────────────────────────────────
+
+function VipCard({ tier, availability, regStatus }) {
+  const isFull = availability && availability.available === 0;
+  const ctaLabel = isFull
+    ? regStatus === "closed_before"
+      ? "احجز للفترة القادمة"
+      : regStatus === "open"
+      ? "ممتلئة — انضم لقائمة الانتظار"
+      : "احجز اهتمامك"
+    : tier.ctaLabel;
+
+  return (
+    <article
+      className="lp-wide-card"
+      style={{
+        padding: "var(--lp-space-2xl)",
+        background: "linear-gradient(135deg, #060912 0%, #0a0e1a 60%, #0d0a06 100%)",
+        border: "1px solid rgba(180, 83, 9, 0.4)",
+        borderRadius: "var(--lp-radius-lg)",
+        position: "relative",
+        overflow: "hidden",
+        display: "grid",
+        gridTemplateColumns: "minmax(0, 1.4fr) minmax(0, 1fr)",
+        gap: "var(--lp-space-2xl)",
+        boxShadow: "inset 0 1px 0 rgba(180, 83, 9, 0.15), 0 10px 40px rgba(0,0,0,0.4)",
+        transition: "border-color var(--lp-dur-med) var(--lp-ease), box-shadow var(--lp-dur-med) var(--lp-ease)",
+      }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.borderColor = "rgba(217, 119, 6, 0.7)";
+        e.currentTarget.style.boxShadow =
+          "inset 0 1px 0 rgba(180, 83, 9, 0.25), 0 20px 60px rgba(0,0,0,0.6), 0 0 40px rgba(180, 83, 9, 0.15)";
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.borderColor = "rgba(180, 83, 9, 0.4)";
+        e.currentTarget.style.boxShadow =
+          "inset 0 1px 0 rgba(180, 83, 9, 0.15), 0 10px 40px rgba(0,0,0,0.4)";
+      }}
+    >
+      {/* Soft gold glow */}
+      <div
+        aria-hidden
+        style={{
+          position: "absolute",
+          top: "-120px",
+          insetInlineEnd: "-80px",
+          width: "360px",
+          height: "300px",
+          background: "radial-gradient(ellipse at center, rgba(180,83,9,0.18), transparent 70%)",
+          pointerEvents: "none",
+        }}
+      />
+
+      {/* LEFT — name, price range, features, CTA */}
+      <div style={{ display: "flex", flexDirection: "column", position: "relative" }}>
+        {/* Badge pill */}
+        <div
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: 6,
+            paddingBlock: 5,
+            paddingInline: 12,
+            background: "rgba(180, 83, 9, 0.12)",
+            border: "1px solid rgba(180, 83, 9, 0.35)",
+            borderRadius: "var(--lp-radius-pill)",
+            color: "#d97706",
+            fontFamily: "var(--lp-font-display)",
+            fontSize: 11,
+            fontWeight: 800,
+            letterSpacing: "0.06em",
+            marginBottom: "var(--lp-space-md)",
+            width: "fit-content",
+          }}
+        >
+          {tier.badge}
+        </div>
+
+        <div style={{ position: "relative", display: "inline-block", marginBottom: 12, width: "fit-content" }}>
+          <h3
+            style={{
+              fontFamily: "var(--lp-font-display)",
+              fontSize: "var(--lp-h2)",
+              fontWeight: 900,
+              color: "var(--lp-text-strong)",
+              lineHeight: 1.1,
+              margin: 0,
+              letterSpacing: "0.01em",
+            }}
+          >
+            {tier.name}
+          </h3>
+          <span
+            aria-hidden
+            style={{
+              position: "absolute",
+              bottom: -6,
+              insetInlineStart: 0,
+              width: 48,
+              height: 2,
+              background: "linear-gradient(90deg, #d97706, rgba(180, 83, 9, 0.2) 70%, transparent)",
+              borderRadius: 2,
+            }}
+          />
+        </div>
+
+        {tier.audienceLabel && (
+          <div
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 6,
+              paddingBlock: 4,
+              paddingInline: 10,
+              background: "rgba(180, 83, 9, 0.10)",
+              border: "1px solid rgba(180, 83, 9, 0.30)",
+              borderRadius: "var(--lp-radius-pill)",
+              color: "#d97706",
+              fontFamily: "var(--lp-font-display)",
+              fontSize: 10,
+              fontWeight: 700,
+              letterSpacing: "0.06em",
+              marginBottom: "var(--lp-space-md)",
+              width: "fit-content",
+            }}
+          >
+            💼 {tier.audienceLabel}
+          </div>
+        )}
+
+        <p
+          style={{
+            fontSize: "var(--lp-body-l)",
+            color: "var(--lp-text-muted)",
+            margin: 0,
+            marginBottom: "var(--lp-space-lg)",
+            lineHeight: 1.5,
+          }}
+        >
+          {tier.tagline}
+        </p>
+
+        {/* Availability badge */}
+        <div style={{ marginBottom: "var(--lp-space-md)" }}>
+          <AvailabilityBadge availability={availability} regStatus={regStatus} />
+        </div>
+
+        {/* Price RANGE */}
+        <div
+          style={{
+            display: "flex",
+            alignItems: "baseline",
+            gap: 6,
+            marginBottom: "var(--lp-space-sm)",
+            flexWrap: "wrap",
+          }}
+        >
+          <span
+            className="lp-num"
+            style={{
+              fontSize: "clamp(2.25rem, 4.5vw, 3rem)",
+              fontWeight: 900,
+              color: "#d97706",
+              lineHeight: 1,
+              letterSpacing: "-0.02em",
+              fontVariantNumeric: "tabular-nums",
+            }}
+          >
+            {tier.priceLow.toLocaleString("en")}
+          </span>
+          <span style={{ fontSize: "1.5rem", fontWeight: 800, color: "var(--lp-text-muted)" }}>–</span>
+          <span
+            className="lp-num"
+            style={{
+              fontSize: "clamp(2.25rem, 4.5vw, 3rem)",
+              fontWeight: 900,
+              color: "#d97706",
+              lineHeight: 1,
+              letterSpacing: "-0.02em",
+              fontVariantNumeric: "tabular-nums",
+            }}
+          >
+            {tier.priceHigh.toLocaleString("en")}
+          </span>
+          <span style={{ fontSize: "var(--lp-body-s)", color: "var(--lp-text-muted)" }}>
+            {tier.priceSuffix}
+          </span>
+        </div>
+        <p
+          style={{
+            fontSize: "var(--lp-caption)",
+            color: "var(--lp-text-muted)",
+            margin: 0,
+            marginBottom: "var(--lp-space-lg)",
+            paddingBottom: "var(--lp-space-md)",
+            borderBottom: "1px solid rgba(180, 83, 9, 0.25)",
+            lineHeight: 1.6,
+          }}
+        >
+          {tier.priceNote}
+        </p>
+
+        {/* Features */}
+        <ul
+          style={{
+            listStyle: "none",
+            padding: 0,
+            margin: 0,
+            display: "flex",
+            flexDirection: "column",
+            gap: "var(--lp-space-sm)",
+            marginBottom: "var(--lp-space-xl)",
+          }}
+        >
+          {tier.features.map((f, i) => (
+            <li
+              key={i}
+              style={{
+                display: "flex",
+                alignItems: "flex-start",
+                gap: "var(--lp-space-md)",
+                color: "var(--lp-text-muted)",
+                fontSize: "var(--lp-body-s)",
+                lineHeight: 1.6,
+              }}
+            >
+              <span
+                style={{
+                  flexShrink: 0,
+                  width: 18,
+                  height: 18,
+                  borderRadius: "50%",
+                  background: "rgba(180, 83, 9, 0.18)",
+                  color: "#d97706",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontSize: 11,
+                  fontWeight: 800,
+                  marginTop: 2,
+                }}
+              >
+                ✓
+              </span>
+              <span>{f}</span>
+            </li>
+          ))}
+        </ul>
+
+        {/* CTA — gold outline */}
+        <div style={{ marginTop: "auto" }}>
+          <button
+            type="button"
+            data-open-form="true"
+            data-tier={tier.id}
+            style={{
+              paddingBlock: 14,
+              paddingInline: 28,
+              background: "transparent",
+              color: "#d97706",
+              fontFamily: "var(--lp-font-display)",
+              fontSize: "var(--lp-body)",
+              fontWeight: 700,
+              border: "1px solid rgba(180, 83, 9, 0.5)",
+              borderRadius: "var(--lp-radius-pill)",
+              cursor: "pointer",
+              transition:
+                "background var(--lp-dur-fast) var(--lp-ease), border-color var(--lp-dur-fast) var(--lp-ease), color var(--lp-dur-fast) var(--lp-ease)",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = "rgba(180, 83, 9, 0.10)";
+              e.currentTarget.style.borderColor = "rgba(217, 119, 6, 0.8)";
+              e.currentTarget.style.color = "#fbbf24";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = "transparent";
+              e.currentTarget.style.borderColor = "rgba(180, 83, 9, 0.5)";
+              e.currentTarget.style.color = "#d97706";
+            }}
+          >
+            {ctaLabel} ←
+          </button>
+        </div>
+      </div>
+
+      {/* RIGHT — how the price is set */}
+      <div
+        style={{
+          background: "rgba(13, 10, 6, 0.6)",
+          border: "1px solid rgba(180, 83, 9, 0.25)",
+          borderRadius: "var(--lp-radius-card)",
+          padding: "var(--lp-space-xl)",
+          display: "flex",
+          flexDirection: "column",
+          gap: "var(--lp-space-md)",
+          height: "fit-content",
+          position: "relative",
+        }}
+      >
+        <div
+          style={{
+            fontFamily: "var(--lp-font-display)",
+            fontSize: "var(--lp-h3)",
+            fontWeight: 800,
+            color: "var(--lp-text-strong)",
+            lineHeight: 1.2,
+            display: "flex",
+            alignItems: "center",
+            gap: 8,
+          }}
+        >
+          <span style={{ fontSize: "1.2em" }}>📐</span>
+          {tier.howPriced.title}
+        </div>
+        <p
+          style={{
+            fontSize: "var(--lp-body)",
+            color: "var(--lp-text)",
+            lineHeight: 1.7,
+            margin: 0,
+          }}
+        >
+          {tier.howPriced.body}
+        </p>
+        <div
+          style={{
+            marginTop: "auto",
+            paddingTop: "var(--lp-space-md)",
+            borderTop: "1px solid rgba(180, 83, 9, 0.25)",
+            fontSize: "var(--lp-caption)",
+            color: "var(--lp-text-muted)",
+            fontStyle: "italic",
+            lineHeight: 1.5,
+          }}
+        >
+          {tier.howPriced.note}
+        </div>
+      </div>
     </article>
   );
 }

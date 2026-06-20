@@ -130,7 +130,7 @@ export default function LeadFormModal() {
   const isWaitlist = regStatus !== "open";
   const titleCopy = isWaitlist ? "احجز مقعدك للفترة القادمة" : FORM.title;
   const subCopy = isWaitlist
-    ? `فترة التسجيل القادمة: ٢٣-٢٧ مايو · ${REGISTRATION.nextWindow.cohortStartLabel} · سنتواصل معك يوم ٢٣ لإكمال الحجز.`
+    ? `سنتواصل معك قريباً لإكمال حجزك.`
     : FORM.sub;
   const submitCopy = isWaitlist ? "أرسل واحجز للفترة القادمة ←" : FORM.submitLabel;
   const formContentId = isWaitlist ? "fluentia_waitlist_v2" : "fluentia_lead_form_v2";

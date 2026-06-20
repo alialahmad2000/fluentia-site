@@ -93,7 +93,7 @@ const PACKAGES = [
     id: 'talaqa',
     name: 'طلاقة',
     sub: 'الأنسب للتأسيس والتطوير',
-    price: 1100,
+    price: 1200,
     oldPrice: 1600,
     tier: 'talaqa',
     accent: T.talaqa,
@@ -131,7 +131,8 @@ const PACKAGES = [
     name: 'فردي',
     sub: 'أقصى تركيز. أقصى نتائج',
     price: 2000,
-    oldPrice: 2800,
+    priceMax: 3000,
+    priceNote: 'حسب عدد الحصص وكثافة البرنامج',
     tier: 'fardi',
     accent: T.fardi,
     badge: '👑 VIP',
@@ -1158,13 +1159,18 @@ function PackageCard({ pkg, onClick }) {
           )}
           <div style={{ display: 'flex', alignItems: 'baseline', gap: 6, flexWrap: 'wrap' }}>
             <span style={{ fontSize: 32, fontWeight: 900, color: T.white, fontFamily: FONTS.en }}>
-              {pkg.price}
+              {pkg.priceMax ? `${pkg.price}–${pkg.priceMax}` : pkg.price}
             </span>
             <span style={{ fontSize: 12, color: T.muted }}>ر.س / شهرياً</span>
           </div>
+          {pkg.priceNote && (
+            <div style={{ fontSize: 12, color: T.muted, marginTop: 6, fontFamily: FONTS.ar }}>
+              {pkg.priceNote}
+            </div>
+          )}
           {pkg.oldPrice && pkg.oldPrice > pkg.price && (
             <div style={{ fontSize: 12.5, fontWeight: 700, color: T.gold, marginTop: 6, fontFamily: FONTS.ar }}>
-              ✦ خصم العيد — وفّر {(pkg.oldPrice - pkg.price).toLocaleString('en')} ر.س شهرياً
+              ✦ وفّر {(pkg.oldPrice - pkg.price).toLocaleString('en')} ر.س شهرياً
             </div>
           )}
         </div>

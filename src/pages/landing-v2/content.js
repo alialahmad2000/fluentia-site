@@ -117,7 +117,7 @@ export const SOLUTION = {
       title: "مدرّبون أكاديميون",
       tagline: "مدرّبون مدرّبون على منهج Fluentia خصيصاً.",
       points: [
-        "حد أقصى ١٢ طالباً في الكلاس",
+        "حد أقصى ٧ طلاب في الكلاس",
         "متابعة شخصية عبر WhatsApp والمنصة",
       ],
     },
@@ -192,104 +192,119 @@ export const METHOD = {
 };
 
 export const PRICING = {
-  eyebrow: "🌙 عرض عيد الأضحى المبارك — لفترة محدودة",
-  headline: "ثلاث باقات شهرية.",
-  intro: "كل الباقات تبدأ بمحادثة مع المدرّب — لا تدفع شيئاً قبل أن تعرف إن هذي الأكاديمية تناسبك. اقرأ أيضاً قسم 'هل Fluentia مناسبة لك؟' قبل التواصل.",
+  eyebrow: "أسعار جديدة · في متناول الجميع",
+  headline: "خمس باقات. ابدأ من حيث يناسبك.",
+  intro: "خفّضنا الأسعار لتكون أقرب للجميع — بنفس الجودة والمتابعة. كل الباقات تبدأ بمحادثة مجانية مع المدرّب: لا تدفع شيئاً قبل أن تتأكد أن الأكاديمية تناسبك.",
   trust: "إلغاء بأي وقت · محادثة أولى مجانية · لا التزام طويل",
 
+  // Wide entry card (sits ABOVE the 3-tier grid) — platform only, instant access.
+  entryTier: {
+    id: "self_study",
+    badge: "ابدأ بنفسك · وصول فوري",
+    name: "التعلم الذاتي",
+    tagline: "المنصة الذكية كاملة، تتعلّم بوتيرتك الخاصة — بدون حصص مباشرة.",
+    price: 500,
+    originalPrice: 700,
+    savings: 200,
+    priceSuffix: "ر.س / شهرياً",
+    features: [
+      "وصول كامل للمنصة الذكية",
+      "منهج ٦ مستويات (Pre-A1 → C1) · ٧٢ وحدة · +١٥٬٠٠٠ كلمة",
+      "تمارين قواعد + مفردات + قراءة + استماع",
+      "مساعد AI للتدريب على المحادثة والنطق",
+      "تقدّمك بنظام نقاط ومكافآت",
+    ],
+    whoFor: {
+      title: "لمن هذي الباقة؟",
+      body: "للي عنده انضباط ذاتي ويبي يتعلّم بمفرده على المنصة — بدون حصص مباشرة أو متابعة من مدرب.",
+      note: "تبي كلاسات مباشرة ومتابعة؟ ابدأ من باقة «أساس».",
+    },
+    ctaLabel: "اشترك الآن",
+  },
+
+  // 3-tier grid — every tier here includes live group classes.
   tiers: [
     {
-      id: "l1_group",
-      name: "الجماعي",
+      id: "asas",
+      name: "أساس",
       variant: "standard",
-      tagline: "ابدأ رحلتك مع مجموعة طموحة.",
-      price: 1199,
-      originalPrice: 2000,
-      savings: 801,
-      eidOffer: true,
+      tagline: "ابدأ مع مجموعة صغيرة وكلاسات مباشرة.",
+      price: 750,
+      originalPrice: 1050,
+      savings: 300,
       priceSuffix: "ر.س / شهرياً",
-      ctaLabel: "تواصل لمعرفة المزيد",
+      ctaLabel: "اختر أساس",
       features: [
-        { text: "8 حصص جماعية شهرياً", bold: true },
-        { text: "حد أقصى 12 طالباً في الكلاس", bold: false },
-        { text: "المنصة كاملة مع AI feedback", bold: false },
-        { text: "منهج Fluentia (٧٢ وحدة · +١٥٬٠٠٠ كلمة)", bold: false },
-        { text: "تسجيلات الحصص محفوظة", bold: false },
-        { text: "مجموعة WhatsApp للطلاب", bold: false },
+        { text: "٨ حصص جماعية شهرياً", bold: true },
+        { text: "حد أقصى ٧ طلاب في الكلاس", bold: false },
+        { text: "كل مزايا التعلم الذاتي (المنصة كاملة)", bold: false },
+        { text: "تقييم شهري + متابعة من المدرّب", bold: false },
+        { text: "مجتمع تيليجرام داعم", bold: false },
       ],
     },
     {
-      id: "l2_excellence",
-      name: "تميّز",
+      id: "talaqa",
+      name: "طلاقة",
       variant: "hero",
-      tagline: "كل الجماعي + متابعة شخصية حقيقية.",
-      price: 2199,
-      originalPrice: 3000,
-      savings: 801,
-      eidOffer: true,
-      priceSuffix: "ر.س / شهرياً",
-      ctaLabel: "تواصل لمعرفة المزيد",
       isHero: true,
+      tagline: "الأنسب للتأسيس والتطوير — متابعة يومية وحصة فردية.",
+      price: 1200,
+      originalPrice: 1600,
+      savings: 400,
+      priceSuffix: "ر.س / شهرياً",
+      ctaLabel: "اختر طلاقة",
       features: [
-        { text: "كل ما في باقة الجماعي", bold: false },
-        { text: "+ ٤ حصص فردية شهرياً (٣٠ د / موعد ثابت أسبوعياً)", bold: true },
-        { text: "متابعة يومية مع المدرّب على WhatsApp", bold: true },
-        { text: "تقرير أسبوعي مفصّل عن تقدّمك", bold: false },
-        { text: "تصحيح شخصي للكتابة والتسجيلات", bold: false },
-        { text: "أولوية في الردود (خلال ساعات)", bold: false },
+        { text: "كل مزايا أساس", bold: false },
+        { text: "متابعة يومية مع المدرّب", bold: true },
+        { text: "حصة فردية شهرية مع مدربك", bold: true },
+        { text: "تقييم كل أسبوعين + تقرير شهري", bold: false },
+        { text: "محتوى مسجّل ترجع له أي وقت", bold: false },
       ],
     },
     {
-      id: "l3_private",
-      name: "التدريب الفردي المكثف",
-      variant: "exclusive",
-      audienceLabel: "للمهنيين ورواد الأعمال",
-      tagline: "حصص فردية كاملة مع د. علي — مرونة في الجدول، خصوصية تامة.",
-      price: 2999,
-      originalPrice: 4000,
-      savings: 1001,
-      eidOffer: true,
+      id: "tamayuz",
+      name: "تميّز",
+      variant: "standard",
+      tagline: "أسرع تقدّم — متابعة مكثفة و٤ حصص فردية شهرياً.",
+      price: 1500,
+      originalPrice: 2200,
+      savings: 700,
       priceSuffix: "ر.س / شهرياً",
-      ctaLabel: "تواصل لاستشارة خاصة",
+      ctaLabel: "اختر تميّز",
       features: [
-        { text: "كل الحصص ١:١ مع د. علي شخصياً", bold: true },
-        { text: "مرونة كاملة في الجدول الزمني (تناسب جدول المهنيين)", bold: true },
-        { text: "منهج مفصّل لأهدافك وحياتك المهنية", bold: false },
-        { text: "تواصل مباشر بدون وسطاء", bold: false },
-        { text: "خصوصية تامة — لا مجموعات، لا مشاركة هوية", bold: false },
-        { text: "٣ مقاعد فقط لكل فترة تسجيل", bold: false },
+        { text: "كل مزايا طلاقة", bold: false },
+        { text: "٤ حصص فردية شهرياً (حصة كل أسبوع)", bold: true },
+        { text: "متابعة يومية مكثفة", bold: false },
+        { text: "تقييم أسبوعي + خطة تطوير شخصية", bold: false },
+        { text: "بنك أسئلة حصري + مكتبة دروس كاملة", bold: false },
       ],
     },
   ],
 
-  // Student tier — full-width card, sits before the main 3 tiers
-  // Same group, same schedule as الجماعي. Differentiation = service level only.
-  studentTier: {
-    id: "l0_student",
-    badge: "برنامج خاص · للجامعيين",
-    name: "طلابي",
-    headline: "ميزانية صديقة · للطلاب الجامعيين السعوديين",
-    tagline: "نقطة دخول للطلاب الجامعيين. نفس الكلاسات الجماعية، مع منصة أساسية.",
-    price: 799,
-    originalPrice: 2000,
-    savings: 1201,
-    eidOffer: true,
+  // Wide exclusive card (sits BELOW the grid) — 1:1 VIP, price is a range.
+  vipTier: {
+    id: "fardi",
+    badge: "👑 VIP · التدريب الفردي",
+    name: "التدريب الفردي المباشر",
+    audienceLabel: "للمهنيين ومن يريد أقصى نتيجة",
+    tagline: "حصص فردية كاملة — أنت ومدربك فقط. منهج مخصّص، أقصى تركيز ونتائج.",
+    priceLow: 2000,
+    priceHigh: 3000,
     priceSuffix: "ر.س / شهرياً",
+    priceNote: "السعر حسب عدد الحصص وكثافة البرنامج — كل ما زادت الحصص، زادت الكثافة والنتائج.",
     features: [
-      "نفس ٨ حصص جماعية شهرياً (في نفس مجموعة الجماعي)",
-      "حد أقصى ١٢ طالباً في الكلاس",
-      "منهج Fluentia كامل (٧٢ وحدة)",
-      "تسجيلات الحصص محفوظة",
-      "مجموعة WhatsApp للطلاب",
+      "حصص فردية فقط (أنت ومدربك)",
+      "منهج مخصّص يتكيّف معك ومع هدفك",
+      "متابعة يومية مباشرة + تصحيح كتابي ونطق غير محدود",
+      "تدريب على مقابلات العمل والعروض التقديمية والإلقاء",
+      "أولوية في الرد + تواصل مباشر مع مدربك",
     ],
-    // Explicit, factual differentiation — replaces strikethroughs (Naval-honest)
-    differenceNote: "الفرق عن باقة الجماعي (1,199 ر.س): متابعة شخصية من المدرّب · تقييم AI الفوري للنطق والكتابة · أدوات AI المتقدّمة في المنصة. لو تحتاج هذي الإضافات، الجماعي هو خيارك.",
-    eligibility: {
-      title: "شرط الأهلية",
-      body: "متاحة فقط لطلاب الجامعات السعودية الحاليين. سيُطلب منك إثبات (بطاقة طالب أو خطاب قبول) خلال محادثة التسجيل. الباقة ليست متاحة للموظفين أو الخريجين.",
-      note: "ليست لك؟ ابدأ من باقة الجماعي.",
+    howPriced: {
+      title: "كيف نحدّد السعر؟",
+      body: "نتفق معك في اللقاء المبدئي على عدد الحصص الأسبوعية وكثافة البرنامج حسب هدفك وجدولك — وبناءً عليه يكون السعر بين ٢٬٠٠٠ و٣٬٠٠٠ ر.س شهرياً.",
+      note: "تبي أقصى نتيجة بأسرع وقت؟ هذي باقتك.",
     },
-    ctaLabel: "تواصل لتقييم الأهلية",
+    ctaLabel: "احجز استشارة VIP",
   },
 
   footer: {
@@ -378,10 +393,11 @@ export const FORM = {
     goal: { label: "هدفك (اختياري)", placeholder: "مثال: تطوير الإنجليزي للعمل / IELTS / السفر" },
   },
   tierOptions: [
-    { value: "l0_student", label: "طلابي · 799 ر.س / شهر · للجامعيين فقط", price: 799 },
-    { value: "l1_group", label: "الجماعي · 1,199 ر.س / شهر", price: 1199 },
-    { value: "l2_excellence", label: "تميّز · 2,199 ر.س / شهر", price: 2199, recommended: true },
-    { value: "l3_private", label: "التدريب الفردي المكثف · 2,999 ر.س / شهر", price: 2999 },
+    { value: "self_study", label: "التعلم الذاتي · 500 ر.س / شهر", price: 500 },
+    { value: "asas", label: "أساس · 750 ر.س / شهر", price: 750 },
+    { value: "talaqa", label: "طلاقة · 1,200 ر.س / شهر", price: 1200, recommended: true },
+    { value: "tamayuz", label: "تميّز · 1,500 ر.س / شهر", price: 1500 },
+    { value: "fardi", label: "التدريب الفردي · 2,000–3,000 ر.س / شهر", price: 2000 },
     { value: "unsure", label: "غير متأكد — أريد استشارة", price: 0 },
   ],
   submitLabel: "أرسل وانتقل إلى WhatsApp ←",
@@ -428,10 +444,10 @@ export const REGISTRATION = {
   },
 
   tiers: {
-    l1_group:      { available: 10, total: 10, label: "الجماعي" },
-    l2_excellence: { available: 10, total: 10, label: "تميّز" },
-    l3_private:    { available: 3,  total: 3,  label: "التدريب الفردي المكثف" },
-    l0_student:    { available: 5,  total: 5,  label: "طلابي" },
+    asas:    { available: 10, total: 10, label: "أساس" },
+    talaqa:  { available: 10, total: 10, label: "طلاقة" },
+    tamayuz: { available: 6,  total: 6,  label: "تميّز" },
+    fardi:   { available: 3,  total: 3,  label: "التدريب الفردي" },
   },
 
   history: [],
@@ -439,17 +455,14 @@ export const REGISTRATION = {
   whyClose: "مقاعد محدودة لكل فترة تسجيل · لضمان متابعة شخصية حقيقية لكل طالب.",
 };
 
-export function getRegistrationStatus(now = new Date()) {
-  const opens = new Date(REGISTRATION.nextWindow.opens);
-  const closes = new Date(REGISTRATION.nextWindow.closes);
-  if (now < opens) return "closed_before";
-  if (now <= closes) return "open";
-  return "closed_after";
+export function getRegistrationStatus() {
+  // Rolling enrollment — registration is always open (no fixed cohort window).
+  return "open";
 }
 
 export function getTotalAvailable() {
   const t = REGISTRATION.tiers;
-  return t.l1_group.available + t.l2_excellence.available + t.l3_private.available;
+  return t.asas.available + t.talaqa.available + t.tamayuz.available + t.fardi.available;
 }
 
 export const TRUSTED_BY = {
