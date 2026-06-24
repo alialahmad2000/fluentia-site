@@ -6,6 +6,7 @@ import ProblemSection from "./landing-v2/ProblemSection";
 import SolutionSection from "./landing-v2/SolutionSection";
 import ProductShowcaseSection from "./landing-v2/ProductShowcaseSection";
 import MethodSection from "./landing-v2/MethodSection";
+import WorthSection from "./landing-v2/WorthSection";
 import WhoForSection from "./landing-v2/WhoForSection";
 import PricingSection from "./landing-v2/PricingSection";
 import StoriesSection from "./landing-v2/StoriesSection";
@@ -30,6 +31,7 @@ export default function LandingV2() {
       <SolutionSection />
       <ProductShowcaseSection />
       <MethodSection />
+      <WorthSection />
       <WhoForSection />
       <PricingSection />
       <StoriesSection />
