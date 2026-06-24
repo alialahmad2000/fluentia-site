@@ -469,6 +469,7 @@ export const FOOTER = {
     { label: "المنهج", href: "#solution" },
     { label: "الباقات", href: "#pricing" },
     { label: "القصص", href: "#stories" },
+    { label: "مقالات", href: "/articles" },
     { label: "دخول الطلاب", href: "https://app.fluentia.academy" },
   ],
   copyright: "© 2026 Fluentia Academy · طلاقة. كل الحقوق محفوظة.",

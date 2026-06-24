@@ -31,6 +31,7 @@ export default function LandingV2() {
           content="أكاديمية طلاقة — دورات إنجليزي أونلاين بمجموعات صغيرة (7 طلاب) مع مدربين سعوديين. متابعة يومية، حصص فردية، تقنيات ذكاء اصطناعي. باقات تبدأ من 500 ريال."
         />
         <link rel="canonical" href="https://fluentia.academy/" />
+        <meta property="og:type" content="website" />
         <meta property="og:url" content="https://fluentia.academy/" />
         <meta property="og:title" content="أكاديمية طلاقة | تعلَّم الإنجليزي بثقة" />
         <meta

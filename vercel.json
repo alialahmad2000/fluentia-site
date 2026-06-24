@@ -1,7 +1,19 @@
 {
   "redirects": [
     { "source": "/legacy", "destination": "/", "permanent": true },
-    { "source": "/v1", "destination": "/", "permanent": true }
+    { "source": "/v1", "destination": "/", "permanent": true },
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "fluentia.online" }],
+      "destination": "https://fluentia.academy/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "fluentia-site.vercel.app" }],
+      "destination": "https://fluentia.academy/:path*",
+      "permanent": true
+    }
   ],
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }

@@ -16,6 +16,8 @@ const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
 const TermsOfService = lazy(() => import('./pages/TermsOfService'));
 const WhatsAppRedirect = lazy(() => import('./pages/WhatsAppRedirect'));
 const AtelierLanding = lazy(() => import('./pages/atelier/AtelierLanding'));
+const ArticlesIndex = lazy(() => import('./pages/articles/ArticlesIndex'));
+const ArticlePage = lazy(() => import('./pages/articles/ArticlePage'));
 
 /* ─── UTM Source ─── */
 const UTM_MAP = {
@@ -1198,6 +1200,8 @@ function AppRoutes(){
       <Route path="/partners/submitted" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#060e1c'}} />}><PartnersSubmitted /></Suspense>} />
       <Route path="/partners/terms" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#060e1c'}} />}><PartnersTerms /></Suspense>} />
       <Route path="/about" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#060e1c'}} />}><AboutPage /></Suspense>} />
+      <Route path="/articles" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#0a0e1a'}} />}><ArticlesIndex /></Suspense>} />
+      <Route path="/articles/:slug" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#0a0e1a'}} />}><ArticlePage /></Suspense>} />
       <Route path="/privacy" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#060e1c'}} />}><PrivacyPolicy /></Suspense>} />
       <Route path="/terms" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#060e1c'}} />}><TermsOfService /></Suspense>} />
       <Route path="/w" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#0a1225'}} />}><WhatsAppRedirect /></Suspense>} />
