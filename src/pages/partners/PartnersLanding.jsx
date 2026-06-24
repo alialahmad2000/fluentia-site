@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
 import {
   Handshake, Link2, Share2, Wallet, TrendingUp, ShieldCheck,
@@ -106,6 +107,22 @@ export default function PartnersLanding() {
 
   return (
     <div dir="rtl" style={{ fontFamily: "'Tajawal', sans-serif", color: T1, minHeight: '100vh', position: 'relative', overflowX: 'hidden', background: BG }}>
+      <Helmet>
+        <title>برنامج شركاء طلاقة — اربح بترشيح طلاب الإنجليزي | Fluentia</title>
+        <meta
+          name="description"
+          content="انضم لبرنامج شركاء أكاديمية طلاقة: رشّح طلاباً للإنجليزي واربح عمولة على كل اشتراك. رابط إحالة خاص، تتبّع شفّاف، ودفعات منتظمة."
+        />
+        <link rel="canonical" href="https://fluentia.academy/partners" />
+        <meta property="og:url" content="https://fluentia.academy/partners" />
+        <meta property="og:title" content="برنامج شركاء طلاقة — اربح بترشيح طلاب الإنجليزي" />
+        <meta
+          property="og:description"
+          content="رشّح طلاباً للإنجليزي واربح عمولة على كل اشتراك. رابط إحالة خاص وتتبّع شفّاف."
+        />
+        <meta name="twitter:url" content="https://fluentia.academy/partners" />
+        <meta name="twitter:title" content="برنامج شركاء طلاقة — اربح بترشيح طلاب الإنجليزي" />
+      </Helmet>
 
       {/* ══════════════════════════════════════════════════════════ */}
       {/* HERO SECTION — animated background INSIDE it (absolute)  */}

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { fireLeadTracking, getSource } from '../utils/tracking';
 import { buildWhatsAppUrl } from '../lib/whatsapp';
 
@@ -351,6 +352,22 @@ export default function StartPage() {
         overflowX: 'hidden',
       }}
     >
+      <Helmet>
+        <title>ابدأ الإنجليزي مع طلاقة — باقات تبدأ من ٥٠٠ ر.س | أكاديمية طلاقة</title>
+        <meta
+          name="description"
+          content="ابدأ رحلتك مع أكاديمية طلاقة: مجموعات صغيرة (٧ طلاب)، متابعة يومية مع مدربين سعوديين، ومنصة ذكية. باقات من ٥٠٠ ر.س شهرياً. أول محادثة مجانية — بدون التزام."
+        />
+        <link rel="canonical" href="https://fluentia.academy/start" />
+        <meta property="og:url" content="https://fluentia.academy/start" />
+        <meta property="og:title" content="ابدأ الإنجليزي مع طلاقة — باقات تبدأ من ٥٠٠ ر.س" />
+        <meta
+          property="og:description"
+          content="مجموعات صغيرة، متابعة يومية، ومنصة ذكية. أول محادثة مجانية مع المدرّب — بدون التزام."
+        />
+        <meta name="twitter:url" content="https://fluentia.academy/start" />
+        <meta name="twitter:title" content="ابدأ الإنجليزي مع طلاقة — باقات تبدأ من ٥٠٠ ر.س" />
+      </Helmet>
       {/* Fonts + keyframes + media queries */}
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap');

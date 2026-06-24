@@ -5,9 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <!-- Primary Meta Tags -->
+    <!-- title + description + canonical + og/twitter url/title/description are set
+         PER-ROUTE via react-helmet-async (see <Seo> usage). This static <title> is a
+         no-JS fallback only. Do NOT re-add a static description/canonical here — it
+         would duplicate the Helmet-managed tag on every sub-page. -->
     <title>أكاديمية طلاقة | تعلَّم الإنجليزي مع مدربين سعوديين محترفين</title>
-    <meta name="title" content="أكاديمية طلاقة | تعلَّم الإنجليزي مع مدربين سعوديين محترفين" />
-    <meta name="description" content="أكاديمية طلاقة — دورات إنجليزي أونلاين بمجموعات صغيرة (7 طلاب) مع مدربين سعوديين. متابعة يومية، حصص فردية، تقنيات ذكاء اصطناعي. باقات تبدأ من 750 ريال." />
     <meta name="keywords" content="تعلم الإنجليزي, دورات إنجليزي أونلاين, IELTS السعودية, أكاديمية إنجليزي, كورس إنجليزي, مدرب إنجليزي سعودي, تعلم إنجليزي أونلاين" />
     <meta name="author" content="Dr. Ali Alahmad — Fluentia Academy" />
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
@@ -28,9 +30,7 @@
     <meta property="og:site_name" content="Fluentia Academy" />
     <meta property="og:locale" content="ar_SA" />
     <meta property="og:locale:alternate" content="en_US" />
-    <meta property="og:url" content="https://fluentia.academy/" />
-    <meta property="og:title" content="أكاديمية طلاقة | تعلَّم الإنجليزي بثقة" />
-    <meta property="og:description" content="دورات إنجليزي أونلاين بمجموعات صغيرة مع مدربين سعوديين محترفين. متابعة يومية. حصص فردية. باقات من 750 ريال." />
+    <!-- og:url / og:title / og:description set per-route via Helmet -->
     <meta property="og:image" content="https://fluentia.academy/og-image.png" />
     <meta property="og:image:secure_url" content="https://fluentia.academy/og-image.png" />
     <meta property="og:image:type" content="image/png" />
@@ -42,21 +42,17 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@fluentia_" />
     <meta name="twitter:creator" content="@fluentia_" />
-    <meta name="twitter:url" content="https://fluentia.academy/" />
-    <meta name="twitter:title" content="أكاديمية طلاقة | تعلَّم الإنجليزي بثقة" />
-    <meta name="twitter:description" content="دورات إنجليزي أونلاين بمجموعات صغيرة مع مدربين سعوديين محترفين." />
+    <!-- twitter:url / twitter:title / twitter:description set per-route via Helmet -->
     <meta name="twitter:image" content="https://fluentia.academy/og-image.png" />
     <meta name="twitter:image:alt" content="Fluentia Academy" />
 
     <!-- Google Search Console verification -->
     <meta name="google-site-verification" content="OT_pza6-DGpRqBqRpW5jIryK64ctJ19toacNsphPdyU" />
 
-    <!-- Canonical -->
-    <link rel="canonical" href="https://fluentia.academy/" />
+    <!-- Canonical is set per-route via Helmet (self-referencing) -->
 
-    <!-- Alternate languages -->
+    <!-- Alternate languages (Arabic-only site) -->
     <link rel="alternate" hreflang="ar-SA" href="https://fluentia.academy/" />
-    <link rel="alternate" hreflang="en" href="https://fluentia.academy/?lang=en" />
     <link rel="alternate" hreflang="x-default" href="https://fluentia.academy/" />
 
     <!-- Favicons & PWA -->
@@ -116,9 +112,9 @@
       },
       "image": "https://fluentia.academy/og-image.png",
       "description": "Premium online English language academy for Arabic speakers. Small-group classes, daily trainer follow-up, structured A1–C1 curriculum, and IELTS preparation.",
-      "email": "fluentia.sa@gmail.com",
+      "email": "hi@fluentia.academy",
       "telephone": "+966558669974",
-      "foundingDate": "2025-01-01",
+      "foundingDate": "2021",
       "founder": {
         "@type": "Person",
         "@id": "https://fluentia.academy/#founder",
@@ -145,13 +141,6 @@
         "contactType": "customer service",
         "availableLanguage": ["Arabic", "English"],
         "areaServed": "SA"
-      },
-      "aggregateRating": {
-        "@type": "AggregateRating",
-        "ratingValue": "4.9",
-        "reviewCount": "100",
-        "bestRating": "5",
-        "worstRating": "1"
       }
     }
     </script>
@@ -219,7 +208,7 @@
       "offers": {
         "@type": "Offer",
         "category": "Subscription",
-        "price": "1100",
+        "price": "1200",
         "priceCurrency": "SAR",
         "availability": "https://schema.org/InStock",
         "url": "https://fluentia.academy/"
@@ -227,27 +216,26 @@
     }
     </script>
 
-    <!-- JSON-LD: Course — IELTS Preparation -->
+    <!-- JSON-LD: Course — Self-study (platform only) -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "Course",
-      "name": "IELTS Preparation Course",
-      "description": "Comprehensive IELTS preparation for Arabic speakers targeting band 6.5–8.0. Covers all four skills with mock tests and individual feedback.",
+      "name": "التعلم الذاتي — Self-Study Platform",
+      "description": "Full access to the Fluentia smart platform: 6 CEFR levels (Pre-A1 → C1), 72 units, 15,000+ words, grammar/vocabulary/reading/listening exercises, and an AI speaking-and-pronunciation coach — at your own pace, without live classes.",
       "provider": { "@id": "https://fluentia.academy/#organization" },
-      "educationalLevel": "Upper-Intermediate to Advanced (B2–C1)",
+      "educationalLevel": "All levels (CEFR Pre-A1 → C1)",
       "inLanguage": "ar-SA",
-      "teaches": "IELTS Academic and General Training",
+      "teaches": "English as a Second Language",
       "hasCourseInstance": {
         "@type": "CourseInstance",
         "courseMode": "online",
-        "courseWorkload": "PT8H",
         "instructor": { "@id": "https://fluentia.academy/#founder" }
       },
       "offers": {
         "@type": "Offer",
         "category": "Subscription",
-        "price": "1500",
+        "price": "500",
         "priceCurrency": "SAR",
         "availability": "https://schema.org/InStock",
         "url": "https://fluentia.academy/"
@@ -271,10 +259,21 @@
         "@type": "OfferCatalog",
         "name": "Fluentia Packages",
         "itemListElement": [
+          { "@type": "Offer", "name": "التعلم الذاتي (Self-Study)", "price": "500", "priceCurrency": "SAR" },
           { "@type": "Offer", "name": "أساس (Foundation)", "price": "750", "priceCurrency": "SAR" },
-          { "@type": "Offer", "name": "طلاقة (Fluency)", "price": "1100", "priceCurrency": "SAR" },
+          { "@type": "Offer", "name": "طلاقة (Fluency)", "price": "1200", "priceCurrency": "SAR" },
           { "@type": "Offer", "name": "تميّز (Excellence)", "price": "1500", "priceCurrency": "SAR" },
-          { "@type": "Offer", "name": "VIP الفردي", "price": "1800", "priceCurrency": "SAR" }
+          {
+            "@type": "Offer",
+            "name": "التدريب الفردي (1-on-1 VIP)",
+            "priceCurrency": "SAR",
+            "priceSpecification": {
+              "@type": "PriceSpecification",
+              "minPrice": "2000",
+              "maxPrice": "3000",
+              "priceCurrency": "SAR"
+            }
+          }
         ]
       }
     }
@@ -288,58 +287,42 @@
       "mainEntity": [
         {
           "@type": "Question",
-          "name": "ما هو اللقاء المبدئي المجاني؟",
+          "name": "هل أحتاج Fluentia فعلاً؟ ألا توجد طرق مجانية؟",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "لقاء مباشر مع المدرب لفهم مستواك وأهدافك وشخصيتك. أنت تتعرف على أسلوب المدرب، وبناءً عليه نقرر مع بعض إذا أكاديمية طلاقة المكان الصح لك."
+            "text": "نعم، توجد طرق مجانية ممتازة — Duolingo للمفردات، YouTube للاستماع، ChatGPT للممارسة الكتابية. إذا كنت تستطيع التعلّم بنظام بنفسك، الأرجح لا تحتاج Fluentia. الفرق أن Fluentia توفّر الثلاثة معاً: نموذج علمي + ممارسة منظّمة + متابعة شخصية. اختر بناءً على نفسك، لا تحت الضغط."
           }
         },
         {
           "@type": "Question",
-          "name": "متى تبدأ الدورات؟",
+          "name": "ليش أدفع أكثر بدل كورس أرخص أو السفر أتعلّم برّا؟",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "نعتمد الأشهر الميلادية — الكورسات تبدأ مع بداية كل شهر. ومع ذلك، تستطيع الانضمام في أي وقت والمدرب يعوّضك عن الحصص السابقة."
+            "text": "لأنك لا تدفع مقابل حصص — تدفع مقابل أن يتولّى فريقٌ كامل مسؤولية وصولك: مدرّب مرّ بفلترٍ صعب، منهج مبني على حالتك أنت، متابعة يومية، ومنصة تقيس تقدّمك. الكورس الأرخص يعطيك مادة ثم ينساك؛ والسفر بلا متابعة كثيراً ما يرجع بصاحبه دون تطوّرٍ حقيقي. الفرق هنا أن هناك من يتابعك — ويصحّح المسار معك أسبوعاً بأسبوع. إن كانت البدائل المجانية تكفيك، فهذا قرارك المحترم."
           }
         },
         {
           "@type": "Question",
-          "name": "هل أستطيع التسجيل في دورة IELTS مباشرة؟",
+          "name": "لماذا الأسعار بهذا الشكل؟",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "دورة IELTS مصممة لمن لديه أساس متين في اللغة الإنجليزية. إذا كان مستواك مبتدئاً، ننصحك بالبدء بمسار التأسيس أو التطوير أولاً، ثم الانتقال إلى IELTS بجاهزية كاملة."
+            "text": "السعر يغطّي تكلفة حقيقية: مدرّب مؤهَّل ومتفرّغ، منصة LMS كاملة، تكلفة تقييم الـ AI الفعلية (Whisper + Claude)، تطوير المنهج، والمتابعة الشخصية اليومية. لا رمزٌ للجودة، ولا قطعٌ للزاوية — وكل باقة تبدأ بمحادثة مجانية حتى تتأكد قبل أن تدفع. إذا كان السعر أكثر مما تستطيع، فهذا قرارك المحترم."
           }
         },
         {
           "@type": "Question",
-          "name": "كم عدد الطلاب في الكلاس الواحد؟",
+          "name": "هل تضمنون نتيجة؟",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "حد أقصى 7 طلاب في كل مجموعة، على عكس المعاهد الأخرى التي قد تضم 20 أو 30 طالباً."
+            "text": "لا نضمن نتيجة في أي باقة — لأن النتيجة تعتمد على ممارستك، ولا نستطيع التحكم بها. نضمن جودة المنهج والكلاسات والمتابعة."
           }
         },
         {
           "@type": "Question",
-          "name": "جربت دورات سابقة ولم أستفد — كيف تختلف أكاديمية طلاقة؟",
+          "name": "ماذا لو لم يناسبني بعد الاشتراك؟",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "ندرس كل طالب بشكل فردي، نفهم شخصيته، ونضعه في المجموعة المناسبة لمستواه. المدرب يتابعك يومياً، والمحتوى مصمم بعناية علمية."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "هل يمكنني تغيير الباقة؟",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "نعم، الدفع شهري بدون أي التزام طويل الأمد. يمكنك الترقية أو تغيير الباقة في أي وقت."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "هل جميع المدربين سعوديون؟",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "نعم، جميع مدربينا سعوديون متخصصون في تدريس اللغة الإنجليزية للناطقين بالعربية."
+            "text": "تستطيع الإلغاء في أي وقت. الشهر القادم لن نأخذ منك. الشهر الحالي محسوب — لأن المدرّب فعلياً خصّص وقته لك. ليس لدينا 'صفقات' أو 'فترات حبس'."
           }
         }
       ]
