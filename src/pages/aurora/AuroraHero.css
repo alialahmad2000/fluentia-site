@@ -1,0 +1,55 @@
+/* ───────────────────────────────────────────────────────────────
+   AuroraHero.css — scoped styles for the /aurora preview hero.
+   Ported 1:1 from "Fluentia Hero Aurora.dc.html" (Claude Design).
+   Keyframes are prefixed `au_` and rules are scoped under #flstage
+   so nothing leaks into other routes.
+   ─────────────────────────────────────────────────────────────── */
+
+#flstage,
+#flstage * { box-sizing: border-box; }
+
+#flstage ::selection { background: #38bdf8; color: #0b1322; }
+
+/* aurora field */
+@keyframes au_aur1 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(7%,5%) scale(1.18); } }
+@keyframes au_aur2 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-8%,-4%) scale(1.22); } }
+@keyframes au_aur3 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(5%,-7%) scale(1.15); } }
+@keyframes au_hueShift { 0%,100% { opacity: .85; } 50% { opacity: 1; } }
+
+/* orbital system */
+@keyframes au_spin { from { transform: rotate(0); } to { transform: rotate(360deg); } }
+@keyframes au_spinR { from { transform: rotate(0); } to { transform: rotate(-360deg); } }
+@keyframes au_corePulse { 0%,100% { box-shadow: 0 0 70px 8px rgba(56,189,248,.4), inset 0 0 34px rgba(127,212,255,.4); } 50% { box-shadow: 0 0 110px 18px rgba(56,189,248,.66), inset 0 0 46px rgba(127,212,255,.62); } }
+@keyframes au_coreHalo { 0%,100% { opacity: .5; transform: translate(-50%,-50%) scale(1); } 50% { opacity: .95; transform: translate(-50%,-50%) scale(1.14); } }
+@keyframes au_coreText { 0%,100% { text-shadow: 0 0 18px rgba(56,189,248,.55); } 50% { text-shadow: 0 0 36px rgba(127,212,255,.9); } }
+@keyframes au_ringGlow { 0%,100% { opacity: .4; } 50% { opacity: .85; } }
+@keyframes au_ringGlow2 { 0%,100% { opacity: .5; } 50% { opacity: .95; } }
+@keyframes au_twinkle { 0%,100% { opacity: .22; transform: scale(.7); } 50% { opacity: 1; transform: scale(1); } }
+
+/* ===== LOAD: scattered -> pulled into orbit (chaos -> order) ===== */
+@keyframes au_groupIn { 0% { opacity: 0; transform: scale(.9); } 100% { opacity: 1; transform: scale(1); } }
+@keyframes au_ringsIn { 0% { opacity: 0; transform: scale(1.35); } 100% { opacity: 1; transform: scale(1); } }
+@keyframes au_gather1 { 0% { opacity: 0; transform: translate(150px,-118px) scale(.45); filter: blur(9px); } 60% { opacity: 1; } 100% { opacity: 1; transform: translate(0,0) scale(1); filter: blur(0); } }
+@keyframes au_gather2 { 0% { opacity: 0; transform: translate(-168px,96px) scale(.45); filter: blur(9px); } 60% { opacity: 1; } 100% { opacity: 1; transform: translate(0,0) scale(1); filter: blur(0); } }
+@keyframes au_gather3 { 0% { opacity: 0; transform: translate(74px,170px) scale(.45); filter: blur(9px); } 60% { opacity: 1; } 100% { opacity: 1; transform: translate(0,0) scale(1); filter: blur(0); } }
+@keyframes au_coreIn { 0% { opacity: 0; transform: translate(-50%,-50%) scale(.4); } 100% { opacity: 1; transform: translate(-50%,-50%) scale(1); } }
+@keyframes au_nzClarify { 0% { opacity: .25; filter: blur(7px); } 100% { opacity: 1; filter: blur(0); } }
+@keyframes au_nzGlow { 0%,100% { text-shadow: 0 0 20px rgba(56,189,248,.5); } 50% { text-shadow: 0 0 42px rgba(127,212,255,.9), 0 0 6px rgba(127,212,255,.7); } }
+
+@keyframes au_wcycle { 0%,3% { opacity: 0; transform: translateY(14px); filter: blur(6px); } 6%,21% { opacity: 1; transform: translateY(0); filter: blur(0); } 24%,100% { opacity: 0; transform: translateY(-14px); filter: blur(6px); } }
+@keyframes au_scrollCue { 0%,100% { opacity: .4; transform: translateY(0); } 50% { opacity: 1; transform: translateY(5px); } }
+
+/* CTA hover (ported from the design file's style-hover attribute) */
+#flstage .aurora-cta:hover {
+  background: #7fd4ff;
+  transform: translateY(-2px);
+  box-shadow: 0 18px 50px rgba(56,189,248,0.55);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #flstage * {
+    animation-duration: .001s !important;
+    animation-delay: 0s !important;
+    animation-iteration-count: 1 !important;
+  }
+}

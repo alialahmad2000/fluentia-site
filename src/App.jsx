@@ -18,6 +18,7 @@ const WhatsAppRedirect = lazy(() => import('./pages/WhatsAppRedirect'));
 const AtelierLanding = lazy(() => import('./pages/atelier/AtelierLanding'));
 const ArticlesIndex = lazy(() => import('./pages/articles/ArticlesIndex'));
 const ArticlePage = lazy(() => import('./pages/articles/ArticlePage'));
+const AuroraHero = lazy(() => import('./pages/aurora/AuroraHero'));
 
 /* ─── UTM Source ─── */
 const UTM_MAP = {
@@ -1193,6 +1194,7 @@ function AppRoutes(){
     <Routes>
       <Route path="/v2" element={<LandingV2 />} />
       <Route path="/atelier" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#060e1c'}} />}><AtelierLanding /></Suspense>} />
+      <Route path="/aurora" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#070b14'}} />}><AuroraHero /></Suspense>} />
       <Route path="/legacy" element={<HomePage />} />
       <Route path="/" element={<LandingV2 />} />
       <Route path="/start" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#0A0A0A'}} />}><StartPage /></Suspense>} />
