@@ -9,6 +9,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fontsource/alexandria": "^5.2.8",
+    "@fontsource/aref-ruqaa": "^5.2.8",
     "@fontsource/cairo": "^5.2.7",
     "@fontsource/inter": "^5.2.8",
     "@fontsource/readex-pro": "^5.2.11",

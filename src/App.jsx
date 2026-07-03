@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef, lazy, Suspense } from "react";
-import PremiumV1 from './pages/PremiumV1.deprecated.jsx';
 import LandingV2 from './pages/LandingV2';
 import { BrowserRouter, Routes, Route, Link, useLocation } from "react-router-dom";
 import { getStoredRef, getVisitorId } from './utils/affiliateTracking';
@@ -19,6 +18,7 @@ const AtelierLanding = lazy(() => import('./pages/atelier/AtelierLanding'));
 const ArticlesIndex = lazy(() => import('./pages/articles/ArticlesIndex'));
 const ArticlePage = lazy(() => import('./pages/articles/ArticlePage'));
 const AuroraHero = lazy(() => import('./pages/aurora/AuroraHero'));
+const V1Landing = lazy(() => import('./pages/v1/V1Landing'));
 
 /* ─── UTM Source ─── */
 const UTM_MAP = {
@@ -1207,7 +1207,7 @@ function AppRoutes(){
       <Route path="/privacy" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#060e1c'}} />}><PrivacyPolicy /></Suspense>} />
       <Route path="/terms" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#060e1c'}} />}><TermsOfService /></Suspense>} />
       <Route path="/w" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#0a1225'}} />}><WhatsAppRedirect /></Suspense>} />
-      <Route path="/v1" element={<PremiumV1 />} />
+      <Route path="/v1" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#04070e'}} />}><V1Landing /></Suspense>} />
     </Routes>
   );
 }

@@ -27,6 +27,14 @@ import "@fontsource/inter/500.css";
 import "@fontsource/inter/600.css";
 import "@fontsource/inter/700.css";
 
+// V1 landing fonts (/v1 Obsidian Azure) — Alexandria display
+import "@fontsource/alexandria/300.css";
+import "@fontsource/alexandria/500.css";
+import "@fontsource/alexandria/600.css";
+import "@fontsource/alexandria/700.css";
+import "@fontsource/alexandria/800.css";
+import "@fontsource/aref-ruqaa/400.css"; // founder signature only
+
 // Atelier landing fonts (/atelier) — Cairo headings + Cormorant Garamond serif
 import "@fontsource/cairo/700.css";
 import "@fontsource/cairo/800.css";

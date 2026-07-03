@@ -1,0 +1,332 @@
+/* ============================================================
+ * Fluentia V1 — "Obsidian Azure" design system
+ * Route: /v1 (candidate homepage). Scope: .v1-scope only.
+ * Deep-ink cinema + azure light + restrained gold.
+ * ============================================================ */
+
+.v1-scope {
+  /* ─── Surfaces ─── */
+  --v1-ink: #04070e;
+  --v1-ink-2: #060b16;
+  --v1-ink-3: #0a1220;
+  --v1-raised: rgba(148, 197, 255, 0.04);
+  --v1-glass: rgba(10, 18, 32, 0.72);
+
+  /* ─── Brand light ─── */
+  --v1-azure: #38bdf8;
+  --v1-azure-soft: #7dd3fc;
+  --v1-azure-deep: #0284c7;
+  --v1-azure-glow: rgba(56, 189, 248, 0.16);
+  --v1-gold: #f2c14e;
+  --v1-gold-soft: #f7d789;
+  --v1-gold-glow: rgba(242, 193, 78, 0.16);
+
+  /* ─── Text ─── */
+  --v1-t-strong: #f4f8fd;
+  --v1-t: rgba(233, 241, 250, 0.9);
+  --v1-t-mute: rgba(214, 228, 243, 0.6);
+  --v1-t-faint: rgba(214, 228, 243, 0.38);
+
+  /* ─── Lines ─── */
+  --v1-line: rgba(160, 200, 240, 0.1);
+  --v1-line-strong: rgba(160, 200, 240, 0.2);
+  --v1-line-azure: rgba(56, 189, 248, 0.35);
+  --v1-line-gold: rgba(242, 193, 78, 0.38);
+
+  /* ─── Status ─── */
+  --v1-green: #4ade80;
+  --v1-red: #f87171;
+
+  /* ─── Type ─── */
+  --v1-display: 'Alexandria', 'Tajawal', system-ui, sans-serif;
+  --v1-body: 'Readex Pro Variable', 'Readex Pro', 'Tajawal', system-ui, sans-serif;
+  --v1-num: 'Inter', 'Alexandria', sans-serif;
+
+  --v1-mega: clamp(2.4rem, 6.5vw, 4.6rem);
+  --v1-d1: clamp(2rem, 5vw, 3.4rem);
+  --v1-d2: clamp(1.6rem, 3.6vw, 2.5rem);
+  --v1-h3: clamp(1.2rem, 2.4vw, 1.6rem);
+  --v1-lead: clamp(1.02rem, 1.6vw, 1.22rem);
+  --v1-body-s: 0.9rem;
+  --v1-cap: 0.78rem;
+
+  /* ─── Rhythm ─── */
+  --v1-section: clamp(88px, 12vw, 168px);
+  --v1-gutter: clamp(20px, 4.5vw, 48px);
+  --v1-maxw: 1180px;
+
+  /* ─── Radius / motion ─── */
+  --v1-r-lg: 28px;
+  --v1-r-md: 18px;
+  --v1-r-sm: 12px;
+  --v1-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --v1-fast: 200ms;
+  --v1-base: 380ms;
+
+  /* ─── Depth ─── */
+  --v1-shadow-card: 0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 24px rgba(0, 0, 0, 0.35),
+    0 24px 64px rgba(0, 0, 0, 0.3);
+  --v1-shadow-azure: 0 0 0 1px var(--v1-line-azure), 0 8px 32px rgba(56, 189, 248, 0.12),
+    0 24px 80px rgba(2, 132, 199, 0.14);
+  --v1-shadow-gold: 0 0 0 1px var(--v1-line-gold), 0 8px 32px rgba(242, 193, 78, 0.1),
+    0 24px 80px rgba(242, 193, 78, 0.1);
+
+  background: var(--v1-ink);
+  color: var(--v1-t);
+  font-family: var(--v1-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: clip;
+  position: relative;
+}
+
+/* ─── Grain overlay (kills flat-digital look) ─── */
+.v1-scope::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+}
+
+/* ─── Layout primitives ─── */
+.v1-container {
+  max-width: var(--v1-maxw);
+  margin-inline: auto;
+  padding-inline: var(--v1-gutter);
+  position: relative;
+}
+
+.v1-section {
+  padding-block: var(--v1-section);
+  position: relative;
+}
+
+.v1-hairline {
+  height: 1px;
+  border: none;
+  margin: 0;
+  background: linear-gradient(to left, transparent, var(--v1-line) 18%, var(--v1-line) 82%, transparent);
+}
+
+/* ─── Type primitives ─── */
+.v1-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--v1-display);
+  font-size: var(--v1-cap);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: var(--v1-azure);
+  text-transform: uppercase;
+}
+.v1-eyebrow::before {
+  content: "";
+  width: 26px;
+  height: 1px;
+  background: linear-gradient(to left, var(--v1-azure), transparent);
+}
+
+.v1-headline {
+  font-family: var(--v1-display);
+  font-size: var(--v1-d1);
+  font-weight: 700;
+  line-height: 1.32;
+  color: var(--v1-t-strong);
+  letter-spacing: 0;
+  margin: 18px 0 0;
+}
+
+.v1-intro {
+  font-size: var(--v1-lead);
+  line-height: 1.95;
+  color: var(--v1-t-mute);
+  max-width: 62ch;
+  margin: 22px 0 0;
+  font-weight: 300;
+}
+
+.v1-num {
+  font-family: var(--v1-num);
+  font-feature-settings: "tnum";
+}
+
+/* ─── Surfaces ─── */
+.v1-card {
+  background: linear-gradient(165deg, rgba(148, 197, 255, 0.055), rgba(148, 197, 255, 0.015) 55%);
+  border: 1px solid var(--v1-line);
+  border-radius: var(--v1-r-lg);
+  box-shadow: var(--v1-shadow-card);
+  position: relative;
+  overflow: hidden;
+  transition: transform var(--v1-base) var(--v1-ease), border-color var(--v1-base) var(--v1-ease),
+    box-shadow var(--v1-base) var(--v1-ease);
+}
+@media (hover: hover) {
+  .v1-card-hover:hover {
+    transform: translateY(-4px);
+    border-color: var(--v1-line-strong);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 16px 40px rgba(0, 0, 0, 0.45),
+      0 40px 90px rgba(2, 132, 199, 0.1);
+  }
+}
+
+.v1-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 16px;
+  border: 1px solid var(--v1-line);
+  border-radius: 999px;
+  background: rgba(148, 197, 255, 0.035);
+  font-size: var(--v1-body-s);
+  color: var(--v1-t-mute);
+  white-space: nowrap;
+  font-weight: 400;
+}
+.v1-chip b {
+  color: var(--v1-t);
+  font-weight: 600;
+}
+
+/* ─── CTAs ─── */
+.v1-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 17px 38px;
+  border-radius: 999px;
+  font-family: var(--v1-display);
+  font-size: 1.02rem;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  text-decoration: none;
+  position: relative;
+  transition: transform var(--v1-fast) var(--v1-ease), box-shadow var(--v1-base) var(--v1-ease),
+    background var(--v1-base) var(--v1-ease);
+  will-change: transform;
+}
+.v1-cta-primary {
+  background: linear-gradient(135deg, var(--v1-azure-soft), var(--v1-azure) 45%, var(--v1-azure-deep));
+  color: #041018;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 10px 34px rgba(56, 189, 248, 0.32),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+.v1-cta-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4), 0 16px 48px rgba(56, 189, 248, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+.v1-cta-primary:active {
+  transform: translateY(0) scale(0.985);
+}
+.v1-cta-ghost {
+  background: rgba(148, 197, 255, 0.05);
+  color: var(--v1-t);
+  border: 1px solid var(--v1-line-strong);
+}
+.v1-cta-ghost:hover {
+  transform: translateY(-2px);
+  background: rgba(148, 197, 255, 0.09);
+  border-color: var(--v1-line-azure);
+}
+.v1-cta-gold {
+  background: linear-gradient(135deg, var(--v1-gold-soft), var(--v1-gold) 55%, #d9a636);
+  color: #241703;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 10px 34px rgba(242, 193, 78, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+.v1-cta-gold:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4), 0 16px 48px rgba(242, 193, 78, 0.42),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+/* ─── Ambient glow fields ─── */
+.v1-glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Slow ambient drift — transform-only, disabled on touch + reduced-motion */
+@keyframes v1-drift {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(-3%, 4%, 0) scale(1.06); }
+}
+@media (hover: hover) and (pointer: fine) {
+  .v1-drift { animation: v1-drift 16s ease-in-out infinite; }
+  .v1-drift-late { animation: v1-drift 22s ease-in-out infinite reverse; }
+}
+
+/* ─── Hero beam sweep ─── */
+@keyframes v1-beam {
+  from { transform: translateX(60%) rotate(12deg); opacity: 0; }
+  12% { opacity: 1; }
+  to { transform: translateX(-160%) rotate(12deg); opacity: 0; }
+}
+
+/* ─── Accordion ─── */
+.v1-acc-body {
+  overflow: hidden;
+}
+
+/* ─── Focus rings (keyboard) ─── */
+.v1-scope :is(button, a, input, select, textarea):focus-visible {
+  outline: 2px solid var(--v1-azure);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* ─── Inputs (lead modal) ─── */
+.v1-input {
+  width: 100%;
+  padding: 14px 16px;
+  background: rgba(148, 197, 255, 0.04);
+  border: 1px solid var(--v1-line);
+  border-radius: var(--v1-r-sm);
+  color: var(--v1-t-strong);
+  font-family: var(--v1-body);
+  font-size: 1rem;
+  outline: none;
+  transition: border-color var(--v1-fast) var(--v1-ease), background var(--v1-fast) var(--v1-ease);
+}
+.v1-input:focus {
+  border-color: var(--v1-line-azure);
+  background: rgba(148, 197, 255, 0.06);
+}
+.v1-input::placeholder {
+  color: var(--v1-t-faint);
+}
+
+/* ─── Branded text selection ─── */
+.v1-scope ::selection {
+  background: rgba(56, 189, 248, 0.25);
+  color: var(--v1-t-strong);
+}
+
+/* ─── Scrollbar (desktop) ─── */
+.v1-scope ::-webkit-scrollbar { width: 10px; }
+.v1-scope ::-webkit-scrollbar-thumb {
+  background: rgba(148, 197, 255, 0.14);
+  border-radius: 8px;
+}
+
+/* ─── Reduced motion: collapse everything decorative ─── */
+@media (prefers-reduced-motion: reduce) {
+  .v1-scope *,
+  .v1-scope *::before,
+  .v1-scope *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
