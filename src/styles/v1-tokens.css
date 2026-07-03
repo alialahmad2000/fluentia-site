@@ -312,6 +312,12 @@
   color: var(--v1-t-strong);
 }
 
+/* ─── Branded text selection ─── */
+.v1-scope ::selection {
+  background: rgba(56, 189, 248, 0.28);
+  color: var(--v1-t-strong);
+}
+
 /* ─── Scrollbar (desktop) ─── */
 .v1-scope ::-webkit-scrollbar { width: 10px; }
 .v1-scope ::-webkit-scrollbar-thumb {

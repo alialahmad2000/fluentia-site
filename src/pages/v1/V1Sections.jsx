@@ -6,11 +6,12 @@ import { Reveal, CountUp, staggerParent, staggerItem, EASE } from "./motion";
  * Stats — honest numbers, gold-free, count-up numerals
  * ──────────────────────────────────────────────────────────── */
 export function V1Stats() {
-  // parse "+100" / "72" / "+15K" / "6" into count-up pieces
+  // parse "+100" / "72" / "+15K" / "6" into count-up pieces; expand K so
+  // the band matches the ١٥,٠٠٠+ used in prose (critic: one numeral policy)
   const parse = (v) => {
     const m = v.match(/^(\+?)(\d+)(K?)$/);
     if (!m) return null;
-    return { prefix: m[1], num: Number(m[2]), suffix: m[3] };
+    return { prefix: m[1], num: Number(m[2]) * (m[3] ? 1000 : 1), suffix: "" };
   };
 
   return (
@@ -113,8 +114,8 @@ export function V1Problem() {
             <motion.article key={c.title} variants={staggerItem} className="v1-card v1-card-hover" style={{ padding: "clamp(24px, 3.5vw, 40px)", display: "flex", flexDirection: "column" }}>
               <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between" }}>
                 <span className="v1-num" aria-hidden style={{
-                  fontSize: "0.95rem", fontWeight: 700, direction: "ltr",
-                  color: "var(--v1-red)", opacity: 0.85, letterSpacing: "0.08em",
+                  fontSize: "1.5rem", fontWeight: 700, direction: "ltr", lineHeight: 1,
+                  color: "transparent", WebkitTextStroke: "1.2px rgba(248,113,113,0.75)", letterSpacing: "0.06em",
                 }}>
                   {String(i + 1).padStart(2, "0")}
                 </span>

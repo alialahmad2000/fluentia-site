@@ -40,7 +40,7 @@ export const staggerItem = {
 export function CountUp({ to, suffix = "", prefix = "", style, className }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-20% 0px" });
-  const mv = useSpring(0, { stiffness: 80, damping: 26 });
+  const mv = useSpring(0, { stiffness: 160, damping: 32 });
   const text = useTransform(mv, (v) => `${prefix}${Math.round(v).toLocaleString("en-US")}${suffix}`);
   useEffect(() => {
     if (inView) mv.set(to);

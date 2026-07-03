@@ -209,8 +209,8 @@ export default function V1LeadModal() {
               onClick={close}
               aria-label="إغلاق"
               style={{
-                position: "absolute", top: 16, insetInlineEnd: 16,
-                width: 34, height: 34, borderRadius: "50%",
+                position: "absolute", top: 10, insetInlineEnd: 10,
+                width: 44, height: 44, borderRadius: "50%",
                 background: "rgba(148,197,255,0.06)", border: "1px solid var(--v1-line)",
                 color: "var(--v1-t-mute)", cursor: "pointer", fontSize: 17, lineHeight: 1,
               }}
