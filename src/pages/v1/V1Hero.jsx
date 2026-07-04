@@ -1,7 +1,8 @@
-import { useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { HERO, MOCKUP, TRUSTED_BY } from "../landing-v2/content";
 import { EASE } from "./motion";
+import { Magnetic } from "./V1Interactive";
 
 /**
  * V1Hero — the cinematic opening.
@@ -110,10 +111,12 @@ export default function V1Hero() {
           transition={{ duration: 0.8, ease: EASE, delay: 1.1 }}
           style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap", marginTop: 40 }}
         >
-          <button type="button" data-open-form className="v1-cta v1-cta-primary">
-            {HERO.primaryCTA}
-            <span aria-hidden style={{ fontSize: "1.1em", lineHeight: 1 }}>←</span>
-          </button>
+          <Magnetic>
+            <button type="button" data-open-form className="v1-cta v1-cta-primary">
+              {HERO.primaryCTA}
+              <span aria-hidden style={{ fontSize: "1.1em", lineHeight: 1 }}>←</span>
+            </button>
+          </Magnetic>
           <a href="#pricing" className="v1-cta v1-cta-ghost">{HERO.secondaryCTA}</a>
         </motion.div>
 
@@ -183,10 +186,37 @@ export default function V1Hero() {
  * HeroPanel — in-code glass dashboard (no images, real UI feel)
  * ──────────────────────────────────────────────────────────── */
 function HeroPanel() {
+  const wrapRef = useRef(null);
+  const rx = useSpring(0, { stiffness: 140, damping: 24, mass: 0.8 });
+  const ry = useSpring(0, { stiffness: 140, damping: 24, mass: 0.8 });
+  const [tiltOn, setTiltOn] = useState(false);
+
+  useEffect(() => {
+    setTiltOn(
+      window.matchMedia("(hover: hover) and (pointer: fine)").matches &&
+      !window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    );
+  }, []);
+
+  const onMove = (e) => {
+    if (!tiltOn || !wrapRef.current) return;
+    const r = wrapRef.current.getBoundingClientRect();
+    ry.set(((e.clientX - (r.left + r.width / 2)) / r.width) * -5);
+    rx.set(((e.clientY - (r.top + r.height / 2)) / r.height) * 3.5);
+  };
+  const onLeave = () => { rx.set(0); ry.set(0); };
+
   return (
-    <div
+    <motion.div
+      ref={wrapRef}
       dir="rtl"
+      onMouseMove={onMove}
+      onMouseLeave={onLeave}
       style={{
+        rotateX: rx,
+        rotateY: ry,
+        transformPerspective: 1400,
+        transformStyle: "preserve-3d",
         position: "relative",
         zIndex: 1,
         maxWidth: 920,
@@ -320,7 +350,7 @@ function HeroPanel() {
           .v1-scope .v1-hero-grid { grid-template-columns: 1fr !important; }
         }
       `}</style>
-    </div>
+    </motion.div>
   );
 }
 

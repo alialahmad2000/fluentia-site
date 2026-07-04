@@ -308,15 +308,120 @@
 
 /* ─── Branded text selection ─── */
 .v1-scope ::selection {
-  background: rgba(56, 189, 248, 0.25);
-  color: var(--v1-t-strong);
-}
-
-/* ─── Branded text selection ─── */
-.v1-scope ::selection {
   background: rgba(56, 189, 248, 0.28);
   color: var(--v1-t-strong);
 }
+
+/* ─── Cursor spotlight (fine pointers only; vars set from JS) ─── */
+@media (hover: hover) and (pointer: fine) {
+  .v1-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    opacity: 0;
+    transition: opacity 500ms var(--v1-ease);
+    background: radial-gradient(
+      420px circle at var(--mx, 50%) var(--my, 50%),
+      rgba(125, 211, 252, 0.08),
+      transparent 65%
+    );
+    pointer-events: none;
+    z-index: 0;
+  }
+  .v1-card:hover::before {
+    opacity: 1;
+  }
+  .v1-card > * {
+    position: relative;
+    z-index: 1;
+  }
+}
+
+/* ─── Gold shimmer on the hero pricing tier top bar ─── */
+@keyframes v1-shimmer-slide {
+  from { background-position: 200% 0; }
+  to { background-position: -200% 0; }
+}
+.v1-gold-shimmer {
+  background: linear-gradient(
+    100deg,
+    transparent 20%,
+    var(--v1-gold) 40%,
+    #fff3d6 50%,
+    var(--v1-gold) 60%,
+    transparent 80%
+  ) !important;
+  background-size: 200% 100% !important;
+  animation: v1-shimmer-slide 4.5s linear infinite;
+}
+
+/* ─── Mobile sticky CTA bar ─── */
+.v1-ctabar {
+  position: fixed;
+  bottom: 0;
+  inset-inline: 0;
+  z-index: 90;
+  padding: 10px var(--v1-gutter) calc(10px + env(safe-area-inset-bottom, 0px));
+  background: rgba(4, 7, 14, 0.86);
+  backdrop-filter: blur(18px) saturate(1.4);
+  -webkit-backdrop-filter: blur(18px) saturate(1.4);
+  border-top: 1px solid var(--v1-line);
+  display: none;
+  align-items: center;
+  gap: 12px;
+}
+@media (max-width: 860px) {
+  .v1-ctabar { display: flex; }
+}
+
+/* ─── Desktop section dot-nav ─── */
+.v1-dotnav {
+  position: fixed;
+  top: 50%;
+  inset-inline-end: 22px;
+  transform: translateY(-50%);
+  z-index: 80;
+  display: none;
+  flex-direction: column;
+  gap: 14px;
+}
+@media (min-width: 1240px) {
+  .v1-dotnav { display: flex; }
+}
+.v1-dotnav a {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(160, 200, 240, 0.22);
+  transition: background 300ms var(--v1-ease), transform 300ms var(--v1-ease), box-shadow 300ms var(--v1-ease);
+  position: relative;
+}
+.v1-dotnav a:hover { background: rgba(160, 200, 240, 0.5); }
+.v1-dotnav a.active {
+  background: var(--v1-azure);
+  transform: scale(1.35);
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.6);
+}
+.v1-dotnav a span {
+  position: absolute;
+  inset-inline-end: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  white-space: nowrap;
+  font-size: 0.72rem;
+  font-family: var(--v1-display);
+  font-weight: 600;
+  color: var(--v1-t-mute);
+  background: var(--v1-glass);
+  border: 1px solid var(--v1-line);
+  border-radius: 8px;
+  padding: 4px 10px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 250ms var(--v1-ease);
+}
+.v1-dotnav a:hover span { opacity: 1; }
 
 /* ─── Scrollbar (desktop) ─── */
 .v1-scope ::-webkit-scrollbar { width: 10px; }

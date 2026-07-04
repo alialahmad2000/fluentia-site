@@ -87,9 +87,8 @@ export default function V1Pricing() {
                 }}
               >
                 {hero && (
-                  <div style={{
+                  <div className="v1-gold-shimmer" style={{
                     position: "absolute", top: 0, insetInline: 0, height: 3,
-                    background: "linear-gradient(to left, transparent, var(--v1-gold), transparent)",
                   }} aria-hidden />
                 )}
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>

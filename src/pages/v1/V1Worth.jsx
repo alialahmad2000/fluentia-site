@@ -1,6 +1,30 @@
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { WORTH, WHO_FOR } from "../landing-v2/content";
 import { Reveal, staggerParent, staggerItem } from "./motion";
+
+/* Apple-style read-along: each word brightens as it crosses the
+ * reading band. One scroll progress drives every word (no per-word
+ * observers); reduced-motion users get full opacity via MotionConfig. */
+function ScrollBrightText({ text, style }) {
+  const ref = useRef(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start 0.9", "end 0.45"] });
+  const words = text.split(" ");
+  return (
+    <p ref={ref} style={style}>
+      {words.map((w, i) => (
+        <Word key={i} word={w} progress={scrollYProgress} start={i / words.length} end={(i + 1) / words.length} />
+      ))}
+    </p>
+  );
+}
+
+function Word({ word, progress, start, end }) {
+  const opacity = useTransform(progress, [start, end], [0.22, 1]);
+  return (
+    <motion.span style={{ opacity }}>{word}{" "}</motion.span>
+  );
+}
 
 /**
  * V1Worth — the value manifesto. Editorial, type-led, the quietest
@@ -22,9 +46,20 @@ export function V1Worth() {
             }}>
               {WORTH.deck}
             </p>
-            <p className="v1-intro" style={{ textAlign: "center" }}>{WORTH.intro}</p>
           </div>
         </Reveal>
+        <ScrollBrightText
+          text={WORTH.intro}
+          style={{
+            fontSize: "clamp(1.1rem, 2vw, 1.35rem)",
+            lineHeight: 2.15,
+            fontWeight: 300,
+            color: "var(--v1-t)",
+            textAlign: "center",
+            maxWidth: 680,
+            margin: "34px auto 0",
+          }}
+        />
 
         <div style={{ marginTop: 72, display: "flex", flexDirection: "column", gap: 0 }}>
           {WORTH.pillars.map((p, i) => (

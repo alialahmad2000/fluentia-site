@@ -2,6 +2,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { STORIES, FAQ, FOUNDER, FINAL_CTA, FOOTER, NAV } from "../landing-v2/content";
 import { Reveal, staggerParent, staggerItem, EASE, SPRING_SMOOTH } from "./motion";
+import { Magnetic } from "./V1Interactive";
 
 /* ────────────────────────────────────────────────────────────
  * Stories — 3 real testimonials
@@ -212,6 +213,19 @@ export function V1FinalCTA() {
   return (
     <section className="v1-section" style={{ position: "relative", overflow: "clip" }}>
       <div className="v1-glow v1-drift" aria-hidden style={{ width: 900, height: 620, top: "16%", insetInlineStart: "8%", background: "radial-gradient(ellipse, rgba(56,189,248,0.11), transparent 62%)" }} />
+      {/* Giant watermark wordmark behind the closing statement */}
+      <div aria-hidden style={{
+        position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center",
+        overflow: "hidden", pointerEvents: "none",
+      }}>
+        <span style={{
+          fontFamily: "var(--v1-display)", fontWeight: 800, fontSize: "clamp(11rem, 30vw, 26rem)",
+          lineHeight: 1, color: "transparent", WebkitTextStroke: "1px rgba(125,211,252,0.07)",
+          transform: "translateY(6%)", whiteSpace: "nowrap", userSelect: "none",
+        }}>
+          طلاقة
+        </span>
+      </div>
       <div className="v1-container" style={{ textAlign: "center", position: "relative" }}>
         <Reveal>
           <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
@@ -227,10 +241,12 @@ export function V1FinalCTA() {
             <p style={{ fontSize: "var(--v1-lead)", lineHeight: 2, color: "var(--v1-t-mute)", maxWidth: 560, margin: "22px auto 0", fontWeight: 300 }}>
               {FINAL_CTA.sub}
             </p>
-            <button type="button" data-open-form className="v1-cta v1-cta-primary" style={{ marginTop: 40, padding: "19px 52px", fontSize: "1.1rem" }}>
-              {FINAL_CTA.primaryCTA}
-              <span aria-hidden style={{ fontSize: "1.1em", lineHeight: 1 }}>←</span>
-            </button>
+            <Magnetic>
+              <button type="button" data-open-form className="v1-cta v1-cta-primary" style={{ marginTop: 40, padding: "19px 52px", fontSize: "1.1rem" }}>
+                {FINAL_CTA.primaryCTA}
+                <span aria-hidden style={{ fontSize: "1.1em", lineHeight: 1 }}>←</span>
+              </button>
+            </Magnetic>
           </div>
         </Reveal>
       </div>

@@ -9,6 +9,7 @@ import { V1Worth, V1WhoFor } from "./V1Worth";
 import V1Pricing from "./V1Pricing";
 import { V1Stories, V1FAQ, V1Founder, V1FinalCTA, V1Footer } from "./V1Closing";
 import V1LeadModal from "./V1LeadModal";
+import { SpotlightController, MobileCtaBar, DotNav } from "./V1Interactive";
 
 /**
  * V1Landing — "Obsidian Azure" candidate homepage at /v1.
@@ -45,6 +46,9 @@ export default function V1Landing() {
         </main>
         <V1Footer />
         <V1LeadModal />
+        <SpotlightController />
+        <MobileCtaBar />
+        <DotNav />
       </div>
     </MotionConfig>
   );
