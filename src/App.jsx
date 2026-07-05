@@ -1208,6 +1208,9 @@ function AppRoutes(){
       <Route path="/terms" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#060e1c'}} />}><TermsOfService /></Suspense>} />
       <Route path="/w" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#0a1225'}} />}><WhatsAppRedirect /></Suspense>} />
       <Route path="/v1" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#04070e'}} />}><V1Landing /></Suspense>} />
+      {/* /v4 = same page, fresh path — /v1 was 308-redirected to / for months and
+          browsers cache permanent redirects, so some visitors can't reach /v1 */}
+      <Route path="/v4" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#04070e'}} />}><V1Landing /></Suspense>} />
     </Routes>
   );
 }

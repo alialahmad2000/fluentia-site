@@ -1,7 +1,6 @@
 {
   "redirects": [
     { "source": "/legacy", "destination": "/", "permanent": true },
-    { "source": "/v1", "destination": "/", "permanent": true },
     {
       "source": "/:path*",
       "has": [{ "type": "host", "value": "fluentia.online" }],
