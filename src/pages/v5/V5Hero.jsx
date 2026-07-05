@@ -114,7 +114,9 @@ function ConversationCard() {
           {show(0) && (
             <motion.div key="ai" className="v5-bubble v5-bubble-ai" dir="ltr"
               initial={{ opacity: 0, y: 14, scale: 0.97 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: -8 }}
-              transition={{ type: "spring", stiffness: 300, damping: 28 }}>
+              transition={{ type: "spring", stiffness: 300, damping: 28 }}
+              style={{ display: "flex", alignItems: "center", gap: 10 }}>
+              <BrandMark size={17} style={{ opacity: 0.9 }} />
               <span className="v1-num" style={{ fontWeight: 500 }}>Tell me about your morning routine, Sara 👋</span>
             </motion.div>
           )}
@@ -327,6 +329,11 @@ export default function V5Hero() {
               position: "absolute", inset: "-12%",
               background: "radial-gradient(ellipse 55% 50% at 50% 45%, rgba(56,189,248,0.12), transparent 70%)",
               filter: "blur(26px)",
+            }} />
+            {/* colossal ghost mark behind the card — the brand carries the stage */}
+            <img aria-hidden src="/brand/fluentia-mark.svg" alt="" style={{
+              position: "absolute", width: "125%", top: "-14%", insetInlineStart: "-16%",
+              opacity: 0.05, filter: "saturate(0.6)", pointerEvents: "none", userSelect: "none",
             }} />
             <ConversationCard />
           </motion.div>

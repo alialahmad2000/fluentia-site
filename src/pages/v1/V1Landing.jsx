@@ -10,6 +10,7 @@ import V1Pricing from "./V1Pricing";
 import { V1Stories, V1FAQ, V1Founder, V1FinalCTA, V1Footer } from "./V1Closing";
 import V1LeadModal from "./V1LeadModal";
 import { SpotlightController, MobileCtaBar, DotNav } from "./V1Interactive";
+import BrandIntro from "./BrandIntro";
 
 /**
  * V1Landing — "Obsidian Azure" candidate homepage at /v1.
@@ -21,6 +22,7 @@ export default function V1Landing() {
   return (
     <MotionConfig reducedMotion="user">
       <div className="v1-scope" dir="rtl">
+        <BrandIntro />
         <Helmet>
           <title>أكاديمية طلاقة | تعلّم إنجليزي تتكلّمه — لا تحفظه</title>
           <meta name="robots" content="noindex, nofollow" />

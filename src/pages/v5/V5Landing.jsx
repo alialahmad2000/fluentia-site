@@ -12,6 +12,7 @@ import V1Pricing from "../v1/V1Pricing";
 import { V1Stories, V1FAQ, V1Founder, V1FinalCTA, V1Footer } from "../v1/V1Closing";
 import V1LeadModal from "../v1/V1LeadModal";
 import { SpotlightController, MobileCtaBar, DotNav } from "../v1/V1Interactive";
+import BrandIntro from "../v1/BrandIntro";
 
 /**
  * V5Landing — "Dawn Stage" at /v5.
@@ -26,6 +27,7 @@ export default function V5Landing() {
   return (
     <MotionConfig reducedMotion="user">
       <div className="v1-scope v5-scope" dir="rtl">
+        <BrandIntro />
         <Helmet>
           <title>أكاديمية طلاقة | تعلّم إنجليزي تتكلّمه — لا تحفظه</title>
           <meta name="robots" content="noindex, nofollow" />

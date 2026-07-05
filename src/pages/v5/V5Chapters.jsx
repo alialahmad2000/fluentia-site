@@ -44,7 +44,10 @@ export function Chapter({ num, label }) {
           <span className="num">{String(num).padStart(2, "0")}</span>
           <span className="meta">
             <span className="label">{label}</span>
-            <span className="rule" />
+            <span style={{ display: "flex", alignItems: "center", gap: 12 }}>
+              <span className="rule" style={{ flex: 1 }} />
+              <img src="/brand/fluentia-mark.svg" alt="" width={13} height={13} style={{ opacity: 0.35, flexShrink: 0 }} />
+            </span>
           </span>
         </div>
       </Reveal>

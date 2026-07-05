@@ -118,8 +118,18 @@ export function DotNav() {
 
   return (
     <nav className="v1-dotnav" aria-label="أقسام الصفحة">
-      {DOT_SECTIONS.map(({ id, label }) => (
-        <a key={id} href={`#${id}`} className={active === id ? "active" : ""} aria-label={label}>
+      {DOT_SECTIONS.map(({ id, label }, i) => (
+        <a
+          key={id}
+          href={`#${id}`}
+          className={active === id ? "active" : ""}
+          aria-label={label}
+          style={i === 0 ? { background: "none", boxShadow: "none", width: 14, height: 14 } : undefined}
+        >
+          {i === 0 && (
+            <img src="/brand/fluentia-mark.svg" alt="" width={14} height={14}
+              style={{ display: "block", opacity: active === id ? 1 : 0.45, transition: "opacity 300ms var(--v1-ease)" }} />
+          )}
           <span>{label}</span>
         </a>
       ))}

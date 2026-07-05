@@ -1,0 +1,13 @@
+{
+  "name": "Fluentia Academy | أكاديمية طلاقة",
+  "short_name": "طلاقة",
+  "icons": [
+    { "src": "/brand/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/brand/fluentia-appicon.png", "sizes": "512x512", "type": "image/png" }
+  ],
+  "theme_color": "#060e1c",
+  "background_color": "#04070e",
+  "display": "browser",
+  "lang": "ar",
+  "dir": "rtl"
+}

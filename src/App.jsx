@@ -21,6 +21,14 @@ const AuroraHero = lazy(() => import('./pages/aurora/AuroraHero'));
 const V1Landing = lazy(() => import('./pages/v1/V1Landing'));
 const V5Landing = lazy(() => import('./pages/v5/V5Landing'));
 
+/* Branded chunk-loading screen for the candidate pages (pulsing real mark) */
+const VFallback = (
+  <div style={{ minHeight: '100vh', background: '#04070e', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+    <style>{`@keyframes vfb-pulse { 0%,100% { opacity: .35; transform: scale(.96); } 50% { opacity: .9; transform: scale(1); } }`}</style>
+    <img src="/brand/fluentia-mark.svg" alt="" width="56" height="70" style={{ animation: 'vfb-pulse 1.6s ease-in-out infinite' }} />
+  </div>
+);
+
 /* ─── UTM Source ─── */
 const UTM_MAP = {
   'tiktok': 'تيك توك',
@@ -1208,11 +1216,11 @@ function AppRoutes(){
       <Route path="/privacy" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#060e1c'}} />}><PrivacyPolicy /></Suspense>} />
       <Route path="/terms" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#060e1c'}} />}><TermsOfService /></Suspense>} />
       <Route path="/w" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#0a1225'}} />}><WhatsAppRedirect /></Suspense>} />
-      <Route path="/v1" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#04070e'}} />}><V1Landing /></Suspense>} />
+      <Route path="/v1" element={<Suspense fallback={VFallback}><V1Landing /></Suspense>} />
       {/* /v4 = same page, fresh path — /v1 was 308-redirected to / for months and
           browsers cache permanent redirects, so some visitors can't reach /v1 */}
-      <Route path="/v4" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#04070e'}} />}><V1Landing /></Suspense>} />
-      <Route path="/v5" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#04070e'}} />}><V5Landing /></Suspense>} />
+      <Route path="/v4" element={<Suspense fallback={VFallback}><V1Landing /></Suspense>} />
+      <Route path="/v5" element={<Suspense fallback={VFallback}><V5Landing /></Suspense>} />
     </Routes>
   );
 }
