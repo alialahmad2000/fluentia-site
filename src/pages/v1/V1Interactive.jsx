@@ -6,6 +6,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useSpring, AnimatePresence } from "framer-motion";
 import { HERO } from "../landing-v2/content";
+import BrandMark from "../../components/BrandMark";
 
 const FINE_POINTER = () =>
   typeof window !== "undefined" &&
@@ -61,6 +62,7 @@ export function MobileCtaBar() {
           exit={{ y: 90 }}
           transition={{ type: "spring", stiffness: 300, damping: 32 }}
         >
+          <BrandMark size={26} />
           <div style={{ minWidth: 0 }}>
             <div style={{ fontFamily: "var(--v1-display)", fontWeight: 700, fontSize: "0.88rem", color: "var(--v1-t-strong)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
               محادثة أولى مجانية

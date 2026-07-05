@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { motion, useScroll, useSpring } from "framer-motion";
 import { NAV } from "../landing-v2/content";
 import { EASE } from "./motion";
+import BrandMark from "../../components/BrandMark";
 
 /**
  * V1Header — glass nav with scroll progress hairline.
@@ -78,24 +79,27 @@ export default function V1Header() {
         }}
       >
         {/* Brand */}
-        <a href="#top" style={{ display: "flex", alignItems: "baseline", gap: 10, textDecoration: "none" }}>
-          <span style={{
-            fontFamily: "var(--v1-display)",
-            fontWeight: 800,
-            fontSize: "1.3rem",
-            color: "var(--v1-t-strong)",
-            letterSpacing: "0.01em",
-          }}>
-            {NAV.brand.ar}
-          </span>
-          <span className="v1-num" style={{
-            fontSize: "0.72rem",
-            fontWeight: 600,
-            letterSpacing: "0.22em",
-            color: "var(--v1-azure)",
-            textTransform: "uppercase",
-          }}>
-            {NAV.brand.en}
+        <a href="#top" style={{ display: "flex", alignItems: "center", gap: 11, textDecoration: "none" }}>
+          <BrandMark size={30} />
+          <span style={{ display: "flex", alignItems: "baseline", gap: 10 }}>
+            <span style={{
+              fontFamily: "var(--v1-display)",
+              fontWeight: 800,
+              fontSize: "1.3rem",
+              color: "var(--v1-t-strong)",
+              letterSpacing: "0.01em",
+            }}>
+              {NAV.brand.ar}
+            </span>
+            <span className="v1-num" style={{
+              fontSize: "0.72rem",
+              fontWeight: 600,
+              letterSpacing: "0.22em",
+              color: "var(--v1-azure)",
+              textTransform: "uppercase",
+            }}>
+              {NAV.brand.en}
+            </span>
           </span>
         </a>
 

@@ -60,31 +60,40 @@ export default function LandingHeader() {
           href="#hero"
           style={{
             display: "flex",
-            alignItems: "baseline",
-            gap: 6,
+            alignItems: "center",
+            gap: 9,
             color: "var(--lp-text-strong)",
             textDecoration: "none",
           }}
         >
-          <span
-            style={{
-              fontFamily: "var(--lp-font-display)",
-              fontWeight: 900,
-              fontSize: "var(--lp-h3)",
-              letterSpacing: "-0.02em",
-            }}
-          >
-            {NAV.brand.en}
-          </span>
-          <span
-            style={{
-              fontFamily: "var(--lp-font-display)",
-              fontWeight: 700,
-              fontSize: "var(--lp-body-s)",
-              color: "var(--lp-amber-bright)",
-            }}
-          >
-            {NAV.brand.ar}
+          <img
+            src="/brand/fluentia-mark.svg"
+            width={26}
+            height={26}
+            alt=""
+            style={{ display: "block", objectFit: "contain", flexShrink: 0 }}
+          />
+          <span style={{ display: "flex", alignItems: "baseline", gap: 6 }}>
+            <span
+              style={{
+                fontFamily: "var(--lp-font-display)",
+                fontWeight: 900,
+                fontSize: "var(--lp-h3)",
+                letterSpacing: "-0.02em",
+              }}
+            >
+              {NAV.brand.en}
+            </span>
+            <span
+              style={{
+                fontFamily: "var(--lp-font-display)",
+                fontWeight: 700,
+                fontSize: "var(--lp-body-s)",
+                color: "var(--lp-amber-bright)",
+              }}
+            >
+              {NAV.brand.ar}
+            </span>
           </span>
         </a>
 

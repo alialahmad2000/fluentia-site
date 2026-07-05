@@ -3,6 +3,7 @@ import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion"
 import { HERO, TRUSTED_BY } from "../landing-v2/content";
 import { EASE } from "../v1/motion";
 import { Magnetic } from "../v1/V1Interactive";
+import BrandMark from "../../components/BrandMark";
 
 /**
  * V5Hero — "the stage".
@@ -100,8 +101,11 @@ function ConversationCard() {
         <span style={{ fontFamily: "var(--v1-display)", fontWeight: 700, fontSize: "0.85rem", color: "var(--v1-t-strong)" }}>
           تدريب محادثة · مباشر
         </span>
-        <span className="v1-num" style={{ marginInlineStart: "auto", fontSize: "0.68rem", color: "var(--v1-t-faint)", letterSpacing: "0.1em" }}>
-          SPEAKING LAB
+        <span style={{ marginInlineStart: "auto", display: "inline-flex", alignItems: "center", gap: 8 }}>
+          <span className="v1-num" style={{ fontSize: "0.68rem", color: "var(--v1-t-faint)", letterSpacing: "0.1em" }}>
+            SPEAKING LAB
+          </span>
+          <BrandMark size={18} />
         </span>
       </div>
 

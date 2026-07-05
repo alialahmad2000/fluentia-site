@@ -4,6 +4,7 @@ import { FORM } from "../landing-v2/content";
 import { fireTikTokLeadEvents, normalizePhoneE164 } from "../../lib/tiktokPixel";
 import { saveLead } from "../../utils/tracking";
 import { EASE } from "./motion";
+import BrandMark from "../../components/BrandMark";
 
 /**
  * V1LeadModal — identical tracking flow to the live LeadFormModal
@@ -218,6 +219,7 @@ export default function V1LeadModal() {
               ×
             </button>
 
+            <BrandMark size={34} style={{ marginBottom: 16 }} />
             <h3 id="v1-form-title" style={{ fontFamily: "var(--v1-display)", fontSize: "1.5rem", fontWeight: 800, color: "var(--v1-t-strong)", margin: 0, lineHeight: 1.5 }}>
               {FORM.title}
             </h3>

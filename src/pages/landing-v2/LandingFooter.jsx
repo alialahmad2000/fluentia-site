@@ -25,11 +25,18 @@ export default function LandingFooter() {
             <div
               style={{
                 display: "flex",
-                alignItems: "baseline",
-                gap: 6,
+                alignItems: "center",
+                gap: 9,
                 marginBottom: "var(--lp-space-md)",
               }}
             >
+              <img
+                src="/brand/fluentia-mark.svg"
+                width={24}
+                height={24}
+                alt=""
+                style={{ display: "block", objectFit: "contain", flexShrink: 0 }}
+              />
               <span
                 style={{
                   fontFamily: "var(--lp-font-display)",

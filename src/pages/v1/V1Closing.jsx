@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { STORIES, FAQ, FOUNDER, FINAL_CTA, FOOTER, NAV } from "../landing-v2/content";
 import { Reveal, staggerParent, staggerItem, EASE, SPRING_SMOOTH } from "./motion";
 import { Magnetic } from "./V1Interactive";
+import BrandMark from "../../components/BrandMark";
 
 /* ────────────────────────────────────────────────────────────
  * Stories — 3 real testimonials
@@ -263,9 +264,12 @@ export function V1Footer() {
       <div className="v1-container">
         <div className="v1-footer-grid" style={{ display: "grid", gridTemplateColumns: "1.6fr 1fr 1fr", gap: "36px 48px" }}>
           <div>
-            <div style={{ display: "flex", alignItems: "baseline", gap: 10 }}>
-              <span style={{ fontFamily: "var(--v1-display)", fontWeight: 800, fontSize: "1.5rem", color: "var(--v1-t-strong)" }}>{NAV.brand.ar}</span>
-              <span className="v1-num" style={{ fontSize: "0.72rem", fontWeight: 600, letterSpacing: "0.22em", color: "var(--v1-azure)", textTransform: "uppercase" }}>{NAV.brand.en}</span>
+            <div style={{ display: "flex", alignItems: "center", gap: 11 }}>
+              <BrandMark size={30} />
+              <span style={{ display: "flex", alignItems: "baseline", gap: 10 }}>
+                <span style={{ fontFamily: "var(--v1-display)", fontWeight: 800, fontSize: "1.5rem", color: "var(--v1-t-strong)" }}>{NAV.brand.ar}</span>
+                <span className="v1-num" style={{ fontSize: "0.72rem", fontWeight: 600, letterSpacing: "0.22em", color: "var(--v1-azure)", textTransform: "uppercase" }}>{NAV.brand.en}</span>
+              </span>
             </div>
             <p style={{ fontSize: "0.92rem", lineHeight: 2, color: "var(--v1-t-mute)", margin: "16px 0 0", maxWidth: 380, fontWeight: 300 }}>
               {FOOTER.tagline}
