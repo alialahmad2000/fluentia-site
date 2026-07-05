@@ -1,0 +1,175 @@
+/* ============================================================
+ * Fluentia V5 — "Dawn Stage" creative layer
+ * Route: /v5. Applied ON TOP of .v1-scope (v5 overrides + adds).
+ * Narrative: the page travels from night (struggle) to dawn
+ * (fluency). Chapters, ledger strikes, stage spotlight.
+ * ============================================================ */
+
+.v5-scope {
+  /* dawn accents available to sections */
+  --v5-dawn: #f7a97b;
+  --v5-dawn-soft: #fdd9c0;
+  --v5-indigo: #6366f1;
+}
+
+/* ─── Word-rain fragments (hero) ─── */
+@keyframes v5-fall {
+  0% { transform: translateY(-12vh); opacity: 0; }
+  12% { opacity: var(--frag-o, 0.15); }
+  82% { opacity: var(--frag-o, 0.15); }
+  100% { transform: translateY(96vh); opacity: 0; }
+}
+.v5-frag {
+  position: absolute;
+  top: 0;
+  font-family: 'Inter', monospace;
+  font-weight: 500;
+  color: rgba(160, 200, 240, 0.5);
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+  animation: v5-fall var(--frag-d, 16s) linear var(--frag-delay, 0s) infinite;
+  will-change: transform, opacity;
+}
+/* rain only on fine pointers (tablet flicker rule) + reduced-motion off */
+@media (pointer: coarse) {
+  .v5-frag { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .v5-frag { display: none; }
+}
+/* mobile fallback: a few static, very faint fragments */
+@media (pointer: coarse) {
+  .v5-frag-static { display: block !important; }
+}
+
+/* ─── Stage spotlight cone ─── */
+.v5-spotlight {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 52% 42% at 50% -6%, rgba(125, 211, 252, 0.13), transparent 70%),
+    radial-gradient(ellipse 30% 26% at 50% -4%, rgba(226, 240, 253, 0.09), transparent 75%);
+}
+
+/* ─── Chapter headers ─── */
+.v5-chapter {
+  display: flex;
+  align-items: baseline;
+  gap: 22px;
+  padding-top: clamp(40px, 6vw, 84px);
+  margin-bottom: clamp(-26px, -2vw, -10px);
+}
+.v5-chapter .num {
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+  font-size: clamp(3.2rem, 7vw, 5.4rem);
+  line-height: 0.9;
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgba(125, 211, 252, 0.28);
+  letter-spacing: 0.02em;
+  direction: ltr;
+  flex-shrink: 0;
+}
+.v5-chapter .meta {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+}
+.v5-chapter .label {
+  font-family: var(--v1-display);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  color: var(--v1-azure);
+}
+.v5-chapter .rule {
+  height: 1px;
+  background: linear-gradient(to left, var(--v1-line-azure), transparent 70%);
+}
+
+/* ─── Ledger (problem) strike ─── */
+.v5-strike {
+  position: absolute;
+  inset-inline: -2px;
+  top: 52%;
+  height: 2px;
+  background: linear-gradient(to left, rgba(248, 113, 113, 0.9), rgba(248, 113, 113, 0.35));
+  transform-origin: right center;
+  border-radius: 2px;
+}
+
+/* ─── Solution timeline beam ─── */
+.v5-beam {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  inset-inline-start: 27px;
+  width: 2px;
+  background: rgba(160, 200, 240, 0.1);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.v5-beam > div {
+  width: 100%;
+  height: 100%;
+  transform-origin: top center;
+  background: linear-gradient(to bottom, var(--v1-azure-soft), var(--v1-azure) 60%, rgba(56, 189, 248, 0.2));
+}
+
+/* ─── Conversation card bubbles ─── */
+.v5-bubble {
+  border-radius: 16px;
+  padding: 12px 15px;
+  font-size: 0.86rem;
+  line-height: 1.75;
+  max-width: 86%;
+}
+.v5-bubble-ai {
+  background: rgba(148, 197, 255, 0.08);
+  border: 1px solid var(--v1-line);
+  color: var(--v1-t);
+  border-start-start-radius: 6px;
+  align-self: flex-start;
+}
+.v5-bubble-student {
+  background: linear-gradient(140deg, rgba(56, 189, 248, 0.2), rgba(2, 132, 199, 0.12));
+  border: 1px solid var(--v1-line-azure);
+  color: var(--v1-t-strong);
+  border-start-end-radius: 6px;
+  align-self: flex-end;
+}
+.v5-bubble-trainer {
+  background: rgba(74, 222, 128, 0.08);
+  border: 1px solid rgba(74, 222, 128, 0.25);
+  color: var(--v1-t);
+  border-start-start-radius: 6px;
+  align-self: flex-start;
+}
+
+/* ─── Key-word shimmer in hero headline ─── */
+@keyframes v5-key-sweep {
+  from { background-position: 210% center; }
+  to { background-position: -110% center; }
+}
+.v5-keyword {
+  background: linear-gradient(
+    100deg,
+    var(--v1-azure-soft) 0%,
+    var(--v1-azure) 30%,
+    #eaf7ff 50%,
+    var(--v1-azure) 70%,
+    var(--v1-azure-soft) 100%
+  );
+  background-size: 220% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: v5-key-sweep 6s ease-in-out 2.2s infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .v5-keyword { animation: none; }
+}

@@ -8,6 +8,7 @@ Disallow: /api/
 Disallow: /v2
 Disallow: /v1
 Disallow: /v4
+Disallow: /v5
 Disallow: /atelier
 
 # Major AI training & search bots — explicitly allowed

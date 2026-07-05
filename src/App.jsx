@@ -19,6 +19,7 @@ const ArticlesIndex = lazy(() => import('./pages/articles/ArticlesIndex'));
 const ArticlePage = lazy(() => import('./pages/articles/ArticlePage'));
 const AuroraHero = lazy(() => import('./pages/aurora/AuroraHero'));
 const V1Landing = lazy(() => import('./pages/v1/V1Landing'));
+const V5Landing = lazy(() => import('./pages/v5/V5Landing'));
 
 /* ─── UTM Source ─── */
 const UTM_MAP = {
@@ -1211,6 +1212,7 @@ function AppRoutes(){
       {/* /v4 = same page, fresh path — /v1 was 308-redirected to / for months and
           browsers cache permanent redirects, so some visitors can't reach /v1 */}
       <Route path="/v4" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#04070e'}} />}><V1Landing /></Suspense>} />
+      <Route path="/v5" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#04070e'}} />}><V5Landing /></Suspense>} />
     </Routes>
   );
 }
