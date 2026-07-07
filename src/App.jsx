@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, lazy, Suspense } from "react";
 import LandingV2 from './pages/LandingV2';
+import V5LandingHome from './pages/v5/V5Landing';
 import { BrowserRouter, Routes, Route, Link, useLocation } from "react-router-dom";
 import { getStoredRef, getVisitorId } from './utils/affiliateTracking';
 import { buildWhatsAppUrl, WA_MESSAGES } from './lib/whatsapp';
@@ -1205,7 +1206,9 @@ function AppRoutes(){
       <Route path="/atelier" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#060e1c'}} />}><AtelierLanding /></Suspense>} />
       <Route path="/aurora" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#070b14'}} />}><AuroraHero /></Suspense>} />
       <Route path="/legacy" element={<HomePage />} />
-      <Route path="/" element={<LandingV2 />} />
+      {/* Official homepage = V5 "Dawn Stage" (promoted 2026-07-07), eager-bundled
+          for instant first paint. The previous homepage stays reachable at /v2. */}
+      <Route path="/" element={<V5LandingHome />} />
       <Route path="/start" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#0A0A0A'}} />}><StartPage /></Suspense>} />
       <Route path="/partners" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#060e1c'}} />}><PartnersLanding /></Suspense>} />
       <Route path="/partners/submitted" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#060e1c'}} />}><PartnersSubmitted /></Suspense>} />
