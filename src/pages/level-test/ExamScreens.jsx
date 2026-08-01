@@ -100,7 +100,12 @@ export function QuestionScreen({ item, onAnswer, answered, total, stageLabel }) 
 
 /* ─── Listening ─────────────────────────────────────────────────────────── */
 
-/** Resolve an English voice once; null means this device can't do the block. */
+/** Pre-rendered clips (scripts/build-level-test-audio.mjs). Fixed recordings
+ *  mean every student hears the same voice at the same speed — a device-supplied
+ *  voice silently changes item difficulty, and therefore the score. */
+export const clipUrl = (id) => `/audio/level-test/${id}.mp3`;
+
+/** Resolve an English voice once. Only a FALLBACK now that clips are shipped. */
 export function useEnglishVoice() {
   const [voice, setVoice] = useState(undefined); // undefined = still looking
 
@@ -137,16 +142,19 @@ export function useEnglishVoice() {
 
 export function ListeningIntro({ voice, onStart, onSkip }) {
   const [tested, setTested] = useState(false);
+  const audioRef = useRef(null);
+
   const speak = () => {
-    try {
-      const u = new SpeechSynthesisUtterance('This is the listening section. Tap play to hear each question.');
-      u.lang = voice?.lang || 'en-US';
-      if (voice) u.voice = voice;
-      u.rate = 0.92;
-      window.speechSynthesis.cancel();
-      window.speechSynthesis.speak(u);
-      setTested(true);
-    } catch { setTested(true); }
+    setTested(true);
+    const el = audioRef.current;
+    if (el) {
+      el.currentTime = 0;
+      // A rejected play() means autoplay policy or a missing file — fall through
+      // to the device voice rather than leaving the student with silence.
+      el.play().catch(() => speakFallback(voice, 'Sound check. If you can hear this clearly, you are ready to begin.'));
+      return;
+    }
+    speakFallback(voice, 'Sound check. If you can hear this clearly, you are ready to begin.');
   };
 
   return (
@@ -154,9 +162,12 @@ export function ListeningIntro({ voice, onStart, onSkip }) {
       <div className="lt-card">
         <h2 className="lt-h2">قسم الاستماع</h2>
         <p className="lt-lead" style={{ marginTop: 12 }}>
-          أربعة أسئلة قصيرة. تسمع الجملة من جهازك، وتختار الإجابة. تقدر تسمع كل جملة مرتين.
+          أربعة أسئلة قصيرة. تسمع التسجيل، وتختار الإجابة. تقدر تسمع كل تسجيل مرتين.
         </p>
         <div style={{ marginTop: 22 }}>
+          {/* Attached to the DOM on purpose: a detached `new Audio()` is killed
+              mid-playback on iPad. */}
+          <audio ref={audioRef} src={clipUrl('check')} preload="auto" playsInline />
           <button type="button" className="lt-play" onClick={speak}>
             <div className={`lt-wave ${tested ? '' : 'idle'}`}><b /><b /><b /><b /><b /></div>
             جرّب الصوت أولاً
@@ -175,11 +186,25 @@ export function ListeningIntro({ voice, onStart, onSkip }) {
   );
 }
 
+/** Last resort when the clip can't play: the device voice, if it has one. */
+function speakFallback(voice, text) {
+  try {
+    if (!('speechSynthesis' in window)) return;
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = voice?.lang || 'en-US';
+    if (voice) u.voice = voice;
+    u.rate = 0.9;
+    window.speechSynthesis.cancel();
+    window.speechSynthesis.speak(u);
+  } catch { /* nothing else to try */ }
+}
+
 export function ListeningScreen({ item, voice, onAnswer, answered, total, stageLabel }) {
   const [picked, setPicked] = useState(null);
   const [plays, setPlays] = useState(0);
   const [speaking, setSpeaking] = useState(false);
   const timer = useRef(null);
+  const audioRef = useRef(null);
 
   useEffect(() => {
     setPicked(null);
@@ -193,24 +218,19 @@ export function ListeningScreen({ item, voice, onAnswer, answered, total, stageL
 
   const play = () => {
     if (plays >= 2 || speaking) return;
-    try {
-      const u = new SpeechSynthesisUtterance(item.say);
-      u.lang = voice?.lang || 'en-US';
-      if (voice) u.voice = voice;
-      u.rate = 0.9;
-      u.onend = () => setSpeaking(false);
-      u.onerror = () => setSpeaking(false);
-      window.speechSynthesis.cancel();
-      window.speechSynthesis.speak(u);
-      setSpeaking(true);
-      setPlays((p) => p + 1);
-      // Safari sometimes drops onend; release the button on a timer too.
-      clearTimeout(timer.current);
-      timer.current = setTimeout(() => setSpeaking(false), Math.max(4000, item.say.length * 90));
-    } catch {
-      setSpeaking(false);
-      setPlays((p) => p + 1);
+    setPlays((p) => p + 1);
+    setSpeaking(true);
+    // Safari occasionally drops `ended`; release the button on a timer as well.
+    clearTimeout(timer.current);
+    timer.current = setTimeout(() => setSpeaking(false), Math.max(5000, item.say.length * 95));
+
+    const el = audioRef.current;
+    if (el) {
+      el.currentTime = 0;
+      el.play().catch(() => { speakFallback(voice, item.say); });
+      return;
     }
+    speakFallback(voice, item.say);
   };
 
   return (
@@ -219,6 +239,14 @@ export function ListeningScreen({ item, voice, onAnswer, answered, total, stageL
       <div className="lt-card">
         <div className="lt-qhead"><span className="lt-tag">استماع</span></div>
 
+        <audio
+          ref={audioRef}
+          src={clipUrl(item.id)}
+          preload="auto"
+          playsInline
+          onEnded={() => setSpeaking(false)}
+          onError={() => setSpeaking(false)}
+        />
         <button type="button" className="lt-play" onClick={play} disabled={plays >= 2 && !speaking}>
           <div className={`lt-wave ${speaking ? '' : 'idle'}`}><b /><b /><b /><b /><b /></div>
           {speaking ? 'جارٍ التشغيل…' : plays === 0 ? 'اضغط للاستماع' : plays === 1 ? 'اسمعها مرة أخيرة' : 'انتهت المحاولتان'}

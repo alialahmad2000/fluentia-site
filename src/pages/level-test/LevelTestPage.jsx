@@ -33,6 +33,8 @@ export default function LevelTestPage() {
   const usedRef = useRef(new Set());
   const responsesRef = useRef([]);
   const startedAtRef = useRef(0);
+  const lastTickRef = useRef(0);
+  const activeMsRef = useRef(0);
   const leftPageRef = useRef(0);
   const [queue, setQueue] = useState([]);
   const [idx, setIdx] = useState(0);
@@ -76,6 +78,8 @@ export default function LevelTestPage() {
     usedRef.current = new Set();
     responsesRef.current = [];
     startedAtRef.current = Date.now();
+    lastTickRef.current = Date.now();
+    activeMsRef.current = 0;
     setQueue(buildStage1(usedRef.current).map(serve));
     setIdx(0);
     setStage(1);
@@ -85,12 +89,17 @@ export default function LevelTestPage() {
   }, []);
 
   const finish = useCallback((writingText) => {
+    // Count the writing screen too, under the same idle cap.
+    const now = Date.now();
+    activeMsRef.current += Math.min(now - (lastTickRef.current || now), 120_000);
+    lastTickRef.current = now;
+
     const built = buildReport({
       responses: responsesRef.current,
       writing: writingText || '',
       listeningDone,
       leftPage: leftPageRef.current,
-      elapsedMs: Date.now() - startedAtRef.current,
+      elapsedMs: activeMsRef.current,
     });
     setReport(built);
     setPhase('gate2');
@@ -113,23 +122,27 @@ export default function LevelTestPage() {
       return;
     }
     if (stage === 3) {
-      // Listening only if this device actually has an English voice.
-      if (voice) {
-        setQueue(buildListening(theta).map(serve));
-        setIdx(0);
-        setStage(4);
-        setPhase('listenIntro');
-      } else {
-        setPhase('writing');
-      }
+      // Always offered: the clips are pre-rendered files, so this no longer
+      // depends on the device shipping an English speech voice.
+      setQueue(buildListening(theta).map(serve));
+      setIdx(0);
+      setStage(4);
+      setPhase('listenIntro');
       return;
     }
     // stage 4 (listening) finished
     setListeningDone(true);
     setPhase('writing');
-  }, [stage, voice]);
+  }, [stage]);
 
   const onAnswer = useCallback((pickedIndex) => {
+    // Count time question-by-question and discard any gap longer than two
+    // minutes: a student who wanders off and comes back tomorrow should not be
+    // reported as having spent seven hours on the exam.
+    const now = Date.now();
+    activeMsRef.current += Math.min(now - (lastTickRef.current || now), 120_000);
+    lastTickRef.current = now;
+
     const item = queue[idx];
     responsesRef.current = [
       ...responsesRef.current,
