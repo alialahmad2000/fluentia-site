@@ -399,6 +399,7 @@ export const NAV = {
   links: [
     { label: "المنهج", href: "#solution" },
     { label: "المنصة", href: "#product" },
+    { label: "اختبر مستواك", href: "/level-test" },
     { label: "الباقات", href: "#pricing" },
     { label: "القصص", href: "#stories" },
   ],

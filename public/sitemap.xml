@@ -14,6 +14,12 @@
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://fluentia.academy/level-test</loc>
+    <lastmod>2026-08-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
     <loc>https://fluentia.academy/partners</loc>
     <lastmod>2026-04-15</lastmod>
     <changefreq>monthly</changefreq>

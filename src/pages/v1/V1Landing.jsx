@@ -7,6 +7,7 @@ import { V1Stats, V1Problem, V1Solution, V1Method } from "./V1Sections";
 import V1Product from "./V1Product";
 import { V1Worth, V1WhoFor } from "./V1Worth";
 import V1Pricing from "./V1Pricing";
+import V1LevelTestBand from "./V1LevelTestBand";
 import { V1Stories, V1FAQ, V1Founder, V1FinalCTA, V1Footer } from "./V1Closing";
 import V1LeadModal from "./V1LeadModal";
 import { SpotlightController, MobileCtaBar, DotNav } from "./V1Interactive";
@@ -39,6 +40,7 @@ export default function V1Landing() {
           <hr className="v1-hairline" />
           <V1Worth />
           <V1WhoFor />
+          <V1LevelTestBand />
           <V1Pricing />
           <V1Stories />
           <V1FAQ />

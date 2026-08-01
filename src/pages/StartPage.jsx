@@ -939,6 +939,17 @@ export default function StartPage() {
         <p style={{ fontSize: 15, color: T.muted, marginBottom: 28 }}>
           احجز لقاءك المبدئي المجاني الآن — بدون أي التزام
         </p>
+        {/* Not ready to talk yet? The exam is the lower-commitment first step. */}
+        <p style={{ fontSize: 14, color: T.muted, marginBottom: 24, lineHeight: 1.9 }}>
+          ما زلت متردداً؟{' '}
+          <a
+            href="/level-test"
+            style={{ color: T.sky, fontWeight: 700, textDecoration: 'none', borderBottom: `1px solid ${T.sky}44` }}
+          >
+            اعرف مستواك أولاً باختبار ١٠ دقائق
+          </a>{' '}
+          — مجاني وبدون تسجيل.
+        </p>
         <div className="sp-cta-row" style={{ alignItems: 'center' }}>
           <button
             onClick={() => { formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' }); setTimeout(() => nameInputRef.current?.focus(), 600); }}

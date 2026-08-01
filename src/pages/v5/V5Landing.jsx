@@ -10,6 +10,7 @@ import { V1Stats, V1Method } from "../v1/V1Sections";
 import V1Product from "../v1/V1Product";
 import { V1Worth, V1WhoFor } from "../v1/V1Worth";
 import V1Pricing from "../v1/V1Pricing";
+import V1LevelTestBand from "../v1/V1LevelTestBand";
 import { V1Stories, V1FAQ, V1Founder, V1FinalCTA, V1Footer } from "../v1/V1Closing";
 import V1LeadModal from "../v1/V1LeadModal";
 import { SpotlightController, MobileCtaBar, DotNav } from "../v1/V1Interactive";
@@ -78,6 +79,7 @@ export default function V5Landing() {
             <Chapter num={4} label="لماذا طلاقة" />
             <V1Worth />
             <V1WhoFor />
+            <V1LevelTestBand />
             <Chapter num={5} label="الباقات" />
             <V1Pricing />
             <Chapter num={6} label="قصص الطلاب" />

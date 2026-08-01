@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, lazy, Suspense } from "react";
 import LandingV2 from './pages/LandingV2';
 import V5LandingHome from './pages/v5/V5Landing';
-import { BrowserRouter, Routes, Route, Link, useLocation } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Link, Navigate, useLocation } from "react-router-dom";
 import { getStoredRef, getVisitorId } from './utils/affiliateTracking';
 import { buildWhatsAppUrl, WA_MESSAGES } from './lib/whatsapp';
 import { fireTikTokLeadEvents, fireTikTokViewContent } from './lib/tiktokPixel';
@@ -21,6 +21,7 @@ const ArticlePage = lazy(() => import('./pages/articles/ArticlePage'));
 const AuroraHero = lazy(() => import('./pages/aurora/AuroraHero'));
 const V1Landing = lazy(() => import('./pages/v1/V1Landing'));
 const V5Landing = lazy(() => import('./pages/v5/V5Landing'));
+const LevelTestPage = lazy(() => import('./pages/level-test/LevelTestPage'));
 
 /* Branded chunk-loading screen for the candidate pages (pulsing real mark) */
 const VFallback = (
@@ -1210,6 +1211,9 @@ function AppRoutes(){
           for instant first paint. The previous homepage stays reachable at /v2. */}
       <Route path="/" element={<V5LandingHome />} />
       <Route path="/start" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#0A0A0A'}} />}><StartPage /></Suspense>} />
+      {/* Adaptive CEFR placement exam. /test is the short alias for ads and bios. */}
+      <Route path="/level-test" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#04070e'}} />}><LevelTestPage /></Suspense>} />
+      <Route path="/test" element={<Navigate to="/level-test" replace />} />
       <Route path="/partners" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#060e1c'}} />}><PartnersLanding /></Suspense>} />
       <Route path="/partners/submitted" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#060e1c'}} />}><PartnersSubmitted /></Suspense>} />
       <Route path="/partners/terms" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#060e1c'}} />}><PartnersTerms /></Suspense>} />
