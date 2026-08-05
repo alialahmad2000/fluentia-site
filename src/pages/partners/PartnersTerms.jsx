@@ -1,9 +1,11 @@
 import { Link } from 'react-router-dom'
 import { ArrowRight } from 'lucide-react'
+import Seo from '../../components/Seo'
 
 export default function PartnersTerms() {
   return (
     <div className="min-h-dvh py-12 px-4" dir="rtl" style={{ background: '#060e1c', color: '#e2e8f0' }}>
+      <Seo path="/partners/terms" />
       <div className="max-w-3xl mx-auto space-y-8">
         <div className="flex items-center gap-3 mb-8">
           <Link to="/partners" className="p-2 rounded-lg hover:bg-white/10 transition text-white/50 hover:text-white">

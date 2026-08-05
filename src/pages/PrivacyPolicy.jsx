@@ -1,5 +1,5 @@
 import React from 'react';
-import { Helmet } from 'react-helmet-async';
+import Seo from "../components/Seo";
 import LegalLayout from './_shared/LegalLayout';
 
 const H1 = (props) => (
@@ -57,16 +57,7 @@ const Ul = (props) => (
 export default function PrivacyPolicy() {
   return (
     <LegalLayout updated={{ iso: '2026-04-15', display: '15 أبريل 2026' }}>
-      <Helmet>
-        <title>سياسة الخصوصية | أكاديمية طلاقة</title>
-        <meta
-          name="description"
-          content="سياسة الخصوصية لأكاديمية طلاقة — كيف نجمع بياناتك، نستخدمها، ونحميها. متوافقة مع نظام حماية البيانات الشخصية السعودي (PDPL)."
-        />
-        <link rel="canonical" href="https://fluentia.academy/privacy" />
-        <meta property="og:title" content="سياسة الخصوصية | أكاديمية طلاقة" />
-        <meta property="og:url" content="https://fluentia.academy/privacy" />
-      </Helmet>
+      <Seo path="/privacy" />
 
       <H1>سياسة الخصوصية</H1>
       <div style={{ fontSize: '0.875rem', color: '#7e8a9a', marginBottom: '2rem' }}>

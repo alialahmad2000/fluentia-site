@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
+import Seo from "../../components/Seo";
 import { Container, EyebrowLabel, Reveal } from "../../components/landing";
 import { ARTICLES } from "../../content/articles";
 
@@ -68,21 +69,8 @@ export default function ArticlesIndex() {
 
   return (
     <div className="lp-scope" style={{ minHeight: "100vh" }}>
+      <Seo path="/articles" />
       <Helmet>
-        <title>مقالات طلاقة — تعلّم الإنجليزي للكبار | أكاديمية طلاقة</title>
-        <meta
-          name="description"
-          content="مقالات صريحة عن تعلّم الإنجليزي للكبار: لماذا تتعثّر المحاولات، كيف تكسر الحاجز، والطريقة العلمية للوصول إلى الطلاقة."
-        />
-        <link rel="canonical" href={`${SITE}/articles`} />
-        <meta property="og:url" content={`${SITE}/articles`} />
-        <meta property="og:title" content="مقالات طلاقة — تعلّم الإنجليزي للكبار" />
-        <meta
-          property="og:description"
-          content="مقالات صريحة عن تعلّم الإنجليزي للكبار وكسر الحاجز والطريقة العلمية للوصول إلى الطلاقة."
-        />
-        <meta name="twitter:url" content={`${SITE}/articles`} />
-        <meta name="twitter:title" content="مقالات طلاقة — تعلّم الإنجليزي للكبار" />
         <script type="application/ld+json">{JSON.stringify(collectionLd)}</script>
       </Helmet>
 

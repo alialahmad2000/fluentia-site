@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Helmet } from 'react-helmet-async';
+import Seo from "../../components/Seo";
 import BrandMark from '../../components/BrandMark';
 import {
   bOf, serve, estimateTheta, buildStage1, buildStage2, buildStage3,
@@ -177,25 +177,7 @@ export default function LevelTestPage() {
 
   return (
     <div className="lt-scope">
-      <Helmet>
-        <title>اختبار تحديد المستوى في الإنجليزي — أكاديمية طلاقة</title>
-        <meta
-          name="description"
-          content="اختبار تكيّفي مجاني يحدد مستواك في الإنجليزي بدقة (CEFR من Pre-A1 إلى C1) في عشر دقائق: قواعد، مفردات، استيعاب، استماع، وكتابة — مع تقرير مفصّل لمهاراتك وخطوتك الجاية."
-        />
-        <link rel="canonical" href="https://fluentia.academy/level-test" />
-        <meta property="og:url" content="https://fluentia.academy/level-test" />
-        <meta property="og:title" content="اختبار تحديد المستوى في الإنجليزي — أكاديمية طلاقة" />
-        <meta
-          property="og:description"
-          content="عشر دقائق تعطيك مستواك الحقيقي في الإنجليزي، وتقرير يوضح وين قوتك ووين تحتاج شغل."
-        />
-        <meta name="twitter:title" content="اختبار تحديد المستوى في الإنجليزي — أكاديمية طلاقة" />
-        <meta
-          name="twitter:description"
-          content="عشر دقائق تعطيك مستواك الحقيقي في الإنجليزي، وتقرير يوضح وين قوتك ووين تحتاج شغل."
-        />
-      </Helmet>
+      <Seo path="/level-test" />
 
       <div className="lt-bg" aria-hidden="true" />
       <div className="lt-orb lt-orb-a" aria-hidden="true" />

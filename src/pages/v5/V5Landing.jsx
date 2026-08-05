@@ -1,4 +1,4 @@
-import { Helmet } from "react-helmet-async";
+import Seo from "../../components/Seo";
 import { useLocation } from "react-router-dom";
 import { MotionConfig } from "framer-motion";
 import "../../styles/v1-tokens.css";
@@ -36,33 +36,7 @@ export default function V5Landing() {
     <MotionConfig reducedMotion="user">
       <div className="v1-scope v5-scope" dir="rtl">
         <BrandIntro />
-        <Helmet>
-          <title>أكاديمية طلاقة | تعلَّم الإنجليزي مع مدربين سعوديين محترفين</title>
-          {isRoot ? (
-            <>
-              <meta
-                name="description"
-                content="أكاديمية طلاقة — دورات إنجليزي أونلاين بمجموعات صغيرة (7 طلاب) مع مدربين سعوديين. متابعة يومية، حصص فردية، تقييم بالذكاء الاصطناعي. باقات تبدأ من 500 ريال."
-              />
-              <link rel="canonical" href="https://fluentia.academy/" />
-              <meta property="og:type" content="website" />
-              <meta property="og:url" content="https://fluentia.academy/" />
-              <meta property="og:title" content="أكاديمية طلاقة | تعلّم إنجليزي تتكلّمه — لا تحفظه" />
-              <meta
-                property="og:description"
-                content="أكاديمية أونلاين للراشدين السعوديين — منهج علمي، مدرّبون أكاديميون، متابعة يومية، تقييم AI. باقات من 500 ريال."
-              />
-              <meta name="twitter:url" content="https://fluentia.academy/" />
-              <meta name="twitter:title" content="أكاديمية طلاقة | تعلّم إنجليزي تتكلّمه — لا تحفظه" />
-              <meta
-                name="twitter:description"
-                content="أكاديمية أونلاين للراشدين السعوديين — منهج علمي ومتابعة شخصية حقيقية."
-              />
-            </>
-          ) : (
-            <meta name="robots" content="noindex, nofollow" />
-          )}
-        </Helmet>
+        {isRoot ? <Seo path="/" /> : <Seo noindex />}
         <DawnArc />
         <div style={{ position: "relative", zIndex: 1 }}>
           <V1Header />

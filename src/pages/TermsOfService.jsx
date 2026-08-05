@@ -1,6 +1,6 @@
 import React from 'react';
 import { buildWhatsAppUrl, WA_MESSAGES } from '../lib/whatsapp';
-import { Helmet } from 'react-helmet-async';
+import Seo from "../components/Seo";
 import LegalLayout from './_shared/LegalLayout';
 
 const H1 = (props) => (
@@ -58,16 +58,7 @@ const Ul = (props) => (
 export default function TermsOfService() {
   return (
     <LegalLayout updated={{ iso: '2026-04-15', display: '15 أبريل 2026' }}>
-      <Helmet>
-        <title>شروط الاستخدام | أكاديمية طلاقة</title>
-        <meta
-          name="description"
-          content="شروط وأحكام الاشتراك في أكاديمية طلاقة — الدفع، الاسترداد، الملكية الفكرية، إنهاء الخدمة."
-        />
-        <link rel="canonical" href="https://fluentia.academy/terms" />
-        <meta property="og:title" content="شروط الاستخدام | أكاديمية طلاقة" />
-        <meta property="og:url" content="https://fluentia.academy/terms" />
-      </Helmet>
+      <Seo path="/terms" />
 
       <H1>شروط الاستخدام</H1>
       <div style={{ fontSize: '0.875rem', color: '#7e8a9a', marginBottom: '2rem' }}>

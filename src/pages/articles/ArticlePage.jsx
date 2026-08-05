@@ -2,6 +2,8 @@ import { useParams, Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { Container, EyebrowLabel, Reveal, PrimaryCTA } from "../../components/landing";
 import { getArticle } from "../../content/articles";
+import { articleSeo } from "../../content/seo";
+import Seo from "../../components/Seo";
 
 const SITE = "https://fluentia.academy";
 
@@ -236,20 +238,8 @@ export default function ArticlePage() {
 
   return (
     <div className="lp-scope" style={{ minHeight: "100vh" }}>
+      <Seo entry={articleSeo(article)} />
       <Helmet>
-        <title>{`${article.title} | أكاديمية طلاقة`}</title>
-        <meta name="description" content={article.description} />
-        {article.keywords?.length ? (
-          <meta name="keywords" content={article.keywords.join(", ")} />
-        ) : null}
-        <link rel="canonical" href={url} />
-        <meta property="og:type" content="article" />
-        <meta property="og:url" content={url} />
-        <meta property="og:title" content={article.title} />
-        <meta property="og:description" content={article.description} />
-        <meta name="twitter:url" content={url} />
-        <meta name="twitter:title" content={article.title} />
-        <meta name="twitter:description" content={article.description} />
         <script type="application/ld+json">{JSON.stringify(articleLd)}</script>
         <script type="application/ld+json">{JSON.stringify(breadcrumbLd)}</script>
       </Helmet>

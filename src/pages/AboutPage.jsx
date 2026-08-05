@@ -1,6 +1,7 @@
 import React from 'react';
 import { buildWhatsAppUrl, WA_MESSAGES } from '../lib/whatsapp';
 import { Helmet } from 'react-helmet-async';
+import Seo from "../components/Seo";
 import LegalLayout from './_shared/LegalLayout';
 
 const H1 = (props) => (
@@ -114,16 +115,8 @@ const TeamCard = ({ name, role, text }) => (
 export default function AboutPage() {
   return (
     <LegalLayout updated={{ iso: '2026-04-15', display: '15 أبريل 2026' }}>
+      <Seo path="/about" />
       <Helmet>
-        <title>من نحن | أكاديمية طلاقة — Fluentia Academy</title>
-        <meta
-          name="description"
-          content="قصة أكاديمية طلاقة ومؤسسها د. علي الأحمد — لماذا نؤمن بالتعليم المخصص والمجموعات الصغيرة."
-        />
-        <link rel="canonical" href="https://fluentia.academy/about" />
-        <meta property="og:title" content="من نحن | أكاديمية طلاقة" />
-        <meta property="og:url" content="https://fluentia.academy/about" />
-        <meta property="og:description" content="قصة أكاديمية طلاقة ومؤسسها د. علي الأحمد." />
         <script type="application/ld+json">{`
           {
             "@context": "https://schema.org",

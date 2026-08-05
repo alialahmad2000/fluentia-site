@@ -4,12 +4,24 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Primary Meta Tags -->
-    <!-- title + description + canonical + og/twitter url/title/description are set
-         PER-ROUTE via react-helmet-async (see <Seo> usage). This static <title> is a
-         no-JS fallback only. Do NOT re-add a static description/canonical here — it
-         would duplicate the Helmet-managed tag on every sub-page. -->
+    <!-- SOCIAL_META:START — do not hand-edit. Generated per route at build time by
+         scripts/prerender-meta.mjs from src/content/seo.js; the block below is the
+         homepage default used in dev and as the fallback for unlisted routes.
+         Every tag carries data-rh so react-helmet-async ADOPTS it on hydration
+         (see <Seo>) instead of appending a duplicate. Social crawlers (WhatsApp,
+         X, Telegram) never run JS, so these static tags are what they read. -->
     <title>أكاديمية طلاقة | تعلَّم الإنجليزي مع مدربين سعوديين محترفين</title>
+    <meta data-rh="true" name="description" content="أكاديمية طلاقة — دورات إنجليزي أونلاين بمجموعات صغيرة (7 طلاب) مع مدربين سعوديين. متابعة يومية، حصص فردية، تقييم بالذكاء الاصطناعي. باقات تبدأ من 500 ريال." />
+    <link data-rh="true" rel="canonical" href="https://fluentia.academy/" />
+    <meta data-rh="true" property="og:type" content="website" />
+    <meta data-rh="true" property="og:url" content="https://fluentia.academy/" />
+    <meta data-rh="true" property="og:title" content="أكاديمية طلاقة | تعلّم إنجليزي تتكلّمه — لا تحفظه" />
+    <meta data-rh="true" property="og:description" content="أكاديمية أونلاين للراشدين السعوديين — منهج علمي، مدرّبون أكاديميون، متابعة يومية، تقييم AI. باقات من 500 ريال." />
+    <meta data-rh="true" name="twitter:url" content="https://fluentia.academy/" />
+    <meta data-rh="true" name="twitter:title" content="أكاديمية طلاقة | تعلّم إنجليزي تتكلّمه — لا تحفظه" />
+    <meta data-rh="true" name="twitter:description" content="أكاديمية أونلاين للراشدين السعوديين — منهج علمي ومتابعة شخصية حقيقية." />
+    <!-- SOCIAL_META:END -->
+
     <meta name="keywords" content="تعلم الإنجليزي, دورات إنجليزي أونلاين, IELTS السعودية, أكاديمية إنجليزي, كورس إنجليزي, مدرب إنجليزي سعودي, تعلم إنجليزي أونلاين" />
     <meta name="author" content="Dr. Ali Alahmad — Fluentia Academy" />
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
@@ -25,11 +37,10 @@
     <meta name="geo.region" content="SA" />
     <meta name="geo.placename" content="Saudi Arabia" />
 
-    <!-- Open Graph (og:type set per-route via Helmet: website / article) -->
+    <!-- Open Graph — invariant tags only (og:type/url/title/description live in SOCIAL_META above) -->
     <meta property="og:site_name" content="Fluentia Academy" />
     <meta property="og:locale" content="ar_SA" />
     <meta property="og:locale:alternate" content="en_US" />
-    <!-- og:url / og:title / og:description set per-route via Helmet -->
     <meta property="og:image" content="https://fluentia.academy/og-image.png" />
     <meta property="og:image:secure_url" content="https://fluentia.academy/og-image.png" />
     <meta property="og:image:type" content="image/png" />
@@ -41,14 +52,11 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@fluentia_" />
     <meta name="twitter:creator" content="@fluentia_" />
-    <!-- twitter:url / twitter:title / twitter:description set per-route via Helmet -->
     <meta name="twitter:image" content="https://fluentia.academy/og-image.png" />
     <meta name="twitter:image:alt" content="Fluentia Academy" />
 
     <!-- Google Search Console verification -->
     <meta name="google-site-verification" content="OT_pza6-DGpRqBqRpW5jIryK64ctJ19toacNsphPdyU" />
-
-    <!-- Canonical is set per-route via Helmet (self-referencing) -->
 
     <!-- Alternate languages (Arabic-only site) -->
     <link rel="alternate" hreflang="ar-SA" href="https://fluentia.academy/" />
