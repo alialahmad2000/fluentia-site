@@ -359,9 +359,9 @@ export const PRICING = {
 };
 
 export const STORIES = {
-  eyebrow: "قصص الطلاب",
+  eyebrow: "قصص نجاح",
   headline: "أرقام، نتائج، إنسان واحد في كل مرة.",
-  intro: "كل قصة هنا من طالبة حقيقية، بكلامها هي. لا نقول إن النتائج مضمونة لكل أحد — هذي قصص الطلاب الذين التزموا.",
+  intro: "كل قصة هنا من طالبة حقيقية، بكلامها هي. لا نقول إن النتائج مضمونة لكل أحد — هذي قصص نجاح طالبات التزمن.",
   // TODO Ali: replace with real, verbatim quotes — these are stand-in templates
   cards: [
     {
@@ -401,7 +401,7 @@ export const NAV = {
     { label: "المنصة", href: "#product" },
     { label: "اختبر مستواك", href: "/level-test" },
     { label: "الباقات", href: "#pricing" },
-    { label: "القصص", href: "#stories" },
+    { label: "قصص نجاح", href: "#stories" },
   ],
   studentLogin: { label: "دخول الطلاب", href: "https://app.fluentia.academy" },
   primaryCTA: { label: "ابدأ بمحادثة" },
@@ -469,7 +469,7 @@ export const FOOTER = {
   links: [
     { label: "المنهج", href: "#solution" },
     { label: "الباقات", href: "#pricing" },
-    { label: "القصص", href: "#stories" },
+    { label: "قصص نجاح", href: "#stories" },
     { label: "مقالات", href: "/articles" },
     { label: "دخول الطلاب", href: "https://app.fluentia.academy" },
   ],

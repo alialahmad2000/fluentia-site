@@ -93,7 +93,7 @@ const DOT_SECTIONS = [
   { id: "product", label: "المنصة" },
   { id: "worth", label: "لماذا طلاقة" },
   { id: "pricing", label: "الباقات" },
-  { id: "stories", label: "القصص" },
+  { id: "stories", label: "قصص نجاح" },
   { id: "faq", label: "أسئلة" },
   { id: "founder", label: "المؤسس" },
 ];

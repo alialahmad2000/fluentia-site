@@ -56,7 +56,7 @@ export default function V5Landing() {
             <V1LevelTestBand />
             <Chapter num={5} label="الباقات" />
             <V1Pricing />
-            <Chapter num={6} label="قصص الطلاب" />
+            <Chapter num={6} label="قصص نجاح" />
             <V1Stories />
             <V1FAQ />
             <Chapter num={7} label="كلمة المؤسس" />
