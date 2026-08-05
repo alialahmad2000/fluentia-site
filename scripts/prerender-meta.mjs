@@ -9,8 +9,10 @@
  *
  * HOW: after `vite build`, for every route in src/content/seo.js we write a copy
  * of dist/index.html whose SOCIAL_META block holds that route's real tags.
- * Vercel's filesystem check runs BEFORE the SPA rewrite in vercel.json, so
- * GET /level-test serves dist/level-test.html; the bundle is identical, React
+ * "cleanUrls": true in vercel.json makes the extensionless path resolve to the
+ * matching .html in the filesystem phase, which runs BEFORE the SPA rewrite — so
+ * GET /level-test serves dist/level-test.html (without cleanUrls the rewrite wins
+ * and every route falls back to index.html); the bundle is identical, React
  * boots as usual, and Helmet adopts the baked tags (they carry data-rh) rather
  * than duplicating them. Unlisted routes still fall through to dist/index.html,
  * which keeps the homepage block — a correct brand preview, never a comment.
