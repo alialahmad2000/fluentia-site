@@ -1,21 +1,73 @@
 {
-  "cleanUrls": true,
   "redirects": [
-    { "source": "/legacy", "destination": "/", "permanent": true },
+    {
+      "source": "/legacy",
+      "destination": "/",
+      "permanent": true
+    },
     {
       "source": "/:path*",
-      "has": [{ "type": "host", "value": "fluentia.online" }],
+      "has": [
+        {
+          "type": "host",
+          "value": "fluentia.online"
+        }
+      ],
       "destination": "https://fluentia.academy/:path*",
       "permanent": true
     },
     {
       "source": "/:path*",
-      "has": [{ "type": "host", "value": "fluentia-site.vercel.app" }],
+      "has": [
+        {
+          "type": "host",
+          "value": "fluentia-site.vercel.app"
+        }
+      ],
       "destination": "https://fluentia.academy/:path*",
       "permanent": true
     }
   ],
   "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
+    {
+      "source": "/level-test",
+      "destination": "/level-test.html"
+    },
+    {
+      "source": "/start",
+      "destination": "/start.html"
+    },
+    {
+      "source": "/partners",
+      "destination": "/partners.html"
+    },
+    {
+      "source": "/partners/terms",
+      "destination": "/partners/terms.html"
+    },
+    {
+      "source": "/about",
+      "destination": "/about.html"
+    },
+    {
+      "source": "/articles",
+      "destination": "/articles.html"
+    },
+    {
+      "source": "/privacy",
+      "destination": "/privacy.html"
+    },
+    {
+      "source": "/terms",
+      "destination": "/terms.html"
+    },
+    {
+      "source": "/articles/ليش-ما-تتكلم-انجليزي",
+      "destination": "/articles/ليش-ما-تتكلم-انجليزي.html"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
   ]
 }

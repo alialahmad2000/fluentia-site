@@ -9,10 +9,9 @@
  *
  * HOW: after `vite build`, for every route in src/content/seo.js we write a copy
  * of dist/index.html whose SOCIAL_META block holds that route's real tags.
- * "cleanUrls": true in vercel.json makes the extensionless path resolve to the
- * matching .html in the filesystem phase, which runs BEFORE the SPA rewrite — so
- * GET /level-test serves dist/level-test.html (without cleanUrls the rewrite wins
- * and every route falls back to index.html); the bundle is identical, React
+ * vercel.json carries an explicit rewrite per route (/level-test → /level-test.html,
+ * kept in sync by scripts/sync-vercel-rewrites.mjs) ahead of the SPA catch-all, so
+ * GET /level-test serves dist/level-test.html; the bundle is identical, React
  * boots as usual, and Helmet adopts the baked tags (they carry data-rh) rather
  * than duplicating them. Unlisted routes still fall through to dist/index.html,
  * which keeps the homepage block — a correct brand preview, never a comment.
@@ -25,6 +24,7 @@ import { fileURLToPath } from "node:url";
 
 import { ARTICLES } from "../src/content/articles.js";
 import { PRERENDER_ROUTES, articleSeo, resolveSeo } from "../src/content/seo.js";
+import { expectedRewrites } from "./sync-vercel-rewrites.mjs";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const DIST = join(ROOT, "dist");
@@ -82,6 +82,16 @@ function inject(html, seo) {
 function outFile(path) {
   if (path === "/") return join(DIST, "index.html");
   return join(DIST, `${path.replace(/^\//, "")}.html`);
+}
+
+// A prerendered file nobody routes to is invisible: fail loudly instead of
+// silently shipping the homepage preview on a route that has its own copy.
+const vercelConfig = JSON.parse(await readFile(join(ROOT, "vercel.json"), "utf8"));
+if (JSON.stringify(vercelConfig.rewrites) !== JSON.stringify(expectedRewrites())) {
+  throw new Error(
+    "vercel.json rewrites are out of sync with the prerendered routes.\n" +
+      "Run `npm run sync:rewrites` and commit vercel.json.",
+  );
 }
 
 const indexPath = join(DIST, "index.html");
