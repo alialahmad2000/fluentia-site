@@ -27,9 +27,20 @@ export function prerenderedPaths() {
   ];
 }
 
+/**
+ * Vercel matches `source` against the RAW request path, and browsers/WhatsApp
+ * send Arabic article slugs percent-encoded — so the source must be encoded too.
+ * `destination` resolves against the build output, where the file keeps its
+ * literal UTF-8 name.
+ */
+const encodePath = (path) => path.split("/").map(encodeURIComponent).join("/");
+
 export function expectedRewrites() {
   return [
-    ...prerenderedPaths().map((path) => ({ source: path, destination: `${path}.html` })),
+    ...prerenderedPaths().map((path) => ({
+      source: encodePath(path),
+      destination: `${path}.html`,
+    })),
     { source: "/(.*)", destination: "/index.html" },
   ];
 }
