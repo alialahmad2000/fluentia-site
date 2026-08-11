@@ -472,6 +472,7 @@ export const FOOTER = {
     { label: "قصص نجاح", href: "#stories" },
     { label: "مقالات", href: "/articles" },
     { label: "دخول الطلاب", href: "https://app.fluentia.academy" },
+    { label: "برنامج الشركاء", href: "/partners" },
   ],
   copyright: "© 2026 Fluentia Academy · طلاقة. كل الحقوق محفوظة.",
 };
