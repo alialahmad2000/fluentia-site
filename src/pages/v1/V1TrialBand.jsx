@@ -175,6 +175,25 @@ export default function V1TrialBand() {
             linear-gradient(180deg, rgba(10,18,32,0.88), rgba(6,11,22,0.96));
           transition: background 900ms ease;
         }
+        /* The room the lesson comes from, carrying the whole band. Blurred and
+           held at low opacity because it sits UNDER Arabic body copy: an
+           un-scrimmed plate would eat the text. The scrim is directional —
+           heaviest on the right, where the text column lives in RTL. */
+        .tb-atmo { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+        .tb-atmo img {
+          position: absolute; inset: 0;
+          width: 100%; height: 100%; object-fit: cover;
+          opacity: 0.46;
+          filter: blur(34px) saturate(1.25);
+          transform: scale(1.18);
+        }
+        .tb-atmo::after {
+          content: ""; position: absolute; inset: 0;
+          background: linear-gradient(to left,
+            rgba(6,11,22,0.94) 0%, rgba(6,11,22,0.82) 40%,
+            rgba(6,11,22,0.52) 74%, rgba(6,11,22,0.34) 100%);
+        }
+
         /* A hairline of the field's own colour along the top edge, so the whole
            surface answers to the selection — not just the card. */
         .tb-shell::before {
@@ -186,6 +205,7 @@ export default function V1TrialBand() {
         }
         .tb-grid {
           position: relative;
+          z-index: 1;
           display: grid;
           grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
           grid-template-rows: auto auto;
@@ -263,11 +283,26 @@ export default function V1TrialBand() {
           overflow: hidden;
           backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
         }
-        .tb-cardhead {
-          display: flex; align-items: center; gap: 13px;
-          padding: 15px 18px;
+        .tb-cover {
+          position: relative; height: 138px; overflow: hidden;
           border-bottom: 1px solid var(--v1-line);
-          background: linear-gradient(115deg, hsla(var(--tb-h), 85%, 58%, 0.17), transparent 66%);
+        }
+        .tb-cover > img {
+          position: absolute; inset: 0;
+          width: 100%; height: 100%; object-fit: cover;
+        }
+        /* Scrim + the field's hue, so the cover reads as one system with the
+           rest of the band rather than a photo dropped into a dark page. */
+        .tb-cover::after {
+          content: ""; position: absolute; inset: 0;
+          background:
+            linear-gradient(to top, rgba(8,13,24,0.94) 8%, rgba(8,13,24,0.42) 58%, rgba(8,13,24,0.30) 100%),
+            linear-gradient(115deg, hsla(var(--tb-h), 85%, 55%, 0.30), transparent 70%);
+        }
+        .tb-cardhead {
+          position: absolute; z-index: 1; inset-inline: 0; bottom: 0;
+          display: flex; align-items: center; gap: 13px;
+          padding: 14px 18px;
         }
         .tb-no {
           width: 38px; height: 38px; border-radius: 11px; flex: 0 0 auto;
@@ -348,6 +383,18 @@ export default function V1TrialBand() {
         viewport={{ once: true, margin: "-80px" }}
         transition={{ duration: 0.7, ease: EASE }}
       >
+        {/* Keyed so the room cross-fades with the lesson it belongs to. */}
+        <div className="tb-atmo" aria-hidden="true">
+          <motion.img
+            key={s.slug}
+            src={`/worlds/${s.slug}.jpg`}
+            alt=""
+            initial={reduce ? false : { opacity: 0 }}
+            animate={{ opacity: 0.46 }}
+            transition={{ duration: 0.8, ease: EASE }}
+          />
+        </div>
+
         <div className="tb-grid">
           {/* ── the claim, and the control that tests it ── */}
           <div className="tb-say">
@@ -387,12 +434,17 @@ export default function V1TrialBand() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, ease: EASE }}
               >
-                <div className="tb-cardhead">
-                  {/* Latin + isolated: Arabic-Indic «٠١» flips inside an RTL run. */}
-                  <div className="tb-no">01</div>
-                  <div>
-                    <div className="tb-unit">{s.unitAr}</div>
-                    <div className="tb-uniten">{s.unitEn}</div>
+                {/* A cover, the way every unit carries one inside the product —
+                    the room this lesson is set in, with the title sitting on it. */}
+                <div className="tb-cover">
+                  <img src={`/worlds/${s.slug}.jpg`} alt="" loading="lazy" decoding="async" />
+                  <div className="tb-cardhead">
+                    {/* Latin + isolated: Arabic-Indic «٠١» flips inside an RTL run. */}
+                    <div className="tb-no">01</div>
+                    <div>
+                      <div className="tb-unit">{s.unitAr}</div>
+                      <div className="tb-uniten">{s.unitEn}</div>
+                    </div>
                   </div>
                 </div>
 
