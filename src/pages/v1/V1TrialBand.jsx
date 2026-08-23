@@ -4,11 +4,15 @@ import { motion } from "framer-motion";
 /**
  * V1TrialBand — the invitation to «درسك الأول» (app.fluentia.academy/try).
  *
- * Sits immediately after the Solution chapter: the visitor has just been TOLD
- * that we write the course around their own work, and the only honest next
- * move is to prove it rather than describe it again. Everything else on this
- * page is a claim; this is the one place they can check the claim themselves,
- * in ninety seconds, without handing over anything.
+ * Sits immediately after the Solution chapter: the visitor has just been told
+ * the academy teaches the English of their own field, and this is the one place
+ * on the page where they can check that instead of being told it again.
+ *
+ * The copy sells the OUTCOME (a lesson from your field), never the act of
+ * producing one on demand — "we will write you a lesson now" is a low-status
+ * offer in Arabic, and it announces the machinery instead of the result. For
+ * the same reason there is no list of what we won't ask for: an academy states
+ * what it gives, it does not reassure.
  *
  * Deliberately warm (amber) where the level-test band is cool (azure) — two
  * different invitations, and a visitor should never confuse "sit an exam" with
@@ -17,8 +21,9 @@ import { motion } from "framer-motion";
 
 const EASE = [0.16, 1, 0.3, 1];
 
-/* Shown as evidence, not decoration: these are real seeded jobs, so a visitor
-   who recognises their own profession here is being told the truth. */
+/* Evidence, not decoration: these are the fields the academy actually has
+   material for, so a visitor recognising their own profession is being told
+   the truth. */
 const JOBS = [
   "تمريض",
   "محاسبة",
@@ -72,7 +77,7 @@ export default function V1TrialBand() {
             border: "1px solid rgba(251,191,36,0.22)",
           }}
         >
-          جرّبها قبل أي شيء
+          قبل أن تقرّر
         </span>
 
         <h2
@@ -87,7 +92,7 @@ export default function V1TrialBand() {
             maxWidth: "24ch",
           }}
         >
-          أعطنا مهنتك، ونكتب لك درساً عنها الآن.
+          لكل مهنة إنجليزيتها الخاصة.
         </h2>
 
         <p
@@ -99,9 +104,9 @@ export default function V1TrialBand() {
             margin: 0,
           }}
         >
-          كل ما سبق كلام عن المنصّة. هذا الجزء يخليك تشوفها بنفسك: سطر واحد عن شغلك، ونكتب لك درساً
-          إنجليزياً حقيقياً من داخل يومك — النص الذي تقرأه فعلاً، والمصطلحات التي تسمعها فعلاً. تقرأه
-          وتجاوب عليه، ويجيك التصحيح بالعربي في نفس اللحظة. ما نطلب رقمك إلا بعد ما تشوف الدرس.
+          الممرّضة تحتاج لغة تسليم المناوبة. المحاسب يحتاج لغة الإقفال والمراجعة. مهندس الموقع يحتاج
+          لغة التقارير وطلبات التوضيح. لا شيء من هذا في كتاب عام، ولا في معهد يعطي الجميع نفس الملف.
+          اختر مجالك، وادخل على درس من داخله: نصّ من يومك، ومصطلحاته، وأسئلة عليه — والتصحيح بالعربية.
         </p>
 
         <div
@@ -148,10 +153,10 @@ export default function V1TrialBand() {
 
         <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 18 }}>
           <a href={TRIAL_URL} className="v1-cta v1-cta-primary" style={{ textDecoration: "none" }}>
-            اكتبوا لي درسي الأول ←
+            ادخل على درس من مجالك ←
           </a>
           <span style={{ fontSize: "0.84rem", color: "var(--v1-t-faint)", lineHeight: 1.8 }}>
-            مجاني · بدون تسجيل · ٩٠ ثانية · درس حقيقي لا عيّنة
+            درس كامل · تصحيح فوري بالعربية
           </span>
         </div>
       </motion.div>
