@@ -11,6 +11,7 @@ import V1Product from "../v1/V1Product";
 import { V1Worth, V1WhoFor } from "../v1/V1Worth";
 import V1Pricing from "../v1/V1Pricing";
 import V1LevelTestBand from "../v1/V1LevelTestBand";
+import V1TrialBand from "../v1/V1TrialBand";
 import { V1Stories, V1FAQ, V1Founder, V1FinalCTA, V1Footer } from "../v1/V1Closing";
 import V1LeadModal from "../v1/V1LeadModal";
 import { SpotlightController, MobileCtaBar, DotNav } from "../v1/V1Interactive";
@@ -47,6 +48,7 @@ export default function V5Landing() {
             <V5Problem />
             <Chapter num={2} label="الحل" />
             <V5Solution />
+            <V1TrialBand />
             <Chapter num={3} label="المنصة" />
             <V1Product />
             <V1Method />
