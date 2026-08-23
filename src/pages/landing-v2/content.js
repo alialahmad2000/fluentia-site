@@ -8,7 +8,7 @@ export const HERO = {
   headline: "تعلّم إنجليزي تتكلّمه — لا تحفظه.",
   sub: "أكاديمية أونلاين للراشدين السعوديين، مبنية على منهج علمي ومنصة تعلّم بحجم منتج عالمي. مدرّبون أكاديميون · متابعة شخصية · لن نعدك بنتائج معجزة، لكن سنعطيك كل ما يلزم.",
   primaryCTA: "ابدأ بمحادثة",
-  secondaryCTA: "شاهد الباقات",
+  secondaryCTA: "جرّب درساً عن شغلك",
   trustRow: [
     "+100 طالب",
     "محادثة أولى مجانية",
@@ -398,6 +398,7 @@ export const NAV = {
   brand: { en: "Fluentia", ar: "طلاقة" },
   links: [
     { label: "المنهج", href: "#solution" },
+    { label: "جرّب درساً", href: "#trial" },
     { label: "المنصة", href: "#product" },
     { label: "اختبر مستواك", href: "/level-test" },
     { label: "الباقات", href: "#pricing" },

@@ -299,7 +299,7 @@ export default function V5Hero() {
                   <span aria-hidden style={{ fontSize: "1.1em", lineHeight: 1 }}>←</span>
                 </button>
               </Magnetic>
-              <a href="#pricing" className="v1-cta v1-cta-ghost">{HERO.secondaryCTA}</a>
+              <a href="#trial" className="v1-cta v1-cta-ghost">{HERO.secondaryCTA}</a>
             </motion.div>
 
             <motion.div
