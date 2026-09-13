@@ -203,7 +203,10 @@ async function run(browser, width, height, tag) {
   await page.locator('.tx-next.is-home').click()
   await page.waitForURL(/\/tour\/expressions$/)
   ok(true, 'last sheet returns to /tour/expressions')
-  const paused = await audioTime(page)
+  // the router commits the new route a beat after the URL changes (a transition), and the sheet
+  // pauses its clip on unmount, so give it up to 1.5s rather than reading the very same tick
+  let paused = await audioTime(page)
+  for (let i = 0; i < 15 && paused && !paused.paused; i++) { await page.waitForTimeout(100); paused = await audioTime(page) }
   ok(!paused || paused.paused, 'leaving a sheet stops its audio')
 
   // back link + switcher from an idiom to a proverb
