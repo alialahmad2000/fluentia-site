@@ -5,6 +5,8 @@ import "@fontsource/alexandria/500.css";
 import "@fontsource/alexandria/700.css";
 import "./shell/shell.css";
 import Hub from "./Hub";
+import { captureAttribution } from "../lib/attribution";
+import { installWhatsAppClickTracking } from "../lib/track";
 
 /**
  * /tour — a walk through the real student platform, from outside.
@@ -19,10 +21,22 @@ const ROOM_MODULES = {
   library: lazy(() => import("./rooms/library/index.jsx")),
 };
 
-function ScrollToTop() {
+// Same boot as the main site (src/main.jsx): remember where the visitor came
+// from, and count every WhatsApp tap (CTAs carry data-cta).
+captureAttribution();
+installWhatsAppClickTracking();
+
+/** Each room change starts at the top and counts as a page view, the way the
+ *  main site's router reports its routes to GA4 (src/App.jsx AppRoutes). */
+function RouteEffects() {
   const { pathname } = useLocation();
   useEffect(() => {
     window.scrollTo(0, 0);
+    try {
+      window.gtag?.("config", "G-19G2SJ1WYL", { page_path: pathname });
+    } catch {
+      /* analytics only */
+    }
   }, [pathname]);
   return null;
 }
@@ -31,7 +45,7 @@ const Loading = <div className="tour-loading" aria-hidden />;
 
 ReactDOM.createRoot(document.getElementById("tour-root")).render(
   <BrowserRouter>
-    <ScrollToTop />
+    <RouteEffects />
     <Routes>
       <Route path="/tour" element={<Hub />} />
       {Object.entries(ROOM_MODULES).map(([slug, Room]) => (

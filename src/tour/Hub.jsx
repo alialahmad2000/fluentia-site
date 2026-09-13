@@ -16,7 +16,7 @@ export default function Hub() {
           <img src="/brand/fluentia-mark.svg" alt="" width="28" height="28" />
           <span>طلاقة</span>
         </a>
-        <a className="tour-btn tour-btn-ghost tour-hub-top-cta" href={whatsappHref()} target="_blank" rel="noopener noreferrer">
+        <a className="tour-btn tour-btn-ghost tour-hub-top-cta" data-cta="tour_hub_top" href={whatsappHref()} target="_blank" rel="noopener noreferrer">
           ابدأ مع طلاقة
         </a>
       </header>
@@ -59,10 +59,10 @@ export default function Hub() {
       <section className="tour-hub-close">
         <p>أعجبك ما رأيت؟ هذا جزء صغير مما ينتظرك داخل المنصة.</p>
         <div className="tour-end-actions">
-          <a className="tour-btn tour-btn-solid" href={whatsappHref()} target="_blank" rel="noopener noreferrer">
+          <a className="tour-btn tour-btn-solid" data-cta="tour_hub_close" href={whatsappHref()} target="_blank" rel="noopener noreferrer">
             ابدأ مع طلاقة
           </a>
-          <a className="tour-btn tour-btn-ghost" href="/level-test">
+          <a className="tour-btn tour-btn-ghost" data-cta="tour_hub_close_level_test" href="/level-test">
             اختبر مستواك مجاناً
           </a>
         </div>

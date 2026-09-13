@@ -56,7 +56,7 @@ export function TourBar({ slug }) {
               <span aria-hidden>←</span>
             </Link>
           )}
-          <a className="tour-btn tour-btn-solid tour-bar-cta" href={whatsappHref()} target="_blank" rel="noopener noreferrer">
+          <a className="tour-btn tour-btn-solid tour-bar-cta" data-cta={`tour_bar_${slug}`} href={whatsappHref()} target="_blank" rel="noopener noreferrer">
             ابدأ مع طلاقة
           </a>
         </div>
@@ -89,10 +89,10 @@ export function TourEnd({ slug }) {
       <div className="tour-end-in">
         <p className="tour-end-lead">هذه عيّنة صغيرة. داخل المنصة المنهج كاملاً، ومدرّبك يتابع كل ما تنجزه.</p>
         <div className="tour-end-actions">
-          <a className="tour-btn tour-btn-solid" href={whatsappHref()} target="_blank" rel="noopener noreferrer">
+          <a className="tour-btn tour-btn-solid" data-cta={`tour_end_${slug}`} href={whatsappHref()} target="_blank" rel="noopener noreferrer">
             ابدأ مع طلاقة
           </a>
-          <a className="tour-btn tour-btn-ghost" href="/level-test">
+          <a className="tour-btn tour-btn-ghost" data-cta={`tour_end_${slug}_level_test`} href="/level-test">
             اختبر مستواك مجاناً
           </a>
         </div>
