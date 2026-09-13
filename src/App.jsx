@@ -25,6 +25,8 @@ const LevelTestPage = lazy(() => import('./pages/level-test/LevelTestPage'));
 // ~124 kB into the main chunk that every visitor to / downloads.
 const LandingV2 = lazy(() => import('./pages/LandingV2'));
 const NotFound = lazy(() => import('./pages/NotFound'));
+const WorkEnglishHub = lazy(() => import('./pages/work/WorkEnglishHub'));
+const WorkEnglishPage = lazy(() => import('./pages/work/WorkEnglishPage'));
 
 /* Branded chunk-loading screen for the candidate pages (pulsing real mark) */
 const VFallback = (
@@ -1223,6 +1225,9 @@ function AppRoutes(){
       <Route path="/about" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#060e1c'}} />}><AboutPage /></Suspense>} />
       <Route path="/articles" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#0a0e1a'}} />}><ArticlesIndex /></Suspense>} />
       <Route path="/articles/:slug" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#0a0e1a'}} />}><ArticlePage /></Suspense>} />
+      {/* «الإنجليزي للعمل» — field glossaries for «مصطلحات <مجال> بالانجليزي» searches */}
+      <Route path="/work-english" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#0a0e1a'}} />}><WorkEnglishHub /></Suspense>} />
+      <Route path="/work-english/:slug" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#0a0e1a'}} />}><WorkEnglishPage /></Suspense>} />
       <Route path="/privacy" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#060e1c'}} />}><PrivacyPolicy /></Suspense>} />
       <Route path="/terms" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#060e1c'}} />}><TermsOfService /></Suspense>} />
       <Route path="/w" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#0a1225'}} />}><WhatsAppRedirect /></Suspense>} />
@@ -1237,11 +1242,22 @@ function AppRoutes(){
   );
 }
 
+/** Everything under the router. Shared by the browser (BrowserRouter, below) and
+ *  the build-time prerender (src/entry-server.jsx, StaticRouter) so both render
+ *  the identical tree — hydration depends on it. */
+export function AppShell(){
+  return(
+    <>
+      <AppRoutes />
+      <CookieBanner />
+    </>
+  );
+}
+
 export default function App(){
   return(
     <BrowserRouter>
-      <AppRoutes />
-      <CookieBanner />
+      <AppShell />
     </BrowserRouter>
   );
 }

@@ -104,6 +104,11 @@ export default function ArticlesIndex() {
             >
               كتابات صريحة عن تعلّم الإنجليزي للكبار — لماذا تتعثّر المحاولات، وكيف تكسر الحاجز فعلاً.
             </p>
+            <p style={{ fontSize: "var(--lp-body)", margin: "var(--lp-space-md) 0 0" }}>
+              <Link to="/work-english" style={{ color: "var(--lp-amber-bright)" }}>
+                ولمصطلحات كل مجال عمل بالإنجليزي مع الترجمة: الإنجليزي للعمل ←
+              </Link>
+            </p>
           </div>
         </Reveal>
 

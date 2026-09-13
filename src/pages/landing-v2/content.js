@@ -472,6 +472,7 @@ export const FOOTER = {
     { label: "الباقات", href: "#pricing" },
     { label: "قصص نجاح", href: "#stories" },
     { label: "مقالات", href: "/articles" },
+    { label: "الإنجليزي للعمل", href: "/work-english" },
     { label: "دخول الطلاب", href: "https://app.fluentia.academy" },
     { label: "برنامج الشركاء", href: "/partners" },
   ],

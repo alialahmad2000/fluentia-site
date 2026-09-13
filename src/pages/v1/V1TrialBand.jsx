@@ -4,6 +4,7 @@ import { getVisitorId } from "../../utils/affiliateTracking";
 import { SUPABASE_URL } from "../../utils/tracking";
 import { getAttribution } from "../../lib/attribution";
 import { track } from "../../lib/track";
+import { useTrialHref } from "../../lib/trialLink";
 
 /**
  * V1TrialBand — the invitation to «درسك الأول» (app.fluentia.academy/try).
@@ -30,7 +31,6 @@ import { track } from "../../lib/track";
  */
 
 const EASE = [0.16, 1, 0.3, 1];
-const TRIAL_URL = "https://app.fluentia.academy/try";
 const ROTATE_MS = 5200;
 
 /* ── measurement ─────────────────────────────────────────────────────────────
@@ -70,18 +70,6 @@ function funnel(event, slug) {
       fetch(FUNNEL_URL, { method: "POST", body, keepalive: true }).catch(() => {});
     }
   } catch { /* measurement must never break the band */ }
-}
-
-function trialHref(slug) {
-  const p = new URLSearchParams({
-    utm_source: "home_band",
-    utm_medium: "site",
-    utm_campaign: getAttribution().utm_source || "direct",
-    job: slug,
-  });
-  const vid = visitor();
-  if (vid) p.set("vid", vid);
-  return `${TRIAL_URL}?${p.toString()}`;
 }
 
 /* Verbatim from the seeded lessons in `trial_lesson_cache`. `**term**` marks a
@@ -232,6 +220,9 @@ export default function V1TrialBand() {
     funnel("band_pick", SPECIMENS[n].slug);
     track("trial_band_select", { field: SPECIMENS[n].slug });
   };
+
+  // Prerendered: the vid/channel-bearing href is only computed after mount.
+  const ctaHref = useTrialHref({ source: "home_band", job: s.slug });
 
   const onCtaClick = () => {
     funnel("band_cta", s.slug);
@@ -557,7 +548,7 @@ export default function V1TrialBand() {
           {/* Its own grid child: beneath the claim on desktop, and AFTER the
               specimen on a phone — the evidence has to land before the ask. */}
           <div className="tb-cta-row">
-            <a href={trialHref(s.slug)} onClick={onCtaClick} data-cta="trial_band"
+            <a href={ctaHref} onClick={onCtaClick} data-cta="trial_band"
                className="v1-cta v1-cta-primary" style={{ textDecoration: "none" }}>
               ادخل على درس من مجالك ←
             </a>

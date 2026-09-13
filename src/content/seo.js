@@ -81,6 +81,14 @@ export const PAGE_SEO = {
       "مقالات صريحة عن تعلّم الإنجليزي للكبار وكسر الحاجز والطريقة العلمية للوصول إلى الطلاقة.",
   },
 
+  "/work-english": {
+    title: "الإنجليزي للعمل: مصطلحات كل مجال بالإنجليزي مترجمة | أكاديمية طلاقة",
+    description:
+      "مصطلحات العمل بالإنجليزي مع الترجمة لكل مجال: الطب والتمريض والصيدلة والمحاسبة والبنوك والهندسة وتقنية المعلومات والتسويق والموارد البشرية — مع أمثلة وجمل جاهزة.",
+    ogTitle: "الإنجليزي للعمل — مصطلحات كل مجال بالإنجليزي",
+    ogDescription: "قوائم مصطلحات مترجمة لكل مجال عمل، مع أمثلة وجمل جاهزة وأخطاء شائعة. قابلة للطباعة.",
+  },
+
   "/privacy": {
     title: "سياسة الخصوصية | أكاديمية طلاقة",
     description:
@@ -126,6 +134,19 @@ export function normalizeSeo(entry) {
     twDescription: entry.twDescription || ogDescription,
     keywords: entry.keywords || null,
   };
+}
+
+/** A work-English glossary page (data lives in content/work-english/<slug>.js). */
+export function workPageSeo(page) {
+  return normalizeSeo({
+    path: `/work-english/${page.slug}`,
+    title: `${page.title} | أكاديمية طلاقة`,
+    description: page.description,
+    ogType: "article",
+    ogTitle: page.h1,
+    ogDescription: page.description,
+    keywords: page.keywords?.length ? page.keywords.join(", ") : null,
+  });
 }
 
 /** Build a normalized entry for an article (data lives in content/articles.js). */

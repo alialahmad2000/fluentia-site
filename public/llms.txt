@@ -32,10 +32,25 @@ Every package starts with a free initial conversation with the trainer — no pa
 
 ## Key Pages
 - [Home & pricing](https://fluentia.academy/)
+- [Free adaptive English placement test (CEFR Pre-A1–C1, ~10 min)](https://fluentia.academy/level-test)
+- [Free trial lesson built from the visitor's own job](https://app.fluentia.academy/try)
+- [Work English hub — field glossaries with Arabic translations](https://fluentia.academy/work-english)
+- [Articles](https://fluentia.academy/articles)
 - [Partner program](https://fluentia.academy/partners)
 - [About](https://fluentia.academy/about)
 - [Privacy Policy](https://fluentia.academy/privacy)
 - [Terms of Service](https://fluentia.academy/terms)
+
+## Work English glossaries (English term → Arabic, with examples, phrases, common mistakes)
+- [Medical](https://fluentia.academy/work-english/medical) · [Nursing](https://fluentia.academy/work-english/nursing) · [Pharmacy](https://fluentia.academy/work-english/pharmacy) · [Medical laboratory](https://fluentia.academy/work-english/medical-lab)
+- [Accounting](https://fluentia.academy/work-english/accounting) · [Banking](https://fluentia.academy/work-english/banking)
+- [Engineering (site & projects)](https://fluentia.academy/work-english/engineering) · [IT](https://fluentia.academy/work-english/it)
+- [Marketing](https://fluentia.academy/work-english/marketing) · [HR](https://fluentia.academy/work-english/hr) · [Legal (contracts & compliance)](https://fluentia.academy/work-english/legal)
+
+## Guides (Arabic)
+- [Learning English from zero as an adult — a realistic plan](https://fluentia.academy/articles/%D8%AA%D8%B9%D9%84%D9%85-%D8%A7%D9%84%D8%A7%D9%86%D8%AC%D9%84%D9%8A%D8%B2%D9%8A%D8%A9-%D9%85%D9%86-%D8%A7%D9%84%D8%B5%D9%81%D8%B1)
+- [The STEP test (Qiyas) — sections, fees, results, preparation](https://fluentia.academy/articles/%D8%A7%D8%AE%D8%AA%D8%A8%D8%A7%D8%B1-%D8%B3%D8%AA%D9%8A%D8%A8)
+- [English levels A1–C2 explained with workplace examples](https://fluentia.academy/articles/%D9%85%D8%B3%D8%AA%D9%88%D9%8A%D8%A7%D8%AA-%D8%A7%D9%84%D9%84%D8%BA%D8%A9-%D8%A7%D9%84%D8%A7%D9%86%D8%AC%D9%84%D9%8A%D8%B2%D9%8A%D8%A9)
 
 ## Language
 Primary language: Arabic (العربية). Full English translations available for About, Privacy, and Terms.

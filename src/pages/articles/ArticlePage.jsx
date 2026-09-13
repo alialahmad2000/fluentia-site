@@ -69,6 +69,26 @@ function ArticleBar() {
   );
 }
 
+/** A list item written "English sentence — المعنى بالعربية" (the work guides use
+ *  this for every sample). As one RTL run the dash and the English wrap into the
+ *  Arabic unpredictably on a phone, so the English gets its own LTR line and the
+ *  Arabic sits under it. Anything else renders as plain text. */
+const ARABIC = /[\u0600-\u06FF]/;
+function PairOrText({ text }) {
+  const at = text.indexOf(" — ");
+  const en = at > 0 ? text.slice(0, at).replace(/\u200E/g, "").trim() : "";
+  if (!en || ARABIC.test(en)) return <span>{text}</span>;
+  const ar = text.slice(at + 3).trim();
+  return (
+    <span style={{ display: "block", flex: 1, minWidth: 0 }}>
+      <span dir="ltr" style={{ display: "block", textAlign: "left", color: "var(--lp-text-strong)", fontFamily: "var(--lp-font-num)", fontWeight: 500 }}>
+        {en}
+      </span>
+      <span style={{ display: "block", color: "var(--lp-text-muted)", marginTop: 4 }}>{ar}</span>
+    </span>
+  );
+}
+
 function Block({ block }) {
   if (block.type === "h2") {
     return (
@@ -154,7 +174,7 @@ function Block({ block }) {
             >
               {i + 1}
             </span>
-            <span>{it}</span>
+            <PairOrText text={it} />
           </li>
         ))}
       </ul>

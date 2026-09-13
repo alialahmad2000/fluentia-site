@@ -444,6 +444,941 @@ export const ARTICLES = [
         text: "معرفة المستوى بدقة توفّر وقتاً ومالاً: الدخول في مستوى أسهل من القدرة يسبب الملل، والدخول في مستوى أصعب يسبب الانسحاب. اختبار تحديد المستوى المجاني على fluentia.academy/level-test يعطي في نحو 10 دقائق مستوى واحداً محدداً، مع تفصيل المهارات القوية والمهارات التي تحتاج إلى تطوير — وهي نقطة بداية أوضح بكثير من كلمة «متوسط».",
       },
     ],
+  },
+  // ───────────────────────────────────────────────────────────────── 1
+  {
+    slug: "اسئلة-مقابلة-عمل-بالانجليزي",
+    eyebrow: "الإنجليزي للعمل",
+    title: "أسئلة مقابلة عمل بالإنجليزي مع الإجابة: 15 سؤالاً بنماذج مترجمة",
+    description:
+      "أسئلة مقابلة عمل بالإنجليزي مع الإجابة: 15 سؤالاً شائعاً بإجابات نموذجية مترجمة، وما يختبره كل سؤال، وبناء التعريف بالنفس، وأسئلة تُطرح على المُقابِل.",
+    keywords: [
+      "أسئلة مقابلة عمل بالانجليزي مع الإجابة",
+      "مقابلة عمل بالانجليزي",
+      "اسئلة المقابلة الشخصية بالانجليزي",
+      "أسئلة مقابلة عمل واجوبتها بالانجليزي",
+      "تكلم عن نفسك بالانجليزي مقابلة عمل",
+      "نقاط القوة والضعف في المقابلة الشخصية بالانجليزي",
+      "مقابلة عمل بالانجليزي مترجمة",
+      "tell me about yourself interview answer",
+    ],
+    datePublished: "2026-09-13",
+    dateModified: "2026-09-13",
+    readingMinutes: 10,
+    body: [
+      {
+        type: "p",
+        text: "المقابلة بالإنجليزي تختبر شيئين في وقت واحد: الكفاءة للوظيفة، والقدرة على شرح هذه الكفاءة بلغة ليست اللغة الأم. وكثير من المتقدّمين يملكون الخبرة المطلوبة لكنهم يخسرون المقابلة لأن الإجابة خرجت قصيرة ومتقطعة، أو طويلة ومحفوظة. هذا الدليل يجمع 15 سؤالاً من أكثر أسئلة مقابلات العمل تكراراً، ولكل سؤال إجابة نموذجية بإنجليزي طبيعي كما يُقال في مقابلة حقيقية، مع معناها بالعربي، وسطر يوضح ما الذي يبحث عنه المُقابِل خلف السؤال.",
+      },
+      { type: "h2", text: "كيف يُستفاد من الإجابات النموذجية؟" },
+      {
+        type: "p",
+        text: "الإجابات هنا قوالب لا نصوص للحفظ. المُقابِل المتمرّس يلاحظ بسرعة الإجابة المحفوظة حرفياً: إيقاعها ثابت، وتنهار عند أول سؤال متابعة. الأنفع أن تُفهم بنية كل إجابة، ثم تُعاد كتابتها بتفاصيل حقيقية من الخبرة الشخصية، ثم تُقال بصوت مرتفع عدة مرات حتى تصبح مألوفة دون أن تتجمّد. ومن المفيد تسجيل الإجابة صوتياً وسماعها، لأن الفرق بين ما نظنه قيل وما قيل فعلاً يكون كبيراً أحياناً.",
+      },
+      { type: "h2", text: "سؤال التعريف بالنفس: Tell me about yourself" },
+      {
+        type: "p",
+        text: "هذا غالباً أول سؤال، وهو ليس دعوة لسرد السيرة الذاتية من الولادة. المطلوب ملخّص مهني في دقيقة إلى دقيقتين تقريباً، يربط الخبرة بالوظيفة المعروضة. أسهل بنية له ثلاثة أجزاء: الحاضر، ثم الماضي، ثم سبب الاهتمام بهذه الوظيفة. ولا حاجة لذكر العمر أو الحالة الاجتماعية أو الهوايات إلا إذا كانت مرتبطة بالعمل.",
+      },
+      {
+        type: "list",
+        items: [
+          "I'm an accountant with six years of experience, currently at a logistics company in Riyadh, where I handle the month-end close and VAT returns.\u200E — أعمل في المحاسبة منذ 6 سنوات، وحالياً في شركة لوجستية في الرياض، ومن مهامي إقفال الحسابات الشهري وإقرارات ضريبة القيمة المضافة.",
+          "Before that, I spent two years in audit at an accounting firm, which gave me a solid grounding in controls and reporting.\u200E — وقبل ذلك عملت سنتين في التدقيق لدى مكتب محاسبة، وهذا أعطاني أساساً متيناً في الرقابة الداخلية وإعداد التقارير.",
+          "I'm now looking for a role with more responsibility for financial planning, and that's what caught my attention about this position.\u200E — وأبحث الآن عن دور فيه مسؤولية أكبر في التخطيط المالي، وهذا ما لفت انتباهي في هذه الوظيفة.",
+        ],
+      },
+      {
+        type: "p",
+        text: "ولحديثي التخرّج البنية نفسها مع تبديل المحتوى: التخصص والمشروع أو التدريب الأبرز مكان الخبرة، ثم مهارة واحدة واضحة، ثم سبب الاهتمام بالوظيفة. ما يختبره المُقابِل هنا: هل يستطيع المتقدّم تلخيص نفسه بوضوح وثقة، وهل يعرف لماذا تقدّم لهذه الوظيفة تحديداً.",
+      },
+      { type: "h2", text: "أسئلة عن الدافع: لماذا هذه الوظيفة ولماذا الآن؟" },
+      {
+        type: "p",
+        text: "السؤال 2: Why do you want to work here?\u200E — ما الذي يجذبك للعمل لدينا؟",
+      },
+      {
+        type: "list",
+        items: [
+          "I've followed your expansion into the Eastern Province over the past two years, and I'd like to be part of a team that's growing.\u200E — تابعت توسّع شركتكم في المنطقة الشرقية خلال السنتين الماضيتين، ويهمني أن أكون جزءاً من فريق في مرحلة نمو.",
+          "The role also matches what I do best: building reports that help managers make faster decisions.\u200E — والوظيفة أيضاً قريبة مما أجيده: إعداد تقارير تساعد المديرين على اتخاذ قرارات أسرع.",
+        ],
+      },
+      {
+        type: "p",
+        text: "ما يختبره السؤال: هل بحث المتقدّم عن الشركة فعلاً، أم أن إجابته تصلح لأي شركة. والتفصيلة في المثال تُستبدل بمعلومة حقيقية عن الجهة: مشروع أعلنت عنه، أو خدمة جديدة، أو قيمة مذكورة في موقعها.",
+      },
+      {
+        type: "p",
+        text: "السؤال 3: Why should we hire you?\u200E — لماذا نختارك لهذه الوظيفة؟",
+      },
+      {
+        type: "list",
+        items: [
+          "The role needs someone who can manage supplier contracts from day one, and I've been doing exactly that for four years.\u200E — الوظيفة تحتاج إلى شخص يدير عقود الموردين من اليوم الأول، وهذا بالضبط ما أعمله منذ 4 سنوات.",
+          "Last year, I renegotiated our three largest contracts, which cut costs by 12%.\u200E — وفي العام الماضي أعدت التفاوض على أكبر 3 عقود لدينا، وخفّض ذلك التكاليف بنسبة 12%.",
+        ],
+      },
+      {
+        type: "p",
+        text: "ما يختبره السؤال: الربط بين متطلبات الوظيفة المعلنة وخبرة المتقدّم بدليل ملموس، لا بصفات عامة مثل hard-working التي يقولها الجميع.",
+      },
+      {
+        type: "p",
+        text: "السؤال 4: Why are you leaving your current job?\u200E — ما سبب رغبتك في ترك عملك الحالي؟",
+      },
+      {
+        type: "list",
+        items: [
+          "I've learned a lot in my current role, and I'm grateful for that.\u200E — تعلّمت الكثير في عملي الحالي، وأقدّر ذلك.",
+          "But I've reached a point where there isn't much room to grow, and I'm looking for broader responsibilities.\u200E — لكني وصلت إلى مرحلة لم تعد فيها مساحة كبيرة للتطور، وأبحث عن مسؤوليات أوسع.",
+        ],
+      },
+      {
+        type: "p",
+        text: "ما يختبره السؤال: هل سيتحدث المتقدّم بسلبية عن جهة عمله. الإجابة الآمنة تتجه إلى ما هو قادم، لا إلى الشكوى مما مضى، حتى لو كانت أسباب المغادرة حقيقية.",
+      },
+      { type: "h2", text: "أسئلة عن المهارات ونقاط القوة والضعف" },
+      {
+        type: "p",
+        text: "السؤال 5: What are your strengths?\u200E — ما نقاط قوتك؟",
+      },
+      {
+        type: "list",
+        items: [
+          "I'd say my main strength is organization.\u200E — أظن أن أبرز نقاط قوتي التنظيم.",
+          "In my current job, I set up a shared tracker for project deadlines, and since then we haven't missed a single client submission.\u200E — في عملي الحالي أنشأت جدول متابعة مشتركاً لمواعيد المشاريع، ومنذ ذلك الحين لم يفُتنا أي موعد تسليم لعميل.",
+        ],
+      },
+      {
+        type: "p",
+        text: "ما يختبره السؤال: هل خلف الصفة مثال يثبتها. نقطة قوة واحدة مع قصة قصيرة أقوى من خمس صفات متتالية بلا دليل.",
+      },
+      {
+        type: "p",
+        text: "السؤال 6: What's your greatest weakness?\u200E — ما أكبر نقطة ضعف لديك؟",
+      },
+      {
+        type: "list",
+        items: [
+          "Public speaking used to be a weakness of mine, and I would avoid presenting in meetings.\u200E — التحدث أمام الآخرين كان نقطة ضعف عندي، وكنت أتجنب العرض في الاجتماعات.",
+          "So last year, I started volunteering to present our monthly updates, and it's become much easier.\u200E — فبدأت في العام الماضي أتطوع لعرض التحديث الشهري للفريق، وأصبح الأمر أسهل بكثير.",
+        ],
+      },
+      {
+        type: "p",
+        text: "ما يختبره السؤال: الوعي بالذات والقدرة على التحسن. إجابة I'm a perfectionist مستهلكة ولا تُقنع، وذكر ضعف جوهري في صميم الوظيفة يضر أكثر مما ينفع. الأفضل ضعف حقيقي لكنه غير أساسي للدور، مع خطوة عملية اتُّخذت لعلاجه.",
+      },
+      {
+        type: "p",
+        text: "السؤال 7: What's your biggest achievement so far?\u200E — ما أبرز إنجاز حققته حتى الآن؟",
+      },
+      {
+        type: "list",
+        items: [
+          "Last year, I led our switch from paper expense claims to an online system.\u200E — في العام الماضي قُدت انتقالنا من مطالبات المصروفات الورقية إلى نظام إلكتروني.",
+          "It took about three months, and claims now take two days to process instead of two weeks.\u200E — استغرق المشروع نحو 3 أشهر، وأصبحت معالجة المطالبات تأخذ يومين بدل أسبوعين.",
+        ],
+      },
+      {
+        type: "p",
+        text: "ما يختبره السؤال: حجم الأثر، ودور المتقدّم تحديداً فيه. استخدام I حين يكون الدور فعلاً دوراً شخصياً ليس غروراً؛ المُقابِل يريد أن يعرف ما فعله المتقدّم لا ما فعله الفريق كله.",
+      },
+      {
+        type: "p",
+        text: "السؤال 8: How do you handle pressure?\u200E — كيف يكون تعاملك مع ضغط العمل؟",
+      },
+      {
+        type: "list",
+        items: [
+          "I break the work down by priority, and if something is at risk, I flag it to my manager early.\u200E — أقسّم العمل حسب الأولوية، وإذا كان هناك ما قد يتأخر أنبّه مديري مبكراً.",
+          "During our year-end audit, for example, the team and I worked from a daily checklist, and we delivered everything on time.\u200E — مثلاً، أثناء تدقيق نهاية السنة عملنا أنا والفريق وفق قائمة مهام يومية، وسلّمنا كل شيء في موعده.",
+        ],
+      },
+      {
+        type: "p",
+        text: "ما يختبره السؤال: هل عند المتقدّم طريقة عملية لإدارة الضغط، أم مجرد عبارة جاهزة مثل I work well under pressure لا تقول شيئاً.",
+      },
+      { type: "h2", text: "الأسئلة السلوكية: طريقة STAR" },
+      {
+        type: "p",
+        text: "الأسئلة التي تبدأ بعبارة Tell me about a time تطلب قصة حقيقية من الماضي، لأن هذا النوع من الأسئلة يفترض أن التصرف السابق مؤشر جيد على التصرف المتوقع. وأوضح طريقة لبنائها هي STAR: الموقف (Situation)، والمهمة (Task)، والتصرف (Action)، والنتيجة (Result). والجزء الأطول يكون التصرف، والخطأ الشائع إطالة وصف الموقف ثم إنهاء القصة دون نتيجة.",
+      },
+      {
+        type: "p",
+        text: "السؤال 9: Tell me about a time you faced a challenge at work.\u200E — ما موقف واجهت فيه تحدياً في العمل، وكيف تعاملت معه؟",
+      },
+      {
+        type: "list",
+        items: [
+          "Last Ramadan, our biggest client brought a delivery deadline forward by a full week.\u200E — في رمضان الماضي قدّم أكبر عملائنا موعد التسليم أسبوعاً كاملاً.",
+          "I reorganized the team's shifts, split the order into two shipments, and updated the client every day.\u200E — أعدت تنظيم مناوبات الفريق، وقسمت الطلب إلى شحنتين، وكنت أحدّث العميل يومياً.",
+          "We delivered the first shipment on the new date, and the client renewed their contract that year.\u200E — سلّمنا الشحنة الأولى في الموعد الجديد، وجدّد العميل عقده في ذلك العام.",
+        ],
+      },
+      {
+        type: "p",
+        text: "ما يختبره السؤال: القدرة على التصرف بخطوات واضحة تحت ظرف غير متوقع، وهل تنتهي القصة بنتيجة يمكن قياسها.",
+      },
+      {
+        type: "p",
+        text: "السؤال 10: Tell me about a time you disagreed with a colleague.\u200E — ما موقف اختلفت فيه مع زميل، وكيف انتهى؟",
+      },
+      {
+        type: "list",
+        items: [
+          "A colleague and I disagreed on how to price a new service.\u200E — اختلفت مع زميل على طريقة تسعير خدمة جديدة.",
+          "Instead of arguing it out in the meeting, I suggested we go through the numbers together afterwards.\u200E — وبدل أن نتجادل في الاجتماع، اقترحت أن نراجع الأرقام معاً بعده.",
+          "We ended up combining parts of both ideas, and the final pricing worked well.\u200E — وانتهينا إلى الجمع بين أجزاء من الفكرتين، ونجح التسعير النهائي.",
+        ],
+      },
+      {
+        type: "p",
+        text: "ما يختبره السؤال: التعامل مع الخلاف باحترام، والتركيز على الحل لا على من كان محقاً.",
+      },
+      {
+        type: "p",
+        text: "السؤال 11: Tell me about a mistake you made at work.\u200E — ما خطأ وقعت فيه في العمل، وماذا تعلّمت منه؟",
+      },
+      {
+        type: "list",
+        items: [
+          "Early in my career, I sent a report to a client without double-checking one of the figures.\u200E — في بداية مسيرتي أرسلت تقريراً لعميل دون مراجعة أحد الأرقام مرة ثانية.",
+          "I told my manager straight away and sent a corrected version within the hour.\u200E — أبلغت مديري فوراً، وأرسلت نسخة مصححة خلال ساعة.",
+          "Since then, I always have a colleague review anything that goes out to a client.\u200E — ومنذ ذلك الوقت أطلب من زميل مراجعة أي شيء يُرسل إلى عميل.",
+        ],
+      },
+      {
+        type: "p",
+        text: "ما يختبره السؤال: الأمانة وتحمّل المسؤولية. إنكار وجود أي خطأ يثير الشك أكثر من خطأ صغير عولج بطريقة ناضجة.",
+      },
+      { type: "h2", text: "أسئلة عن المستقبل والراتب وموعد المباشرة" },
+      {
+        type: "p",
+        text: "السؤال 12: Where do you see yourself in five years?\u200E — ما تصورك لمسارك المهني بعد 5 سنوات؟",
+      },
+      {
+        type: "list",
+        items: [
+          "I'd like to have grown into a team lead role, with deeper expertise in financial analysis.\u200E — أطمح إلى الوصول لدور قيادة فريق، مع خبرة أعمق في التحليل المالي.",
+          "I see this position as a strong step in that direction.\u200E — وأرى هذه الوظيفة خطوة قوية في هذا الاتجاه.",
+        ],
+      },
+      {
+        type: "p",
+        text: "ما يختبره السؤال: هل الطموح منسجم مع الوظيفة، وهل يُتوقع أن يبقى المتقدّم مدة معقولة. ذكر رغبة في تأسيس مشروع خاص بعد سنة مثلاً يرسل رسالة غير مقصودة.",
+      },
+      {
+        type: "p",
+        text: "السؤال 13: What are your salary expectations?\u200E — ما الراتب المتوقع لديك؟",
+      },
+      {
+        type: "list",
+        items: [
+          "Based on the responsibilities and what similar roles pay, I'm looking for a total package of around 15,000 riyals a month.\u200E — بناءً على المسؤوليات وما تقدمه الوظائف المشابهة، أتوقع إجمالي راتب في حدود 15,000 ريال شهرياً.",
+          "That said, I'm open to discussion, depending on the full benefits package.\u200E — ومع ذلك، الرقم قابل للنقاش حسب المزايا المقدَّمة كاملة.",
+        ],
+      },
+      {
+        type: "p",
+        text: "ما يختبره السؤال: هل التوقع واقعي ومبني على معرفة بالسوق. والرقم في المثال للتوضيح فقط وليس مرجعاً للرواتب. وفي كثير من الشركات داخل المملكة يتكوّن الراتب من أساسي وبدلات مثل السكن والنقل، لذلك يُفضَّل توضيح هل الرقم المذكور إجمالي أم أساسي.",
+      },
+      {
+        type: "p",
+        text: "السؤال 14: When can you start?\u200E — متى يمكنك المباشرة؟",
+      },
+      {
+        type: "list",
+        items: [
+          "My contract has a one-month notice period, so I could start about a month after accepting an offer.\u200E — عقدي الحالي فيه فترة إشعار مدتها شهر، لذلك يمكنني المباشرة بعد نحو شهر من قبول العرض.",
+        ],
+      },
+      {
+        type: "p",
+        text: "ما يختبره السؤال: الجدية واحترام الالتزامات الحالية. الالتزام بفترة الإشعار نقطة تُحسب للمتقدّم لا عليه.",
+      },
+      { type: "h2", text: "السؤال 15: Do you have any questions for us?\u200E" },
+      {
+        type: "p",
+        text: "هذا السؤال يأتي عادة في النهاية، وإجابة No, I think you covered everything تضيّع فرصة حقيقية. الأسئلة الجيدة تُظهر اهتماماً بالعمل نفسه، وتعطي المتقدّم معلومات يحتاجها للقرار. هذه أسئلة مناسبة لأغلب الوظائف:",
+      },
+      {
+        type: "list",
+        items: [
+          "What does a typical day look like in this role?\u200E — كيف يبدو يوم العمل المعتاد في هذه الوظيفة؟",
+          "What would success look like in the first six months?\u200E — ما الذي يُعدّ نجاحاً في هذه الوظيفة خلال الأشهر الستة الأولى؟",
+          "What are the biggest challenges the team is facing right now?\u200E — ما أبرز التحديات التي يواجهها الفريق حالياً؟",
+          "Who would I be working with most closely?\u200E — مع من سيكون أغلب عملي اليومي؟",
+          "How is performance reviewed here?\u200E — كيف يُقيَّم الأداء لديكم؟",
+          "What are the next steps in the process?\u200E — ما الخطوات التالية في عملية التوظيف؟",
+        ],
+      },
+      {
+        type: "p",
+        text: "أما الأسئلة عن الإجازات والبدلات بالتفصيل فمكانها الطبيعي مرحلة العرض الوظيفي، لا المقابلة الأولى، إلا إذا فتح المُقابِل الموضوع بنفسه.",
+      },
+      { type: "h2", text: "أخطاء شائعة عند المتحدثين بالعربية في مقابلات الإنجليزي" },
+      {
+        type: "list",
+        items: [
+          "الترجمة الحرفية للمدة: I am working here since 3 years خطأ شائع، والصحيح I've been working here for three years، لأن since تأتي مع نقطة زمنية مثل since 2021 و for تأتي مع المدة.",
+          "حذف of في الخبرة: عبارة I have 5 years experience تُسمع كثيراً، والأدق I have five years of experience بإضافة of، خصوصاً في مقابلة رسمية.",
+          "عبارة I'm fresh graduate ينقصها a، والأشيع في هذا السياق I'm a recent graduate أو I graduated recently عند الحديث عن التخرّج الحديث.",
+          "استخدام discuss about: الفعل discuss لا يحتاج about، فيُقال We discussed the budget دون حرف جر.",
+          "الإجابة بكلمة واحدة: Yes أو No دون مثال تُلقي عبء الحوار كله على المُقابِل، وتترك انطباعاً بقلة الخبرة حتى لو كانت موجودة.",
+          "حفظ الإجابة حرفياً: الإلقاء المحفوظ يُكشف بسهولة، ويتعطّل عند أول سؤال متابعة.",
+          "عبارات عامة بلا دليل: I want to develop myself لا تعني شيئاً محدداً؛ الأوضح ذكر المهارة المقصودة، مثل I want to get better at financial modeling بدل العبارة العامة.",
+          "الاعتذار عن اللغة في البداية: جملة My English is not very good تضع المُقابِل في موقع البحث عن الأخطاء. الأفضل الكلام بهدوء، وطلب إعادة السؤال عند الحاجة بعبارة Sorry, could you repeat the question، وهي عبارة طبيعية تماماً.",
+        ],
+      },
+      {
+        type: "quote",
+        text: "المقابلة لا تقيس أجمل إنجليزي، بل أوضح إنجليزي. جملة بسيطة مع مثال حقيقي تتفوّق على جملة معقدة بلا مضمون.",
+      },
+      { type: "h2", text: "قبل المقابلة" },
+      {
+        type: "p",
+        text: "أفضل تحضير هو محاكاة المقابلة بصوت مرتفع مع شخص يطرح أسئلة المتابعة ويصحّح التعبير، لا قراءة الإجابات بصمت. ومن أراد معرفة نقطة البداية قبل التحضير، فاختبار تحديد المستوى المجاني على fluentia.academy/level-test يستغرق نحو 10 دقائق ويعطي تقديراً للمستوى على مقياس CEFR مع تفصيل للمهارات. وفي أكاديمية طلاقة درس تجريبي مجاني مبني على مجال العمل نفسه على app.fluentia.academy/try، لتجربة الكلام عن الخبرة والمهام بالإنجليزي في سياق الوظيفة الفعلية.",
+      },
+    ],
+  },
+  // ───────────────────────────────────────────────────────────────── 2
+  {
+    slug: "ايميل-رسمي-بالانجليزي",
+    eyebrow: "الإنجليزي للعمل",
+    title: "كتابة إيميل رسمي بالإنجليزي: صيغ جاهزة ونماذج للعمل",
+    description:
+      "إيميل رسمي بالإنجليزي: هيكل الرسالة من الموضوع إلى التوقيع، و8 نماذج جاهزة مترجمة لمواقف العمل، وعبارات مهذبة بديلة للصيغ المباشرة، وأخطاء شائعة.",
+    keywords: [
+      "ايميل رسمي بالانجليزي",
+      "كتابة ايميل رسمي بالانجليزي",
+      "صيغة ايميل رسمي بالانجليزي",
+      "ايميل رسمي بالانجليزي جاهز",
+      "بداية ايميل رسمي بالانجليزي",
+      "خاتمة ايميل رسمي بالانجليزي",
+      "ايميل طلب اجازة بالانجليزي",
+      "ايميل طلب وظيفة بالانجليزي",
+      "ايميل اعتذار عن التأخير بالانجليزي",
+    ],
+    datePublished: "2026-09-13",
+    dateModified: "2026-09-13",
+    readingMinutes: 9,
+    body: [
+      {
+        type: "p",
+        text: "الإيميل الرسمي بالإنجليزي جزء يومي من العمل في شركات ومستشفيات وجهات كثيرة داخل المملكة، حتى حين يكون أغلب الفريق عربياً. والصعوبة عادة ليست في القواعد بل في الصيغة: كيف تُفتتح الرسالة، وكيف يُطلب شيء بأدب دون إطالة، وكيف تُختم. هذا الدليل يشرح هيكل الإيميل الرسمي جزءاً جزءاً، ثم يقدّم 8 نماذج قصيرة جاهزة لمواقف عمل حقيقية، كل سطر فيها بالإنجليزي مع معناه بالعربي.",
+      },
+      { type: "h2", text: "هيكل الإيميل الرسمي بالإنجليزي" },
+      {
+        type: "p",
+        text: "إيميل العمل الواضح يتكوّن من ستة أجزاء، ولكل جزء وظيفة محددة:",
+      },
+      {
+        type: "list",
+        items: [
+          "سطر الموضوع (Subject): يلخّص الغرض في كلمات قليلة، ليُفهم قبل فتح الرسالة.",
+          "التحية (Greeting): مثل Dear Ms. Al-Qahtani أو Hi Faisal حسب درجة الرسمية.",
+          "الافتتاحية (Opening): سطر واحد يذكر سبب الرسالة أو يربطها بسياقها.",
+          "المحتوى (Body): الطلب أو المعلومة الأساسية في أول سطرين، ثم التفاصيل في فقرات قصيرة.",
+          "الخاتمة (Closing): سطر يوضح الخطوة التالية، مثل موعد الرد المطلوب.",
+          "التوقيع (Sign-off): عبارة ختام مثل Best regards، ثم الاسم والمسمى الوظيفي ووسيلة التواصل.",
+        ],
+      },
+      { type: "h2", text: "سطر الموضوع: قصير ومحدد" },
+      {
+        type: "p",
+        text: "سطر الموضوع الجيد يجيب عن سؤال واحد: ما هذه الرسالة؟ الموضوع الفارغ أو العام مثل Hello أو Important يُضيّع الرسالة بين عشرات الرسائل. وهذه أمثلة واضحة:",
+      },
+      {
+        type: "list",
+        items: [
+          "Meeting request: Q4 marketing plan — طلب اجتماع: خطة التسويق للربع الرابع",
+          "Follow-up on Invoice 4521 — متابعة الفاتورة رقم 4521",
+          "Annual leave request: 4–8 October — طلب إجازة سنوية: من 4 إلى 8 أكتوبر",
+          "Application for HR Specialist position — تقديم على وظيفة HR Specialist",
+          "Updated delivery date for Order 7784 — موعد تسليم جديد للطلب رقم 7784",
+        ],
+      },
+      { type: "h2", text: "التحية: Dear أم Hi؟" },
+      {
+        type: "p",
+        text: "في أول رسالة رسمية مع شخص من خارج الفريق، أو مع مسؤول أعلى، تبقى Dear الخيار الآمن. ومع الزملاء والتواصل المتكرر تصبح Hi مقبولة في أغلب بيئات العمل. وبعد التحية تأتي فاصلة، ثم يبدأ النص في سطر جديد.",
+      },
+      {
+        type: "list",
+        items: [
+          "Dear Ms. Al-Otaibi,\u200E — للمخاطبة الرسمية باسم العائلة.",
+          "Dear Eng. Khalid,\u200E — صيغة شائعة في بيئات العمل السعودية، ومثلها Dr.\u200E للأطباء وحملة الدكتوراه.",
+          "Dear Hiring Manager,\u200E — عند التقديم على وظيفة دون معرفة اسم المسؤول.",
+          "Dear Sir or Madam,\u200E — حين يكون المستلم غير معروف تماماً، وهي صيغة رسمية جداً.",
+          "Hi Faisal,\u200E — مع زميل يجري التواصل معه باستمرار.",
+          "Dear all,\u200E — لرسالة موجهة إلى مجموعة أو قسم كامل.",
+        ],
+      },
+      {
+        type: "p",
+        text: "وملاحظة عن الألقاب: في الإنجليزية الدولية يأتي Mr.\u200E أو Ms.\u200E قبل اسم العائلة لا الاسم الأول، مثل Mr. Al-Harbi. أما داخل بيئات العمل في المملكة فالشائع الاسم الأول مع اللقب المهني، مثل Eng. Khalid، وهو مفهوم ومقبول. واللقب Ms.\u200E هو الصيغة المحايدة للمرأة لأنه لا يفترض الحالة الاجتماعية.",
+      },
+      { type: "h2", text: "بداية الإيميل الرسمي وخاتمته" },
+      {
+        type: "p",
+        text: "الافتتاحية الجيدة قصيرة. عبارة I hope this email finds you well شائعة جداً في رسائل المنطقة ومقبولة، لكنها ليست إلزامية، وفي المراسلات المتكررة مع الشخص نفسه يمكن الدخول في الموضوع مباشرة. هذه عبارات افتتاح جاهزة:",
+      },
+      {
+        type: "list",
+        items: [
+          "I hope you're well.\u200E — أرجو أن تصلك رسالتي وأنت بخير.",
+          "I'm writing to ask about the status of our purchase order.\u200E — أكتب للاستفسار عن حالة أمر الشراء الخاص بنا.",
+          "Thank you for your quick reply.\u200E — شكراً على ردك السريع.",
+          "Following our call this morning, here is the updated timeline.\u200E — بناءً على مكالمتنا هذا الصباح، هذا هو الجدول الزمني المحدّث.",
+          "Further to your email of 10 September, please see my comments below.\u200E — إلحاقاً برسالتك بتاريخ 10 سبتمبر، وفيما يلي ملاحظاتي.",
+        ],
+      },
+      {
+        type: "p",
+        text: "وفي الخاتمة سطر يحدد الخطوة التالية، ثم عبارة الختام. و Best regards و Kind regards هما الأكثر استخداماً في إيميلات العمل، أما Yours sincerely فتناسب الخطابات الرسمية جداً وخطابات التقديم حين يكون اسم المرسَل إليه معروفاً، وتقابلها في البريطانية Yours faithfully مع Dear Sir or Madam.",
+      },
+      {
+        type: "list",
+        items: [
+          "Please let me know if you have any questions.\u200E — يسعدني الرد على أي استفسار.",
+          "I look forward to hearing from you.\u200E — بانتظار ردك.",
+          "I'd appreciate your reply by Thursday.\u200E — أقدّر وصول ردك في موعد أقصاه يوم الخميس.",
+          "Thank you for your help with this.\u200E — شكراً على مساعدتك في هذا الأمر.",
+          "Best regards — مع أطيب التحيات",
+          "Kind regards — مع خالص التحية",
+        ],
+      },
+      { type: "h2", text: "نموذج 1: إيميل طلب اجتماع" },
+      {
+        type: "list",
+        items: [
+          "Subject: Meeting to discuss the Q4 marketing plan — الموضوع: اجتماع لمناقشة خطة التسويق للربع الرابع",
+          "Dear Ms. Al-Shehri,\u200E — الأستاذة الشهري،",
+          "I'd like to set up a 30-minute meeting to go over the Q4 marketing plan before it goes to management.\u200E — أودّ ترتيب اجتماع مدته 30 دقيقة لمراجعة خطة التسويق للربع الرابع قبل رفعها إلى الإدارة.",
+          "Would Sunday or Monday morning work for you?\u200E — هل يناسبك صباح الأحد أو الإثنين؟",
+          "If neither works, I'm happy to work around your schedule.\u200E — وإن لم يناسبك أي منهما، فالموعد مرن حسب جدولك.",
+          "Best regards, Abdullah Al-Harbi — مع أطيب التحيات، عبدالله الحربي",
+        ],
+      },
+      { type: "h2", text: "نموذج 2: إيميل متابعة" },
+      {
+        type: "list",
+        items: [
+          "Subject: Follow-up on Invoice 4521 — الموضوع: متابعة الفاتورة رقم 4521",
+          "Dear Accounts Team,\u200E — فريق الحسابات،",
+          "I'm following up on Invoice 4521, which was due on 31 August.\u200E — أتابع بخصوص الفاتورة رقم 4521 التي كان موعد استحقاقها 31 أغسطس.",
+          "Could you let me know when we can expect payment?\u200E — هل يمكن إفادتي بموعد السداد المتوقع؟",
+          "I've attached a copy of the invoice for reference.\u200E — أرفقت نسخة من الفاتورة للاطلاع.",
+          "Kind regards,\u200E — مع خالص التحية،",
+        ],
+      },
+      { type: "h2", text: "نموذج 3: إيميل اعتذار عن التأخير" },
+      {
+        type: "list",
+        items: [
+          "Subject: Monthly sales report: new delivery time — الموضوع: موعد جديد لتسليم تقرير المبيعات الشهري",
+          "Dear Eng. Saad,\u200E — المهندس سعد،",
+          "I'm sorry for the delay in sending the monthly sales report.\u200E — أعتذر عن التأخر في إرسال تقرير المبيعات الشهري.",
+          "Some branch figures came in late, and I wanted to make sure the numbers were accurate.\u200E — وصلت أرقام بعض الفروع متأخرة، وأردت التأكد من دقة الأرقام قبل الإرسال.",
+          "You'll have the full report by 2 p.m. tomorrow.\u200E — سيصلك التقرير كاملاً قبل الساعة 2 بعد ظهر الغد.",
+          "Thank you for your patience.\u200E — شكراً لسعة صدرك.",
+        ],
+      },
+      { type: "h2", text: "نموذج 4: إيميل طلب إجازة بالإنجليزي" },
+      {
+        type: "list",
+        items: [
+          "Subject: Annual leave request: 4–8 October — الموضوع: طلب إجازة سنوية من 4 إلى 8 أكتوبر",
+          "Dear Mr. Al-Dosari,\u200E — الأستاذ الدوسري،",
+          "I'd like to request five days of annual leave, from Sunday 4 October to Thursday 8 October.\u200E — أودّ طلب إجازة سنوية مدتها 5 أيام، من الأحد 4 أكتوبر إلى الخميس 8 أكتوبر.",
+          "I'll finish the pending reports before I go, and Reem has agreed to cover urgent requests while I'm away.\u200E — سأنهي التقارير المعلّقة قبل الإجازة، ووافقت ريم على تغطية الطلبات العاجلة أثناء غيابي.",
+          "Please let me know if these dates work for the team.\u200E — أرجو إفادتي إن كانت هذه التواريخ مناسبة للفريق.",
+          "Best regards,\u200E — مع أطيب التحيات،",
+        ],
+      },
+      { type: "h2", text: "نموذج 5: إيميل اعتذار عن الحضور بسبب المرض" },
+      {
+        type: "list",
+        items: [
+          "Subject: Sick leave today — الموضوع: إجازة مرضية اليوم",
+          "Hi Majed,\u200E — مرحباً ماجد،",
+          "I'm not feeling well today, so I won't be able to come in.\u200E — لست بخير اليوم، لذلك لن أتمكن من الحضور.",
+          "I'll upload the medical report to the HR system as soon as I have it.\u200E — سأرفع التقرير الطبي على نظام الموارد البشرية فور حصولي عليه.",
+          "Nora can take today's client call, and I'll keep an eye on my email in case anything urgent comes up.\u200E — تستطيع نورة تولّي مكالمة العميل اليوم، وسأتابع بريدي في حال طرأ أمر عاجل.",
+          "Thanks,\u200E — شكراً،",
+        ],
+      },
+      { type: "h2", text: "نموذج 6: إيميل تقديم على وظيفة بالإنجليزي" },
+      {
+        type: "list",
+        items: [
+          "Subject: Application for HR Specialist position — الموضوع: التقديم على وظيفة HR Specialist",
+          "Dear Hiring Manager,\u200E — مسؤول التوظيف المحترم،",
+          "I'm writing to apply for the HR Specialist position advertised on LinkedIn.\u200E — أتقدّم بطلب لوظيفة HR Specialist المعلن عنها في LinkedIn.",
+          "I have four years of experience in recruitment and onboarding, most recently with a healthcare group in Jeddah.\u200E — لدي خبرة 4 سنوات في التوظيف وتهيئة الموظفين الجدد، آخرها في مجموعة صحية في جدة.",
+          "I've attached my CV and would welcome the chance to discuss how I could contribute to your team.\u200E — أرفقت سيرتي الذاتية، ويسعدني الحديث عما يمكن أن أضيفه لفريقكم.",
+          "Thank you for your time and consideration.\u200E — شكراً على وقتكم واهتمامكم.",
+          "Kind regards, Lama Al-Ghamdi — مع خالص التحية، لمى الغامدي",
+        ],
+      },
+      { type: "h2", text: "نموذج 7: رد على عميل" },
+      {
+        type: "list",
+        items: [
+          "Subject: Re: Delay in Order 7784 — الموضوع: رد: تأخر الطلب رقم 7784",
+          "Dear Mr. Al-Zahrani,\u200E — السيد الزهراني،",
+          "Thank you for getting in touch, and I'm sorry for the inconvenience this delay has caused.\u200E — شكراً على تواصلك، وأعتذر عن الإزعاج الذي سببه هذا التأخير.",
+          "I've checked with our warehouse, and your order will be shipped tomorrow morning.\u200E — راجعت الأمر مع المستودع، وسيُشحن طلبك صباح الغد.",
+          "You'll receive a tracking number by text message once it's on its way.\u200E — ستصلك رسالة نصية برقم التتبع فور شحن الطلب.",
+          "If there's anything else we can help with, please don't hesitate to contact us.\u200E — ويسعدنا المساعدة في أي أمر آخر.",
+          "Best regards,\u200E — مع أطيب التحيات،",
+        ],
+      },
+      { type: "h2", text: "نموذج 8: إيميل شكر بعد مقابلة العمل" },
+      {
+        type: "list",
+        items: [
+          "Subject: Thank you: HR Specialist interview — الموضوع: شكر بعد مقابلة وظيفة HR Specialist",
+          "Dear Ms. Al-Harthi,\u200E — الأستاذة الحارثي،",
+          "Thank you for taking the time to meet with me today.\u200E — شكراً على وقتك في لقاء اليوم.",
+          "I enjoyed hearing about the team's plans for the new onboarding program, and it made me even more interested in the role.\u200E — سعدت بالتعرّف على خطط الفريق لبرنامج التهيئة الجديد، وزاد ذلك من اهتمامي بالوظيفة.",
+          "I look forward to hearing about the next steps.\u200E — بانتظار معرفة الخطوات التالية.",
+          "Kind regards,\u200E — مع خالص التحية،",
+        ],
+      },
+      { type: "h2", text: "من صيغة مباشرة إلى صيغة مهذبة" },
+      {
+        type: "p",
+        text: "إنجليزي العمل يميل إلى تليين الطلب بصيغة سؤال أو عبارة تمهيدية، والصيغة المباشرة جداً قد تبدو حادة للقارئ حتى لو كانت النية عادية. هذه مقارنات سريعة بين الصيغتين:",
+      },
+      {
+        type: "list",
+        items: [
+          "Send me the report → Could you send me the report by Thursday?\u200E — بدل الأمر المباشر: هل يمكن إرسال التقرير في موعد أقصاه الخميس؟",
+          "I want a meeting → I'd like to set up a meeting.\u200E — بدل «أريد»: أودّ ترتيب اجتماع.",
+          "You didn't send the file → I don't seem to have received the file.\u200E — بدل الاتهام: يبدو أن الملف لم يصلني.",
+          "This is wrong → I think there may be an error in the figures.\u200E — بدل الحكم القاطع: أظن أن في الأرقام خطأً محتملاً.",
+          "Reply quickly → I'd appreciate a reply by the end of the day.\u200E — بدل الاستعجال الحاد: أقدّر وصول الرد قبل نهاية الدوام.",
+          "I can't come → Unfortunately, I won't be able to make it on Sunday.\u200E — بدل الرفض المقتضب: للأسف لن أتمكن من الحضور يوم الأحد.",
+        ],
+      },
+      { type: "h2", text: "أخطاء شائعة في الإيميل الرسمي بالإنجليزي" },
+      {
+        type: "list",
+        items: [
+          "ترجمة «تحية طيبة وبعد» حرفياً: لا توجد صيغة إنجليزية مقابلة لها، والتحية بالاسم ثم سطر افتتاحي قصير تكفي.",
+          "عبارة Waiting your reply: ينقصها for، والأكثر طبيعية I look forward to hearing from you في الختام الرسمي.",
+          "كلمة revert بمعنى «الرد»: عبارة Kindly revert منتشرة في بعض مكاتب المنطقة، لكن كثيراً من المتحدثين الأصليين لا يفهمونها بهذا المعنى، لأن revert عندهم تعني العودة إلى حالة سابقة. والأوضح استخدام get back to me أو reply بدلها.",
+          "جمع الكلمات غير المعدودة: informations و advices و feedbacks أخطاء شائعة، والصحيح information و advice و feedback دون إضافة s في آخرها.",
+          "إخفاء الطلب في آخر الرسالة: القارئ المشغول قد لا يصل إليه، ومكان الطلب الأساسي أول سطرين.",
+          "موضوع بأحرف كبيرة كلها مثل URGENT PLEASE READ: يُقرأ كأنه صراخ، والأوضح موضوع يذكر الموعد، مثل Approval needed by Thursday عند وجود استعجال فعلي.",
+          "كتابة Dear Sir مع معرفة اسم المستلم: الصيغة العامة تبدو باردة حين يكون الاسم معروفاً، والتحية بالاسم أفضل.",
+          "الإطالة: جملة I am writing this email to inform you that يمكن غالباً اختصارها إلى I'm writing to let you know that، أو الاستغناء عنها والدخول في الموضوع مباشرة.",
+        ],
+      },
+      {
+        type: "quote",
+        text: "الإيميل الرسمي الجيد لا يُقاس بطوله ولا بصعوبة كلماته، بل بسرعة فهمه: موضوع واضح، وطلب في البداية، وخاتمة تحدد الخطوة التالية.",
+      },
+      { type: "h2", text: "ما بعد الصيغ الجاهزة" },
+      {
+        type: "p",
+        text: "النماذج الجاهزة تحلّ جزءاً من المشكلة، لكن الرد بثقة على رسالة غير متوقعة، أو كتابة إيميل لا يشبه أي نموذج، يعتمد على مستوى لغوي ثابت. ولمعرفة هذا المستوى، يتوفر اختبار تحديد المستوى المجاني على fluentia.academy/level-test في نحو 10 دقائق، ويعطي تقديراً على مقياس CEFR مع تفصيل للمهارات، ومنه تتضح نقطة البداية.",
+      },
+    ],
+  },
+  // ───────────────────────────────────────────────────────────────── 3
+  {
+    slug: "سيرة-ذاتية-بالانجليزي",
+    eyebrow: "الإنجليزي للعمل",
+    title: "كتابة سيرة ذاتية بالإنجليزي للوظائف: أقسام وأفعال وصيغ جاهزة",
+    description:
+      "سيرة ذاتية بالإنجليزي للوظائف: الأقسام بالترتيب، وأفعال جاهزة لوصف الخبرة، وصياغة الإنجازات بالأرقام، و3 نماذج لنبذة مهنية، وأخطاء شائعة.",
+    keywords: [
+      "سيرة ذاتية بالانجليزي",
+      "كتابة سيرة ذاتية بالانجليزي",
+      "السيرة الذاتية بالانجليزي والعربي",
+      "سي في بالانجليزي",
+      "cv بالانجليزي",
+      "نبذة عن نفسي في السيرة الذاتية بالانجليزي",
+      "مهارات السيرة الذاتية بالانجليزي",
+      "سيرة ذاتية ats",
+      "كيف اكتب سيرة ذاتية بالانجليزي",
+    ],
+    datePublished: "2026-09-13",
+    dateModified: "2026-09-13",
+    readingMinutes: 9,
+    body: [
+      {
+        type: "p",
+        text: "السيرة الذاتية بالإنجليزي هي أول ما يراه مسؤول التوظيف في أغلب الشركات الكبيرة داخل المملكة، وفي كل شركة تكون الإنجليزية فيها لغة العمل. وكثير من السير تُكتب بترجمة سطر بسطر من نسخة عربية، فتخرج صحيحة الكلمات لكنها لا تُقرأ كسيرة مهنية. هذا الدليل عن السيرة الذاتية المهنية التي تُرسل مع طلب التوظيف، لا عن النبذة القصيرة لحسابات التواصل الاجتماعي: أقسامها بالترتيب، وأفعال جاهزة لوصف الخبرة، وطريقة تحويل المهام إلى إنجازات، وثلاثة نماذج لنبذة مهنية من ثلاثة مجالات مختلفة.",
+      },
+      { type: "h2", text: "CV أم Resume؟" },
+      {
+        type: "p",
+        text: "في المملكة ومعظم دول الخليج وفي بريطانيا تُستخدم كلمة CV للسيرة الذاتية المقدَّمة للوظائف. أما في الولايات المتحدة فالشائع كلمة resume للسيرة المختصرة، وتُخصَّص CV غالباً للسيرة الأكاديمية الطويلة. والمهم في النهاية المحتوى لا التسمية. وأما الطول، فالقاعدة العملية المتداولة صفحة إلى صفحتين لأغلب الوظائف، وصفحة واحدة تكفي عادة لحديثي التخرج.",
+      },
+      { type: "h2", text: "أقسام السيرة الذاتية بالإنجليزي بالترتيب" },
+      {
+        type: "list",
+        items: [
+          "بيانات التواصل (Contact details): الاسم، والمدينة، ورقم الجوال، والبريد الإلكتروني، ورابط LinkedIn إن وُجد. ولا حاجة للعنوان الكامل.",
+          "النبذة المهنية (Professional summary): من 3 إلى 4 أسطر تلخّص الخبرة والتخصص وأقوى ما يقدّمه المتقدّم.",
+          "الخبرة العملية (Work experience): من الأحدث إلى الأقدم، ولكل وظيفة المسمى والجهة والمدينة والفترة، ثم من 3 إلى 5 نقاط.",
+          "التعليم (Education): الدرجة والتخصص والجامعة وسنة التخرج، والمعدل لحديثي التخرج إن كان مرتفعاً.",
+          "المهارات (Skills): مهارات محددة يمكن التحقق منها، مثل الأنظمة والبرامج والمهارات الفنية في المجال، لا صفات عامة.",
+          "الشهادات والدورات (Certifications): الشهادات المهنية المعروفة في المجال، مثل SOCPA أو CMA أو PMP، مع سنة الحصول عليها.",
+          "اللغات (Languages): مثل Arabic (native) و English (fluent)، أو المستوى على مقياس CEFR إن كان موثّقاً باختبار.",
+        ],
+      },
+      {
+        type: "p",
+        text: "أما البيانات الشخصية مثل تاريخ الميلاد والحالة الاجتماعية والصورة، فلم تعد جزءاً أساسياً من السيرة الذاتية بالإنجليزي، وفي الشركات الدولية يُفضَّل غالباً تركها. وذكر الجنسية شائع في السير المقدَّمة داخل المملكة، ويُترك لطبيعة الوظيفة ومتطلبات الإعلان.",
+      },
+      { type: "h2", text: "أفعال جاهزة لوصف الخبرة" },
+      {
+        type: "p",
+        text: "كل نقطة في قسم الخبرة تبدأ بفعل قوي، دون ضمير I، ودون تكرار عبارة responsible for في كل سطر. الوظائف السابقة تُكتب بالماضي، وفي الوظيفة الحالية تُكتب المهام المستمرة بالمضارع والإنجازات المكتملة بالماضي. هذه أفعال مجمّعة حسب نوع العمل:",
+      },
+      {
+        type: "list",
+        items: [
+          "Led, managed, supervised — للقيادة: قيادة، وإدارة، وإشراف",
+          "Developed, designed, launched — للبناء: تطوير، وتصميم، وإطلاق",
+          "Improved, streamlined, reduced — للتحسين: تحسين، وتبسيط الإجراءات، وخفض",
+          "Increased, grew, exceeded — للنتائج: زيادة، وتنمية، وتجاوز المستهدف",
+          "Negotiated, secured, closed — للتفاوض والمبيعات: تفاوض، والحصول على عقد أو عميل، وإتمام صفقة",
+          "Analyzed, reconciled, audited — للتحليل والمالية: تحليل، ومطابقة الحسابات، وتدقيق",
+          "Trained, mentored, onboarded — للتدريب: تدريب، وتوجيه، وتهيئة الموظفين الجدد",
+          "Coordinated, organized, scheduled — للتنسيق: تنسيق، وتنظيم، وجدولة",
+          "Resolved, handled, responded to — لخدمة العملاء: حل المشكلات، والتعامل مع الطلبات، والاستجابة",
+          "Implemented, automated, migrated — للأنظمة: تطبيق نظام، وأتمتة، ونقل البيانات أو الأنظمة",
+        ],
+      },
+      { type: "h2", text: "صياغة الإنجازات: من المهمة إلى النتيجة" },
+      {
+        type: "p",
+        text: "الفرق بين سيرة عادية وسيرة مقنعة يكون غالباً في هذه النقطة. وصف المهمة يقول ما كان مطلوباً، ووصف الإنجاز يقول ما تغيّر بسبب العمل. وأبسط صيغة: فعل، ثم ماذا، ثم النتيجة، بالأرقام كلما أمكن. وكل رقم في السيرة يجب أن يكون حقيقياً وقابلاً للشرح في المقابلة. هذه أمثلة للتحويل، والأرقام فيها للتوضيح:",
+      },
+      {
+        type: "list",
+        items: [
+          "Responsible for customer complaints → Resolved an average of 40 customer complaints a week, with satisfaction scores above 90% — من وصف الواجب إلى إنجاز: حل 40 شكوى أسبوعياً في المتوسط مع رضا عملاء فوق 90%",
+          "In charge of payroll → Processed monthly payroll for 350 employees with no audit findings — معالجة الرواتب الشهرية لـ 350 موظفاً دون أي ملاحظات في التدقيق",
+          "Worked on social media → Grew the company's Instagram following from 8,000 to 25,000 in 12 months — تنمية متابعي حساب الشركة في إنستغرام من 8,000 إلى 25,000 خلال 12 شهراً",
+          "Helped with the new system → Led the rollout of a new ERP system across three branches and trained 60 staff — قيادة تطبيق نظام ERP جديد في 3 فروع وتدريب 60 موظفاً",
+          "Did site inspections → Carried out weekly safety inspections on a 12-story residential project with no lost-time injuries in 18 months — تنفيذ فحوص سلامة أسبوعية في مشروع سكني من 12 طابقاً دون أي إصابة عمل أدت إلى توقف خلال 18 شهراً",
+        ],
+      },
+      {
+        type: "p",
+        text: "وإن لم تتوفر أرقام دقيقة، فالنتيجة الوصفية أفضل من لا شيء، مثل cut month-end closing time، بشرط ألا يُكتب رقم لا يمكن الدفاع عنه عند السؤال.",
+      },
+      { type: "h2", text: "مثال كامل لوظيفة في قسم الخبرة" },
+      {
+        type: "p",
+        text: "هكذا تبدو وظيفة واحدة مكتملة في قسم Work Experience: سطر للمسمى والجهة والفترة، ثم نقاط تجمع المهام المستمرة والإنجازات. والتفاصيل للتوضيح:",
+      },
+      {
+        type: "list",
+        items: [
+          "Senior Accountant, [Company Name], Riyadh | Mar 2022 – Present — السطر الأول: المسمى، ثم الجهة والمدينة، ثم الفترة",
+          "Manage the month-end close for three business units, reporting to the Finance Manager — إدارة إقفال نهاية الشهر لثلاث وحدات أعمال، بالتبعية المباشرة للمدير المالي",
+          "Prepare quarterly VAT returns and coordinate with external auditors — إعداد إقرارات ضريبة القيمة المضافة الربعية، والتنسيق مع المراجعين الخارجيين",
+          "Automated bank reconciliations in Excel, saving the team around 15 hours a month — أتمتة مطابقات الحسابات البنكية في إكسل، ما وفّر على الفريق نحو 15 ساعة شهرياً",
+          "Reduced month-end closing time from 10 to 6 working days — خفض مدة إقفال نهاية الشهر من 10 إلى 6 أيام عمل",
+        ],
+      },
+      { type: "h2", text: "صيغ جاهزة لقسم المهارات واللغات" },
+      {
+        type: "list",
+        items: [
+          "Advanced Excel (pivot tables, Power Query) — إكسل متقدم مع ذكر الأدوات تحديداً",
+          "ERP systems: SAP S/4HANA, Oracle Fusion — أنظمة تخطيط موارد المؤسسات مع ذكر اسم النظام",
+          "Project management: planning, budgeting and risk tracking — إدارة المشاريع: التخطيط، والميزانية، ومتابعة المخاطر",
+          "Arabic: Native | English: Fluent (IELTS 7.0, 2025) — العربية لغة أم، والإنجليزية بطلاقة مع ذكر الاختبار وسنته إن وُجد",
+          "Valid Saudi driver's license — رخصة قيادة سعودية سارية، وتُذكر حين تكون مهمة للوظيفة",
+        ],
+      },
+      { type: "h2", text: "نبذة عن النفس في السيرة الذاتية بالإنجليزي: 3 نماذج" },
+      {
+        type: "p",
+        text: "النبذة المهنية (Professional summary) أول ما يُقرأ في السيرة، وتُكتب عادة دون ضمير I وبجمل مختصرة. هذه ثلاثة نماذج من ثلاثة مجالات، والتفاصيل فيها للتوضيح وتُستبدل بالخبرة الحقيقية.",
+      },
+      {
+        type: "p",
+        text: "النموذج الأول: وظيفة في المحاسبة بخبرة متوسطة.",
+      },
+      {
+        type: "list",
+        items: [
+          "Accountant with six years of experience in general ledger, month-end close and VAT compliance.\u200E — خبرة 6 سنوات في المحاسبة: دفتر الأستاذ العام، وإقفال نهاية الشهر، والامتثال لضريبة القيمة المضافة.",
+          "CMA certified, with hands-on experience in SAP and management reporting.\u200E — شهادة المحاسب الإداري المعتمد (CMA)، وخبرة عملية في نظام SAP والتقارير الإدارية.",
+          "Cut month-end closing time from 10 to 6 working days by standardizing reconciliations.\u200E — خفض مدة إقفال نهاية الشهر من 10 إلى 6 أيام عمل عبر توحيد إجراءات المطابقة.",
+        ],
+      },
+      {
+        type: "p",
+        text: "النموذج الثاني: وظيفة في التمريض بخبرة سريرية.",
+      },
+      {
+        type: "list",
+        items: [
+          "Registered nurse with five years of experience in adult ICU at a 400-bed tertiary hospital.\u200E — خبرة 5 سنوات في تمريض العناية المركزة للكبار في مستشفى تخصصي بسعة 400 سرير.",
+          "BLS and ACLS certified, and registered with the Saudi Commission for Health Specialties.\u200E — شهادتا BLS و ACLS، وتصنيف وتسجيل مهني لدى الهيئة السعودية للتخصصات الصحية.",
+          "Trained 12 newly hired nurses on the unit's infection control protocols.\u200E — تدريب 12 من طاقم التمريض الجديد على بروتوكولات مكافحة العدوى في الوحدة.",
+        ],
+      },
+      {
+        type: "p",
+        text: "النموذج الثالث: وظيفة مبتدئة في التسويق بعد التخرج.",
+      },
+      {
+        type: "list",
+        items: [
+          "Marketing graduate from King Abdulaziz University with six months of co-op training in digital marketing at a retail company.\u200E — بكالوريوس تسويق من جامعة الملك عبدالعزيز، وتدريب تعاوني لمدة 6 أشهر في التسويق الرقمي لدى شركة تجزئة.",
+          "Planned and ran a Ramadan social media campaign that increased engagement by 35%.\u200E — تخطيط حملة رمضانية على منصات التواصل وتنفيذها، ورفعت التفاعل بنسبة 35%.",
+          "Skilled in Meta Ads Manager, Google Analytics and Canva, and eager to grow in performance marketing.\u200E — إتقان أدوات الإعلانات والتحليلات والتصميم، ورغبة في التطور في مجال التسويق القائم على الأداء.",
+        ],
+      },
+      { type: "h2", text: "السيرة الذاتية وأنظمة الفرز الآلي (ATS)" },
+      {
+        type: "p",
+        text: "بعض الشركات، خصوصاً الكبيرة، تستخدم أنظمة لفرز الطلبات إلكترونياً قبل وصولها إلى مسؤول التوظيف. ولتقليل احتمال أن تُساء قراءة السيرة آلياً، يفيد تصميم بسيط بعمود واحد، وعناوين أقسام معروفة مثل Work Experience و Education، وتجنّب وضع معلومات مهمة داخل صور أو جداول معقدة، واستخدام المصطلحات الواردة في إعلان الوظيفة حين تنطبق فعلاً على الخبرة، وحفظ الملف بصيغة PDF أو Word حسب ما يطلبه الإعلان.",
+      },
+      { type: "h2", text: "أخطاء شائعة في السيرة الذاتية بالإنجليزي" },
+      {
+        type: "list",
+        items: [
+          "ترجمة السيرة العربية سطراً بسطر: السيرة بالإنجليزي تُعاد كتابتها بمنطق الإنجليزية، مع مسميات وظيفية متداولة مثل Head of Department أو Team Lead بدل ترجمات حرفية غير مألوفة.",
+          "بدء كل نقطة بضمير I: الأسلوب المعتاد يحذف الضمير، فيُكتب Managed a team of eight بدل I managed a team of eight في بداية النقطة.",
+          "تكرار responsible for: هذه العبارة تصف الواجب لا الإنجاز، والفعل المباشر مع النتيجة أقوى غالباً.",
+          "أخطاء إملائية في كلمات متكررة: مثل recieve بدل receive، و manger بدل manager. والأخيرة قد لا يلتقطها المدقق الإملائي لأن manger كلمة إنجليزية صحيحة معناها المعلف.",
+          "خلط الأزمنة دون قاعدة: الوظائف السابقة بالماضي دائماً، وفي الوظيفة الحالية المهام المستمرة بالمضارع والإنجازات المكتملة بالماضي. أما التنقل العشوائي بين الزمنين فيبدو إهمالاً.",
+          "بريد إلكتروني غير مهني: عنوان يحمل لقباً أو اسم فريق أو أرقاماً عشوائية يترك انطباعاً ضعيفاً، والبريد المبني على الاسم أفضل.",
+          "صفات عامة بلا دليل: hard-working و team player تتكرر كثيراً ولا تميّز أحداً، والأقوى مهارة محددة مثل Power BI مع مثال عليها في قسم الخبرة.",
+          "الإطالة: سرد كل دورة منذ أيام الجامعة يُضعف الأهم، والأولوية لما يخدم الوظيفة المطلوبة.",
+        ],
+      },
+      {
+        type: "quote",
+        text: "السيرة الذاتية لا تمنح الوظيفة، بل تفتح باب المقابلة. ودورها أن تجعل القارئ يرغب في معرفة المزيد.",
+      },
+      { type: "h2", text: "بعد السيرة تأتي المقابلة" },
+      {
+        type: "p",
+        text: "حين تفتح السيرة باب المقابلة، يصبح المطلوب شرح الخبرة نفسها بالإنجليزي بكلام واضح لا بنقاط مكتوبة. ولمعرفة المستوى الحالي، يتوفر اختبار تحديد المستوى المجاني على fluentia.academy/level-test في نحو 10 دقائق، ويعطي تقديراً على مقياس CEFR مع تفصيل للمهارات. وهو يساعد على وصف مستوى الإنجليزي بواقعية في قسم اللغات، مع أن الشهادة الرسمية المعتمدة تبقى المرجع حين تطلبها جهة التوظيف.",
+      },
+    ],
+  },
+  // ───────────────────────────────────────────────────────────────── 4
+  {
+    slug: "جمل-انجليزية-للعمل",
+    eyebrow: "الإنجليزي للعمل",
+    title: "جمل إنجليزية للعمل: عبارات جاهزة للاجتماعات والإيميل والهاتف",
+    description:
+      "جمل إنجليزية للعمل مترجمة: 59 عبارة جاهزة للتعارف والاجتماعات والإيميل والمكالمات وطلب المساعدة ومتابعة المهام، مع ملاحظات عن الاستخدام وأخطاء شائعة.",
+    keywords: [
+      "جمل انجليزية للعمل",
+      "انجليزي للعمل",
+      "عبارات انجليزية للعمل",
+      "جمل انجليزية تستعمل يوميا في العمل",
+      "محادثة انجليزي للعمل",
+      "كلمات انجليزي للعمل",
+      "مصطلحات انجليزي للعمل",
+      "عبارات رسمية بالانجليزي",
+      "مكالمة هاتفية بالانجليزي",
+    ],
+    datePublished: "2026-09-13",
+    dateModified: "2026-09-13",
+    readingMinutes: 8,
+    body: [
+      {
+        type: "p",
+        text: "أغلب إنجليزي العمل اليومي لا يقوم على مفردات نادرة، بل على عدد محدود من الجمل المتكررة: بداية اجتماع، وطلب توضيح، واعتذار عن تأخير، ومتابعة مهمة. ومن يملك هذه الجمل جاهزة يتكلم بثقة أكبر حتى لو كان مستواه العام متوسطاً، لأن الذهن لا ينشغل ببناء كل جملة من الصفر. جمعنا هنا 59 عبارة من مواقف العمل الأكثر تكراراً، مقسّمة حسب الموقف، مع معناها بالعربي وملاحظات قصيرة عن الاستخدام. والصيغ المختارة هي ما يُقال فعلاً في المكاتب والاجتماعات اليوم، لا عبارات الكتب القديمة.",
+      },
+      { type: "h2", text: "طريقة حفظ الجمل واستخدامها" },
+      {
+        type: "p",
+        text: "قراءة القائمة مرة واحدة لا تكفي لتبقى الجمل حاضرة وقت الحاجة. الأنفع حفظ كل عبارة قطعة واحدة لا كلمة كلمة، ونطقها بصوت مرتفع حتى يألفها اللسان، ثم اختيار خمس جمل فقط كل أسبوع لاستخدامها فعلاً في إيميل أو اجتماع. ومن المفيد أيضاً ملاحظة العبارات التي يستخدمها الزملاء والعملاء في رسائلهم وإضافتها إلى القائمة الشخصية، لأنها أقرب ما يكون إلى لغة بيئة العمل نفسها.",
+      },
+      { type: "h2", text: "التعارف في بيئة العمل" },
+      {
+        type: "list",
+        items: [
+          "Nice to meet you. I'm Khalid from the IT team.\u200E — تشرفت بمعرفتك، أنا خالد من فريق تقنية المعلومات.",
+          "I don't think we've met. I'm Reem, the project coordinator.\u200E — لا أظن أننا التقينا من قبل، أنا ريم منسقة المشروع.",
+          "Which team are you with?\u200E — ما فريقك هنا؟",
+          "Welcome to the team. Let me know if you need anything.\u200E — أهلاً بك في الفريق، ويسعدني المساعدة في أي شيء.",
+        ],
+      },
+      {
+        type: "p",
+        text: "في بيئات العمل التي تستخدم الإنجليزية يُعرّف الشخص نفسه عادة بالاسم الأول مع الفريق أو الدور، لا بالمسمى الوظيفي الكامل. وفي اللقاء الأول تكفي عبارة Nice to meet you، وفي اللقاءات التالية تصبح Good to see you again أنسب.",
+      },
+      { type: "h2", text: "عبارات إنجليزية لبداية الاجتماع وإدارته" },
+      {
+        type: "list",
+        items: [
+          "Shall we get started?\u200E — هل نبدأ؟",
+          "Thanks, everyone, for making the time.\u200E — شكراً للجميع على تخصيص الوقت.",
+          "The aim of today's meeting is to agree on the launch date.\u200E — هدف اجتماع اليوم الاتفاق على موعد الإطلاق.",
+          "Let's go through the agenda.\u200E — لنمرّ على جدول الأعمال.",
+          "Let's move on to the next item.\u200E — لننتقل إلى البند التالي.",
+          "We're running short on time, so let's focus on the main points.\u200E — الوقت يضيق، فلنركّز على النقاط الرئيسية.",
+          "Let's take this offline.\u200E — لنكمل هذا الموضوع لاحقاً خارج الاجتماع.",
+        ],
+      },
+      {
+        type: "p",
+        text: "عبارة Let's take this offline لا علاقة لها بالإنترنت، بل تعني نقل نقاش جانبي إلى وقت آخر أو إلى عدد أقل من الحضور حتى لا يتعطّل الاجتماع.",
+      },
+      { type: "h2", text: "جمل المشاركة في النقاش" },
+      {
+        type: "list",
+        items: [
+          "Can I add something here?\u200E — هل يمكن أن أضيف نقطة هنا؟",
+          "Sorry to interrupt, but I have a quick question.\u200E — عذراً على المقاطعة، لكن لدي سؤال سريع.",
+          "That's a good point.\u200E — نقطة في محلها.",
+          "I agree with Sara on this.\u200E — أتفق مع سارة في هذه النقطة.",
+          "I see your point, but I look at it a bit differently.\u200E — أفهم وجهة نظرك، لكن رأيي مختلف قليلاً.",
+          "I don't think that will work, because the budget is already tight.\u200E — لا أظن أن هذا سينجح، لأن الميزانية محدودة أصلاً.",
+          "Could you clarify what you mean by phase two?\u200E — هل يمكن توضيح المقصود بالمرحلة الثانية؟",
+          "Just to confirm, we need two more weeks, right?\u200E — للتأكد من فهمي: نحتاج أسبوعين إضافيين؟",
+        ],
+      },
+      {
+        type: "p",
+        text: "الاعتراض المهذب في إنجليزي العمل يبدأ عادة بالإقرار بالرأي الآخر ثم طرح الرأي المختلف، بدل الرفض المباشر مثل That's wrong الذي قد يُسمع حاداً حتى لو كانت النية مجرد نقاش.",
+      },
+      { type: "h2", text: "ختام الاجتماع وتوزيع المهام" },
+      {
+        type: "list",
+        items: [
+          "To sum up, we've agreed to launch on 1 November.\u200E — للتلخيص: اتفقنا على الإطلاق في 1 نوفمبر.",
+          "Who's going to take care of this?\u200E — من سيتولى هذه المهمة؟",
+          "Faisal will send the updated figures by Tuesday.\u200E — سيرسل فيصل الأرقام المحدّثة بحلول يوم الثلاثاء.",
+          "I'll share the minutes after the meeting.\u200E — سأشارك محضر الاجتماع بعد انتهائه.",
+          "Let's schedule a follow-up meeting for next week.\u200E — لنحدد اجتماع متابعة الأسبوع القادم.",
+        ],
+      },
+      {
+        type: "p",
+        text: "كلمة by في عبارة by Tuesday تعني «في موعد أقصاه» يوم الثلاثاء، لا «بواسطة»، وهي من أكثر الكلمات تكراراً عند توزيع المهام وتحديد المواعيد.",
+      },
+      { type: "h2", text: "جمل إنجليزية للإيميل والرسائل" },
+      {
+        type: "list",
+        items: [
+          "Just a quick reminder about tomorrow's deadline.\u200E — تذكير سريع بموعد التسليم غداً.",
+          "As discussed, I've attached the revised proposal.\u200E — كما ناقشنا، أرفقت العرض المعدّل.",
+          "Could you please confirm receipt?\u200E — هل يمكن تأكيد الاستلام؟",
+          "Sorry for the late reply.\u200E — أعتذر عن تأخر الرد.",
+          "I've copied Ahmed, who's handling the contract.\u200E — أضفت أحمد إلى الرسالة لأنه يتابع العقد.",
+          "Just following up on my email from last week.\u200E — أتابع بخصوص رسالتي من الأسبوع الماضي.",
+          "Noted, thanks.\u200E — تم العلم، شكراً.",
+        ],
+      },
+      {
+        type: "p",
+        text: "كلمة Noted شائعة جداً في مراسلات المكاتب في المنطقة للإشعار بالاستلام، وهي مقبولة بين الزملاء. أما مع العملاء أو المسؤولين الأعلى فتبدو مقتضبة وحدها، ويحسن أن تُضاف إليها جملة شكر أو خطوة تالية.",
+      },
+      { type: "h2", text: "عبارات المكالمات والاجتماعات عن بُعد" },
+      {
+        type: "list",
+        items: [
+          "Hello, this is Nora from the finance department.\u200E — مرحباً، معك نورة من الإدارة المالية.",
+          "Could I speak to Mr. Al-Harbi, please?\u200E — هل يمكنني التحدث مع الأستاذ الحربي؟",
+          "I'm afraid he's in a meeting. Can I take a message?\u200E — للأسف هو في اجتماع، هل أسجّل له رسالة؟",
+          "Sorry, could you say that again? The line is breaking up.\u200E — عذراً، هل يمكن الإعادة؟ الصوت يتقطع.",
+          "Could you speak a little more slowly, please?\u200E — هل يمكن التحدث ببطء قليلاً؟",
+          "Can everyone hear me?\u200E — هل صوتي واضح للجميع؟",
+          "I think you're on mute.\u200E — أظن أن الميكروفون مغلق عندك.",
+          "I'll share my screen.\u200E — سأشارك الشاشة الآن.",
+          "I'll call you back in ten minutes.\u200E — سأعاود الاتصال بعد 10 دقائق.",
+        ],
+      },
+      {
+        type: "p",
+        text: "عبارة I'm afraid في بداية الجملة لا تعني الخوف هنا، بل هي تمهيد مهذب قبل خبر غير مرغوب، مثل غياب الشخص المطلوب أو تعذّر طلب. وفي المكالمات تحديداً، طلب الإعادة أو التحدث ببطء أمر طبيعي تماماً ولا يُعدّ ضعفاً في اللغة.",
+      },
+      { type: "h2", text: "طلب المساعدة والتوضيح" },
+      {
+        type: "list",
+        items: [
+          "Do you have a minute?\u200E — هل لديك دقيقة؟",
+          "Could you walk me through the new process?\u200E — هل يمكن شرح الإجراء الجديد لي خطوة بخطوة؟",
+          "I'm not sure I follow. Could you give me an example?\u200E — لم أفهم تماماً، هل يمكن ذكر مثال؟",
+          "When is this due?\u200E — متى موعد تسليم هذا العمل؟",
+          "Which of these should I prioritize?\u200E — أيّ هذه المهام له الأولوية؟",
+          "Would you mind checking this before I send it?\u200E — هل يمكن مراجعة هذا قبل أن أرسله؟",
+        ],
+      },
+      {
+        type: "p",
+        text: "طلب المساعدة بسؤال محدد يأتي بإجابة أسرع من طلب عام. الجملة الأولى في هذه المجموعة تمهيد مهذب قبل مقاطعة زميل مشغول، والبقية تحدد نوع المساعدة المطلوبة بدقة: شرح، أو مثال، أو موعد، أو أولوية، أو مراجعة.",
+      },
+      { type: "h2", text: "النبرة: متى تصبح الجملة رسمية أكثر من اللازم؟" },
+      {
+        type: "p",
+        text: "ليست كل جملة مهذبة مناسبة لكل موقف. عبارة I would be grateful if you could مناسبة لإيميل رسمي إلى جهة خارجية أو مسؤول لا توجد معه معرفة سابقة، لكنها تبدو متكلّفة في رسالة سريعة لزميل في الفريق، حيث تكفي Could you في بداية الطلب. والقاعدة العملية: كلما قربت العلاقة وقصرت الرسالة، قصرت الصيغة، دون التخلي عن كلمات مثل please و thanks في أي مستوى.",
+      },
+      { type: "h2", text: "تحديث حالة العمل ومتابعة المهام" },
+      {
+        type: "list",
+        items: [
+          "I'm working on it and should have it ready by tomorrow.\u200E — أعمل عليه، ومن المتوقع أن يكون جاهزاً غداً.",
+          "It's almost done.\u200E — شارف على الانتهاء.",
+          "We're on track to finish by the end of the month.\u200E — نسير وفق الخطة للانتهاء بنهاية الشهر.",
+          "We've run into a problem with the supplier.\u200E — واجهتنا مشكلة مع المورد.",
+          "It's been pushed back to next week.\u200E — تأجل إلى الأسبوع القادم.",
+          "I'll keep you posted.\u200E — سأبقيك على اطلاع بالمستجدات.",
+        ],
+      },
+      {
+        type: "p",
+        text: "عبارة I'll keep you posted وعد بتحديثات لاحقة، وقيمتها في الالتزام بها فعلاً. ومن يرسل تحديثاً قصيراً قبل أن يُسأل يكسب ثقة الفريق أسرع من أي عبارة جميلة.",
+      },
+      { type: "h2", text: "الاعتذار والرفض بلباقة والشكر" },
+      {
+        type: "list",
+        items: [
+          "Sorry, that was my mistake. I'll fix it today.\u200E — عذراً، الخطأ مني، وسأصلحه اليوم.",
+          "I'm afraid I can't take this on right now, but I can help next week.\u200E — للأسف لا أستطيع تولي هذا الآن، لكن يمكنني المساعدة الأسبوع القادم.",
+          "That's outside my authority, so I'll check with my manager.\u200E — هذا خارج صلاحياتي، لذلك سأراجع مديري.",
+          "Thanks for your help. I really appreciate it.\u200E — شكراً على مساعدتك، أقدّر ذلك كثيراً.",
+          "Great job on the presentation.\u200E — عمل رائع في العرض التقديمي.",
+          "No problem at all.\u200E — لا مشكلة إطلاقاً.",
+          "Happy to help.\u200E — بكل سرور.",
+        ],
+      },
+      {
+        type: "p",
+        text: "رفض مهمة إضافية بلباقة مع اقتراح بديل، كما في الجملة الثانية، أوضح للفريق من قبولها ثم التأخر فيها. والصيغة المهمة هنا ذكر السبب أو البديل، لا الاكتفاء بكلمة No وحدها.",
+      },
+      { type: "h2", text: "أخطاء شائعة في جمل العمل عند المتحدثين بالعربية" },
+      {
+        type: "list",
+        items: [
+          "قول I am agree: الفعل agree لا يأتي بعد am، والصحيح I agree، كما يُقال I think دون am قبلها.",
+          "حروف الجر مع الوقت: قول in Sunday أو in 3 p.m. خطأ متكرر، والصحيح on مع الأيام و at مع الساعة، مثل The meeting is on Sunday at 3 p.m. في دعوة الاجتماع.",
+          "قول Explain me: الفعل explain يحتاج to قبل الشخص، فيُقال Could you explain it to me بدلها.",
+          "قول make a meeting: ترجمة حرفية لعبارة «نعمل اجتماع»، والمستخدم فعلاً set up a meeting أو schedule a meeting في بيئة العمل.",
+          "قول after one hour للحديث عن وقت من الآن: الأشيع in an hour، فيُقال I'll call you back in an hour عادة.",
+          "قول Repeat please بصيغة أمر: الأكثر تهذيباً Sorry, could you say that again، وهي جملة يستخدمها المتحدثون الأصليون أنفسهم يومياً.",
+        ],
+      },
+      {
+        type: "quote",
+        text: "إنجليزي العمل لا يحتاج جملاً معقدة. جملة قصيرة في وقتها، بنبرة مهذبة، تنجز أكثر من فقرة كاملة محفوظة لا تُقال.",
+      },
+      { type: "h2", text: "من القائمة إلى الكلام" },
+      {
+        type: "p",
+        text: "القوائم تعطي الجمل، لكن استخدامها بطلاقة يأتي من الممارسة في مواقف قريبة من العمل الحقيقي مع من يصحّح التعبير والنطق. ولمعرفة المستوى الحالي، اختبار تحديد المستوى المجاني على fluentia.academy/level-test يستغرق نحو 10 دقائق ويعطي تقديراً على مقياس CEFR مع تفصيل للمهارات. وفي أكاديمية طلاقة درس تجريبي مجاني مبني على مجال العمل نفسه على app.fluentia.academy/try، لتجربة هذه المواقف بلغة الوظيفة الفعلية.",
+      },
+    ],
   }
 ];
 

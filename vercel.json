@@ -58,6 +58,54 @@
   ],
   "rewrites": [
     {
+      "source": "/work-english",
+      "destination": "/work-english.html"
+    },
+    {
+      "source": "/work-english/medical",
+      "destination": "/work-english/medical.html"
+    },
+    {
+      "source": "/work-english/nursing",
+      "destination": "/work-english/nursing.html"
+    },
+    {
+      "source": "/work-english/pharmacy",
+      "destination": "/work-english/pharmacy.html"
+    },
+    {
+      "source": "/work-english/medical-lab",
+      "destination": "/work-english/medical-lab.html"
+    },
+    {
+      "source": "/work-english/accounting",
+      "destination": "/work-english/accounting.html"
+    },
+    {
+      "source": "/work-english/banking",
+      "destination": "/work-english/banking.html"
+    },
+    {
+      "source": "/work-english/engineering",
+      "destination": "/work-english/engineering.html"
+    },
+    {
+      "source": "/work-english/it",
+      "destination": "/work-english/it.html"
+    },
+    {
+      "source": "/work-english/marketing",
+      "destination": "/work-english/marketing.html"
+    },
+    {
+      "source": "/work-english/hr",
+      "destination": "/work-english/hr.html"
+    },
+    {
+      "source": "/work-english/legal",
+      "destination": "/work-english/legal.html"
+    },
+    {
       "source": "/level-test",
       "destination": "/level-test.html"
     },
@@ -106,8 +154,24 @@
       "destination": "/articles/مستويات-اللغة-الانجليزية.html"
     },
     {
+      "source": "/articles/%D8%A7%D8%B3%D8%A6%D9%84%D8%A9-%D9%85%D9%82%D8%A7%D8%A8%D9%84%D8%A9-%D8%B9%D9%85%D9%84-%D8%A8%D8%A7%D9%84%D8%A7%D9%86%D8%AC%D9%84%D9%8A%D8%B2%D9%8A",
+      "destination": "/articles/اسئلة-مقابلة-عمل-بالانجليزي.html"
+    },
+    {
+      "source": "/articles/%D8%A7%D9%8A%D9%85%D9%8A%D9%84-%D8%B1%D8%B3%D9%85%D9%8A-%D8%A8%D8%A7%D9%84%D8%A7%D9%86%D8%AC%D9%84%D9%8A%D8%B2%D9%8A",
+      "destination": "/articles/ايميل-رسمي-بالانجليزي.html"
+    },
+    {
+      "source": "/articles/%D8%B3%D9%8A%D8%B1%D8%A9-%D8%B0%D8%A7%D8%AA%D9%8A%D8%A9-%D8%A8%D8%A7%D9%84%D8%A7%D9%86%D8%AC%D9%84%D9%8A%D8%B2%D9%8A",
+      "destination": "/articles/سيرة-ذاتية-بالانجليزي.html"
+    },
+    {
+      "source": "/articles/%D8%AC%D9%85%D9%84-%D8%A7%D9%86%D8%AC%D9%84%D9%8A%D8%B2%D9%8A%D8%A9-%D9%84%D9%84%D8%B9%D9%85%D9%84",
+      "destination": "/articles/جمل-انجليزية-للعمل.html"
+    },
+    {
       "source": "/(.*)",
-      "destination": "/index.html"
+      "destination": "/app-shell.html"
     }
   ]
 }

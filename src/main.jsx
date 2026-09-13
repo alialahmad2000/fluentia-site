@@ -64,10 +64,29 @@ captureRefFromUrl()
 captureAttribution()
 installWhatsAppClickTracking()
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+const tree = (
   <React.StrictMode>
     <HelmetProvider>
       <App />
     </HelmetProvider>
-  </React.StrictMode>,
+  </React.StrictMode>
 )
+
+// Routes listed in src/content/seo.js / articles / work-english ship with their
+// markup already inside #root (scripts/prerender-meta.mjs), stamped with the path
+// it was rendered for. Hydrate only when that stamp matches THIS path — anything
+// else (the app shell, a stale cache) is rendered from scratch.
+const rootEl = document.getElementById('root')
+let here = window.location.pathname
+try { here = decodeURIComponent(here) } catch { /* keep raw */ }
+if (rootEl.hasChildNodes() && rootEl.dataset.prerendered === here) {
+  ReactDOM.hydrateRoot(rootEl, tree, {
+    onRecoverableError(err) {
+      // A mismatch is recovered by client rendering that subtree; log, don't crash.
+      if (typeof console !== 'undefined') console.warn('[hydrate]', err?.message || err)
+    },
+  })
+} else {
+  rootEl.textContent = ''
+  ReactDOM.createRoot(rootEl).render(tree)
+}

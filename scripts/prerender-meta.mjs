@@ -16,14 +16,25 @@
  * than duplicating them. Unlisted routes still fall through to dist/index.html,
  * which keeps the homepage block — a correct brand preview, never a comment.
  *
+ * BODY (added 2026-09-13): the head alone left every route's <body> an empty
+ * #root — 0 characters of text for any crawler that doesn't run JavaScript, and
+ * a render-dependent first pass for Google. Each target is now also rendered to
+ * HTML by the SSR bundle (src/entry-server.jsx → dist-ssr/) and placed inside
+ * #root with data-prerendered="<path>"; src/main.jsx hydrates it. Per-page
+ * JSON-LD emitted through <Helmet> is baked into <head> the same way. Routes that
+ * are NOT prerendered are served dist/app-shell.html (empty #root), because
+ * dist/index.html now holds the homepage's markup.
+ *
  * Run: npm run build  (wired as the postbuild half of the build script)
  */
 import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { existsSync } from "node:fs";
 import { dirname, join } from "node:path";
-import { fileURLToPath } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 
 import { ARTICLES } from "../src/content/articles.js";
-import { PRERENDER_ROUTES, articleSeo, resolveSeo } from "../src/content/seo.js";
+import { PRERENDER_ROUTES, articleSeo, resolveSeo, workPageSeo } from "../src/content/seo.js";
+import { WORK_PAGES } from "../src/content/workEnglish.js";
 import { expectedRewrites } from "./sync-vercel-rewrites.mjs";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
@@ -112,20 +123,61 @@ if (JSON.stringify(vercelConfig.rewrites) !== JSON.stringify(expectedRewrites())
 }
 
 const indexPath = join(DIST, "index.html");
-const template = await readFile(indexPath, "utf8");
+const shellPath = join(DIST, "app-shell.html");
+// Re-runnable: after a first run index.html holds the homepage markup, so the
+// pristine template is the shell written by that run.
+const template = await readFile(existsSync(shellPath) ? shellPath : indexPath, "utf8");
+
+// The empty shell for every route that isn't prerendered (catch-all rewrite).
+await writeFile(shellPath, template, "utf8");
+
+const { render } = await import(pathToFileURL(join(ROOT, "dist-ssr", "entry-server.js")).href);
+
+const ROOT_EMPTY = '<div id="root"></div>';
+if (!template.includes(ROOT_EMPTY)) {
+  throw new Error('dist/index.html has no empty <div id="root"></div> to fill — did index.html change?');
+}
+
+/** React 18's server renderer HTML-escapes the text of <style>{`...`}</style>
+ *  children («>» → «&gt;»). Browsers do NOT decode entities inside <style>, so
+ *  the prerendered CSS was broken (child combinators silently dropped) AND its
+ *  text mismatched the client's during hydration, which threw away the whole
+ *  server tree. 39 components use that pattern; un-escaping here fixes all. */
+const unescapeStyles = (markup) =>
+  markup.replace(/<style([^>]*)>([\s\S]*?)<\/style>/g, (_, attrs, css) =>
+    `<style${attrs}>${css
+      .replace(/&gt;/g, ">")
+      .replace(/&lt;/g, "<")
+      .replace(/&quot;/g, '"')
+      .replace(/&#x27;/g, "'")
+      .replace(/&amp;/g, "&")}</style>`);
+
+/** Render the route and put its markup + Helmet JSON-LD into the page. */
+async function withBody(html, path) {
+  const { html: rawBody, helmet } = await render(path);
+  const body = unescapeStyles(rawBody);
+  if (!body || body.length < 200) throw new Error(`prerender produced almost nothing for ${path}`);
+  const ld = helmet?.script?.toString() || "";
+  const attrPath = path.replace(/&/g, "&amp;").replace(/"/g, "&quot;");
+  return html
+    .replace("</head>", `${ld ? `    ${ld}\n  ` : ""}</head>`)
+    .replace(ROOT_EMPTY, `<div id="root" data-prerendered="${attrPath}">${body}</div>`);
+}
 
 const targets = [
   ...PRERENDER_ROUTES.map((path) => resolveSeo(path)),
   ...ARTICLES.map((article) => articleSeo(article)),
+  ...WORK_PAGES.map((page) => workPageSeo(page)),
 ];
 
 let written = 0;
 for (const seo of targets) {
   const file = outFile(seo.path);
   await mkdir(dirname(file), { recursive: true });
-  await writeFile(file, inject(template, seo), "utf8");
+  const page = await withBody(inject(template, seo), seo.path);
+  await writeFile(file, page, "utf8");
   written += 1;
-  console.log(`  ✓ ${seo.path.padEnd(28)} → ${file.replace(`${ROOT}/`, "")}`);
+  console.log(`  ✓ ${seo.path.padEnd(28)} → ${file.replace(`${ROOT}/`, "")}  (${Math.round(page.length / 1024)} kB)`);
 }
 
 console.log(`prerender-meta: ${written} route${written === 1 ? "" : "s"} written`);

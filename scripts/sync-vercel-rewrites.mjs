@@ -15,14 +15,20 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 
 import { ARTICLES } from "../src/content/articles.js";
 import { PRERENDER_ROUTES } from "../src/content/seo.js";
+import { WORK_PAGES, WORK_HUB_PATH, workPath } from "../src/content/workEnglish.js";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const CONFIG = join(ROOT, "vercel.json");
 
 /** Every route that has a static .html twin in dist/, "/" excluded (it IS index.html). */
 export function prerenderedPaths() {
+  // The work-English cluster is listed FIRST: rewrites don't overlap, so order
+  // is free, and keeping new route families away from the tail (where the
+  // catch-all and other branches' entries sit) keeps merges conflict-free.
   return [
-    ...PRERENDER_ROUTES.filter((p) => p !== "/"),
+    WORK_HUB_PATH,
+    ...WORK_PAGES.map((p) => workPath(p.slug)),
+    ...PRERENDER_ROUTES.filter((p) => p !== "/" && p !== WORK_HUB_PATH),
     ...ARTICLES.map((a) => `/articles/${a.slug}`),
   ];
 }
@@ -41,7 +47,9 @@ export function expectedRewrites() {
       source: encodePath(path),
       destination: `${path}.html`,
     })),
-    { source: "/(.*)", destination: "/index.html" },
+    // Unlisted routes get the EMPTY app shell: index.html now carries the
+    // prerendered homepage markup, which must never flash on /w or a 404.
+    { source: "/(.*)", destination: "/app-shell.html" },
   ];
 }
 
