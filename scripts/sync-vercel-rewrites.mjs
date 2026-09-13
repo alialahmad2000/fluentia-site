@@ -47,6 +47,9 @@ export function expectedRewrites() {
       source: encodePath(path),
       destination: `${path}.html`,
     })),
+    // /tour is a separate page entry (tour.html) with its own client router.
+    { source: "/tour", destination: "/tour.html" },
+    { source: "/tour/:path*", destination: "/tour.html" },
     // Unlisted routes get the EMPTY app shell: index.html now carries the
     // prerendered homepage markup, which must never flash on /w or a 404.
     { source: "/(.*)", destination: "/app-shell.html" },

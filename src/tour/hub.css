@@ -1,0 +1,139 @@
+/* /tour hub — scoped under .tour-hub (itself a .tour-chrome). */
+
+.tour-hub {
+  min-height: 100vh;
+  background:
+    radial-gradient(ellipse 70% 50% at 50% -10%, rgba(56, 189, 248, 0.14), transparent 70%),
+    radial-gradient(ellipse 50% 40% at 90% 30%, rgba(242, 193, 78, 0.05), transparent 70%),
+    linear-gradient(180deg, #04070e 0%, #060c18 60%, #04070e 100%);
+  padding-inline: clamp(16px, 4vw, 40px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  overflow-x: clip;
+}
+
+.tour-hub-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1240px;
+  margin-inline: auto;
+  padding-block: calc(16px + env(safe-area-inset-top, 0px)) 16px;
+}
+.tour-hub-brand { display: inline-flex; align-items: center; gap: 10px; font-family: var(--tc-display); font-weight: 700; font-size: 1.2rem; color: var(--tc-t-strong); }
+.tour-chrome .tour-hub-top-cta { min-height: 40px; font-size: 0.88rem; }
+
+.tour-hub-hero {
+  max-width: 820px;
+  margin-inline: auto;
+  padding-block: clamp(36px, 7vw, 88px) clamp(32px, 5vw, 56px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
+}
+.tour-hub-title {
+  font-family: var(--tc-display);
+  font-weight: 700;
+  font-size: clamp(2.2rem, 6.4vw, 4.2rem);
+  line-height: 1.25;
+  color: var(--tc-t-strong);
+}
+.tour-hub-title em {
+  font-style: normal;
+  background: linear-gradient(90deg, #7dd3fc, #38bdf8 55%, #a5b4fc);
+  -webkit-background-clip: text;
+          background-clip: text;
+  color: transparent;
+}
+.tour-hub-lead { font-size: clamp(1rem, 1.8vw, 1.15rem); color: var(--tc-t-mute); line-height: 1.95; max-width: 60ch; }
+
+/* ─── Doors ─── */
+.tour-doors {
+  list-style: none;
+  margin: 0 auto;
+  padding: 0;
+  max-width: 1240px;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: clamp(12px, 1.6vw, 20px);
+}
+.tour-door { min-width: 0; }
+.tour-door:nth-child(1), .tour-door:nth-child(2) { grid-column: span 3; }
+.tour-door:nth-child(n + 3) { grid-column: span 2; }
+
+.tour-door-link {
+  position: relative;
+  display: block;
+  height: 100%;
+  min-height: clamp(300px, 34vw, 420px);
+  border-radius: 26px;
+  overflow: hidden;
+  isolation: isolate;
+  border: 1px solid var(--tc-line-strong);
+  background: #0a1220;
+  box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.8);
+  transition: transform 450ms var(--tc-ease), border-color 450ms var(--tc-ease);
+}
+.tour-door:nth-child(n + 3) .tour-door-link { min-height: clamp(300px, 30vw, 380px); }
+.tour-door-art {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background-size: cover;
+  background-position: center;
+  transform: scale(1.02);
+  transition: transform 900ms var(--tc-ease);
+}
+.tour-door-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(180deg, rgba(4, 7, 14, 0.05) 20%, rgba(4, 7, 14, 0.55) 55%, rgba(4, 7, 14, 0.94) 100%);
+}
+.tour-door-body {
+  position: absolute;
+  inset: auto 0 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: clamp(18px, 2.4vw, 28px);
+}
+.tour-door-num { font-family: "Inter Tight", var(--tc-display); font-size: 0.78rem; letter-spacing: 0.14em; color: rgba(214, 228, 243, 0.55); }
+.tour-door-kicker { font-size: 0.8rem; color: var(--tc-azure-soft); }
+.tour-door-title { font-family: var(--tc-display); font-weight: 700; font-size: clamp(1.35rem, 2.4vw, 1.8rem); color: #fff; line-height: 1.35; }
+.tour-door-blurb { font-size: 0.9rem; color: rgba(233, 241, 250, 0.78); line-height: 1.8; max-width: 46ch; }
+.tour-door-foot { display: flex; align-items: center; justify-content: space-between; margin-top: 8px; font-size: 0.8rem; color: rgba(214, 228, 243, 0.6); }
+.tour-door-go { font-family: var(--tc-display); font-weight: 500; font-size: 0.92rem; color: #fff; }
+
+@media (hover: hover) {
+  .tour-door-link:hover { transform: translateY(-4px); border-color: rgba(125, 211, 252, 0.45); }
+  .tour-door-link:hover .tour-door-art { transform: scale(1.07); }
+}
+
+@media (max-width: 960px) {
+  .tour-doors { grid-template-columns: 1fr 1fr; }
+  .tour-door:nth-child(n) { grid-column: span 1; }
+  .tour-door:nth-child(1) { grid-column: span 2; }
+}
+@media (max-width: 600px) {
+  .tour-doors { grid-template-columns: 1fr; }
+  .tour-door:nth-child(n) { grid-column: auto; }
+  .tour-door-link, .tour-door:nth-child(n + 3) .tour-door-link { min-height: 320px; }
+}
+
+.tour-hub-close {
+  max-width: 720px;
+  margin-inline: auto;
+  padding-block: clamp(56px, 9vw, 110px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  text-align: center;
+}
+.tour-hub-close p { font-family: var(--tc-display); font-size: clamp(1.1rem, 2.2vw, 1.4rem); color: var(--tc-t-strong); line-height: 1.7; }
+
+@media (prefers-reduced-motion: reduce) {
+  .tour-door-link, .tour-door-art { transition: none; }
+}

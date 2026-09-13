@@ -1,0 +1,201 @@
+/* ============================================================
+ * Tour chrome — the bar, intro and end band around each room.
+ * Everything is scoped under .tour-chrome: the ported LMS CSS sets
+ * html/body type and colour globally, and this must not inherit it.
+ * Palette follows the homepage's Obsidian Azure system.
+ * ============================================================ */
+
+.tour-chrome {
+  --tc-ink: #04070e;
+  --tc-ink-2: #07101d;
+  --tc-azure: #38bdf8;
+  --tc-azure-soft: #7dd3fc;
+  --tc-t-strong: #f4f8fd;
+  --tc-t: rgba(233, 241, 250, 0.9);
+  --tc-t-mute: rgba(214, 228, 243, 0.62);
+  --tc-line: rgba(160, 200, 240, 0.12);
+  --tc-line-strong: rgba(160, 200, 240, 0.22);
+  --tc-display: "Alexandria", "Readex Pro", system-ui, sans-serif;
+  --tc-body: "Readex Pro", "Alexandria", system-ui, sans-serif;
+  --tc-ease: cubic-bezier(0.16, 1, 0.3, 1);
+
+  font-family: var(--tc-body);
+  color: var(--tc-t);
+  line-height: 1.6;
+  letter-spacing: normal;
+  -webkit-font-smoothing: antialiased;
+  box-sizing: border-box;
+}
+.tour-chrome *,
+.tour-chrome *::before,
+.tour-chrome *::after {
+  box-sizing: border-box;
+}
+.tour-chrome a { color: inherit; text-decoration: none; }
+.tour-chrome h1, .tour-chrome p { margin: 0; }
+
+.tour-loading { min-height: 100vh; background: #05070d; }
+
+/* ─── Buttons ─── */
+.tour-chrome .tour-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 22px;
+  border-radius: 999px;
+  font-family: var(--tc-display);
+  font-weight: 700;
+  font-size: 0.95rem;
+  white-space: nowrap;
+  transition: transform 200ms var(--tc-ease), background 200ms var(--tc-ease), border-color 200ms var(--tc-ease);
+}
+.tour-chrome .tour-btn-solid {
+  background: linear-gradient(180deg, #5cc9fa, #1ea7ea);
+  color: #03121f;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.45) inset, 0 10px 28px -10px rgba(56, 189, 248, 0.7);
+}
+.tour-chrome .tour-btn-ghost {
+  border: 1px solid var(--tc-line-strong);
+  color: var(--tc-t-strong);
+  background: rgba(255, 255, 255, 0.02);
+}
+@media (hover: hover) {
+  .tour-chrome .tour-btn:hover { transform: translateY(-1px); }
+  .tour-chrome .tour-btn-ghost:hover { border-color: rgba(125, 211, 252, 0.5); }
+}
+.tour-chrome .tour-btn:focus-visible,
+.tour-chrome a:focus-visible {
+  outline: 2px solid var(--tc-azure);
+  outline-offset: 3px;
+}
+
+/* ─── Top bar ─── */
+.tour-bar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: rgba(4, 7, 14, 0.78);
+  -webkit-backdrop-filter: blur(18px) saturate(1.4);
+          backdrop-filter: blur(18px) saturate(1.4);
+  border-bottom: 1px solid var(--tc-line);
+  padding-top: env(safe-area-inset-top, 0px);
+}
+.tour-bar-in {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  max-width: 1280px;
+  margin-inline: auto;
+  padding: 10px clamp(16px, 3vw, 32px);
+}
+.tour-bar-home { display: inline-flex; align-items: center; gap: 9px; flex: none; }
+.tour-bar-brand { font-family: var(--tc-display); font-weight: 700; font-size: 1.05rem; color: var(--tc-t-strong); }
+.tour-bar-sep { width: 1px; height: 18px; background: var(--tc-line-strong); }
+.tour-bar-crumb { font-size: 0.85rem; color: var(--tc-t-mute); }
+.tour-bar-mid { flex: 1; display: flex; align-items: center; justify-content: center; gap: 14px; min-width: 0; }
+.tour-bar-room { font-family: var(--tc-display); font-weight: 500; font-size: 0.92rem; color: var(--tc-t-strong); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tour-bar-dots { display: inline-flex; gap: 6px; }
+.tour-dot { width: 6px; height: 6px; border-radius: 99px; background: var(--tc-line-strong); transition: width 300ms var(--tc-ease), background 300ms; }
+.tour-dot.is-past { background: rgba(125, 211, 252, 0.45); }
+.tour-dot.is-on { width: 20px; background: var(--tc-azure); }
+.tour-bar-end { display: flex; align-items: center; gap: 14px; flex: none; }
+.tour-bar-next { display: inline-flex; align-items: baseline; gap: 7px; font-size: 0.88rem; color: var(--tc-t); }
+.tour-bar-next-label { color: var(--tc-t-mute); font-size: 0.8rem; }
+.tour-bar-next-title { font-family: var(--tc-display); font-weight: 500; }
+.tour-chrome .tour-bar-cta { min-height: 38px; padding: 0 18px; font-size: 0.86rem; }
+
+@media (max-width: 860px) {
+  .tour-bar-crumb, .tour-bar-sep, .tour-bar-cta, .tour-bar-next-label, .tour-bar-next-title { display: none !important; }
+  .tour-bar-mid { justify-content: flex-start; }
+  .tour-bar-next { font-size: 1.1rem; padding: 6px 4px; }
+}
+
+/* ─── Room intro ─── */
+.tour-intro {
+  position: relative;
+  background:
+    radial-gradient(ellipse 60% 80% at 50% 0%, rgba(56, 189, 248, 0.1), transparent 70%),
+    linear-gradient(180deg, var(--tc-ink), var(--tc-ink-2));
+  border-bottom: 1px solid var(--tc-line);
+}
+.tour-intro-in {
+  max-width: 880px;
+  margin-inline: auto;
+  padding: clamp(36px, 6vw, 64px) clamp(16px, 4vw, 32px) clamp(28px, 5vw, 48px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+}
+.tour-intro-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(56, 189, 248, 0.28);
+  background: rgba(56, 189, 248, 0.06);
+  color: var(--tc-azure-soft);
+  font-size: 0.8rem;
+  margin-bottom: 6px;
+}
+.tour-live-dot { width: 7px; height: 7px; border-radius: 99px; background: #4ade80; box-shadow: 0 0 10px #4ade80; }
+.tour-intro-kicker { font-family: var(--tc-display); font-size: 0.85rem; color: var(--tc-t-mute); letter-spacing: 0.02em; }
+.tour-intro-title { font-family: var(--tc-display); font-weight: 700; font-size: clamp(1.8rem, 4.6vw, 2.8rem); line-height: 1.3; color: var(--tc-t-strong); }
+.tour-intro-blurb { font-size: clamp(0.98rem, 1.6vw, 1.1rem); color: var(--tc-t-mute); max-width: 58ch; line-height: 1.85; }
+
+/* ─── End band ─── */
+.tour-end {
+  background:
+    radial-gradient(ellipse 70% 90% at 50% 100%, rgba(56, 189, 248, 0.09), transparent 70%),
+    linear-gradient(180deg, var(--tc-ink-2), var(--tc-ink));
+  border-top: 1px solid var(--tc-line);
+}
+.tour-end-in {
+  max-width: 880px;
+  margin-inline: auto;
+  padding: clamp(44px, 7vw, 80px) clamp(16px, 4vw, 32px) calc(clamp(44px, 7vw, 80px) + env(safe-area-inset-bottom, 0px));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 22px;
+  text-align: center;
+}
+.tour-end-lead { font-family: var(--tc-display); font-size: clamp(1.05rem, 2vw, 1.3rem); color: var(--tc-t-strong); max-width: 40ch; line-height: 1.7; }
+.tour-end-actions { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+.tour-end-next {
+  position: relative;
+  width: 100%;
+  max-width: 560px;
+  margin-top: 14px;
+  display: grid;
+  gap: 6px;
+  padding-block: 22px;
+  padding-inline: 24px 64px;
+  border-radius: 22px;
+  border: 1px solid var(--tc-line-strong);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.01));
+  text-align: start;
+  transition: border-color 250ms var(--tc-ease), transform 250ms var(--tc-ease);
+}
+@media (hover: hover) {
+  .tour-end-next:hover { border-color: rgba(125, 211, 252, 0.5); transform: translateY(-2px); }
+}
+.tour-end-next-kicker { font-size: 0.78rem; color: var(--tc-azure-soft); }
+.tour-end-next-title { font-family: var(--tc-display); font-weight: 700; font-size: 1.25rem; color: var(--tc-t-strong); }
+.tour-end-next-blurb { font-size: 0.9rem; color: var(--tc-t-mute); line-height: 1.75; }
+.tour-end-next-go {
+  position: absolute;
+  inset-inline-end: 22px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.4rem;
+  color: var(--tc-azure);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tour-chrome *, .tour-chrome *::before, .tour-chrome *::after { transition: none !important; }
+}

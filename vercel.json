@@ -170,6 +170,14 @@
       "destination": "/articles/جمل-انجليزية-للعمل.html"
     },
     {
+      "source": "/tour",
+      "destination": "/tour.html"
+    },
+    {
+      "source": "/tour/:path*",
+      "destination": "/tour.html"
+    },
+    {
       "source": "/(.*)",
       "destination": "/app-shell.html"
     }
