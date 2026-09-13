@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
-import { HERO, TRUSTED_BY } from "../landing-v2/content";
+import { HERO } from "../landing-v2/content";
 import { EASE } from "../v1/motion";
 import { Magnetic } from "../v1/V1Interactive";
 import BrandMark from "../../components/BrandMark";
@@ -334,35 +334,24 @@ export default function V5Hero() {
             <img aria-hidden src="/brand/fluentia-mark.svg" alt="" style={{
               position: "absolute", width: "125%", top: "-14%", insetInlineStart: "-16%",
               opacity: 0.05, filter: "saturate(0.6)", pointerEvents: "none", userSelect: "none",
+              // fade its foot out so the section's clip edge never draws a line
+              WebkitMaskImage: "linear-gradient(to bottom, #000 55%, transparent 85%)",
+              maskImage: "linear-gradient(to bottom, #000 55%, transparent 85%)",
             }} />
             <ConversationCard />
           </motion.div>
         </div>
-
-        {/* Trusted-by */}
-        <motion.div
-          initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}
-          transition={{ duration: 1 }}
-          style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 16, padding: "56px 0 30px" }}
-        >
-          <span style={{ fontSize: "var(--v1-cap)", letterSpacing: "0.18em", color: "var(--v1-t-faint)", fontFamily: "var(--v1-display)", fontWeight: 600 }}>
-            {TRUSTED_BY.label}
-          </span>
-          <div style={{ display: "flex", gap: "10px 12px", flexWrap: "wrap", justifyContent: "center" }}>
-            {TRUSTED_BY.items.map((it) => (
-              <span key={it} className="v1-chip" style={{ fontSize: "0.85rem", borderColor: "rgba(242,193,78,0.16)", background: "rgba(242,193,78,0.03)" }}>
-                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" aria-hidden style={{ opacity: 0.7 }}>
-                  <path d="M12 3l7 4v5c0 4.5-3 8-7 9-4-1-7-4.5-7-9V7l7-4z" stroke="var(--v1-gold)" strokeWidth="1.8" strokeLinejoin="round" />
-                </svg>
-                {it}
-              </span>
-            ))}
-          </div>
-        </motion.div>
+        {/* Trusted-by moved out of the hero into V5LogoBand. This spacer keeps
+            the room it used to hold: the conversation card drifts down on
+            scroll, and the section clips anything past its bottom edge. */}
+        <div aria-hidden className="v5-hero-tail" />
       </div>
 
       <style>{`
+        .v1-scope .v5-hero-tail { height: 56px; }
         @media (max-width: 960px) {
+          /* stacked: the card sits last, so its scroll drift needs the room */
+          .v1-scope .v5-hero-tail { height: 88px; }
           .v1-scope .v5-hero-grid { grid-template-columns: 1fr !important; min-height: unset !important; }
           .v1-scope .v5-hero-grid > div:first-child { text-align: center; }
           .v1-scope .v5-hero-grid > div:first-child > div { justify-content: center; }

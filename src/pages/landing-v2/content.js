@@ -525,6 +525,21 @@ export const TRUSTED_BY = {
   ],
 };
 
+// The homepage logo band. Only entities the site already names: the three
+// ministries above, plus the two universities in the student testimonials.
+// `h` is the optical height in px — emblems sit taller than wide lockups.
+export const TRUSTED_LOGOS = {
+  lead: "طلابنا من",
+  emphasis: "كبرى الجهات والجامعات",
+  items: [
+    { name: "وزارة الداخلية", src: "/brand/entities/moi.svg", h: 74 },
+    { name: "وزارة التجارة", src: "/brand/entities/mc.svg", h: 62 },
+    { name: "جامعة الملك سعود", src: "/brand/entities/ksu.svg", h: 46 },
+    { name: "وزارة العدل", src: "/brand/entities/moj.png", h: 54 },
+    { name: "جامعة الملك عبدالعزيز", src: "/brand/entities/kau.png", h: 86 },
+  ],
+};
+
 // ────────────────────────────────────────────────────────────
 // Honest qualification filter — Naval's 'steer them away' move
 // ────────────────────────────────────────────────────────────
