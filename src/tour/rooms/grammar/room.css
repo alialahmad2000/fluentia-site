@@ -1,0 +1,179 @@
+/* ============================================================
+ * Grammar room — the tour's own pieces around the two platform surfaces.
+ * Everything tour-side is .tour-chrome + grm-*; the platform's CSS (grammarRef.css,
+ * grammar.css, questionCards.css, lms.generated.css) is untouched by this file.
+ * ============================================================ */
+
+.grm-room {
+  --header-height: 64px;
+  /* The LMS reserves room for its phone bottom nav under every page; the tour has none. */
+  --mobile-bottom-clearance: 24px;
+  background: #05070d;
+  min-height: 100vh;
+}
+
+/* ─── The stage: the LMS <main> the surface sits in (px-4 py-6 lg:px-10 lg:py-8) ─── */
+.grm-stage {
+  max-width: 1320px;
+  margin-inline: auto;
+  padding-inline: 16px;
+  padding-block: 24px 32px;
+  background: var(--ds-bg-base, #05070d);
+}
+@media (min-width: 1024px) {
+  .grm-stage { padding-inline: 40px; padding-block: 32px 40px; }
+}
+.grm-stage--unit { padding-block-start: 8px; }
+
+/* ─── Chapter switch: 1 · the reference, 2 · inside a unit ─── */
+.grm-chapters {
+  background: linear-gradient(180deg, var(--tc-ink-2), #05070d);
+  border-bottom: 1px solid var(--tc-line);
+}
+.grm-chapters-in {
+  max-width: 880px;
+  margin-inline: auto;
+  padding: 14px clamp(16px, 4vw, 32px);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.grm-ch {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 64px;
+  padding: 10px 14px;
+  border-radius: 16px;
+  border: 1px solid var(--tc-line);
+  background: rgba(255, 255, 255, 0.015);
+  color: var(--tc-t-mute);
+  transition: border-color 220ms var(--tc-ease), background 220ms var(--tc-ease), color 220ms var(--tc-ease);
+}
+@media (hover: hover) {
+  .grm-ch:not(.is-on):hover { border-color: var(--tc-line-strong); color: var(--tc-t); }
+}
+.grm-ch.is-on {
+  border-color: rgba(125, 211, 252, 0.45);
+  background: rgba(56, 189, 248, 0.07);
+  color: var(--tc-t-strong);
+}
+.grm-ch-n {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 99px;
+  border: 1px solid var(--tc-line-strong);
+  font-family: var(--tc-display);
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+.grm-ch.is-on .grm-ch-n { background: var(--tc-azure); border-color: var(--tc-azure); color: #03121f; }
+.grm-ch-body { display: grid; gap: 2px; min-width: 0; }
+.grm-ch-title { font-family: var(--tc-display); font-weight: 700; font-size: 0.98rem; }
+.grm-ch-sub { font-size: 0.8rem; line-height: 1.5; color: var(--tc-t-mute); }
+@media (max-width: 560px) {
+  .grm-chapters-in { gap: 8px; padding-block: 12px; }
+  .grm-ch { flex-direction: column; align-items: flex-start; gap: 6px; padding: 10px 12px; }
+  .grm-ch-n { width: 24px; height: 24px; font-size: 0.75rem; }
+  .grm-ch-title { font-size: 0.9rem; }
+  .grm-ch-sub { font-size: 0.74rem; }
+}
+
+/* ─── «متاح داخل المنصة» ─── */
+.tour-chrome.grm-inplatform {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px 10px;
+  max-width: 62ch;
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(125, 211, 252, 0.22);
+  background: rgba(56, 189, 248, 0.05);
+  font-size: 0.86rem;
+  line-height: 1.75;
+  color: var(--tc-t);
+  animation: grm-note-in 220ms var(--tc-ease) both;
+}
+.grm-inplatform-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--tc-display);
+  font-weight: 500;
+  font-size: 0.76rem;
+  color: var(--tc-azure-soft);
+  white-space: nowrap;
+}
+@keyframes grm-note-in {
+  from { opacity: 0; transform: translateY(-3px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* ─── Bridge: from the reference to the unit lesson ─── */
+.grm-bridge {
+  position: relative;
+  background:
+    radial-gradient(ellipse 60% 90% at 50% 0%, rgba(56, 189, 248, 0.08), transparent 70%),
+    #05070d;
+  border-top: 1px solid var(--tc-line);
+}
+.grm-bridge::before {
+  /* the reference's gold hairline hands over to the unit's sky */
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  top: -1px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(233, 185, 73, 0.55) 30%, rgba(56, 189, 248, 0.6) 70%, transparent);
+}
+.grm-bridge-in {
+  max-width: 720px;
+  margin-inline: auto;
+  padding: clamp(40px, 7vw, 72px) clamp(16px, 4vw, 32px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 12px;
+}
+.grm-bridge-kicker { font-size: 0.8rem; color: var(--tc-azure-soft); letter-spacing: 0.01em; }
+.grm-bridge-title {
+  margin: 0;
+  font-family: var(--tc-display);
+  font-weight: 700;
+  font-size: clamp(1.4rem, 3.4vw, 2rem);
+  line-height: 1.4;
+  color: var(--tc-t-strong);
+}
+.grm-bridge-text { font-size: clamp(0.95rem, 1.6vw, 1.05rem); line-height: 1.95; color: var(--tc-t-mute); max-width: 56ch; }
+.tour-chrome .grm-bridge-go { margin-top: 10px; }
+
+/* ─── Unit context above the lesson ─── */
+.grm-unit-context { background: #05070d; }
+.grm-unit-context-in {
+  max-width: 920px;
+  margin-inline: auto;
+  padding: clamp(22px, 4vw, 34px) clamp(16px, 4vw, 40px) 8px;
+  display: grid;
+  gap: 8px;
+}
+.grm-crumb {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--tc-display);
+  font-size: 0.85rem;
+  color: var(--tc-t-mute);
+}
+.grm-crumb-sep { width: 4px; height: 4px; border-radius: 99px; background: var(--tc-line-strong); }
+.grm-crumb-theme { color: var(--tc-azure-soft); font-weight: 500; }
+.grm-unit-context-text { font-size: 0.92rem; line-height: 1.9; color: var(--tc-t-mute); max-width: 70ch; }
+
+@media (prefers-reduced-motion: reduce) {
+  .tour-chrome.grm-inplatform { animation: none; }
+}
