@@ -9,6 +9,7 @@ import {
   Progress, QuestionScreen, ListeningScreen, ListeningIntro, WritingScreen, useEnglishVoice,
 } from './ExamScreens';
 import ResultScreen from './ResultScreen';
+import LevelTestExplainer from './LevelTestExplainer';
 import { startAttempt, finishAttempt, fireTracking, GOALS } from './submit';
 import { track } from '../../lib/track';
 import './levelTest.css';
@@ -264,7 +265,7 @@ export default function LevelTestPage() {
 function Intro({ onStart }) {
   return (
     <div className="lt-in">
-      <span className="lt-eyebrow">اختبار تحديد مستوى مجاني · بدون تسجيل</span>
+      <span className="lt-eyebrow">اختبار تحديد مستوى اللغة الإنجليزية مجاناً · بدون حساب</span>
       <h1 className="lt-h1">وين مستواك بالضبط في الإنجليزي؟</h1>
       <p className="lt-lead">
         أغلب الناس يقولون «متوسط». وهذي أكثر إجابة تضيّع الوقت والفلوس: تدخل مستوى أسهل من قدرتك فتملّ،
@@ -305,6 +306,8 @@ function Intro({ onStart }) {
       <div className="lt-cta-block">
         <button type="button" className="lt-btn" onClick={onStart}>نبدأ الاختبار ←</button>
       </div>
+
+      <LevelTestExplainer />
     </div>
   );
 }
@@ -402,7 +405,7 @@ function GateTwo({ lead, onDone }) {
       <span className="lt-eyebrow">خلصت ✓</span>
       <h1 className="lt-h1">نتيجتك جاهزة يا {lead.name}</h1>
       <p className="lt-lead">
-        باقي شيء واحد: رقمك، عشان نرسل لك النتيجة وخطتك ولا تضيع منك. ما نتصل عليك إلا إذا طلبت.
+        باقي شيء واحد: رقمك، عشان نرسل لك النتيجة وخطتك ولا تضيع منك. ورقمك يبقى عندنا ولا نشاركه مع أي جهة.
       </p>
 
       <form className="lt-card" style={{ marginTop: 24 }} onSubmit={submit} noValidate>

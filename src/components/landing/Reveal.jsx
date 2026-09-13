@@ -22,7 +22,11 @@ export default function Reveal({ delay = 0, children, style }) {
           }
         });
       },
-      { threshold: 0.15, rootMargin: "0px 0px -50px 0px" }
+      // threshold 0, NOT a ratio: an intersection RATIO can never be reached by an
+      // element taller than viewport/ratio. At 0.15 an article body over ~5,300px
+      // (every long article on a phone) never became visible — readers saw a blank
+      // page. The -50px margin still makes it wait until it is really on screen.
+      { threshold: 0, rootMargin: "0px 0px -50px 0px" }
     );
     io.observe(el);
     return () => io.disconnect();

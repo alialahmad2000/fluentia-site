@@ -439,3 +439,28 @@
   .lt-bar i, .lt-skill-bar i, .lt-level-ring .lt-ring-fg { transition: none; }
   .lt-wave b { animation: none; }
 }
+
+/* ─── Below-the-fold explainer (LevelTestExplainer.jsx) ─────────────────── */
+.lt-explainer { margin-top: clamp(40px, 8vw, 72px); }
+.lt-explainer .lt-card + .lt-card { margin-top: 16px; }
+.lt-explainer-p { max-width: none; font-size: 0.95rem; margin-top: 14px; }
+.lt-explainer-p b { color: var(--lt-t-strong); font-weight: 700; }
+.lt-levels { list-style: none; padding: 0; margin: 16px 0 0; display: flex; flex-direction: column; gap: 10px; }
+.lt-levels li { display: flex; gap: 12px; align-items: baseline; font-size: 0.93rem; line-height: 1.85; color: var(--lt-t-mute); }
+.lt-levels li b { color: var(--lt-t-strong); font-weight: 600; }
+.lt-level-code {
+  flex: 0 0 auto; min-width: 58px; text-align: center; font-family: var(--lt-num); font-weight: 700;
+  font-size: 0.8rem; color: var(--lt-azure-soft); border: 1px solid var(--lt-line-strong);
+  border-radius: 999px; padding: 2px 10px;
+}
+.lt-faq { margin-top: 12px; }
+.lt-faq details { border-top: 1px solid var(--lt-line); }
+.lt-faq details:first-child { border-top: 0; }
+.lt-faq summary {
+  cursor: pointer; list-style: none; padding: 14px 0; font-weight: 600; font-size: 0.97rem;
+  color: var(--lt-t-strong); display: flex; justify-content: space-between; gap: 12px; min-height: 44px; align-items: center;
+}
+.lt-faq summary::-webkit-details-marker { display: none; }
+.lt-faq summary::after { content: '+'; color: var(--lt-azure-soft); font-size: 1.2rem; line-height: 1; transition: transform 0.25s; }
+.lt-faq details[open] summary::after { transform: rotate(45deg); }
+.lt-faq details p { margin: 0 0 14px; font-size: 0.92rem; line-height: 1.9; color: var(--lt-t-mute); }
