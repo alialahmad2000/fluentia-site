@@ -9,6 +9,7 @@ import V5LogoBand from "./V5LogoBand";
 import { DawnArc, Chapter, V5Problem, V5Solution } from "./V5Chapters";
 import { V1Stats, V1Method } from "../v1/V1Sections";
 import V1Product from "../v1/V1Product";
+import V5TourBand from "./V5TourBand";
 import { V1Worth, V1WhoFor } from "../v1/V1Worth";
 import V1Pricing from "../v1/V1Pricing";
 import V1LevelTestBand from "../v1/V1LevelTestBand";
@@ -53,6 +54,7 @@ export default function V5Landing() {
             <V1TrialBand />
             <Chapter num={3} label="المنصة" />
             <V1Product />
+            <V5TourBand />
             <V1Method />
             <Chapter num={4} label="لماذا طلاقة" />
             <V1Worth />
