@@ -41,6 +41,7 @@
 }
 .tour-hub-title em {
   font-style: normal;
+  white-space: nowrap;
   background: linear-gradient(90deg, #7dd3fc, #38bdf8 55%, #a5b4fc);
   -webkit-background-clip: text;
           background-clip: text;

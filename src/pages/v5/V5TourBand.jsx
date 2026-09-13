@@ -6,7 +6,7 @@ import { Reveal } from "../v1/motion";
  *
  * The «المنصة» chapter above describes the product with in-code mockups; this
  * band hands the visitor the real thing instead: five rooms of the actual
- * student platform, each shown by its own art (public/tour/<slug>/door.webp),
+ * student platform, each shown by its own portrait art (public/tour/<slug>/door-tall.webp),
  * no sign-up. Room titles and order come from the tour's own registry, so the
  * band can never list a room the tour doesn't have.
  *
@@ -35,7 +35,7 @@ export default function V5TourBand() {
             {ROOMS.map((room, i) => (
               <li key={room.slug}>
                 <a className="v5-tour-room" href={`/tour/${room.slug}`}>
-                  <span className="v5-tour-art" style={{ backgroundImage: `url(/tour/${room.slug}/door.webp)` }} aria-hidden />
+                  <span className="v5-tour-art" style={{ backgroundImage: `url(/tour/${room.slug}/door-tall.webp)` }} aria-hidden />
                   <span className="v5-tour-scrim" aria-hidden />
                   <span className="v5-tour-num v1-num">{String(i + 1).padStart(2, "0")}</span>
                   <span className="v5-tour-title">{room.title}</span>
