@@ -1,0 +1,55 @@
+/* ==========================================================================
+ * «سُلّم الأفعال» — the few tour-only pieces. Everything else is the platform's
+ * own verbLadder.css. Written in the same pure-colour vocabulary (one hue per
+ * element, --vl-rgb triplets, the white top-light) so nothing here reads as a
+ * second design.
+ * ==========================================================================*/
+
+/* the session element takes focus (without scrolling) once an answer locks
+   its input, so Enter can continue — it needs no ring of its own */
+.vl-sess:focus{outline:none}
+
+/* TOUR FIX — the three-form plate on a phone. verbLadder.css gives each cell a
+   one-row grid (say · word · tag) and places the children by column only. The
+   children come in the order tag, word, say, i.e. columns 3, 2, 1, and grid
+   auto-placement never moves backwards along a row — so each child dropped to
+   a new row and every cell became a three-row staircase, 110px tall, with the
+   word nowhere near its neighbours'. Pinning them to row 1 gives the one shared
+   axis the platform's own comment asks for. */
+@media (max-width:560px){
+  .vl-form__say,.vl-form__word,.vl-form__tag{grid-row:1}
+}
+
+/* ── the five rungs of the demo session ─────────────────────────────────── */
+.vl-rungs{display:flex;flex-wrap:wrap;gap:.5rem;list-style:none;margin:0;padding:0}
+.vl-rungs li{display:inline-flex;align-items:center;gap:.5rem;padding:.4rem .8rem .4rem .6rem;
+  border:1px solid rgba(var(--vl-amber-rgb),.42);border-radius:12px;background:rgba(5,7,14,.55);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.14);font-size:.84rem;color:rgba(255,255,255,.78)}
+.vl-rungs__n{display:grid;place-items:center;width:1.35rem;height:1.35rem;border-radius:999px;
+  font-size:.72rem;font-weight:700;color:#05070E;background:var(--vl-amber)}
+
+/* ── «مثال لتقدّم طالب» — where the visitor's part ends and the example begins */
+.vl-sample{display:flex;align-items:center;gap:.8rem;margin-block:2.4rem 1.1rem}
+.vl-sample__line{flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.2),transparent)}
+.vl-sample__label{flex:none;padding:.3rem .8rem;border-radius:999px;font-size:.8rem;font-weight:600;
+  color:rgba(255,255,255,.72);border:1px dashed rgba(255,255,255,.3);background:rgba(5,7,14,.6)}
+
+/* ── the Arabic-keyboard hint ───────────────────────────────────────────── */
+.vl-arhint{display:flex;align-items:center;gap:.4rem;margin-top:.45rem;font-size:.84rem;
+  color:var(--vl-amber)}
+
+/* ── atlas ──────────────────────────────────────────────────────────────── */
+/* TOUR FIX — the two legends above the families.
+   The dot key used bare <i class="vl-dot"> inside inline spans; an inline <i>
+   ignores width/height, so the four dots never painted and the key was four
+   words. The form key used classes (.k1/.k2/.k3) that no stylesheet defines,
+   so it read «goالأصل» in italics. Both now show what they are keys for: the
+   state colours of the dots, and the V1/V2/V3 colour grammar of the rows. */
+.vl-atlas-key>span{display:inline-flex;align-items:center;gap:.35rem}
+.vl-atlas-key .vl-dot{display:inline-block}
+.vl-atlas-key i.vl-en{font-style:normal;font-weight:700;font-size:.82rem}
+.vl-atlas-key .k1 i{color:var(--vl-paper)}
+.vl-atlas-key .k2 i{color:var(--vl-amber)}
+.vl-atlas-key .k3 i{color:var(--vl-violet)}
+.vl-fam__locked{display:flex;align-items:center;gap:.45rem;padding:0 .55rem .8rem;
+  font-size:.84rem;color:var(--vc-text-dim)}

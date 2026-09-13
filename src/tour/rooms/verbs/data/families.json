@@ -1,0 +1,26 @@
+{
+  "snapshot_at": "2026-09-13T12:38:00.865963+00:00",
+  "catalogue_total": 163,
+  "families": [
+    { "key": "aid", "name_ar": "عائلة aid", "rule_ar": "الياء تسقط ويحلّ محلّها aid: pay / paid / paid.", "n": 3, "pattern": "abb" },
+    { "key": "ake-ook-aken", "name_ar": "عائلة ake ← ook ← aken", "rule_ar": "take / took / taken، وكل مركّباته.", "n": 6, "pattern": "abc" },
+    { "key": "d-t", "name_ar": "عائلة d ← t", "rule_ar": "الدال في آخر الفعل تصير تاءً: send / sent / sent.", "n": 5, "pattern": "abb" },
+    { "key": "ee-ed", "name_ar": "عائلة الحرف القصير", "rule_ar": "الحرف الطويل يقصر: feed / fed / fed.", "n": 9, "pattern": "abb" },
+    { "key": "eep-ept", "name_ar": "عائلة ept", "rule_ar": "الحرف الطويل يقصر وينتهي بـ t: keep / kept / kept.", "n": 8, "pattern": "abb" },
+    { "key": "ew-own", "name_ar": "عائلة ew ← own", "rule_ar": "الثاني بـ ew والثالث بـ own أو awn: know / knew / known.", "n": 7, "pattern": "abc" },
+    { "key": "i-a-u", "name_ar": "عائلة i ← a ← u", "rule_ar": "حرف العلّة يتدرّج: sing / sang / sung.", "n": 8, "pattern": "abc" },
+    { "key": "i-u-u", "name_ar": "عائلة i ← u ← u", "rule_ar": "حرف العلّة يتحوّل إلى u ويثبت: stick / stuck / stuck.", "n": 11, "pattern": "abb" },
+    { "key": "ide-idden", "name_ar": "عائلة ode ← idden", "rule_ar": "الثاني بـ o والثالث يضيف en: write / wrote / written.", "n": 7, "pattern": "abc" },
+    { "key": "ind-ound", "name_ar": "عائلة ind ← ound", "rule_ar": "ind تصير ound: find / found / found.", "n": 4, "pattern": "abb" },
+    { "key": "ite-itten", "name_ar": "عائلة الحرف المضاعف", "rule_ar": "الثالث يضاعف الحرف ويضيف en: hide / hid / hidden.", "n": 2, "pattern": "abc" },
+    { "key": "oke-oken", "name_ar": "عائلة oke ← oken", "rule_ar": "الثاني بـ o والثالث يضيف en: speak / spoke / spoken.", "n": 8, "pattern": "abc" },
+    { "key": "old", "name_ar": "عائلة old", "rule_ar": "ell تصير old: sell / sold / sold.", "n": 2, "pattern": "abb" },
+    { "key": "oot-ot", "name_ar": "عائلة الحرف القصير ot", "rule_ar": "shoot / shot / shot، get / got / got.", "n": 3, "pattern": "abb" },
+    { "key": "ore-orn", "name_ar": "عائلة ore ← orn", "rule_ar": "الثاني بـ ore والثالث بـ orn: wear / wore / worn.", "n": 4, "pattern": "abc" },
+    { "key": "ought", "name_ar": "عائلة ought", "rule_ar": "الثاني والثالث ينتهيان بـ ought أو augh: think / thought / thought.", "n": 7, "pattern": "abb" },
+    { "key": "ow-ed-own", "name_ar": "ماضٍ منتظم، ثالثٌ شاذّ", "rule_ar": "الثاني يأخذ ed والثالث ينتهي بـ n: show / showed / shown.", "n": 3, "pattern": "abc" },
+    { "key": "same3", "name_ar": "لا يتغيّر أبداً", "rule_ar": "التصريفات الثلاثة متطابقة: put / put / put.", "n": 19, "pattern": "aaa" },
+    { "key": "t-ed", "name_ar": "الوجهان: ed أو t", "rule_ar": "كلاهما صحيح: learned أو learnt. نُعلّم ed ونقبل t.", "n": 8, "pattern": "abb" },
+    { "key": "unique", "name_ar": "وحيد في نمطه", "rule_ar": "لا يشبه غيره — يُحفظ كما هو.", "n": 39, "pattern": "abc" }
+  ]
+}
