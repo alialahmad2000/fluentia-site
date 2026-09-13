@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef, lazy, Suspense } from "react";
-import LandingV2 from './pages/LandingV2';
 import V5LandingHome from './pages/v5/V5Landing';
 import { BrowserRouter, Routes, Route, Link, Navigate, useLocation } from "react-router-dom";
 import { getStoredRef, getVisitorId } from './utils/affiliateTracking';
@@ -22,6 +21,10 @@ const AuroraHero = lazy(() => import('./pages/aurora/AuroraHero'));
 const V1Landing = lazy(() => import('./pages/v1/V1Landing'));
 const V5Landing = lazy(() => import('./pages/v5/V5Landing'));
 const LevelTestPage = lazy(() => import('./pages/level-test/LevelTestPage'));
+// /v2 is a superseded homepage kept reachable; it was eager-imported and put
+// ~124 kB into the main chunk that every visitor to / downloads.
+const LandingV2 = lazy(() => import('./pages/LandingV2'));
+const NotFound = lazy(() => import('./pages/NotFound'));
 
 /* Branded chunk-loading screen for the candidate pages (pulsing real mark) */
 const VFallback = (
@@ -1203,7 +1206,7 @@ function AppRoutes(){
 
   return(
     <Routes>
-      <Route path="/v2" element={<LandingV2 />} />
+      <Route path="/v2" element={<Suspense fallback={VFallback}><LandingV2 /></Suspense>} />
       <Route path="/atelier" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#060e1c'}} />}><AtelierLanding /></Suspense>} />
       <Route path="/aurora" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#070b14'}} />}><AuroraHero /></Suspense>} />
       <Route path="/legacy" element={<HomePage />} />
@@ -1228,6 +1231,8 @@ function AppRoutes(){
           browsers cache permanent redirects, so some visitors can't reach /v1 */}
       <Route path="/v4" element={<Suspense fallback={VFallback}><V1Landing /></Suspense>} />
       <Route path="/v5" element={<Suspense fallback={VFallback}><V5Landing /></Suspense>} />
+      {/* Unknown URLs rendered a blank page under the homepage's canonical. */}
+      <Route path="*" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#060e1c'}} />}><NotFound /></Suspense>} />
     </Routes>
   );
 }
