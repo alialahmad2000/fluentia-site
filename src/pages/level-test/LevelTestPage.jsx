@@ -264,7 +264,7 @@ export default function LevelTestPage() {
 function Intro({ onStart }) {
   return (
     <div className="lt-in">
-      <span className="lt-eyebrow">مجاني · بدون تسجيل</span>
+      <span className="lt-eyebrow">اختبار تحديد مستوى مجاني · بدون تسجيل</span>
       <h1 className="lt-h1">وين مستواك بالضبط في الإنجليزي؟</h1>
       <p className="lt-lead">
         أغلب الناس يقولون «متوسط». وهذي أكثر إجابة تضيّع الوقت والفلوس: تدخل مستوى أسهل من قدرتك فتملّ،

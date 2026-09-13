@@ -335,6 +335,14 @@ export default function ArticlePage() {
                   ←
                 </span>
               </PrimaryCTA>
+              {/* Every article used to dead-end at pricing. The free placement test
+                  is the natural next step for a reader who is still deciding — and
+                  the internal link tells search engines the two belong together. */}
+              <p style={{ margin: "var(--lp-space-md) 0 0", fontSize: "var(--lp-body)" }}>
+                <a href="/level-test" style={{ color: "var(--lp-amber-bright)" }}>
+                  أو ابدأ باختبار تحديد المستوى المجاني — عشر دقائق ←
+                </a>
+              </p>
             </div>
           </Reveal>
         </Container>

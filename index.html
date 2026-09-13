@@ -10,8 +10,8 @@
          Every tag carries data-rh so react-helmet-async ADOPTS it on hydration
          (see <Seo>) instead of appending a duplicate. Social crawlers (WhatsApp,
          X, Telegram) never run JS, so these static tags are what they read. -->
-    <title>أكاديمية طلاقة | تعلَّم الإنجليزي مع مدربين سعوديين محترفين</title>
-    <meta data-rh="true" name="description" content="أكاديمية طلاقة — دورات إنجليزي أونلاين بمجموعات صغيرة (7 طلاب) مع مدربين سعوديين. متابعة يومية، حصص فردية، تقييم بالذكاء الاصطناعي. باقات تبدأ من 500 ريال." />
+    <title>أكاديمية طلاقة | دورات إنجليزي أونلاين للكبار مع مدربين سعوديين</title>
+    <meta data-rh="true" name="description" content="دورات إنجليزي أونلاين للكبار في السعودية: مجموعات صغيرة (7 طلاب) أو حصص فردية مع مدربين سعوديين، متابعة يومية، واختبار تحديد مستوى مجاني. باقات تبدأ من 500 ريال." />
     <link data-rh="true" rel="canonical" href="https://fluentia.academy/" />
     <meta data-rh="true" property="og:type" content="website" />
     <meta data-rh="true" property="og:url" content="https://fluentia.academy/" />
@@ -25,13 +25,6 @@
     <meta name="keywords" content="تعلم الإنجليزي, دورات إنجليزي أونلاين, IELTS السعودية, أكاديمية إنجليزي, كورس إنجليزي, مدرب إنجليزي سعودي, تعلم إنجليزي أونلاين" />
     <meta name="author" content="Dr. Ali Alahmad — Fluentia Academy" />
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-    <meta name="language" content="Arabic" />
-    <meta name="revisit-after" content="7 days" />
-
-    <!-- Publish / Updated dates (for Freshness score) -->
-    <meta name="article:published_time" content="2026-03-23T00:00:00+03:00" />
-    <meta name="article:modified_time" content="2026-04-15T00:00:00+03:00" />
-    <meta property="og:updated_time" content="2026-04-15T00:00:00+03:00" />
 
     <!-- Geo tags -->
     <meta name="geo.region" content="SA" />
@@ -58,9 +51,8 @@
     <!-- Google Search Console verification -->
     <meta name="google-site-verification" content="OT_pza6-DGpRqBqRpW5jIryK64ctJ19toacNsphPdyU" />
 
-    <!-- Alternate languages (Arabic-only site) -->
-    <link rel="alternate" hreflang="ar-SA" href="https://fluentia.academy/" />
-    <link rel="alternate" hreflang="x-default" href="https://fluentia.academy/" />
+    <!-- No hreflang: the site is Arabic-only, and a static ar-SA → "/" alternate
+         on every route contradicted each page's own canonical. -->
 
     <!-- Favicons & PWA -->
     <!-- Real brand icons (official F-mark from the brand PDF) -->
@@ -170,6 +162,10 @@
     }
     </script>
 
+    <!-- HOME_JSONLD:START — homepage-only structured data (Courses, Service, FAQPage,
+         BreadcrumbList). scripts/prerender-meta.mjs removes this whole block from
+         every other route's HTML: an FAQPage on /privacy describes questions that
+         page does not show. Organization + WebSite above stay site-wide. -->
     <!-- JSON-LD: Course — Level 1 (A1) -->
     <script type="application/ld+json">
     {
@@ -297,10 +293,10 @@
       "mainEntity": [
         {
           "@type": "Question",
-          "name": "هل أحتاج Fluentia فعلاً؟ ألا توجد طرق مجانية؟",
+          "name": "هل أحتاج أكاديمية طلاقة فعلاً؟ ألا توجد طرق مجانية؟",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "نعم، توجد طرق مجانية ممتازة — Duolingo للمفردات، YouTube للاستماع، ChatGPT للممارسة الكتابية. إذا كنت تستطيع التعلّم بنظام بنفسك، الأرجح لا تحتاج Fluentia. الفرق أن Fluentia توفّر الثلاثة معاً: نموذج علمي + ممارسة منظّمة + متابعة شخصية. اختر بناءً على نفسك، لا تحت الضغط."
+            "text": "نعم، توجد طرق مجانية ممتازة — Duolingo للمفردات، YouTube للاستماع، ChatGPT للممارسة الكتابية. إذا كنت تستطيع التعلّم بنظام بنفسك، الأرجح لا تحتاج طلاقة. الفرق أن طلاقة توفّر الثلاثة معاً: نموذج علمي + ممارسة منظّمة + متابعة شخصية. اختر بناءً على نفسك، لا تحت الضغط."
           }
         },
         {
@@ -349,6 +345,7 @@
       ]
     }
     </script>
+    <!-- HOME_JSONLD:END -->
   </head>
   <body>
     <div id="root"></div>

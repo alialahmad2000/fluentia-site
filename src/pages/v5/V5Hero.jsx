@@ -280,17 +280,21 @@ export default function V5Hero() {
               ))}
             </h1>
 
+            {/* This paragraph is the page's LCP element on a phone, and an element
+                is not "painted" for LCP while its opacity is 0 — a 1.05s delay
+                plus a 0.8s fade cost ~1.8s of LCP (Lighthouse 2026-09-13: 10.1s).
+                It now arrives with the headline instead of after it. */}
             <motion.p
-              initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, ease: EASE, delay: 1.05 }}
+              initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, ease: EASE, delay: 0.3 }}
               style={{ fontSize: "var(--v1-lead)", lineHeight: 2, color: "var(--v1-t-mute)", maxWidth: 520, margin: "26px 0 0", fontWeight: 300 }}
             >
               {HERO.sub}
             </motion.p>
 
             <motion.div
-              initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, ease: EASE, delay: 1.2 }}
+              initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, ease: EASE, delay: 0.45 }}
               style={{ display: "flex", gap: 14, flexWrap: "wrap", marginTop: 38 }}
             >
               <Magnetic>

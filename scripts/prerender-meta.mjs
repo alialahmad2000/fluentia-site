@@ -67,6 +67,22 @@ function metaBlock(seo) {
   return lines.join("\n    ");
 }
 
+const HOME_LD_START = "<!-- HOME_JSONLD:START";
+const HOME_LD_END = "<!-- HOME_JSONLD:END -->";
+
+/** Homepage-only JSON-LD (Courses, Service, FAQPage, BreadcrumbList) stays on
+ *  "/" and is cut from every other route, where it would describe content that
+ *  page does not show — Google treats that as misleading structured data. */
+function scopeHomeJsonLd(html, path) {
+  if (path === "/") return html;
+  const start = html.indexOf(HOME_LD_START);
+  const end = html.indexOf(HOME_LD_END);
+  if (start === -1 || end === -1 || end < start) {
+    throw new Error("HOME_JSONLD markers missing from dist/index.html — did index.html get edited?");
+  }
+  return html.slice(0, start) + html.slice(end + HOME_LD_END.length);
+}
+
 function inject(html, seo) {
   const start = html.indexOf(START);
   const end = html.indexOf(END);
@@ -75,7 +91,8 @@ function inject(html, seo) {
       "SOCIAL_META markers missing from dist/index.html — did index.html get edited?",
     );
   }
-  return html.slice(0, start) + metaBlock(seo) + html.slice(end + END.length);
+  const withMeta = html.slice(0, start) + metaBlock(seo) + html.slice(end + END.length);
+  return scopeHomeJsonLd(withMeta, seo.path);
 }
 
 /** /level-test → dist/level-test.html ; /partners/terms → dist/partners/terms.html */
