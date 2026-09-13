@@ -1,0 +1,658 @@
+/* TOUR PORT: vendored from fluentia-lms src/components/grammar/grammar.css (origin/main 3396e97e).
+   One change: overflow-x: clip on .grammar-page, marked below. */
+/* ─── Grammar Page Atmospheric Background ─── */
+.grammar-page {
+  background:
+    radial-gradient(1200px 600px at 90% -10%, var(--accent-sky-glow) 0%, transparent 60%),
+    radial-gradient(900px 500px at -10% 110%, var(--accent-violet-glow) 0%, transparent 55%);
+  color: var(--text-primary);
+  position: relative;
+  overflow-x: hidden;
+  /* TOUR PORT FIX: `hidden` still makes this a scroll container, and the 380px glow orb
+     (::after) overhangs its left edge on a phone, so any focus / scroll-into-view inside the
+     lesson could scroll it sideways — measured at -57px after tapping reorder chips, which
+     slid every card 57px off the right edge. `clip` paints the same and cannot scroll.
+     Browsers without `clip` (iOS < 16) keep the line above. */
+  overflow-x: clip;
+  transition: background 300ms ease, color 300ms ease;
+}
+
+/* Grid overlay — scoped to grammar section, not the entire viewport */
+.grammar-page::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--border-subtle) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border-subtle) 1px, transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none;
+  mask-image: radial-gradient(ellipse at center, black 40%, transparent 85%);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 40%, transparent 85%);
+  z-index: 0;
+}
+
+/* Floating orb */
+.grammar-page::after {
+  content: '';
+  position: absolute;
+  top: 80px;
+  right: 10%;
+  width: 380px;
+  height: 380px;
+  background: radial-gradient(circle, var(--accent-sky-glow) 0%, transparent 70%);
+  filter: blur(60px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Frost-white: tone down atmospheric effects */
+[data-theme="frost-white"] .grammar-page::after { opacity: 0.25; }
+[data-theme="frost-white"] .grammar-page::before { opacity: 0.3; }
+[data-theme="frost-white"] .grammar-page {
+  background:
+    radial-gradient(1200px 600px at 90% -10%, var(--accent-sky-glow) 0%, transparent 60%),
+    radial-gradient(900px 500px at -10% 110%, var(--accent-violet-glow) 0%, transparent 55%);
+}
+
+/* ─── Glass Card base ─── */
+.grammar-glass {
+  background: var(--glass-card);
+  border: 1px solid var(--border-default);
+  border-radius: 1rem;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: var(--text-primary);
+  transition: background 200ms ease, border-color 200ms ease, box-shadow 200ms ease;
+}
+
+/* Subtle hover lift on exercise cards */
+[data-grammar-exercise-card].grammar-glass:hover {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* ─── Rule block accent bar ─── */
+.grammar-rule-block {
+  background: var(--info-bg);
+  border-inline-start: 3px solid var(--accent-sky);
+  border-radius: 0.75rem;
+  padding: 1rem 1.25rem;
+  color: var(--text-primary);
+}
+
+/* The Arabic half of a rule sits INSIDE the same card as the English, under a
+   hairline, so the two languages read as one object instead of two floating
+   paragraphs (the old layout left the Arabic bare on the page). */
+.grammar-rule-ar {
+  margin-top: 0.875rem;
+  padding-top: 0.875rem;
+  border-top: 1px solid var(--border-subtle);
+}
+
+/* ─── Structured rich text (see RichText.jsx) ─── */
+.grammar-rt-block + .grammar-rt-block {
+  margin-top: 0.75rem;
+}
+
+.grammar-rt-line + .grammar-rt-line {
+  margin-top: 0.2rem;
+}
+
+/* A line whose direction was flipped (English line inside an Arabic block, or
+   the reverse) must also flip its alignment, or it reads as a stray indent. */
+.grammar-rt[dir='rtl'] .grammar-rt-line[dir='ltr'],
+.grammar-rt[dir='rtl'] .grammar-rt-li[dir='ltr'] {
+  text-align: left;
+}
+.grammar-rt[dir='ltr'] .grammar-rt-line[dir='rtl'],
+.grammar-rt[dir='ltr'] .grammar-rt-li[dir='rtl'] {
+  text-align: right;
+}
+
+/* Example sentences — authors mark them with <i>. Quiet, offset, scannable. */
+.grammar-rt-eg {
+  padding-inline-start: 0.75rem;
+  border-inline-start: 2px solid var(--info-border);
+  color: var(--text-secondary);
+  margin-top: 0.3rem;
+}
+
+.grammar-rt-b {
+  color: var(--accent-sky);
+  font-weight: 700;
+}
+
+.grammar-rt-i {
+  font-style: italic;
+}
+
+.grammar-rt-u {
+  text-decoration-color: var(--accent-sky);
+  text-underline-offset: 3px;
+}
+
+.grammar-rt-code {
+  background: var(--glass-input);
+  border: 1px solid var(--border-subtle);
+  border-radius: 4px;
+  padding: 1px 5px;
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-size: 0.85em;
+  color: var(--accent-sky);
+  unicode-bidi: isolate;
+}
+
+.grammar-rt-ul {
+  list-style: none;
+  margin: 0.35rem 0 0;
+  padding: 0;
+}
+
+.grammar-rt-li {
+  position: relative;
+  padding-inline-start: 1rem;
+  margin-bottom: 0.3rem;
+}
+
+.grammar-rt-ol {
+  margin: 0.35rem 0 0;
+  padding-inline-start: 1.35rem;
+}
+
+.grammar-rt-oli {
+  margin-bottom: 0.3rem;
+}
+
+.grammar-rt-oli::marker {
+  color: var(--accent-sky);
+  font-weight: 700;
+}
+
+.grammar-rt-li::before {
+  content: '';
+  position: absolute;
+  inset-inline-start: 0.25rem;
+  top: 0.62em;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--accent-sky);
+  opacity: 0.75;
+}
+
+/* ─── Formula box ─── */
+.grammar-formula {
+  position: relative;
+  background: var(--info-bg);
+  border: 1px solid var(--info-border);
+  border-radius: 0.75rem;
+  padding: 1.125rem 1.5rem;
+  text-align: center;
+  font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  letter-spacing: 0.02em;
+  color: var(--text-primary);
+}
+
+/* Formulas are frequently multi-line ("negatives: …", "3rd person: …").
+   Centred monospace lines need a little more air than prose. */
+.grammar-formula .grammar-rt-line + .grammar-rt-line {
+  margin-top: 0.35rem;
+}
+
+.grammar-formula-label {
+  display: block;
+  font-family: 'Tajawal', sans-serif;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: normal;
+  color: var(--text-secondary);
+  margin-bottom: 0.5rem;
+}
+
+/* ─── Section heading ─── */
+.grammar-heading {
+  font-size: 1.0625rem;
+  font-weight: 700;
+  color: var(--accent-sky);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.5rem;
+}
+
+/* Arabic is a connected script: letter-spacing severs it and uppercase is a
+   no-op. Never apply either to an Arabic heading. */
+.grammar-heading[dir='rtl'],
+.grammar-heading:lang(ar) {
+  text-transform: none;
+  letter-spacing: normal;
+  font-family: 'Tajawal', sans-serif;
+}
+
+/* ─── Comparison table ───
+   Wide content must scroll inside its own box; the page must never scroll
+   sideways on a 390px phone. */
+.grammar-table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border: 1px solid var(--border-subtle);
+  border-radius: 0.75rem;
+  background: var(--glass-input);
+}
+
+.grammar-table {
+  width: 100%;
+  min-width: 320px;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+/* On a phone the wrap is ~258px wide, so a 320px floor leaves one column
+   permanently half-cut. Let the cells wrap instead — the student's primary
+   device should not have to scroll a four-row table sideways. */
+@media (max-width: 460px) {
+  .grammar-table {
+    min-width: 0;
+  }
+  .grammar-table td,
+  .grammar-table th {
+    padding: 0.75rem 0.625rem;
+    font-size: 0.875rem;
+  }
+}
+
+.grammar-table td:first-child,
+.grammar-table th:first-child {
+  padding-inline-start: 1.125rem;
+}
+
+.grammar-table td:last-child,
+.grammar-table th:last-child {
+  padding-inline-end: 1.125rem;
+}
+
+.grammar-table tr:last-child td {
+  border-bottom: none;
+}
+
+/* Grammar forms in a cell are English — keep them LTR inside an RTL page. */
+.grammar-table-cell-ltr {
+  direction: ltr;
+  text-align: left;
+  unicode-bidi: isolate;
+  font-family: 'Inter', sans-serif;
+}
+
+.grammar-table-cell-ltr .grammar-rt-b {
+  color: var(--accent-sky);
+}
+
+.grammar-table th {
+  padding: 0.75rem 1rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid var(--border-default);
+}
+
+.grammar-table td {
+  padding: 1rem;
+  font-size: 0.9375rem;
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--border-subtle);
+  transition: background 0.15s;
+}
+
+.grammar-table tr:hover td {
+  background: var(--glass-card-hover);
+}
+
+/* ─── Example row ─── */
+.grammar-example-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  transition: background 0.15s;
+  color: var(--text-primary);
+}
+
+.grammar-example-row:hover {
+  background: var(--glass-card-hover);
+}
+
+.grammar-example-wrong {
+  text-decoration: underline wavy var(--accent-rose);
+  text-underline-offset: 4px;
+}
+
+/* ─── Exercise option cards ─── */
+.grammar-option {
+  padding: 0.875rem 1.25rem;
+  border-radius: 0.75rem;
+  background: var(--glass-input);
+  border: 1.5px solid var(--border-default);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: transform 0.12s ease-out, border-color 0.15s, background 0.15s, box-shadow 0.15s;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9375rem;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.grammar-option:not(:disabled):hover {
+  transform: translateY(-2px);
+  border-color: var(--accent-sky);
+  background: var(--accent-sky-glow);
+}
+
+.grammar-option:not(:disabled):active {
+  transform: scale(0.97);
+}
+
+.grammar-option:focus-visible {
+  outline: 2px solid var(--accent-sky);
+  outline-offset: 2px;
+}
+
+.grammar-option:disabled {
+  cursor: default;
+  transform: none;
+}
+
+/* Correctness states — kept as semantic colors, not theme bg */
+.grammar-option--correct {
+  background: var(--success-bg) !important;
+  border-color: var(--success) !important;
+  animation: grammar-pop 0.3s ease-out;
+}
+
+.grammar-option--wrong {
+  background: var(--danger-bg) !important;
+  border-color: var(--danger) !important;
+  animation: grammar-shake 0.35s ease-out;
+}
+
+@keyframes grammar-pop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.03); }
+  100% { transform: scale(1); }
+}
+
+@keyframes grammar-shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-4px); }
+  40% { transform: translateX(4px); }
+  60% { transform: translateX(-3px); }
+  80% { transform: translateX(2px); }
+}
+
+.grammar-option--dimmed {
+  opacity: 0.4;
+}
+
+.grammar-option--reveal-correct {
+  border-color: var(--success) !important;
+}
+
+/* ─── Exercise input fields ─── */
+.grammar-input {
+  background: var(--glass-input);
+  border: 1.5px solid var(--border-default);
+  border-radius: 0.75rem;
+  padding: 0.75rem 1rem;
+  color: var(--text-primary);
+  /* 16px prevents iOS Safari auto-zoom on input focus */
+  font-size: max(0.9375rem, 16px);
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  min-height: 44px;
+  -webkit-appearance: none;
+}
+
+.grammar-input::placeholder {
+  color: var(--text-tertiary);
+}
+
+.grammar-input:focus {
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.12);
+}
+
+.grammar-input--correct {
+  background: var(--success-bg);
+  border-color: var(--success-border);
+  color: var(--success);
+}
+
+.grammar-input--wrong {
+  background: var(--danger-bg);
+  border-color: var(--danger-border);
+  color: var(--danger);
+}
+
+/* ─── Reorder chips ─── */
+.grammar-chip {
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  background: var(--glass-input);
+  border: 1px solid var(--border-default);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: transform 0.15s, background 0.15s, border-color 0.15s;
+  font-size: 0.875rem;
+  min-height: 40px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.grammar-chip:hover:not(:disabled) {
+  transform: translateY(-1px);
+  border-color: var(--accent-sky);
+  background: var(--accent-sky-glow);
+}
+
+.grammar-chip--selected {
+  background: var(--info-bg);
+  border-color: var(--accent-sky);
+  color: var(--accent-sky);
+}
+
+.grammar-chip--used {
+  opacity: 0.25;
+  cursor: default;
+  transform: none;
+}
+
+/* ─── Progress dots ─── */
+.grammar-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--border-default);
+  transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
+}
+
+.grammar-dot--correct {
+  background: var(--success);
+  transform: scale(1.15);
+  box-shadow: 0 0 6px rgba(74, 222, 128, 0.4);
+}
+
+.grammar-dot--wrong {
+  background: var(--danger);
+  transform: scale(1.15);
+  box-shadow: 0 0 6px rgba(248, 113, 113, 0.4);
+}
+
+/* ─── Sticky CTA ─── */
+.grammar-sticky-cta {
+  position: fixed;
+  /* Sit above the mobile nav AND the iOS home indicator. The nav is
+     fixed bottom:0 with paddingBottom:var(--sab), so its total occupied
+     space from the viewport bottom = --bottom-nav-height + --sab. */
+  bottom: calc(1rem + var(--bottom-nav-height, 64px) + var(--sab, 0px));
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 40;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  background: var(--glass-elevated);
+  border: 1px solid var(--info-border);
+  border-radius: 999px;
+  padding: 0.75rem 2rem;
+  padding-bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px));
+  font-weight: 700;
+  color: var(--accent-sky);
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+  box-shadow: var(--shadow-lg);
+  -webkit-tap-highlight-color: transparent;
+}
+
+@media (min-width: 1024px) {
+  .grammar-sticky-cta {
+    bottom: 1.5rem;
+  }
+}
+
+.grammar-sticky-cta:hover {
+  background: var(--accent-sky-glow);
+  transform: translateX(-50%) translateY(-2px);
+}
+
+.grammar-sticky-cta:active {
+  transform: translateX(-50%) scale(0.96);
+}
+
+/* ─── Fade-in on scroll ─── */
+.grammar-fade-in {
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+}
+
+.grammar-fade-in--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ─── Explanation feedback bar ─── */
+.grammar-explanation-bar {
+  border-right: 3px solid var(--accent-gold);
+  background: var(--warning-bg);
+  border-radius: 0.5rem;
+  padding: 0.75rem 1rem;
+  color: var(--text-secondary);
+}
+
+/* ─── AI Explain button ─── */
+.grammar-explain-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 10px;
+  background: var(--info-bg);
+  border: 1px solid var(--info-border);
+  color: var(--accent-sky);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 150ms ease;
+  font-family: 'Tajawal', sans-serif;
+}
+.grammar-explain-btn:hover {
+  background: var(--accent-sky-glow);
+  transform: translateY(-1px);
+}
+
+/* ─── Exercise Instruction ─── */
+.exercise-instruction {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: color-mix(in oklab, var(--accent-sky) 8%, transparent);
+  border-right: 3px solid var(--accent-sky);
+  color: var(--text-primary);
+  font-size: 14px;
+  font-family: 'Tajawal', sans-serif;
+  line-height: 1.5;
+}
+.exercise-instruction .instruction-icon { font-size: 16px; }
+
+/* ─── AI Explanation rendered HTML ─── */
+.grammar-explain-content p {
+  margin-bottom: 0.5rem;
+}
+.grammar-explain-content code {
+  background: var(--glass-input);
+  border: 1px solid var(--border-subtle);
+  border-radius: 4px;
+  padding: 1px 5px;
+  font-family: 'Inter', monospace;
+  font-size: 0.85em;
+  color: var(--accent-sky);
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+.grammar-explain-content strong {
+  color: var(--accent-sky);
+  font-weight: 700;
+}
+.grammar-explain-content ul,
+.grammar-explain-content ol {
+  padding-right: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+.grammar-explain-content li {
+  margin-bottom: 0.25rem;
+}
+
+/* ─── Circular progress ring ─── */
+.grammar-progress-ring {
+  transform: rotate(-90deg);
+}
+
+/* ─── Reduced motion ─── */
+@media (prefers-reduced-motion: reduce) {
+  .grammar-fade-in {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .grammar-option:not(:disabled):hover {
+    transform: none;
+  }
+  .grammar-option--correct,
+  .grammar-option--wrong {
+    animation: none;
+  }
+  .grammar-chip:hover:not(:disabled) {
+    transform: none;
+  }
+  .grammar-sticky-cta:hover {
+    transform: translateX(-50%);
+  }
+}
+
+/* Numbered RTL ordered lists. RichText.jsx carried a comment that Arabic-numbered
+   lines were deliberately NOT turned into <ol> "because it would renumber them
+   with Latin digits" — @counter-style made an <ol> possible, and since
+   NUMERALS-UNIFY-v1 Latin is what the whole platform wants anyway. The rule is
+   kept because the counter carries the Arabic list PREFIX, not the digits.
+   :dir() resolves the element's OWN resolved direction. An ancestor selector
+   like [dir="rtl"] .grammar-rt-ol is wrong here: the whole app lives inside
+   <html dir="rtl">, so an English (dir="ltr") list would still match it and get
+   this counter style. Verified: the ancestor form leaked, this one does not.
+   Unsupported browsers simply drop the rule and keep Latin digits. */
+.grammar-rt-ol:dir(rtl) { list-style: fl-arabic; }
