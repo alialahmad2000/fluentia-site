@@ -1,5 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { resultWhatsAppUrl, goalAr } from './submit';
+import { track } from '../../lib/track';
+
+/* The share link carries its own source, so a friend who arrives through it and
+ * later takes the test or leaves a number is counted as utm_source=share. */
+const SHARE_URL = 'https://fluentia.academy/level-test?utm_source=share&utm_medium=level_test&utm_campaign=result';
+
+/** First person, so it reads right whoever sends it and to whomever. The level
+ *  is included from A2 up — a Pre-A1/A1 result is not something most people
+ *  want to broadcast, and a share nobody sends converts no one. */
+function shareText(report) {
+  const lvl = report.lvlIndex >= 2 ? ` وطلع مستواي ${report.level.cefr}` : '';
+  return `اختبرت مستواي في الإنجليزي مع أكاديمية طلاقة (اختبار تكيّفي مجاني، 10 دقائق)${lvl}.`;
+}
+
 
 /* What each level actually means, in the site's honest voice — and written for
  * both genders rather than defaulting to the masculine. */
@@ -49,6 +63,24 @@ export default function ResultScreen({ lead, report, saving }) {
   const filled = (report.lvlIndex + 1) / 6;
 
   const waUrl = resultWhatsAppUrl(lead, report);
+
+  const [shared, setShared] = useState(false);
+  const share = async () => {
+    const text = shareText(report);
+    try {
+      if (navigator.share) {
+        await navigator.share({ text, url: SHARE_URL });
+        track('share', { method: 'web_share', content_type: 'level_test', item_id: report.level.cefr });
+        setShared(true);
+        return;
+      }
+    } catch (e) {
+      if (e?.name === 'AbortError') return; // closed the share sheet — not a share
+    }
+    window.open(`https://wa.me/?text=${encodeURIComponent(`${text}\n${SHARE_URL}`)}`, '_blank', 'noopener');
+    track('share', { method: 'whatsapp', content_type: 'level_test', item_id: report.level.cefr });
+    setShared(true);
+  };
 
   return (
     <div className="lt-in">
@@ -155,6 +187,7 @@ export default function ResultScreen({ lead, report, saving }) {
         <div className="lt-cta-block">
           <a
             className="lt-btn lt-btn-wa"
+            data-cta="level_test_result"
             href={waUrl}
             target="_blank"
             rel="noopener noreferrer"
@@ -177,6 +210,16 @@ export default function ResultScreen({ lead, report, saving }) {
         <p className="lt-hint" style={{ marginTop: 16 }}>
           هذا تقييم مبدئي دقيق، لكنه ما يغني عن المكالمة: النطق والطلاقة ما ينقاسان باختيار من متعدد.
         </p>
+      </div>
+
+      <div className="lt-card">
+        <h2 className="lt-h2">{g === 'm' ? 'تعرف أحد' : 'تعرفين أحد'} يسأل عن مستواه؟</h2>
+        <p className="lt-lead" style={{ margin: '12px 0 16px', fontSize: '0.95rem' }}>
+          الاختبار مجاني ومفتوح لأي أحد — {g === 'm' ? 'شاركه' : 'شاركيه'} مع صديق أو زميل.
+        </p>
+        <button type="button" className="lt-btn lt-btn-ghost lt-btn-wide" onClick={share}>
+          {shared ? 'تمت المشاركة ✓' : `${g === 'm' ? 'شارك' : 'شاركي'} الاختبار ←`}
+        </button>
       </div>
     </div>
   );
