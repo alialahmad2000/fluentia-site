@@ -1,0 +1,22 @@
+/* Bilingual chrome. Lives beside labels.jsx rather than in world.css because
+   the «Proverb of the day» card on the home page uses the labels without ever
+   loading a World — the styles have to travel with the component. */
+.xbi{display:inline-flex;align-items:baseline;gap:7px;white-space:nowrap}
+.xbi b{font-family:'Inter Tight',system-ui,sans-serif;font-weight:600;letter-spacing:.005em}
+.xbi em{font-style:normal;opacity:.62;font-size:.86em}
+/* The English half must be laid out as English: a multi-word Latin run inside an
+   RTL box wearing the Arabic face paints its words on top of each other. */
+.xbi b,.xkind b{direction:ltr;unicode-bidi:isolate}
+.xbi em,.xkind em{direction:rtl;unicode-bidi:isolate}
+@media (max-width:520px){ .xbi{white-space:normal} }
+
+.xkind{display:inline-flex;align-items:baseline;gap:8px;padding:6px 13px;border-radius:99px;
+  border:1px solid;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+.xkind b{font-family:'Inter Tight',system-ui,sans-serif;font-weight:700;font-size:12.5px;
+  letter-spacing:.09em;text-transform:uppercase}
+.xkind em{font-style:normal;font-size:12px;opacity:.72}
+.xkind.is-proverb{color:#f3d69a;border-color:rgba(224,169,74,.5);background:rgba(224,169,74,.16)}
+.xkind.is-idiom  {color:#a9ece8;border-color:rgba(95,214,208,.45);background:rgba(95,214,208,.14)}
+/* A third category needs a third colour, not a reused one: the badge is how the
+   sheet answers "what am I looking at" before any text does. */
+.xkind.is-preposition{color:#c7b6f5;border-color:rgba(167,139,250,.45);background:rgba(167,139,250,.14)}

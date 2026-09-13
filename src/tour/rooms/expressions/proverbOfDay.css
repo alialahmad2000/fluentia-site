@@ -1,0 +1,85 @@
+/* «مثل اليوم» — the daily proverb plate on the Living Atlas home.
+   It sits over the living world, so it carries its own image and its own scrim
+   rather than borrowing the page's. House rules: no letter-spacing on Arabic,
+   ≥44px target, hover lifts by 2px and never scales. */
+
+.pod-card{
+  position:relative; display:block; overflow:hidden;
+  border-radius:20px; min-height:190px; text-decoration:none;
+  border:1px solid rgba(232,220,200,.16);
+  box-shadow:inset 0 1px 0 rgba(255,242,224,.07),
+             0 3px 8px -3px rgba(0,0,0,.6),
+             0 22px 48px -24px rgba(0,0,0,.92);
+  transition:transform .3s cubic-bezier(.2,.7,.3,1),
+             box-shadow .3s cubic-bezier(.2,.7,.3,1),
+             border-color .3s;
+}
+.pod-card:hover{
+  transform:translateY(-2px);
+  border-color:rgba(217,164,65,.42);
+  box-shadow:inset 0 1px 0 rgba(255,242,224,.1),
+             0 4px 10px -3px rgba(0,0,0,.6),
+             0 30px 62px -26px rgba(0,0,0,.95);
+}
+.pod-card:focus-visible{ outline:2px solid rgba(217,164,65,.7); outline-offset:3px; }
+
+.pod-card__img{
+  position:absolute; inset:0; width:100%; height:100%;
+  object-fit:cover; filter:saturate(.95);
+}
+.pod-card__veil{
+  position:absolute; inset:0;
+  background:linear-gradient(to top,
+    rgba(6,6,10,.95) 0%, rgba(6,6,10,.68) 42%,
+    rgba(6,6,10,.12) 76%, rgba(6,6,10,.34) 100%);
+}
+
+.pod-card__tag{
+  position:absolute; top:14px; inset-inline-start:14px; z-index:2;
+  display:inline-flex; align-items:center; gap:6px;
+  font-family:'IBM Plex Sans Arabic',system-ui,sans-serif;
+  font-size:.75rem; font-weight:600; color:#f0cf8e;
+  padding:6px 12px; border-radius:999px;
+  background:rgba(10,10,14,.62); border:1px solid rgba(217,164,65,.32);
+  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+}
+
+.pod-card__body{
+  position:absolute; inset:auto 0 0 0; z-index:2; display:block;
+  padding:22px 20px 18px;
+}
+.pod-card__en{
+  display:block;
+  font-family:'Cormorant Garamond',Georgia,serif;
+  font-style:italic; font-weight:600; font-size:1.35rem; line-height:1.32;
+  color:#fff; direction:ltr; text-align:left;
+  text-shadow:0 2px 18px rgba(0,0,0,.78);
+}
+.pod-card__tw{
+  display:block; margin-top:9px;
+  font-family:'Amiri',serif; /* TOUR PORT: LMS never loads Aref Ruqaa; students see Amiri */
+  font-size:1.0625rem; line-height:1.7; color:#f0cf8e;
+  text-shadow:0 2px 14px rgba(0,0,0,.85);
+}
+.pod-card__cta{
+  display:inline-flex; align-items:center; gap:5px; margin-top:12px;
+  min-height:22px;
+  font-family:'IBM Plex Sans Arabic',system-ui,sans-serif;
+  font-size:.8125rem; font-weight:600; color:rgba(244,239,230,.82);
+}
+.pod-card:hover .pod-card__cta{ color:#f0cf8e; }
+
+@media (max-width:520px){
+  .pod-card{ min-height:168px; }
+  .pod-card__en{ font-size:1.2rem; }
+  .pod-card__body{ padding:18px 16px 15px; }
+}
+@media (prefers-reduced-motion: reduce){
+  .pod-card{ transition:none }
+  .pod-card:hover{ transform:none }
+}
+
+/* The tag and CTA now carry English + Arabic. */
+.pod-card__tag .xbi b{font-size:12px}
+.pod-card__tag .xbi em{font-size:11.5px}
+.pod-card__cta .xbi b{font-size:13.5px}
