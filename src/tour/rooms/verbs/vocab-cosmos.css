@@ -1,0 +1,86 @@
+/* ============================================================================
+ * TOUR PORT — the slice of fluentia-lms src/styles/vocab-constellation.css the
+ * verb ladder actually depends on (origin/main 3396e97e):
+ *   L14-77   the --vc-* tokens and the .vocab-cosmos text/font base (verbatim)
+ *   L487     .vc-content stacking (verbatim)
+ *   L501-507 the room-variant shell, WITHOUT min-height:100dvh — a tour view is
+ *            a section of a page, not a full-screen app route.
+ * Dropped: L851-860, the negative-margin bleed. It is tuned to the LMS <main>
+ * padding, and on this page it pushes the room 16-40px past both edges and
+ * scrolls the viewport sideways on a phone.
+ * ==========================================================================*/
+.vocab-cosmos {
+  /* ── Base: deep navy, tuned to the platform's #060e1c family ── */
+  --vc-void: #04070f;
+  --vc-field: #0b1428;
+
+  /* ── Surfaces — OPAQUE, stepping up from the field ──────────────────────
+     These were `rgba(130,165,255,.05–.15)` sheets of blue glass laid over an
+     animated starfield, so no card was ever a colour: each one rendered as an
+     average of itself and whatever stars happened to drift behind it, and text
+     sat on a ground that changed while you read it. The atmosphere belongs to
+     the BACKGROUND layer (the night sky + ConstellationField, both untouched);
+     content sits on solid ground above it. */
+  --vc-surface: #111c33;
+  --vc-surface-2: #182444;
+  --vc-surface-3: #223057;
+  --vc-border: #22305a;
+  --vc-border-strong: #3a4d85;
+
+  /* ── Accents — a disciplined 3-note chord that matches the platform ── */
+  --vc-sky: #38bdf8;          /* platform primary — interactive / learning */
+  --vc-sky-bright: #7dd3fc;
+  --vc-indigo: #818cf8;       /* cosmic secondary (ambient only) */
+  --vc-indigo-bright: #a5b4fc;
+  --vc-violet: #a78bfa;       /* nebula flavour */
+  --vc-gold: #fbbf24;         /* mastery / achievement — shared w/ platform */
+  --vc-gold-soft: #fcd34d;
+
+  /* Unit light for the one-word stage (VocabShell overrides per unit) */
+  --vc-room-hue: 206;
+
+  /* ── Star mastery states ── */
+  --vc-star-new: #64748b;
+  --vc-star-learning: #7dd3fc;
+  --vc-star-mastered: #fcd34d;
+
+  /* ── Text ── */
+  --vc-text: #eef3ff;
+  --vc-text-soft: #c2ccea;
+  --vc-text-dim: #8994ba;
+
+  /* ── Shadows ────────────────────────────────────────────────────────────
+     The three glow tokens are kept as NAMES but emptied. They were spent in 15
+     places across 8 files purely decoratively, and a bloom around a chip turns
+     a decided colour into a haze of itself. Emptying the token retires all 15
+     at once; they resolve to a valid no-op rather than `none`, which would be
+     illegal inside a `box-shadow` list and would break every one of those
+     rules. Depth is carried by the layered shadows below — a real downward
+     shadow, not light leaking out of the element. */
+  --vc-glow-sky: 0 0 0 0 transparent;
+  --vc-glow-indigo: 0 0 0 0 transparent;
+  --vc-glow-gold: 0 0 0 0 transparent;
+  --vc-shadow-card:
+    0 1px 0 0 rgba(255, 255, 255, 0.05) inset,
+    0 2px 8px -3px rgba(0, 0, 0, 0.5),
+    0 14px 34px -14px rgba(0, 0, 0, 0.72);
+  --vc-shadow-pill:
+    0 1px 0 0 rgba(255, 255, 255, 0.04) inset,
+    0 4px 12px -6px rgba(0, 0, 0, 0.5);
+
+  position: relative;
+  color: var(--vc-text);
+  font-family: 'Tajawal', system-ui, sans-serif;
+}
+
+
+.vocab-cosmos .vc-content { position: relative; z-index: 1; }
+
+
+/* ── shell: full-bleed, the stage owns the column ── */
+.vocab-cosmos.vc-shell-room .vc-content {
+  display: flex;
+  flex-direction: column;
+  padding-inline: clamp(1rem, 5vw, 3.5rem);
+  padding-block-start: 1.375rem;
+}
