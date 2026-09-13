@@ -1,0 +1,318 @@
+/* ══════════════════════════════════════════════════════════════════════════
+   «الأمثال» + «التعابير» — two worlds, one engine.
+
+   The two surfaces share this file but NOT their look, and that is the point:
+   a proverb is literature (Aref Ruqaa, warm gold, a gallery) and an idiom is a
+   mechanism (Readex, cool cyan, a lab). A student should know which world she
+   is in before she reads a word.
+
+   House rules honoured here, each one earned by a past bug:
+     · no type below 12px (.75rem)        · NO letter-spacing on Arabic — it
+     · ≥44px touch targets                  severs the connected script
+     · hover = translateY(-2px), never     · panels are LIT from the top
+       scale/bounce                        · headings pinned (see below)
+   ══════════════════════════════════════════════════════════════════════════ */
+
+.expr-root{
+  --x-ink:#f4efe6; --x-ink-soft:#cfc7ba; --x-muted:#b4aca0; --x-faint:#948d83;
+  --x-card:rgba(255,250,242,.075); --x-card-2:rgba(255,250,242,.04);
+  --x-line:rgba(232,220,200,.16); --x-line-soft:rgba(232,220,200,.085);
+  --x-ok:#82c9a1; --x-ok-soft:rgba(130,201,161,.15);
+  --x-no:#e0796a; --x-no-soft:rgba(224,121,106,.15);
+  --x-lit:linear-gradient(180deg,rgba(255,248,236,.055),rgba(255,248,236,.010) 46%);
+  --x-elev:inset 0 1px 0 rgba(255,242,224,.06),
+           0 2px 4px -2px rgba(0,0,0,.62),
+           0 14px 32px -20px rgba(0,0,0,.92);
+  --x-elev-hi:inset 0 1px 0 rgba(255,242,224,.09),
+              0 3px 6px -2px rgba(0,0,0,.6),
+              0 26px 50px -26px rgba(0,0,0,.96);
+  /* Arabic display faces — an English serif here falls back to whatever system
+     Arabic font the device has (Geeza Pro on iOS), which looks broken. */
+  --x-ar:'IBM Plex Sans Arabic','Readex Pro',system-ui,sans-serif;
+  /* TOUR PORT: the LMS names 'Aref Ruqaa' first but never loads it, so students
+     see Amiri. This site DOES ship Aref Ruqaa (the founder signature), so it is
+     dropped here to render what students actually see. */
+  --x-ar-lit:'Amiri',serif;                       /* ARABIC proverbs only */
+  --x-ar-lab:'Readex Pro','IBM Plex Sans Arabic',system-ui,sans-serif;
+  --x-en-lit:'Cormorant Garamond',Georgia,serif;  /* ENGLISH only */
+  --x-en-lab:'Inter Tight',-apple-system,'SF Pro Text','Segoe UI',system-ui,sans-serif;
+  --x-mono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+  --x-ease:cubic-bezier(.2,.7,.3,1);
+  position:relative; z-index:1; min-height:100dvh; color:var(--x-ink);
+  font-family:var(--x-ar);
+}
+/* world accents */
+.expr-root.is-hall{ --x-accent:#d9a441; --x-accent-soft:#f0cf8e; --x-accent-dim:rgba(217,164,65,.14); --x-accent-line:rgba(217,164,65,.30); }
+.expr-root.is-lab { --x-accent:#5fd6d0; --x-accent-soft:#a9ece8; --x-accent-dim:rgba(95,214,208,.13); --x-accent-line:rgba(95,214,208,.30); }
+
+/* The app sets a GLOBAL `h1..h6 { color: var(--text-primary) }`, which is near-black
+   under the light themes. This page paints its own dark stage, so every heading is
+   pinned here or it goes invisible for half the students. */
+.expr-root h1,.expr-root h2,.expr-root h3,.expr-root h4{ color:var(--x-ink); }
+
+/* ── the stage ──────────────────────────────────────────────────────────
+   Was a pair of CSS gradient blobs over a flat panel — a background made of
+   nothing, with the expression's own plate sitting on top of it in a card.
+   Replaced by <World src={image_url} />, which builds the background OUT OF the
+   expression being read; the layers live in world.css. `.expr-root` paints no
+   background of its own, so the fixed world shows through it. */
+
+.expr-wrap{position:relative;z-index:1;max-width:1120px;margin:0 auto;padding:28px 20px 132px}
+
+/* ── masthead ──────────────────────────────────────────────────────────── */
+.expr-eyebrow{font-size:.8125rem;color:var(--x-faint);font-weight:600;margin-bottom:10px}
+.expr-title{font-size:clamp(1.75rem,4.6vw,2.9rem);font-weight:400;line-height:1.28;margin:0}
+.is-hall .expr-title{font-family:var(--x-ar-lit)}
+.is-lab  .expr-title{font-family:var(--x-ar-lab);font-weight:300}
+.expr-lede{color:var(--x-muted);font-size:1rem;line-height:1.95;max-width:60ch;margin-top:14px}
+.expr-lede b{color:var(--x-accent-soft);font-weight:600}
+.expr-rule{height:1px;background:linear-gradient(90deg,transparent,var(--x-line),transparent);margin:38px 0 26px;border:0}
+
+/* ── theme filter ──────────────────────────────────────────────────────── */
+.expr-themes{display:flex;gap:8px;flex-wrap:wrap;margin-top:22px}
+.expr-chip{
+  font-family:var(--x-ar);font-size:.875rem;font-weight:500;color:var(--x-muted);
+  background:var(--x-card-2);border:1px solid var(--x-line);border-radius:999px;
+  padding:11px 17px;min-height:44px;cursor:pointer;transition:transform .22s var(--x-ease),border-color .22s,color .22s,background .22s;
+}
+.expr-chip:hover{transform:translateY(-2px);border-color:var(--x-line);color:var(--x-ink)}
+.expr-chip[aria-pressed="true"]{background:var(--x-accent-dim);border-color:var(--x-accent-line);color:var(--x-accent-soft)}
+
+/* ── proverb plates ────────────────────────────────────────────────────── */
+.expr-plates{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:24px}
+@media (max-width:860px){ .expr-plates{grid-template-columns:1fr} }
+.expr-plate{
+  position:relative;display:block;border-radius:18px;overflow:hidden;aspect-ratio:4/3;
+  border:1px solid var(--x-line);box-shadow:var(--x-elev);text-decoration:none;
+  transition:transform .3s var(--x-ease),box-shadow .3s var(--x-ease),border-color .3s;
+}
+.expr-plate:hover{transform:translateY(-2px);box-shadow:var(--x-elev-hi);border-color:var(--x-accent-line)}
+.expr-plate img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(.95)}
+.expr-plate .veil{position:absolute;inset:0;background:linear-gradient(to top,rgba(6,6,10,.95) 0%,rgba(6,6,10,.62) 40%,rgba(6,6,10,.08) 72%,rgba(6,6,10,.30) 100%)}
+.expr-plate .txt{display:block;position:absolute;inset:auto 0 0 0;padding:22px 20px 18px}
+.expr-plate .en{display:block;font-family:var(--x-en-lit);font-style:italic;font-size:1.3rem;font-weight:600;line-height:1.34;color:#fff;direction:ltr;text-align:left;text-shadow:0 2px 18px rgba(0,0,0,.75)}
+.expr-plate .tw{display:block;font-family:var(--x-ar-lit);font-size:1.0625rem;line-height:1.7;color:var(--x-accent-soft);margin-top:9px;text-shadow:0 2px 14px rgba(0,0,0,.85)}
+.expr-badge{
+  position:absolute;top:13px;inset-inline-start:13px;font-size:.75rem;font-weight:600;
+  padding:6px 11px;border-radius:999px;background:rgba(10,10,14,.62);
+  border:1px solid var(--x-line);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);color:var(--x-accent-soft);
+}
+.expr-badge.is-state{inset-inline-start:auto;inset-inline-end:13px;color:var(--x-ok);border-color:rgba(130,201,161,.4)}
+
+/* ── idiom cards (lab index) ───────────────────────────────────────────── */
+.expr-idioms{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-top:24px}
+.expr-icard{
+  position:relative;display:block;border-radius:18px;overflow:hidden;text-decoration:none;
+  border:1px solid var(--x-line);background:var(--x-card-2);background-image:var(--x-lit);
+  box-shadow:var(--x-elev);transition:transform .3s var(--x-ease),box-shadow .3s var(--x-ease),border-color .3s;
+}
+.expr-icard:hover{transform:translateY(-2px);box-shadow:var(--x-elev-hi);border-color:var(--x-accent-line)}
+.expr-icard .duo{display:grid;grid-template-columns:1fr 1fr;gap:2px;aspect-ratio:16/9;background:var(--x-line-soft)}
+.expr-icard .duo span{position:relative;overflow:hidden;display:block}
+.expr-icard .duo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.expr-icard .duo .tag{position:absolute;bottom:0;inset-inline:0;font-size:.75rem;padding:5px 9px;background:linear-gradient(to top,rgba(6,8,12,.92),transparent);color:var(--x-ink-soft)}
+.expr-icard .body{display:block;padding:16px 18px 18px}
+.expr-icard .en{display:block;font-family:var(--x-en-lab);font-size:1.25rem;font-weight:700;direction:ltr;text-align:left;color:#fff;line-height:1.3}
+.expr-icard .mn{display:block;font-size:.9375rem;color:var(--x-muted);line-height:1.75;margin-top:8px}
+
+/* ── the sheet ─────────────────────────────────────────────────────────── */
+.expr-back{
+  display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:10px 15px;
+  border-radius:12px;border:1px solid var(--x-line);background:var(--x-card-2);
+  color:var(--x-muted);font-family:var(--x-ar);font-size:.875rem;text-decoration:none;
+  transition:transform .22s var(--x-ease),color .22s,border-color .22s;
+}
+.expr-back:hover{transform:translateY(-2px);color:var(--x-ink)}
+
+.expr-hero{position:relative;border-radius:20px;overflow:hidden;margin-top:18px;border:1px solid var(--x-line);box-shadow:var(--x-elev)}
+.expr-hero img{display:block;width:100%;aspect-ratio:21/9;object-fit:cover}
+@media (max-width:640px){ .expr-hero img{aspect-ratio:4/3} }
+.expr-hero .veil{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,9,14,.97) 2%,rgba(10,9,14,.5) 46%,transparent 82%)}
+.expr-hero .cap{display:block;position:absolute;inset:auto 0 0 0;padding:0 26px 22px}
+.expr-hero .en{display:block;font-family:var(--x-en-lit);font-style:italic;font-size:clamp(1.4rem,3.4vw,2.3rem);font-weight:600;color:#fff;direction:ltr;text-align:left;line-height:1.28;text-shadow:0 3px 24px rgba(0,0,0,.8)}
+.is-lab .expr-hero .en{font-family:var(--x-en-lab);font-style:normal;font-weight:700}
+
+.expr-step{border-top:1px solid var(--x-line-soft);padding:24px 0}
+.expr-step:first-of-type{border-top:0}
+.expr-steph{display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+.expr-stepn{
+  width:26px;height:26px;flex:none;border-radius:8px;display:grid;place-items:center;
+  font-size:.75rem;font-weight:700;font-family:var(--x-mono);
+  background:var(--x-accent-dim);border:1px solid var(--x-accent-line);color:var(--x-accent-soft);
+}
+.expr-steph b{font-size:.9375rem;font-weight:600;color:var(--x-ink)}
+.expr-steph .hint{font-size:.8125rem;color:var(--x-faint);font-weight:400}
+
+/* guess options */
+.expr-opts{display:grid;gap:9px}
+.expr-opt{
+  position:relative;text-align:start;font-family:var(--x-ar);font-size:.9375rem;line-height:1.7;
+  color:var(--x-ink);background:var(--x-card-2);border:1px solid var(--x-line);border-radius:14px;
+  padding:14px 16px;min-height:44px;cursor:pointer;
+  transition:transform .22s var(--x-ease),background .22s,border-color .22s;
+}
+.expr-opt:hover:not(:disabled){transform:translateY(-2px);background:var(--x-card);border-color:var(--x-line)}
+.expr-opt:disabled{cursor:default}
+.expr-opt.is-right{background:var(--x-ok-soft);border-color:rgba(130,201,161,.5)}
+.expr-opt.is-wrong{background:var(--x-no-soft);border-color:rgba(224,121,106,.42);opacity:.78}
+.expr-opt .tag{display:block;margin-top:6px;font-size:.75rem;font-weight:600;opacity:0;transition:opacity .3s}
+.expr-opt.is-right .tag,.expr-opt.is-wrong .tag{opacity:1}
+.expr-opt.is-right .tag{color:var(--x-ok)} .expr-opt.is-wrong .tag{color:var(--x-no)}
+
+.expr-meaning{font-size:1.0625rem;line-height:1.95;color:var(--x-ink)}
+
+/* the Arabic twin — the whole point of the proverb world */
+.expr-twin{
+  position:relative;overflow:hidden;margin-top:18px;border-radius:16px;padding:20px 22px;
+  background:linear-gradient(135deg,rgba(217,164,65,.14),rgba(217,164,65,.04));
+  border:1px solid var(--x-accent-line);
+}
+.expr-twin::before{content:'';position:absolute;inset-inline-start:0;top:0;bottom:0;width:3px;background:linear-gradient(to bottom,var(--x-accent),transparent)}
+.expr-twin .lbl{font-size:.75rem;color:var(--x-accent);font-weight:600;margin-bottom:10px}
+.expr-twin .say{font-family:var(--x-ar-lit);font-size:clamp(1.25rem,3vw,1.75rem);line-height:1.6;color:var(--x-accent-soft)}
+.expr-twin .note{margin-top:11px;font-size:.9375rem;line-height:1.9;color:var(--x-muted)}
+.expr-twin .note b{color:var(--x-ink-soft);font-weight:600}
+
+/* the frame — the whole point of the idiom world */
+.expr-frame{
+  border-radius:16px;padding:20px 22px;
+  background:linear-gradient(135deg,rgba(95,214,208,.11),rgba(95,214,208,.03));
+  border:1px solid var(--x-accent-line);
+}
+.expr-pattern{
+  font-family:var(--x-mono);font-size:.9375rem;direction:ltr;text-align:left;color:var(--x-accent-soft);
+  line-height:1.8;background:rgba(0,0,0,.32);border:1px solid var(--x-line);border-radius:11px;
+  padding:13px 15px;overflow-x:auto;
+}
+.expr-forms{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.expr-form{
+  font-family:var(--x-mono);font-size:.8125rem;direction:ltr;background:var(--x-card);
+  border:1px solid var(--x-line);border-radius:9px;padding:7px 11px;color:var(--x-ink);
+}
+.expr-form.is-fixed{color:var(--x-accent-soft);border-color:var(--x-accent-line)}
+.expr-warn{
+  margin-top:14px;border-radius:13px;padding:14px 16px;
+  background:var(--x-no-soft);border:1px solid rgba(224,121,106,.32);
+  font-size:.875rem;line-height:1.9;color:var(--x-ink-soft);
+}
+.expr-warn b{color:var(--x-no);font-weight:600}
+.expr-code{
+  font-family:var(--x-mono);direction:ltr;display:inline-block;background:rgba(0,0,0,.34);
+  padding:2px 7px;border-radius:6px;font-size:.8125rem;color:var(--x-ink);
+}
+.expr-code.is-bad{color:#f0a08c;text-decoration:line-through;text-decoration-color:rgba(224,121,106,.6)}
+.expr-code.is-good{color:var(--x-ok)}
+.expr-tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.expr-tag{
+  display:inline-flex;align-items:center;gap:7px;font-size:.8125rem;font-weight:600;
+  padding:8px 13px;border-radius:999px;background:var(--x-card-2);border:1px solid var(--x-line);color:var(--x-muted);
+}
+.expr-tag i{width:7px;height:7px;border-radius:50%;background:var(--x-accent);font-style:normal;flex:none}
+.expr-tag.is-warn{color:#f0a08c;border-color:rgba(224,121,106,.34)}
+.expr-tag.is-warn i{background:var(--x-no)}
+
+/* the split plate — literal vs real */
+.expr-split{display:grid;grid-template-columns:1fr 1fr;gap:3px;border-radius:18px;overflow:hidden;
+  border:1px solid var(--x-line);box-shadow:var(--x-elev);background:var(--x-line-soft)}
+@media (max-width:700px){ .expr-split{grid-template-columns:1fr} }
+.expr-pane{position:relative;aspect-ratio:3/4;overflow:hidden}
+@media (max-width:700px){ .expr-pane{aspect-ratio:4/3} }
+.expr-pane img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.expr-pane .lbl{position:absolute;top:12px;inset-inline-start:12px;z-index:3;font-size:.75rem;font-weight:700;
+  padding:6px 11px;border-radius:999px;background:rgba(8,10,14,.68);border:1px solid var(--x-line);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+.expr-pane.is-literal .lbl{color:#f0a08c}
+.expr-pane.is-real .lbl{color:var(--x-accent-soft)}
+.expr-pane .cap{display:block;position:absolute;inset:auto 0 0 0;z-index:3;padding:18px 16px;
+  background:linear-gradient(to top,rgba(6,8,12,.96),rgba(6,8,12,.45) 58%,transparent);
+  font-size:.9375rem;line-height:1.8;color:var(--x-ink-soft)}
+.expr-pane .cap b{color:var(--x-accent-soft);font-weight:600}
+.expr-cover{
+  position:absolute;inset:0;z-index:4;display:grid;place-items:center;align-content:center;gap:10px;
+  cursor:pointer;border:0;width:100%;background:rgba(8,12,18,.74);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);
+  transition:opacity .7s var(--x-ease);font-family:var(--x-ar);
+}
+.expr-cover .q{font-size:2.5rem;font-weight:300;color:var(--x-accent-soft);line-height:1}
+.expr-cover .t{font-size:.875rem;color:var(--x-muted);text-align:center;padding:0 22px;line-height:1.8}
+.expr-split.is-open .expr-cover{opacity:0;pointer-events:none}
+
+/* dialogue */
+.expr-dlg{display:grid;gap:10px}
+.expr-line{display:flex;gap:11px;align-items:flex-start}
+.expr-who{flex:none;width:28px;height:28px;border-radius:9px;display:grid;place-items:center;
+  font-size:.75rem;font-weight:700;font-family:var(--x-mono);background:var(--x-card);border:1px solid var(--x-line);color:var(--x-muted)}
+.expr-bub{
+  background:var(--x-card-2);border:1px solid var(--x-line);border-radius:14px;padding:12px 15px;
+  direction:ltr;text-align:left;font-family:var(--x-en-lab);font-size:.9375rem;line-height:1.7;color:var(--x-ink);
+}
+.expr-line.is-target .expr-bub{background:var(--x-accent-dim);border-color:var(--x-accent-line)}
+.expr-bub mark{background:transparent;color:var(--x-accent-soft);font-weight:700}
+.expr-bub .ar{display:block;direction:rtl;text-align:right;font-family:var(--x-ar);font-size:.875rem;color:var(--x-faint);margin-top:7px;line-height:1.8}
+.expr-play{
+  display:inline-flex;align-items:center;gap:8px;margin-top:12px;min-height:44px;
+  font-family:var(--x-ar);font-size:.875rem;color:var(--x-ink-soft);cursor:pointer;
+  background:var(--x-card-2);border:1px solid var(--x-line);border-radius:999px;padding:10px 17px;
+  transition:transform .22s var(--x-ease),border-color .22s,color .22s;
+}
+.expr-play:hover{transform:translateY(-2px);border-color:var(--x-accent-line);color:var(--x-ink)}
+.expr-play[aria-pressed="true"]{border-color:var(--x-accent-line);color:var(--x-accent-soft)}
+
+/* production */
+.expr-ta{
+  width:100%;font-family:var(--x-en-lab);font-size:.9375rem;line-height:1.7;direction:ltr;text-align:left;
+  color:var(--x-ink);background:var(--x-card-2);border:1px solid var(--x-line);border-radius:14px;
+  padding:13px 15px;min-height:92px;resize:vertical;outline:none;transition:border-color .22s,background .22s;
+}
+.expr-ta:focus{border-color:var(--x-accent-line);background:var(--x-card)}
+.expr-ta::placeholder{color:var(--x-faint)}
+.expr-row{display:flex;gap:9px;align-items:center;margin-top:11px;flex-wrap:wrap}
+.expr-btn{
+  font-family:var(--x-ar);font-size:.875rem;font-weight:600;border:0;border-radius:12px;
+  padding:12px 20px;min-height:44px;cursor:pointer;color:#16110a;
+  background:linear-gradient(135deg,var(--x-accent),color-mix(in srgb,var(--x-accent) 72%,#000));
+  transition:transform .22s var(--x-ease),filter .22s;
+}
+.is-lab .expr-btn{color:#04201f}
+.expr-btn:hover:not(:disabled){transform:translateY(-2px);filter:brightness(1.07)}
+.expr-btn:disabled{opacity:.55;cursor:default}
+.expr-btn.is-ghost{background:var(--x-card-2);border:1px solid var(--x-line);color:var(--x-muted)}
+.expr-fb{
+  margin-top:13px;border-radius:14px;padding:16px 18px;font-size:.9375rem;line-height:1.9;color:var(--x-ink-soft);
+  background:var(--x-ok-soft);border:1px solid rgba(130,201,161,.3);
+}
+.expr-fb.is-partly{background:rgba(217,164,65,.11);border-color:rgba(217,164,65,.32)}
+.expr-fb.is-wrong{background:var(--x-no-soft);border-color:rgba(224,121,106,.32)}
+.expr-fb b{color:var(--x-ok);font-weight:600}
+.expr-fb.is-partly b{color:var(--x-accent-soft)} .expr-fb.is-wrong b{color:var(--x-no)}
+
+/* gap fill */
+.expr-gap{
+  font-family:var(--x-en-lab);font-size:1.0625rem;line-height:2.15;direction:ltr;text-align:left;color:var(--x-ink);
+  background:var(--x-card-2);border:1px solid var(--x-line);border-radius:14px;padding:16px 18px;
+}
+.expr-blank{display:inline-block;min-width:120px;border-bottom:2px solid var(--x-accent-line);
+  margin:0 4px;text-align:center;color:var(--x-accent-soft);font-weight:600;transition:color .3s,border-color .3s}
+.expr-blank.is-right{border-bottom-color:rgba(130,201,161,.7);color:var(--x-ok)}
+.expr-blank.is-wrong{border-bottom-color:rgba(224,121,106,.6);color:var(--x-no)}
+
+/* empty + loading */
+.expr-empty{text-align:center;padding:60px 20px;color:var(--x-muted);font-size:.9375rem;line-height:1.9}
+.expr-skel{border-radius:18px;background:var(--x-card-2);border:1px solid var(--x-line);aspect-ratio:4/3;
+  animation:expr-pulse 1.7s ease-in-out infinite}
+@keyframes expr-pulse{0%,100%{opacity:.5}50%{opacity:.9}}
+@media (prefers-reduced-motion: reduce){ .expr-skel{animation:none} }
+
+/* ── bilingual chrome on the sheets ──────────────────────────────────────
+   English leads and Arabic supports here, because this feature teaches ENGLISH
+   phrases — and with every label in Arabic nothing on the page ever said
+   whether you were looking at a proverb or an idiom. */
+.expr-hero .cap{display:flex;flex-direction:column;align-items:flex-start}
+.expr-hero .cap .xkind{margin-bottom:11px;align-self:flex-start}
+.expr-tag .xbi b{font-size:12px}
+.expr-tag .xbi em{font-size:11.5px}
+.expr-back .xbi b{font-size:13px}
+.expr-back .xbi em{font-size:12.5px}
+.expr-steph .xbi b{font-family:var(--x-en-lab);font-size:1rem;font-weight:700;letter-spacing:-.01em}
+.expr-steph .xbi em{font-size:.86rem;color:var(--x-muted)}
+.expr-twin .lbl .xbi b{font-size:12px;letter-spacing:.05em;text-transform:uppercase}
+/* Wrapping is the difference between a tidy row and a ragged one on a phone. */
+@media (max-width:520px){ .xbi{white-space:normal} }

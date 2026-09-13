@@ -1,0 +1,316 @@
+{
+  "source": "fluentia-lms expressions / expression_examples / expression_questions, read 2026-09-13 (snapshot.sql)",
+  "library": {
+    "proverb": 120,
+    "idiom": 200
+  },
+  "items": [
+    {
+      "id": "3f47d302-de4d-41ca-9d27-1f221b29b335",
+      "kind": "proverb",
+      "slug": "dont-count-your-chickens",
+      "text_en": "Don't count your chickens before they hatch",
+      "literal_ar": "ألّا تُعَدّ الفراخ قبل أن تفقس",
+      "meaning_ar": "ألّا تُبنى الحسابات على نتيجة لم تتحقّق بعد — ولا يُفرَح بالمكسب قبل قبضه.",
+      "when_to_use_ar": "حين يخطّط أحدهم لصرف مكافأة لم تصله، أو يحتفل بوظيفة لم تُؤكَّد، أو يؤثّث بيتاً لم يستأجره.",
+      "arabic_twin": "لا تبع السمك وهو في البحر",
+      "twin_note_ar": "المعنى واحد والصورة مختلفة: العربية تحذّر من البيع، والإنجليزية من العدّ. كلاهما عن الفرح المبكّر — وهذا الفارق الصغير هو ما يثبّت المثل في ذاكرتك.",
+      "frame_en": null,
+      "forms": null,
+      "fixed_part_en": null,
+      "common_error_ar": null,
+      "wrong_forms": null,
+      "register": "neutral",
+      "register_warning_ar": null,
+      "frequency": "very_common",
+      "cefr_level": "B1",
+      "theme": "caution",
+      "theme_label_ar": "الحذر والتعقّل",
+      "image_url": "/tour/expressions/dont-count-your-chickens.webp",
+      "image_literal_url": null,
+      "audio_url": "/tour/expressions/dont-count-your-chickens.mp3",
+      "sort_order": 1,
+      "expression_examples": [
+        {
+          "id": "fa6f04b8-4d3c-4d9e-a530-bce7825bc2f7",
+          "idx": 0,
+          "speaker": "A",
+          "text_ar": "بدأت أخطّط لصرف المكافأة من الآن.",
+          "text_en": "I'm already planning how to spend the bonus.",
+          "audio_url": "/tour/expressions/dont-count-your-chickens-0.mp3",
+          "is_target": false
+        },
+        {
+          "id": "1e2eac93-e7b3-4e71-b346-f1a7e71ce837",
+          "idx": 1,
+          "speaker": "B",
+          "text_ar": "على مهلك — لا تبع السمك وهو في البحر.",
+          "text_en": "Careful — don't count your chickens before they hatch.",
+          "audio_url": "/tour/expressions/dont-count-your-chickens-1.mp3",
+          "is_target": true
+        }
+      ],
+      "expression_questions": [
+        {
+          "id": "e7b4a69b-5786-4af6-bbff-8d8dc215947f",
+          "kind": "guess_meaning",
+          "answer": null,
+          "hint_ar": null,
+          "options": [
+            {
+              "t": "لا تبنِ حساباتك على نتيجة لم تتحقق بعد.",
+              "ok": true,
+              "tag_ar": "صحيح"
+            },
+            {
+              "t": "لا تربّي الدجاج إلا بعد أن يفقس البيض.",
+              "ok": false,
+              "tag_ar": "الفخّ الحرفي"
+            },
+            {
+              "t": "اصبر، فالنتائج الجيدة تحتاج وقتاً.",
+              "ok": false,
+              "tag_ar": "قريب لكنه ليس المعنى"
+            }
+          ],
+          "prompt_ar": "قبل أي شرح — وش المعنى في تقديرك؟",
+          "prompt_en": null,
+          "sort_order": 0
+        }
+      ]
+    },
+    {
+      "id": "892652dc-efba-4ada-8423-320892039fca",
+      "kind": "proverb",
+      "slug": "the-early-bird",
+      "text_en": "The early bird catches the worm",
+      "literal_ar": "الطائر المبكّر يظفر بالدودة",
+      "meaning_ar": "من يبدأ مبكّراً يحصل على أفضل الفرص، لأن الفرص تنفد.",
+      "when_to_use_ar": "عند تشجيع أحد على البدء مبكّراً: التسجيل، الحجز، التقديم على وظيفة، أو حتى الوصول للقاعة.",
+      "arabic_twin": "من سبق أكل النبق",
+      "twin_note_ar": "التوأم العربي يتحدّث عن السَّبْق عموماً، والإنجليزي عن البكور تحديداً. فإن أردت الحثّ على الاستيقاظ مبكّراً فالإنجليزي أدقّ.",
+      "frame_en": null,
+      "forms": null,
+      "fixed_part_en": null,
+      "common_error_ar": null,
+      "wrong_forms": null,
+      "register": "neutral",
+      "register_warning_ar": null,
+      "frequency": "very_common",
+      "cefr_level": "A2",
+      "theme": "time",
+      "theme_label_ar": "الوقت والمبادرة",
+      "image_url": "/tour/expressions/the-early-bird.webp",
+      "image_literal_url": null,
+      "audio_url": "/tour/expressions/the-early-bird.mp3",
+      "sort_order": 2,
+      "expression_examples": [
+        {
+          "id": "1c1ac5de-1738-4e51-934e-981dbf48b0dc",
+          "idx": 0,
+          "speaker": "A",
+          "text_ar": "التسجيل يفتح الساعة ثمانية. أحتاج فعلاً أضبط منبّهاً؟",
+          "text_en": "Registration opens at eight. Should I really set an alarm?",
+          "audio_url": "/tour/expressions/the-early-bird-0.mp3",
+          "is_target": false
+        },
+        {
+          "id": "913b9c7e-9963-4571-b3de-0c5ea60cf1cb",
+          "idx": 1,
+          "speaker": "B",
+          "text_ar": "أكيد. من سبق أكل النبق.",
+          "text_en": "Definitely. The early bird catches the worm.",
+          "audio_url": "/tour/expressions/the-early-bird-1.mp3",
+          "is_target": true
+        }
+      ],
+      "expression_questions": [
+        {
+          "id": "40d4bdb2-2d5f-4292-860f-8bdf59597510",
+          "kind": "guess_meaning",
+          "answer": null,
+          "hint_ar": null,
+          "options": [
+            {
+              "t": "الطيور تستيقظ قبل البشر بكثير.",
+              "ok": false,
+              "tag_ar": "الفخّ الحرفي"
+            },
+            {
+              "t": "الرزق يأتي لمن يسعى إليه.",
+              "ok": false,
+              "tag_ar": "قريب لكنه ليس المعنى"
+            },
+            {
+              "t": "من يبدأ مبكّراً يظفر بأفضل الفرص.",
+              "ok": true,
+              "tag_ar": "صحيح"
+            }
+          ],
+          "prompt_ar": "قبل أي شرح — وش المعنى في تقديرك؟",
+          "prompt_en": null,
+          "sort_order": 0
+        }
+      ]
+    },
+    {
+      "id": "2bdde567-9008-4075-b4bb-8fed639ad2cd",
+      "kind": "idiom",
+      "slug": "cost-an-arm-and-a-leg",
+      "text_en": "cost an arm and a leg",
+      "literal_ar": "يكلّف ذراعاً وساقاً",
+      "meaning_ar": "باهظ الثمن جداً.",
+      "when_to_use_ar": "عند التعجّب من سعر مرتفع. ودّية ومبالِغة عمداً، فلا تُقال في سياق مالي جادّ.",
+      "arabic_twin": null,
+      "twin_note_ar": null,
+      "frame_en": "[something] costs an arm and a leg",
+      "forms": [
+        "cost",
+        "costs",
+        "cost"
+      ],
+      "fixed_part_en": "an arm and a leg",
+      "common_error_ar": "الفعل «cost» لا يتغيّر في الماضي: cost ← cost. والأداة «an» ثم «a» لا تُحذفان.",
+      "wrong_forms": [
+        "costed an arm and a leg",
+        "cost arm and leg",
+        "cost an arm and leg"
+      ],
+      "register": "casual",
+      "register_warning_ar": "غير رسمية ومبالِغة. في التقرير المالي: «very expensive» أو «costly».",
+      "frequency": "very_common",
+      "cefr_level": "B1",
+      "theme": "money",
+      "theme_label_ar": "المال والشراء",
+      "image_url": "/tour/expressions/cost-an-arm-and-a-leg-real.webp",
+      "image_literal_url": "/tour/expressions/cost-an-arm-and-a-leg-literal.webp",
+      "audio_url": "/tour/expressions/cost-an-arm-and-a-leg.mp3",
+      "sort_order": 18,
+      "expression_examples": [
+        {
+          "id": "950c99dc-fb93-4ff9-9ba7-f3200dfa4557",
+          "idx": 0,
+          "speaker": "A",
+          "text_ar": "لابتوبك يبدو جديداً.",
+          "text_en": "Your laptop looks new.",
+          "audio_url": "/tour/expressions/cost-an-arm-and-a-leg-0.mp3",
+          "is_target": false
+        },
+        {
+          "id": "0048ff3d-e228-46d8-8305-ed795a91c988",
+          "idx": 1,
+          "speaker": "B",
+          "text_ar": "إي — وكلّفني ثروة.",
+          "text_en": "It is — and it cost an arm and a leg.",
+          "audio_url": "/tour/expressions/cost-an-arm-and-a-leg-1.mp3",
+          "is_target": true
+        }
+      ],
+      "expression_questions": [
+        {
+          "id": "cb666993-97ec-4b67-a571-7b4bb437ee99",
+          "kind": "gap_form",
+          "answer": "cost an arm and a leg",
+          "hint_ar": "الحدث في الماضي، لكن هذا الفعل لا يتغيّر.",
+          "options": [
+            {
+              "t": "costed an arm and a leg",
+              "ok": false
+            },
+            {
+              "t": "cost an arm and a leg",
+              "ok": true
+            },
+            {
+              "t": "cost arm and leg",
+              "ok": false
+            }
+          ],
+          "prompt_ar": null,
+          "prompt_en": "The repair ___ , so I decided to buy a new one.",
+          "sort_order": 0
+        }
+      ]
+    },
+    {
+      "id": "7d62eafe-1449-4a2d-a7d8-dbd45674ef6b",
+      "kind": "idiom",
+      "slug": "spill-the-beans",
+      "text_en": "spill the beans",
+      "literal_ar": "يسكب الفاصولياء",
+      "meaning_ar": "يُفشي سرّاً — يقول ما كان يُفترض أن يبقى مكتوماً.",
+      "when_to_use_ar": "بين الأصدقاء والزملاء المقرّبين، حين يُكشف خبر مفاجأة أو سرّ صغير.",
+      "arabic_twin": null,
+      "twin_note_ar": null,
+      "frame_en": "[someone] spills the beans (about something) (to someone)",
+      "forms": [
+        "spill",
+        "spills",
+        "spilled",
+        "spilling"
+      ],
+      "fixed_part_en": "the beans",
+      "common_error_ar": "الفعل يُصرَّف عادي، أمّا «the beans» فلا تتغيّر أبداً: تبقى بالجمع ومعرَّفة بـ the.",
+      "wrong_forms": [
+        "spill beans",
+        "spill the bean",
+        "spill a bean"
+      ],
+      "register": "casual",
+      "register_warning_ar": "ودّية وغير رسمية. لا تُستعمَل في تقرير أو مقابلة عمل — البديل «revealed the information».",
+      "frequency": "very_common",
+      "cefr_level": "B1",
+      "theme": "talk",
+      "theme_label_ar": "الكلام والأسرار",
+      "image_url": "/tour/expressions/spill-the-beans-real.webp",
+      "image_literal_url": "/tour/expressions/spill-the-beans-literal.webp",
+      "audio_url": "/tour/expressions/spill-the-beans.mp3",
+      "sort_order": 12,
+      "expression_examples": [
+        {
+          "id": "230f73e5-8957-44da-a479-40a021cd1498",
+          "idx": 0,
+          "speaker": "A",
+          "text_ar": "مين خبّرها عن الحفلة؟",
+          "text_en": "Who told her about the party?",
+          "audio_url": "/tour/expressions/spill-the-beans-0.mp3",
+          "is_target": false
+        },
+        {
+          "id": "7f695779-8fd4-4d11-bc41-4e3fac9feb47",
+          "idx": 1,
+          "speaker": "B",
+          "text_ar": "آسفة… أنا اللي فشيت السر أمس.",
+          "text_en": "Sorry… I spilled the beans yesterday.",
+          "audio_url": "/tour/expressions/spill-the-beans-1.mp3",
+          "is_target": true
+        }
+      ],
+      "expression_questions": [
+        {
+          "id": "f0d293c5-3299-4c26-a7c5-380e95322e09",
+          "kind": "gap_form",
+          "answer": "spilled the beans",
+          "hint_ar": "الحدث في الماضي — يُصرَّف الفعل وتبقى بقيّة التعبير كما هي.",
+          "options": [
+            {
+              "t": "spilled the beans",
+              "ok": true
+            },
+            {
+              "t": "spill the beans",
+              "ok": false
+            },
+            {
+              "t": "spilled the bean",
+              "ok": false
+            }
+          ],
+          "prompt_ar": null,
+          "prompt_en": "We wanted it to be a surprise, but Sara ___ before we could stop her.",
+          "sort_order": 0
+        }
+      ]
+    }
+  ]
+}
