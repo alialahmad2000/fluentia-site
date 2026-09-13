@@ -1,0 +1,284 @@
+/* ============================================================
+ * Unit room — the tour's own layer over the ported platform CSS.
+ * Everything the platform ships is imported verbatim from its own files
+ * (levelUnits.css, spread.css, unitReadingPlane.css, questionCards.css);
+ * this file only (1) keeps fixed-position platform layers inside the room,
+ * (2) styles the handful of tour-only notes, in the surface's own palette.
+ * ============================================================ */
+
+.tour-unit {
+  position: relative;
+  isolation: isolate;
+  display: block;
+  background: var(--cinematic-bg, #0a0a0f);
+  color: var(--ds-text-primary, #faf5e6);
+  --impersonation-banner-height: 0px;
+  --mobile-bottom-clearance: 56px;
+  overflow-x: clip;
+}
+
+/* ── Fixed platform backdrops, kept inside the room ─────────────────────
+   CinematicBg and the level "world" are position:fixed in the platform. Here
+   they sit in a sticky, viewport-tall frame clipped to the room, so they read
+   as fixed while scrolling and never paint over the TourBar or the end band. */
+.tu-stickyframe {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  overflow: clip;
+  pointer-events: none;
+}
+.tu-stickyframe__view {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100lvh;
+  overflow: hidden;
+}
+.tour-unit .tu-stickyframe__view > .lvx-world {
+  position: absolute;
+  inset: 0;
+}
+.tour-unit .lvx-root { min-height: 0; }
+
+/* Production renders .lvx-title in Amiri: it asks for 'Aref Ruqaa', which the
+   platform never loads. This site does load Aref Ruqaa, so pin what students see. */
+.tour-unit .lvx-title { font-family: 'Amiri', serif; }
+
+/* ── Level page: the specimen and the locked-card note ───────────────── */
+.tour-unit .lvx-card.tu-specimen,
+.tour-unit .lvx-feat.tu-specimen {
+  border-color: rgba(245, 200, 66, 0.42);
+  box-shadow: 0 20px 42px -14px rgba(0, 0, 0, 0.7), 0 0 30px rgba(245, 200, 66, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+.tu-peek {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 18px;
+  text-align: center;
+  cursor: default;
+  background: linear-gradient(170deg, rgba(14, 17, 29, 0.9), rgba(7, 9, 15, 0.94));
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  animation: tu-fade 220ms ease both;
+}
+@keyframes tu-fade { from { opacity: 0; } to { opacity: 1; } }
+.tu-peek__icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #f0cf7e;
+  background: rgba(245, 200, 66, 0.1);
+  border: 1px solid rgba(245, 200, 66, 0.32);
+  margin-bottom: 2px;
+}
+.tu-peek__title { margin: 0; font-size: 0.98rem; font-weight: 700; color: #fbf8ef; }
+.tu-peek__text { margin: 0; font-size: 0.8125rem; line-height: 1.7; color: rgba(238, 233, 219, 0.7); max-width: 30ch; }
+.tu-peek__go {
+  margin-top: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 40px;
+  padding: 0 16px;
+  border-radius: 999px;
+  font-family: 'Tajawal', sans-serif;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: #241a05;
+  background: linear-gradient(140deg, #ffe9a8 0%, #f5c842 45%, #d99e2b 100%);
+  box-shadow: 0 8px 22px -8px rgba(245, 200, 66, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.55);
+  cursor: pointer;
+}
+.tu-peek--compact .tu-peek__text { display: none; }
+@media (max-width: 767px) {
+  .tu-peek--compact .tu-peek__text { display: block; }
+}
+
+/* ── Unit page ───────────────────────────────────────────────────────── */
+.tu-backlink { opacity: 0.6; min-height: 44px; cursor: pointer; transition: opacity 180ms ease; }
+.tu-backlink:hover, .tu-backlink:focus-visible { opacity: 1; }
+
+.tu-st-locked { display: inline-flex; align-items: center; gap: 5px; }
+.sp-item.tu-locked .sp-t { color: var(--sp-ink-2); }
+.sp-item.tu-open { background: var(--sp-tint); }
+
+.tu-teaser-wrap { overflow: hidden; }
+.tu-teaser {
+  margin: 2px 0 12px;
+  margin-inline-start: 42px;
+  padding: 14px 16px;
+  border-radius: 10px;
+  background: var(--sp-tint);
+  border-right: 3px solid var(--sp-gold);
+}
+.tu-teaser__lead {
+  margin: 0 0 4px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .06em;
+  color: var(--sp-accent);
+}
+.tu-teaser__text { margin: 0; font-size: 13.5px; line-height: 1.8; color: var(--sp-ink-2); }
+.tu-teaser__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 10px;
+  min-height: 40px;
+  padding: 0 14px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--sp-on-ink);
+  background: var(--sp-ink);
+  text-decoration: none;
+}
+@media (max-width: 420px) {
+  .tu-teaser { margin-inline-start: 31px; }
+}
+
+/* ── Section station bar (tour) ─────────────────────────────────────── */
+.tu-stations {
+  display: flex;
+  gap: 6px;
+  margin: -4px 0 18px;
+  padding-bottom: 2px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.tu-stations::-webkit-scrollbar { display: none; }
+.tu-stations__item {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 40px;
+  padding: 0 14px 0 12px;
+  border-radius: 12px;
+  font-family: 'Tajawal', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ds-text-secondary, #c9c3b0);
+  border: 1px solid var(--ds-border-subtle, rgba(255, 255, 255, 0.07));
+  background: rgba(255, 255, 255, 0.02);
+  text-decoration: none;
+  transition: background-color 180ms ease, color 180ms ease, border-color 180ms ease;
+}
+.tu-stations__n {
+  font-family: 'Amiri', 'Playfair Display', serif;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--ds-text-tertiary, #8b8578);
+}
+.tu-stations__item.is-active {
+  color: var(--ds-accent-primary, #e9b949);
+  background: var(--ds-accent-wash, rgba(233, 185, 73, .08));
+  border-color: rgba(233, 185, 73, 0.3);
+  font-weight: 700;
+}
+.tu-stations__item.is-active .tu-stations__n { color: var(--ds-accent-primary, #e9b949); }
+.tu-stations__item.is-locked { color: var(--ds-text-tertiary, #8b8578); }
+.tu-stations__lock { opacity: 0.7; }
+@media (hover: hover) {
+  .tu-stations__item:not(.is-active):hover { color: var(--ds-text-primary, #faf5e6); background: rgba(255, 255, 255, 0.05); }
+}
+@media (pointer: coarse) {
+  .tu-stations__item { min-height: 44px; }
+}
+
+/* ── Notes inside a section («متاح داخل المنصة») ──────────────────────── */
+.tu-note {
+  padding: 12px 16px;
+  border-radius: 12px;
+  background: rgba(233, 185, 73, 0.07);
+  border: 1px solid rgba(233, 185, 73, 0.22);
+  font-family: 'Tajawal', sans-serif;
+}
+.tu-note__lead { margin: 0; font-size: 13px; font-weight: 700; color: var(--ds-accent-primary, #e9b949); }
+.tu-note__text { margin: 2px 0 0; font-size: 13px; line-height: 1.75; color: var(--ds-text-secondary, #c9c3b0); }
+.tu-note--violet { background: rgba(168, 85, 247, 0.08); border-color: rgba(168, 85, 247, 0.28); }
+.tu-note--violet .tu-note__lead { color: #d8b4fe; }
+.tu-note--sky { background: rgba(56, 189, 248, 0.07); border-color: rgba(56, 189, 248, 0.25); }
+.tu-note--sky .tu-note__lead { color: #7dd3fc; }
+
+.tu-popnote {
+  margin: 10px 0 0;
+  padding: 8px 10px;
+  border-radius: 10px;
+  font-family: 'Tajawal', sans-serif;
+  font-size: 12.5px;
+  line-height: 1.7;
+  color: var(--ds-text-secondary, #c9c3b0);
+  background: rgba(233, 185, 73, 0.07);
+  border: 1px solid rgba(233, 185, 73, 0.2);
+}
+
+/* ── Reading: to the second passage ─────────────────────────────────── */
+.tu-nextreading {
+  position: relative;
+  display: grid;
+  gap: 4px;
+  width: 100%;
+  padding-block: 18px;
+  padding-inline: 20px 56px;
+  border-radius: 18px;
+  text-align: start;
+  cursor: pointer;
+  background: linear-gradient(172deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.012) 40%), var(--ds-bg-elevated, #0b0f18);
+  border: 1px solid rgba(56, 189, 248, 0.28);
+  transition: border-color 200ms ease, transform 200ms ease;
+}
+@media (hover: hover) {
+  .tu-nextreading:hover { border-color: rgba(56, 189, 248, 0.55); transform: translateY(-1px); }
+}
+.tu-nextreading__kicker { font-family: 'Tajawal', sans-serif; font-size: 12px; font-weight: 700; color: #7dd3fc; }
+.tu-nextreading__title {
+  font-family: 'Cormorant Garamond', 'Playfair Display', serif;
+  font-style: italic;
+  font-weight: 600;
+  font-size: clamp(24px, 4vw, 32px);
+  line-height: 1.1;
+  color: var(--ds-text-primary, #faf5e6);
+  text-align: right;
+}
+.tu-nextreading__deck { font-family: 'Tajawal', sans-serif; font-size: 13px; line-height: 1.7; color: var(--ds-text-secondary, #c9c3b0); }
+.tu-nextreading__go { position: absolute; inset-inline-end: 20px; top: 50%; transform: translateY(-50%); font-size: 22px; color: #7dd3fc; }
+
+/* ── Listening: the player bar rides at the bottom of its section ───── */
+.tu-player-dock {
+  position: sticky;
+  bottom: 0;
+  z-index: 30;
+  margin-inline: -2.25rem;
+  margin-bottom: -3rem;
+}
+@media (max-width: 760px) {
+  .tu-player-dock { margin-inline: -1.1rem; margin-bottom: -2.25rem; }
+}
+
+/* ── Vocabulary: in-section toast ───────────────────────────────────── */
+.tu-toast {
+  position: sticky;
+  bottom: 16px;
+  z-index: 40;
+  margin: 12px auto 0;
+  width: fit-content;
+  max-width: calc(100% - 8px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tu-peek { animation: none; }
+  .tu-nextreading { transition: none; }
+}
