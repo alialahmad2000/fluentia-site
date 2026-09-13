@@ -55,10 +55,16 @@
          on every route contradicted each page's own canonical. -->
 
     <!-- Favicons & PWA -->
-    <!-- Real brand icons (official F-mark from the brand PDF) -->
-    <link rel="icon" type="image/svg+xml" href="/brand/fluentia-mark.svg" />
-    <link rel="icon" type="image/png" sizes="64x64" href="/brand/favicon-64.png" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/brand/apple-touch-icon.png" />
+    <!-- The navy app tile with the white F (same master as the LMS home-screen icon,
+         fluentia-lms public/brand/icon-512.png). No SVG icon on purpose: browsers
+         prefer SVG, and the only SVG is the transparent blue mark, not the tile.
+         Sizes are multiples of 48 for Google Search's favicon rules; /favicon.ico is
+         a real file (it used to fall through to the HTML app shell). New file names
+         so browsers don't keep showing the cached old icon. -->
+    <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48" />
+    <link rel="icon" type="image/png" sizes="96x96" href="/brand/app-tile-96.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/brand/app-tile-192.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/brand/app-tile-180.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <meta name="theme-color" content="#060e1c" />
     <meta name="apple-mobile-web-app-title" content="Fluentia" />
