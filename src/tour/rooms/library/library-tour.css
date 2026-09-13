@@ -1,0 +1,176 @@
+/* ============================================================================
+   Library room — tour-only layer on top of the ported library.css.
+   Only what the tour adds: the in-room pins that replace the LMS's fixed layers,
+   the «داخل المنصة» states, the part-cut marker and the end card. Everything is
+   drawn from the library's own tokens (--lib-*) so it reads as the same room.
+   ========================================================================== */
+
+.lib-tour-main { position: relative; }
+
+/* ---- pins: fixed-in-the-LMS layers, now sticky inside the room ------------ */
+.lib-env-pin,
+.lib-tour-pin {
+  position: -webkit-sticky;
+  position: sticky;
+  top: var(--tour-bar-h, 58px);
+  height: calc(100vh - var(--tour-bar-h, 58px));
+  overflow: hidden;
+}
+.lib-tour-pin-layer { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+
+/* ---- shelf ---------------------------------------------------------------- */
+.lib-tour-shelf { position: relative; isolation: isolate; background: #0b0810; }
+.lib-tour-shelf .lib-home {
+  position: relative; z-index: 1;
+  padding: 10px clamp(16px, 4vw, 32px) 84px; /* the LMS <Page> gutter */
+}
+.lib-card:focus-visible { outline: 2px solid var(--lib-gold); outline-offset: 5px; border-radius: 12px; }
+/* WebKit bug (any Safari with sibling-index()): the LMS stagger's `both` fill keeps the
+   cards composited and each cover's blurred contact shadow paints as a noisy square
+   at the cover's top corner. `backwards` ends on the same resting frame without it. */
+.lib-tour-shelf .fl-stagger > * { animation-fill-mode: backwards; }
+
+/* the one novel that opens in the tour: a warm lamp on its cover */
+.lib-card[data-tour-open] .lib-cover {
+  box-shadow: 0 0 0 1px rgba(251,191,36,0.55), 0 0 36px -6px rgba(251,191,36,0.5), 0 18px 40px -18px rgba(0,0,0,0.7);
+  animation: lib-tour-lamp 3.6s ease-in-out infinite alternate;
+}
+@keyframes lib-tour-lamp {
+  from { box-shadow: 0 0 0 1px rgba(251,191,36,0.45), 0 0 26px -8px rgba(251,191,36,0.35), 0 18px 40px -18px rgba(0,0,0,0.7); }
+  to   { box-shadow: 0 0 0 1px rgba(251,191,36,0.7), 0 0 44px -4px rgba(251,191,36,0.55), 0 18px 40px -18px rgba(0,0,0,0.7); }
+}
+
+/* «هذه الرواية داخل المنصة» — a veil on the tapped cover itself */
+.lib-tour-inside {
+  position: absolute; inset: 0; z-index: 3; border-radius: 12px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 7px;
+  padding: 14px 12px; text-align: center; font-family: 'Tajawal', sans-serif; color: var(--lib-ink);
+  background: radial-gradient(120% 90% at 50% 38%, rgba(28,20,10,0.74), rgba(8,6,12,0.92));
+  -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px);
+  border: 1px solid rgba(251,191,36,0.34);
+  animation: lib-warm-in .28s ease both;
+}
+.lib-tour-inside svg { color: var(--lib-gold); }
+.lib-tour-inside b { font-size: 14px; font-weight: 700; line-height: 1.5; }
+.lib-tour-inside > span { font-size: 12px; color: var(--lib-whisper); }
+.lib-tour-inside-go {
+  margin-top: 6px; padding: 7px 12px; border: none; border-radius: 999px; cursor: pointer;
+  font-family: 'Tajawal', sans-serif; font-size: 12px; font-weight: 700; line-height: 1.3;
+  color: #1a1206; background: linear-gradient(135deg, var(--lib-gold), #f59e0b);
+  box-shadow: 0 6px 18px -8px rgba(251,191,36,0.6);
+}
+
+/* ---- book page ------------------------------------------------------------ */
+.lib-tour-plain {
+  background:
+    radial-gradient(90% 50% at 50% -6%, rgba(251,191,36,0.06), transparent 62%),
+    linear-gradient(180deg, #0a0d16, #070a12);
+  min-height: calc(100vh - var(--tour-bar-h, 58px));
+}
+.lib-tour-plain .lib-detail { padding: 22px clamp(16px, 4vw, 32px) 72px; }
+.lib-tour-back {
+  display: inline-flex; align-items: center; gap: 6px; border: none; background: none; cursor: pointer;
+  padding: 4px 0 16px; color: var(--ds-text-tertiary, #94a3b8); font-family: 'Tajawal', sans-serif; font-size: 13px;
+}
+.lib-tour-ch-tag {
+  display: inline-flex; align-items: center; gap: 4px; flex: 0 0 auto; white-space: nowrap;
+  font-family: 'Tajawal', sans-serif; font-size: 11px; line-height: 1.4; padding: 3px 9px; border-radius: 999px;
+  background: rgba(255,255,255,0.05); color: #94a3b8; border: 1px solid rgba(255,255,255,0.08);
+}
+.lib-tour-ch-tag[data-kind="open"] { background: rgba(251,191,36,0.12); color: var(--lib-gold); border-color: rgba(251,191,36,0.28); }
+.lib-chapter-row[data-tour-inside] { cursor: default; }
+.lib-chapter-row[data-tour-inside] .n,
+.lib-chapter-row[data-tour-inside] .ti { opacity: 0.62; }
+.lib-chapter-row[data-tour-inside]:hover { transform: none; border-color: var(--ds-border-subtle, rgba(255,255,255,0.06)); }
+.lib-chapter-row:focus-visible { outline: 2px solid var(--lib-gold); outline-offset: 2px; }
+@media (max-width: 420px) { .lib-chapter-row .w { display: none; } }
+
+/* ---- reader --------------------------------------------------------------- */
+.lib-tour-codex-wrap { position: relative; }
+.lib-codex:focus { outline: none; }
+.lib-codex:focus-visible .lib-book { box-shadow: 0 0 0 2px rgba(251,191,36,0.6), 0 38px 90px -30px rgba(0,0,0,0.85); }
+.lib-tour-codex-after { padding-top: 0; }
+
+.lib-cine-track:focus-visible,
+.lib-cine-sentence:focus-visible { outline: 1px dashed rgba(251,191,36,0.7); outline-offset: 3px; }
+
+.lib-tour-hint {
+  display: block; width: fit-content; max-width: 100%; margin: -8px auto 24px; padding: 6px 14px;
+  text-align: center; font-family: 'Tajawal', sans-serif; font-size: 12.5px; line-height: 1.7; color: #e9d9a8;
+  background: rgba(10,14,22,0.52); border: 1px solid rgba(251,191,36,0.22); border-radius: 999px;
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+}
+@media (max-width: 480px) { .lib-tour-hint { border-radius: 14px; } }
+
+/* the veil-lift, inside cinema: the same slip, set for the dark living backdrop */
+.lib-cine-prose .lib-reveal { cursor: pointer; }
+.lib-cine-prose .lib-reveal-inner {
+  font-size: 16px; color: #efe3c8; margin: 6px 0 12px;
+  background: rgba(8,11,18,0.64); border-inline-start-color: rgba(251,191,36,0.55);
+  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+}
+.lib-cine-sentence[data-open] { color: #fdf6e6; }
+
+/* where the sampled part stops */
+.lib-tour-cut {
+  display: flex; flex-direction: column; align-items: center; gap: 10px; margin: 28px auto 4px;
+  font-family: 'Tajawal', sans-serif; font-size: 13px; line-height: 1.7; color: var(--lib-whisper); text-align: center;
+}
+.lib-tour-cut-orn { display: flex; align-items: center; gap: 9px; color: var(--lib-gold); }
+.lib-tour-cut-orn::before,
+.lib-tour-cut-orn::after { content: ""; width: 34px; height: 1px; background: currentColor; opacity: 0.5; }
+.lib-tour-cut-orn i { width: 5px; height: 5px; transform: rotate(45deg); background: currentColor; opacity: 0.85; }
+.lib-tour-cut.is-cine { color: #d9c9a3; text-shadow: 0 1px 10px rgba(0,0,0,0.85); }
+.lib-tour-cut.is-codex { break-inside: avoid; margin: 18px 0 0; font-size: 12.5px; color: #8a6f47; }
+.lib-tour-cut.is-codex .lib-tour-cut-orn { color: #9a7b3c; }
+.lib-book[data-paper="night"] .lib-tour-cut.is-codex { color: #9aa0ab; }
+.lib-book[data-paper="night"] .lib-tour-cut.is-codex .lib-tour-cut-orn { color: #c9a45a; }
+
+/* the end card */
+.lib-tour-end {
+  width: 100%; max-width: 640px; margin: 26px auto 0; padding: 22px 20px 20px; border-radius: 18px;
+  font-family: 'Tajawal', sans-serif; color: var(--lib-ink); text-align: start;
+  background:
+    radial-gradient(120% 80% at 50% 0%, rgba(251,191,36,0.11), transparent 62%),
+    linear-gradient(170deg, rgba(34,25,17,0.95), rgba(12,10,14,0.97));
+  border: 1px solid rgba(251,191,36,0.3);
+  box-shadow: 0 30px 60px -24px rgba(0,0,0,0.85), inset 0 1px 0 rgba(251,191,36,0.12);
+}
+.lib-tour-end-body { display: grid; grid-template-columns: 96px 1fr; gap: 18px; align-items: center; }
+.lib-tour-end-cover .lib-cover { border-radius: 8px; }
+.lib-tour-end-cover .lib-cover-field { padding: 8px 8px; }
+.lib-tour-end-cover .lib-cover-kicker { font-size: 6px; }
+.lib-tour-end-cover .lib-cover-level { font-size: 7px; padding: 1px 4px; }
+.lib-tour-end-cover .lib-cover-title { font-size: 13px; }
+.lib-tour-end-cover .lib-cover-rule { width: 18px; margin: 5px 0 4px; }
+.lib-tour-end-cover .lib-cover-author { font-size: 7.5px; }
+.lib-tour-end-text .k { display: block; font-size: 12.5px; color: var(--lib-gold); }
+.lib-tour-end-text h3 { font-family: 'Tajawal', sans-serif; font-weight: 800; font-size: clamp(19px, 3.4vw, 24px); line-height: 1.35; margin: 4px 0 8px; color: #fdf6e6; }
+.lib-tour-end-text p { font-size: 14px; line-height: 1.85; color: var(--lib-ink-soft); margin: 0; }
+.lib-tour-end-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+.lib-tour-end-actions .lib-start { text-decoration: none; justify-content: center; }
+.lib-tour-end-ghost {
+  display: inline-flex; align-items: center; justify-content: center; gap: 7px; cursor: pointer;
+  padding: 12px 18px; border-radius: 12px; font-family: 'Tajawal', sans-serif; font-weight: 700; font-size: 14px;
+  color: var(--lib-gold); background: rgba(251,191,36,0.08); border: 1px solid rgba(251,191,36,0.3);
+}
+.lib-tour-end-ghost:hover { background: rgba(251,191,36,0.14); }
+@media (max-width: 480px) {
+  .lib-tour-end { padding: 18px 16px 16px; }
+  .lib-tour-end-body { grid-template-columns: 76px 1fr; gap: 14px; }
+  .lib-tour-end-actions > * { flex: 1 1 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lib-card[data-tour-open] .lib-cover, .lib-tour-inside { animation: none; }
+}
+
+/* ---- narrow phones: the LMS reader bar overflowed at 390px (back label + title +
+   gear + four modes ≈ 396px in 358px). Keep the look; tighten it. ---------------- */
+@media (max-width: 480px) {
+  .lib-reader-bar { gap: 8px; }
+  .lib-reader-bar .lib-back { padding: 6px 2px; gap: 0; }
+  .lib-reader-bar .lib-back-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .lib-reader-bar .lib-bar-title .bc { display: none; }
+  .lib-mode button { padding: 6px 7px; }
+}
