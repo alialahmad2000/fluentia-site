@@ -41,6 +41,9 @@ export function expectedRewrites() {
       source: encodePath(path),
       destination: `${path}.html`,
     })),
+    // /tour is a separate page entry (tour.html) with its own client router.
+    { source: "/tour", destination: "/tour.html" },
+    { source: "/tour/:path*", destination: "/tour.html" },
     { source: "/(.*)", destination: "/index.html" },
   ];
 }

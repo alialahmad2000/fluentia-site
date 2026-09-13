@@ -66,6 +66,14 @@
       "destination": "/articles/ليش-ما-تتكلم-انجليزي.html"
     },
     {
+      "source": "/tour",
+      "destination": "/tour.html"
+    },
+    {
+      "source": "/tour/:path*",
+      "destination": "/tour.html"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }

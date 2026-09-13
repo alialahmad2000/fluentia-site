@@ -1,0 +1,671 @@
+@import './styles/design-tokens.css';
+@import './styles/global.css';
+@import './styles/animations.css';
+@import './styles/components.css';
+@import './styles/modern-css.css';
+@import './design-system/themes.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ═══════════════════════════════════════════════════════════════
+   BIDI — English content inside RTL pages
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Belt-and-suspenders for older webviews where dir="ltr" alone
+   may not override an inherited RTL bidi context. */
+.fl-en {
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   ACCESSIBILITY (a11y) — driven by AccessibilityContext
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Base font size driven by accessibility */
+html { font-size: var(--a11y-base-font, 16px); }
+body { line-height: var(--a11y-line-height, 1.6); }
+
+/* High contrast mode — works on both light and dark themes */
+.a11y-high-contrast {
+  --text-primary: #000000 !important;
+  --text-secondary: #000000 !important;
+  --bg-base: #ffffff !important;
+  --bg-elevated: #ffffff !important;
+  --surface-base: #ffffff !important;
+  --surface-raised: #ffffff !important;
+  --border-subtle: #000000 !important;
+  --border-default: #000000 !important;
+  --sky-primary: #0033cc !important;
+  --accent-sky: #0033cc !important;
+}
+.a11y-high-contrast[data-theme="deep-space"],
+.a11y-high-contrast[data-theme="aurora"] {
+  --text-primary: #ffffff !important;
+  --text-secondary: #ffffff !important;
+  --bg-base: #000000 !important;
+  --bg-elevated: #000000 !important;
+  --surface-base: #000000 !important;
+  --surface-raised: #000000 !important;
+  --border-subtle: #ffffff !important;
+  --border-default: #ffffff !important;
+}
+.a11y-high-contrast * {
+  text-shadow: none !important;
+  box-shadow: none !important;
+}
+
+/* Dyslexia font — falls back to Tajawal if OpenDyslexic unavailable */
+.a11y-dyslexia, .a11y-dyslexia * {
+  font-family: 'OpenDyslexic', 'Tajawal', sans-serif !important;
+  letter-spacing: 0.05em !important;
+  word-spacing: 0.15em !important;
+}
+
+/* Reduce motion */
+.a11y-reduce-motion *, .a11y-reduce-motion *::before, .a11y-reduce-motion *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}
+.a11y-reduce-motion {
+  --cinematic-duration-fast: 0.01ms;
+  --cinematic-duration-medium: 0.01ms;
+  --cinematic-duration-slow: 0.01ms;
+  --cinematic-duration-ambient: 0.01ms;
+}
+
+/* Keyboard navigation — large visible focus rings */
+.a11y-keyboard-nav *:focus-visible {
+  outline: 3px solid #0284c7 !important;
+  outline-offset: 3px !important;
+  border-radius: 4px;
+}
+
+/* Cursor sizes — inline SVG data URIs to avoid external asset deps */
+.a11y-cursor-large, .a11y-cursor-large * {
+  cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 24 24'><path d='M3 2 L3 20 L8 15 L11 22 L14 21 L11 14 L18 14 Z' fill='white' stroke='black' stroke-width='1.5'/></svg>") 2 2, auto;
+}
+.a11y-cursor-xlarge, .a11y-cursor-xlarge * {
+  cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 24 24'><path d='M3 2 L3 20 L8 15 L11 22 L14 21 L11 14 L18 14 Z' fill='white' stroke='black' stroke-width='1.5'/></svg>") 3 3, auto;
+}
+
+/* Screen reader mode — hide decorative elements */
+.a11y-screen-reader [aria-hidden="true"] { display: none !important; }
+.a11y-screen-reader .decorative { display: none !important; }
+
+/* iOS PWA Standalone Safe Area Support */
+:root {
+  --sat: env(safe-area-inset-top, 0px);
+  --sab: env(safe-area-inset-bottom, 0px);
+  --sal: env(safe-area-inset-left, 0px);
+  --sar: env(safe-area-inset-right, 0px);
+  --bottom-nav-height: 64px;
+  --mobile-action-bar-height: 64px;
+  /* Total bottom clearance any scrollable page content must respect on mobile.
+     Nav is fixed bottom:0 with internal paddingBottom:var(--sab), so its total
+     occupied space = --bottom-nav-height + --sab. We add 16px breathing room. */
+  --mobile-bottom-clearance: calc(var(--bottom-nav-height) + var(--sab) + 16px);
+  /* When a sticky/floating action bar also sits above the nav */
+  --mobile-bottom-clearance-with-action: calc(var(--bottom-nav-height) + var(--mobile-action-bar-height) + var(--sab) + 16px);
+}
+
+html {
+  background-color: #050d1a;
+}
+html.light,
+html[data-theme="frost-white"] {
+  background-color: #f6f8fb;
+}
+
+body {
+  /* Only top safe area on body — bottom is handled by mobile-tab-bar + pb-safe-bottom */
+  padding-top: var(--sat);
+}
+
+/* Safe area utility classes */
+.safe-top { padding-top: env(safe-area-inset-top, 0px); }
+.safe-bottom { padding-bottom: env(safe-area-inset-bottom, 0px); }
+.fixed-top-safe { top: env(safe-area-inset-top, 0px); }
+.fixed-bottom-safe { bottom: env(safe-area-inset-bottom, 0px); }
+.mobile-safe-bottom { padding-bottom: var(--mobile-bottom-clearance); }
+.mobile-safe-bottom-action { padding-bottom: var(--mobile-bottom-clearance-with-action); }
+
+/* Modal open — locks body scroll on iOS Safari and hides the mobile nav.
+   The position:fixed + top trick prevents background scroll on iOS when
+   overflow:hidden alone isn't enough. useBodyLock.js saves/restores scrollY. */
+body.modal-open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
+
+/* Hide the mobile bottom nav bar when a fullscreen modal is open.
+   Prevents z-index/backdrop-filter bleed-through on older iOS Safari. */
+body.modal-open .mobile-bottom-nav,
+body.modal-open [data-role='mobile-bottom-nav'] {
+  display: none !important;
+}
+
+/* The floating utilities sit at z-997/998 — above every dialog in the app. With
+   a modal up they land ON the dialog's own controls: both of them were sitting
+   across the coordinator's save button on a phone. A dialog is a modal context;
+   these belong to the page behind it. */
+body.modal-open [data-role='a11y-floating-button'],
+body.modal-open [data-role='bug-report-button'] {
+  display: none !important;
+}
+
+@layer base {
+  html {
+    direction: rtl;
+    font-feature-settings: 'tnum' on, 'lnum' on;
+  }
+
+  body {
+    @apply antialiased font-tajawal text-[15px] leading-relaxed;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Selection color */
+  ::selection {
+    background: var(--color-selection-bg);
+    color: var(--color-selection-text);
+  }
+
+  /* Custom scrollbar — thin */
+  ::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-scrollbar-thumb);
+    border-radius: 9999px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-scrollbar-hover);
+  }
+
+  /* Firefox scrollbar */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-scrollbar-thumb) transparent;
+  }
+}
+
+@layer components {
+  /* ═══════════════════════════════════════════════════════════
+     CARDS — Layered surface system (Apple depth model)
+     Generous padding, deep shadows, breathing room
+     ═══════════════════════════════════════════════════════════ */
+  .glass-card {
+    @apply backdrop-blur-xl rounded-2xl;
+    background: var(--color-bg-surface);
+    border: 1px solid var(--color-border-subtle);
+    box-shadow: 0 1px 3px var(--color-card-shadow), inset 0 1px 0 var(--color-card-inset);
+  }
+
+  .glass-card-raised {
+    @apply backdrop-blur-xl rounded-2xl;
+    background: var(--color-bg-surface-raised);
+    border: 1px solid var(--color-border-medium);
+    box-shadow: 0 4px 24px var(--color-card-shadow), 0 1px 4px var(--color-card-shadow), inset 0 1px 0 var(--color-card-inset);
+  }
+
+  .glass-card-hover {
+    @apply glass-card transition-all duration-300 ease-apple;
+  }
+  .glass-card-hover:hover {
+    background: var(--color-bg-hover);
+    border-color: var(--color-border-medium);
+    box-shadow: 0 8px 32px var(--color-card-shadow);
+    transform: translateY(-2px);
+  }
+
+  .glass-card-interactive {
+    @apply glass-card cursor-pointer transition-all duration-200 ease-apple;
+  }
+  .glass-card-interactive:hover {
+    background: var(--color-bg-hover);
+    border-color: var(--color-border-medium);
+    box-shadow: 0 8px 32px var(--color-card-shadow);
+    transform: translateY(-2px);
+  }
+  .glass-card-interactive:active {
+    transform: translateY(0);
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     BUTTONS — Clean, solid, Apple-style — 48px tall
+     ═══════════════════════════════════════════════════════════ */
+  .btn-primary {
+    @apply bg-sky-500 text-white px-7 py-3.5 rounded-xl font-semibold text-[15px]
+           shadow-lg shadow-sky-500/20 hover:bg-sky-400 hover:shadow-sky-500/30
+           cursor-pointer active:scale-[0.98] disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-sky-500 disabled:hover:shadow-sky-500/20
+           transition-all duration-200 ease-apple;
+    min-height: 48px;
+  }
+
+  .btn-secondary {
+    @apply px-7 py-3.5 rounded-xl font-semibold text-[15px]
+           cursor-pointer active:scale-[0.98] disabled:opacity-40 disabled:cursor-not-allowed
+           transition-all duration-200 ease-apple;
+    min-height: 48px;
+    background: var(--color-bg-surface-raised);
+    border: 1px solid var(--color-border-medium);
+    color: var(--color-text-primary);
+  }
+  .btn-secondary:hover {
+    background: var(--color-bg-overlay);
+    border-color: var(--color-border-medium);
+  }
+
+  .btn-gold {
+    @apply bg-gold-400 text-navy-950 px-7 py-3.5 rounded-xl font-bold text-[15px]
+           shadow-lg shadow-gold-500/20 hover:bg-gold-300 hover:shadow-gold-500/30
+           cursor-pointer active:scale-[0.98] disabled:opacity-40 disabled:cursor-not-allowed
+           transition-all duration-200 ease-apple;
+    min-height: 48px;
+  }
+
+  .btn-danger {
+    @apply bg-red-500/10 text-red-400 border border-red-500/20 px-7 py-3.5 rounded-xl font-semibold text-[15px]
+           hover:bg-red-500/15 hover:border-red-500/25
+           cursor-pointer active:scale-[0.98] disabled:opacity-40 disabled:cursor-not-allowed
+           transition-all duration-200 ease-apple;
+    min-height: 48px;
+  }
+
+  .btn-ghost {
+    @apply px-5 py-2.5 rounded-xl font-medium text-[15px]
+           cursor-pointer active:scale-[0.98] disabled:opacity-40 disabled:cursor-not-allowed
+           transition-all duration-200 ease-apple;
+    color: var(--color-text-muted);
+  }
+  .btn-ghost:hover {
+    background: var(--color-bg-hover);
+    color: var(--color-text-primary);
+  }
+
+  /* Icon button — square, subtle, 44px touch target */
+  .btn-icon {
+    @apply w-11 h-11 rounded-xl flex items-center justify-center
+           cursor-pointer active:scale-[0.96]
+           transition-all duration-150 ease-apple;
+    color: var(--color-text-muted);
+  }
+  .btn-icon:hover {
+    background: var(--color-bg-surface-raised);
+    color: var(--color-text-primary);
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     INPUTS — 48-52px tall, generous padding, clean focus
+     ═══════════════════════════════════════════════════════════ */
+  .input-field {
+    @apply w-full rounded-xl px-4 text-base
+           focus:outline-none focus:ring-2 focus:ring-sky-500/30 focus:border-sky-500/40
+           transition-all duration-200 ease-apple;
+    min-height: 48px;
+    -webkit-appearance: none;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    background: var(--color-bg-input);
+    border: 1px solid var(--color-border-subtle);
+    color: var(--color-text-primary);
+  }
+  .input-field::placeholder {
+    color: var(--color-text-placeholder);
+  }
+  .input-field:focus {
+    background: var(--color-bg-input-focus);
+  }
+
+  .input-field-lg {
+    @apply input-field text-base;
+    min-height: 52px;
+    padding-top: 14px;
+    padding-bottom: 14px;
+  }
+
+  /* Label style */
+  .input-label {
+    @apply block text-[13px] mb-2.5 font-semibold tracking-wide;
+    color: var(--color-text-muted);
+  }
+
+  /* Textarea */
+  textarea.input-field {
+    @apply min-h-[140px] resize-y leading-relaxed;
+  }
+
+  /* Native select dropdown options */
+  select.input-field option {
+    background-color: var(--color-select-option-bg);
+    color: var(--color-select-option-text);
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     TOGGLE SWITCH — Apple-style
+     ═══════════════════════════════════════════════════════════ */
+  .toggle-switch {
+    @apply relative w-11 h-6 rounded-full transition-colors duration-200 ease-apple cursor-pointer;
+  }
+  .toggle-switch::after {
+    content: '';
+    @apply absolute top-0.5 w-5 h-5 rounded-full bg-white shadow-sm transition-all duration-200 ease-apple;
+  }
+  .toggle-switch[data-checked="false"] {
+    background: var(--color-bg-overlay);
+  }
+  .toggle-switch[data-checked="false"]::after {
+    right: calc(100% - 1.375rem);
+  }
+  .toggle-switch[data-checked="true"] {
+    @apply bg-sky-500;
+  }
+  .toggle-switch[data-checked="true"]::after {
+    right: 0.125rem;
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     BADGES — Pill shape, semi-transparent
+     ═══════════════════════════════════════════════════════════ */
+  .badge {
+    @apply inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium;
+  }
+
+  .badge-green  { @apply badge bg-emerald-500/10 text-emerald-400 border border-emerald-500/25; }
+  .badge-yellow { @apply badge bg-amber-500/10 text-amber-400 border border-amber-500/25; }
+  .badge-red    { @apply badge bg-red-500/10 text-red-400 border border-red-500/20; }
+  .badge-blue   { @apply badge bg-sky-500/10 text-sky-400 border border-sky-500/20; }
+  .badge-gold   { @apply badge bg-gold-500/10 text-gold-400 border border-gold-500/20; }
+  .badge-sky    { @apply badge bg-sky-500/10 text-sky-400 border border-sky-500/20; }
+  .badge-emerald { @apply badge bg-emerald-500/10 text-emerald-400 border border-emerald-500/25; }
+  .badge-violet { @apply badge bg-violet-500/10 text-violet-400 border border-violet-500/20; }
+  .badge-orange { @apply badge bg-orange-500/10 text-orange-400 border border-orange-500/20; }
+  .badge-muted  { @apply badge border; background: var(--color-bg-surface); color: var(--color-text-muted); border-color: var(--color-border-subtle); }
+
+  /* ═══════════════════════════════════════════════════════════
+     STAT CARDS — Dashboard KPIs
+     ═══════════════════════════════════════════════════════════ */
+  .stat-card {
+    @apply glass-card relative overflow-hidden;
+    padding: 28px 28px;
+  }
+
+  .stat-card .stat-number {
+    font-size: 2.5rem;
+    line-height: 1;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.02em;
+  }
+
+  .stat-card .stat-label {
+    @apply text-[13px] mt-2 tracking-wide;
+    color: var(--color-text-muted);
+  }
+
+  .stat-card .stat-icon {
+    @apply absolute top-6 left-6 w-11 h-11 rounded-xl flex items-center justify-center opacity-50;
+  }
+
+  .stat-card::before {
+    content: '';
+    @apply absolute top-0 right-0 w-40 h-40 rounded-full opacity-[0.015] -translate-y-1/2 translate-x-1/2;
+    background: currentColor;
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     TABLES — Clean, spacious, 56-64px rows, no grid lines
+     ═══════════════════════════════════════════════════════════ */
+  .data-table {
+    @apply w-full text-[15px];
+  }
+
+  .data-table thead th {
+    @apply text-[11px] font-semibold uppercase tracking-wider px-5 py-4 text-right;
+    color: var(--color-text-muted);
+    border-bottom: 1px solid var(--color-border-subtle);
+  }
+
+  .data-table tbody tr {
+    @apply transition-colors duration-150;
+  }
+
+  .data-table tbody tr:hover {
+    background: var(--color-bg-hover);
+  }
+
+  .data-table tbody td {
+    @apply px-5;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    min-height: 56px;
+    color: var(--color-text-secondary);
+    border-bottom: 1px solid var(--color-border-subtle);
+  }
+
+  .data-table tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+  .data-table tbody td:first-child {
+    @apply font-medium;
+    color: var(--color-text-primary);
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     SKELETON LOADING
+     ═══════════════════════════════════════════════════════════ */
+  .skeleton {
+    @apply rounded-xl;
+    background: linear-gradient(90deg,
+      var(--skeleton-from) 25%,
+      var(--skeleton-via) 50%,
+      var(--skeleton-to) 75%
+    );
+    background-size: 200% 100%;
+    animation: shimmerWave 1.8s ease-in-out infinite;
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     DIVIDERS
+     ═══════════════════════════════════════════════════════════ */
+  .divider {
+    @apply my-6;
+    border-top: 1px solid var(--color-border-subtle);
+  }
+
+  .divider-sm {
+    @apply my-3;
+    border-top: 1px solid var(--color-border-subtle);
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     ROLE-BASED ACCENT OVERRIDES
+     ═══════════════════════════════════════════════════════════ */
+  [data-role="student"] .role-accent { @apply text-sky-400; }
+  [data-role="student"] .role-accent-bg { @apply bg-sky-500/10; }
+  [data-role="student"] .role-accent-border { @apply border-sky-500/20; }
+
+  [data-role="trainer"] .role-accent { @apply text-emerald-400; }
+  [data-role="trainer"] .role-accent-bg { @apply bg-emerald-500/10; }
+  [data-role="trainer"] .role-accent-border { @apply border-emerald-500/25; }
+
+  [data-role="admin"] .role-accent { @apply text-gold-400; }
+  [data-role="admin"] .role-accent-bg { @apply bg-gold-500/10; }
+  [data-role="admin"] .role-accent-border { @apply border-gold-500/20; }
+
+  /* ═══════════════════════════════════════════════════════════
+     AI FILL HIGHLIGHT — fields glow when AI fills them
+     ═══════════════════════════════════════════════════════════ */
+  .ai-fill-glow {
+    animation: fill-highlight 0.6s ease-out;
+  }
+}
+
+@layer utilities {
+  /* Text gradient */
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-l from-sky-400 to-sky-200;
+  }
+
+  /* Glow effects */
+  .glow-sky { @apply shadow-glow-sky; }
+  .glow-gold { @apply shadow-glow-gold; }
+  .glow-emerald { @apply shadow-glow-emerald; }
+
+  /* Subtle gradient background for page sections */
+  .section-gradient {
+    background: radial-gradient(ellipse at top right, rgba(56, 189, 248, 0.03) 0%, transparent 60%);
+  }
+
+  /* Page section spacing — generous Apple-level gaps */
+  .page-section {
+    @apply mb-14;
+  }
+
+  .page-section-lg {
+    @apply mb-16;
+  }
+
+  /* Hide scrollbar but allow scrolling */
+  .scrollbar-none {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Max content width for readability */
+  .content-max {
+    @apply max-w-6xl;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   ACCESSIBLE FOCUS INDICATORS
+   ═══════════════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════════
+   SMOOTH THEME TRANSITIONS
+   ═══════════════════════════════════════════════════════════ */
+html.theme-transition,
+html.theme-transition *,
+html.theme-transition *::before,
+html.theme-transition *::after {
+  transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease !important;
+}
+
+:focus-visible {
+  outline: 2px solid rgba(56, 189, 248, 0.5);
+  outline-offset: 2px;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   REDUCED MOTION
+   ═══════════════════════════════════════════════════════════ */
+/* Disable browser default pull-to-refresh — we have our own */
+html, body {
+  overscroll-behavior-y: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --cinematic-duration-fast: 0.01ms !important;
+    --cinematic-duration-medium: 0.01ms !important;
+    --cinematic-duration-slow: 0.01ms !important;
+    --cinematic-duration-ambient: 0.01ms !important;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ========== CINEMATIC HIGH CONTRAST OVERRIDES ========== */
+.a11y-high-contrast {
+  --cinematic-border: rgba(255, 255, 255, 0.35);
+  --cinematic-border-hover: rgba(245, 200, 66, 0.9);
+  --cinematic-accent-gold-soft: rgba(245, 200, 66, 0.5);
+  --cinematic-accent-cyan-soft: rgba(0, 212, 255, 0.5);
+  --cinematic-text-dim: #e5e7eb;
+  --cinematic-text-faint: #cbd5e1;
+  --cinematic-film-grain-opacity: 0;
+}
+.light.a11y-high-contrast,
+[data-theme="frost-white"].a11y-high-contrast {
+  --cinematic-border: rgba(0, 0, 0, 0.3);
+  --cinematic-border-hover: rgba(184, 134, 11, 0.9);
+  --cinematic-accent-gold-soft: rgba(184, 134, 11, 0.4);
+  --cinematic-text-dim: #1a1a1a;
+  --cinematic-text-faint: #2a2a2a;
+}
+
+/* ========== CINEMATIC FOCUS RINGS ========== */
+.cinematic-card:focus-visible {
+  outline: 2px solid var(--cinematic-accent-gold);
+  outline-offset: 3px;
+  box-shadow: var(--cinematic-glow-gold);
+}
+
+/* ========== LINE SPACING ========== */
+.a11y-line-spacing-tight { --cinematic-leading-normal: 1.3; }
+.a11y-line-spacing-relaxed { --cinematic-leading-normal: 1.8; }
+.a11y-line-spacing-loose { --cinematic-leading-normal: 2.1; }
+
+
+/* ========== I18N: LANGUAGE / DIRECTION / FONT ========== */
+:root {
+  --font-arabic: 'Tajawal', system-ui, sans-serif;
+  --font-english: 'Inter Tight', 'Inter', system-ui, sans-serif;
+}
+
+html.font-arabic, html.font-arabic body { font-family: var(--font-arabic); }
+html.font-english, html.font-english body { font-family: var(--font-english); letter-spacing: 0.005em; }
+
+/* `@layer base` sets `html { direction: rtl }`, and an author rule beats the
+   UA stylesheet's `[dir=ltr] { direction: ltr }`. So LanguageBootstrap could
+   set dir="ltr" on <html> for an English account and the whole shell — header,
+   sidebar, mobile bar, drawer — still laid itself out right-to-left. That is
+   why the three .tr-* patches below exist; they fixed the trainer shell only.
+   This does the same thing once, for every English account and every element.
+   Nothing Arabic is affected: those accounts carry dir="rtl". */
+html[dir="ltr"] { direction: ltr; }
+
+/* Structural LTR overrides — catches flex/margin direction flips in layout
+   without rewriting individual Tailwind classes across the codebase */
+html[dir="ltr"] .tr-sidebar { direction: ltr; }
+html[dir="ltr"] .tr-header  { direction: ltr; }
+html[dir="ltr"] .tr-mobile-bar { direction: ltr; }
+
+/* ── The desktop rail follows the reading direction ──────────────────────────
+   The rail is `position: fixed` and was pinned with a physical `right: 0`, so
+   an English account read left-to-right with its navigation still glued to the
+   right edge of the screen — the Learning Coach's entire console. Navigation
+   belongs on the INLINE-START side: the right in Arabic, the left in English.
+   Written physically rather than with `inset-inline-start`, so the side stays
+   verifiable with getBoundingClientRect and cannot be quietly re-resolved by a
+   descendant that sets its own `direction`. The content shell's own offset is
+   the logical `lg:ms-[…]` in LayoutShell, which follows on its own. */
+html[dir="ltr"] aside[data-sidebar-root] {
+  right: auto;
+  left: 0;
+}
