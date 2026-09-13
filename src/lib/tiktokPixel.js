@@ -219,6 +219,26 @@ export function fireTikTokRedirectEvents({
 }
 
 /**
+ * A prospect opened a WhatsApp conversation — TikTok's standard `Contact`.
+ * No PII: the phone number is typed inside WhatsApp, never on our page.
+ */
+export function fireTikTokContact({
+  contentId = 'fluentia_whatsapp',
+  contentName = 'WhatsApp conversation',
+} = {}) {
+  if (typeof window === 'undefined' || !window.ttq) return;
+  try {
+    window.ttq.track('Contact', {
+      content_id: contentId,
+      content_name: contentName,
+      content_type: 'product',
+    });
+  } catch (e) {
+    if (typeof console !== 'undefined') console.error('TikTok Contact error:', e);
+  }
+}
+
+/**
  * Fire upper-funnel ViewContent event on page load.
  * No PII is expected at this stage — kept here so src/ has zero raw ttq.track
  * calls outside this helper.

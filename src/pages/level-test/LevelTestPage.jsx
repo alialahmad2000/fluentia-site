@@ -10,6 +10,7 @@ import {
 } from './ExamScreens';
 import ResultScreen from './ResultScreen';
 import { startAttempt, finishAttempt, fireTracking, GOALS } from './submit';
+import { track } from '../../lib/track';
 import './levelTest.css';
 
 const TOTAL_ITEMS = 26; // 22 multiple-choice + 4 listening
@@ -86,6 +87,8 @@ export default function LevelTestPage() {
     setAnswered(0);
     setPhase('exam');
     startAttempt(leadData).then(setAttemptId); // fire-and-forget
+    // GA4 had only the final generate_lead; starts vs completions is the drop-off.
+    track('level_test_start', { page_path: window.location.pathname });
   }, []);
 
   const finish = useCallback((writingText) => {

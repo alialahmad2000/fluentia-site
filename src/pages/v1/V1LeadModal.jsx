@@ -3,6 +3,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { FORM } from "../landing-v2/content";
 import { fireTikTokLeadEvents, normalizePhoneE164 } from "../../lib/tiktokPixel";
 import { saveLead } from "../../utils/tracking";
+import { getAttribution } from "../../lib/attribution";
+import { track } from "../../lib/track";
 import { EASE } from "./motion";
 import BrandMark from "../../components/BrandMark";
 
@@ -25,15 +27,16 @@ function isValidSaudiPhone(raw) {
   return /^5\d{8}$/.test(p);
 }
 
+/** URL at submit time → else the touch remembered at landing (attribution.js). */
 function readUtm() {
   if (typeof window === "undefined") return {};
-  const u = new URLSearchParams(window.location.search);
+  const a = getAttribution();
   return {
-    utm_source: u.get("utm_source") || "",
-    utm_medium: u.get("utm_medium") || "",
-    utm_campaign: u.get("utm_campaign") || "",
-    utm_content: u.get("utm_content") || "",
-    utm_term: u.get("utm_term") || "",
+    utm_source: a.utm_source || "",
+    utm_medium: a.utm_medium || "",
+    utm_campaign: a.utm_campaign || "",
+    utm_content: a.utm_content || "",
+    utm_term: a.utm_term || "",
   };
 }
 
@@ -82,8 +85,11 @@ export default function V1LeadModal() {
       const trigger = e.target.closest("[data-open-form]");
       if (!trigger) return;
       e.preventDefault();
-      setTier(trigger.getAttribute("data-tier") || "");
+      const t = trigger.getAttribute("data-tier") || "";
+      setTier(t);
       setOpen(true);
+      // Opens vs submits = where the form itself loses people.
+      track("lead_form_open", { form_id: FORM_CONTENT_ID, tier_id: t || "none", page_path: window.location.pathname });
     };
     document.addEventListener("click", onClick);
     return () => document.removeEventListener("click", onClick);

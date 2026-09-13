@@ -1,5 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion, useReducedMotion } from "framer-motion";
+import { getVisitorId } from "../../utils/affiliateTracking";
+import { SUPABASE_URL } from "../../utils/tracking";
+import { getAttribution } from "../../lib/attribution";
+import { track } from "../../lib/track";
 
 /**
  * V1TrialBand — the invitation to «درسك الأول» (app.fluentia.academy/try).
@@ -28,6 +32,57 @@ import { motion, useReducedMotion } from "framer-motion";
 const EASE = [0.16, 1, 0.3, 1];
 const TRIAL_URL = "https://app.fluentia.academy/try";
 const ROTATE_MS = 5200;
+
+/* ── measurement ─────────────────────────────────────────────────────────────
+   After three weeks the band had produced 12 trial starts and nobody could say
+   whether that was good, because nothing before `start` was recorded: not how
+   many saw the band, tapped a profession, or clicked through.
+
+   Now the band writes three anonymous steps to the LMS `trial_funnel_events`
+   table (through the public trial-lesson function) and mirrors them to GA4:
+     band_view  — the band was actually on screen (once per browser session)
+     band_pick  — a profession was TAPPED (not hovered, not auto-rotated)
+     band_cta   — «ادخل على درس من مجالك» was clicked, with the field shown
+   /try then logs its own view + steps under the SAME visitor id, carried
+   across origins as ?vid=, so one query reads the whole funnel.
+
+   UTMs on the link: utm_source=home_band identifies the entry point, and
+   utm_campaign keeps the channel that brought the visitor to the site
+   (tiktok, google, direct…) — trial_sessions has only three utm columns and
+   losing the original channel would cost more than a purist utm_campaign. */
+const FUNNEL_URL = `${SUPABASE_URL}/functions/v1/trial-lesson`;
+
+function visitor() {
+  try { return getVisitorId(); } catch { return null; }
+}
+
+function funnel(event, slug) {
+  try {
+    const visitor_id = visitor();
+    if (!visitor_id) return;
+    const { utm_source } = getAttribution();
+    const body = JSON.stringify({
+      action: "event", event, visitor_id, job_slug: slug || null,
+      utm_source: "home_band", utm_medium: "site", utm_campaign: utm_source || "direct",
+    });
+    // Beacon: the CTA navigates away immediately, and a fetch would be cancelled.
+    if (!navigator.sendBeacon?.(FUNNEL_URL, body)) {
+      fetch(FUNNEL_URL, { method: "POST", body, keepalive: true }).catch(() => {});
+    }
+  } catch { /* measurement must never break the band */ }
+}
+
+function trialHref(slug) {
+  const p = new URLSearchParams({
+    utm_source: "home_band",
+    utm_medium: "site",
+    utm_campaign: getAttribution().utm_source || "direct",
+    job: slug,
+  });
+  const vid = visitor();
+  if (vid) p.set("vid", vid);
+  return `${TRIAL_URL}?${p.toString()}`;
+}
 
 /* Verbatim from the seeded lessons in `trial_lesson_cache`. `**term**` marks a
    word that is genuinely taught in that lesson's glossary — the highlight is a
@@ -155,8 +210,36 @@ export default function V1TrialBand() {
   const pick = (n) => { setTouched(true); clearInterval(timer.current); setI(n); };
   const s = SPECIMENS[i];
 
+  // band_view: at least a third of the band on screen, once per session.
+  const sectionRef = useRef(null);
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el || typeof IntersectionObserver === "undefined") return undefined;
+    try { if (sessionStorage.getItem("flu_trial_band_seen")) return undefined; } catch { /* count it */ }
+    const io = new IntersectionObserver((entries) => {
+      if (!entries.some((e) => e.isIntersecting)) return;
+      io.disconnect();
+      try { sessionStorage.setItem("flu_trial_band_seen", "1"); } catch { /* ignore */ }
+      funnel("band_view");
+      track("trial_band_view", { page_path: window.location.pathname });
+    }, { threshold: 0.35 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  const onPickClick = (n) => {
+    pick(n);
+    funnel("band_pick", SPECIMENS[n].slug);
+    track("trial_band_select", { field: SPECIMENS[n].slug });
+  };
+
+  const onCtaClick = () => {
+    funnel("band_cta", s.slug);
+    track("trial_band_click", { field: s.slug });
+  };
+
   return (
-    <section id="trial" className="tb">
+    <section id="trial" className="tb" ref={sectionRef}>
       <style>{`
         .tb {
           padding: var(--v1-section) var(--v1-gutter);
@@ -415,7 +498,7 @@ export default function V1TrialBand() {
                   type="button"
                   className="tb-chip"
                   aria-pressed={n === i}
-                  onClick={() => pick(n)}
+                  onClick={() => onPickClick(n)}
                   onMouseEnter={() => pick(n)}
                 >
                   {sp.label}
@@ -474,7 +557,8 @@ export default function V1TrialBand() {
           {/* Its own grid child: beneath the claim on desktop, and AFTER the
               specimen on a phone — the evidence has to land before the ask. */}
           <div className="tb-cta-row">
-            <a href={TRIAL_URL} className="v1-cta v1-cta-primary" style={{ textDecoration: "none" }}>
+            <a href={trialHref(s.slug)} onClick={onCtaClick} data-cta="trial_band"
+               className="v1-cta v1-cta-primary" style={{ textDecoration: "none" }}>
               ادخل على درس من مجالك ←
             </a>
             <span className="tb-note">

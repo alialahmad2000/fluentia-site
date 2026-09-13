@@ -9,6 +9,7 @@ import { buildWhatsAppUrl } from '../../lib/whatsapp';
 import { SUPABASE_URL } from '../../utils/tracking';
 import { getStoredRef, getVisitorId } from '../../utils/affiliateTracking';
 import { fireTikTokLeadEvents, normalizePhoneE164 } from '../../lib/tiktokPixel';
+import { getAttribution } from '../../lib/attribution';
 
 const FN = `${SUPABASE_URL}/functions/v1/level-test-submit`;
 
@@ -27,14 +28,13 @@ export const GOALS = [
 
 export const goalAr = (id) => GOALS.find((g) => g.id === id)?.ar || '—';
 
+/** The homepage links here with a full-reload <a href>, which drops the query
+ *  string — so the source comes from what attribution.js stored at landing.
+ *  Before this, 0 of 34 level-test rows in 30 days had any source. */
 function utm() {
   try {
-    const p = new URLSearchParams(window.location.search);
-    return {
-      utm_source: p.get('utm_source') || sessionStorage.getItem('utm_source') || null,
-      utm_medium: p.get('utm_medium') || null,
-      utm_campaign: p.get('utm_campaign') || null,
-    };
+    const { utm_source, utm_medium, utm_campaign } = getAttribution();
+    return { utm_source, utm_medium, utm_campaign };
   } catch { return {}; }
 }
 

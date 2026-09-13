@@ -5,6 +5,7 @@
  */
 import { getStoredRef, getVisitorId } from './affiliateTracking';
 import { fireTikTokLeadEvents, normalizePhoneE164 } from '../lib/tiktokPixel';
+import { getAttribution } from '../lib/attribution';
 
 export const UTM_MAP = {
   tiktok:    'تيك توك',
@@ -42,6 +43,7 @@ export async function saveLead({ name, phone, email, path, pkg, goal, source }) 
       if (affs?.[0]?.id) affiliateId = affs[0].id;
     }
     const p = new URLSearchParams(window.location.search);
+    const attr = getAttribution();
     await fetch(`${SUPABASE_URL}/rest/v1/leads`, {
       method: 'POST',
       headers: {
@@ -58,9 +60,10 @@ export async function saveLead({ name, phone, email, path, pkg, goal, source }) 
         pkg: pkg || null,
         goal: goal || null,
         source: source || null,
-        utm_source: p.get('utm_source') || null,
-        utm_medium: p.get('utm_medium') || null,
-        utm_campaign: p.get('utm_campaign') || null,
+        // URL first (unchanged behaviour), then the touch remembered at landing.
+        utm_source: p.get('utm_source') || attr.utm_source,
+        utm_medium: p.get('utm_medium') || attr.utm_medium,
+        utm_campaign: p.get('utm_campaign') || attr.utm_campaign,
         ref_code: refCode || null,
         affiliate_id: affiliateId,
         first_click_at: refCode ? new Date().toISOString() : null,

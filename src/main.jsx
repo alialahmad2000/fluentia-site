@@ -54,9 +54,15 @@ import './index.css'
 import './styles/typography.css'
 import App from './App.jsx'
 import { captureRefFromUrl } from './utils/affiliateTracking'
+import { captureAttribution } from './lib/attribution'
+import { installWhatsAppClickTracking } from './lib/track'
 
 // Capture affiliate ref code on first load
 captureRefFromUrl()
+// Remember where this visitor came from before any navigation drops the query
+// string, and count every WhatsApp tap (the site's main conversion path).
+captureAttribution()
+installWhatsAppClickTracking()
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
