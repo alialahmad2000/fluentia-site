@@ -290,7 +290,7 @@ function PartEnd({ book, chapter, otherBooks, mode, onReplay, onCinema }) {
         </div>
       </div>
       <div className="lib-tour-end-actions">
-        <a className="lib-start" href={whatsappHref()} target="_blank" rel="noopener noreferrer">ابدأ مع طلاقة</a>
+        <a className="lib-start" data-cta="tour_library_reader_end" href={whatsappHref()} target="_blank" rel="noopener noreferrer">ابدأ بمحادثة</a>
         {mode === 'cinema'
           ? <button className="lib-tour-end-ghost" onClick={onReplay}><RotateCcw size={15} aria-hidden /> استمع من البداية</button>
           : <button className="lib-tour-end-ghost" onClick={onCinema}><Clapperboard size={15} aria-hidden /> شاهده في وضع السينما</button>}

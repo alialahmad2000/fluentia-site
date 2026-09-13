@@ -8,6 +8,10 @@ import "./hub.css";
  * student platform. Every room provides its own door art at
  * public/tour/<slug>/door.webp, cut from that room's real content.
  */
+// On a phone the doors are near-square. Photographs crop well from the wide
+// art; the grammar door is typography, which only fits from its portrait cut.
+const PORTRAIT_ON_PHONE = new Set(["grammar"]);
+
 export default function Hub() {
   return (
     <div className="tour-chrome tour-hub" dir="rtl">
@@ -17,7 +21,7 @@ export default function Hub() {
           <span>طلاقة</span>
         </a>
         <a className="tour-btn tour-btn-ghost tour-hub-top-cta" data-cta="tour_hub_top" href={whatsappHref()} target="_blank" rel="noopener noreferrer">
-          ابدأ مع طلاقة
+          ابدأ بمحادثة
         </a>
       </header>
 
@@ -39,7 +43,14 @@ export default function Hub() {
         {ROOMS.map((room, i) => (
           <li key={room.slug} className={`tour-door tour-door--${room.slug}`}>
             <Link to={roomPath(room.slug)} className="tour-door-link">
-              <span className="tour-door-art" style={{ backgroundImage: `url(/tour/${room.slug}/door.webp)` }} aria-hidden />
+              <span
+                className="tour-door-art"
+                style={{
+                  "--door": `url(/tour/${room.slug}/door.webp)`,
+                  "--door-phone": `url(/tour/${room.slug}/${PORTRAIT_ON_PHONE.has(room.slug) ? "door-tall" : "door"}.webp)`,
+                }}
+                aria-hidden
+              />
               <span className="tour-door-scrim" aria-hidden />
               <span className="tour-door-body">
                 <span className="tour-door-num">{String(i + 1).padStart(2, "0")}</span>
@@ -57,10 +68,10 @@ export default function Hub() {
       </ol>
 
       <section className="tour-hub-close">
-        <p>أعجبك ما رأيت؟ هذا جزء صغير مما ينتظرك داخل المنصة.</p>
+        <p>عندك سؤال قبل أن تبدأ؟ محادثة أولى مجانية، بدون التزام.</p>
         <div className="tour-end-actions">
           <a className="tour-btn tour-btn-solid" data-cta="tour_hub_close" href={whatsappHref()} target="_blank" rel="noopener noreferrer">
-            ابدأ مع طلاقة
+            ابدأ بمحادثة
           </a>
           <a className="tour-btn tour-btn-ghost" data-cta="tour_hub_close_level_test" href="/level-test">
             اختبر مستواك مجاناً

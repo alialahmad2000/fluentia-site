@@ -45,19 +45,19 @@ export function TourBar({ slug }) {
 
         <div className="tour-bar-end">
           {next ? (
-            <Link to={roomPath(next.slug)} className="tour-bar-next">
+            <Link to={roomPath(next.slug)} className="tour-bar-next" aria-label={`التالي: ${next.title}`}>
               <span className="tour-bar-next-label">التالي</span>
               <span className="tour-bar-next-title">{next.title}</span>
               <span aria-hidden>←</span>
             </Link>
           ) : (
-            <Link to="/tour" className="tour-bar-next">
+            <Link to="/tour" className="tour-bar-next" aria-label="كل الغرف">
               <span className="tour-bar-next-title">كل الغرف</span>
               <span aria-hidden>←</span>
             </Link>
           )}
           <a className="tour-btn tour-btn-solid tour-bar-cta" data-cta={`tour_bar_${slug}`} href={whatsappHref()} target="_blank" rel="noopener noreferrer">
-            ابدأ مع طلاقة
+            ابدأ بمحادثة
           </a>
         </div>
       </div>
@@ -87,15 +87,16 @@ export function TourEnd({ slug }) {
   return (
     <section className="tour-chrome tour-end" dir="rtl">
       <div className="tour-end-in">
-        <p className="tour-end-lead">هذه عيّنة صغيرة. داخل المنصة المنهج كاملاً، ومدرّبك يتابع كل ما تنجزه.</p>
+        <p className="tour-end-lead">ما جرّبته هنا جزء من المنهج. داخل المنصة تجد المنهج كاملاً، ومدرّباً يتابع كل ما تنجزه.</p>
         <div className="tour-end-actions">
           <a className="tour-btn tour-btn-solid" data-cta={`tour_end_${slug}`} href={whatsappHref()} target="_blank" rel="noopener noreferrer">
-            ابدأ مع طلاقة
+            ابدأ بمحادثة
           </a>
           <a className="tour-btn tour-btn-ghost" data-cta={`tour_end_${slug}_level_test`} href="/level-test">
             اختبر مستواك مجاناً
           </a>
         </div>
+        <p className="tour-end-note">محادثة أولى مجانية، بدون التزام.</p>
 
         {next ? (
           <Link to={roomPath(next.slug)} className="tour-end-next">
@@ -105,11 +106,12 @@ export function TourEnd({ slug }) {
             <span className="tour-end-next-go" aria-hidden>←</span>
           </Link>
         ) : (
-          <Link to="/tour" className="tour-end-next">
+          <a href="/level-test" className="tour-end-next" data-cta={`tour_end_${slug}_last_level_test`}>
             <span className="tour-end-next-kicker">انتهت الجولة</span>
-            <span className="tour-end-next-title">عُد إلى كل الغرف</span>
+            <span className="tour-end-next-title">اختبر مستواك مجاناً</span>
+            <span className="tour-end-next-blurb">اعرف من أي مستوى تبدأ قبل أن تتحدث معنا.</span>
             <span className="tour-end-next-go" aria-hidden>←</span>
-          </Link>
+          </a>
         )}
       </div>
     </section>

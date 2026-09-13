@@ -107,9 +107,18 @@
 .tour-chrome .tour-bar-cta { min-height: 38px; padding: 0 18px; font-size: 0.86rem; }
 
 @media (max-width: 860px) {
-  .tour-bar-crumb, .tour-bar-sep, .tour-bar-cta, .tour-bar-next-label, .tour-bar-next-title { display: none !important; }
+  /* phones: the mark goes home, the dots say where you are, and the two actions that matter stay in reach */
+  .tour-bar-in { gap: 10px; padding-block: 8px; }
+  .tour-bar-crumb, .tour-bar-sep, .tour-bar-brand, .tour-bar-room, .tour-bar-next-label, .tour-bar-next-title { display: none !important; }
   .tour-bar-mid { justify-content: flex-start; }
-  .tour-bar-next { font-size: 1.1rem; padding: 6px 4px; }
+  .tour-bar-end { gap: 8px; }
+  .tour-bar-next {
+    display: inline-grid; place-items: center;
+    width: 44px; height: 44px; padding: 0;
+    border-radius: 999px; border: 1px solid var(--tc-line-strong);
+    font-size: 1.1rem;
+  }
+  .tour-chrome .tour-bar-cta { min-height: 44px; padding: 0 16px; font-size: 0.86rem; }
 }
 
 /* ─── Room intro ─── */
@@ -118,7 +127,6 @@
   background:
     radial-gradient(ellipse 60% 80% at 50% 0%, rgba(56, 189, 248, 0.1), transparent 70%),
     linear-gradient(180deg, var(--tc-ink), var(--tc-ink-2));
-  border-bottom: 1px solid var(--tc-line);
 }
 .tour-intro-in {
   max-width: 880px;
@@ -147,6 +155,14 @@
 .tour-intro-title { font-family: var(--tc-display); font-weight: 700; font-size: clamp(1.8rem, 4.6vw, 2.8rem); line-height: 1.3; color: var(--tc-t-strong); }
 .tour-intro-blurb { font-size: clamp(0.98rem, 1.6vw, 1.1rem); color: var(--tc-t-mute); max-width: 58ch; line-height: 1.85; }
 
+@media (max-width: 600px) {
+  /* the room itself should start high on the first screen */
+  .tour-intro-in { padding: 18px 20px 16px; gap: 6px; }
+  .tour-intro-badge { margin-bottom: 2px; font-size: 0.74rem; padding: 4px 11px; }
+  .tour-intro-kicker, .tour-intro-blurb { display: none; }
+  .tour-intro-title { font-size: 1.5rem; }
+}
+
 /* ─── End band ─── */
 .tour-end {
   background:
@@ -166,6 +182,7 @@
 }
 .tour-end-lead { font-family: var(--tc-display); font-size: clamp(1.05rem, 2vw, 1.3rem); color: var(--tc-t-strong); max-width: 40ch; line-height: 1.7; }
 .tour-end-actions { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+.tour-end-note { margin-top: -8px; font-size: 0.85rem; color: var(--tc-t-mute); }
 .tour-end-next {
   position: relative;
   width: 100%;

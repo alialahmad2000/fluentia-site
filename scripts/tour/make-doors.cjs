@@ -126,6 +126,8 @@ async function grammarDoors(browser) {
       Object.assign(fig.style, { position: "absolute", left: `${(w - cfg.svgWidth) / 2}px`, top: `${cfg.svgTop}px`, width: `${cfg.svgWidth}px`, margin: 0, padding: 0, border: 0 });
       const clone = svg.cloneNode(true);
       clone.style.width = "100%";
+      // art, not a figure to read: keep the bars and their English labels, drop the small Arabic glosses
+      clone.querySelectorAll("text").forEach((el) => { if (/[\u0600-\u06FF]/.test(el.textContent)) el.remove(); });
       fig.appendChild(clone);
       stage.append(t, a, fig);
       gref.appendChild(stage);

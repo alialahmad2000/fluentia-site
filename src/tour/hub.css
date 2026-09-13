@@ -81,6 +81,7 @@
   position: absolute;
   inset: 0;
   z-index: -2;
+  background-image: var(--door);
   background-size: cover;
   background-position: center;
   transform: scale(1.02);
@@ -90,7 +91,7 @@
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: linear-gradient(180deg, rgba(4, 7, 14, 0.05) 20%, rgba(4, 7, 14, 0.55) 55%, rgba(4, 7, 14, 0.94) 100%);
+  background: linear-gradient(180deg, rgba(4, 7, 14, 0) 15%, rgba(4, 7, 14, 0.4) 40%, rgba(4, 7, 14, 0.85) 62%, rgba(4, 7, 14, 0.96) 100%);
 }
 .tour-door-body {
   position: absolute;
@@ -102,8 +103,8 @@
 }
 .tour-door-num { font-family: "Inter Tight", var(--tc-display); font-size: 0.78rem; letter-spacing: 0.14em; color: rgba(214, 228, 243, 0.55); }
 .tour-door-kicker { font-size: 0.8rem; color: var(--tc-azure-soft); }
-.tour-door-title { font-family: var(--tc-display); font-weight: 700; font-size: clamp(1.35rem, 2.4vw, 1.8rem); color: #fff; line-height: 1.35; }
-.tour-door-blurb { font-size: 0.9rem; color: rgba(233, 241, 250, 0.78); line-height: 1.8; max-width: 46ch; }
+.tour-door-title { font-family: var(--tc-display); font-weight: 700; font-size: clamp(1.35rem, 2.4vw, 1.8rem); color: #fff; line-height: 1.35; text-shadow: 0 2px 18px rgba(4, 7, 14, 0.7); }
+.tour-door-blurb { font-size: 0.9rem; color: rgba(233, 241, 250, 0.82); line-height: 1.8; max-width: 46ch; text-shadow: 0 2px 18px rgba(4, 7, 14, 0.7); }
 .tour-door-foot { display: flex; align-items: center; justify-content: space-between; margin-top: 8px; font-size: 0.8rem; color: rgba(214, 228, 243, 0.6); }
 .tour-door-go { font-family: var(--tc-display); font-weight: 500; font-size: 0.92rem; color: #fff; }
 
@@ -118,6 +119,9 @@
   .tour-door:nth-child(1) { grid-column: span 2; }
 }
 @media (max-width: 600px) {
+  /* near-square cards: typographic doors switch to their portrait cut, anchored at the top */
+  .tour-door-art { background-image: var(--door-phone); }
+  .tour-door--grammar .tour-door-art { background-position: center top; }
   .tour-doors { grid-template-columns: 1fr; }
   .tour-door:nth-child(n) { grid-column: auto; }
   .tour-door-link, .tour-door:nth-child(n + 3) .tour-door-link { min-height: 320px; }
