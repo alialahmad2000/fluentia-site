@@ -38,9 +38,28 @@ export function SpotlightController() {
   return null;
 }
 
-/** Mobile sticky CTA — springs in after the hero, stays out of the modal's way. */
+/** Mobile sticky CTA — springs in after the hero, stays out of the modal's way.
+ *  It also steps aside over the speak demo (it covered the mic caption and the
+ *  typed toggle) and over pricing (an azure CTA under the gold «اختر طلاقة»). */
 export function MobileCtaBar() {
   const [show, setShow] = useState(false);
+  const [covered, setCovered] = useState(false);
+  useEffect(() => {
+    if (typeof IntersectionObserver === "undefined") return;
+    const visible = new Set();
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => (e.isIntersecting ? visible.add(e.target) : visible.delete(e.target)));
+        setCovered(visible.size > 0);
+      },
+      { rootMargin: "-20% 0px -20% 0px" }
+    );
+    ["speak", "pricing"].forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) io.observe(el);
+    });
+    return () => io.disconnect();
+  }, []);
   useEffect(() => {
     const onScroll = () => {
       const past = window.scrollY > window.innerHeight * 1.4;
@@ -54,7 +73,7 @@ export function MobileCtaBar() {
 
   return (
     <AnimatePresence>
-      {show && (
+      {show && !covered && (
         <motion.div
           className="v1-ctabar"
           initial={{ y: 80 }}
@@ -88,12 +107,12 @@ export function MobileCtaBar() {
 /** Desktop side dot-nav — active section via IntersectionObserver. */
 const DOT_SECTIONS = [
   { id: "top", label: "البداية" },
+  { id: "speak", label: "قلها بالإنجليزي" },
   { id: "problem", label: "المشكلة" },
   { id: "solution", label: "المنهج" },
   { id: "product", label: "المنصة" },
   { id: "worth", label: "لماذا طلاقة" },
   { id: "pricing", label: "الباقات" },
-  { id: "stories", label: "قصص نجاح" },
   { id: "faq", label: "أسئلة" },
   { id: "founder", label: "المؤسس" },
 ];

@@ -71,7 +71,9 @@
     <meta name="application-name" content="Fluentia Academy" />
 
     <style>
-      html,body{margin:0;padding:0;background:#060e1c;overflow-x:hidden;}
+      /* clip, not hidden: overflow-x:hidden on html+body turns body into a scroll container that never
+         scrolls, which silently disables every position:sticky on the page. hidden stays as the fallback. */
+      html,body{margin:0;padding:0;background:#060e1c;overflow-x:hidden;overflow-x:clip;}
       :root{
         --surface-base:#060e1c;
         --surface-raised:rgba(255,255,255,0.03);
@@ -234,7 +236,7 @@
       "@context": "https://schema.org",
       "@type": "Course",
       "name": "التعلم الذاتي — Self-Study Platform",
-      "description": "Full access to the Fluentia smart platform: 6 CEFR levels (Pre-A1 → C1), 72 units, 15,000+ words, grammar/vocabulary/reading/listening exercises, and an AI speaking-and-pronunciation coach — at your own pace, without live classes.",
+      "description": "Full access to the Fluentia smart platform: 6 CEFR levels (Pre-A1 → C1), 72 units, 12,000+ words, grammar/vocabulary/reading/listening exercises, and an AI speaking-and-pronunciation coach — at your own pace, without live classes.",
       "provider": { "@id": "https://fluentia.academy/#organization" },
       "educationalLevel": "All levels (CEFR Pre-A1 → C1)",
       "inLanguage": "ar-SA",

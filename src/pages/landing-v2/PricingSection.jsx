@@ -1,49 +1,16 @@
 import { Container, EyebrowLabel, Reveal, PrimaryCTA, SecondaryCTA } from "../../components/landing";
 import { PRICING, REGISTRATION, getRegistrationStatus } from "./content";
 
-// ── Anchored-pricing bits (quiet, realistic "before" price) ─────────────────
-// Struck-through original price, shown ABOVE the current price as a soft erasure.
-function PriceAnchor({ originalPrice }) {
-  if (!originalPrice) return null;
-  return (
-    <div style={{ marginBottom: 4 }}>
-      <span
-        className="lp-num"
-        style={{
-          fontSize: "var(--lp-body-l)",
-          fontWeight: 700,
-          color: "var(--lp-text-muted)",
-          textDecoration: "line-through",
-          textDecorationColor: "var(--lp-text-muted)",
-          textDecorationThickness: "1px",
-          opacity: 0.7,
-          fontVariantNumeric: "tabular-nums",
-        }}
-      >
-        {originalPrice.toLocaleString("en")} ر.س
-      </span>
-    </div>
-  );
+// ── Anchored-pricing bits — retired 2026-09-14 ─────────────────────────────
+// The struck-through "before" price and the «وفّر» line are no longer shown
+// anywhere: no standing discount claims. Call sites are kept so the data can
+// come back only as a deliberate, time-boxed offer.
+function PriceAnchor() {
+  return null;
 }
 
-// Calm savings line below the price block, in the section's existing amber accent.
-function PriceSavings({ savings, marginBottom = "var(--lp-space-lg)" }) {
-  if (!savings) return null;
-  return (
-    <div
-      style={{
-        fontFamily: "var(--lp-font-display)",
-        fontSize: 13,
-        fontWeight: 700,
-        color: "var(--lp-amber-bright)",
-        letterSpacing: "0.01em",
-        marginBottom,
-        fontVariantNumeric: "tabular-nums",
-      }}
-    >
-      ✦ وفّر {savings.toLocaleString("en")} ر.س شهرياً
-    </div>
-  );
+function PriceSavings() {
+  return null;
 }
 
 export default function PricingSection() {

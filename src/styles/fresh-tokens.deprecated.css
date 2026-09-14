@@ -161,6 +161,7 @@ body {
   font-feature-settings: "kern", "liga", "calt";
   direction: rtl;
   overflow-x: hidden;
+  overflow-x: clip; /* hidden turns body into a non-scrolling scroll container and kills position:sticky */
 }
 
 /* Western numerals always — premium standard */

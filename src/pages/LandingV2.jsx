@@ -9,7 +9,6 @@ import MethodSection from "./landing-v2/MethodSection";
 import WorthSection from "./landing-v2/WorthSection";
 import WhoForSection from "./landing-v2/WhoForSection";
 import PricingSection from "./landing-v2/PricingSection";
-import StoriesSection from "./landing-v2/StoriesSection";
 import FAQSection from "./landing-v2/FAQSection";
 import FounderSection from "./landing-v2/FounderSection";
 import FinalCTASection from "./landing-v2/FinalCTASection";
@@ -56,7 +55,6 @@ export default function LandingV2() {
       <WorthSection />
       <WhoForSection />
       <PricingSection />
-      <StoriesSection />
       <FAQSection />
       <FounderSection />
       <FinalCTASection />

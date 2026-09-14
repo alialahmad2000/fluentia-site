@@ -10,7 +10,7 @@ export const HERO = {
   primaryCTA: "ابدأ بمحادثة",
   secondaryCTA: "جرّب درساً عن شغلك",
   trustRow: [
-    "+100 طالب",
+    "منذ 2021",
     "محادثة أولى مجانية",
     "إلغاء بأي وقت",
     "بدون التزام طويل",
@@ -49,10 +49,10 @@ export const SOCIAL_PROOF = {
   eyebrow: "بيانات الأكاديمية",
   headline: "الأرقام كما هي — لا أكثر، لا أقل.",
   stats: [
-    { value: "+100", label: "طالب نشط" },
     { value: "72", label: "وحدة تعليمية" },
-    { value: "+15K", label: "كلمة في المنهج" },
-    { value: "6", label: "مستويات (A1–C1)" },
+    { value: "144", label: "نص قراءة" },
+    { value: "+12K", label: "كلمة في المنهج" },
+    { value: "6", label: "مستويات (Pre-A1 → C1)" },
   ],
   badges: [
     "AI Feedback",
@@ -105,9 +105,9 @@ export const SOLUTION = {
       num: "٠١",
       icon: "method",
       title: "منهج علمي",
-      tagline: "مبني على ملاحظات +١٠٠ طالب على مدى عامين.",
+      tagline: "مبني على ما تعلّمناه من طلابنا منذ 2021.",
       points: [
-        "٦ مستويات (A1 → C1) · ٧٢ وحدة · أكثر من ١٥٬٠٠٠ كلمة",
+        "6 مستويات (Pre-A1 → C1) · 72 وحدة · أكثر من 12,000 كلمة",
         "يركّز على التحدّث الفعلي قبل القواعد",
       ],
     },
@@ -150,7 +150,7 @@ export const PRODUCT = {
       size: "big",
       title: "إتقان المفردات",
       tagline: "نظام Anki مدمج — كل كلمة تراها في الوقت المناسب لتحفظها للأبد.",
-      bullet: "+١٥٬٠٠٠ كلمة منظّمة عبر ٦ مستويات، مع spaced repetition.",
+      bullet: "+12,000 كلمة منظّمة عبر 6 مستويات، مع spaced repetition.",
       mockup: "vocab",
     },
     {
@@ -237,10 +237,10 @@ export const WORTH = {
 };
 
 export const PRICING = {
-  eyebrow: "أسعار جديدة · في متناول الجميع",
+  eyebrow: "الباقات",
   headline: "خمس باقات. ابدأ من حيث يناسبك.",
-  intro: "خفّضنا الأسعار لتكون أقرب للجميع — بنفس الجودة والمتابعة. كل الباقات تبدأ بمحادثة مجانية مع المدرّب: لا تدفع شيئاً قبل أن تتأكد أن الأكاديمية تناسبك.",
-  trust: "إلغاء بأي وقت · محادثة أولى مجانية · لا التزام طويل",
+  intro: "ابدأ بلقاء مبدئي مجاني مع المدرّب، ولن تدفع شيئاً قبل أن تتأكد أن الباقة تناسبك.",
+  trust: "لقاء مبدئي مجاني · إلغاء بأي وقت · لا التزام طويل",
 
   // Wide entry card (sits ABOVE the 3-tier grid) — platform only, instant access.
   entryTier: {
@@ -254,7 +254,7 @@ export const PRICING = {
     priceSuffix: "ر.س / شهرياً",
     features: [
       "وصول كامل للمنصة الذكية",
-      "منهج ٦ مستويات (Pre-A1 → C1) · ٧٢ وحدة · +١٥٬٠٠٠ كلمة",
+      "منهج 6 مستويات (Pre-A1 → C1) · 72 وحدة · +12,000 كلمة",
       "تمارين قواعد + مفردات + قراءة + استماع",
       "مساعد AI للتدريب على المحادثة والنطق",
       "تقدّمك بنظام نقاط ومكافآت",
@@ -268,6 +268,9 @@ export const PRICING = {
   },
 
   // 3-tier grid — every tier here includes live group classes.
+  // originalPrice/savings are kept as history but NOT rendered anywhere (2026-09-14): a struck-through
+  // "before" price is a standing discount claim, and it made the premium tiers read as clearance stock.
+  // glance feeds the identical comparison rows; features marked inGlance are not repeated under them.
   tiers: [
     {
       id: "asas",
@@ -279,9 +282,10 @@ export const PRICING = {
       savings: 300,
       priceSuffix: "ر.س / شهرياً",
       ctaLabel: "اختر أساس",
+      glance: { group: "8", solo: "—", followUp: "شهرية" },
       features: [
-        { text: "٨ حصص جماعية شهرياً", bold: true },
-        { text: "حد أقصى ٧ طلاب في الكلاس", bold: false },
+        { text: "8 حصص جماعية شهرياً", bold: true, inGlance: true },
+        { text: "حد أقصى 7 طلاب في الكلاس", bold: false },
         { text: "كل مزايا التعلم الذاتي (المنصة كاملة)", bold: false },
         { text: "تقييم شهري + متابعة من المدرّب", bold: false },
         { text: "مجتمع تيليجرام داعم", bold: false },
@@ -298,10 +302,11 @@ export const PRICING = {
       savings: 400,
       priceSuffix: "ر.س / شهرياً",
       ctaLabel: "اختر طلاقة",
+      glance: { group: "8", solo: "1", followUp: "يومية" },
       features: [
         { text: "كل مزايا أساس", bold: false },
-        { text: "متابعة يومية مع المدرّب", bold: true },
-        { text: "حصة فردية شهرية مع مدربك", bold: true },
+        { text: "متابعة يومية مع المدرّب", bold: true, inGlance: true },
+        { text: "حصة فردية شهرية مع مدربك", bold: true, inGlance: true },
         { text: "تقييم كل أسبوعين + تقرير شهري", bold: false },
         { text: "محتوى مسجّل ترجع له أي وقت", bold: false },
       ],
@@ -310,16 +315,17 @@ export const PRICING = {
       id: "tamayuz",
       name: "تميّز",
       variant: "standard",
-      tagline: "أسرع تقدّم — متابعة مكثفة و٤ حصص فردية شهرياً.",
+      tagline: "أسرع تقدّم — متابعة مكثفة و4 حصص فردية شهرياً.",
       price: 1500,
       originalPrice: 2200,
       savings: 700,
       priceSuffix: "ر.س / شهرياً",
       ctaLabel: "اختر تميّز",
+      glance: { group: "8", solo: "4", followUp: "يومية مكثّفة" },
       features: [
         { text: "كل مزايا طلاقة", bold: false },
-        { text: "٤ حصص فردية شهرياً (حصة كل أسبوع)", bold: true },
-        { text: "متابعة يومية مكثفة", bold: false },
+        { text: "4 حصص فردية شهرياً (حصة كل أسبوع)", bold: true },
+        { text: "متابعة يومية مكثفة", bold: false, inGlance: true },
         { text: "تقييم أسبوعي + خطة تطوير شخصية", bold: false },
         { text: "بنك أسئلة حصري + مكتبة دروس كاملة", bold: false },
       ],
@@ -329,7 +335,7 @@ export const PRICING = {
   // Wide exclusive card (sits BELOW the grid) — 1:1 VIP, price is a range.
   vipTier: {
     id: "fardi",
-    badge: "👑 VIP · التدريب الفردي",
+    badge: "VIP · التدريب الفردي",
     name: "التدريب الفردي المباشر",
     audienceLabel: "للمهنيين ومن يريد أقصى نتيجة",
     tagline: "حصص فردية كاملة — أنت ومدربك فقط. منهج مخصّص، أقصى تركيز ونتائج.",
@@ -346,7 +352,7 @@ export const PRICING = {
     ],
     howPriced: {
       title: "كيف نحدّد السعر؟",
-      body: "نتفق معك في اللقاء المبدئي على عدد الحصص الأسبوعية وكثافة البرنامج حسب هدفك وجدولك — وبناءً عليه يكون السعر بين ٢٬٠٠٠ و٣٬٠٠٠ ر.س شهرياً.",
+      body: "نتفق معك في اللقاء المبدئي على عدد الحصص الأسبوعية وكثافة البرنامج حسب هدفك وجدولك — وبناءً عليه يكون السعر بين 2,000 و3,000 ر.س شهرياً.",
       note: "تبي أقصى نتيجة بأسرع وقت؟ هذي باقتك.",
     },
     ctaLabel: "احجز استشارة VIP",
@@ -362,7 +368,8 @@ export const STORIES = {
   eyebrow: "قصص نجاح",
   headline: "أرقام، نتائج، إنسان واحد في كل مرة.",
   intro: "كل قصة هنا من طالبة حقيقية، بكلامها هي. لا نقول إن النتائج مضمونة لكل أحد — هذي قصص نجاح طالبات التزمن.",
-  // TODO Ali: replace with real, verbatim quotes — these are stand-in templates
+  // HIDDEN from every landing (2026-09-14): these are stand-in templates, not real quotes, and the
+  // intro above claims they are real. Re-mount <V1Stories /> only with verbatim quotes + consent.
   cards: [
     {
       initial: "ه",
@@ -402,7 +409,6 @@ export const NAV = {
     { label: "جولة المنصة", href: "/tour" },
     { label: "اختبر مستواك", href: "/level-test" },
     { label: "الباقات", href: "#pricing" },
-    { label: "قصص نجاح", href: "#stories" },
   ],
   studentLogin: { label: "دخول الطلاب", href: "https://app.fluentia.academy" },
   primaryCTA: { label: "ابدأ بمحادثة" },
@@ -470,7 +476,6 @@ export const FOOTER = {
   links: [
     { label: "المنهج", href: "#solution" },
     { label: "الباقات", href: "#pricing" },
-    { label: "قصص نجاح", href: "#stories" },
     { label: "مقالات", href: "/articles" },
     { label: "الإنجليزي للعمل", href: "/work-english" },
     { label: "دخول الطلاب", href: "https://app.fluentia.academy" },

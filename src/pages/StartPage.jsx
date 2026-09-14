@@ -1165,11 +1165,7 @@ function PackageCard({ pkg, onClick }) {
         <div style={{ fontSize: 12, color: T.muted, marginBottom: 14 }}>{pkg.sub}</div>
 
         <div style={{ marginBottom: 12 }}>
-          {pkg.oldPrice && (
-            <div style={{ fontSize: 13, color: T.dim, textDecoration: 'line-through' }}>
-              {pkg.oldPrice} ر.س
-            </div>
-          )}
+          {/* oldPrice is no longer shown (2026-09-14): no standing strikethrough discount claims. */}
           <div style={{ display: 'flex', alignItems: 'baseline', gap: 6, flexWrap: 'wrap' }}>
             <span style={{ fontSize: 32, fontWeight: 900, color: T.white, fontFamily: FONTS.en }}>
               {pkg.priceMax ? `${pkg.price}–${pkg.priceMax}` : pkg.price}
@@ -1179,11 +1175,6 @@ function PackageCard({ pkg, onClick }) {
           {pkg.priceNote && (
             <div style={{ fontSize: 12, color: T.muted, marginTop: 6, fontFamily: FONTS.ar }}>
               {pkg.priceNote}
-            </div>
-          )}
-          {pkg.oldPrice && pkg.oldPrice > pkg.price && (
-            <div style={{ fontSize: 12.5, fontWeight: 700, color: T.gold, marginTop: 6, fontFamily: FONTS.ar }}>
-              ✦ وفّر {(pkg.oldPrice - pkg.price).toLocaleString('en')} ر.س شهرياً
             </div>
           )}
         </div>

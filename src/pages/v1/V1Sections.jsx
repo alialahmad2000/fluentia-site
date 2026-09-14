@@ -62,28 +62,16 @@ export function V1Stats() {
           })}
         </motion.div>
 
-        {/* Capability badges + quote */}
-        <Reveal delay={0.15}>
-          <div style={{ display: "flex", gap: 10, flexWrap: "wrap", justifyContent: "center", marginTop: 28 }}>
-            {SOCIAL_PROOF.badges.map((b) => (
-              <span key={b} className="v1-chip v1-num" style={{ fontSize: "0.8rem" }}>{b}</span>
-            ))}
-          </div>
-        </Reveal>
-
-        <Reveal delay={0.2}>
-          <figure style={{ margin: "64px auto 0", maxWidth: 640, textAlign: "center" }}>
-            <div aria-hidden style={{ fontFamily: "var(--v1-display)", fontSize: "3rem", lineHeight: 0.4, color: "var(--v1-azure)", opacity: 0.6 }}>”</div>
-            <blockquote style={{ margin: 0, fontFamily: "var(--v1-display)", fontSize: "clamp(1.15rem, 2.4vw, 1.5rem)", fontWeight: 500, lineHeight: 1.9, color: "var(--v1-t)" }}>
-              {SOCIAL_PROOF.quote.text}
-            </blockquote>
-            <figcaption style={{ marginTop: 18, fontSize: "var(--v1-body-s)", color: "var(--v1-t-faint)" }}>
-              <span style={{ color: "var(--v1-azure-soft)", fontWeight: 600 }}>{SOCIAL_PROOF.quote.author}</span>
-              {" · "}{SOCIAL_PROOF.quote.role}
-            </figcaption>
-          </figure>
-        </Reveal>
+        {/* Tech-name chips and the stand-in quote were removed 2026-09-14: the chips read as a
+            developer spec sheet, and the quote came from the placeholder STORIES set. */}
       </div>
+      {/* The 2-up phone rule used to live only in V1Problem's style block, which the V5
+          homepage doesn't render — so phones got four squeezed columns. */}
+      <style>{`
+        @media (max-width: 720px) {
+          .v1-scope .v1-stats-grid { grid-template-columns: 1fr 1fr !important; }
+        }
+      `}</style>
     </section>
   );
 }

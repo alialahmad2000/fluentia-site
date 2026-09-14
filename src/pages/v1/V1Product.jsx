@@ -139,7 +139,7 @@ function VocabMock() {
       ))}
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 4, paddingTop: 10, borderTop: "1px solid var(--v1-line)" }}>
         <span style={{ fontSize: "0.74rem", color: "var(--v1-t-faint)" }}>نظام التكرار المتباعد · Anki SRS</span>
-        <span className="v1-num" style={{ fontSize: "0.74rem", color: "var(--v1-azure-soft)", fontWeight: 600 }}>+15,000 كلمة</span>
+        <span className="v1-num" style={{ fontSize: "0.74rem", color: "var(--v1-azure-soft)", fontWeight: 600 }}>+12,000 كلمة</span>
       </div>
     </div>
   );

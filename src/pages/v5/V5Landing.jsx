@@ -6,6 +6,7 @@ import "../../styles/v5-tokens.css";
 import V1Header from "../v1/V1Header";
 import V5Hero from "./V5Hero";
 import V5LogoBand from "./V5LogoBand";
+import V5SpeakDemo from "./V5SpeakDemo";
 import { DawnArc, Chapter, V5Problem, V5Solution } from "./V5Chapters";
 import { V1Stats, V1Method } from "../v1/V1Sections";
 import V1Product from "../v1/V1Product";
@@ -14,7 +15,7 @@ import { V1Worth, V1WhoFor } from "../v1/V1Worth";
 import V1Pricing from "../v1/V1Pricing";
 import V1LevelTestBand from "../v1/V1LevelTestBand";
 import V1TrialBand from "../v1/V1TrialBand";
-import { V1Stories, V1FAQ, V1Founder, V1FinalCTA, V1Footer } from "../v1/V1Closing";
+import { V1FAQ, V1Founder, V1FinalCTA, V1Footer } from "../v1/V1Closing";
 import V1LeadModal from "../v1/V1LeadModal";
 import { SpotlightController, MobileCtaBar, DotNav } from "../v1/V1Interactive";
 import BrandIntro from "../v1/BrandIntro";
@@ -46,6 +47,7 @@ export default function V5Landing() {
           <main>
             <V5Hero />
             <V5LogoBand />
+            <V5SpeakDemo />
             <V1Stats />
             <Chapter num={1} label="المشكلة" />
             <V5Problem />
@@ -62,10 +64,9 @@ export default function V5Landing() {
             <V1LevelTestBand />
             <Chapter num={5} label="الباقات" />
             <V1Pricing />
-            <Chapter num={6} label="قصص نجاح" />
-            <V1Stories />
+            {/* Stories hidden until real quotes exist — see STORIES in landing-v2/content.js */}
             <V1FAQ />
-            <Chapter num={7} label="كلمة المؤسس" />
+            <Chapter num={6} label="كلمة المؤسس" />
             <V1Founder />
             <V1FinalCTA />
           </main>

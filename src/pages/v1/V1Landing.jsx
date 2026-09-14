@@ -8,7 +8,7 @@ import V1Product from "./V1Product";
 import { V1Worth, V1WhoFor } from "./V1Worth";
 import V1Pricing from "./V1Pricing";
 import V1LevelTestBand from "./V1LevelTestBand";
-import { V1Stories, V1FAQ, V1Founder, V1FinalCTA, V1Footer } from "./V1Closing";
+import { V1FAQ, V1Founder, V1FinalCTA, V1Footer } from "./V1Closing";
 import V1LeadModal from "./V1LeadModal";
 import { SpotlightController, MobileCtaBar, DotNav } from "./V1Interactive";
 import BrandIntro from "./BrandIntro";
@@ -42,7 +42,6 @@ export default function V1Landing() {
           <V1WhoFor />
           <V1LevelTestBand />
           <V1Pricing />
-          <V1Stories />
           <V1FAQ />
           <hr className="v1-hairline" />
           <V1Founder />
