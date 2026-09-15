@@ -526,6 +526,12 @@
   background: rgba(var(--hue), 0.22);
   box-shadow: inset 0 -2px 0 rgb(var(--hue));
 }
+.v1-scope .hs-word::after { content: ""; position: absolute; inset: -9px -4px; }
+.v1-scope .hs-word[data-playing="true"] { color: #070b14; }
+.v1-scope .hs-word[data-playing="true"]::before { background: rgb(var(--hue)); }
+@media (hover: hover) {
+  .v1-scope .hs-word:hover::before { background: rgba(var(--hue), 0.34); }
+}
 .v1-scope .hs-ripple {
   position: absolute;
   left: 50%;
@@ -921,7 +927,9 @@
   }
   .v1-scope .hs-book-ar { display: none; }
   /* a wrapped line reads better than an ellipsis inside a number phrase */
-  .v1-scope .hs-meta { white-space: normal; line-height: 1.4; }
+  .v1-scope .hs-meta { white-space: normal; line-height: 1.45; }
+  .v1-scope .hs-meta .hs-sep { display: none; }
+  .v1-scope .hs-meta > span { display: block; }
   .v1-scope .hs-tabs { padding-inline: 14px; gap: 8px; }
   .v1-scope .hs-head { padding-inline: 16px; }
   .v1-scope .hs-foot { padding-inline: 14px; }

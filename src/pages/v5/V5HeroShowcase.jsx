@@ -151,6 +151,7 @@ function ReadingScene({ anim, playing, onListen }) {
           <button
             type="button"
             className="hs-word"
+            data-playing={playing === "reading"}
             ref={wordRef}
             onClick={() => onListen("reading")}
             aria-label={`استمع لنطق ${r.word}`}
@@ -362,7 +363,7 @@ const MOMENTS = [
     tab: "الأمثال",
     ms: 9000,
     room: M.proverb.room,
-    meta: `من ${counted(M.proverb.proverbs, MITHL)} و${counted(M.proverb.idioms, TAABIR)}`,
+    meta: `ضمن ${counted(M.proverb.proverbs, MITHL)} و${counted(M.proverb.idioms, TAABIR)}`,
     audio: { url: M.proverb.audio },
     Scene: ProverbScene,
   },
@@ -371,7 +372,7 @@ const MOMENTS = [
     tab: "الأفعال",
     ms: 10500,
     room: M.verb.room,
-    meta: `من ${counted(M.verb.catalogue, FIIL)}`,
+    meta: `ضمن ${counted(M.verb.catalogue, FIIL)}`,
     audio: { url: M.verb.audio },
     Scene: VerbScene,
   },
@@ -380,7 +381,7 @@ const MOMENTS = [
     tab: "الروايات",
     ms: 10500,
     room: M.novel.room,
-    meta: `رواية بمستوى ${M.novel.cefr}`,
+    meta: `رواية «${M.novel.titleAr}» · مستوى ${M.novel.cefr}`,
     audio: { url: M.novel.audio, t1: M.novel.t1 },
     Scene: NovelScene,
   },
@@ -613,7 +614,11 @@ export default function V5HeroShowcase() {
             {/* break only between segments, never inside «الطقس المتطرف» */}
             {m.meta.split(" · ").map((seg, i) => (
               <span key={i}>
-                {i > 0 && " · "}
+                {i > 0 && (
+                  <span className="hs-sep" aria-hidden>
+                    {" · "}
+                  </span>
+                )}
                 <span className="hs-seg">
                   <Iso text={seg} />
                 </span>
