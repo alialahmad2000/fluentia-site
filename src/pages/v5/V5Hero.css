@@ -205,7 +205,7 @@
     inset 0 1px 0 rgba(255, 255, 255, 0.07),
     0 2px 4px rgba(0, 0, 0, 0.4),
     0 34px 90px -18px rgba(0, 0, 0, 0.75),
-    0 22px 80px -36px rgba(var(--hue), 0.6);
+    0 18px 44px -28px rgba(var(--hue), 0.38);
   isolation: isolate;
   overflow: hidden;
   transition:
@@ -272,10 +272,11 @@
   place-items: center;
   border: 0;
   background: transparent;
-  color: var(--v1-t-faint);
+  color: var(--v1-t-mute);
   cursor: pointer;
   transition: color var(--v1-fast) var(--v1-ease), background var(--v1-fast) var(--v1-ease);
 }
+.v1-scope .hs[data-user-paused="true"] .hs-pause { color: rgb(var(--hue)); }
 .v1-scope .hs-pause::after { content: ""; position: absolute; inset: -6px; }
 @media (hover: hover) {
   .v1-scope .hs-pause:hover { color: var(--v1-t-strong); background: rgba(148, 197, 255, 0.07); }
@@ -402,6 +403,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+.v1-scope .hs-seg { white-space: nowrap; }
 .v1-scope .hs-room {
   margin-inline-start: auto;
   flex: none;
@@ -505,9 +507,15 @@
   position: relative;
   display: inline-block;
   isolation: isolate;
-  margin-inline: 0.12em;
+  margin: 0 0.12em;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  line-height: inherit;
   color: #fff;
   font-weight: 600;
+  cursor: pointer;
 }
 .v1-scope .hs-word::before {
   content: "";
@@ -755,7 +763,7 @@
   background: rgba(248, 113, 113, 0.05);
 }
 .v1-scope .hs-verdict-top { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-.v1-scope .hs-verdict-title { font-family: var(--v1-display); font-size: 0.95rem; font-weight: 700; color: #fecaca; }
+.v1-scope .hs-verdict-title { font-family: var(--v1-display); font-size: 0.95rem; font-weight: 700; color: #fecaca; white-space: nowrap; }
 .v1-scope .hs-fix { display: inline-flex; align-items: baseline; gap: 8px; }
 .v1-scope .hs-fix-k { font-size: 0.75rem; color: var(--v1-t-mute); }
 .v1-scope .hs-diff {
@@ -894,7 +902,7 @@
    then the showcase, then the tour door, the trial link and the trust row. */
 @media (max-width: 560px) {
   .v1-scope .v5h { padding-top: 96px; }
-  .v1-scope .v5h-layout { display: flex; flex-direction: column; gap: 0; }
+  .v1-scope .v5h-layout { display: flex; flex-direction: column; align-items: stretch; gap: 0; }
   .v1-scope .v5h-copy,
   .v1-scope .v5h-actions,
   .v1-scope .v5h-ctas { display: contents; }
@@ -906,7 +914,14 @@
   .v1-scope .v5h-trial { order: 4; align-self: center; margin-top: 8px; }
   .v1-scope .v5h-trust { order: 5; gap: 8px 16px; margin-top: 12px; padding-top: 18px; width: 100%; }
 
-  .v1-scope .hs-stage { height: 392px; margin-inline: 10px; }
+  .v1-scope .hs-stage { height: 360px; margin-inline: 10px; }
+  /* the gutters are narrow here: a coloured glow would grey the navy on both sides */
+  .v1-scope .hs {
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07), 0 2px 4px rgba(0, 0, 0, 0.4), 0 30px 70px -20px rgba(0, 0, 0, 0.8);
+  }
+  .v1-scope .hs-book-ar { display: none; }
+  /* a wrapped line reads better than an ellipsis inside a number phrase */
+  .v1-scope .hs-meta { white-space: normal; line-height: 1.4; }
   .v1-scope .hs-tabs { padding-inline: 14px; gap: 8px; }
   .v1-scope .hs-head { padding-inline: 16px; }
   .v1-scope .hs-foot { padding-inline: 14px; }
@@ -920,14 +935,14 @@
   .v1-scope .hs-book .hs-speak > span:last-child:not(.hs-bars) { display: none; }
 }
 @media (max-width: 374px) {
-  .v1-scope .hs-stage { height: 414px; }
+  .v1-scope .hs-stage { height: 394px; }
 }
 @media (max-width: 359px) {
   .v1-scope .hs-passage { font-size: 0.9rem; line-height: 1.7; }
   .v1-scope .hs-pos { display: none; }
   .v1-scope .hs-pop-word { font-size: 1.45rem; }
   .v1-scope .hs-pop { margin-top: 14px; padding-inline: 12px; }
-  .v1-scope .hs-stage { height: 420px; }
+  .v1-scope .hs-stage { height: 428px; }
   .v1-scope .hs-tab { font-size: 0.78rem; }
 }
 

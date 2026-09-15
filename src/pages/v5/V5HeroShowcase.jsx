@@ -87,7 +87,7 @@ function SpeakBtn({ id, playing, onListen, label, compact = false }) {
       data-compact={compact || undefined}
       data-playing={on}
       aria-pressed={on}
-      aria-label={on ? `إيقاف: ${label}` : label}
+      aria-label={label}
       onClick={() => onListen(id)}
     >
       {on ? (
@@ -140,7 +140,7 @@ function ReadingScene({ anim, playing, onListen }) {
 
   return (
     <div className="hs-scene hs-reading" data-anim={anim ? "on" : "off"}>
-      <p className="hs-cap">اضغط أي كلمة في النص، يظهر معناها ونطقها</p>
+      <p className="hs-cap">تضغط على أي كلمة، فيظهر معناها ونطقها</p>
       <div className="hs-body">
       <div className="hs-page" dir="ltr" lang="en">
         <span className="hs-kicker">
@@ -148,10 +148,16 @@ function ReadingScene({ anim, playing, onListen }) {
         </span>
         <p className="hs-passage">
           {before}
-          <span className="hs-word" ref={wordRef}>
+          <button
+            type="button"
+            className="hs-word"
+            ref={wordRef}
+            onClick={() => onListen("reading")}
+            aria-label={`استمع لنطق ${r.word}`}
+          >
             <span className="hs-ripple" aria-hidden />
             {r.word}
-          </span>
+          </button>
           {after}
         </p>
       </div>
@@ -197,7 +203,7 @@ function ProverbScene({ anim, playing, onListen }) {
           <img src={p.image} alt="" loading="lazy" decoding="async" onLoad={() => setLoaded(true)} />
         </div>
       )}
-      <p className="hs-cap">كل مثل إنجليزي بجانب توأمه العربي</p>
+      <p className="hs-cap">مثل إنجليزي، وما يقابله عندنا</p>
       <div className="hs-prov-body">
         <blockquote className="hs-prov-en" dir="ltr" lang="en">
           {PROVERB_WORDS.map((w, i) => (
@@ -210,7 +216,7 @@ function ProverbScene({ anim, playing, onListen }) {
         <div className="hs-twin-rule">توأمه العربي</div>
         <p className="hs-twin">{glueAr(p.twinAr)}</p>
         <p className="hs-prov-meaning">{glueAr(p.meaningAr)}</p>
-        <SpeakBtn id="proverb" playing={playing} onListen={onListen} label="استمع للمثل بصوته" />
+        <SpeakBtn id="proverb" playing={playing} onListen={onListen} label="استمع إلى نطق المثل" />
       </div>
     </div>
   );
@@ -227,7 +233,7 @@ function VerbScene({ anim, playing, onListen }) {
   const v = M.verb;
   return (
     <div className="hs-scene hs-verb" data-anim={anim ? "on" : "off"}>
-      <p className="hs-cap">تكتب التصريفين، ويصحّحك حرفاً حرفاً</p>
+      <p className="hs-cap">تكتب التصريفات بنفسك، والتصحيح فوري</p>
       <div className="hs-body">
       <div className="hs-drill">
         <div className="hs-base">
@@ -303,7 +309,7 @@ function NovelScene({ anim, playing, onListen }) {
           <img src={n.image} alt="" loading="lazy" decoding="async" onLoad={() => setLoaded(true)} />
         </div>
       )}
-      <p className="hs-cap">اسمع الراوي، واضغط الجملة لترى معناها</p>
+      <p className="hs-cap">تسمع الراوي، ثم تكشف معنى كل جملة</p>
       <div className="hs-novel-body">
         <div className="hs-book">
           <span className="hs-book-en" dir="ltr" lang="en">
@@ -330,6 +336,17 @@ function NovelScene({ anim, playing, onListen }) {
   );
 }
 
+/* Arabic counted noun after a Western-digit number (the counts come from data). */
+function counted(n, { acc, gen, pl }) {
+  const r = n % 100;
+  if (r >= 3 && r <= 10) return `${n} ${pl}`;
+  if (r >= 11) return `${n} ${acc}`;
+  return `${n} ${gen}`; // 100, 200, … and the rare 101/102
+}
+const MITHL = { acc: "مثلاً", gen: "مثل", pl: "أمثال" };
+const TAABIR = { acc: "تعبيراً", gen: "تعبير", pl: "تعابير" };
+const FIIL = { acc: "فعلاً شاذاً", gen: "فعل شاذ", pl: "أفعال شاذة" };
+
 const MOMENTS = [
   {
     id: "reading",
@@ -345,7 +362,7 @@ const MOMENTS = [
     tab: "الأمثال",
     ms: 9000,
     room: M.proverb.room,
-    meta: `من ${M.proverb.proverbs} مثلاً و${M.proverb.idioms} تعبير`,
+    meta: `من ${counted(M.proverb.proverbs, MITHL)} و${counted(M.proverb.idioms, TAABIR)}`,
     audio: { url: M.proverb.audio },
     Scene: ProverbScene,
   },
@@ -354,7 +371,7 @@ const MOMENTS = [
     tab: "الأفعال",
     ms: 10500,
     room: M.verb.room,
-    meta: `من ${M.verb.catalogue} فعلاً شاذاً`,
+    meta: `من ${counted(M.verb.catalogue, FIIL)}`,
     audio: { url: M.verb.audio },
     Scene: VerbScene,
   },
@@ -363,7 +380,7 @@ const MOMENTS = [
     tab: "الروايات",
     ms: 10500,
     room: M.novel.room,
-    meta: `${M.novel.titleAr} · ${M.novel.cefr}`,
+    meta: `رواية بمستوى ${M.novel.cefr}`,
     audio: { url: M.novel.audio, t1: M.novel.t1 },
     Scene: NovelScene,
   },
@@ -521,8 +538,7 @@ export default function V5HeroShowcase() {
               type="button"
               className="hs-pause"
               onClick={() => setUserPaused((p) => !p)}
-              aria-label={userPaused ? "تشغيل العرض" : "إيقاف العرض مؤقتاً"}
-              aria-pressed={userPaused}
+              aria-label={userPaused ? "استئناف العرض" : "إيقاف العرض مؤقتاً"}
             >
               {userPaused ? (
                 <svg width="12" height="12" viewBox="0 0 24 24" aria-hidden>
@@ -594,15 +610,23 @@ export default function V5HeroShowcase() {
 
         <div className="hs-foot">
           <span className="hs-meta">
-            <Iso text={m.meta} />
+            {/* break only between segments, never inside «الطقس المتطرف» */}
+            {m.meta.split(" · ").map((seg, i) => (
+              <span key={i}>
+                {i > 0 && " · "}
+                <span className="hs-seg">
+                  <Iso text={seg} />
+                </span>
+              </span>
+            ))}
           </span>
           <a
             className="hs-room"
             href={`/tour/${m.room}`}
             data-cta={`hero_showcase_${m.room}`}
-            aria-label={`جرّبها بنفسك: ${room} في جولة المنصة`}
+            aria-label={`جرّبها في الجولة: ${room}`}
           >
-            جرّبها بنفسك
+            جرّبها في الجولة
             <span aria-hidden>←</span>
           </a>
         </div>
