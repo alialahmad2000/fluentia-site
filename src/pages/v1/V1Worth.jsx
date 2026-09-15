@@ -110,7 +110,7 @@ export function V1Worth() {
                   id={spread.id}
                   variant="tall"
                   sizes="360px"
-                  art={[{ variant: "wide", media: "(max-width: 820px)", sizes: "100vw" }]}
+                  art={[{ variant: "phone", media: "(max-width: 820px)", sizes: "100vw" }]}
                 />
               </div>
             </div>

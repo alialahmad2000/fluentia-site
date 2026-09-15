@@ -138,7 +138,7 @@ export function V5Problem() {
                 id="problem-desk"
                 variant="tall"
                 sizes="380px"
-                art={[{ variant: "wide", media: "(max-width: 820px)", sizes: "100vw" }]}
+                art={[{ variant: "phone", media: "(max-width: 820px)", sizes: "100vw" }]}
               />
             </div>
           </div>
@@ -254,7 +254,7 @@ function PillarArt({ name }) {
             </div>
           ))}
         </div>
-        <span className="hi-caption">أغلفة حقيقية من وحدات المنهج</span>
+        <span className="hi-caption">أغلفة وحدات من منهج طلاقة</span>
       </div>
     );
   if (name === "trainer")

@@ -220,7 +220,7 @@ function PillarIcon({ name }) {
 /* Spaced repetition, drawn rather than rendered: five cards along a line, the
  * gap after each review wider than the one before. Positions are measured from
  * the inline start, so the intervals widen in reading direction (RTL: leftward). */
-const INTERVALS = [0, 13, 28, 49, 88]; // card width 12%; gaps 1 → 3 → 9 → 27, each three times the last
+const INTERVALS = [0, 13.67, 30.5, 53.67, 89.5]; // card width 10.5%; each gap twice the last (3.2 → 6.3 → 12.7 → 25.3)
 
 function PrincipleArt({ i }) {
   if (i === 0) return <HomePicture id="method-coffee" variant="main" sizes="(max-width: 900px) 100vw, 360px" />;
@@ -246,6 +246,8 @@ function PrincipleArt({ i }) {
       {INTERVALS.map((x, n) => (
         <span key={`t${x}`} className="hi-iv-tick" style={{ "--x": `${x}%` }} data-now={n === 0 || undefined} />
       ))}
+      <span className="hi-iv-label" style={{ "--x": `${INTERVALS[0]}%` }}>اليوم</span>
+      <span className="hi-iv-label" style={{ "--x": `${INTERVALS[INTERVALS.length - 1]}%` }}>بعد أسابيع</span>
       </span>
     </motion.div>
   );

@@ -159,7 +159,7 @@ export default function V1LevelTestBand() {
             id="level-stairs"
             variant="tall"
             sizes="440px"
-            art={[{ variant: "wide", media: "(max-width: 820px)", sizes: "100vw" }]}
+            art={[{ variant: "phone", media: "(max-width: 820px)", sizes: "100vw" }]}
           />
         </div>
         </div>

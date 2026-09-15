@@ -263,7 +263,7 @@ export function V1FinalCTA() {
           id="cta-riyadh"
           variant="wide"
           sizes="100vw"
-          art={[{ variant: "tall", media: "(max-width: 700px)", sizes: "100vw" }]}
+          art={[{ variant: "phone", media: "(max-width: 700px)", sizes: "100vw" }]}
         />
       </div>
     </section>

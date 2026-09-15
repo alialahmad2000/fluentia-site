@@ -91,8 +91,8 @@
       "model": "fal-ai/flux-pro/v1.1-ultra",
       "aspect_ratio": "21:9",
       "raw": true,
-      "note": "If 4 seeds fail the landmarks, use a licensed real photograph, graded to match; never ship a wrong Kingdom Centre.",
-      "prompt": "The Riyadh skyline at dawn seen from far across the city: the Kingdom Centre tower and the Al Faisaliah tower stand as crisp dark silhouettes against the horizon, with no facade detail. The sky moves from deep night navy, nearly black, at the top of the frame, through clear blue, to soft apricot and gold at the horizon. The low city below is a dark silhouette. Clear, clean air; calm and optimistic. The upper half of the frame is open sky. Wide cinematic landscape photograph, telephoto, natural colour."
+      "note": "If 4 seeds fail the landmarks, use a licensed real photograph, graded to match; never ship a wrong Kingdom Centre. Placed as a 3:1 cut (focus y 0.62) on desktop and a 1:1 cut on phones, both faded into the page ground.",
+      "prompt": "The Riyadh skyline at dawn seen from far across the city: the Kingdom Centre tower and the Al Faisaliah tower stand as crisp dark silhouettes against the horizon, with no facade detail. The sky moves from deep night navy, nearly black, at the top of the frame, through clear blue, to soft apricot and gold at the horizon. The low city below is a dark silhouette. Clear, clean air; calm and optimistic. The skyline occupies only the lower 45 percent of the frame; everything above it is open sky, darkening to near-black at the top edge. Wide cinematic landscape photograph, telephoto, natural colour."
     }
   ],
   "real": [
