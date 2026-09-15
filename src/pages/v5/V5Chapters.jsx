@@ -196,11 +196,11 @@ export function V5Solution() {
 
                   <div className="v1-card v1-card-hover hi-pillar">
                     <div className="hi-pillar-text">
-                    <div style={{ display: "flex", alignItems: "baseline", gap: 14, flexWrap: "wrap" }}>
+                    <div style={{ display: "flex", alignItems: "baseline", gap: 14, flexWrap: "nowrap" }}>
                       <span className="v1-num" style={{ fontSize: "0.8rem", fontWeight: 700, color: "var(--v1-azure)", letterSpacing: "0.14em", direction: "ltr" }}>
                         {String(i + 1).padStart(2, "0")}
                       </span>
-                      <h3 style={{ fontFamily: "var(--v1-display)", fontSize: "var(--v1-h3)", fontWeight: 700, color: "var(--v1-t-strong)", margin: 0 }}>
+                      <h3 style={{ fontFamily: "var(--v1-display)", fontSize: "var(--v1-h3)", fontWeight: 700, color: "var(--v1-t-strong)", margin: 0, minWidth: 0 }}>
                         {p.title}
                       </h3>
                     </div>

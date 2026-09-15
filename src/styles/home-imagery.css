@@ -196,12 +196,12 @@
   box-shadow: inset 0 0 0 1px rgba(160, 200, 240, 0.18), 0 1px 0 rgba(255, 255, 255, 0.04),
     0 34px 60px -24px #000;
 }
-/* Desktop: the phone fades out above the card floor instead of being cut through a row of chips. */
-@media (min-width: 821px) {
-  .v1-scope .hi-phone {
-    -webkit-mask-image: linear-gradient(to bottom, #000 170px, rgba(0,0,0,.72) 198px, rgba(0,0,0,.3) 224px, transparent 248px);
-    mask-image: linear-gradient(to bottom, #000 170px, rgba(0,0,0,.72) 198px, rgba(0,0,0,.3) 224px, transparent 248px);
-  }
+/* The phone fades itself out between the screen's word card and its filter chips,
+   instead of being cut through the chips by the card floor. In % of its own
+   height, so the same stops hold at 226px (desktop) and 196px (phone) wide. */
+.v1-scope .hi-phone {
+  -webkit-mask-image: linear-gradient(to bottom, #000 47%, rgba(0,0,0,.72) 54%, rgba(0,0,0,.3) 59.5%, transparent 63.5%);
+  mask-image: linear-gradient(to bottom, #000 47%, rgba(0,0,0,.72) 54%, rgba(0,0,0,.3) 59.5%, transparent 63.5%);
 }
 .v1-scope .hi-phone-screen {
   position: relative;
@@ -232,7 +232,7 @@
     -webkit-mask-image: linear-gradient(to bottom, #000 68%, rgba(0,0,0,.82) 79%, rgba(0,0,0,.45) 89%, rgba(0,0,0,.12) 96%, transparent 100%);
     mask-image: linear-gradient(to bottom, #000 68%, rgba(0,0,0,.82) 79%, rgba(0,0,0,.45) 89%, rgba(0,0,0,.12) 96%, transparent 100%);
   }
-  .v1-scope .hi-pillar-art--phone { aspect-ratio: 1 / 1; }
+  .v1-scope .hi-pillar-art--phone { aspect-ratio: 1 / 1; -webkit-mask-image: none; mask-image: none; }
   .v1-scope .hi-phone { inset-inline: 0; margin-inline: auto; top: 68px; }
   .v1-scope .hi-covers { justify-content: flex-start; padding-top: 62px; }
   .v1-scope .hi-pillar-art--covers { aspect-ratio: 1 / 1; }
