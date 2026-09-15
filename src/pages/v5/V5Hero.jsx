@@ -3,7 +3,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { HERO } from "../landing-v2/content";
 import { EASE } from "../v1/motion";
 import { Magnetic } from "../v1/V1Interactive";
-import V5HeroShowcase from "./V5HeroShowcase";
+import V5HeroShowcase, { glueAr } from "./V5HeroShowcase";
 import "./V5Hero.css";
 
 /**
@@ -17,7 +17,7 @@ import "./V5Hero.css";
  */
 
 /* The /tour door lives here, not in content.js HERO (another run owns that file). */
-const TOUR_CTA = "ادخل المنصة من الداخل";
+const TOUR_CTA = "تجوّل داخل المنصة";
 
 /* The old world falling away — drill fragments, deterministic layout */
 const FRAGMENTS = [
@@ -73,7 +73,7 @@ function Word({ children, i, keyword }) {
           <span style={{ position: "relative", display: "inline-block" }}>
             <span className="v5-keyword">{children}</span>
             {/* hand-drawn underline */}
-            <svg viewBox="0 0 120 12" aria-hidden style={{ position: "absolute", bottom: "-0.12em", insetInlineStart: 0, width: "100%", height: "0.22em", overflow: "visible" }}>
+            <svg viewBox="0 0 120 12" aria-hidden style={{ position: "absolute", bottom: "0.02em", insetInlineStart: 0, width: "100%", height: "0.22em", overflow: "visible" }}>
               <motion.path
                 d="M4 8 C 30 3, 60 10, 116 5"
                 fill="none" stroke="var(--v1-azure)" strokeWidth="3" strokeLinecap="round"
@@ -153,7 +153,7 @@ export default function V5Hero() {
       <div className="v5-spotlight" aria-hidden />
       <div className="v5h-horizon" aria-hidden />
       <div className="v5h-gridlines" aria-hidden />
-      <motion.div style={{ opacity: rainO, position: "absolute", inset: 0 }} aria-hidden>
+      <motion.div className="v5h-rain" style={{ opacity: rainO, position: "absolute", inset: 0 }} aria-hidden>
         <WordRain />
       </motion.div>
 
@@ -182,10 +182,11 @@ export default function V5Hero() {
               initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, ease: EASE, delay: 0.3 }}
             >
-              {HERO.sub}
+              {glueAr(HERO.sub)}
             </motion.p>
 
             <motion.div
+              className="v5h-actions"
               initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, ease: EASE, delay: 0.45 }}
             >

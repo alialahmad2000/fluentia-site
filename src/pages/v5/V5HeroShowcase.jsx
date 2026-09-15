@@ -26,6 +26,24 @@ import data from "./heroMoments.json";
 const M = data.moments;
 const roomTitle = (slug) => ROOMS.find((r) => r.slug === slug)?.title || "";
 
+/**
+ * Keep short negations and joiners with their neighbour, by whole word, so a
+ * line never ends on «لا» / «لن» or starts on «—» / «·». (No regex lookbehind:
+ * it breaks the bundle on iOS Safari below 16.4.)
+ */
+const GLUE_NEXT = new Set(["لا", "ولا", "لن", "لم", "—", "·"]);
+const GLUE_PREV = new Set(["—", "·"]);
+export function glueAr(text) {
+  const w = String(text).split(" ");
+  return w
+    .map((word, i) => {
+      if (i === w.length - 1) return word;
+      const bind = GLUE_NEXT.has(word) || GLUE_PREV.has(w[i + 1]);
+      return word + (bind ? "\u00A0" : " ");
+    })
+    .join("");
+}
+
 /* Arabic copy that quotes English: every Latin run gets its own isolate. */
 const LATIN = /([A-Za-z][A-Za-z0-9'’-]*(?:[ ]+[A-Za-z0-9][A-Za-z0-9'’-]*)*)/;
 function Iso({ text }) {
@@ -190,8 +208,8 @@ function ProverbScene({ anim, playing, onListen }) {
           ))}
         </blockquote>
         <div className="hs-twin-rule">توأمه العربي</div>
-        <p className="hs-twin">{p.twinAr}</p>
-        <p className="hs-prov-meaning">{p.meaningAr}</p>
+        <p className="hs-twin">{glueAr(p.twinAr)}</p>
+        <p className="hs-prov-meaning">{glueAr(p.meaningAr)}</p>
         <SpeakBtn id="proverb" playing={playing} onListen={onListen} label="استمع للمثل بصوته" />
       </div>
     </div>
@@ -209,7 +227,7 @@ function VerbScene({ anim, playing, onListen }) {
   const v = M.verb;
   return (
     <div className="hs-scene hs-verb" data-anim={anim ? "on" : "off"}>
-      <p className="hs-cap">تكتب التصريفين بنفسك، ويصحّحك حرفاً حرفاً</p>
+      <p className="hs-cap">تكتب التصريفين، ويصحّحك حرفاً حرفاً</p>
       <div className="hs-body">
       <div className="hs-drill">
         <div className="hs-base">
@@ -255,7 +273,7 @@ function VerbScene({ anim, playing, onListen }) {
           <SpeakBtn id="verb" playing={playing} onListen={onListen} label={`استمع لنطق ${v.v3}`} compact />
         </div>
         <p className="hs-trap">
-          <b>انتبه:</b> <Iso text={v.trapAr} />
+          <b>انتبه:</b> <Iso text={glueAr(v.trapAr)} />
         </p>
       </div>
       </div>
@@ -285,7 +303,7 @@ function NovelScene({ anim, playing, onListen }) {
           <img src={n.image} alt="" loading="lazy" decoding="async" onLoad={() => setLoaded(true)} />
         </div>
       )}
-      <p className="hs-cap">رواية بصوت الراوي، واضغط الجملة ليظهر معناها</p>
+      <p className="hs-cap">اسمع الراوي، واضغط الجملة لترى معناها</p>
       <div className="hs-novel-body">
         <div className="hs-book">
           <span className="hs-book-en" dir="ltr" lang="en">
@@ -305,7 +323,7 @@ function NovelScene({ anim, playing, onListen }) {
           ))}
         </p>
         <div className="hs-veil">
-          <p>{n.ar}</p>
+          <p>{glueAr(n.ar)}</p>
         </div>
       </div>
     </div>
@@ -316,7 +334,7 @@ const MOMENTS = [
   {
     id: "reading",
     tab: "القراءة",
-    ms: 7200,
+    ms: 8500,
     room: M.reading.room,
     meta: `الوحدة ${M.reading.unitNumber} · ${M.reading.themeAr}`,
     audio: { url: M.reading.audio },
@@ -325,25 +343,25 @@ const MOMENTS = [
   {
     id: "proverb",
     tab: "الأمثال",
-    ms: 7600,
+    ms: 9000,
     room: M.proverb.room,
-    meta: `واحد من ${M.proverb.proverbs} مثلاً و${M.proverb.idioms} تعبير`,
+    meta: `من ${M.proverb.proverbs} مثلاً و${M.proverb.idioms} تعبير`,
     audio: { url: M.proverb.audio },
     Scene: ProverbScene,
   },
   {
     id: "verb",
     tab: "الأفعال",
-    ms: 8200,
+    ms: 10500,
     room: M.verb.room,
-    meta: `واحد من ${M.verb.catalogue} فعلاً شاذاً`,
+    meta: `من ${M.verb.catalogue} فعلاً شاذاً`,
     audio: { url: M.verb.audio },
     Scene: VerbScene,
   },
   {
     id: "novel",
     tab: "الروايات",
-    ms: 7800,
+    ms: 10500,
     room: M.novel.room,
     meta: `${M.novel.titleAr} · ${M.novel.cefr}`,
     audio: { url: M.novel.audio, t1: M.novel.t1 },
@@ -453,10 +471,11 @@ export default function V5HeroShowcase() {
           }
         : null;
       setPlaying(id);
+      if (live) setUserPaused(true);
       const p = a.play();
       if (p && p.catch) p.catch(() => setPlaying(null));
     },
-    [playing, stopAudio]
+    [playing, stopAudio, live]
   );
 
   const onTabKey = (e) => {
@@ -465,6 +484,7 @@ export default function V5HeroShowcase() {
     else if (e.key === "ArrowRight") go(active - 1);
     else return;
     e.preventDefault();
+    if (live) setUserPaused(true);
     const tabs = rootRef.current?.querySelectorAll(".hs-tab");
     const next = tabs?.[(active + (e.key === "ArrowLeft" ? 1 : -1) + MOMENTS.length) % MOMENTS.length];
     next?.focus();
@@ -477,18 +497,12 @@ export default function V5HeroShowcase() {
 
   return (
     <div className="hs-wrap" data-shown={shown} ref={rootRef}>
-      <div className="hs-aura" aria-hidden>
-        {MOMENTS.map((x, i) => (
-          <i key={x.id} data-m={x.id} data-on={i === active} />
-        ))}
-      </div>
-      <img className="hs-ghost" aria-hidden src="/brand/fluentia-mark.svg" alt="" width="600" height="600" />
-
       <div
         className="hs"
         data-m={m.id}
         data-idle={idle}
         data-hold={holdFill}
+        data-user-paused={userPaused}
         onPointerEnter={(e) => e.pointerType === "mouse" && setHeld(true)}
         onPointerLeave={(e) => e.pointerType === "mouse" && setHeld(false)}
         onFocus={(e) => {
@@ -538,11 +552,14 @@ export default function V5HeroShowcase() {
                 tabIndex={i === active ? 0 : -1}
                 className="hs-tab"
                 data-state={state}
-                onClick={() => go(i)}
+                onClick={() => {
+                  go(i);
+                  if (live) setUserPaused(true);
+                }}
               >
                 <span className="hs-tab-label">{x.tab}</span>
                 <span className="hs-track" aria-hidden>
-                  {i === active && live ? (
+                  {i === active && live && !userPaused ? (
                     <i
                       key={`${active}-${run}`}
                       className="hs-fill"
