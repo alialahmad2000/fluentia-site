@@ -39,8 +39,7 @@ export function SpotlightController() {
 }
 
 /** Mobile sticky CTA — springs in after the hero, stays out of the modal's way.
- *  It also steps aside over the speak demo (it covered the mic caption and the
- *  typed toggle) and over pricing (an azure CTA under the gold «اختر طلاقة»). */
+ *  It also steps aside over pricing (an azure CTA under the gold «اختر طلاقة»). */
 export function MobileCtaBar() {
   const [show, setShow] = useState(false);
   const [covered, setCovered] = useState(false);
@@ -54,7 +53,7 @@ export function MobileCtaBar() {
       },
       { rootMargin: "-20% 0px -20% 0px" }
     );
-    ["speak", "pricing"].forEach((id) => {
+    ["pricing"].forEach((id) => {
       const el = document.getElementById(id);
       if (el) io.observe(el);
     });
@@ -107,7 +106,6 @@ export function MobileCtaBar() {
 /** Desktop side dot-nav — active section via IntersectionObserver. */
 const DOT_SECTIONS = [
   { id: "top", label: "البداية" },
-  { id: "speak", label: "قلها بالإنجليزي" },
   { id: "problem", label: "المشكلة" },
   { id: "solution", label: "المنهج" },
   { id: "product", label: "المنصة" },

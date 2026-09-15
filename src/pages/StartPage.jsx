@@ -130,10 +130,10 @@ const PACKAGES = [
   {
     id: 'fardi',
     name: 'فردي',
-    sub: 'أقصى تركيز. أقصى نتائج',
+    sub: 'أنت ومدربك فقط',
     price: 2000,
-    priceMax: 3000,
-    priceNote: 'حسب عدد الحصص وكثافة البرنامج',
+    priceFrom: true,
+    priceNote: 'حسب عدد الحصص الأسبوعية',
     tier: 'fardi',
     accent: T.fardi,
     badge: '👑 VIP',
@@ -143,9 +143,28 @@ const PACKAGES = [
       'منهج مخصص يتكيف معك',
       'متابعة يومية مباشرة',
       'تصحيح كتابي ونطق غير محدود',
-      'أولوية في الرد + جلسة شهرية مع المؤسس',
+      'أولوية في الرد + تواصل مباشر مع مدربك',
     ],
     cta: 'احجز VIP',
+  },
+  {
+    id: 'fardi_intensive',
+    name: 'فردي مكثّف',
+    sub: 'أسرع تقدّم ممكن',
+    price: 3000,
+    priceNote: '12 حصة فردية + 8 جلسات ممارسة شهرياً',
+    tier: 'fardi',
+    accent: T.fardi,
+    badge: '👑 مكثّف',
+    premium: true,
+    features: [
+      '3 حصص فردية كل أسبوع (12 شهرياً)',
+      'جلستا ممارسة كل أسبوع (8 شهرياً)',
+      'جلسات الممارسة عادةً مع متحدث أصلي للغة',
+      'كل جلسة ممارسة لتقوية نقاط ضعفك',
+      'كل مزايا التدريب الفردي',
+    ],
+    cta: 'احجز المكثّف',
   },
 ];
 
@@ -255,7 +274,7 @@ export default function StartPage() {
 
   /* ── IELTS path → auto-select tamayuz ── */
   useEffect(() => {
-    if (path === 'IELTS' && pkgId !== 'tamayuz' && pkgId !== 'fardi') {
+    if (path === 'IELTS' && pkgId !== 'tamayuz' && pkgId !== 'fardi' && pkgId !== 'fardi_intensive') {
       setPkgId('tamayuz');
     }
   }, [path]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -396,7 +415,7 @@ export default function StartPage() {
           .sp-hero-grid { grid-template-columns: 3fr 2fr; gap: 48px; align-items: center; }
           .sp-hero-text { order: 1; }
           .sp-hero-form { order: 2; }
-          .sp-pkg-grid  { grid-template-columns: repeat(5, 1fr); gap: 14px; }
+          .sp-pkg-grid  { grid-template-columns: repeat(3, 1fr); gap: 14px; }
         }
 
         /* Mobile: package strip becomes horizontal-scroll snap */
@@ -506,7 +525,7 @@ export default function StartPage() {
             </h1>
 
             <p style={{ fontSize: 16, color: T.text, lineHeight: 1.8, marginBottom: 22 }}>
-              مدربون سعوديون · مجموعات صغيرة (٧ طلاب) · متابعة يومية · 5 باقات تناسبك
+              مدربون سعوديون · مجموعات صغيرة (٧ طلاب) · متابعة يومية · 6 باقات تناسبك
             </p>
 
             <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 20px', display: 'grid', gap: 10 }}>
@@ -646,7 +665,7 @@ export default function StartPage() {
                           value={p.id}
                           style={{ background: '#0d1a2d', color: '#f8fafc' }}
                         >
-                          {p.name} — {p.price} ر.س/شهرياً
+                          {p.name} — {p.priceFrom ? 'من ' : ''}{p.price} ر.س/شهرياً
                         </option>
                       ))}
                     </select>
@@ -1168,7 +1187,7 @@ function PackageCard({ pkg, onClick }) {
           {/* oldPrice is no longer shown (2026-09-14): no standing strikethrough discount claims. */}
           <div style={{ display: 'flex', alignItems: 'baseline', gap: 6, flexWrap: 'wrap' }}>
             <span style={{ fontSize: 32, fontWeight: 900, color: T.white, fontFamily: FONTS.en }}>
-              {pkg.priceMax ? `${pkg.price}–${pkg.priceMax}` : pkg.price}
+              {pkg.priceMax ? `${pkg.price}–${pkg.priceMax}` : pkg.priceFrom ? `من ${pkg.price}` : pkg.price}
             </span>
             <span style={{ fontSize: 12, color: T.muted }}>ر.س / شهرياً</span>
           </div>

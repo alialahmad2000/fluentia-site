@@ -147,13 +147,26 @@ export default function PricingSection() {
           })}
         </div>
 
-        {/* VIP tier — التدريب الفردي (wide, exclusive, price range) */}
+        {/* 1:1 tiers — التدريب الفردي + التدريب الفردي المكثّف (wide cards) */}
         <Reveal delay={0.3}>
           <VipCard
             tier={PRICING.vipTier}
             availability={REGISTRATION.tiers[PRICING.vipTier.id]}
             regStatus={regStatus}
           />
+        </Reveal>
+        <Reveal delay={0.35}>
+          <div style={{ marginTop: "var(--lp-space-lg)" }}>
+            <VipCard
+              tier={{
+                ...PRICING.intensiveTier,
+                priceLow: PRICING.intensiveTier.price,
+                features: [...PRICING.intensiveTier.glance.map((g) => `${g.value} ${g.label} (${g.sub})`), ...PRICING.intensiveTier.features],
+              }}
+              availability={REGISTRATION.tiers[PRICING.intensiveTier.id]}
+              regStatus={regStatus}
+            />
+          </div>
         </Reveal>
 
         {/* Pricing footer */}
@@ -938,20 +951,24 @@ function VipCard({ tier, availability, regStatus }) {
           >
             {tier.priceLow.toLocaleString("en")}
           </span>
-          <span style={{ fontSize: "1.5rem", fontWeight: 800, color: "var(--lp-text-muted)" }}>–</span>
-          <span
-            className="lp-num"
-            style={{
-              fontSize: "clamp(2.25rem, 4.5vw, 3rem)",
-              fontWeight: 900,
-              color: "#d97706",
-              lineHeight: 1,
-              letterSpacing: "-0.02em",
-              fontVariantNumeric: "tabular-nums",
-            }}
-          >
-            {tier.priceHigh.toLocaleString("en")}
-          </span>
+          {tier.priceHigh ? (
+            <>
+              <span style={{ fontSize: "1.5rem", fontWeight: 800, color: "var(--lp-text-muted)" }}>–</span>
+              <span
+                className="lp-num"
+                style={{
+                  fontSize: "clamp(2.25rem, 4.5vw, 3rem)",
+                  fontWeight: 900,
+                  color: "#d97706",
+                  lineHeight: 1,
+                  letterSpacing: "-0.02em",
+                  fontVariantNumeric: "tabular-nums",
+                }}
+              >
+                {tier.priceHigh.toLocaleString("en")}
+              </span>
+            </>
+          ) : null}
           <span style={{ fontSize: "var(--lp-body-s)", color: "var(--lp-text-muted)" }}>
             {tier.priceSuffix}
           </span>
