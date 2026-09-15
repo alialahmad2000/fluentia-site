@@ -238,7 +238,7 @@ export const WORTH = {
 
 export const PRICING = {
   eyebrow: "الباقات",
-  headline: "خمس باقات. ابدأ من حيث يناسبك.",
+  headline: "ست باقات. ابدأ من حيث يناسبك.",
   intro: "ابدأ بلقاء مبدئي مجاني مع المدرّب، ولن تدفع شيئاً قبل أن تتأكد أن الباقة تناسبك.",
   trust: "لقاء مبدئي مجاني · إلغاء بأي وقت · لا التزام طويل",
 
@@ -332,17 +332,19 @@ export const PRICING = {
     },
   ],
 
-  // Wide exclusive card (sits BELOW the grid) — 1:1 VIP, price is a range.
+  // 1:1 programmes (sit BELOW the grid) — two cards side by side (2026-09-15):
+  // the regular programme is priced by the weekly classes agreed in the first
+  // meeting; the intensive one is a fixed monthly schedule. Counts are MONTHLY,
+  // like every other package (3 classes + 2 practice sessions a week).
   vipTier: {
     id: "fardi",
-    badge: "VIP · التدريب الفردي",
-    name: "التدريب الفردي المباشر",
-    audienceLabel: "للمهنيين ومن يريد أقصى نتيجة",
-    tagline: "حصص فردية كاملة — أنت ومدربك فقط. منهج مخصّص، أقصى تركيز ونتائج.",
+    badge: "VIP · مرن",
+    name: "التدريب الفردي",
+    audienceLabel: "للمهنيين ومن يريد منهجاً على مقاسه",
+    tagline: "حصص فردية كاملة — أنت ومدربك فقط. منهج مخصّص، وتركيز كامل على هدفك.",
     priceLow: 2000,
-    priceHigh: 3000,
     priceSuffix: "ر.س / شهرياً",
-    priceNote: "السعر حسب عدد الحصص وكثافة البرنامج — كل ما زادت الحصص، زادت الكثافة والنتائج.",
+    priceNote: "السعر حسب عدد الحصص الأسبوعية التي نتفق عليها معك في اللقاء المبدئي.",
     features: [
       "حصص فردية فقط (أنت ومدربك)",
       "منهج مخصّص يتكيّف معك ومع هدفك",
@@ -352,10 +354,31 @@ export const PRICING = {
     ],
     howPriced: {
       title: "كيف نحدّد السعر؟",
-      body: "نتفق معك في اللقاء المبدئي على عدد الحصص الأسبوعية وكثافة البرنامج حسب هدفك وجدولك — وبناءً عليه يكون السعر بين 2,000 و3,000 ر.س شهرياً.",
-      note: "تبي أقصى نتيجة بأسرع وقت؟ هذي باقتك.",
+      body: "نتفق معك في اللقاء المبدئي على عدد الحصص الأسبوعية حسب هدفك وجدولك — ويبدأ السعر من 2,000 ر.س شهرياً.",
+      note: "تبي برنامجاً أكثف بجلسات ممارسة؟ اختر التدريب الفردي المكثّف.",
     },
     ctaLabel: "احجز استشارة VIP",
+  },
+
+  intensiveTier: {
+    id: "fardi_intensive",
+    badge: "VIP · مكثّف",
+    name: "التدريب الفردي المكثّف",
+    audienceLabel: "لمن يريد أسرع تقدّم ممكن",
+    tagline: "5 لقاءات كل أسبوع — تتكلّم الإنجليزي تقريباً كل يوم.",
+    price: 3000,
+    priceSuffix: "ر.س / شهرياً",
+    glance: [
+      { value: "12", label: "حصة فردية", sub: "في الشهر · 3 أسبوعياً" },
+      { value: "8", label: "جلسات ممارسة", sub: "في الشهر · 2 أسبوعياً" },
+    ],
+    features: [
+      "كل مزايا التدريب الفردي",
+      "جلسات الممارسة عادةً مع متحدث أصلي للإنجليزية",
+      "كل جلسة ممارسة مخصّصة لتقوية نقاط ضعفك",
+    ],
+    priceNote: "12 حصة فردية + 8 جلسات ممارسة كل شهر.",
+    ctaLabel: "احجز استشارة المكثّف",
   },
 
   footer: {
@@ -450,7 +473,8 @@ export const FORM = {
     { value: "asas", label: "أساس · 750 ر.س / شهر", price: 750 },
     { value: "talaqa", label: "طلاقة · 1,200 ر.س / شهر", price: 1200, recommended: true },
     { value: "tamayuz", label: "تميّز · 1,500 ر.س / شهر", price: 1500 },
-    { value: "fardi", label: "التدريب الفردي · 2,000–3,000 ر.س / شهر", price: 2000 },
+    { value: "fardi", label: "التدريب الفردي · من 2,000 ر.س / شهر", price: 2000 },
+    { value: "fardi_intensive", label: "التدريب الفردي المكثّف · 3,000 ر.س / شهر", price: 3000 },
     { value: "unsure", label: "غير متأكد — أريد استشارة", price: 0 },
   ],
   submitLabel: "أرسل وانتقل إلى WhatsApp ←",
@@ -503,6 +527,7 @@ export const REGISTRATION = {
     talaqa:  { available: 10, total: 10, label: "طلاقة" },
     tamayuz: { available: 6,  total: 6,  label: "تميّز" },
     fardi:   { available: 3,  total: 3,  label: "التدريب الفردي" },
+    fardi_intensive: { available: 3, total: 3, label: "التدريب الفردي المكثّف" },
   },
 
   history: [],
@@ -517,7 +542,7 @@ export function getRegistrationStatus() {
 
 export function getTotalAvailable() {
   const t = REGISTRATION.tiers;
-  return t.asas.available + t.talaqa.available + t.tamayuz.available + t.fardi.available;
+  return t.asas.available + t.talaqa.available + t.tamayuz.available + t.fardi.available + t.fardi_intensive.available;
 }
 
 export const TRUSTED_BY = {

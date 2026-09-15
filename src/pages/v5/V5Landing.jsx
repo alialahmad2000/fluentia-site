@@ -6,7 +6,8 @@ import "../../styles/v5-tokens.css";
 import V1Header from "../v1/V1Header";
 import V5Hero from "./V5Hero";
 import V5LogoBand from "./V5LogoBand";
-import V5SpeakDemo from "./V5SpeakDemo";
+// V5SpeakDemo («قلها بالإنجليزي») is unmounted from the homepage (2026-09-15, owner's call);
+// the component stays in ./V5SpeakDemo.jsx.
 import { DawnArc, Chapter, V5Problem, V5Solution } from "./V5Chapters";
 import { V1Stats, V1Method } from "../v1/V1Sections";
 import V1Product from "../v1/V1Product";
@@ -47,7 +48,6 @@ export default function V5Landing() {
           <main>
             <V5Hero />
             <V5LogoBand />
-            <V5SpeakDemo />
             <V1Stats />
             <Chapter num={1} label="المشكلة" />
             <V5Problem />

@@ -19,7 +19,8 @@ const GLANCE_ROWS = [
  *
  * Order of attention: the three class tiers first (طلاقة in the middle, raised,
  * gold-edged), each answering the same three questions in the same rows so they
- * compare at a glance; then the 1:1 VIP programme; then the platform-only plan as
+ * compare at a glance; then the two 1:1 programmes side by side (regular, and the
+ * intensive schedule with practice sessions); then the platform-only plan as
  * a slim line for the self-directed. No struck-through "before" prices: a premium
  * product states its price once, and anchors it to the day (≈ 40 ر.س) instead.
  *
@@ -31,7 +32,7 @@ const GLANCE_ROWS = [
  * the markup (prerender, SEO); the switcher only toggles which one shows under 980px.
  */
 export default function V1Pricing() {
-  const { entryTier: entry, tiers, vipTier: vip } = PRICING;
+  const { entryTier: entry, tiers, vipTier: vip, intensiveTier: intensive } = PRICING;
   const heroId = (tiers.find((t) => t.isHero) || tiers[0]).id;
   const [active, setActive] = useState(heroId);
   const trust = PRICING.trust.split("·").map((s) => s.trim()).filter(Boolean);
@@ -157,33 +158,68 @@ export default function V1Pricing() {
           </motion.div>
         </div>
 
-        {/* ── 1:1 VIP ── */}
+        {/* ── 1:1 programmes: regular + intensive ── */}
         <Reveal delay={0.05}>
-          <article className="v1-card v1p-vip" aria-labelledby="v1p-vip-name">
-            <div className="v1p-vip-copy">
+          <div className="v1p-solo">
+            <article className="v1-card v1p-vip" aria-labelledby="v1p-vip-name">
               <span className="v1p-vip-badge">{vip.badge}</span>
               <h3 id="v1p-vip-name" className="v1p-vip-name">{vip.name}</h3>
               <p className="v1p-vip-aud">{vip.audienceLabel}</p>
               <p className="v1p-tagline">{vip.tagline}</p>
-              <ul className="v1p-feats v1p-feats-2col">
+              <div className="v1p-price">
+                <div className="v1p-price-row">
+                  <span className="v1p-from">من</span>
+                  <span className="v1p-amount v1-num">{fmt(vip.priceLow)}</span>
+                  <span className="v1p-cur">ر.س</span>
+                  <span className="v1p-per">/ شهرياً</span>
+                </div>
+                <p className="v1p-vip-note">{vip.priceNote}</p>
+              </div>
+              <ul className="v1p-feats">
                 {vip.features.map((f) => (
                   <li key={f}><Check gold /><span className="v1-num">{f}</span></li>
                 ))}
               </ul>
-            </div>
-            <div className="v1p-vip-side">
-              <div className="v1p-price-row" style={{ justifyContent: "center" }}>
-                <span className="v1p-from">من</span>
-                <span className="v1p-amount v1-num">{fmt(vip.priceLow)}</span>
-                <span className="v1p-cur">ر.س</span>
-                <span className="v1p-per">/ شهرياً</span>
-              </div>
-              <p className="v1p-vip-note">{vip.priceNote}</p>
               <button type="button" data-open-form data-tier={vip.id} className="v1-cta v1-cta-ghost v1p-cta v1p-vip-cta">
                 {vip.ctaLabel}
               </button>
-            </div>
-          </article>
+            </article>
+
+            <article className="v1-card v1p-vip is-intensive" aria-labelledby="v1p-int-name">
+              <div className="v1p-vip-line" aria-hidden />
+              <span className="v1p-vip-badge">{intensive.badge}</span>
+              <h3 id="v1p-int-name" className="v1p-vip-name">{intensive.name}</h3>
+              <p className="v1p-vip-aud">{intensive.audienceLabel}</p>
+              <p className="v1p-tagline">{intensive.tagline}</p>
+              <div className="v1p-price">
+                <div className="v1p-price-row">
+                  <span className="v1p-amount v1-num">{fmt(intensive.price)}</span>
+                  <span className="v1p-cur">ر.س</span>
+                  <span className="v1p-per">/ شهرياً</span>
+                </div>
+                <div className="v1p-daily">
+                  حوالي <b className="v1-num">{perDay(intensive.price)}</b> ر.س في اليوم
+                </div>
+              </div>
+              <ul className="v1p-solo-glance">
+                {intensive.glance.map((g) => (
+                  <li key={g.label} className="v1p-solo-stat">
+                    <span className="v1p-solo-num v1-num">{g.value}</span>
+                    <span className="v1p-solo-lbl">{g.label}</span>
+                    <span className="v1p-solo-sub v1-num">{g.sub}</span>
+                  </li>
+                ))}
+              </ul>
+              <ul className="v1p-feats">
+                {intensive.features.map((f) => (
+                  <li key={f}><Check gold /><span className="v1-num">{f}</span></li>
+                ))}
+              </ul>
+              <button type="button" data-open-form data-tier={intensive.id} className="v1-cta v1-cta-ghost v1p-cta v1p-vip-cta">
+                {intensive.ctaLabel}
+              </button>
+            </article>
+          </div>
         </Reveal>
 
         {/* ── platform only ── */}
@@ -293,25 +329,44 @@ export default function V1Pricing() {
           .v1-scope .v1p-tier:not(.is-hero):hover { translate: 0 -3px; border-color: var(--v1-line-strong); }
         }
 
-        /* VIP — outlined, never a second gold slab */
+        /* 1:1 programmes — two outlined cards, never a second gold slab */
+        .v1-scope .v1p-solo {
+          margin-top: 22px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; align-items: stretch;
+        }
         .v1-scope .v1p-vip {
-          margin-top: 22px; padding: clamp(26px, 3.6vw, 42px);
-          display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: 24px 48px; align-items: center;
-          border-color: rgba(242, 193, 78, 0.32);
+          position: relative; display: flex; flex-direction: column; padding: clamp(26px, 3vw, 38px);
+          border-color: rgba(242, 193, 78, 0.28);
           background: linear-gradient(170deg, rgba(148, 197, 255, 0.05), rgba(148, 197, 255, 0.012) 60%);
         }
+        .v1-scope .v1p-vip.is-intensive {
+          border-color: rgba(242, 193, 78, 0.5);
+          background: linear-gradient(170deg, rgba(242, 193, 78, 0.06), rgba(148, 197, 255, 0.02) 55%);
+        }
+        .v1-scope .v1p-vip-line {
+          position: absolute; top: 0; inset-inline: 22%; height: 2px;
+          background: linear-gradient(90deg, transparent, rgba(242, 193, 78, 0.7) 35%, rgba(255, 243, 214, 0.9) 50%, rgba(242, 193, 78, 0.7) 65%, transparent);
+        }
         .v1-scope .v1p-vip-badge {
+          align-self: flex-start;
           display: inline-flex; font: 700 0.74rem/1 var(--v1-display); letter-spacing: 0.04em; color: var(--v1-gold-soft);
           padding: 8px 13px; border-radius: 99px; border: 1px solid var(--v1-line-gold); background: rgba(242, 193, 78, 0.06);
         }
-        .v1-scope .v1p-vip-name { margin: 16px 0 0; font: 800 clamp(1.4rem, 2.6vw, 1.8rem)/1.3 var(--v1-display); color: var(--v1-t-strong); }
+        .v1-scope .v1p-vip-name { margin: 16px 0 0; font: 800 clamp(1.35rem, 2.3vw, 1.65rem)/1.3 var(--v1-display); color: var(--v1-t-strong); }
         .v1-scope .v1p-vip-aud { margin: 6px 0 0; font-size: 0.9rem; font-weight: 500; color: var(--v1-t); }
-        .v1-scope .v1p-vip .v1p-tagline { min-height: 0; }
-        .v1-scope .v1p-feats-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 22px; }
-        .v1-scope .v1p-vip-side { text-align: center; border-inline-start: 1px solid var(--v1-line); padding-inline-start: clamp(0px, 3vw, 40px); }
-        .v1-scope .v1p-vip-note { margin: 14px auto 0; max-width: 34ch; font-size: 0.8rem; line-height: 1.9; color: var(--v1-t-mute); }
+        .v1-scope .v1p-vip .v1p-tagline { min-height: 3.7em; }
+        .v1-scope .v1p-vip-note { margin: 10px 0 0; font-size: 0.8rem; line-height: 1.9; color: var(--v1-t-mute); }
+        .v1-scope .v1p-vip.is-intensive .v1p-daily b { color: var(--v1-gold-soft); }
         .v1-scope .v1p-vip-cta { border-color: rgba(242, 193, 78, 0.55); color: var(--v1-gold-soft); }
         .v1-scope .v1p-vip-cta:hover { border-color: var(--v1-gold); background: rgba(242, 193, 78, 0.06); }
+
+        .v1-scope .v1p-solo-glance { list-style: none; padding: 0; margin: 20px 0 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+        .v1-scope .v1p-solo-stat {
+          display: flex; flex-direction: column; align-items: center; text-align: center; gap: 4px;
+          padding: 14px 10px; border-radius: 14px; border: 1px solid var(--v1-line); background: rgba(4, 7, 14, 0.35);
+        }
+        .v1-scope .v1p-solo-num { font: 800 2rem/1 var(--v1-num); color: var(--v1-t-strong); letter-spacing: -0.02em; }
+        .v1-scope .v1p-solo-lbl { font: 600 0.86rem/1.5 var(--v1-display); color: var(--v1-t); }
+        .v1-scope .v1p-solo-sub { font-size: 0.76rem; color: var(--v1-t-faint); }
 
         /* platform only — slim line */
         .v1-scope .v1p-self {
@@ -357,17 +412,16 @@ export default function V1Pricing() {
           .v1-scope .v1p-tier[data-active="false"] { display: none; }
           .v1-scope .v1p-tier[data-active="true"] { animation: v1p-in 0.42s var(--v1-ease); }
           .v1-scope .v1p-tagline { min-height: 0; }
-          .v1-scope .v1p-vip, .v1-scope .v1p-self { max-width: 520px; margin-inline: auto; }
+          .v1-scope .v1p-solo { grid-template-columns: minmax(0, 1fr); max-width: 520px; margin-inline: auto; }
+          .v1-scope .v1p-vip .v1p-tagline { min-height: 0; }
+          .v1-scope .v1p-self { max-width: 520px; margin-inline: auto; }
         }
         @keyframes v1p-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
         @media (max-width: 860px) {
-          .v1-scope .v1p-vip { grid-template-columns: minmax(0, 1fr); }
-          .v1-scope .v1p-vip-side { border-inline-start: 0; padding-inline-start: 0; border-top: 1px solid var(--v1-line); padding-top: 24px; }
           .v1-scope .v1p-self { grid-template-columns: minmax(0, 1fr) auto; }
           .v1-scope .v1p-self-copy { grid-column: 1 / -1; }
         }
         @media (max-width: 560px) {
-          .v1-scope .v1p-feats-2col { grid-template-columns: minmax(0, 1fr); }
           .v1-scope .v1p-hl { display: block; }
         }
         @media (prefers-reduced-motion: reduce) {
