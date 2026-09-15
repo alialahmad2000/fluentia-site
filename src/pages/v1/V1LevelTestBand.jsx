@@ -146,7 +146,7 @@ export default function V1LevelTestBand() {
             اختبر مستواك الآن ←
           </a>
           <span style={{ fontSize: "0.84rem", color: "var(--v1-t-faint)", lineHeight: 1.8 }}>
-            مجاني · بدون تسجيل · ١٠ دقائق · النتيجة تظهر لك فوراً
+            مجاني · بدون تسجيل · 10 دقائق · النتيجة تظهر لك فوراً
           </span>
         </div>
       </motion.div>

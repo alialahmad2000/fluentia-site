@@ -463,9 +463,14 @@ export default function V1TrialBand() {
             key={s.slug}
             src={`/worlds/${s.slug}.jpg`}
             alt=""
-            initial={reduce ? false : { opacity: 0 }}
+            /* The starting style is written into the prerendered HTML, where
+               reduced motion is unknown — so it must not depend on `reduce`, or
+               a reduced-motion visitor hydrates «opacity:0.46» over a server
+               «opacity:0». Reduced motion changes only the duration, which
+               never reaches the markup. */
+            initial={{ opacity: 0 }}
             animate={{ opacity: 0.46 }}
-            transition={{ duration: 0.8, ease: EASE }}
+            transition={reduce ? { duration: 0 } : { duration: 0.8, ease: EASE }}
           />
         </div>
 
@@ -504,9 +509,9 @@ export default function V1TrialBand() {
             <div className="tb-card">
               <motion.div
                 key={s.slug}
-                initial={reduce ? false : { opacity: 0.25, y: 8 }}
+                initial={{ opacity: 0.25, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, ease: EASE }}
+                transition={reduce ? { duration: 0 } : { duration: 0.4, ease: EASE }}
               >
                 {/* A cover, the way every unit carries one inside the product —
                     the room this lesson is set in, with the title sitting on it. */}
