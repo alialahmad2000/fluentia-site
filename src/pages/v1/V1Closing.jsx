@@ -219,7 +219,7 @@ export function V1FinalCTA() {
           their watermark stay on the page ground; the picture starts beneath them. */}
       <div className="hi-cta-head">
       {/* Giant watermark wordmark behind the closing statement */}
-      <div aria-hidden style={{
+      <div aria-hidden className="hi-cta-mark" style={{
         position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center",
         overflow: "hidden", pointerEvents: "none",
       }}>

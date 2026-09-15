@@ -242,7 +242,7 @@ const COVER_COURSES = [
 function PillarArt({ name }) {
   if (name === "method")
     return (
-      <div className="hi-pillar-art" aria-hidden="true">
+      <div className="hi-pillar-art hi-pillar-art--covers" aria-hidden="true">
         <div className="hi-covers">
           {COVER_COURSES.map((row, r) => (
             <div className="hi-covers-row" key={r}>
