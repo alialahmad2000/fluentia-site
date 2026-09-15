@@ -1,0 +1,409 @@
+{
+  "about": "Every image the homepage serves, how it is cut, and at which widths. optimise.mjs reads this file, writes public/home/<id>-<variant>-<width>.{avif,webp} and src/pages/v5/homeImages.json. `source` is where the pixels come from: null = no render picked yet (a flat placeholder of the exact aspect is written instead), `raw:<file>` = a file in RAW_DIR, `https://…` = a public URL (real platform assets). `focus` is the crop centre as fractions [x, y] of the source.",
+  "outDir": "public/home",
+  "dataFile": "src/pages/v5/homeImages.json",
+  "budgetKB": {
+    "400": 30,
+    "480": 45,
+    "640": 55,
+    "780": 80,
+    "1024": 100,
+    "1600": 160,
+    "1920": 190
+  },
+  "images": [
+    {
+      "id": "problem-desk",
+      "kind": "generated",
+      "shot": "problem-desk",
+      "source": null,
+      "seed": null,
+      "aspect": "3:4",
+      "placeholder": [
+        "#0d1a30",
+        "#04070e"
+      ],
+      "variants": {
+        "tall": {
+          "aspect": "3:4",
+          "widths": [
+            640,
+            1024,
+            1600
+          ]
+        },
+        "wide": {
+          "aspect": "16:10",
+          "widths": [
+            640,
+            1024
+          ],
+          "focus": [
+            0.5,
+            0.5
+          ]
+        }
+      }
+    },
+    {
+      "id": "cover-l1u02",
+      "kind": "real",
+      "source": "https://nmjexpuycmqcxuxljier.supabase.co/storage/v1/object/public/curriculum-images/units/1de8e161-81eb-416e-af87-c136d93f3930.jpg",
+      "note": "standard unit cover · A1 U2 Ocean Life",
+      "aspect": "16:9",
+      "variants": {
+        "tile": {
+          "aspect": "16:9",
+          "widths": [
+            400,
+            640
+          ]
+        }
+      }
+    },
+    {
+      "id": "cover-l3u04",
+      "kind": "real",
+      "source": "https://nmjexpuycmqcxuxljier.supabase.co/storage/v1/object/public/curriculum-images/units/738ff234-070d-4ace-9901-434e43521bdb.jpg",
+      "note": "standard unit cover · B1 U4 Global Coffee Culture",
+      "aspect": "16:9",
+      "variants": {
+        "tile": {
+          "aspect": "16:9",
+          "widths": [
+            400,
+            640
+          ]
+        }
+      }
+    },
+    {
+      "id": "cover-l2u01",
+      "kind": "real",
+      "source": "https://nmjexpuycmqcxuxljier.supabase.co/storage/v1/object/public/curriculum-images/units/542c8884-0fd4-4a0c-abad-d5f0913ab8b4.jpg",
+      "note": "standard unit cover · A2 U1 Brain & Memory",
+      "aspect": "16:9",
+      "variants": {
+        "tile": {
+          "aspect": "16:9",
+          "widths": [
+            400,
+            640
+          ]
+        }
+      }
+    },
+    {
+      "id": "cover-l1u08",
+      "kind": "real",
+      "source": "https://nmjexpuycmqcxuxljier.supabase.co/storage/v1/object/public/curriculum-images/units/34f36fbb-3cc6-4f5f-be54-491491297386.jpg",
+      "note": "standard unit cover · A1 U8 Ancient Civilizations",
+      "aspect": "16:9",
+      "variants": {
+        "tile": {
+          "aspect": "16:9",
+          "widths": [
+            400,
+            640
+          ]
+        }
+      }
+    },
+    {
+      "id": "cover-l1u03",
+      "kind": "real",
+      "source": "https://nmjexpuycmqcxuxljier.supabase.co/storage/v1/object/public/curriculum-images/units/dfefdb76-330a-4ac3-9102-95e1b792a5a6.jpg",
+      "note": "standard unit cover · A1 U3 Space Exploration",
+      "aspect": "16:9",
+      "variants": {
+        "tile": {
+          "aspect": "16:9",
+          "widths": [
+            400,
+            640
+          ]
+        }
+      }
+    },
+    {
+      "id": "cover-l3u02",
+      "kind": "real",
+      "source": "https://nmjexpuycmqcxuxljier.supabase.co/storage/v1/object/public/curriculum-images/units/55d40057-1d91-4eb0-8d78-b3f47a8d0a24.jpg",
+      "note": "standard unit cover · B1 U2 Coral Reefs",
+      "aspect": "16:9",
+      "variants": {
+        "tile": {
+          "aspect": "16:9",
+          "widths": [
+            400,
+            640
+          ]
+        }
+      }
+    },
+    {
+      "id": "cover-l3u01",
+      "kind": "real",
+      "source": "https://nmjexpuycmqcxuxljier.supabase.co/storage/v1/object/public/curriculum-images/units/a5b583a4-5d9e-41b7-b95f-c07e0c44f64b.jpg",
+      "note": "standard unit cover · B1 U1 Artificial Intelligence",
+      "aspect": "16:9",
+      "variants": {
+        "tile": {
+          "aspect": "16:9",
+          "widths": [
+            400,
+            640
+          ]
+        }
+      }
+    },
+    {
+      "id": "cover-l2u03",
+      "kind": "real",
+      "source": "https://nmjexpuycmqcxuxljier.supabase.co/storage/v1/object/public/curriculum-images/units/6527e32e-b7f3-4196-9bae-a034712c9fa6.jpg",
+      "note": "standard unit cover · A2 U3 Extreme Weather",
+      "aspect": "16:9",
+      "variants": {
+        "tile": {
+          "aspect": "16:9",
+          "widths": [
+            400,
+            640
+          ]
+        }
+      }
+    },
+    {
+      "id": "cover-l3u12",
+      "kind": "real",
+      "source": "https://nmjexpuycmqcxuxljier.supabase.co/storage/v1/object/public/curriculum-images/units/c14c9ffc-13b9-4c4f-9e67-b178f4d85bf6.jpg",
+      "note": "standard unit cover · B1 U12 Mars Exploration",
+      "aspect": "16:9",
+      "variants": {
+        "tile": {
+          "aspect": "16:9",
+          "widths": [
+            400,
+            640
+          ]
+        }
+      }
+    },
+    {
+      "id": "solution-trainer",
+      "kind": "generated",
+      "shot": "solution-trainer",
+      "source": null,
+      "seed": null,
+      "aspect": "4:3",
+      "placeholder": [
+        "#0b1628",
+        "#1a2436"
+      ],
+      "variants": {
+        "main": {
+          "aspect": "4:3",
+          "widths": [
+            640,
+            1024,
+            1600
+          ]
+        }
+      }
+    },
+    {
+      "id": "platform-vocab",
+      "kind": "real",
+      "source": "raw:real/platform-vocab.png",
+      "note": "render of /tour/unit/extreme-weather/vocabulary at 390 wide, DPR 2 (scripts/home-images/shoot-platform.cjs)",
+      "aspect": "390:640",
+      "variants": {
+        "screen": {
+          "aspect": "390:640",
+          "widths": [
+            480,
+            780
+          ],
+          "focus": [
+            0.5,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "id": "method-coffee",
+      "kind": "generated",
+      "shot": "method-coffee",
+      "source": null,
+      "seed": null,
+      "aspect": "4:3",
+      "placeholder": [
+        "#101634",
+        "#1c1e38"
+      ],
+      "variants": {
+        "main": {
+          "aspect": "4:3",
+          "widths": [
+            640,
+            1024
+          ]
+        }
+      }
+    },
+    {
+      "id": "method-mic",
+      "kind": "generated",
+      "shot": "method-mic",
+      "source": null,
+      "seed": null,
+      "aspect": "4:3",
+      "placeholder": [
+        "#0c1832",
+        "#141d33"
+      ],
+      "variants": {
+        "main": {
+          "aspect": "4:3",
+          "widths": [
+            640,
+            1024
+          ]
+        }
+      }
+    },
+    {
+      "id": "worth-road",
+      "kind": "generated",
+      "shot": "worth-road",
+      "source": null,
+      "seed": null,
+      "aspect": "3:4",
+      "placeholder": [
+        "#1b2946",
+        "#8a7358"
+      ],
+      "variants": {
+        "tall": {
+          "aspect": "3:4",
+          "widths": [
+            640,
+            1024,
+            1600
+          ]
+        },
+        "wide": {
+          "aspect": "16:10",
+          "widths": [
+            640,
+            1024
+          ],
+          "focus": [
+            0.5,
+            0.55
+          ]
+        }
+      }
+    },
+    {
+      "id": "worth-door",
+      "kind": "generated",
+      "shot": "worth-door",
+      "source": null,
+      "seed": null,
+      "aspect": "3:4",
+      "placeholder": [
+        "#172238",
+        "#7a6248"
+      ],
+      "variants": {
+        "tall": {
+          "aspect": "3:4",
+          "widths": [
+            640,
+            1024,
+            1600
+          ]
+        },
+        "wide": {
+          "aspect": "16:10",
+          "widths": [
+            640,
+            1024
+          ],
+          "focus": [
+            0.5,
+            0.6
+          ]
+        }
+      }
+    },
+    {
+      "id": "level-stairs",
+      "kind": "generated",
+      "shot": "level-stairs",
+      "source": null,
+      "seed": null,
+      "aspect": "3:4",
+      "placeholder": [
+        "#12213a",
+        "#b9a88c"
+      ],
+      "variants": {
+        "tall": {
+          "aspect": "3:4",
+          "widths": [
+            640,
+            1024,
+            1600
+          ]
+        },
+        "wide": {
+          "aspect": "16:10",
+          "widths": [
+            640,
+            1024
+          ],
+          "focus": [
+            0.5,
+            0.5
+          ]
+        }
+      }
+    },
+    {
+      "id": "cta-riyadh",
+      "kind": "generated",
+      "shot": "cta-riyadh",
+      "source": null,
+      "seed": null,
+      "aspect": "21:9",
+      "placeholder": [
+        "#04070e",
+        "#c98a5a"
+      ],
+      "variants": {
+        "wide": {
+          "aspect": "21:9",
+          "widths": [
+            1024,
+            1600,
+            1920
+          ]
+        },
+        "tall": {
+          "aspect": "4:5",
+          "widths": [
+            640,
+            1024
+          ],
+          "focus": [
+            0.5,
+            0.5
+          ]
+        }
+      }
+    }
+  ]
+}

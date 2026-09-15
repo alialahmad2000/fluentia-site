@@ -1,0 +1,282 @@
+{
+ "problem-desk": {
+  "placeholder": true,
+  "variants": {
+   "tall": {
+    "w": 1600,
+    "h": 2133,
+    "widths": [
+     640,
+     1024,
+     1600
+    ]
+   },
+   "wide": {
+    "w": 1024,
+    "h": 640,
+    "widths": [
+     640,
+     1024
+    ]
+   }
+  }
+ },
+ "cover-l1u02": {
+  "placeholder": false,
+  "variants": {
+   "tile": {
+    "w": 640,
+    "h": 360,
+    "widths": [
+     400,
+     640
+    ]
+   }
+  }
+ },
+ "cover-l3u04": {
+  "placeholder": false,
+  "variants": {
+   "tile": {
+    "w": 640,
+    "h": 360,
+    "widths": [
+     400,
+     640
+    ]
+   }
+  }
+ },
+ "cover-l2u01": {
+  "placeholder": false,
+  "variants": {
+   "tile": {
+    "w": 640,
+    "h": 360,
+    "widths": [
+     400,
+     640
+    ]
+   }
+  }
+ },
+ "cover-l1u08": {
+  "placeholder": false,
+  "variants": {
+   "tile": {
+    "w": 640,
+    "h": 360,
+    "widths": [
+     400,
+     640
+    ]
+   }
+  }
+ },
+ "cover-l1u03": {
+  "placeholder": false,
+  "variants": {
+   "tile": {
+    "w": 640,
+    "h": 360,
+    "widths": [
+     400,
+     640
+    ]
+   }
+  }
+ },
+ "cover-l3u02": {
+  "placeholder": false,
+  "variants": {
+   "tile": {
+    "w": 640,
+    "h": 360,
+    "widths": [
+     400,
+     640
+    ]
+   }
+  }
+ },
+ "cover-l3u01": {
+  "placeholder": false,
+  "variants": {
+   "tile": {
+    "w": 640,
+    "h": 360,
+    "widths": [
+     400,
+     640
+    ]
+   }
+  }
+ },
+ "cover-l2u03": {
+  "placeholder": false,
+  "variants": {
+   "tile": {
+    "w": 640,
+    "h": 360,
+    "widths": [
+     400,
+     640
+    ]
+   }
+  }
+ },
+ "cover-l3u12": {
+  "placeholder": false,
+  "variants": {
+   "tile": {
+    "w": 640,
+    "h": 360,
+    "widths": [
+     400,
+     640
+    ]
+   }
+  }
+ },
+ "solution-trainer": {
+  "placeholder": true,
+  "variants": {
+   "main": {
+    "w": 1600,
+    "h": 1200,
+    "widths": [
+     640,
+     1024,
+     1600
+    ]
+   }
+  }
+ },
+ "platform-vocab": {
+  "placeholder": false,
+  "variants": {
+   "screen": {
+    "w": 780,
+    "h": 1280,
+    "widths": [
+     480,
+     780
+    ]
+   }
+  }
+ },
+ "method-coffee": {
+  "placeholder": true,
+  "variants": {
+   "main": {
+    "w": 1024,
+    "h": 768,
+    "widths": [
+     640,
+     1024
+    ]
+   }
+  }
+ },
+ "method-mic": {
+  "placeholder": true,
+  "variants": {
+   "main": {
+    "w": 1024,
+    "h": 768,
+    "widths": [
+     640,
+     1024
+    ]
+   }
+  }
+ },
+ "worth-road": {
+  "placeholder": true,
+  "variants": {
+   "tall": {
+    "w": 1600,
+    "h": 2133,
+    "widths": [
+     640,
+     1024,
+     1600
+    ]
+   },
+   "wide": {
+    "w": 1024,
+    "h": 640,
+    "widths": [
+     640,
+     1024
+    ]
+   }
+  }
+ },
+ "worth-door": {
+  "placeholder": true,
+  "variants": {
+   "tall": {
+    "w": 1600,
+    "h": 2133,
+    "widths": [
+     640,
+     1024,
+     1600
+    ]
+   },
+   "wide": {
+    "w": 1024,
+    "h": 640,
+    "widths": [
+     640,
+     1024
+    ]
+   }
+  }
+ },
+ "level-stairs": {
+  "placeholder": true,
+  "variants": {
+   "tall": {
+    "w": 1600,
+    "h": 2133,
+    "widths": [
+     640,
+     1024,
+     1600
+    ]
+   },
+   "wide": {
+    "w": 1024,
+    "h": 640,
+    "widths": [
+     640,
+     1024
+    ]
+   }
+  }
+ },
+ "cta-riyadh": {
+  "placeholder": true,
+  "variants": {
+   "wide": {
+    "w": 1920,
+    "h": 823,
+    "widths": [
+     1024,
+     1600,
+     1920
+    ]
+   },
+   "tall": {
+    "w": 1024,
+    "h": 1280,
+    "widths": [
+     640,
+     1024
+    ]
+   }
+  }
+ }
+}

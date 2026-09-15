@@ -1,0 +1,119 @@
+{
+  "about": "Homepage imagery (fluentia.academy). The set follows the page's night-to-dawn arc, and the progression is carried by the SHARE OF WARM LIGHT in the frame: problem none, trainer one small lamp, method a sliver, worth about half, CTA mostly warm. Each shot uses a different MODE so the page reads as a portfolio, not one theme repeated. Generated shots carry no people, no hands, no text. Platform visuals (unit covers, the phone screen) are REAL assets, listed under `real`, never generated. Prompts revised after art-director review 2026-09-15: no paper with marks (FLUX writes fake text), no precise spacing (the spaced-repetition visual is a CSS graphic, not a render), landmarks as silhouettes only, no 'glow', no film grain (seams against the flat page ground).",
+  "suffix": "No people, no figures, no hands, no text, no letters, no words, no logos, no watermark.",
+  "renderOrder": [
+    "cta-riyadh",
+    "worth-door",
+    "solution-trainer",
+    "problem-desk",
+    "method-mic",
+    "method-coffee",
+    "worth-road",
+    "level-stairs"
+  ],
+  "shots": [
+    {
+      "id": "problem-desk",
+      "section": "#problem",
+      "mode": "still life",
+      "grade": "night, no warm light",
+      "model": "fal-ai/flux-pro/v1.1-ultra",
+      "note": "Render one seed with the suffix and one without; naming hands/letters can invite them.",
+      "prompt": "A cinematic still life on an old wooden desk at night, lit only by cold blue moonlight from a window. An untitled book with a plain unmarked cloth cover lies face-down and splayed open, its spine cracked. Beside it, a cup of coffee gone cold with a dried ring on its saucer, and a pair of folded reading glasses resting on a small stack of plain notebooks. The objects are grouped in the middle third of the frame with dark space above and below. The mood is years of quiet, abandoned attempts. Deep midnight-blue grade with near-black shadows and one crisp azure highlight along the book's edge; restrained and melancholic. Editorial fine-art photograph, medium format, shallow depth of field, clean shadows.",
+      "aspect_ratio": "3:4",
+      "raw": false
+    },
+    {
+      "id": "solution-trainer",
+      "section": "#solution · pillar 02",
+      "mode": "device / interior",
+      "grade": "night, azure screen light + one small warm lamp",
+      "model": "fal-ai/flux-pro/v1.1-ultra",
+      "prompt": "An online English trainer's desk at blue hour, seen from behind an open laptop whose screen faces away from the camera, its azure light spilling across the desk surface. Beside it, a neat stack of plain clothbound notebooks, each with a ribbon bookmark, a pencil, a small ceramic cup, and a brass desk lamp casting one small pool of amber light. Tidy, focused, attentive. Cool deep-blue room with a single warm lamp accent. Editorial interior photograph, 35mm lens, shallow depth of field.",
+      "aspect_ratio": "4:3",
+      "raw": false
+    },
+    {
+      "id": "method-coffee",
+      "section": "#method · 01 conversation first",
+      "mode": "still life",
+      "grade": "pre-dawn indigo, a sliver of warm light",
+      "model": "fal-ai/flux-pro/v1.1-ultra",
+      "prompt": "Two small handleless Saudi coffee cups (finjan) filled with pale golden Arabic coffee, placed symmetrically across a dark walnut table as if set for a conversation between two people, a small dish of dates between them. A thin wisp of steam rises from each cup. Pre-dawn light: the room is deep indigo blue, and a narrow sliver of warm amber light catches the rims of the cups. Editorial still-life photograph, low eye-level angle, shallow depth of field.",
+      "aspect_ratio": "4:3",
+      "raw": false
+    },
+    {
+      "id": "method-mic",
+      "section": "#method · 03 AI + human",
+      "mode": "device",
+      "grade": "pre-dawn blue, azure rim + a sliver of warm light",
+      "model": "fal-ai/flux-pro/v1.1-ultra",
+      "prompt": "A professional studio condenser microphone on a simple solid desk stand with no shock mount, a single wooden pencil lying beside the stand on a dark desk. The microphone's metal grille catches a crisp azure rim light from one side; the pencil sits in a narrow warm lamp light from the other side, just outside the frame. Dark pre-dawn blue room. Editorial still-life photograph, 50mm lens, shallow depth of field.",
+      "aspect_ratio": "4:3",
+      "raw": false
+    },
+    {
+      "id": "worth-road",
+      "section": "#worth · 02 the path",
+      "mode": "landscape",
+      "grade": "first light, about half warm",
+      "model": "fal-ai/flux-pro/v1.1-ultra",
+      "prompt": "An empty two-lane road in central Saudi Arabia at first light, bending up through a pass in a pale limestone escarpment, across a buff gravel plain with a few scattered talh acacia trees. The escarpment edge catches pale gold light while the sky above is still deep blue, and the asphalt carries a thin line of reflected light. Long, quiet perspective; vast, calm and hopeful. Clear clean air. Editorial landscape photograph, telephoto compression, true colours.",
+      "aspect_ratio": "3:4",
+      "raw": false
+    },
+    {
+      "id": "worth-door",
+      "section": "#worth · 03 the barrier",
+      "mode": "architecture",
+      "grade": "first light, about half warm",
+      "model": "fal-ai/flux-pro/v1.1-ultra",
+      "prompt": "A single-leaf traditional Najdi door of unpainted weathered wood, carved only with simple triangles and chevrons and no inscriptions, set in a thick mud-plaster wall at the end of a dim interior passage in old Diriyah. The door stands half open onto a sunlit mud-plaster courtyard wall, and bright warm first light pours through and lays a sharp-edged trapezoid of sunlight across the smooth earthen floor, while the near side of the passage rests in cool blue shadow. Architectural photograph, quiet and hopeful.",
+      "aspect_ratio": "3:4",
+      "raw": false
+    },
+    {
+      "id": "level-stairs",
+      "section": "#level-test",
+      "mode": "architecture / perspective",
+      "grade": "first light, pale sky",
+      "model": "fal-ai/flux-pro/v1.1-ultra",
+      "prompt": "Looking straight up a square stairwell of pale limestone: flights of stairs turn around an open central shaft, each landing a distinct ledge, rising toward a skylight of clear pale morning sky. The lower flights sit in cool blue shadow and each landing higher up catches a little more pale gold light. Minimal modern architecture, strong geometric composition. Architectural photograph, wide lens, symmetrical.",
+      "aspect_ratio": "3:4",
+      "raw": false
+    },
+    {
+      "id": "cta-riyadh",
+      "section": "final CTA",
+      "mode": "landscape / skyline",
+      "grade": "full dawn, mostly warm",
+      "model": "fal-ai/flux-pro/v1.1-ultra",
+      "aspect_ratio": "21:9",
+      "raw": true,
+      "note": "If 4 seeds fail the landmarks, use a licensed real photograph, graded to match; never ship a wrong Kingdom Centre.",
+      "prompt": "The Riyadh skyline at dawn seen from far across the city: the Kingdom Centre tower and the Al Faisaliah tower stand as crisp dark silhouettes against the horizon, with no facade detail. The sky moves from deep night navy, nearly black, at the top of the frame, through clear blue, to soft apricot and gold at the horizon. The low city below is a dark silhouette. Clear, clean air; calm and optimistic. The upper half of the frame is open sky. Wide cinematic landscape photograph, telephoto, natural colour."
+    }
+  ],
+  "real": [
+    {
+      "id": "covers",
+      "section": "#solution · pillar 01",
+      "mode": "graphic mosaic of real unit covers",
+      "source": "curriculum_units.cover_image_url for STANDARD units (owner_student_id IS NULL), levels 1-3, copied and optimised; never per-student custom units"
+    },
+    {
+      "id": "method-intervals",
+      "section": "#method · 02 spaced repetition",
+      "mode": "graphic",
+      "source": "drawn in CSS (cards at widening intervals); exact geometry, mirrors for RTL, no render"
+    },
+    {
+      "id": "platform-vocab",
+      "section": "#solution · pillar 03",
+      "mode": "real product screen",
+      "source": "a 390x844 render of /tour/unit/extreme-weather/vocabulary (static snapshot content, no student data), tour chrome hidden"
+    }
+  ],
+  "model_note": "All shots use flux-pro v1.1-ultra (about 4 MP) so 1600w/1920w deliveries are real pixels, not upscales. raw:true gives a less processed photographic look; try it per shot if a render reads as CGI."
+}

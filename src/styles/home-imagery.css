@@ -1,0 +1,373 @@
+/* ============================================================
+ * Homepage imagery — layouts for the photographs, cover wall,
+ * platform phone and interval graphic (HomePicture + sections).
+ *
+ * Rules this sheet lives under:
+ *   - Images meet the page in ONE of two ways: a framed plate
+ *     (hairline, radius) or a clean mask fade into the page ground.
+ *     Never a translucent colour wash over an image, never a glow.
+ *   - RTL: the text column is the grid's FIRST column, which sits on
+ *     the RIGHT. Fades that face the text therefore start at the
+ *     image's right edge (`to left`).
+ *   - Every frame fixes its aspect-ratio per breakpoint, so the
+ *     image never shifts layout, whichever crop <picture> picks.
+ *   - Sticky only on wide, fine-pointer layouts; no scroll-linked
+ *     transforms anywhere.
+ * ============================================================ */
+
+.v1-scope .hp { display: block; width: 100%; height: 100%; }
+.v1-scope :is(.hi-plate, .hi-cover, .hi-phone-screen) > .hp { position: absolute; inset: 0; }
+.v1-scope .hp img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* A framed plate: opaque ink ground, hairline drawn ABOVE the image. */
+.v1-scope .hi-plate {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  border-radius: var(--v1-r-lg);
+  background: var(--v1-ink-3);
+}
+.v1-scope .hi-plate::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: inset 0 0 0 1px rgba(160, 200, 240, 0.12);
+  pointer-events: none;
+}
+
+/* A small, opaque label on an image: says what a REAL asset is. */
+.v1-scope .hi-caption {
+  position: absolute;
+  z-index: 2;
+  inset-block-end: 14px;
+  inset-inline-end: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 11px;
+  border-radius: 999px;
+  background: var(--v1-ink);
+  border: 1px solid var(--v1-line-strong);
+  font-family: var(--v1-display);
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--v1-t-mute);
+  white-space: nowrap;
+}
+.v1-scope .hi-caption::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--v1-azure);
+}
+
+/* ─── 01 · #problem — the ledger beside one still life ─── */
+.v1-scope .hi-problem {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 380px);
+  gap: clamp(40px, 5.5vw, 76px);
+  margin-top: 56px;
+  align-items: start;
+}
+.v1-scope .hi-problem-art {
+  position: sticky;
+  top: 104px;
+}
+.v1-scope .hi-problem-art .hi-plate { aspect-ratio: 3 / 4; }
+.v1-scope .hi-problem .v5-ledger-row {
+  grid-template-columns: 72px minmax(0, 1fr) !important;
+  grid-template-areas: "num head" ". body";
+  gap: 10px 22px !important;
+}
+.v1-scope .hi-problem .v5-ledger-row > :nth-child(1) { grid-area: num; }
+.v1-scope .hi-problem .v5-ledger-row > :nth-child(2) { grid-area: head; }
+.v1-scope .hi-problem .v5-ledger-row > :nth-child(3) { grid-area: body; margin-top: 4px !important; }
+
+@media (max-width: 820px) {
+  .v1-scope .hi-problem { grid-template-columns: minmax(0, 1fr); gap: 0; margin-top: 36px; }
+  .v1-scope .hi-problem-art {
+    position: static;
+    order: -1;
+    margin-inline: calc(var(--v1-gutter) * -1);
+    margin-bottom: 12px;
+  }
+  .v1-scope .hi-problem-art .hi-plate {
+    aspect-ratio: 16 / 10;
+    border-radius: 0;
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 12%, #000 62%, transparent 100%);
+    mask-image: linear-gradient(to bottom, transparent 0, #000 12%, #000 62%, transparent 100%);
+  }
+  .v1-scope .hi-problem-art .hi-plate::after { display: none; }
+  .v1-scope .hi-problem .v5-ledger-row {
+    grid-template-columns: minmax(0, 1fr) !important;
+    grid-template-areas: "num" "head" "body";
+  }
+}
+
+/* ─── 02 · #solution — each pillar's empty half gets its evidence ─── */
+.v1-scope .hi-station-row {
+  display: grid;
+  grid-template-columns: 56px minmax(0, 1fr);
+  gap: 0 26px;
+  align-items: start;
+}
+.v1-scope .hi-pillar {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
+  min-height: 312px;
+  padding: 0 !important;
+}
+.v1-scope .hi-pillar-text {
+  padding: clamp(22px, 3vw, 34px);
+  align-self: center;
+}
+.v1-scope .hi-pillar-art {
+  position: relative;
+  overflow: hidden;
+  background: var(--v1-ink-2);
+  -webkit-mask-image: linear-gradient(to left, transparent 0, #000 20%);
+  mask-image: linear-gradient(to left, transparent 0, #000 20%);
+}
+.v1-scope .hi-pillar-art > .hp { position: absolute; inset: 0; }
+
+/* 01 · a wall of real unit covers, three offset courses */
+.v1-scope .hi-covers {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+}
+.v1-scope .hi-covers-row {
+  display: flex;
+  gap: 10px;
+  width: 124%;
+  margin-inline-start: -3%;
+}
+.v1-scope .hi-covers-row:nth-child(2) { margin-inline-start: -19%; }
+.v1-scope .hi-covers-row:nth-child(3) { margin-inline-start: -9%; }
+.v1-scope .hi-cover {
+  position: relative;
+  flex: 1 1 0;
+  min-width: 0;
+  aspect-ratio: 16 / 9;
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--v1-ink-3);
+  box-shadow: inset 0 0 0 1px rgba(160, 200, 240, 0.08);
+}
+
+/* 03 · the real platform, in a phone that rises out of the card's floor.
+   No fade here: the phone sits on the card's own ground, so there is no
+   edge to soften, and a mask would only draw a band across the card. */
+.v1-scope .hi-pillar-art--phone {
+  background: transparent;
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+.v1-scope .hi-pillar-art--phone .hi-caption { inset-block-end: auto; inset-block-start: 16px; }
+.v1-scope .hi-phone {
+  position: absolute;
+  top: 34px;
+  inset-inline-start: 16%;
+  width: 226px;
+  padding: 7px;
+  border-radius: 38px;
+  background: #0c121c;
+  box-shadow: inset 0 0 0 1px rgba(160, 200, 240, 0.18), 0 1px 0 rgba(255, 255, 255, 0.04),
+    0 34px 60px -24px #000;
+}
+.v1-scope .hi-phone-screen {
+  position: relative;
+  aspect-ratio: 390 / 640;
+  border-radius: 31px;
+  overflow: hidden;
+  background: #0a0f18;
+}
+.v1-scope .hi-phone-screen::before {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  top: 8px;
+  inset-inline: 0;
+  margin-inline: auto;
+  width: 64px;
+  height: 18px;
+  border-radius: 999px;
+  background: #000;
+}
+
+@media (max-width: 820px) {
+  .v1-scope .hi-pillar { grid-template-columns: minmax(0, 1fr); min-height: 0; }
+  .v1-scope .hi-pillar-art {
+    order: -1;
+    aspect-ratio: 16 / 10;
+    -webkit-mask-image: linear-gradient(to bottom, #000 64%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 64%, transparent 100%);
+  }
+  .v1-scope .hi-pillar-art--phone { aspect-ratio: 1 / 1; -webkit-mask-image: none; mask-image: none; }
+  .v1-scope .hi-phone { inset-inline: 0; margin-inline: auto; top: 58px; }
+  .v1-scope .hi-pillar-text { padding-top: 8px; }
+  .v1-scope .hi-caption { inset-block-end: auto; inset-block-start: 12px; }
+}
+@media (max-width: 640px) {
+  .v1-scope .hi-station-row { grid-template-columns: 40px minmax(0, 1fr); gap: 0 12px; }
+  .v1-scope .hi-station { width: 40px !important; height: 40px !important; border-radius: 13px !important; }
+  .v1-scope .hi-station svg { width: 19px; height: 19px; }
+  .v1-scope .v5-beam { inset-inline-start: 19px; }
+  .v1-scope .hi-phone { width: 196px; top: 26px; border-radius: 34px; }
+  .v1-scope .hi-phone-screen { border-radius: 27px; }
+}
+
+/* ─── 03 · #method — three principles, each with its own picture ─── */
+.v1-scope .hi-method {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(20px, 2.6vw, 34px);
+  margin-top: 64px;
+}
+.v1-scope .hi-principle-art {
+  aspect-ratio: 4 / 3;
+  border-radius: var(--v1-r-md);
+}
+.v1-scope .hi-principle-head {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--v1-line);
+}
+@media (max-width: 900px) {
+  .v1-scope .hi-method { grid-template-columns: minmax(0, 1fr); gap: 48px; }
+  .v1-scope .hi-principle-art { aspect-ratio: 16 / 10; }
+}
+
+/* 02 · spaced repetition, drawn: cards at widening intervals along a line.
+   Intervals widen in reading direction (right → left). */
+.v1-scope .hi-intervals { position: absolute; inset: 0; background: var(--v1-ink-3); }
+.v1-scope .hi-iv-track {
+  position: absolute;
+  inset-inline: 8%;
+  top: 20%;
+  bottom: 26%;
+}
+.v1-scope .hi-iv-line {
+  position: absolute;
+  inset-inline: -4%;
+  bottom: 0;
+  height: 1px;
+  background: rgba(125, 211, 252, 0.34);
+}
+.v1-scope .hi-iv-card {
+  position: absolute;
+  bottom: 22px;
+  inset-inline-start: var(--x);
+  width: 12%;
+  aspect-ratio: 5 / 7;
+  border-radius: 6px;
+  background: #efe7d6;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5) inset, 0 16px 24px -14px #000;
+}
+.v1-scope .hi-iv-card::before,
+.v1-scope .hi-iv-card::after {
+  content: "";
+  position: absolute;
+  inset-inline: 16%;
+  height: 5%;
+  border-radius: 2px;
+  background: #cfc3aa;
+}
+.v1-scope .hi-iv-card::before { top: 20%; inset-inline-end: 34%; }
+.v1-scope .hi-iv-card::after { top: 33%; }
+.v1-scope .hi-iv-tick {
+  position: absolute;
+  bottom: -4px;
+  inset-inline-start: calc(var(--x) + 6% - 4.5px);
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--v1-ink-3);
+  box-shadow: inset 0 0 0 1.5px var(--v1-azure-soft);
+}
+.v1-scope .hi-iv-tick[data-now] { background: var(--v1-azure); box-shadow: none; }
+
+/* ─── 04 · #worth — four rows in two spreads, the picture alternating sides ─── */
+.v1-scope .hi-worth { margin-top: 72px; }
+.v1-scope .hi-worth-pair {
+  display: grid;
+  gap: clamp(36px, 5vw, 72px);
+  align-items: start;
+}
+.v1-scope .hi-worth-pair[data-art="end"] { grid-template-columns: minmax(0, 1fr) minmax(0, 360px); }
+.v1-scope .hi-worth-pair[data-art="start"] { grid-template-columns: minmax(0, 360px) minmax(0, 1fr); }
+.v1-scope .hi-worth-pair + .hi-worth-pair { margin-top: clamp(40px, 5vw, 64px); }
+.v1-scope .hi-worth-art { position: sticky; top: 104px; padding-top: clamp(30px, 4vw, 46px); }
+.v1-scope .hi-worth-art .hi-plate { aspect-ratio: 3 / 4; }
+@media (max-width: 820px) {
+  .v1-scope .hi-worth-pair[data-art] { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .v1-scope .hi-worth-art {
+    position: static;
+    order: -1;
+    padding-top: 0;
+    margin-inline: calc(var(--v1-gutter) * -1);
+  }
+  .v1-scope .hi-worth-art .hi-plate {
+    aspect-ratio: 16 / 10;
+    border-radius: 0;
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 12%, #000 62%, transparent 100%);
+    mask-image: linear-gradient(to bottom, transparent 0, #000 12%, #000 62%, transparent 100%);
+  }
+  .v1-scope .hi-worth-art .hi-plate::after { display: none; }
+}
+
+/* ─── 05 · level-test band — the empty half becomes the staircase ─── */
+.v1-scope .hi-lt {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+  align-items: stretch;
+}
+.v1-scope .hi-lt-text { padding: clamp(30px, 5.5vw, 60px); position: relative; z-index: 1; }
+.v1-scope .hi-lt-art {
+  position: relative;
+  min-height: 100%;
+  -webkit-mask-image: linear-gradient(to left, transparent 0, #000 24%);
+  mask-image: linear-gradient(to left, transparent 0, #000 24%);
+}
+.v1-scope .hi-lt-art > .hp { position: absolute; inset: 0; }
+@media (max-width: 820px) {
+  .v1-scope .hi-lt { grid-template-columns: minmax(0, 1fr); }
+  .v1-scope .hi-lt-art {
+    order: -1;
+    aspect-ratio: 16 / 10;
+    min-height: 0;
+    -webkit-mask-image: linear-gradient(to bottom, #000 58%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 58%, transparent 100%);
+  }
+  .v1-scope .hi-lt-text { padding-top: 4px; }
+}
+
+/* ─── 06 · final CTA — the skyline at dawn, under the words ─── */
+.v1-scope .hi-cta { padding-bottom: 0 !important; }
+.v1-scope .hi-cta-head { position: relative; }
+.v1-scope .hi-cta-art {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 21 / 9;
+  max-height: 760px;
+  margin-top: clamp(-24px, -2vw, -8px);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 34%, #000 78%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0, #000 34%, #000 78%, transparent 100%);
+}
+.v1-scope .hi-cta-art > .hp { position: absolute; inset: 0; }
+@media (max-width: 700px) {
+  .v1-scope .hi-cta-art { aspect-ratio: 4 / 5; margin-top: 8px; }
+}

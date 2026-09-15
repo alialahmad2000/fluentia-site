@@ -2,6 +2,45 @@ import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { WORTH, WHO_FOR } from "../landing-v2/content";
 import { Reveal, staggerParent, staggerItem } from "./motion";
+import HomePicture from "../v5/HomePicture";
+
+/* The four rows read as two spreads, each beside one photograph, the picture
+ * alternating sides: the trainer and the path beside the road; the barrier and
+ * immersion beside the door opening onto light. */
+const WORTH_SPREADS = [
+  { rows: [0, 1], art: "end", id: "worth-road" },
+  { rows: [2, 3], art: "start", id: "worth-door" },
+];
+
+function WorthRow({ p, i }) {
+  return (
+    <Reveal delay={0.05}>
+      <article style={{
+        display: "grid", gridTemplateColumns: "84px 1fr", gap: "8px 28px",
+        padding: "clamp(30px, 4vw, 46px) 0",
+        borderTop: "1px solid var(--v1-line)",
+      }} className="v1-worth-row">
+        <div>
+          <div className="v1-num" aria-hidden style={{
+            fontSize: "1.9rem", fontWeight: 700, lineHeight: 1, direction: "ltr",
+            color: "transparent", WebkitTextStroke: "1.4px rgba(242,193,78,0.8)", letterSpacing: "0.04em",
+          }}>{String(i + 1).padStart(2, "0")}</div>
+          <div style={{ marginTop: 6, fontSize: "0.72rem", letterSpacing: "0.16em", color: "var(--v1-gold)", fontWeight: 600, fontFamily: "var(--v1-display)" }}>
+            {p.essence}
+          </div>
+        </div>
+        <div>
+          <h3 style={{ fontFamily: "var(--v1-display)", fontSize: "var(--v1-h3)", fontWeight: 700, color: "var(--v1-t-strong)", margin: 0, lineHeight: 1.6 }}>
+            {p.title}
+          </h3>
+          <p style={{ margin: "12px 0 0", fontSize: "1.02rem", lineHeight: 2.05, color: "var(--v1-t-mute)", fontWeight: 300 }}>
+            {p.body}
+          </p>
+        </div>
+      </article>
+    </Reveal>
+  );
+}
 
 /* Apple-style read-along: each word brightens as it crosses the
  * reading band. One scroll progress drives every word (no per-word
@@ -60,38 +99,37 @@ export function V1Worth() {
             margin: "34px auto 0",
           }}
         />
+      </div>
 
-        <div style={{ marginTop: 72, display: "flex", flexDirection: "column", gap: 0 }}>
-          {WORTH.pillars.map((p, i) => (
-            <Reveal key={p.num} delay={i * 0.05}>
-              <article style={{
-                display: "grid", gridTemplateColumns: "84px 1fr", gap: "8px 28px",
-                padding: "clamp(30px, 4vw, 46px) 0",
-                borderTop: "1px solid var(--v1-line)",
-              }} className="v1-worth-row">
-                <div>
-                  <div className="v1-num" aria-hidden style={{
-                    fontSize: "1.9rem", fontWeight: 700, lineHeight: 1, direction: "ltr",
-                    color: "transparent", WebkitTextStroke: "1.4px rgba(242,193,78,0.8)", letterSpacing: "0.04em",
-                  }}>{String(i + 1).padStart(2, "0")}</div>
-                  <div style={{ marginTop: 6, fontSize: "0.72rem", letterSpacing: "0.16em", color: "var(--v1-gold)", fontWeight: 600, fontFamily: "var(--v1-display)" }}>
-                    {p.essence}
-                  </div>
-                </div>
-                <div>
-                  <h3 style={{ fontFamily: "var(--v1-display)", fontSize: "var(--v1-h3)", fontWeight: 700, color: "var(--v1-t-strong)", margin: 0, lineHeight: 1.6 }}>
-                    {p.title}
-                  </h3>
-                  <p style={{ margin: "12px 0 0", fontSize: "1.02rem", lineHeight: 2.05, color: "var(--v1-t-mute)", fontWeight: 300 }}>
-                    {p.body}
-                  </p>
-                </div>
-              </article>
-            </Reveal>
-          ))}
-          <hr className="v1-hairline" />
-        </div>
+      <div className="v1-container hi-worth">
+        {WORTH_SPREADS.map((spread) => {
+          const art = (
+            <div className="hi-worth-art" aria-hidden="true" key="art">
+              <div className="hi-plate">
+                <HomePicture
+                  id={spread.id}
+                  variant="tall"
+                  sizes="360px"
+                  art={[{ variant: "wide", media: "(max-width: 820px)", sizes: "100vw" }]}
+                />
+              </div>
+            </div>
+          );
+          const rows = (
+            <div key="rows">
+              {spread.rows.map((n) => <WorthRow key={WORTH.pillars[n].num} p={WORTH.pillars[n]} i={n} />)}
+            </div>
+          );
+          return (
+            <div className="hi-worth-pair" data-art={spread.art} key={spread.id}>
+              {spread.art === "start" ? [art, rows] : [rows, art]}
+            </div>
+          );
+        })}
+        <hr className="v1-hairline" />
+      </div>
 
+      <div className="v1-container" style={{ maxWidth: 900 }}>
         <Reveal delay={0.1}>
           <div style={{ textAlign: "center", marginTop: 64 }}>
             <p style={{ fontFamily: "var(--v1-display)", fontSize: "clamp(1.3rem, 2.8vw, 1.8rem)", fontWeight: 700, color: "var(--v1-t-strong)", margin: 0 }}>

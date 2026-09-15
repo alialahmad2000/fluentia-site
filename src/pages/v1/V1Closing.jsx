@@ -4,6 +4,7 @@ import { STORIES, FAQ, FOUNDER, FINAL_CTA, FOOTER, NAV } from "../landing-v2/con
 import { Reveal, staggerParent, staggerItem, EASE, SPRING_SMOOTH } from "./motion";
 import { Magnetic } from "./V1Interactive";
 import BrandMark from "../../components/BrandMark";
+import HomePicture from "../v5/HomePicture";
 
 /* ────────────────────────────────────────────────────────────
  * Stories — 3 real testimonials
@@ -212,8 +213,11 @@ export function V1Founder() {
  * ──────────────────────────────────────────────────────────── */
 export function V1FinalCTA() {
   return (
-    <section className="v1-section" style={{ position: "relative", overflow: "clip" }}>
-      <div className="v1-glow v1-drift" aria-hidden style={{ width: 900, height: 620, top: "16%", insetInlineStart: "8%", background: "radial-gradient(ellipse, rgba(56,189,248,0.11), transparent 62%)" }} />
+    <section className="v1-section hi-cta" id="final-cta" style={{ position: "relative", overflow: "clip" }}>
+      {/* The azure glow that sat behind this block is gone: the skyline below is
+          now the light, and a blurred wash would have run over it. The words and
+          their watermark stay on the page ground; the picture starts beneath them. */}
+      <div className="hi-cta-head">
       {/* Giant watermark wordmark behind the closing statement */}
       <div aria-hidden style={{
         position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center",
@@ -250,6 +254,17 @@ export function V1FinalCTA() {
             </Magnetic>
           </div>
         </Reveal>
+      </div>
+      </div>
+      {/* Riyadh at dawn: the payoff of the page's night-to-dawn arc. Full-bleed,
+          faded into the page ground at both edges, never behind the headline. */}
+      <div className="hi-cta-art" aria-hidden="true">
+        <HomePicture
+          id="cta-riyadh"
+          variant="wide"
+          sizes="100vw"
+          art={[{ variant: "tall", media: "(max-width: 700px)", sizes: "100vw" }]}
+        />
       </div>
     </section>
   );

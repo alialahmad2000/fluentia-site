@@ -1,5 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
+import HomePicture from "../v5/HomePicture";
 
 /**
  * V1LevelTestBand — the invitation to the placement exam (/level-test).
@@ -42,9 +43,12 @@ export default function V1LevelTestBand() {
           border: "1px solid var(--v1-line-strong)",
           background:
             "radial-gradient(900px 420px at 82% -10%, rgba(56,189,248,0.16), transparent 62%), linear-gradient(180deg, rgba(10,18,32,0.86), rgba(6,11,22,0.94))",
-          padding: "clamp(30px, 5.5vw, 60px)",
         }}
       >
+        {/* Text on the right; the other half is a stairwell rising toward light,
+            each landing a level. On a phone the stairwell leads, as a band. */}
+        <div className="hi-lt">
+        <div className="hi-lt-text">
         <span
           style={{
             display: "inline-block",
@@ -148,6 +152,16 @@ export default function V1LevelTestBand() {
           <span style={{ fontSize: "0.84rem", color: "var(--v1-t-faint)", lineHeight: 1.8 }}>
             مجاني · بدون تسجيل · 10 دقائق · النتيجة تظهر لك فوراً
           </span>
+        </div>
+        </div>
+        <div className="hi-lt-art" aria-hidden="true">
+          <HomePicture
+            id="level-stairs"
+            variant="tall"
+            sizes="440px"
+            art={[{ variant: "wide", media: "(max-width: 820px)", sizes: "100vw" }]}
+          />
+        </div>
         </div>
       </motion.div>
     </section>

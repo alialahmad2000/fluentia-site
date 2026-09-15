@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { SOCIAL_PROOF, PROBLEM, SOLUTION, METHOD } from "../landing-v2/content";
 import { Reveal, CountUp, staggerParent, staggerItem, EASE } from "./motion";
+import HomePicture from "../v5/HomePicture";
 
 /* ────────────────────────────────────────────────────────────
  * Stats — honest numbers, gold-free, count-up numerals
@@ -216,8 +217,42 @@ function PillarIcon({ name }) {
   return <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden><rect {...common} x="3" y="4" width="18" height="14" rx="3" /><path {...common} d="M8 21h8M12 18v3M7 9l3 3-3 3M13 15h4" /></svg>;
 }
 
+/* Spaced repetition, drawn rather than rendered: five cards along a line, the
+ * gap after each review wider than the one before. Positions are measured from
+ * the inline start, so the intervals widen in reading direction (RTL: leftward). */
+const INTERVALS = [0, 13, 28, 49, 88]; // card width 12%; gaps 1 → 3 → 9 → 27, each three times the last
+
+function PrincipleArt({ i }) {
+  if (i === 0) return <HomePicture id="method-coffee" variant="main" sizes="(max-width: 900px) 100vw, 360px" />;
+  if (i === 2) return <HomePicture id="method-mic" variant="main" sizes="(max-width: 900px) 100vw, 360px" />;
+  return (
+    <motion.div
+      className="hi-intervals"
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true, margin: "0px 0px -12% 0px" }}
+      variants={{ hidden: {}, show: { transition: { staggerChildren: 0.12, delayChildren: 0.15 } } }}
+    >
+      <span className="hi-iv-track">
+      <span className="hi-iv-line" />
+      {INTERVALS.map((x, n) => (
+        <motion.span
+          key={x}
+          className="hi-iv-card"
+          style={{ "--x": `${x}%` }}
+          variants={{ hidden: { opacity: 0, y: 10 }, show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE } } }}
+        />
+      ))}
+      {INTERVALS.map((x, n) => (
+        <span key={`t${x}`} className="hi-iv-tick" style={{ "--x": `${x}%` }} data-now={n === 0 || undefined} />
+      ))}
+      </span>
+    </motion.div>
+  );
+}
+
 /* ────────────────────────────────────────────────────────────
- * Method — 3 principles, editorial horizontal rhythm
+ * Method — 3 principles, each with its own picture
  * ──────────────────────────────────────────────────────────── */
 export function V1Method() {
   return (
@@ -229,44 +264,37 @@ export function V1Method() {
           <p className="v1-intro">{METHOD.intro}</p>
         </Reveal>
 
-        <div style={{ marginTop: 64, display: "flex", flexDirection: "column" }}>
+        {/* One picture per principle, each in a different mode: a still life for
+            conversation, a drawn diagram for spacing (exact intervals, no render),
+            a device for AI + human. */}
+        <div className="hi-method">
           {METHOD.pillars.map((p, i) => (
             <Reveal key={p.num} delay={i * 0.06}>
-              <div
-                className="v1-method-row"
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "120px 1fr 2fr",
-                  gap: "18px 40px",
-                  padding: "clamp(28px, 4vw, 44px) 0",
-                  borderTop: "1px solid var(--v1-line)",
-                  alignItems: "baseline",
-                }}
-              >
-                <span className="v1-num" aria-hidden style={{
-                  fontSize: "clamp(1.9rem, 3.5vw, 2.7rem)", fontWeight: 700, lineHeight: 1,
-                  color: "transparent", WebkitTextStroke: "1.5px rgba(125,211,252,0.85)", letterSpacing: "0.04em",
-                  direction: "ltr",
-                }}>
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <h3 style={{ fontFamily: "var(--v1-display)", fontSize: "var(--v1-h3)", fontWeight: 700, color: "var(--v1-t-strong)", margin: 0 }}>
-                  {p.title}
-                </h3>
-                <p style={{ margin: 0, fontSize: "1rem", lineHeight: 2, color: "var(--v1-t-mute)", fontWeight: 300 }}>
+              <article>
+                <div className="hi-plate hi-principle-art" aria-hidden="true">
+                  <PrincipleArt i={i} />
+                </div>
+                <div className="hi-principle-head">
+                  <span className="v1-num" aria-hidden style={{
+                    fontSize: "clamp(1.6rem, 2.6vw, 2.1rem)", fontWeight: 700, lineHeight: 1,
+                    color: "transparent", WebkitTextStroke: "1.4px rgba(125,211,252,0.85)", letterSpacing: "0.04em",
+                    direction: "ltr",
+                  }}>
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <h3 style={{ fontFamily: "var(--v1-display)", fontSize: "var(--v1-h3)", fontWeight: 700, color: "var(--v1-t-strong)", margin: 0 }}>
+                    {p.title}
+                  </h3>
+                </div>
+                <p style={{ margin: "14px 0 0", fontSize: "1rem", lineHeight: 2, color: "var(--v1-t-mute)", fontWeight: 300 }}>
                   {p.body}
                 </p>
-              </div>
+              </article>
             </Reveal>
           ))}
-          <hr className="v1-hairline" />
         </div>
       </div>
-      <style>{`
-        @media (max-width: 820px) {
-          .v1-scope .v1-method-row { grid-template-columns: 1fr !important; gap: 10px !important; }
-        }
-      `}</style>
+      {/* Layout lives in src/styles/home-imagery.css (.hi-method). */}
     </section>
   );
 }

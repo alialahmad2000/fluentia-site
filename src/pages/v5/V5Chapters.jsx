@@ -2,6 +2,7 @@ import { useRef } from "react";
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { PROBLEM, SOLUTION } from "../landing-v2/content";
 import { Reveal, EASE, staggerParent, staggerItem } from "../v1/motion";
+import HomePicture from "./HomePicture";
 
 /**
  * V5 narrative furniture:
@@ -122,11 +123,25 @@ export function V5Problem() {
           <p className="v1-intro">{PROBLEM.intro}</p>
         </Reveal>
 
-        <div style={{ marginTop: 56 }}>
-          {PROBLEM.cards.map((c, i) => (
-            <LedgerRow key={c.title} card={c} i={i} />
-          ))}
-          <hr className="v1-hairline" />
+        {/* The ledger beside one still life of the years it describes. On a phone
+            the picture leads, as a wide band, and the rows follow. */}
+        <div className="hi-problem">
+          <div>
+            {PROBLEM.cards.map((c, i) => (
+              <LedgerRow key={c.title} card={c} i={i} />
+            ))}
+            <hr className="v1-hairline" />
+          </div>
+          <div className="hi-problem-art" aria-hidden="true">
+            <div className="hi-plate">
+              <HomePicture
+                id="problem-desk"
+                variant="tall"
+                sizes="380px"
+                art={[{ variant: "wide", media: "(max-width: 820px)", sizes: "100vw" }]}
+              />
+            </div>
+          </div>
         </div>
 
         <Reveal delay={0.1}>
@@ -167,9 +182,9 @@ export function V5Solution() {
           <div style={{ display: "flex", flexDirection: "column", gap: "clamp(34px, 5vw, 60px)" }}>
             {SOLUTION.pillars.map((p, i) => (
               <Reveal key={p.title} delay={i * 0.05}>
-                <div style={{ display: "grid", gridTemplateColumns: "56px 1fr", gap: "0 26px", alignItems: "start" }}>
+                <div className="hi-station-row">
                   {/* station node */}
-                  <span style={{
+                  <span className="hi-station" style={{
                     width: 56, height: 56, borderRadius: 18, position: "relative", zIndex: 1,
                     background: "linear-gradient(140deg, rgba(56,189,248,0.18), rgba(6,11,22,0.9))",
                     border: "1px solid var(--v1-line-azure)",
@@ -179,7 +194,8 @@ export function V5Solution() {
                     <StationIcon name={p.icon} />
                   </span>
 
-                  <div className="v1-card v1-card-hover" style={{ padding: "clamp(22px, 3vw, 34px)" }}>
+                  <div className="v1-card v1-card-hover hi-pillar">
+                    <div className="hi-pillar-text">
                     <div style={{ display: "flex", alignItems: "baseline", gap: 14, flexWrap: "wrap" }}>
                       <span className="v1-num" style={{ fontSize: "0.8rem", fontWeight: 700, color: "var(--v1-azure)", letterSpacing: "0.14em", direction: "ltr" }}>
                         {String(i + 1).padStart(2, "0")}
@@ -201,6 +217,8 @@ export function V5Solution() {
                         </li>
                       ))}
                     </ul>
+                    </div>
+                    <PillarArt name={p.icon} />
                   </div>
                 </div>
               </Reveal>
@@ -209,6 +227,56 @@ export function V5Solution() {
         </div>
       </div>
     </section>
+  );
+}
+
+/* Standard units only (owner_student_id IS NULL), levels 1-3 — the shared
+   curriculum, never a student's custom track. Ids match scripts/home-images/images.json. */
+const COVER_COURSES = [
+  ["cover-l1u02", "cover-l3u04", "cover-l2u01"],
+  ["cover-l1u08", "cover-l1u03", "cover-l3u02"],
+  ["cover-l3u01", "cover-l2u03", "cover-l3u12"],
+];
+
+/** Each pillar's evidence: the real covers, the trainer's desk, the real platform. */
+function PillarArt({ name }) {
+  if (name === "method")
+    return (
+      <div className="hi-pillar-art" aria-hidden="true">
+        <div className="hi-covers">
+          {COVER_COURSES.map((row, r) => (
+            <div className="hi-covers-row" key={r}>
+              {row.map((id) => (
+                <div className="hi-cover" key={id}>
+                  <HomePicture id={id} variant="tile" sizes="(max-width: 820px) 32vw, 200px" />
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
+        <span className="hi-caption">أغلفة حقيقية من وحدات المنهج</span>
+      </div>
+    );
+  if (name === "trainer")
+    return (
+      <div className="hi-pillar-art" aria-hidden="true">
+        <HomePicture id="solution-trainer" variant="main" sizes="(max-width: 820px) 80vw, 460px" />
+      </div>
+    );
+  return (
+    <div className="hi-pillar-art hi-pillar-art--phone">
+      <div className="hi-phone">
+        <div className="hi-phone-screen">
+          <HomePicture
+            id="platform-vocab"
+            variant="screen"
+            sizes="226px"
+            alt="صفحة مفردات وحدة «الطقس المتطرف» كما تظهر للطالب في منصة طلاقة"
+          />
+        </div>
+      </div>
+      <span className="hi-caption" aria-hidden="true">شاشة حقيقية من المنصة</span>
+    </div>
   );
 }
 
