@@ -152,6 +152,8 @@
 .v1-scope .hi-covers {
   position: absolute;
   inset: 0;
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 18%);
+  mask-image: linear-gradient(to right, transparent 0, #000 18%);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -200,8 +202,14 @@
    instead of being cut through the chips by the card floor. In % of its own
    height, so the same stops hold at 226px (desktop) and 196px (phone) wide. */
 .v1-scope .hi-phone {
-  -webkit-mask-image: linear-gradient(to bottom, #000 47%, rgba(0,0,0,.72) 54%, rgba(0,0,0,.3) 59.5%, transparent 63.5%);
-  mask-image: linear-gradient(to bottom, #000 47%, rgba(0,0,0,.72) 54%, rgba(0,0,0,.3) 59.5%, transparent 63.5%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 62%, rgba(0,0,0,.72) 68%, rgba(0,0,0,.3) 73%, transparent 76%);
+  mask-image: linear-gradient(to bottom, #000 62%, rgba(0,0,0,.72) 68%, rgba(0,0,0,.3) 73%, transparent 76%);
+}
+/* Wide: the card grows so the real screen can be read, and the phone bleeds
+   past where a 312px card would have cut it. */
+@media (min-width: 821px) {
+  .v1-scope .hi-pillar--phone { min-height: 470px; }
+  .v1-scope .hi-pillar--phone .hi-phone { width: 330px; top: 56px; }
 }
 .v1-scope .hi-phone-screen {
   position: relative;
@@ -232,7 +240,7 @@
     -webkit-mask-image: linear-gradient(to bottom, #000 68%, rgba(0,0,0,.82) 79%, rgba(0,0,0,.45) 89%, rgba(0,0,0,.12) 96%, transparent 100%);
     mask-image: linear-gradient(to bottom, #000 68%, rgba(0,0,0,.82) 79%, rgba(0,0,0,.45) 89%, rgba(0,0,0,.12) 96%, transparent 100%);
   }
-  .v1-scope .hi-pillar-art--phone { aspect-ratio: 1 / 1; -webkit-mask-image: none; mask-image: none; }
+  .v1-scope .hi-pillar-art--phone { aspect-ratio: 4 / 5; -webkit-mask-image: none; mask-image: none; }
   .v1-scope .hi-phone { inset-inline: 0; margin-inline: auto; top: 68px; }
   .v1-scope .hi-covers { justify-content: flex-start; padding-top: 62px; }
   .v1-scope .hi-pillar-art--covers { aspect-ratio: 1 / 1; }
@@ -245,6 +253,12 @@
   .v1-scope .hi-station svg { width: 19px; height: 19px; }
   .v1-scope .v5-beam { inset-inline-start: 19px; }
   .v1-scope .hi-phone { width: 196px; top: 68px; border-radius: 34px; }
+  /* Taller art box on a phone: the whole screen shows, chips included, and the
+     fade lands below them instead of through them. */
+  .v1-scope .hi-phone {
+    -webkit-mask-image: linear-gradient(to bottom, #000 80%, rgba(0,0,0,.5) 88%, transparent 94%);
+    mask-image: linear-gradient(to bottom, #000 80%, rgba(0,0,0,.5) 88%, transparent 94%);
+  }
   .v1-scope .hi-phone-screen { border-radius: 27px; }
 }
 
@@ -282,7 +296,7 @@
   flex-direction: column;
   justify-content: center;
   gap: clamp(20px, 7%, 40px);
-  padding-inline: 11%;
+  padding-inline: 15%;
 }
 .v1-scope .hi-voice {
   display: flex;
@@ -299,7 +313,7 @@
   transform-origin: center;
 }
 .v1-scope .hi-voice--a { width: 74%; }
-.v1-scope .hi-voice--a i { background: #efe7d6; }
+.v1-scope .hi-voice--a i { background: #cbd5e1; }
 .v1-scope .hi-voice--b { width: 64%; margin-inline-start: auto; }
 .v1-scope .hi-voice--b i { background: var(--v1-azure); }
 
@@ -308,7 +322,7 @@
 .v1-scope .hi-intervals { position: absolute; inset: 0; background: var(--v1-ink-3); }
 .v1-scope .hi-iv-track {
   position: absolute;
-  inset-inline: 8%;
+  inset-inline: 15%;
   top: 20%;
   bottom: 42%;
 }
@@ -326,7 +340,7 @@
   width: 10.5%;
   aspect-ratio: 5 / 7;
   border-radius: 6px;
-  background: #efe7d6;
+  background: #cbd5e1;
   box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5) inset, 0 16px 24px -14px #000;
 }
 .v1-scope .hi-iv-card::before,
@@ -339,7 +353,12 @@
   background: #cfc3aa;
 }
 .v1-scope .hi-iv-card::before { top: 20%; inset-inline-end: 34%; }
+/* The drawn tiles sit in the same row as a photograph: same ground, no frame of
+   their own, artwork held to ~70% of the tile so it reads as one family. */
+.v1-scope .hi-principle-art:has(.hi-voices)::after,
+.v1-scope .hi-principle-art:has(.hi-intervals)::after { display: none; }
 .v1-scope .hi-iv-card::after { top: 33%; }
+.v1-scope .hi-iv-card::before, .v1-scope .hi-iv-card::after { background: #9fb0c4; }
 .v1-scope .hi-iv-tick {
   position: absolute;
   bottom: -4px;

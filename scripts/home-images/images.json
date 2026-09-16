@@ -276,6 +276,10 @@
           "widths": [
             640,
             1024
+          ],
+          "focus": [
+            0.5,
+            0.8
           ]
         },
         "phone": {
@@ -286,18 +290,20 @@
           ],
           "focus": [
             0.5,
-            0.55
+            0.78
           ]
         }
       },
       "grade": {
-        "saturation": 0.85,
-        "brightness": 0.88
+        "saturation": 0.55,
+        "brightness": 0.62
       },
       "focus": [
         0.5,
-        0.55
-      ]
+        0.8
+      ],
+      "contrast": 1.06,
+      "zoom": 0.72
     },
     {
       "id": "worth-door",
@@ -380,8 +386,8 @@
       "id": "cta-riyadh",
       "kind": "generated",
       "shot": "cta-riyadh",
-      "source": "raw:cta-riyadh--3307055187.jpg",
-      "seed": 3307055187,
+      "source": "raw:cta-riyadh--3702625165.jpg",
+      "seed": 3702625165,
       "aspect": "21:9",
       "placeholder": [
         "#04070e",

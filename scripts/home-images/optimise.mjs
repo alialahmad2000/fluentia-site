@@ -109,10 +109,11 @@ async function placeholderBuffer(img) {
   return sharp(Buffer.from(svg)).png().toBuffer();
 }
 
-function cropBox(W, H, aspect, focus = [0.5, 0.5]) {
+function cropBox(W, H, aspect, focus = [0.5, 0.5], zoom = 1) {
   const r = ratio(aspect);
   let w = W, h = Math.round(W / r);
   if (h > H) { h = H; w = Math.round(H * r); }
+  if (zoom < 1) { w = Math.round(w * zoom); h = Math.round(h * zoom); }
   const left = Math.min(W - w, Math.max(0, Math.round(focus[0] * W - w / 2)));
   const top = Math.min(H - h, Math.max(0, Math.round(focus[1] * H - h / 2)));
   return { left, top, width: w, height: h };
@@ -141,10 +142,12 @@ for (const img of SPEC.images) {
   const buf = src || (await placeholderBuffer(img));
   const meta = await sharp(buf).metadata();
   // `grade` pulls a render into the page's palette (saturation/brightness), never a colour wash.
-  const graded = img.grade ? await sharp(buf).modulate(img.grade).toBuffer() : buf;
+  let graded = buf;
+  if (img.grade) graded = await sharp(graded).modulate(img.grade).toBuffer();
+  if (img.contrast) graded = await sharp(graded).linear(img.contrast, -(128 * (img.contrast - 1))).toBuffer();
   const entry = { placeholder: isPlaceholder, variants: {} };
   for (const [name, v] of Object.entries(img.variants)) {
-    const box = cropBox(meta.width, meta.height, v.aspect, v.focus || img.focus);
+    const box = cropBox(meta.width, meta.height, v.aspect, v.focus || img.focus, v.zoom || img.zoom || 1);
     const cut = await sharp(graded).extract(box).toBuffer();
     const r = ratio(v.aspect);
     for (const w of v.widths) {

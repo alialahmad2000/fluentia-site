@@ -194,7 +194,7 @@ export function V5Solution() {
                     <StationIcon name={p.icon} />
                   </span>
 
-                  <div className="v1-card v1-card-hover hi-pillar">
+                  <div className={`v1-card v1-card-hover hi-pillar${p.icon === "platform" ? " hi-pillar--phone" : ""}`}>
                     <div className="hi-pillar-text">
                     <div style={{ display: "flex", alignItems: "baseline", gap: 14, flexWrap: "nowrap" }}>
                       <span className="v1-num" style={{ fontSize: "0.8rem", fontWeight: 700, color: "var(--v1-azure)", letterSpacing: "0.14em", direction: "ltr" }}>
