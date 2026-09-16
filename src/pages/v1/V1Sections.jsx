@@ -222,8 +222,36 @@ function PillarIcon({ name }) {
  * the inline start, so the intervals widen in reading direction (RTL: leftward). */
 const INTERVALS = [0, 13.67, 30.5, 53.67, 89.5]; // card width 10.5%; each gap twice the last (3.2 → 6.3 → 12.7 → 25.3)
 
+/* «التحدّث أولاً» is drawn, not photographed: four renders of two finjan cups
+ * came back as European handled mugs, which loses the whole point of the shot,
+ * so the slot ships without a photograph. Two voices answering each other —
+ * cream for one, azure for the other — in the same drawn language as the
+ * spaced-repetition tile beside it. Fixed heights: render must be pure. */
+const VOICE_A = [26, 52, 38, 68, 44, 80, 56, 34, 62, 30, 46, 24];
+const VOICE_B = [22, 44, 60, 36, 72, 48, 64, 32, 54, 40, 28];
+
+function Voices() {
+  const bar = { hidden: { opacity: 0, scaleY: 0.35 }, show: { opacity: 1, scaleY: 1, transition: { duration: 0.5, ease: EASE } } };
+  return (
+    <motion.div
+      className="hi-voices"
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true, margin: "0px 0px -12% 0px" }}
+      variants={{ hidden: {}, show: { transition: { staggerChildren: 0.035, delayChildren: 0.1 } } }}
+    >
+      <span className="hi-voice hi-voice--a">
+        {VOICE_A.map((h, i) => <motion.i key={i} style={{ "--h": `${h}%` }} variants={bar} />)}
+      </span>
+      <span className="hi-voice hi-voice--b">
+        {VOICE_B.map((h, i) => <motion.i key={i} style={{ "--h": `${h}%` }} variants={bar} />)}
+      </span>
+    </motion.div>
+  );
+}
+
 function PrincipleArt({ i }) {
-  if (i === 0) return <HomePicture id="method-coffee" variant="main" sizes="(max-width: 900px) 100vw, 360px" />;
+  if (i === 0) return <Voices />;
   if (i === 2) return <HomePicture id="method-mic" variant="main" sizes="(max-width: 900px) 100vw, 360px" />;
   return (
     <motion.div

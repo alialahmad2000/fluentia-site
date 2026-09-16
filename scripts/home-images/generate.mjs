@@ -30,7 +30,7 @@ const args = process.argv.slice(2);
 const flag = (name) => args.includes(name);
 const seedAt = args.indexOf("--seed");
 const fixedSeed = seedAt > -1 ? Number(args[seedAt + 1]) : undefined;
-const positional = args.filter((a, i) => !a.startsWith("--") && i !== seedAt + 1);
+const positional = args.filter((a, i) => !a.startsWith("--") && !(seedAt > -1 && i === seedAt + 1));
 
 const used = () =>
   existsSync(LEDGER)
@@ -40,14 +40,16 @@ const used = () =>
 async function render(shot, seed) {
   if (used() >= MAX) throw new Error(`render budget reached: ${used()} of ${MAX} in ${LEDGER}`);
   const prompt = `${shot.prompt} ${manifest.suffix}`;
+  const ultra = shot.model.endsWith("ultra");
   const body = {
     prompt,
-    aspect_ratio: shot.aspect_ratio,
-    raw: flag("--raw") || Boolean(shot.raw),
     num_images: 1,
     output_format: "jpeg",
     safety_tolerance: "2",
     enable_safety_checker: true,
+    ...(ultra
+      ? { aspect_ratio: shot.aspect_ratio, raw: flag("--raw") || Boolean(shot.raw) }
+      : { image_size: shot.size }),
   };
   if (seed !== undefined) body.seed = seed;
   const res = await fetch(`https://fal.run/${shot.model}`, {
@@ -56,7 +58,7 @@ async function render(shot, seed) {
     body: JSON.stringify(body),
   });
   const text = await res.text();
-  appendFileSync(LEDGER, JSON.stringify({ at: new Date().toISOString(), id: shot.id, status: res.status }) + "\n");
+  appendFileSync(LEDGER, JSON.stringify({ at: new Date().toISOString(), id: shot.id, model: shot.model, status: res.status }) + "\n");
   if (!res.ok) {
     // A locked or empty balance is not retried and not routed elsewhere: stop and report.
     throw new Error(`FAL ${res.status} for ${shot.id}: ${text.slice(0, 300)}`);

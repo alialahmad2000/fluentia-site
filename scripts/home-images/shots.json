@@ -17,71 +17,92 @@
       "section": "#problem",
       "mode": "still life",
       "grade": "night, no warm light",
-      "model": "fal-ai/flux-pro/v1.1-ultra",
+      "model": "fal-ai/flux-pro/v1.1",
       "note": "Render one seed with the suffix and one without; naming hands/letters can invite them.",
-      "prompt": "A cinematic still life on an old wooden desk at night, lit only by cold blue moonlight from a window. An untitled book with a plain unmarked cloth cover lies face-down and splayed open, its spine cracked. Beside it, a cup of coffee gone cold with a dried ring on its saucer, and a pair of folded reading glasses resting on a small stack of plain notebooks. The objects are grouped in the middle third of the frame with dark space above and below. The mood is years of quiet, abandoned attempts. Deep midnight-blue grade with near-black shadows and one crisp azure highlight along the book's edge; restrained and melancholic. Editorial fine-art photograph, medium format, shallow depth of field, clean shadows.",
+      "prompt": "A cinematic still life on an old wooden desk at night, lit only by cold blue moonlight from a window. A plain unglazed matte stoneware mug of cold black coffee sits directly on the wood, no saucer. Beside it folded reading glasses rest on two closed notebooks with blank cloth covers and completely smooth spines — no printing, labels, engraving or maker's marks on any surface. Objects grouped in the middle third, dark space above and below. Deep midnight-blue grade, near-black shadows, one crisp azure highlight along the top notebook's edge. Editorial fine-art photograph, medium format, shallow depth of field.",
       "aspect_ratio": "3:4",
-      "raw": false
+      "size": {
+        "width": 1056,
+        "height": 1408
+      }
     },
     {
       "id": "solution-trainer",
       "section": "#solution · pillar 02",
       "mode": "device / interior",
       "grade": "night, azure screen light + one small warm lamp",
-      "model": "fal-ai/flux-pro/v1.1-ultra",
-      "prompt": "An online English trainer's desk at blue hour, seen from behind an open laptop whose screen faces away from the camera, its azure light spilling across the desk surface. Beside it, a neat stack of plain clothbound notebooks, each with a ribbon bookmark, a pencil, a small ceramic cup, and a brass desk lamp casting one small pool of amber light. Tidy, focused, attentive. Cool deep-blue room with a single warm lamp accent. Editorial interior photograph, 35mm lens, shallow depth of field.",
+      "model": "fal-ai/flux-pro/v1.1",
+      "prompt": "An online English trainer's desk at blue hour photographed from behind the laptop, so the camera sees only the dark matte back of the open screen lid; no screen surface visible anywhere in frame, its azure light spilling forward onto the desk and the wall as a soft cool wash. Beside it a neat stack of clothbound notebooks with ribbon bookmarks, a pencil, a small ceramic cup, and one brass desk lamp casting a single pool of amber light. Cool deep-blue room, dark overall, the lamp the brightest point. Editorial interior photograph, 35mm, shallow depth of field.",
       "aspect_ratio": "4:3",
-      "raw": false
+      "size": {
+        "width": 1408,
+        "height": 1056
+      }
     },
     {
       "id": "method-coffee",
       "section": "#method · 01 conversation first",
       "mode": "still life",
       "grade": "pre-dawn indigo, a sliver of warm light",
-      "model": "fal-ai/flux-pro/v1.1-ultra",
-      "prompt": "Two small handleless Saudi coffee cups (finjan) filled with pale golden Arabic coffee, placed symmetrically across a dark walnut table as if set for a conversation between two people, a small dish of dates between them. A thin wisp of steam rises from each cup. Pre-dawn light: the room is deep indigo blue, and a narrow sliver of warm amber light catches the rims of the cups. Editorial still-life photograph, low eye-level angle, shallow depth of field.",
+      "model": "fal-ai/flux-pro/v1.1",
+      "prompt": "Two tiny Arabic finjan coffee cups on a dark walnut table, facing each other across it as if set for a conversation. Each cup is a small handleless porcelain bowl the size of an egg cup, with a plain rounded rim and absolutely no handle, no ear, no loop and no saucer — not a mug, not a teacup, not an espresso cup. They hold pale amber unmilked Arabic coffee, filled only a third, with a thin wisp of steam. A shallow dish of whole dark dates sits between them. Behind, unbroken deep indigo darkness with no lights or objects. A narrow sliver of warm amber light rakes in from the left and catches the cup rims and the table edge. Editorial still-life photograph, low eye-level, shallow depth of field.",
       "aspect_ratio": "4:3",
-      "raw": false
+      "size": {
+        "width": 1408,
+        "height": 1056
+      }
     },
     {
       "id": "method-mic",
       "section": "#method · 03 AI + human",
       "mode": "device",
       "grade": "pre-dawn blue, azure rim + a sliver of warm light",
-      "model": "fal-ai/flux-pro/v1.1-ultra",
+      "model": "fal-ai/flux-pro/v1.1",
       "prompt": "A professional studio condenser microphone on a simple solid desk stand with no shock mount, a single wooden pencil lying beside the stand on a dark desk. The microphone's metal grille catches a crisp azure rim light from one side; the pencil sits in a narrow warm lamp light from the other side, just outside the frame. Dark pre-dawn blue room. Editorial still-life photograph, 50mm lens, shallow depth of field.",
       "aspect_ratio": "4:3",
-      "raw": false
+      "size": {
+        "width": 1408,
+        "height": 1056
+      }
     },
     {
       "id": "worth-road",
       "section": "#worth · 02 the path",
       "mode": "landscape",
       "grade": "first light, about half warm",
-      "model": "fal-ai/flux-pro/v1.1-ultra",
+      "model": "fal-ai/flux-pro/v1.1",
       "prompt": "An empty two-lane road in central Saudi Arabia at first light, bending up through a pass in a pale limestone escarpment, across a buff gravel plain with a few scattered talh acacia trees. The escarpment edge catches pale gold light while the sky above is still deep blue, and the asphalt carries a thin line of reflected light. Long, quiet perspective; vast, calm and hopeful. Clear clean air. Editorial landscape photograph, telephoto compression, true colours.",
       "aspect_ratio": "3:4",
-      "raw": false
+      "size": {
+        "width": 1056,
+        "height": 1408
+      }
     },
     {
       "id": "worth-door",
       "section": "#worth · 03 the barrier",
       "mode": "architecture",
       "grade": "first light, about half warm",
-      "model": "fal-ai/flux-pro/v1.1-ultra",
+      "model": "fal-ai/flux-pro/v1.1",
       "prompt": "A single-leaf traditional Najdi door of unpainted weathered wood, carved only with simple triangles and chevrons and no inscriptions, set in a thick mud-plaster wall at the end of a dim interior passage in old Diriyah. The door stands half open onto a sunlit mud-plaster courtyard wall, and bright warm first light pours through and lays a sharp-edged trapezoid of sunlight across the smooth earthen floor, while the near side of the passage rests in cool blue shadow. Architectural photograph, quiet and hopeful.",
       "aspect_ratio": "3:4",
-      "raw": false
+      "size": {
+        "width": 1056,
+        "height": 1408
+      }
     },
     {
       "id": "level-stairs",
       "section": "#level-test",
       "mode": "architecture / perspective",
       "grade": "first light, pale sky",
-      "model": "fal-ai/flux-pro/v1.1-ultra",
-      "prompt": "Looking straight up a square stairwell of pale limestone: flights of stairs turn around an open central shaft, each landing a distinct ledge, rising toward a skylight of clear pale morning sky. The lower flights sit in cool blue shadow and each landing higher up catches a little more pale gold light. Minimal modern architecture, strong geometric composition. Architectural photograph, wide lens, symmetrical.",
-      "aspect_ratio": "3:4",
-      "raw": false
+      "model": "fal-ai/flux-pro/v1.1",
+      "prompt": "Looking up a narrow square stairwell of dark basalt-grey stone: six straight flights of real stair treads turning around an open rectangular shaft, one per storey, each landing a clear projecting ledge, rising toward a small distant skylight of pale morning sky. Lowest flights in near-black blue shadow, each flight higher catching slightly more cool light, only the topmost landing taking a faint warm gold edge. Skylight small, not blown out, frame predominantly dark. Dark minimal modern architecture, strong geometry. Architectural photograph, wide lens, symmetrical, from the bottom of the shaft.",
+      "aspect_ratio": "4:3",
+      "size": {
+        "width": 1408,
+        "height": 1056
+      }
     },
     {
       "id": "cta-riyadh",
@@ -92,7 +113,7 @@
       "aspect_ratio": "21:9",
       "raw": true,
       "note": "If 4 seeds fail the landmarks, use a licensed real photograph, graded to match; never ship a wrong Kingdom Centre. Placed as a 3:1 cut (focus y 0.62) on desktop and a 1:1 cut on phones, both faded into the page ground.",
-      "prompt": "The Riyadh skyline at dawn seen from far across the city: the Kingdom Centre tower and the Al Faisaliah tower stand as crisp dark silhouettes against the horizon, with no facade detail. The sky moves from deep night navy, nearly black, at the top of the frame, through clear blue, to soft apricot and gold at the horizon. The low city below is a dark silhouette. Clear, clean air; calm and optimistic. The skyline occupies only the lower 45 percent of the frame; everything above it is open sky, darkening to near-black at the top edge. Wide cinematic landscape photograph, telephoto, natural colour."
+      "prompt": "A wide desert-city skyline at dawn seen from far across the plain. Two towers dominate as flat black silhouettes with no facade detail: on the left a slender rectangular tower whose upper third is pierced by a wide inverted-catenary arch spanned by a straight bridge; on the right a tapered four-sided pyramid tower carrying a single sphere just below its apex. No tower has a needle spire. The rest of the city is a low even band of small dark blocks with scattered warm window lights. The sky runs from near-black navy at the very top edge, through deep blue, to a narrow band of apricot and gold at the horizon only. The skyline occupies the lower 35 percent of the frame. Clear dry air, no haze. Wide cinematic telephoto landscape photograph, natural colour."
     }
   ],
   "real": [
@@ -115,5 +136,6 @@
       "source": "a 390x844 render of /tour/unit/extreme-weather/vocabulary (static snapshot content, no student data), tour chrome hidden"
     }
   ],
-  "model_note": "All shots use flux-pro v1.1-ultra (about 4 MP) so 1600w/1920w deliveries are real pixels, not upscales. raw:true gives a less processed photographic look; try it per shot if a render reads as CGI."
+  "model_note": "flux-pro v1.1 at 1056x1408 / 1408x1056 (1.49 MP, billed as 2 MP) for the seven; v1.1-ultra only for the full-bleed CTA, which is delivered at 1920w.",
+  "revision": "Prompts rewritten 2026-09-16 after the art-director reviewed the first renders: wrong landmarks and a bright sky on the CTA, printed marks on the desk objects, a balcony instead of stairs, a screen facing camera, and European mugs instead of finjan."
 }

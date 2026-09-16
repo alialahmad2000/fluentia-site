@@ -1,5 +1,5 @@
 {
-  "about": "Every image the homepage serves, how it is cut, and at which widths. optimise.mjs reads this file, writes public/home/<id>-<variant>-<width>.{avif,webp} and src/pages/v5/homeImages.json. `source` is where the pixels come from: null = no render picked yet (a flat placeholder of the exact aspect is written instead), `raw:<file>` = a file in RAW_DIR, `https://…` = a public URL (real platform assets). `focus` is the crop centre as fractions [x, y] of the source.",
+  "about": "Every image the homepage serves, how it is cut, and at which widths. optimise.mjs reads this file, writes public/home/<id>-<variant>-<width>.{avif,webp} and src/pages/v5/homeImages.json. `source` is where the pixels come from: null = no render picked yet (a flat placeholder of the exact aspect is written instead), `raw:<file>` = a file in RAW_DIR, `https://…` = a public URL (real platform assets). `focus` is the crop centre as fractions [x, y] of the source. Portrait renders are 1056x1408 and landscapes 1408x1056, so their ladders stop at 1024 (1320 for the level-test cut); only the ultra CTA carries 1600/1920.",
   "outDir": "public/home",
   "dataFile": "src/pages/v5/homeImages.json",
   "budgetKB": {
@@ -16,8 +16,8 @@
       "id": "problem-desk",
       "kind": "generated",
       "shot": "problem-desk",
-      "source": null,
-      "seed": null,
+      "source": "raw:problem-desk--2431757117.jpg",
+      "seed": 2431757117,
       "aspect": "3:4",
       "placeholder": [
         "#0d1a30",
@@ -28,8 +28,7 @@
           "aspect": "3:4",
           "widths": [
             640,
-            1024,
-            1600
+            1024
           ]
         },
         "phone": {
@@ -43,7 +42,11 @@
             0.5
           ]
         }
-      }
+      },
+      "focus": [
+        0.5,
+        0.55
+      ]
     },
     {
       "id": "cover-l1u02",
@@ -193,8 +196,8 @@
       "id": "solution-trainer",
       "kind": "generated",
       "shot": "solution-trainer",
-      "source": null,
-      "seed": null,
+      "source": "raw:solution-trainer--1420221141.jpg",
+      "seed": 1420221141,
       "aspect": "4:3",
       "placeholder": [
         "#0b1628",
@@ -232,32 +235,11 @@
       }
     },
     {
-      "id": "method-coffee",
-      "kind": "generated",
-      "shot": "method-coffee",
-      "source": null,
-      "seed": null,
-      "aspect": "4:3",
-      "placeholder": [
-        "#101634",
-        "#1c1e38"
-      ],
-      "variants": {
-        "main": {
-          "aspect": "4:3",
-          "widths": [
-            640,
-            1024
-          ]
-        }
-      }
-    },
-    {
       "id": "method-mic",
       "kind": "generated",
       "shot": "method-mic",
-      "source": null,
-      "seed": null,
+      "source": "raw:method-mic--2778438419.jpg",
+      "seed": 2778438419,
       "aspect": "4:3",
       "placeholder": [
         "#0c1832",
@@ -271,14 +253,18 @@
             1024
           ]
         }
-      }
+      },
+      "focus": [
+        0.5,
+        0.5
+      ]
     },
     {
       "id": "worth-road",
       "kind": "generated",
       "shot": "worth-road",
-      "source": null,
-      "seed": null,
+      "source": "raw:worth-road--4146170212.jpg",
+      "seed": 4146170212,
       "aspect": "3:4",
       "placeholder": [
         "#1b2946",
@@ -289,8 +275,7 @@
           "aspect": "3:4",
           "widths": [
             640,
-            1024,
-            1600
+            1024
           ]
         },
         "phone": {
@@ -304,14 +289,22 @@
             0.55
           ]
         }
-      }
+      },
+      "grade": {
+        "saturation": 0.85,
+        "brightness": 0.88
+      },
+      "focus": [
+        0.5,
+        0.55
+      ]
     },
     {
       "id": "worth-door",
       "kind": "generated",
       "shot": "worth-door",
-      "source": null,
-      "seed": null,
+      "source": "raw:worth-door--1098451667.jpg",
+      "seed": 1098451667,
       "aspect": "3:4",
       "placeholder": [
         "#172238",
@@ -322,8 +315,7 @@
           "aspect": "3:4",
           "widths": [
             640,
-            1024,
-            1600
+            1024
           ]
         },
         "phone": {
@@ -337,26 +329,34 @@
             0.6
           ]
         }
-      }
+      },
+      "focus": [
+        0.5,
+        0.5
+      ]
     },
     {
       "id": "level-stairs",
       "kind": "generated",
       "shot": "level-stairs",
-      "source": null,
-      "seed": null,
+      "source": "raw:level-stairs--2745012189.jpg",
+      "seed": 2745012189,
       "aspect": "3:4",
       "placeholder": [
         "#12213a",
         "#b9a88c"
       ],
       "variants": {
-        "tall": {
-          "aspect": "3:4",
+        "main": {
+          "aspect": "5:4",
           "widths": [
             640,
             1024,
-            1600
+            1320
+          ],
+          "focus": [
+            0.5,
+            0.5
           ]
         },
         "phone": {
@@ -370,14 +370,18 @@
             0.5
           ]
         }
-      }
+      },
+      "focus": [
+        0.5,
+        0.5
+      ]
     },
     {
       "id": "cta-riyadh",
       "kind": "generated",
       "shot": "cta-riyadh",
-      "source": null,
-      "seed": null,
+      "source": "raw:cta-riyadh--3307055187.jpg",
+      "seed": 3307055187,
       "aspect": "21:9",
       "placeholder": [
         "#04070e",
@@ -407,7 +411,14 @@
             0.62
           ]
         }
-      }
+      },
+      "focus": [
+        0.5,
+        0.62
+      ]
     }
-  ]
+  ],
+  "dropped": {
+    "method-coffee": "Four renders (2026-09-16) never produced a handleless finjan — every seed returned European handled mugs, which loses the cultural point of the shot. Dropped rather than chase it with the remaining balance; #method 01 carries a drawn two-voice graphic instead. The prompt stays in shots.json if it is ever retried."
+  }
 }

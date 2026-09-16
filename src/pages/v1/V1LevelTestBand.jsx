@@ -157,7 +157,7 @@ export default function V1LevelTestBand() {
         <div className="hi-lt-art" aria-hidden="true">
           <HomePicture
             id="level-stairs"
-            variant="tall"
+            variant="main"
             sizes="440px"
             art={[{ variant: "phone", media: "(max-width: 820px)", sizes: "100vw" }]}
           />

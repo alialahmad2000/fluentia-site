@@ -1,14 +1,13 @@
 {
  "problem-desk": {
-  "placeholder": true,
+  "placeholder": false,
   "variants": {
    "tall": {
-    "w": 1600,
-    "h": 2133,
+    "w": 1024,
+    "h": 1365,
     "widths": [
      640,
-     1024,
-     1600
+     1024
     ]
    },
    "phone": {
@@ -139,7 +138,7 @@
   }
  },
  "solution-trainer": {
-  "placeholder": true,
+  "placeholder": false,
   "variants": {
    "main": {
     "w": 1600,
@@ -165,21 +164,8 @@
    }
   }
  },
- "method-coffee": {
-  "placeholder": true,
-  "variants": {
-   "main": {
-    "w": 1024,
-    "h": 768,
-    "widths": [
-     640,
-     1024
-    ]
-   }
-  }
- },
  "method-mic": {
-  "placeholder": true,
+  "placeholder": false,
   "variants": {
    "main": {
     "w": 1024,
@@ -192,15 +178,14 @@
   }
  },
  "worth-road": {
-  "placeholder": true,
+  "placeholder": false,
   "variants": {
    "tall": {
-    "w": 1600,
-    "h": 2133,
+    "w": 1024,
+    "h": 1365,
     "widths": [
      640,
-     1024,
-     1600
+     1024
     ]
    },
    "phone": {
@@ -214,15 +199,14 @@
   }
  },
  "worth-door": {
-  "placeholder": true,
+  "placeholder": false,
   "variants": {
    "tall": {
-    "w": 1600,
-    "h": 2133,
+    "w": 1024,
+    "h": 1365,
     "widths": [
      640,
-     1024,
-     1600
+     1024
     ]
    },
    "phone": {
@@ -236,15 +220,15 @@
   }
  },
  "level-stairs": {
-  "placeholder": true,
+  "placeholder": false,
   "variants": {
-   "tall": {
-    "w": 1600,
-    "h": 2133,
+   "main": {
+    "w": 1320,
+    "h": 1056,
     "widths": [
      640,
      1024,
-     1600
+     1320
     ]
    },
    "phone": {
@@ -258,7 +242,7 @@
   }
  },
  "cta-riyadh": {
-  "placeholder": true,
+  "placeholder": false,
   "variants": {
    "wide": {
     "w": 1920,

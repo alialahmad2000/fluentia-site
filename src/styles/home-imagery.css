@@ -272,6 +272,37 @@
   .v1-scope .hi-principle-art { aspect-ratio: 16 / 10; }
 }
 
+/* 01 · two voices answering each other — the drawn stand-in for the finjan shot
+   that four renders never got right. Pure cream and pure azure on ink. */
+.v1-scope .hi-voices {
+  position: absolute;
+  inset: 0;
+  background: var(--v1-ink-3);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: clamp(20px, 7%, 40px);
+  padding-inline: 11%;
+}
+.v1-scope .hi-voice {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  height: 26%;
+}
+.v1-scope .hi-voice i {
+  display: block;
+  flex: 1 1 0;
+  max-width: 7px;
+  height: var(--h);
+  border-radius: 99px;
+  transform-origin: center;
+}
+.v1-scope .hi-voice--a { width: 74%; }
+.v1-scope .hi-voice--a i { background: #efe7d6; }
+.v1-scope .hi-voice--b { width: 64%; margin-inline-start: auto; }
+.v1-scope .hi-voice--b i { background: var(--v1-azure); }
+
 /* 02 · spaced repetition, drawn: cards at widening intervals along a line.
    Intervals widen in reading direction (right → left). */
 .v1-scope .hi-intervals { position: absolute; inset: 0; background: var(--v1-ink-3); }

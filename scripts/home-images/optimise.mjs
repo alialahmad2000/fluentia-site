@@ -140,10 +140,12 @@ for (const img of SPEC.images) {
   const isPlaceholder = !src;
   const buf = src || (await placeholderBuffer(img));
   const meta = await sharp(buf).metadata();
+  // `grade` pulls a render into the page's palette (saturation/brightness), never a colour wash.
+  const graded = img.grade ? await sharp(buf).modulate(img.grade).toBuffer() : buf;
   const entry = { placeholder: isPlaceholder, variants: {} };
   for (const [name, v] of Object.entries(img.variants)) {
     const box = cropBox(meta.width, meta.height, v.aspect, v.focus || img.focus);
-    const cut = await sharp(buf).extract(box).toBuffer();
+    const cut = await sharp(graded).extract(box).toBuffer();
     const r = ratio(v.aspect);
     for (const w of v.widths) {
       if (!isPlaceholder && w > box.width * 1.05) console.warn(`  ! ${img.id}/${name}: ${w}w is an upscale of a ${box.width}px crop`);
