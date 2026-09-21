@@ -136,8 +136,19 @@ const TickIcon = () => (
 );
 
 /* ─── Hero ─── */
+export function HeroShowcaseSection() {
+  return (
+    <section className="v5h-showcase-after" aria-label="من داخل المنصة">
+      <div className="v1-container">
+        <V5HeroShowcase />
+      </div>
+    </section>
+  );
+}
+
 export default function V5Hero() {
   const cine = useCinema();
+  const filmFirst = cine === "film";
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const headY = useTransform(scrollYProgress, [0, 1], ["0%", "-22%"]);
@@ -156,7 +167,7 @@ export default function V5Hero() {
   }, []);
 
   return (
-    <section id="top" ref={ref} className="v5h" data-cine={cine ? "" : undefined}>
+    <section id="top" ref={ref} className="v5h" data-cine={cine ? "" : undefined} data-cine-mode={cine || undefined}>
       <div className="v5-spotlight" aria-hidden />
       {cine ? (
         <Suspense fallback={null}>
@@ -241,10 +252,15 @@ export default function V5Hero() {
             </motion.ul>
           </motion.div>
 
-          {/* ── The platform, from inside ── */}
-          <motion.div className="v5h-stagecol" style={{ y: cardY }}>
-            <V5HeroShowcase />
-          </motion.div>
+          {/* ── The platform, from inside ──
+              In film mode this leaves the first screen and is remounted
+              immediately below the hero: the film cannot be the frame while
+              a card is standing in it. */}
+          {!filmFirst && (
+            <motion.div className="v5h-stagecol" style={{ y: cardY }}>
+              <V5HeroShowcase />
+            </motion.div>
+          )}
         </div>
         {/* Keeps room below the showcase: it drifts down on scroll, and the
             section clips anything past its bottom edge. */}

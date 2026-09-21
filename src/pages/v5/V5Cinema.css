@@ -48,6 +48,25 @@
   transition: transform 520ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+/* The ambient camera. Its own node for the same reason .v5cine-yaw is:
+   the pointer owns the yaw transform and framer owns the stage transform,
+   and a third owner would evict one of them.
+
+   This exists because the first build was ALIVE ONLY WHILE SCROLLING. The
+   stars drifted 380px over 240s — 1.6 px/s — and the haze 5% over 150s, so
+   standing still the whole scene read as a photograph. Ali's words: «هذه
+   مجرد صورة عادية». A background that only moves when you move is a still. */
+.v5cine-drift {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  animation: v5cine-breathe 42s ease-in-out infinite alternate;
+}
+@keyframes v5cine-breathe {
+  from { transform: translate3d(-0.9%, 0.5%, -40px) rotateY(0.55deg); }
+  to   { transform: translate3d(0.9%, -0.5%, 40px) rotateY(-0.55deg); }
+}
+
 .v5cine-stage {
   position: absolute;
   inset: 0;
@@ -78,13 +97,13 @@
      perspective origin */
   transform: translateZ(-1500px) scale(2.59);
   opacity: 0.8;
-  animation: v5cine-drift-far 240s linear infinite;
+  animation: v5cine-drift-far 90s linear infinite;
 }
 .v5cine-stars--near {
   /* z −1000 · (1200+1000)/1200 = 1.83 */
   transform: translateZ(-1000px) scale(2.11);
   opacity: 1;
-  animation: v5cine-drift-near 170s linear infinite;
+  animation: v5cine-drift-near 58s linear infinite;
 }
 @keyframes v5cine-drift-far {
   from { transform: translateZ(-1500px) scale(2.59) translateX(0); }
@@ -110,11 +129,11 @@
     radial-gradient(ellipse 40% 5% at 72% 92%, rgba(168, 122, 92, 0.14), transparent 74%);
   -webkit-mask-image: linear-gradient(to bottom, transparent 70%, #000 92%);
   mask-image: linear-gradient(to bottom, transparent 70%, #000 92%);
-  animation: v5cine-clouds 150s ease-in-out infinite alternate;
+  animation: v5cine-clouds 44s ease-in-out infinite alternate;
 }
 @keyframes v5cine-clouds {
-  from { transform: translateZ(-700px) scale(1.82) translateX(-2.5%); }
-  to   { transform: translateZ(-700px) scale(1.82) translateX(2.5%); }
+  from { transform: translateZ(-700px) scale(1.82) translateX(-7%); }
+  to   { transform: translateZ(-700px) scale(1.82) translateX(7%); }
 }
 
 /* ─── The dawn ─────────────────────────────────────────────────
@@ -175,13 +194,13 @@
   /* no will-change: a running `animation` already promotes these for its
      duration, and 18 permanently-promoted layers would contradict the very
      reason the starfield above is ONE element. */
-  animation: v5cine-fly var(--fd, 26s) linear var(--fdelay, 0s) infinite;
+  animation: v5cine-fly var(--fd, 16s) linear var(--fdelay, 0s) infinite;
 }
 @keyframes v5cine-fly {
   0%   { transform: translate3d(-50%, -50%, -1700px); opacity: 0; }
-  14%  { opacity: 0.2; }
-  66%  { opacity: 0.15; }
-  88%  { opacity: 0.05; }
+  12%  { opacity: 0.34; }
+  62%  { opacity: 0.26; }
+  88%  { opacity: 0.08; }
   100% { transform: translate3d(-50%, -50%, 240px); opacity: 0; }
 }
 
@@ -263,9 +282,9 @@
    beside it, and the headline has to stay the loudest thing on the screen. */
 @keyframes v5cine-fly-soft {
   0%   { transform: translate3d(-50%, -50%, -1700px); opacity: 0; }
-  14%  { opacity: 0.12; }
-  66%  { opacity: 0.09; }
-  88%  { opacity: 0.03; }
+  14%  { opacity: 0.2; }
+  66%  { opacity: 0.15; }
+  88%  { opacity: 0.05; }
   100% { transform: translate3d(-50%, -50%, 240px); opacity: 0; }
 }
 
@@ -273,6 +292,7 @@
    The stage is a real perspective stack, so frozen it still reads as
    depth — which is why this stops the motion rather than the scene. */
 @media (prefers-reduced-motion: reduce) {
+  .v5cine-drift,
   .v5cine-stars--far,
   .v5cine-stars--near,
   .v5cine-clouds { animation: none; }
@@ -299,3 +319,120 @@
 
 /* The hero's own children sit at z-index 2 already; the backdrop is 0. */
 .v1-scope .v5h[data-cine] { background: var(--v1-ink, #04070e); }
+
+/* ─── The film ─────────────────────────────────────────────────
+   The escarpment above a sea of mist, moving. It is full-bleed and sits in
+   the SAME plane as the horizon plate, so the plate — which is a thin band
+   at the very bottom — simply ends up behind it while it plays.
+
+   It fades UP from the frame's bottom edge rather than filling the screen:
+   the mist is the brightest thing in the footage, and the hero's Arabic runs
+   down the middle of the frame. The mask keeps the scene in the bottom
+   half, where the page has no text, and hands the upper half back to the
+   opaque night the headline needs. */
+.v5cine-film {
+  position: absolute;
+  inset-inline: 0;
+  bottom: env(safe-area-inset-bottom, 0px);
+  width: 100%;
+  /* 22%, not the 62% this started at. Measured at 62% against the worst
+     frame of the loop: the ghost CTA failed 4.5:1 on 75.66% of its pixels,
+     the sub-headline on 39.98%, the trust row on 29.07% — the mist is the
+     brightest thing in the footage and the hero's Arabic runs straight down
+     the middle of it. This hero's card and copy column already own the
+     frame, so here the film's job is to make the HORIZON move, nothing
+     more. The film-first composition lives at /cine2. */
+  height: 22%;
+  object-fit: cover;
+  object-position: 50% 88%;
+  /* it arrives during a read — it must not announce itself */
+  opacity: 0;
+  transition: opacity 1200ms cubic-bezier(0.22, 1, 0.36, 1);
+  /* The fade clears the hero's last line. At `0.45 34% / #000 62%` the
+     trust row sat in the ramp and failed 4.5:1 on 15.92% of its pixels;
+     starting the ramp at 58% puts the film wholly below it. */
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.3) 58%, #000 82%);
+  mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.3) 58%, #000 82%);
+}
+.v5cine-film.is-lit { opacity: 1; }
+
+@media (max-width: 960px) {
+  /* Taller share of a taller frame, and pushed down: on a phone the
+     showcase card occupies the middle, so the film only reads in the strip
+     below it. */
+  .v5cine-film { height: 17%; object-position: 50% 86%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* belt and braces — the film is never mounted under reduce, but if it
+     somehow is, it must not animate in */
+  .v5cine-film { transition: none; }
+}
+
+/* ═══ FILM-FIRST (/cine2) ══════════════════════════════════════
+   The Higgsfield composition: the film owns the frame and the words sit on
+   it. The reason this needs its own mode rather than a bigger `height` on
+   the band is measured, not stylistic — at full bleed under the standard
+   hero the ghost CTA failed 4.5:1 on 75.66% of its pixels, the sub-headline
+   on 39.98% and the trust row on 29.07%. The mist is the brightest thing in
+   the footage and the Arabic ran straight down the middle of it. A film
+   needs the frame; you cannot have both the card and the film in it. */
+
+/* Copy compacts into the top half, where the footage is deep navy sky. */
+.v1-scope .v5h[data-cine-mode="film"] .v5h-layout {
+  grid-template-columns: minmax(0, 1fr);
+  min-height: 0;
+  align-content: start;
+}
+.v1-scope .v5h[data-cine-mode="film"] .v5h-copy {
+  max-width: 48ch;
+  margin-inline-start: 0;
+}
+.v1-scope .v5h[data-cine-mode="film"] .v5h-sub {
+  max-width: 44ch;
+}
+/* The trust row would land on the mist; it moves up against the actions. */
+.v1-scope .v5h[data-cine-mode="film"] .v5h-trust {
+  margin-top: 22px;
+  padding-top: 18px;
+}
+.v1-scope .v5h[data-cine-mode="film"] .v5-hero-tail {
+  height: clamp(200px, 34vh, 380px);
+}
+
+/* The film takes the bottom of the frame — the half with no text in it. */
+.v1-scope .v5h[data-cine-mode="film"] .v5cine-film {
+  height: 58%;
+  object-position: 50% 62%;
+  /* The ramp clears the ghost CTA. At `0.5 26% / #000 52%` the CTA landed
+     where the mask reached full and failed 4.5:1 on 7.08% of its pixels. */
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.32) 46%, #000 74%);
+  mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.32) 46%, #000 74%);
+}
+
+/* The film IS the atmosphere here, so the fragments stop competing with it.
+   At the band mode's opacity they read as litter over a photograph. */
+.v1-scope .v5h[data-cine-mode="film"] .v5cine-noise { opacity: 0.45; }
+/* The still horizon is redundant once the film owns the same ground. */
+.v1-scope .v5h[data-cine-mode="film"] .v5cine-dawn { opacity: 0.55; }
+
+@media (max-width: 960px) {
+  .v1-scope .v5h[data-cine-mode="film"] .v5cine-film {
+    height: 46%;
+    object-position: 50% 58%;
+    /* clears the «جرّب درساً عن شغلك» link, which failed on 34.08% of its
+       pixels while the ramp finished above it */
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.3) 54%, #000 78%);
+    mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.3) 54%, #000 78%);
+  }
+  .v1-scope .v5h[data-cine-mode="film"] .v5-hero-tail {
+    height: clamp(180px, 30vh, 300px);
+  }
+}
+
+/* The showcase, remounted below the hero in film mode. */
+.v1-scope .v5h-showcase-after {
+  position: relative;
+  z-index: 1;
+  padding-block: clamp(28px, 5vw, 64px) 0;
+}

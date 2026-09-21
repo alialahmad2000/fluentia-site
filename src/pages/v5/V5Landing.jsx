@@ -4,7 +4,7 @@ import { MotionConfig } from "framer-motion";
 import "../../styles/v1-tokens.css";
 import "../../styles/v5-tokens.css";
 import V1Header from "../v1/V1Header";
-import V5Hero from "./V5Hero";
+import V5Hero, { HeroShowcaseSection } from "./V5Hero";
 import V5LogoBand from "./V5LogoBand";
 // V5SpeakDemo («قلها بالإنجليزي») is unmounted from the homepage (2026-09-15, owner's call);
 // the component stays in ./V5SpeakDemo.jsx.
@@ -37,6 +37,7 @@ import { CinemaContext } from "./cinemaContext";
  * sees the root.
  */
 export default function V5Landing({ cinematic = false }) {
+  const filmFirst = cinematic === "film";
   const isRoot = useLocation().pathname === "/";
   return (
     <MotionConfig reducedMotion="user">
@@ -49,6 +50,7 @@ export default function V5Landing({ cinematic = false }) {
           <V1Header />
           <main>
             <V5Hero />
+            {filmFirst && <HeroShowcaseSection />}
             <V5LogoBand />
             <V1Stats />
             <Chapter num={1} label="المشكلة" />

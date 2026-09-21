@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion, useTransform } from "framer-motion";
 import "./V5Cinema.css";
 
@@ -15,6 +15,7 @@ import "./V5Cinema.css";
  *   z −1000  stars, near
  *   z  −700  the haze the dawn lights, low over the city
  *   z     0  the horizon — a Saudi desert city at dawn, the ONE light
+ *                (a still plate, with a film laid over it when the link allows)
  *   z −1600 → +220  the fragments of the old way, falling past the camera
  *
  * Colour is assigned, not blended: the ground is opaque night, the amber is a
@@ -67,6 +68,21 @@ function starShadows(count, spread, seed) {
   return out.join(", ");
 }
 
+/* The hero's film — the escarpment above a sea of mist at dawn, the motion
+   the still plate could never have. A palindrome cut (forward, then the same
+   frames reversed) so it loops with no jump, which a straight cut could not:
+   the light travels warm across the clip and the seam showed.
+
+   H.264 only, and not for want of trying webm — VP9 came out 747 kB against
+   H.264's 329 kB on this footage, which is mostly smooth gradient and slow
+   mist. One codec every browser decodes in hardware, at less than half the
+   bytes. `media` on a <source> inside <video> is not reliably honoured, so
+   the tier is chosen in JS instead. */
+const FILM = {
+  wide: { src: "/home/cine-dawn-1600.mp4", poster: "/home/cine-dawn-poster-1600.webp" },
+  phone: { src: "/home/cine-dawn-800.mp4", poster: "/home/cine-dawn-poster-800.webp" },
+};
+
 const STARS_FAR = starShadows(300, 1100, 3);
 const STARS_NEAR = starShadows(110, 900, 991);
 
@@ -84,6 +100,30 @@ export default function V5Cinema({ progress }) {
   const camY = useTransform(progress, [0, 1], [0, reduce ? 0 : -40]);
   const camRot = useTransform(progress, [0, 1], [0, reduce ? 0 : 2.4]);
   const veil = useTransform(progress, [0, 0.75], [0, reduce ? 0 : 0.65]);
+
+  /* The film. It is the top tier of the backdrop, not its foundation: the
+     poster below it is the plate the stage already draws, so if the video is
+     never allowed to load — Low Power Mode, save-data, reduced motion, a slow
+     link — nothing is missing, the scene simply does not move as much.
+
+     Mounted from an effect, never from render, because every input here
+     (matchMedia, connection, sessionStorage) differs between the server and
+     the client and would be a hydration mismatch. */
+  const [film, setFilm] = useState(null);
+  useEffect(() => {
+    if (typeof window === "undefined") return undefined;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return undefined;
+    const c = navigator.connection;
+    /* Most of this traffic is a phone on mobile data in KSA. A hero that
+       silently spends bytes on a decoration is not a good trade, so the film
+       waits for a link that can afford it. */
+    if (c && (c.saveData || /^(slow-)?2g$/.test(c.effectiveType || ""))) return undefined;
+    const tier = window.matchMedia("(max-width: 960px)").matches ? FILM.phone : FILM.wide;
+    /* after first paint: the headline is the LCP element and must not queue
+       behind 329 kB of scenery */
+    const id = window.setTimeout(() => setFilm(tier), 600);
+    return () => window.clearTimeout(id);
+  }, []);
 
   /* Pointer yaw — fine pointers only, written straight to the node so the
      stage never re-renders, and never mounted where a touch would fake it. */
@@ -114,6 +154,7 @@ export default function V5Cinema({ progress }) {
   return (
     <div className="v5cine" aria-hidden ref={stageRef}>
      <div className="v5cine-yaw">
+      <div className="v5cine-drift">
       <motion.div
         className="v5cine-stage"
         style={{ z: camZ, y: camY, rotateX: camRot }}
@@ -163,6 +204,32 @@ export default function V5Cinema({ progress }) {
               fetchpriority="high"
             />
           </picture>
+
+          {/* The moving frame sits ON the plate, matched to it, so the cut
+              from still to film is invisible. playsinline is not optional —
+              without it iOS takes the video fullscreen on play. */}
+          {film && (
+            <video
+              className="v5cine-film"
+              src={film.src}
+              poster={film.poster}
+              autoPlay
+              muted
+              loop
+              /* not optional: without playsInline iOS takes the video
+                 fullscreen the moment it plays */
+              playsInline
+              preload="auto"
+              aria-hidden="true"
+              tabIndex={-1}
+              disablePictureInPicture
+              onPlaying={(e) => e.currentTarget.classList.add("is-lit")}
+              /* Low Power Mode refuses autoplay outright; if it never plays
+                 the element stays transparent and the still plate below is
+                 what the reader sees, which is the whole point of the tier. */
+              onError={(e) => e.currentTarget.remove()}
+            />
+          )}
         </div>
 
         {/* The noise of the old way, falling THROUGH the room and past you. */}
@@ -170,7 +237,7 @@ export default function V5Cinema({ progress }) {
           {FRAGMENTS.map((f, i) => {
             const x = (((i * 61) % 81) - 40) * 0.98; // −40..40 %, clear of the frame
             const y = ((i * 43) % 71) - 34;          // −34..36 %
-            const dur = 21 + ((i * 7) % 11);         // 21..31s
+            const dur = 14 + ((i * 7) % 9);          // 14..22s
             const delay = -((i * 6.7) % dur);        // already mid-flight
             const size = 0.66 + ((i * 13) % 5) * 0.06;
             return (
@@ -192,6 +259,7 @@ export default function V5Cinema({ progress }) {
           })}
         </div>
       </motion.div>
+      </div>
      </div>
 
       {/* Night closing back over the stage as the page leaves the hero, so the

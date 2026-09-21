@@ -1237,7 +1237,9 @@ function AppRoutes(){
           browsers cache permanent redirects, so some visitors can't reach /v1 */}
       <Route path="/v4" element={<Suspense fallback={VFallback}><V1Landing /></Suspense>} />
       <Route path="/v5" element={<Suspense fallback={VFallback}><V5Landing /></Suspense>} />
-      <Route path="/cine" element={<Suspense fallback={VFallback}><V5Landing cinematic /></Suspense>} />
+      <Route path="/cine" element={<Suspense fallback={VFallback}><V5Landing cinematic="band" /></Suspense>} />
+      {/* /cine2 — the film owns the frame (the Higgsfield composition). */}
+      <Route path="/cine2" element={<Suspense fallback={VFallback}><V5Landing cinematic="film" /></Suspense>} />
       {/* Unknown URLs rendered a blank page under the homepage's canonical. */}
       <Route path="*" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#060e1c'}} />}><NotFound /></Suspense>} />
     </Routes>
