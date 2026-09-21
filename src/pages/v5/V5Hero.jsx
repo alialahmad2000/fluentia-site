@@ -1,10 +1,16 @@
-import { useEffect, useRef } from "react";
+import { lazy, Suspense, useEffect, useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { HERO } from "../landing-v2/content";
 import { EASE } from "../v1/motion";
 import { Magnetic } from "../v1/V1Interactive";
 import V5HeroShowcase, { glueAr } from "./V5HeroShowcase";
+import { useCinema } from "./cinemaContext";
 import "./V5Hero.css";
+
+/* Lazy so the candidate backdrop stays out of the homepage main chunk that
+   every visitor to / downloads. `/cine` is not prerendered, so it never has
+   to resolve on the server. */
+const V5Cinema = lazy(() => import("./V5Cinema"));
 
 /**
  * V5Hero — the promise, and the proof beside it.
@@ -131,6 +137,7 @@ const TickIcon = () => (
 
 /* ─── Hero ─── */
 export default function V5Hero() {
+  const cine = useCinema();
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const headY = useTransform(scrollYProgress, [0, 1], ["0%", "-22%"]);
@@ -149,13 +156,21 @@ export default function V5Hero() {
   }, []);
 
   return (
-    <section id="top" ref={ref} className="v5h">
+    <section id="top" ref={ref} className="v5h" data-cine={cine ? "" : undefined}>
       <div className="v5-spotlight" aria-hidden />
-      <div className="v5h-horizon" aria-hidden />
-      <div className="v5h-gridlines" aria-hidden />
-      <motion.div className="v5h-rain" style={{ opacity: rainO, position: "absolute", inset: 0 }} aria-hidden>
-        <WordRain />
-      </motion.div>
+      {cine ? (
+        <Suspense fallback={null}>
+          <V5Cinema progress={scrollYProgress} />
+        </Suspense>
+      ) : (
+        <>
+          <div className="v5h-horizon" aria-hidden />
+          <div className="v5h-gridlines" aria-hidden />
+          <motion.div className="v5h-rain" style={{ opacity: rainO, position: "absolute", inset: 0 }} aria-hidden>
+            <WordRain />
+          </motion.div>
+        </>
+      )}
 
       <div className="v1-container" style={{ position: "relative", zIndex: 2 }}>
         <div className="v5h-layout">

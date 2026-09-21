@@ -20,6 +20,7 @@ import { V1FAQ, V1Founder, V1FinalCTA, V1Footer } from "../v1/V1Closing";
 import V1LeadModal from "../v1/V1LeadModal";
 import { SpotlightController, MobileCtaBar, DotNav } from "../v1/V1Interactive";
 import BrandIntro from "../v1/BrandIntro";
+import { CinemaContext } from "./cinemaContext";
 
 /**
  * V5Landing — "Dawn Stage" at /v5.
@@ -35,10 +36,11 @@ import BrandIntro from "../v1/BrandIntro";
  * (/v5, and V1 at /v1 + /v4) it stays noindexed so Google only ever
  * sees the root.
  */
-export default function V5Landing() {
+export default function V5Landing({ cinematic = false }) {
   const isRoot = useLocation().pathname === "/";
   return (
     <MotionConfig reducedMotion="user">
+     <CinemaContext.Provider value={cinematic}>
       <div className="v1-scope v5-scope" dir="rtl">
         <BrandIntro />
         {isRoot ? <Seo path="/" /> : <Seo noindex />}
@@ -77,6 +79,7 @@ export default function V5Landing() {
         <MobileCtaBar />
         <DotNav />
       </div>
+     </CinemaContext.Provider>
     </MotionConfig>
   );
 }

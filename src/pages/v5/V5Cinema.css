@@ -1,0 +1,270 @@
+/* ============================================================
+ * V5Cinema — «الساعة قبل الفجر»
+ * The hero backdrop as a real perspective stage. Five planes at
+ * their own translateZ; scrolling moves the camera, not the art.
+ *
+ * Rules this file keeps:
+ *  · the ground is ONE opaque colour, never a stack of washes
+ *  · the amber is a photograph and the only light in the frame
+ *  · transform/opacity only — no canvas, no rAF, no backdrop-filter,
+ *    so coarse pointers keep the motion instead of losing it
+ * ============================================================ */
+
+.v5cine {
+  position: absolute;
+  /* The first viewport, not the whole hero. On a phone the hero stacks to
+     roughly twice the screen, so `inset: 0` put the city hundreds of pixels
+     below the fold — the scene existed and nobody saw it. */
+  inset: 0 0 auto 0;
+  height: 100vh;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background: var(--v1-ink, #04070e);
+  perspective: 1200px;
+  perspective-origin: 50% 56%;
+  contain: paint;
+  /* --cine-yaw / --cine-pitch are written by the pointer handler */
+  --cine-yaw: 0deg;
+  --cine-pitch: 0deg;
+}
+
+/* Pointer yaw lives on its own node: framer-motion owns the transform of
+   .v5cine-stage, and two owners of one transform is one of them losing. */
+.v5cine-yaw {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  transform: rotateY(var(--cine-yaw)) rotateX(var(--cine-pitch));
+  transition: transform 520ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.v5cine-stage {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+}
+
+.v5cine-plane {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+}
+
+/* ─── Stars ────────────────────────────────────────────────────
+   One 2px dot per plane carrying its whole field in box-shadow:
+   a single layer for the compositor instead of 136 of them. */
+.v5cine-stars {
+  inset: auto;
+  top: 50%;
+  left: 50%;
+  width: 2px;
+  height: 2px;
+  border-radius: 50%;
+  background: transparent;
+}
+.v5cine-stars--far {
+  /* z −1500 · cover scale (1200+1500)/1200 = 2.25, +15% for the off-centre
+     perspective origin */
+  transform: translateZ(-1500px) scale(2.59);
+  opacity: 0.8;
+  animation: v5cine-drift-far 240s linear infinite;
+}
+.v5cine-stars--near {
+  /* z −1000 · (1200+1000)/1200 = 1.83 */
+  transform: translateZ(-1000px) scale(2.11);
+  opacity: 1;
+  animation: v5cine-drift-near 170s linear infinite;
+}
+@keyframes v5cine-drift-far {
+  from { transform: translateZ(-1500px) scale(2.59) translateX(0); }
+  to   { transform: translateZ(-1500px) scale(2.59) translateX(-380px); }
+}
+@keyframes v5cine-drift-near {
+  from { transform: translateZ(-1000px) scale(2.11) translateX(0); }
+  to   { transform: translateZ(-1000px) scale(2.11) translateX(-300px); }
+}
+
+/* ─── The haze the dawn lights ─────────────────────────────────
+   First built as a blue-grey cloud bank across the middle of the frame,
+   which is exactly the interchangeable-wallpaper look this project has
+   rejected before. It is now what it should always have been: the band of
+   air directly above the city, WARM because the only light in the scene is
+   the amber below it, and gone by a third of the way up. */
+.v5cine-clouds {
+  /* z −700 · (1200+700)/1200 = 1.58 */
+  transform-origin: 50% 100%;
+  transform: translateZ(-700px) scale(1.82);
+  background:
+    radial-gradient(ellipse 52% 7% at 26% 95%, rgba(197, 137, 88, 0.2), transparent 72%),
+    radial-gradient(ellipse 40% 5% at 72% 92%, rgba(168, 122, 92, 0.14), transparent 74%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 70%, #000 92%);
+  mask-image: linear-gradient(to bottom, transparent 70%, #000 92%);
+  animation: v5cine-clouds 150s ease-in-out infinite alternate;
+}
+@keyframes v5cine-clouds {
+  from { transform: translateZ(-700px) scale(1.82) translateX(-2.5%); }
+  to   { transform: translateZ(-700px) scale(1.82) translateX(2.5%); }
+}
+
+/* ─── The dawn ─────────────────────────────────────────────────
+   Riyadh before sunrise — the site's own render. The plate carries the
+   silhouette AND the amber; nothing else in the scene emits light. */
+/* The horizon sits at z 0 — deliberately, and this is the one plane that does.
+   A translateZ here is projected about `perspective-origin` (50% 56%), which
+   drags the plane's BOTTOM edge up the screen: at z −420 it landed on y 797 of
+   900, putting the amber line straight under the trust row at 1.25 contrast.
+   A compensating scale cannot undo that, because the scale happens in the
+   plane's own space and the projection happens after it. At z 0 the city meets
+   the bottom of the frame, and it still parallaxes — the camera moves the whole
+   stage, and this is the nearest plane in it, so it moves the most. */
+.v5cine-dawn {
+  transform: none;
+}
+.v5cine-dawn picture {
+  display: block;
+  position: absolute;
+  bottom: 0;
+  left: -5%;
+  width: 110%;
+}
+.v5cine-dawn img {
+  display: block;
+  width: 100%;
+  height: auto;
+  /* The strip's own fade into the night above it — and the reason it reaches
+     so far down: the hero's last line (the trust row) crosses the strip's top
+     third, and at a 34% fade 7% of that line sat on pixels brighter than 4.5:1.
+     Fading to 62% dims the tower tops the text crosses while leaving the amber
+     horizon, which lives in the bottom quarter, at full strength. */
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.35) 38%, #000 62%);
+  mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.35) 38%, #000 62%);
+}
+
+/* ─── The old way, falling past you ────────────────────────────
+   The 2D rain these replace was display:none on every coarse pointer,
+   so the hero had no motion at all on the phones that are the traffic. */
+.v5cine-noise {
+  transform: translateZ(0);
+}
+.v5cine-frag {
+  position: absolute;
+  left: calc(50% + var(--fx));
+  top: calc(50% + var(--fy));
+  font-family: "Inter", ui-monospace, monospace;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  color: var(--v1-azure-soft, #7dd3fc);
+  backface-visibility: hidden;
+  will-change: transform, opacity;
+  animation: v5cine-fly var(--fd, 26s) linear var(--fdelay, 0s) infinite;
+}
+@keyframes v5cine-fly {
+  0%   { transform: translate3d(-50%, -50%, -1700px); opacity: 0; }
+  14%  { opacity: 0.2; }
+  66%  { opacity: 0.15; }
+  88%  { opacity: 0.05; }
+  100% { transform: translate3d(-50%, -50%, 240px); opacity: 0; }
+}
+
+/* The copy side must stay the most legible thing on the page: the noise is
+   masked away from it, exactly as the 2D rain was. */
+.v5cine-noise {
+  -webkit-mask-image: linear-gradient(to right, #000 0%, #000 30%, transparent 50%);
+  mask-image: linear-gradient(to right, #000 0%, #000 30%, transparent 50%);
+}
+
+/* ─── Hand-off ─────────────────────────────────────────────────
+   Night closes back over the stage as the page scrolls out of the hero,
+   so this backdrop ends where DawnArc begins instead of fighting it. */
+.v5cine-veil {
+  position: absolute;
+  inset: 0;
+  background: var(--v1-ink, #04070e);
+  pointer-events: none;
+}
+
+/* ─── Phones ───────────────────────────────────────────────────
+   The layout stacks and the copy takes the full width, so the noise mask
+   turns vertical; the field thins out to keep the composited layer count
+   down on an older iPhone. */
+@media (max-width: 960px) {
+  .v5cine {
+    /* At 390px the hero's own copy, button and showcase card fill the screen
+       edge to edge: below the sub-headline there is no free background at
+       ALL. Running the stage past the fold so the city could rise under the
+       card was tried and measured — by the scroll where it clears the card
+       (874px) the hand-off veil has already dimmed it and the reader is in
+       the next section. So the phone gets the composition it can actually
+       hold: the night sky in full, with the dawn warming the bottom edge of
+       the frame. The skyline itself is a desktop and tablet composition.  */
+    perspective: 900px;
+    perspective-origin: 50% 62%;
+  }
+  /* The copy runs the full width here, so there is no side to hide the noise
+     in. It stays high, where it is sky rather than clutter behind a heading. */
+  .v5cine-noise {
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 26%, transparent 46%);
+    mask-image: linear-gradient(to bottom, #000 0%, #000 26%, transparent 46%);
+  }
+  .v5cine-frag {
+    animation-name: v5cine-fly-soft;
+    font-size: 0.62rem;
+  }
+  .v5cine-frag:nth-child(n + 11) { display: none; }
+  /* a panorama is thin at 390px unless it runs well past both edges */
+  .v5cine-dawn picture { left: -45%; width: 190%; }
+  .v5cine-stars--far { opacity: 0.66; }
+  /* The haze IS the dawn here — it has to read on its own, because the
+     skyline under it is behind the showcase card. */
+  .v5cine-clouds {
+    background:
+      radial-gradient(ellipse 88% 9% at 42% 99%, rgba(203, 138, 84, 0.34), transparent 72%),
+      radial-gradient(ellipse 60% 6% at 78% 96%, rgba(176, 124, 90, 0.2), transparent 74%);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 62%, #000 94%);
+    mask-image: linear-gradient(to bottom, transparent 62%, #000 94%);
+  }
+}
+
+/* Same flight, dimmer: on a phone these pass behind the headline rather than
+   beside it, and the headline has to stay the loudest thing on the screen. */
+@keyframes v5cine-fly-soft {
+  0%   { transform: translate3d(-50%, -50%, -1700px); opacity: 0; }
+  14%  { opacity: 0.12; }
+  66%  { opacity: 0.09; }
+  88%  { opacity: 0.03; }
+  100% { transform: translate3d(-50%, -50%, 240px); opacity: 0; }
+}
+
+/* ─── Reduced motion ───────────────────────────────────────────
+   The stage is a real perspective stack, so frozen it still reads as
+   depth — which is why this stops the motion rather than the scene. */
+@media (prefers-reduced-motion: reduce) {
+  .v5cine-stars--far,
+  .v5cine-stars--near,
+  .v5cine-clouds { animation: none; }
+  .v5cine-yaw { transition: none; }
+  .v5cine-frag {
+    animation: none;
+    opacity: 0.12;
+    transform: translate3d(-50%, -50%, -600px);
+  }
+}
+
+/* ─── What the stage replaces ──────────────────────────────────
+   The flat hero painted its depth with washes: an azure radial at the
+   bottom for "horizon", a drafting grid, and the 2D rain. All three
+   would now sit ON TOP of a photographed dawn — a glow over a glow,
+   and a grid over a city. The stage carries those jobs in 3D instead. */
+.v1-scope .v5h[data-cine] .v5h-horizon,
+.v1-scope .v5h[data-cine] .v5h-gridlines,
+.v1-scope .v5h[data-cine] .v5h-rain { display: none; }
+
+/* The stage cone survives, dimmed: it is the theatre the hero is set in,
+   and it lands at the top of the frame where the dawn never reaches. */
+.v1-scope .v5h[data-cine] .v5-spotlight { opacity: 0.45; z-index: 1; }
+
+/* The hero's own children sit at z-index 2 already; the backdrop is 0. */
+.v1-scope .v5h[data-cine] { background: var(--v1-ink, #04070e); }

@@ -20,6 +20,7 @@ const ArticlePage = lazy(() => import('./pages/articles/ArticlePage'));
 const AuroraHero = lazy(() => import('./pages/aurora/AuroraHero'));
 const V1Landing = lazy(() => import('./pages/v1/V1Landing'));
 const V5Landing = lazy(() => import('./pages/v5/V5Landing'));
+// /cine — the same landing with the 3D cinematic hero backdrop (candidate).
 const LevelTestPage = lazy(() => import('./pages/level-test/LevelTestPage'));
 // /v2 is a superseded homepage kept reachable; it was eager-imported and put
 // ~124 kB into the main chunk that every visitor to / downloads.
@@ -1236,6 +1237,7 @@ function AppRoutes(){
           browsers cache permanent redirects, so some visitors can't reach /v1 */}
       <Route path="/v4" element={<Suspense fallback={VFallback}><V1Landing /></Suspense>} />
       <Route path="/v5" element={<Suspense fallback={VFallback}><V5Landing /></Suspense>} />
+      <Route path="/cine" element={<Suspense fallback={VFallback}><V5Landing cinematic /></Suspense>} />
       {/* Unknown URLs rendered a blank page under the homepage's canonical. */}
       <Route path="*" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#060e1c'}} />}><NotFound /></Suspense>} />
     </Routes>
