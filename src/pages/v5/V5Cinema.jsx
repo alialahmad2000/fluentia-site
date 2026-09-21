@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { motion, useTransform } from "framer-motion";
+import { motion, useReducedMotion, useTransform } from "framer-motion";
 import "./V5Cinema.css";
 
 /**
@@ -14,7 +14,7 @@ import "./V5Cinema.css";
  *   z −1500  stars, far
  *   z −1000  stars, near
  *   z  −700  the haze the dawn lights, low over the city
- *   z     0  the horizon — Riyadh before sunrise, the scene's ONE light
+ *   z     0  the horizon — a Saudi desert city at dawn, the ONE light
  *   z −1600 → +220  the fragments of the old way, falling past the camera
  *
  * Colour is assigned, not blended: the ground is opaque night, the amber is a
@@ -57,26 +57,33 @@ function starShadows(count, spread, seed) {
   for (let i = 0; i < count; i += 1) {
     const x = Math.round((hash(i + seed) * 2 - 1) * spread);
     const y = Math.round((hash(i + seed + 7919) * 2 - 1) * spread);
+    /* Continuous, not three tiers: quantised alpha and size read as a
+       repeating pattern rather than as a sky. */
     const m = hash(i + seed + 104729);
-    const alpha = m < 0.55 ? 0.3 : m < 0.86 ? 0.6 : 0.95;
-    const size = m < 0.55 ? 0 : m < 0.86 ? 0.4 : 0.9;
+    const alpha = (0.18 + m * 0.72).toFixed(2);
+    const size = (m * m * 1.1).toFixed(2);
     out.push(`${x}px ${y}px 0 ${size}px rgba(255,255,255,${alpha})`);
   }
   return out.join(", ");
 }
 
-const STARS_FAR = starShadows(170, 1100, 3);
-const STARS_NEAR = starShadows(80, 900, 991);
+const STARS_FAR = starShadows(300, 1100, 3);
+const STARS_NEAR = starShadows(110, 900, 991);
 
 export default function V5Cinema({ progress }) {
   const stageRef = useRef(null);
+  /* The CSS @media block below stops the keyframes, but it cannot touch these
+     — they are framer inline transforms. Without this, a reader who asked for
+     reduced motion still had the camera fly 300px forward and tip 2.4° on
+     scroll, which is the most vestibular motion on the page. */
+  const reduce = useReducedMotion();
 
   /* The camera. Scrolling the hero flies it forward and tips it down toward
      the city; the plates separate because each sits at its own depth. */
-  const camZ = useTransform(progress, [0, 1], [0, 300]);
-  const camY = useTransform(progress, [0, 1], [0, -40]);
-  const camRot = useTransform(progress, [0, 1], [0, 2.4]);
-  const veil = useTransform(progress, [0, 0.75], [0, 0.65]);
+  const camZ = useTransform(progress, [0, 1], [0, reduce ? 0 : 300]);
+  const camY = useTransform(progress, [0, 1], [0, reduce ? 0 : -40]);
+  const camRot = useTransform(progress, [0, 1], [0, reduce ? 0 : 2.4]);
+  const veil = useTransform(progress, [0, 0.75], [0, reduce ? 0 : 0.65]);
 
   /* Pointer yaw — fine pointers only, written straight to the node so the
      stage never re-renders, and never mounted where a touch would fake it. */
@@ -116,25 +123,44 @@ export default function V5Cinema({ progress }) {
 
         <div className="v5cine-plane v5cine-clouds" />
 
-        {/* The dawn. A photograph of Riyadh before sunrise — the site's own
-            render, already on the page at the closing CTA — is the single
-            light source in the frame, so the amber is a colour and not a
-            CSS bloom over navy. */}
+        {/* The dawn — the site's own render, already on the page at the
+            closing CTA. It is the single light source in the frame, so the
+            amber is a colour and not a CSS bloom over navy.
+            Deliberately a GENERIC Saudi desert-city silhouette and not a
+            portrait of Riyadh: shots.json's own note on this render reads
+            "never ship a wrong Kingdom Centre", because the model would not
+            hold the real landmarks. Don't re-label this as Riyadh. */}
         <div className="v5cine-plane v5cine-dawn">
           <picture>
+            {/* A phone needs a TALLER cut, not the same panorama stretched:
+                the wide band is 11.6:1, which renders 64px tall at 390px and
+                only ~24px of it survives the fade. That is not a dawn. The
+                phone band is 7.3:1 from a taller crop. */}
+            <source
+              type="image/avif"
+              media="(max-width: 960px)"
+              srcSet="/home/cine-horizon-phone-1024.avif 1024w, /home/cine-horizon-phone-1600.avif 1600w, /home/cine-horizon-phone-1920.avif 1920w"
+              sizes="210vw"
+            />
+            <source
+              type="image/webp"
+              media="(max-width: 960px)"
+              srcSet="/home/cine-horizon-phone-1024.webp 1024w, /home/cine-horizon-phone-1600.webp 1600w, /home/cine-horizon-phone-1920.webp 1920w"
+              sizes="210vw"
+            />
             <source
               type="image/avif"
               srcSet="/home/cine-horizon-1024.avif 1024w, /home/cine-horizon-1600.avif 1600w, /home/cine-horizon-1920.avif 1920w"
-              sizes="(max-width: 960px) 190vw, 110vw"
+              sizes="110vw"
             />
             <img
               src="/home/cine-horizon-1600.webp"
               srcSet="/home/cine-horizon-1024.webp 1024w, /home/cine-horizon-1600.webp 1600w, /home/cine-horizon-1920.webp 1920w"
-              sizes="(max-width: 960px) 190vw, 110vw"
+              sizes="110vw"
               alt=""
               decoding="async"
               loading="eager"
-              fetchpriority="low"
+              fetchpriority="high"
             />
           </picture>
         </div>

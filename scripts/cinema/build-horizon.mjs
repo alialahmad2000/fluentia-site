@@ -45,54 +45,74 @@ const OUT_DIR = join(ROOT, "public/home");
 const WIDTHS = [1024, 1600, 1920];
 const check = process.argv.includes("--check");
 
-/* The band, as a fraction of the source frame. Measured off the plate: the
-   towers top out around 0.50 and their base sits on 0.80. The band is kept
-   TIGHT — its aspect ratio is what sets how tall the city renders, and a
-   taller crop put the skyline across the hero's buttons. */
-const BAND_TOP = 0.555;
-const BAND_BOTTOM = 0.815;
+/* Two bands, because a phone and a desktop need different amounts of sky.
+   The desktop band is tight: its aspect ratio is what sets how tall the city
+   renders, and a taller crop put the skyline across the hero's buttons. The
+   phone band is taller on purpose — at 390px a 11.6:1 strip renders 64px
+   tall, of which the fade leaves ~24px, which is not a dawn. */
+const BANDS = {
+  wide: { top: 0.555, bottom: 0.815 },
+  phone: { top: 0.42, bottom: 0.83 },
+};
 
-const outName = (w, ext) => join(OUT_DIR, `cine-horizon-${w}.${ext}`);
+const outName = (band, w, ext) =>
+  join(OUT_DIR, band === "wide" ? `cine-horizon-${w}.${ext}` : `cine-horizon-${band}-${w}.${ext}`);
+
+const allOutputs = () =>
+  Object.keys(BANDS).flatMap((b) => WIDTHS.flatMap((w) => ["avif", "webp"].map((e) => outName(b, w, e))));
 
 async function build() {
   if (!existsSync(SRC)) throw new Error(`missing source plate: ${SRC}`);
-  const src = sharp(SRC);
-  const { width, height } = await src.metadata();
-  const top = Math.round(height * BAND_TOP);
-  const bandH = Math.round(height * (BAND_BOTTOM - BAND_TOP));
+  const { width, height } = await sharp(SRC).metadata();
 
   const written = [];
-  for (const w of WIDTHS) {
-    const base = sharp(SRC)
-      .extract({ left: 0, top, width, height: bandH })
-      .resize({ width: w })
-      // towers → silhouette, amber → a line and not a wash
-      .modulate({ brightness: 0.74, saturation: 0.92 })
-      .linear(1.12, -14);
+  for (const [band, { top: t, bottom: b }] of Object.entries(BANDS)) {
+    const top = Math.round(height * t);
+    const bandH = Math.round(height * (b - t));
+    for (const w of WIDTHS) {
+      const base = sharp(SRC)
+        .extract({ left: 0, top, width, height: bandH })
+        // MIRRORED. The source puts all its warmth in the left half, and this
+        // page is dir="rtl": the reader enters top-right and the headline
+        // column IS the right, so unmirrored the Arabic sat over the dead
+        // colourless half while the dawn glowed at the reading exit. Mirroring
+        // is safe here ONLY because the silhouette is deliberately generic —
+        // see the note in shots.json. If a real landmark is ever rendered into
+        // this plate, delete this .flop() rather than ship it backwards.
+        .flop()
+        .resize({ width: w })
+        // Crush the silhouette, KEEP the light. The first pass did
+        // `brightness 0.74 / saturation 0.92`, which dimmed and desaturated
+        // the one element in the frame that is supposed to be a pure colour —
+        // its hottest pixels came out grey (r−b = +17). Separate the two jobs:
+        // the linear ramp takes the towers to black, the modulate lets the
+        // amber back up.
+        .linear(1.34, -30)
+        .modulate({ brightness: 1.02, saturation: 1.42 });
 
-    await base.clone().avif({ quality: 52, effort: 6 }).toFile(outName(w, "avif"));
-    await base.clone().webp({ quality: 74 }).toFile(outName(w, "webp"));
-    written.push(
-      `${w}: avif ${(statSync(outName(w, "avif")).size / 1024).toFixed(1)} kB · webp ${(statSync(outName(w, "webp")).size / 1024).toFixed(1)} kB`
-    );
+      await base.clone().avif({ quality: 54, effort: 6 }).toFile(outName(band, w, "avif"));
+      await base.clone().webp({ quality: 76 }).toFile(outName(band, w, "webp"));
+    }
+    written.push(`${band}: band ${top}..${top + bandH} of ${height} · ` +
+      WIDTHS.map((w) => `${w} ${(statSync(outName(band, w, "avif")).size / 1024).toFixed(1)}kB`).join(" · "));
   }
-  return { written, band: `${top}..${top + bandH} of ${height}` };
+  return { written };
 }
 
 if (check) {
-  const missing = WIDTHS.flatMap((w) => ["avif", "webp"].map((e) => outName(w, e))).filter((f) => !existsSync(f));
+  const missing = allOutputs().filter((f) => !existsSync(f));
   if (missing.length) {
     console.error(`cinema horizon: missing ${missing.length} file(s)\n  ${missing.join("\n  ")}`);
     process.exit(1);
   }
   const srcAt = statSync(SRC).mtimeMs;
-  const stale = WIDTHS.flatMap((w) => ["avif", "webp"].map((e) => outName(w, e))).filter((f) => statSync(f).mtimeMs < srcAt);
+  const stale = allOutputs().filter((f) => statSync(f).mtimeMs < srcAt);
   if (stale.length) {
     console.error(`cinema horizon: ${stale.length} file(s) older than the source plate`);
     process.exit(1);
   }
   console.log("cinema horizon: up to date");
 } else {
-  const { written, band } = await build();
-  console.log(`cinema horizon — band ${band}\n  ${written.join("\n  ")}`);
+  const { written } = await build();
+  console.log(`cinema horizon\n  ${written.join("\n  ")}`);
 }
