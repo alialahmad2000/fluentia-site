@@ -2,3 +2,8 @@ node_modules
 dist
 dist-ssr
 .DS_Store
+# wrangler pages dev local state
+.wrangler/
+# wrangler reads .dev.vars for `pages dev` — never commit one, it is a secret file
+.dev.vars
+.dev.vars.*

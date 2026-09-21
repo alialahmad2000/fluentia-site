@@ -35,6 +35,7 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 import { ARTICLES } from "../src/content/articles.js";
 import { PRERENDER_ROUTES, articleSeo, resolveSeo, workPageSeo } from "../src/content/seo.js";
 import { WORK_PAGES } from "../src/content/workEnglish.js";
+import { assertRouterClassified, cloudflareRedirectsFile } from "./cloudflare-routing.mjs";
 import { expectedRewrites } from "./sync-vercel-rewrites.mjs";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
@@ -130,6 +131,21 @@ const template = await readFile(existsSync(shellPath) ? shellPath : indexPath, "
 
 // The empty shell for every route that isn't prerendered (catch-all rewrite).
 await writeFile(shellPath, template, "utf8");
+
+// ── Cloudflare Pages ────────────────────────────────────────────────────────
+// 404.html is the same empty shell. Its presence is what turns OFF Pages'
+// automatic single-page-app fallback, and that is the point: the fallback
+// serves index.html, which since 2026-09-13 holds the prerendered HOMEPAGE
+// markup — so /w and every unknown path would have flashed the homepage. It
+// also keeps a deleted /assets/*.js chunk a real 404 instead of an HTML body
+// handed to the browser as JavaScript.
+await writeFile(join(DIST, "404.html"), template, "utf8");
+
+// One explicit rule per client-only route; no catch-all, because Cloudflare
+// follows a redirect rule even when a real asset matches. The generator fails
+// the build if src/App.jsx grew a route that neither mechanism covers.
+await assertRouterClassified();
+await writeFile(join(DIST, "_redirects"), cloudflareRedirectsFile(), "utf8");
 
 const { render } = await import(pathToFileURL(join(ROOT, "dist-ssr", "entry-server.js")).href);
 
