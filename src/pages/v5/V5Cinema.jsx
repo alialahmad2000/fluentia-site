@@ -142,7 +142,7 @@ export default function V5Cinema({ progress }) {
         {/* The noise of the old way, falling THROUGH the room and past you. */}
         <div className="v5cine-plane v5cine-noise">
           {FRAGMENTS.map((f, i) => {
-            const x = ((i * 61) % 97) - 48;          // −48..48 %
+            const x = (((i * 61) % 81) - 40) * 0.98; // −40..40 %, clear of the frame
             const y = ((i * 43) % 71) - 34;          // −34..36 %
             const dur = 21 + ((i * 7) % 11);         // 21..31s
             const delay = -((i * 6.7) % dur);        // already mid-flight

@@ -170,10 +170,12 @@
 }
 
 /* The copy side must stay the most legible thing on the page: the noise is
-   masked away from it, exactly as the 2D rain was. */
+   masked away from it, exactly as the 2D rain was. The mask also fades in
+   from the LEFT edge — a fragment that reaches x 0 was being cut in half by
+   the frame, which reads as a bug rather than as depth. */
 .v5cine-noise {
-  -webkit-mask-image: linear-gradient(to right, #000 0%, #000 30%, transparent 50%);
-  mask-image: linear-gradient(to right, #000 0%, #000 30%, transparent 50%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 9%, #000 30%, transparent 50%);
+  mask-image: linear-gradient(to right, transparent 0%, #000 9%, #000 30%, transparent 50%);
 }
 
 /* ─── Hand-off ─────────────────────────────────────────────────
@@ -206,8 +208,14 @@
   /* The copy runs the full width here, so there is no side to hide the noise
      in. It stays high, where it is sky rather than clutter behind a heading. */
   .v5cine-noise {
-    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 26%, transparent 46%);
-    mask-image: linear-gradient(to bottom, #000 0%, #000 26%, transparent 46%);
+    -webkit-mask-image:
+      linear-gradient(to bottom, #000 0%, #000 26%, transparent 46%),
+      linear-gradient(to right, transparent 0%, #000 12%, #000 88%, transparent 100%);
+    mask-image:
+      linear-gradient(to bottom, #000 0%, #000 26%, transparent 46%),
+      linear-gradient(to right, transparent 0%, #000 12%, #000 88%, transparent 100%);
+    -webkit-mask-composite: source-in;
+    mask-composite: intersect;
   }
   .v5cine-frag {
     animation-name: v5cine-fly-soft;
