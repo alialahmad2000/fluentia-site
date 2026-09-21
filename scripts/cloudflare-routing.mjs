@@ -50,6 +50,8 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 export const CLIENT_ONLY_ROUTES = [
   "/atelier",
   "/aurora",
+  "/cine",
+  "/cine2",
   "/partners/submitted",
   "/v1",
   "/v2",
