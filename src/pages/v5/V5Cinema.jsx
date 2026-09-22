@@ -125,6 +125,20 @@ export default function V5Cinema({ progress }) {
     return () => window.clearTimeout(id);
   }, []);
 
+  /* Safari will NOT start a video that React inserts after first paint, even
+     with autoplay+muted+playsinline — measured on production: WebKit reported
+     paused:true / currentTime:0 while Chromium was already at 5.74s. Every
+     Safari visitor, which is nearly all of this traffic, got a still poster
+     with a play button on it. The attribute is not enough; play() has to be
+     called, and it has to be called again once frames are actually decoded. */
+  const kick = (el) => {
+    if (!el) return;
+    const go = () => { const r = el.play(); if (r && r.catch) r.catch(() => {}); };
+    go();
+    if (el.paused) setTimeout(go, 120);
+  };
+  const playNow = (el) => { if (el) kick(el); };
+
   /* Pointer yaw — fine pointers only, written straight to the node so the
      stage never re-renders, and never mounted where a touch would fake it. */
   useEffect(() => {
@@ -223,6 +237,8 @@ export default function V5Cinema({ progress }) {
               aria-hidden="true"
               tabIndex={-1}
               disablePictureInPicture
+              ref={playNow}
+              onLoadedData={(e) => kick(e.currentTarget)}
               onPlaying={(e) => e.currentTarget.classList.add("is-lit")}
               /* Low Power Mode refuses autoplay outright; if it never plays
                  the element stays transparent and the still plate below is

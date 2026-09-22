@@ -332,6 +332,7 @@
    opaque night the headline needs. */
 .v5cine-film {
   position: absolute;
+  z-index: 0;
   inset-inline: 0;
   bottom: env(safe-area-inset-bottom, 0px);
   width: 100%;
@@ -400,33 +401,56 @@
   height: clamp(200px, 34vh, 380px);
 }
 
-/* The film takes the bottom of the frame — the half with no text in it. */
+/* FULL BLEED. The film IS the frame, not a shadow under the copy.
+   The previous pass ran it at 58% height under a baked scrim and a mask that
+   faded most of it away. Ali's verdict on that was right: the reference's
+   video is the brightest thing on its card, and mine was the darkest thing on
+   the page. Legibility is bought the way the reference buys it — a directional
+   ground on the COPY side — not by hiding the film. */
 .v1-scope .v5h[data-cine-mode="film"] .v5cine-film {
-  height: 58%;
-  object-position: 50% 62%;
-  /* The ramp clears the hero's last two lines. Measured against the worst
-     frame of the loop each time: at `0.5 26% / #000 52%` the ghost CTA failed
-     4.5:1 on 7.08% of its pixels; at `0.32 46% / 74%` the trial link still
-     failed on 4.83%. Re-measure whenever the footage or the grade changes —
-     a brighter clip silently invalidates these numbers. */
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.2) 58%, #000 84%);
-  mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.2) 58%, #000 84%);
+  inset: 0;
+  top: 0;
+  bottom: 0;                  /* beats the base rule's safe-area bottom */
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 50%;
+  -webkit-mask-image: none;
+  mask-image: none;
 }
 
-/* The film IS the atmosphere here, so the fragments stop competing with it.
-   At the band mode's opacity they read as litter over a photograph. */
-.v1-scope .v5h[data-cine-mode="film"] .v5cine-noise { opacity: 0.45; }
-/* The still horizon is redundant once the film owns the same ground. */
-.v1-scope .v5h[data-cine-mode="film"] .v5cine-dawn { opacity: 0.55; }
+/* The copy side's ground. RTL, so the copy is on the RIGHT and the gradient
+   runs from there: dense enough to read on, gone by the middle so the left
+   half of the film plays at full strength. One neutral ink, no colour. */
+.v1-scope .v5h[data-cine-mode="film"]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(to left, rgba(4,7,14,0.95) 0%, rgba(4,7,14,0.92) 30%, rgba(4,7,14,0.66) 50%, rgba(4,7,14,0.2) 72%, rgba(4,7,14,0) 92%),
+    linear-gradient(to top, rgba(4,7,14,0.72) 0%, rgba(4,7,14,0.2) 20%, rgba(4,7,14,0) 44%);
+}
+
+/* The fragments, stars and still horizon go in film mode: they were the flat
+   hero's way of making an empty stage feel occupied, and the stage is not
+   empty any more. Over a full-bleed reel they are litter. */
+.v1-scope .v5h[data-cine-mode="film"] .v5cine-noise,
+.v1-scope .v5h[data-cine-mode="film"] .v5cine-stars,
+.v1-scope .v5h[data-cine-mode="film"] .v5cine-clouds { display: none; }
+
+/* Hide the still PLATE, never the plane — the <video> is a CHILD of
+   .v5cine-dawn, so display:none on the plane took the film with it and the
+   hero rendered as flat black. */
+.v1-scope .v5h[data-cine-mode="film"] .v5cine-dawn picture { display: none; }
 
 @media (max-width: 960px) {
-  .v1-scope .v5h[data-cine-mode="film"] .v5cine-film {
-    height: 46%;
-    object-position: 50% 58%;
-    /* clears the «جرّب درساً عن شغلك» link, which failed on 34.08% of its
-       pixels while the ramp finished above it */
-    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.3) 54%, #000 78%);
-    mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.3) 54%, #000 78%);
+  /* On a phone the copy runs the full width, so the ground turns vertical:
+     dense under the copy at the top, clear over the film at the bottom. */
+  .v1-scope .v5h[data-cine-mode="film"]::after {
+    background:
+      linear-gradient(to bottom, rgba(4,7,14,0.95) 0%, rgba(4,7,14,0.9) 38%, rgba(4,7,14,0.62) 60%, rgba(4,7,14,0.22) 79%, rgba(4,7,14,0) 94%);
   }
   .v1-scope .v5h[data-cine-mode="film"] .v5-hero-tail {
     height: clamp(180px, 30vh, 300px);
@@ -467,4 +491,28 @@
     rgba(4, 7, 14, 0) 100%
   );
   pointer-events: none;
+}
+
+/* The other two lines that sit low enough to meet a bright shot.
+   The alternative was cranking the phone's ground until the whole film went
+   black — which is the over-correction that produced the version Ali rejected.
+   Text over a film carries its own ground; the film stays bright. */
+.v1-scope .v5h[data-cine-mode="film"] .v5h-trial {
+  position: relative;
+  isolation: isolate;
+}
+.v1-scope .v5h[data-cine-mode="film"] .v5h-trial::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: -10px -20px;
+  border-radius: 999px;
+  background: radial-gradient(60% 120% at 50% 50%, rgba(4,7,14,0.9) 0%, rgba(4,7,14,0.78) 55%, rgba(4,7,14,0) 100%);
+  pointer-events: none;
+}
+/* The ghost CTA's own fill is translucent by design — over a lit frame it
+   washes out, so in film mode it takes a real ground instead of a tint. */
+.v1-scope .v5h[data-cine-mode="film"] .v5h-tour {
+  background: rgba(4, 7, 14, 0.82);
+  border-color: rgba(148, 197, 255, 0.28);
 }
