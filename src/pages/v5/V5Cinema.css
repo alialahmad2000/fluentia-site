@@ -439,3 +439,32 @@
   z-index: 1;
   padding-block: clamp(28px, 5vw, 64px) 0;
 }
+
+/* The trust row's own contrast bed, film mode only.
+   A reel's brightness is not predictable the way one landscape clip's is: it
+   swings from a dark stairwell to an amber skyline between shots, and this row
+   sits 76–86% down the film where the baked scrim has almost fallen to zero.
+   Measured against the worst of 7 frames it failed 4.5:1 on 4.00% of its
+   pixels on desktop and 8.17% on a phone. A fixed mask cannot solve a moving
+   target, so the line carries its own ground — the same device Higgsfield use
+   behind their own text block, and the one the Living Atlas home already uses
+   for its title. It is a legibility bed, not decoration: one neutral ink, no
+   colour, feathered so it has no visible edge. */
+.v1-scope .v5h[data-cine-mode="film"] .v5h-trust {
+  position: relative;
+  isolation: isolate;
+}
+.v1-scope .v5h[data-cine-mode="film"] .v5h-trust::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: -14px -26px -16px;
+  background: linear-gradient(
+    to bottom,
+    rgba(4, 7, 14, 0) 0%,
+    rgba(4, 7, 14, 0.82) 26%,
+    rgba(4, 7, 14, 0.86) 74%,
+    rgba(4, 7, 14, 0) 100%
+  );
+  pointer-events: none;
+}
