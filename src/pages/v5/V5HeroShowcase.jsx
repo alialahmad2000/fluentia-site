@@ -108,6 +108,7 @@ function SpeakBtn({ id, playing, onListen, label, compact = false }) {
 /* ─── 1 · A word tapped in a unit reading ─── */
 function ReadingScene({ anim, playing, onListen }) {
   const r = M.reading;
+  const [artLoaded, setArtLoaded] = useState(false);
   const at = r.sentence.search(new RegExp(`\\b${r.word}\\b`));
   const before = r.sentence.slice(0, at);
   const after = r.sentence.slice(at + r.word.length);
@@ -140,6 +141,13 @@ function ReadingScene({ anim, playing, onListen }) {
 
   return (
     <div className="hs-scene hs-reading" data-anim={anim ? "on" : "off"}>
+      {r.image && (
+        <div className="hs-art" data-loaded={artLoaded} aria-hidden>
+          {/* the reading's own art, as the student sees it above the passage; it is the
+              first scene, so it loads with the card rather than lazily */}
+          <img src={r.image} alt="" decoding="async" fetchpriority="high" onLoad={() => setArtLoaded(true)} />
+        </div>
+      )}
       <p className="hs-cap">تضغط على أي كلمة، فيظهر معناها ونطقها</p>
       <div className="hs-body">
       <div className="hs-page" dir="ltr" lang="en">

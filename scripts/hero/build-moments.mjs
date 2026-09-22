@@ -46,6 +46,8 @@ const reading = {
   meaningAr: must(tapped.definition_ar, "word meaning"),
   example: tapped.example_sentence || vocabRow?.example_sentence || null,
   audio: must(unit.word_audio?.[WORD], `word_audio.${WORD}`),
+  // the reading's own hero art, the same picture the student sees above the passage
+  image: must(readingA.before_read_image_url, "reading A before_read_image_url"),
 };
 
 // ── 2 · Expressions: a proverb beside its Arabic twin ──────────────────────

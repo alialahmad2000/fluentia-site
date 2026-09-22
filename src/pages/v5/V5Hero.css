@@ -648,6 +648,41 @@
   inset: -2px;
 }
 
+/* the reading's own art: the picture the student sees above this passage. A slab at
+   the top of the scene, cropped to the lit ridge and the tree — the mask gives its
+   full strength to the part worth seeing, and ends transparent so the clipped box
+   leaves no seam against the card's ground. */
+.v1-scope .hs-reading .hs-art {
+  inset-block-end: auto;
+  height: 46%;
+}
+.v1-scope .hs-reading .hs-art img {
+  object-position: 50% 92%;
+  opacity: 1;
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 62%, rgba(0, 0, 0, 0.55) 80%, transparent 100%);
+  mask-image: linear-gradient(180deg, #000 0%, #000 62%, rgba(0, 0, 0, 0.55) 80%, transparent 100%);
+}
+.v1-scope .hs-reading[data-anim="on"] .hs-art img { animation: hs-kb 9s var(--v1-ease) both; }
+.v1-scope .hs-reading .hs-art::after {
+  background: linear-gradient(
+    180deg,
+    rgba(4, 8, 16, 0.34) 0%,
+    rgba(4, 8, 16, 0.1) 26%,
+    rgba(4, 8, 16, 0.44) 62%,
+    rgba(4, 8, 16, 0.22) 84%,
+    transparent 100%
+  );
+}
+/* the art is the first moment the visitor sees, so it arrives with the card */
+.v1-scope .hs-reading .hs-art { transition-duration: 380ms; }
+/* legibility is bought per line, not by darkening the whole picture */
+.v1-scope .hs-reading .hs-cap,
+.v1-scope .hs-reading .hs-kicker {
+  color: var(--v1-t);
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.85);
+}
+.v1-scope .hs-reading .hs-passage { text-shadow: 0 1px 14px rgba(0, 0, 0, 0.95); }
+
 /* ─── 2 · proverb ─── */
 .v1-scope .hs-proverb .hs-art img { object-position: 50% 62%; opacity: 0.55; }
 .v1-scope .hs-proverb .hs-art::after {
@@ -934,6 +969,8 @@
   .v1-scope .hs-head { padding-inline: 16px; }
   .v1-scope .hs-foot { padding-inline: 14px; }
   .v1-scope .hs-scene { padding: 14px 14px; }
+  .v1-scope .hs-reading .hs-art { height: 36%; }
+  .v1-scope .hs-reading .hs-art img { object-position: 50% 100%; }
   .v1-scope .hs-prov-en { font-size: 1.55rem; }
   .v1-scope .hs-twin { font-size: 1.3rem; }
   .v1-scope .hs-head-note { display: none; }
