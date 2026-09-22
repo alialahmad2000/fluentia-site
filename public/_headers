@@ -1,0 +1,17 @@
+# Cloudflare Pages headers — the port of vercel.json's "headers" block.
+#
+# Cloudflare applies every matching rule, last-wins per header name, so the
+# hashed-asset rule cannot be undone by a later, broader one.
+
+# Hashed filenames: safe to cache forever. This is vercel.json's only header.
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# The prerendered pages and the empty shell carry per-route social meta that
+# WhatsApp and X scrape. A cached copy is a stale link preview.
+/index.html
+  Cache-Control: no-cache
+/app-shell.html
+  Cache-Control: no-cache
+/404.html
+  Cache-Control: no-cache
