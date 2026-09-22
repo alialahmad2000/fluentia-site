@@ -404,10 +404,13 @@
 .v1-scope .v5h[data-cine-mode="film"] .v5cine-film {
   height: 58%;
   object-position: 50% 62%;
-  /* The ramp clears the ghost CTA. At `0.5 26% / #000 52%` the CTA landed
-     where the mask reached full and failed 4.5:1 on 7.08% of its pixels. */
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.32) 46%, #000 74%);
-  mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.32) 46%, #000 74%);
+  /* The ramp clears the hero's last two lines. Measured against the worst
+     frame of the loop each time: at `0.5 26% / #000 52%` the ghost CTA failed
+     4.5:1 on 7.08% of its pixels; at `0.32 46% / 74%` the trial link still
+     failed on 4.83%. Re-measure whenever the footage or the grade changes —
+     a brighter clip silently invalidates these numbers. */
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.2) 58%, #000 84%);
+  mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.2) 58%, #000 84%);
 }
 
 /* The film IS the atmosphere here, so the fragments stop competing with it.
