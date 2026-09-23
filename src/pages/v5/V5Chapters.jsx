@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import V5SectionFilm from "./V5SectionFilm";
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { PROBLEM, SOLUTION } from "../landing-v2/content";
 import { Reveal, EASE, staggerParent, staggerItem } from "../v1/motion";
@@ -115,7 +116,8 @@ function LedgerRow({ card, i }) {
 
 export function V5Problem() {
   return (
-    <section className="v1-section" id="problem" style={{ position: "relative", paddingTop: "clamp(40px, 6vw, 72px)" }}>
+    <section className="v1-section v5-has-film" id="problem" style={{ position: "relative", paddingTop: "clamp(40px, 6vw, 72px)" }}>
+      <V5SectionFilm src="/home/film-problem-1280.mp4" poster="/home/film-problem-poster-1280.webp" side="center" strength={0.98} />
       <div className="v1-container">
         <Reveal>
           <span className="v1-eyebrow" style={{ color: "var(--v1-red)" }}>{PROBLEM.eyebrow}</span>
@@ -166,7 +168,8 @@ export function V5Solution() {
   const beam = useSpring(scrollYProgress, { stiffness: 90, damping: 26 });
 
   return (
-    <section className="v1-section" id="solution" style={{ position: "relative", paddingTop: "clamp(40px, 6vw, 72px)" }}>
+    <section className="v1-section v5-has-film" id="solution" style={{ position: "relative", paddingTop: "clamp(40px, 6vw, 72px)" }}>
+      <V5SectionFilm src="/home/film-solution-1280.mp4" poster="/home/film-solution-poster-1280.webp" side="center" strength={0.94} />
       <div className="v1-container">
         <Reveal>
           <span className="v1-eyebrow">{SOLUTION.eyebrow}</span>

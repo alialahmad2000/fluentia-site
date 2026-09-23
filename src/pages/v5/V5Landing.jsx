@@ -42,7 +42,7 @@ export default function V5Landing({ cinematic = false }) {
   return (
     <MotionConfig reducedMotion="user">
      <CinemaContext.Provider value={cinematic}>
-      <div className="v1-scope v5-scope" dir="rtl">
+      <div className={`v1-scope v5-scope${filmFirst ? " v5h-filmmode" : ""}`} dir="rtl">
         <BrandIntro />
         {isRoot ? <Seo path="/" /> : <Seo noindex />}
         <DawnArc />

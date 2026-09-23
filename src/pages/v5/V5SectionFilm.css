@@ -1,0 +1,88 @@
+/* ============================================================
+ * V5SectionFilm — a full-bleed film behind one section.
+ * Same contract as the hero's: the film is the brightest thing
+ * in the frame, and legibility comes from a directional ground
+ * on the side the copy occupies — never from hiding the film.
+ * ============================================================ */
+
+.v5sf {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background: var(--v1-ink, #04070e);
+}
+
+.v5sf-slot { position: absolute; inset: 0; }
+
+.v5sf-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 50%;
+  /* The push is on the ELEMENT, in CSS, so it animates the POSTER too: a
+     browser that refuses autoplay still shows a moving frame rather than a
+     still one. Each section is offset slightly so five films on one page do
+     not breathe in lockstep. */
+  animation: v5sf-push 30s ease-in-out infinite alternate;
+  will-change: transform;
+}
+@keyframes v5sf-push {
+  from { transform: scale(1.02) translate3d(0, 0, 0); }
+  to   { transform: scale(1.12) translate3d(-1%, -0.8%, 0); }
+}
+.v5sf[data-side="right"] .v5sf-video { animation-duration: 34s; }
+.v5sf[data-side="left"]  .v5sf-video { animation-duration: 27s; animation-direction: alternate-reverse; }
+
+/* The reading ground. `--sf-strength` lets a dense section ask for more of it
+   without every section being tuned separately. */
+.v5sf-ground {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+.v5sf[data-side="center"] .v5sf-ground {
+  background:
+    linear-gradient(to bottom, rgba(4,7,14,calc(0.9 * var(--sf-strength))) 0%, rgba(4,7,14,calc(0.8 * var(--sf-strength))) 38%, rgba(4,7,14,calc(0.8 * var(--sf-strength))) 62%, rgba(4,7,14,calc(0.92 * var(--sf-strength))) 100%);
+}
+.v5sf[data-side="right"] .v5sf-ground {
+  background:
+    linear-gradient(to left, rgba(4,7,14,calc(0.94 * var(--sf-strength))) 0%, rgba(4,7,14,calc(0.88 * var(--sf-strength))) 30%, rgba(4,7,14,calc(0.56 * var(--sf-strength))) 52%, rgba(4,7,14,calc(0.18 * var(--sf-strength))) 74%, rgba(4,7,14,0) 96%),
+    linear-gradient(to top, rgba(4,7,14,0.6) 0%, rgba(4,7,14,0) 34%);
+}
+.v5sf[data-side="left"] .v5sf-ground {
+  background:
+    linear-gradient(to right, rgba(4,7,14,calc(0.94 * var(--sf-strength))) 0%, rgba(4,7,14,calc(0.88 * var(--sf-strength))) 30%, rgba(4,7,14,calc(0.56 * var(--sf-strength))) 52%, rgba(4,7,14,calc(0.18 * var(--sf-strength))) 74%, rgba(4,7,14,0) 96%),
+    linear-gradient(to top, rgba(4,7,14,0.6) 0%, rgba(4,7,14,0) 34%);
+}
+
+/* On a phone every section's copy runs the full width, so a side ground has
+   nowhere to go: it turns vertical everywhere. */
+@media (max-width: 960px) {
+  .v5sf[data-side] .v5sf-ground {
+    background:
+      linear-gradient(to bottom, rgba(4,7,14,0.94) 0%, rgba(4,7,14,0.88) 34%, rgba(4,7,14,0.66) 60%, rgba(4,7,14,0.42) 82%, rgba(4,7,14,0.3) 100%);
+  }
+  .v5sf-video { animation-duration: 38s; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .v5sf-video { animation: none; }
+}
+
+/* A section that hosts a film needs a stacking context and its own content
+   lifted above the ground. */
+.v1-scope .v5-has-film { position: relative; isolation: isolate; }
+.v1-scope .v5-has-film > *:not(.v5sf) { position: relative; z-index: 2; }
+
+/* The final CTA already carries a full-bleed Riyadh still (`hi-cta-art`). With
+   a skyline FILM behind the same section you get two skylines stacked, which
+   is what it looked like on the first pass. The film replaces the still in
+   film mode only — the still is untouched everywhere else, including `/`.
+   The framed plates in the other sections (hi-problem-art and friends) stay:
+   those are content, not background. */
+.v1-scope.v5h-filmmode .hi-cta-art { display: none; }

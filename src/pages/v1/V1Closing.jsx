@@ -1,4 +1,5 @@
 import { useState } from "react";
+import V5SectionFilm from "../v5/V5SectionFilm";
 import { motion, AnimatePresence } from "framer-motion";
 import { STORIES, FAQ, FOUNDER, FINAL_CTA, FOOTER, NAV } from "../landing-v2/content";
 import { Reveal, staggerParent, staggerItem, EASE, SPRING_SMOOTH } from "./motion";
@@ -213,7 +214,8 @@ export function V1Founder() {
  * ──────────────────────────────────────────────────────────── */
 export function V1FinalCTA() {
   return (
-    <section className="v1-section hi-cta" id="final-cta" style={{ position: "relative", overflow: "clip" }}>
+    <section className="v1-section hi-cta v5-has-film" id="final-cta" style={{ position: "relative", overflow: "clip" }}>
+      <V5SectionFilm src="/home/film-cta-1280.mp4" poster="/home/film-cta-poster-1280.webp" side="center" strength={0.9} />
       {/* The azure glow that sat behind this block is gone: the skyline below is
           now the light, and a blurred wash would have run over it. The words and
           their watermark stay on the page ground; the picture starts beneath them. */}

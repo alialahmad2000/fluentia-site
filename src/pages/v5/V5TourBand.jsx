@@ -1,4 +1,5 @@
 import { ROOMS } from "../../tour/rooms";
+import V5SectionFilm from "./V5SectionFilm";
 import { Reveal } from "../v1/motion";
 
 /**
@@ -15,7 +16,8 @@ import { Reveal } from "../v1/motion";
  */
 export default function V5TourBand() {
   return (
-    <section className="v5-tour" id="tour" aria-labelledby="v5-tour-title">
+    <section className="v5-tour v5-has-film" id="tour" aria-labelledby="v5-tour-title">
+      <V5SectionFilm src="/home/film-platform-1280.mp4" poster="/home/film-platform-poster-1280.webp" side="center" strength={0.92} />
       <div className="v1-container">
         <Reveal>
           <div className="v5-tour-head">

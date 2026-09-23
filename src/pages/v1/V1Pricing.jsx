@@ -1,4 +1,5 @@
 import { useState } from "react";
+import V5SectionFilm from "../v5/V5SectionFilm";
 import { motion } from "framer-motion";
 import { PRICING } from "../landing-v2/content";
 import { buildWhatsAppUrl } from "../../lib/whatsapp";
@@ -44,7 +45,8 @@ export default function V1Pricing() {
   };
 
   return (
-    <section className="v1-section v1p" id="pricing">
+    <section className="v1-section v1p v5-has-film" id="pricing">
+      <V5SectionFilm src="/home/film-pricing-1280.mp4" poster="/home/film-pricing-poster-1280.webp" side="center" strength={1.0} />
       <div className="v1-container">
         <Reveal>
           <header className="v1p-head">
