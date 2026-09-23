@@ -27,15 +27,15 @@
      browser that refuses autoplay still shows a moving frame rather than a
      still one. Each section is offset slightly so five films on one page do
      not breathe in lockstep. */
-  animation: v5sf-push 30s ease-in-out infinite alternate;
+  animation: v5sf-push 52s ease-in-out infinite alternate;
   will-change: transform;
 }
 @keyframes v5sf-push {
-  from { transform: scale(1.02) translate3d(0, 0, 0); }
-  to   { transform: scale(1.12) translate3d(-1%, -0.8%, 0); }
+  from { transform: scale(1.01) translate3d(0, 0, 0); }
+  to   { transform: scale(1.05) translate3d(-0.4%, -0.3%, 0); }
 }
-.v5sf[data-side="right"] .v5sf-video { animation-duration: 34s; }
-.v5sf[data-side="left"]  .v5sf-video { animation-duration: 27s; animation-direction: alternate-reverse; }
+.v5sf[data-side="right"] .v5sf-video { animation-duration: 58s; }
+.v5sf[data-side="left"]  .v5sf-video { animation-duration: 46s; animation-direction: alternate-reverse; }
 
 /* The reading ground. `--sf-strength` lets a dense section ask for more of it
    without every section being tuned separately. */
@@ -67,7 +67,7 @@
     background:
       linear-gradient(to bottom, rgba(4,7,14,0.94) 0%, rgba(4,7,14,0.88) 34%, rgba(4,7,14,0.66) 60%, rgba(4,7,14,0.42) 82%, rgba(4,7,14,0.3) 100%);
   }
-  .v5sf-video { animation-duration: 38s; }
+  .v5sf-video { animation-duration: 64s; }
 }
 
 @media (prefers-reduced-motion: reduce) {

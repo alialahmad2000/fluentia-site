@@ -535,11 +535,15 @@
        the poster gets this animation too, so the hero is never a still frame
        whatever the autoplay policy decides. */
 @keyframes v5cine-push {
-  from { transform: scale(1.02) translate3d(0, 0, 0); }
-  to   { transform: scale(1.13) translate3d(-1.2%, -1%, 0); }
+  from { transform: scale(1.01) translate3d(0, 0, 0); }
+  to   { transform: scale(1.05) translate3d(-0.5%, -0.4%, 0); }
 }
 .v5cine-film {
-  animation: v5cine-push 26s ease-in-out infinite alternate;
+  /* Much gentler than it was: the footage now plays at 0.56x, and a 1.13
+     scale over 26s ON TOP of that is what made the motion feel frantic.
+     Its real job is the POSTER, so a browser that blocks autoplay still
+     shows a moving frame — that only needs a hint. */
+  animation: v5cine-push 48s ease-in-out infinite alternate;
   will-change: transform;
 }
 @media (prefers-reduced-motion: reduce) {
