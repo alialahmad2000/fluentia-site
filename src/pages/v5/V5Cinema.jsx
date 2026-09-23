@@ -241,6 +241,12 @@ export default function V5Cinema({ progress }) {
 
   return (
     <div className="v5cine" aria-hidden ref={stageRef}>
+      {/* The film sits OUTSIDE the 3D stage, as a direct child. It was inside
+          .v5cine-dawn, which lives under a `preserve-3d` + transformed
+          ancestor — a context Safari's autoplay heuristics are known to treat
+          differently — and a full-bleed film has no business inside a parallax
+          rig regardless. */}
+      <div className="v5cine-filmslot" ref={filmSlot} aria-hidden />
      <div className="v5cine-yaw">
       <div className="v5cine-drift">
       <motion.div
@@ -296,8 +302,7 @@ export default function V5Cinema({ progress }) {
           {/* The moving frame sits ON the plate, matched to it, so the cut
               from still to film is invisible. playsinline is not optional —
               without it iOS takes the video fullscreen on play. */}
-          {/* the film's mount point — see the effect above */}
-          <div className="v5cine-filmslot" ref={filmSlot} aria-hidden />
+
         </div>
 
         {/* The noise of the old way, falling THROUGH the room and past you. */}

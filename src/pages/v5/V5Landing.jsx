@@ -50,7 +50,6 @@ export default function V5Landing({ cinematic = false }) {
           <V1Header />
           <main>
             <V5Hero />
-            {filmFirst && <HeroShowcaseSection />}
             <V5LogoBand />
             <V1Stats />
             <Chapter num={1} label="المشكلة" />

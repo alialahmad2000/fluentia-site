@@ -256,11 +256,12 @@ export default function V5Hero() {
               In film mode this leaves the first screen and is remounted
               immediately below the hero: the film cannot be the frame while
               a card is standing in it. */}
-          {!filmFirst && (
-            <motion.div className="v5h-stagecol" style={{ y: cardY }}>
-              <V5HeroShowcase />
-            </motion.div>
-          )}
+          {/* The showcase stays IN the hero, beside the copy, in every mode.
+              Moving it below the fold in film mode was wrong: it is the proof
+              next to the promise, and it only appeared after a scroll. */}
+          <motion.div className="v5h-stagecol" style={{ y: cardY }}>
+            <V5HeroShowcase />
+          </motion.div>
         </div>
         {/* Keeps room below the showcase: it drifts down on scroll, and the
             section clips anything past its bottom edge. */}

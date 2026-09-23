@@ -380,10 +380,10 @@
    needs the frame; you cannot have both the card and the film in it. */
 
 /* Copy compacts into the top half, where the footage is deep navy sky. */
-.v1-scope .v5h[data-cine-mode="film"] .v5h-layout {
-  grid-template-columns: minmax(0, 1fr);
-  min-height: 0;
-  align-content: start;
+/* The showcase is back beside the copy, so the layout keeps its two columns —
+   the single-column override was only there while the card lived below. */
+.v1-scope .v5h[data-cine-mode="film"] .v5h-copy {
+  max-width: none;
 }
 .v1-scope .v5h[data-cine-mode="film"] .v5h-copy {
   max-width: 48ch;
@@ -429,7 +429,7 @@
   z-index: 1;
   pointer-events: none;
   background:
-    linear-gradient(to left, rgba(4,7,14,0.95) 0%, rgba(4,7,14,0.92) 30%, rgba(4,7,14,0.66) 50%, rgba(4,7,14,0.2) 72%, rgba(4,7,14,0) 92%),
+    linear-gradient(to left, rgba(4,7,14,0.95) 0%, rgba(4,7,14,0.9) 28%, rgba(4,7,14,0.58) 46%, rgba(4,7,14,0.26) 64%, rgba(4,7,14,0.1) 82%, rgba(4,7,14,0) 96%),
     linear-gradient(to top, rgba(4,7,14,0.72) 0%, rgba(4,7,14,0.2) 20%, rgba(4,7,14,0) 44%);
 }
 
@@ -517,5 +517,31 @@
   border-color: rgba(148, 197, 255, 0.28);
 }
 
-/* the film's mount point — it only has to not affect layout */
-.v5cine-filmslot { position: absolute; inset: 0; pointer-events: none; }
+/* The film's mount point, a direct child of .v5cine and outside the 3D rig. */
+.v5cine-filmslot {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* A slow push, applied by CSS to the ELEMENT rather than baked into the clip.
+   Two problems, one mechanism:
+     · Ali: «الحركة اللي بالفيديو مب بايّنة» — the footage's own motion is a
+       drifting mist and a hair of camera, which is too subtle to register in
+       the seconds someone looks at a hero.
+     · If the browser refuses to autoplay, the element shows its POSTER — and
+       the poster gets this animation too, so the hero is never a still frame
+       whatever the autoplay policy decides. */
+@keyframes v5cine-push {
+  from { transform: scale(1.02) translate3d(0, 0, 0); }
+  to   { transform: scale(1.13) translate3d(-1.2%, -1%, 0); }
+}
+.v5cine-film {
+  animation: v5cine-push 26s ease-in-out infinite alternate;
+  will-change: transform;
+}
+@media (prefers-reduced-motion: reduce) {
+  .v5cine-film { animation: none; }
+}
