@@ -516,3 +516,6 @@
   background: rgba(4, 7, 14, 0.82);
   border-color: rgba(148, 197, 255, 0.28);
 }
+
+/* the film's mount point — it only has to not affect layout */
+.v5cine-filmslot { position: absolute; inset: 0; pointer-events: none; }

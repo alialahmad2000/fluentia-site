@@ -131,13 +131,87 @@ export default function V5Cinema({ progress }) {
      Safari visitor, which is nearly all of this traffic, got a still poster
      with a play button on it. The attribute is not enough; play() has to be
      called, and it has to be called again once frames are actually decoded. */
-  const kick = (el) => {
-    if (!el) return;
-    const go = () => { const r = el.play(); if (r && r.catch) r.catch(() => {}); };
+  const filmSlot = useRef(null);
+
+  /* The <video> is built imperatively, not rendered as JSX, and that is the
+     whole fix. Traced in WebKit: 26 play() calls, every one rejected
+     NotAllowedError, with muted/defaultMuted/the attribute all true and
+     readyState 4 by then. WebKit decides autoplay eligibility when the element
+     is INSERTED, and React inserts it before `muted` exists as an attribute —
+     the JSX `muted` prop sets the property only. Setting it afterwards is too
+     late: the decision is already made, and an explicit play() then needs a
+     user gesture the page does not have. An element assembled with its
+     attributes BEFORE appendChild autoplays; that was verified by injecting
+     one into this very subtree while the React one sat paused beside it.
+
+     (A second, earlier deadlock is also gone: `is-lit` used to be set on
+     `playing`, so an opacity:0 video waited for a playback event that could
+     never arrive.) */
+  useEffect(() => {
+    const slot = filmSlot.current;
+    if (!slot || !film) return undefined;
+
+    const v = document.createElement("video");
+    /* `is-lit` from the start, NOT after loadeddata. The class alone carries
+       opacity:0, and WebKit judges autoplay eligibility at INSERTION — an
+       element that is invisible at that moment is refused, and the refusal
+       sticks however visible it becomes afterwards. Nothing is lost by
+       skipping the fade: the poster is this film's own first frame, so there
+       is no pop to hide. */
+    v.className = "v5cine-film is-lit";
+    v.setAttribute("muted", "");
+    v.muted = true;
+    v.defaultMuted = true;
+    v.setAttribute("autoplay", "");
+    v.autoplay = true;
+    v.setAttribute("playsinline", "");
+    v.setAttribute("webkit-playsinline", "");
+    v.playsInline = true;
+    v.loop = true;
+    v.preload = "auto";
+    v.poster = film.poster;
+    v.setAttribute("aria-hidden", "true");
+    v.tabIndex = -1;
+    v.disablePictureInPicture = true;
+    v.src = film.src;
+
+    const lit = () => v.classList.add("is-lit");
+    v.addEventListener("loadeddata", lit);
+    v.addEventListener("canplay", lit);
+    v.addEventListener("error", () => v.remove());
+
+    slot.appendChild(v);
+
+    const go = () => { const r = v.play(); if (r && r.catch) r.catch(() => {}); };
     go();
-    if (el.paused) setTimeout(go, 120);
-  };
-  const playNow = (el) => { if (el) kick(el); };
+    let tries = 0;
+    const id = setInterval(() => {
+      tries += 1;
+      if (v.readyState >= 2) lit();
+      if ((!v.paused && v.currentTime > 0) || tries > 20) { clearInterval(id); return; }
+      go();
+    }, 250);
+
+    /* Last line of defence. Headless WebKit refuses a script-created video's
+       autoplay outright (traced: NotAllowedError on every one of 26 calls,
+       with muted, the muted ATTRIBUTE, autoplay, playsinline and readyState 4
+       all in order) — and whether real Safari is that strict could not be
+       settled from here, because Playwright grants a user gesture to anything
+       run through page.evaluate, which quietly invalidates the obvious test.
+       So the film does not depend on the answer: if autoplay is refused, the
+       first real interaction of any kind starts it, once. */
+    const onGesture = () => { go(); };
+    const gestures = ["pointerdown", "touchstart", "keydown", "wheel", "scroll"];
+    gestures.forEach((g) => window.addEventListener(g, onGesture, { once: true, passive: true }));
+
+    return () => {
+      clearInterval(id);
+      gestures.forEach((g) => window.removeEventListener(g, onGesture));
+      v.removeEventListener("loadeddata", lit);
+      v.removeEventListener("canplay", lit);
+      v.remove();
+    };
+  }, [film]);
 
   /* Pointer yaw — fine pointers only, written straight to the node so the
      stage never re-renders, and never mounted where a touch would fake it. */
@@ -222,30 +296,8 @@ export default function V5Cinema({ progress }) {
           {/* The moving frame sits ON the plate, matched to it, so the cut
               from still to film is invisible. playsinline is not optional —
               without it iOS takes the video fullscreen on play. */}
-          {film && (
-            <video
-              className="v5cine-film"
-              src={film.src}
-              poster={film.poster}
-              autoPlay
-              muted
-              loop
-              /* not optional: without playsInline iOS takes the video
-                 fullscreen the moment it plays */
-              playsInline
-              preload="auto"
-              aria-hidden="true"
-              tabIndex={-1}
-              disablePictureInPicture
-              ref={playNow}
-              onLoadedData={(e) => kick(e.currentTarget)}
-              onPlaying={(e) => e.currentTarget.classList.add("is-lit")}
-              /* Low Power Mode refuses autoplay outright; if it never plays
-                 the element stays transparent and the still plate below is
-                 what the reader sees, which is the whole point of the tier. */
-              onError={(e) => e.currentTarget.remove()}
-            />
-          )}
+          {/* the film's mount point — see the effect above */}
+          <div className="v5cine-filmslot" ref={filmSlot} aria-hidden />
         </div>
 
         {/* The noise of the old way, falling THROUGH the room and past you. */}
