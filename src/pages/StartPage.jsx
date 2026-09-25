@@ -241,6 +241,8 @@ export default function StartPage() {
   const [path, setPath]     = useState('');
   const [pkgId, setPkgId]   = useState('talaqa'); // default: most popular
   const [goal, setGoal]     = useState('');
+  const [consent, setConsent] = useState(false); // WhatsApp-contact consent — optional
+  const [hp, setHp]         = useState('');      // honeypot — humans never see it
   const [touched, setTouched] = useState({});
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted]   = useState(false);
@@ -324,6 +326,8 @@ export default function StartPage() {
         pkgPrice: pkg.price,
         goal,
         utm,
+        consent,
+        hp,
       });
 
       // Open WhatsApp with UTM-tagged message
@@ -670,6 +674,69 @@ export default function StartPage() {
                       ))}
                     </select>
                   </Field>
+
+                  {/* Honeypot — off-screen, not display:none, so bots still fill it */}
+                  <div
+                    aria-hidden="true"
+                    style={{
+                      position: 'absolute',
+                      left: -10000,
+                      top: 'auto',
+                      width: 1,
+                      height: 1,
+                      overflow: 'hidden',
+                      clipPath: 'inset(50%)',
+                      whiteSpace: 'nowrap',
+                    }}
+                  >
+                    <label>
+                      Company
+                      <input
+                        type="text"
+                        name="company"
+                        tabIndex={-1}
+                        autoComplete="off"
+                        value={hp}
+                        onChange={e => setHp(e.target.value)}
+                      />
+                    </label>
+                  </div>
+
+                  {/* WhatsApp consent — optional, unchecked by default */}
+                  <label
+                    htmlFor="start-consent"
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: 10,
+                      minHeight: 44,
+                      marginBottom: 6,
+                      padding: '4px 2px',
+                      cursor: 'pointer',
+                      fontSize: 13,
+                      fontWeight: 500,
+                      color: T.text,
+                      userSelect: 'none',
+                      WebkitTapHighlightColor: 'transparent',
+                    }}
+                  >
+                    <input
+                      id="start-consent"
+                      type="checkbox"
+                      name="consent"
+                      checked={consent}
+                      onChange={e => setConsent(e.target.checked)}
+                      style={{
+                        width: 20,
+                        height: 20,
+                        margin: 0,
+                        flexShrink: 0,
+                        cursor: 'pointer',
+                        accentColor: T.sky,
+                      }}
+                    />
+                    <span>أوافق على التواصل معي عبر واتساب</span>
+                  </label>
 
                   {/* Submit */}
                   <button
