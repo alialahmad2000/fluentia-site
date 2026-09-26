@@ -64,6 +64,9 @@ function metaBlock(seo) {
   if (seo.keywords) {
     lines.push(`<meta data-rh="true" name="keywords" content="${attr(seo.keywords)}" />`);
   }
+  if (seo.noindex) {
+    lines.push(`<meta data-rh="true" name="robots" content="noindex, nofollow" />`);
+  }
   lines.push(
     `<link data-rh="true" rel="canonical" href="${attr(seo.url)}" />`,
     `<meta data-rh="true" property="og:type" content="${attr(seo.ogType)}" />`,

@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import Seo from "../components/Seo";
-import { fireLeadTracking, getSource } from '../utils/tracking';
+import { getSource } from '../utils/tracking';
+import { fireLeadTracking, stripPhone, toLocalPhone, getUTM, buildWAMessage } from '../lib/leads/submitLead';
 import { buildWhatsAppUrl } from '../lib/whatsapp';
 
 /* ═══════════════════════════════════════════════════════════════
@@ -192,44 +193,6 @@ const FAQS = [
 /* ═══════════════════════════════════════════════════════════════
    HELPERS
    ═══════════════════════════════════════════════════════════════ */
-
-// Strip to digits, drop leading 0 (user might type "05..." or "5..."),
-// return the 9-digit Saudi mobile suffix (starts with 5).
-function stripPhone(raw) {
-  let d = String(raw || '').replace(/\D/g, '');
-  if (d.startsWith('966')) d = d.slice(3);
-  if (d.startsWith('0')) d = d.slice(1);
-  return d.slice(0, 9);
-}
-
-// Back to Saudi local (05XXXXXXXX) format — used in WA message so
-// trainer's template parser keeps working.
-function toLocalPhone(digits) {
-  return digits ? '0' + digits : '';
-}
-
-function getUTM() {
-  const p = new URLSearchParams(window.location.search);
-  return {
-    source:   p.get('utm_source')   || 'direct',
-    medium:   p.get('utm_medium')   || '',
-    campaign: p.get('utm_campaign') || '',
-  };
-}
-
-function buildWAMessage({ name, phoneLocal, path, pkgName, pkgPrice, goal, utm }) {
-  const sourceLabel = getSource();
-  return (
-    `السلام عليكم، أبي أحجز لقاء مبدئي مجاني\n` +
-    `الاسم: ${name}\n` +
-    `الجوال: ${phoneLocal}\n` +
-    `المسار: ${path}\n` +
-    `الباقة: ${pkgName} (${pkgPrice} ر.س)\n` +
-    (goal ? `الهدف: ${goal}\n` : '') +
-    `المصدر: ${sourceLabel}` +
-    (utm.campaign ? ` · ${utm.campaign}` : '')
-  );
-}
 
 /* ═══════════════════════════════════════════════════════════════
    PAGE

@@ -36,6 +36,7 @@ export default function Seo({ path, entry, noindex = false }) {
       <title>{seo.title}</title>
       <meta name="description" content={seo.description} />
       {seo.keywords ? <meta name="keywords" content={seo.keywords} /> : null}
+      {seo.noindex ? <meta name="robots" content="noindex, nofollow" /> : null}
       <link rel="canonical" href={seo.url} />
 
       <meta property="og:type" content={seo.ogType} />

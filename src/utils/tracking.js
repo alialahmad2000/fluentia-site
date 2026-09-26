@@ -167,8 +167,9 @@ export async function submitLeadIntake({ name, phone, email, path, pkg, goal, so
  * @param {object} [data.utm]    — { source, medium, campaign }
  * @param {boolean} [data.consent] — WhatsApp-contact consent (lead-intake only)
  * @param {string} [data.hp]     — honeypot field value (empty for humans)
+ * @param {string} [data.defaultSource] — leads.source when utm.source is empty
  */
-export async function fireLeadTracking({ name, phone, path, pkg, pkgPrice, goal, utm = {}, consent = false, hp = '' }) {
+export async function fireLeadTracking({ name, phone, path, pkg, pkgPrice, goal, utm = {}, consent = false, hp = '', defaultSource = 'start_page' }) {
   const eventId = `lead_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
 
   // 1. GA4
@@ -226,7 +227,7 @@ export async function fireLeadTracking({ name, phone, path, pkg, pkgPrice, goal,
   } catch (e) { /* silent */ }
 
   // 4. Lead → CRM lead-intake (falls back to the direct `leads` insert).
-  submitLeadIntake({ name, phone, email: null, path, pkg, goal, source: utm.source || 'start_page', consent, hp });
+  submitLeadIntake({ name, phone, email: null, path, pkg, goal, source: utm.source || defaultSource, consent, hp });
 
   return eventId;
 }

@@ -96,6 +96,16 @@ export const PAGE_SEO = {
     ogTitle: "سياسة الخصوصية | أكاديمية طلاقة",
   },
 
+  // TikTok campaign landing. Prerendered for first paint inside the in-app
+  // browser, but noindex: paid traffic only, and it duplicates /start's offer.
+  // Deliberately absent from public/sitemap.xml.
+  "/join": {
+    title: "احجز لقاءك المبدئي المجاني | أكاديمية طلاقة",
+    description:
+      "مجموعات صغيرة، حصص مباشرة، ومنصّة تتدرب عليها كل يوم. ابدأ بلقاء مبدئي مجاني بدون أي التزام.",
+    noindex: true,
+  },
+
   "/terms": {
     title: "شروط الاستخدام | أكاديمية طلاقة",
     description:
@@ -133,6 +143,7 @@ export function normalizeSeo(entry) {
     twTitle: entry.twTitle || ogTitle,
     twDescription: entry.twDescription || ogDescription,
     keywords: entry.keywords || null,
+    noindex: entry.noindex === true,
   };
 }
 

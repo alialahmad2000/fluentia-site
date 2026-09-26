@@ -134,6 +134,10 @@
       "destination": "/privacy.html"
     },
     {
+      "source": "/join",
+      "destination": "/join.html"
+    },
+    {
       "source": "/terms",
       "destination": "/terms.html"
     },

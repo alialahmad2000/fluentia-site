@@ -10,6 +10,7 @@ const PartnersLanding = lazy(() => import('./pages/partners/PartnersLanding'));
 const PartnersSubmitted = lazy(() => import('./pages/partners/PartnersSubmitted'));
 const PartnersTerms = lazy(() => import('./pages/partners/PartnersTerms'));
 const StartPage = lazy(() => import('./pages/StartPage'));
+const JoinPage = lazy(() => import('./pages/join/JoinPage'));
 const AboutPage = lazy(() => import('./pages/AboutPage'));
 const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
 const TermsOfService = lazy(() => import('./pages/TermsOfService'));
@@ -1217,6 +1218,8 @@ function AppRoutes(){
           for instant first paint. The previous homepage stays reachable at /v2. */}
       <Route path="/" element={<V5LandingHome />} />
       <Route path="/start" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#0A0A0A'}} />}><StartPage /></Suspense>} />
+      {/* TikTok campaign landing (noindex). /start stays the Google Ads page. */}
+      <Route path="/join" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#060e1c'}} />}><JoinPage /></Suspense>} />
       {/* Adaptive CEFR placement exam. /test is the short alias for ads and bios. */}
       <Route path="/level-test" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#04070e'}} />}><LevelTestPage /></Suspense>} />
       <Route path="/test" element={<Navigate to="/level-test" replace />} />
