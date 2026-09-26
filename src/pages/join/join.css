@@ -272,10 +272,6 @@
 /* ─── Footer (trimmed homepage footer): legal links get a finger-sized target ─── */
 .join-page footer a { display: inline-flex; align-items: center; min-height: 48px; }
 
-/* The closing skyline sits above the final CTA (z-index 2) and swallows the
-   tap on its button — true on `/` as well. Here it is a picture only. */
-.join-page .hi-cta-art { pointer-events: none; }
-
 /* ─── Header on a phone: the brand and the button have to share ~350px ─── */
 @media (max-width: 440px) {
   .join-page header a[href="#top"] .v1-num { display: none; }

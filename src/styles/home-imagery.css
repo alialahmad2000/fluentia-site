@@ -449,6 +449,7 @@
 }
 .v1-scope .hi-cta-art {
   position: relative;
+  pointer-events: none; /* a picture: it sits over the final CTA and must not take its tap */
   width: 100%;
   aspect-ratio: 3 / 1;
   margin-top: clamp(-140px, -9vw, -72px);
