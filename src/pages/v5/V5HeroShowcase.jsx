@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import BrandMark from "../../components/BrandMark";
 import { ROOMS } from "../../tour/rooms";
 import data from "./heroMoments.json";
+import { useCta } from "../v1/ctaContext";
 
 /**
  * V5HeroShowcase — «من داخل المنصة».
@@ -396,6 +397,7 @@ const MOMENTS = [
 ];
 
 export default function V5HeroShowcase() {
+  const cta = useCta();
   const [active, setActive] = useState(0);
   const [run, setRun] = useState(0); // bump to replay the same moment
   const [live, setLive] = useState(false); // on screen once, motion allowed
@@ -633,6 +635,12 @@ export default function V5HeroShowcase() {
               </span>
             ))}
           </span>
+          {cta ? (
+            <button type="button" className="hs-room" data-open-form>
+              {cta.label}
+              <span aria-hidden>←</span>
+            </button>
+          ) : (
           <a
             className="hs-room"
             href={`/tour/${m.room}`}
@@ -642,6 +650,7 @@ export default function V5HeroShowcase() {
             جرّبها في الجولة
             <span aria-hidden>←</span>
           </a>
+          )}
         </div>
       </div>
     </div>

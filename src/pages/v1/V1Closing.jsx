@@ -6,6 +6,7 @@ import { Reveal, staggerParent, staggerItem, EASE, SPRING_SMOOTH } from "./motio
 import { Magnetic } from "./V1Interactive";
 import BrandMark from "../../components/BrandMark";
 import HomePicture from "../v5/HomePicture";
+import { useCta } from "./ctaContext";
 
 /* ────────────────────────────────────────────────────────────
  * Stories — 3 real testimonials
@@ -213,6 +214,7 @@ export function V1Founder() {
  * Final CTA — wordmark moment + single button
  * ──────────────────────────────────────────────────────────── */
 export function V1FinalCTA() {
+  const cta = useCta();
   return (
     <section className="v1-section hi-cta v5-has-film" id="final-cta" style={{ position: "relative", overflow: "clip" }}>
       <V5SectionFilm src="/home/film-cta-1280.mp4" poster="/home/film-cta-poster-1280.webp" side="center" strength={0.9} />
@@ -250,7 +252,7 @@ export function V1FinalCTA() {
             </p>
             <Magnetic>
               <button type="button" data-open-form className="v1-cta v1-cta-primary" style={{ marginTop: 40, padding: "19px 52px", fontSize: "1.1rem" }}>
-                {FINAL_CTA.primaryCTA}
+                {cta ? cta.label : FINAL_CTA.primaryCTA}
                 <span aria-hidden style={{ fontSize: "1.1em", lineHeight: 1 }}>←</span>
               </button>
             </Magnetic>
@@ -276,10 +278,11 @@ export function V1FinalCTA() {
  * Footer
  * ──────────────────────────────────────────────────────────── */
 export function V1Footer() {
+  const cta = useCta();
   return (
     <footer style={{ borderTop: "1px solid var(--v1-line)", padding: "clamp(44px, 6vw, 72px) 0 40px", position: "relative" }}>
       <div className="v1-container">
-        <div className="v1-footer-grid" style={{ display: "grid", gridTemplateColumns: "1.6fr 1fr 1fr", gap: "36px 48px" }}>
+        <div className="v1-footer-grid" style={{ display: "grid", gridTemplateColumns: cta ? "1fr auto" : "1.6fr 1fr 1fr", gap: "36px 48px", alignItems: cta ? "end" : undefined }}>
           <div>
             <div style={{ display: "flex", alignItems: "center", gap: 11 }}>
               <BrandMark size={30} />
@@ -293,6 +296,12 @@ export function V1Footer() {
             </p>
           </div>
 
+          {cta ? (
+            <a href={FOOTER.contact.waLink} target="_blank" rel="noopener noreferrer" className="v1-num" dir="ltr" style={{ color: "var(--v1-t-mute)", textDecoration: "none", fontSize: "0.95rem", padding: "12px 0" }}>
+              {FOOTER.contact.whatsapp}
+            </a>
+          ) : (
+          <>
           <div>
             <div style={{ fontSize: "0.8rem", letterSpacing: "0.14em", color: "var(--v1-t-faint)", fontFamily: "var(--v1-display)", fontWeight: 600, marginBottom: 18 }}>روابط</div>
             <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 12 }}>
@@ -330,6 +339,8 @@ export function V1Footer() {
               ))}
             </ul>
           </div>
+          </>
+          )}
         </div>
 
         <div style={{ marginTop: 52, paddingTop: 26, borderTop: "1px solid var(--v1-line)", display: "flex", justifyContent: "space-between", gap: 14, flexWrap: "wrap", alignItems: "center" }}>

@@ -5,6 +5,7 @@ import { SUPABASE_URL } from "../../utils/tracking";
 import { getAttribution } from "../../lib/attribution";
 import { track } from "../../lib/track";
 import { useTrialHref } from "../../lib/trialLink";
+import { useCta } from "./ctaContext";
 
 /**
  * V1TrialBand — the invitation to «درسك الأول» (app.fluentia.academy/try).
@@ -181,6 +182,7 @@ function MarkedLine({ text }) {
 }
 
 export default function V1TrialBand() {
+  const cta = useCta();
   const [i, setI] = useState(0);
   const [touched, setTouched] = useState(false);
   const reduce = useReducedMotion();
@@ -208,7 +210,7 @@ export default function V1TrialBand() {
       if (!entries.some((e) => e.isIntersecting)) return;
       io.disconnect();
       try { sessionStorage.setItem("flu_trial_band_seen", "1"); } catch { /* ignore */ }
-      funnel("band_view");
+      if (!cta) funnel("band_view");
       track("trial_band_view", { page_path: window.location.pathname });
     }, { threshold: 0.35 });
     io.observe(el);
@@ -217,7 +219,7 @@ export default function V1TrialBand() {
 
   const onPickClick = (n) => {
     pick(n);
-    funnel("band_pick", SPECIMENS[n].slug);
+    if (!cta) funnel("band_pick", SPECIMENS[n].slug);
     track("trial_band_select", { field: SPECIMENS[n].slug });
   };
 
@@ -553,6 +555,12 @@ export default function V1TrialBand() {
           {/* Its own grid child: beneath the claim on desktop, and AFTER the
               specimen on a phone — the evidence has to land before the ask. */}
           <div className="tb-cta-row">
+            {cta ? (
+              <button type="button" data-open-form className="v1-cta v1-cta-primary">
+                {cta.label} ←
+              </button>
+            ) : (
+            <>
             <a href={ctaHref} onClick={onCtaClick} data-cta="trial_band"
                className="v1-cta v1-cta-primary" style={{ textDecoration: "none" }}>
               ادخل على درس من مجالك ←
@@ -560,6 +568,8 @@ export default function V1TrialBand() {
             <span className="tb-note">
               أو أي مهنة أخرى — درس كامل وتصحيح فوري بالعربية.
             </span>
+            </>
+            )}
           </div>
         </div>
       </motion.div>

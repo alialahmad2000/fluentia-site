@@ -3,12 +3,14 @@ import { motion, useScroll, useSpring } from "framer-motion";
 import { NAV } from "../landing-v2/content";
 import { EASE } from "./motion";
 import BrandMark from "../../components/BrandMark";
+import { useCta } from "./ctaContext";
 
 /**
  * V1Header — glass nav with scroll progress hairline.
  * Solidifies after 40px of scroll; mobile gets a simple sheet menu.
  */
 export default function V1Header() {
+  const cta = useCta();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const { scrollYProgress } = useScroll();
@@ -103,6 +105,13 @@ export default function V1Header() {
           </span>
         </a>
 
+        {/* Single-action page: the brand and one button, on every width */}
+        {cta ? (
+          <button type="button" data-open-form className="v1-cta v1-cta-primary" style={{ padding: "0 20px", fontSize: "0.9rem", minHeight: 48, whiteSpace: "nowrap", flexShrink: 0 }}>
+            {cta.label}
+          </button>
+        ) : (
+        <>
         {/* Desktop links */}
         <nav className="v1-nav-desktop" style={{ display: "flex", alignItems: "center", gap: 28 }}>
           {NAV.links.map((l) => (
@@ -144,6 +153,8 @@ export default function V1Header() {
           <span style={{ width: 17, height: 1.5, background: "var(--v1-t)", display: "block", transition: "transform 300ms var(--v1-ease)", transform: menuOpen ? "translateY(3.25px) rotate(45deg)" : "none" }} />
           <span style={{ width: 17, height: 1.5, background: "var(--v1-t)", display: "block", transition: "transform 300ms var(--v1-ease)", transform: menuOpen ? "translateY(-3.25px) rotate(-45deg)" : "none" }} />
         </button>
+        </>
+        )}
       </div>
 
       {/* Mobile sheet */}

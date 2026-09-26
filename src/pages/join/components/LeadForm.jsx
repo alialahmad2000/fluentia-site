@@ -101,7 +101,7 @@ export default function LeadForm({ pkgId, setPkgId, nameRef, onDone }) {
   }
 
   function backToPage() {
-    const top = document.getElementById("join-top");
+    const top = document.getElementById("top");
     if (top) top.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
@@ -110,7 +110,7 @@ export default function LeadForm({ pkgId, setPkgId, nameRef, onDone }) {
       <div className="j-form-inner j-success" aria-live="polite">
         <h2 className="j-form-title">وصلنا طلبك يا {success.firstName}</h2>
         <p className="j-form-sub">بنتواصل معك على واتساب خلال ساعات. تبي تبدأ المحادثة الحين؟</p>
-        <a className="j-btn j-btn-primary" href={success.waUrl} target="_blank" rel="noopener">
+        <a className="v1-cta v1-cta-primary j-btn" href={success.waUrl} target="_blank" rel="noopener">
           افتح واتساب
         </a>
         <button type="button" className="j-textlink" onClick={backToPage}>
@@ -215,7 +215,7 @@ export default function LeadForm({ pkgId, setPkgId, nameRef, onDone }) {
         <input id="join-company" name="company" type="text" tabIndex={-1} autoComplete="off" value={hp} onChange={(e) => setHp(e.target.value)} />
       </div>
 
-      <button type="submit" className="j-btn j-btn-primary j-submit" disabled={sending} aria-busy={sending}>
+      <button type="submit" className="v1-cta v1-cta-primary j-btn j-submit" disabled={sending} aria-busy={sending}>
         {sending ? (
           <>
             <LoaderCircle className="j-spin" size={20} aria-hidden="true" />

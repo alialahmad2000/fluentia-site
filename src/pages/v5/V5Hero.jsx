@@ -5,6 +5,7 @@ import { EASE } from "../v1/motion";
 import { Magnetic } from "../v1/V1Interactive";
 import V5HeroShowcase, { glueAr } from "./V5HeroShowcase";
 import { useCinema } from "./cinemaContext";
+import { useCta } from "../v1/ctaContext";
 import "./V5Hero.css";
 
 /* Lazy so the candidate backdrop stays out of the homepage main chunk that
@@ -146,7 +147,10 @@ export function HeroShowcaseSection() {
   );
 }
 
-export default function V5Hero() {
+/* `aside` (optional) takes the showcase's column — /join puts its lead form
+   there. Default: the showcase, exactly as the homepage shows it. */
+export default function V5Hero({ aside = null }) {
+  const cta = useCta();
   const cine = useCinema();
   const filmFirst = cine === "film";
   const ref = useRef(null);
@@ -219,10 +223,11 @@ export default function V5Hero() {
               <div className="v5h-ctas">
                 <Magnetic>
                   <button type="button" data-open-form className="v1-cta v1-cta-primary">
-                    {HERO.primaryCTA}
+                    {cta ? cta.label : HERO.primaryCTA}
                     <span aria-hidden style={{ fontSize: "1.1em", lineHeight: 1 }}>←</span>
                   </button>
                 </Magnetic>
+                {!cta && (
                 <a href="/tour" className="v1-cta v1-cta-ghost v5h-tour" data-cta="hero_tour">
                   <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden>
                     <rect x="3" y="4" width="18" height="16" rx="3" stroke="currentColor" strokeWidth="1.8" />
@@ -231,11 +236,14 @@ export default function V5Hero() {
                   </svg>
                   {TOUR_CTA}
                 </a>
+                )}
               </div>
+              {!cta && (
               <a href="#trial" className="v5h-trial" data-cta="hero_trial">
                 أو <b>{HERO.secondaryCTA}</b>
                 <span aria-hidden>←</span>
               </a>
+              )}
             </motion.div>
 
             <motion.ul
@@ -259,8 +267,9 @@ export default function V5Hero() {
           {/* The showcase stays IN the hero, beside the copy, in every mode.
               Moving it below the fold in film mode was wrong: it is the proof
               next to the promise, and it only appeared after a scroll. */}
-          <motion.div className="v5h-stagecol" style={{ y: cardY }}>
-            <V5HeroShowcase />
+          {/* A form does not drift under the finger that is typing in it. */}
+          <motion.div className="v5h-stagecol" style={aside ? undefined : { y: cardY }}>
+            {aside || <V5HeroShowcase />}
           </motion.div>
         </div>
         {/* Keeps room below the showcase: it drifts down on scroll, and the

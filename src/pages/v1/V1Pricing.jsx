@@ -5,6 +5,7 @@ import { PRICING } from "../landing-v2/content";
 import { buildWhatsAppUrl } from "../../lib/whatsapp";
 import { track } from "../../lib/track";
 import { Reveal, staggerParent, staggerItem } from "./motion";
+import { useCta } from "./ctaContext";
 
 const fmt = (n) => n.toLocaleString("en-US");
 const perDay = (n) => Math.round(n / 30);
@@ -33,6 +34,7 @@ const GLANCE_ROWS = [
  * the markup (prerender, SEO); the switcher only toggles which one shows under 980px.
  */
 export default function V1Pricing() {
+  const cta = useCta();
   const { entryTier: entry, tiers, vipTier: vip, intensiveTier: intensive } = PRICING;
   const heroId = (tiers.find((t) => t.isHero) || tiers[0]).id;
   const [active, setActive] = useState(heroId);
@@ -245,9 +247,13 @@ export default function V1Pricing() {
         <Reveal delay={0.05}>
           <p className="v1p-foot">
             {PRICING.footer.line}{" "}
+            {cta ? (
+              <button type="button" data-open-form className="v1p-foot-cta">{cta.label} ←</button>
+            ) : (
             <a href={buildWhatsAppUrl("السلام عليكم، عندي استفسار عن الباقة المناسبة لي")} target="_blank" rel="noopener noreferrer">
               {PRICING.footer.waLabel} ↖
             </a>
+            )}
           </p>
         </Reveal>
       </div>
