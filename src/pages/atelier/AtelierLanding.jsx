@@ -11,7 +11,6 @@ import Comparison from "./sections/Comparison";
 import Transformation from "./sections/Transformation";
 import Testimonials from "./sections/Testimonials";
 import Stats from "./sections/Stats";
-import PriceReframe from "./sections/PriceReframe";
 import Pricing from "./sections/Pricing";
 import Faq from "./sections/Faq";
 import ClosingCTA from "./sections/ClosingCTA";
@@ -47,7 +46,6 @@ export default function AtelierLanding() {
       <Transformation />
       <Testimonials />
       <Stats />
-      <PriceReframe />
       <Pricing />
       <Faq />
       <ClosingCTA />

@@ -846,20 +846,6 @@ section+section::before{content:'';display:block;height:1px;background:linear-gr
   ].map((r,i)=>(<div key={i} style={{display:"grid",gridTemplateColumns:"1.2fr 1fr 1fr",gap:"4px",padding:"11px 14px",background:i%2===0?"var(--card)":"transparent",borderRadius:"6px"}}><div style={{fontSize:"0.875rem",color:"var(--t2)",fontWeight:600}}>{r.f}</div><div style={{fontSize:"0.875rem",color:SKY,fontWeight:700,textAlign:"center"}}>{r.us}</div><div style={{fontSize:"0.875rem",color:RED,textAlign:"center",opacity:0.6}}>{r.them}</div></div>))}</div>
 </div></Reveal></div></section>
 
-{/* 10. وش يعادل 37 ريال */}
-<section style={{padding:"60px 28px"}}><div style={{...mx,maxWidth:"900px"}}>
-  <Reveal><div style={{textAlign:"center",marginBottom:"36px"}}><span style={{fontFamily:"'Playfair Display',serif",fontSize:"clamp(1.5rem,4vw,2.5rem)",fontWeight:900,color:"var(--t1)"}}>وش يعادل <span style={{color:SKY}}>٣٧ ريال</span> باليوم؟</span></div></Reveal>
-  <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(170px,1fr))",gap:"12px"}}>
-    {[{e:"☕",l:"ستاربكس",p:"25-35",n:"10 دقايق"},{e:"🍔",l:"وجبة مطعم",p:"35-50",n:"نص ساعة"},{e:"🎮",l:"اشتراك قيمنق",p:"40-60",n:"ترفيه مؤقت"},{e:"📚",l:"Fluentia يومياً",p:"37",n:"مهارة للأبد",hl:1}].map((item,i)=>(
-      <Reveal key={i} d={i*0.08}><div style={{background:item.hl?"var(--sky-bg)":"var(--card)",border:item.hl?"2px solid var(--sky-b)":"1px solid var(--card-b)",borderRadius:"16px",padding:"22px 16px",textAlign:"center",transform:item.hl?"scale(1.05)":"scale(1)"}}>
-        <div style={{fontSize:"1.75rem",marginBottom:"8px"}}>{item.e}</div>
-        <div style={{fontSize:"0.875rem",color:item.hl?SKY_L:"var(--t2)",fontWeight:600}}>{item.l}</div>
-        <div style={{fontSize:"1.125rem",fontWeight:900,color:item.hl?SKY:"var(--t1)",fontFamily:"'Playfair Display',serif"}}>{item.p} ر.س</div>
-        <div style={{fontSize:"0.75rem",color:item.hl?SKY:"var(--t3)",marginTop:"4px",fontWeight:item.hl?700:400}}>{item.n}</div>
-      </div></Reveal>))}
-  </div>
-</div></section>
-
 {/* 10.5 الأرقام تتكلم */}
 <section style={{padding:"60px 28px"}}><div style={{...mx,maxWidth:"900px"}}>
   <Reveal><div style={{textAlign:"center",marginBottom:"40px"}}><span style={{fontFamily:"'Playfair Display',serif",fontSize:"clamp(1.5rem,4vw,2.25rem)",fontWeight:900,color:"var(--t1)"}}>الأرقام <span style={{color:GOLD}}>تتكلم</span></span></div></Reveal>
