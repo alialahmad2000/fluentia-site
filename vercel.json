@@ -142,6 +142,10 @@
       "destination": "/private.html"
     },
     {
+      "source": "/next",
+      "destination": "/next.html"
+    },
+    {
       "source": "/terms",
       "destination": "/terms.html"
     },

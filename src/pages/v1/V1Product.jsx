@@ -73,7 +73,7 @@ export default function V1Product() {
 }
 
 /* In-code speaking-feedback mock */
-function SpeakingMock() {
+export function SpeakingMock() {
   return (
     <div style={{ borderRadius: "var(--v1-r-md)", border: "1px solid var(--v1-line)", background: "rgba(4,7,14,0.65)", padding: 18 }}>
       <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
