@@ -102,6 +102,10 @@ const BOOT = `(${boot.toString()})();`;
 const FORM_BLOCK_CSS = `
 .fx-next .fx-joinform { display: flex; justify-content: center; padding: clamp(96px, 16vh, 180px) var(--fx-gut, 20px) 0; }
 .fx-next .fx-joinform .j-card { position: relative; z-index: 2; }
+/* The hero's sub line is the page's LCP element on a phone, and an element is
+   not counted while its opacity is 0: its delayed fade cost /join ~1.5 s of LCP
+   on a throttled phone (measured live). Paid traffic gets it at once. */
+html.fx-js .fx-next[data-campaign] .fx-hero-sub.fx-hero-after { animation: none; opacity: 1; }
 `;
 
 // Client-only renders (dev, or arriving by in-app navigation) get no inline
@@ -238,7 +242,7 @@ export default function NextLanding({ seoPath = "/next", campaign = false }) {
   return (
     <MotionConfig reducedMotion="user">
      <CtaContext.Provider value={campaign ? CAMPAIGN_CTA : null}>
-      <div ref={rootRef} className="v1-scope v5-scope fx-next" dir="rtl">
+      <div ref={rootRef} className="v1-scope v5-scope fx-next" dir="rtl" data-campaign={campaign ? "" : undefined}>
         {/* The client and server bundles may stringify boot() differently; the
             script has already run by the time React hydrates it. */}
         <script suppressHydrationWarning dangerouslySetInnerHTML={{ __html: BOOT }} />
