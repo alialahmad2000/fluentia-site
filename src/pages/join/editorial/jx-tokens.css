@@ -1,0 +1,91 @@
+/* ============================================================
+ * /join — editorial light edition (after moe-alhakeem.webflow.io).
+ * One scope (.jx), one palette, one type system. Section files add
+ * their own rules under .jx and never redefine these tokens.
+ *
+ * Colour jobs (pure, opaque — no glows, no translucent washes):
+ *   --jx-paper  #ffffff  page ground
+ *   --jx-ink    #141414  text, rules, the dark band, outline buttons
+ *   --jx-stone  #e8edf2  the one cool block section (reference's beige, cooled)
+ *   --jx-sky    #38bdf8  primary button fill + marquee accent (ink text on it)
+ *   --jx-deep   #0369a1  accent TEXT on white (links, small highlights)
+ *   --jx-mute   #5b6470  secondary text
+ * Type: Aref Ruqaa (Arabic display), Cormorant Garamond (Latin display,
+ * marquee + big numerals), Readex Pro (body).
+ * ============================================================ */
+.jx {
+  --jx-paper: #ffffff;
+  --jx-ink: #141414;
+  --jx-stone: #e8edf2;
+  --jx-sky: #38bdf8;
+  --jx-deep: #0369a1;
+  --jx-mute: #5b6470;
+  --jx-line: #d9dee4;
+  --jx-display: "Aref Ruqaa", "Readex Pro Variable", serif;
+  --jx-latin: "Cormorant Garamond", Georgia, serif;
+  --jx-body: "Readex Pro Variable", "Readex Pro", "Tajawal", system-ui, sans-serif;
+  --jx-num: "Inter", "Readex Pro Variable", sans-serif;
+  --jx-gutter: clamp(20px, 5vw, 64px);
+  --jx-maxw: 1240px;
+  --jx-section: clamp(88px, 12vw, 160px);
+  --jx-ease: cubic-bezier(0.16, 1, 0.3, 1);
+
+  background: var(--jx-paper);
+  color: var(--jx-ink);
+  font-family: var(--jx-body);
+  font-weight: 300;
+  line-height: 1.9;
+  min-height: 100vh;
+  overflow-x: clip;
+  -webkit-font-smoothing: antialiased;
+}
+.jx *, .jx *::before, .jx *::after { box-sizing: border-box; }
+.jx img { display: block; max-width: 100%; }
+.jx a { color: inherit; }
+.jx :focus-visible { outline: 2px solid var(--jx-deep); outline-offset: 3px; }
+
+.jx-wrap { max-width: var(--jx-maxw); margin-inline: auto; padding-inline: var(--jx-gutter); }
+.jx-section { padding-block: var(--jx-section); position: relative; }
+
+/* Display: calligraphic Arabic, set large and tight */
+.jx-display {
+  font-family: var(--jx-display);
+  font-weight: 400;
+  line-height: 1.25;
+  letter-spacing: 0;
+  margin: 0;
+}
+.jx-h1 { font-size: clamp(2.9rem, 9vw, 7.2rem); }
+.jx-h2 { font-size: clamp(2.2rem, 5.6vw, 4.2rem); }
+.jx-h3 { font-size: clamp(1.5rem, 2.8vw, 2.1rem); }
+.jx-lead { font-size: clamp(1.05rem, 1.7vw, 1.3rem); line-height: 1.95; color: var(--jx-ink); max-width: 60ch; }
+.jx-body { font-size: 1rem; line-height: 1.95; color: var(--jx-mute); max-width: 62ch; }
+.jx-latin { font-family: var(--jx-latin); font-weight: 500; }
+
+/* Buttons: sharp rectangles, like the reference. Primary = sky fill + ink text;
+   outline = ink hairline. Both ≥ 52px tall (TikTok in-app thumbs). */
+.jx-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  min-height: 54px; padding: 0 28px;
+  font-family: var(--jx-body); font-size: 1rem; font-weight: 500;
+  border-radius: 0; border: 1.5px solid var(--jx-ink);
+  cursor: pointer; text-decoration: none; white-space: nowrap;
+  transition: background 220ms var(--jx-ease), color 220ms var(--jx-ease), transform 220ms var(--jx-ease);
+}
+.jx-btn-primary { background: var(--jx-sky); color: var(--jx-ink); border-color: var(--jx-sky); }
+.jx-btn-outline { background: transparent; color: var(--jx-ink); }
+.jx-btn-ink { background: var(--jx-ink); color: var(--jx-paper); }
+@media (hover: hover) {
+  .jx-btn-primary:hover { background: var(--jx-ink); color: var(--jx-paper); border-color: var(--jx-ink); }
+  .jx-btn-outline:hover { background: var(--jx-ink); color: var(--jx-paper); }
+  .jx-btn-ink:hover { background: var(--jx-sky); color: var(--jx-ink); border-color: var(--jx-sky); }
+}
+.jx-btn:active { transform: scale(0.985); }
+
+/* Marquee track — see primitives.jsx <Marquee>. */
+.jx-marquee { overflow: hidden; white-space: nowrap; direction: ltr; }
+.jx-marquee-track { display: inline-flex; will-change: transform; }
+
+@media (prefers-reduced-motion: reduce) {
+  .jx *, .jx *::before, .jx *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+}

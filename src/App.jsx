@@ -10,7 +10,7 @@ const PartnersLanding = lazy(() => import('./pages/partners/PartnersLanding'));
 const PartnersSubmitted = lazy(() => import('./pages/partners/PartnersSubmitted'));
 const PartnersTerms = lazy(() => import('./pages/partners/PartnersTerms'));
 const StartPage = lazy(() => import('./pages/StartPage'));
-const JoinPage = lazy(() => import('./pages/join/JoinPage'));
+const JoinPage = lazy(() => import('./pages/join/editorial/JoinEditorial'));
 const PrivatePage = lazy(() => import('./pages/private/PrivatePage'));
 const AboutPage = lazy(() => import('./pages/AboutPage'));
 const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
