@@ -2,13 +2,14 @@ import { useEffect, useState } from "react";
 import Orb from "./Orb";
 
 /**
- * Intro — once per visitor, medium/high tier only, ≤ 2.4 s.
+ * Intro — once per visitor, medium/high tier only, ~3.35 s (slowed from 2.4 s
+ * at Ali's request, 2026-09-27: the first cut read as rushed).
  *
- *   0.08 s  «العالم يتحدث الإنجليزية.» rises word by word
- *   0.85 s  it dissolves
- *   0.95 s  «وأنت؟» rises, giant, its letters filled with the live planet shader
- *   1.65 s  the Fluentia mark fades in at the centre
- *   1.80 s  the overlay lifts (opacity + a small rise, 600 ms), the hero is
+ *   0.12 s  «العالم يتحدث الإنجليزية.» rises word by word
+ *   1.25 s  it dissolves
+ *   1.40 s  «وأنت؟» rises, giant, its letters filled with the live planet shader
+ *   2.35 s  the Fluentia mark fades in at the centre
+ *   2.65 s  the overlay lifts (opacity + a small rise, 700 ms), the hero is
  *           already rendered underneath
  *
  * The whole choreography is CSS, keyed on `html.fx-intro`, which the inline
@@ -21,7 +22,7 @@ import Orb from "./Orb";
  * right away instead of waiting out the intro's delay.
  */
 
-const DONE_AFTER = 2450;
+const DONE_AFTER = 3400;
 
 function restartHero() {
   document.querySelectorAll(".fx-hero-rv .fx-w, .fx-hero-after").forEach((el) => {

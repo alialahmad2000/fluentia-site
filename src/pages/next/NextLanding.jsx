@@ -96,7 +96,6 @@ export default function NextLanding() {
   const rootRef = useRef(null);
   const [tier, setTier] = useState(null);
   const [mode, setMode] = useState("auto");
-  const [font, setFont] = useState(null);
   const [introDone, setIntroDone] = useState(false);
 
   useEffect(() => {
@@ -112,8 +111,6 @@ export default function NextLanding() {
       /* storage blocked */
     }
     if (stored === "high" || stored === "low") setMode(stored);
-    const f = new URLSearchParams(window.location.search).get("font");
-    if (f === "kufam" || f === "lalezar") setFont(f);
     let alive = true;
     detectTier().then((t) => alive && setTier(t));
     return () => {
@@ -171,11 +168,14 @@ export default function NextLanding() {
 
   return (
     <MotionConfig reducedMotion="user">
-      <div ref={rootRef} className="v1-scope v5-scope fx-next" dir="rtl" data-font={font || undefined}>
+      <div ref={rootRef} className="v1-scope v5-scope fx-next" dir="rtl">
         {/* The client and server bundles may stringify boot() differently; the
             script has already run by the time React hydrates it. */}
         <script suppressHydrationWarning dangerouslySetInnerHTML={{ __html: BOOT }} />
         <style dangerouslySetInnerHTML={{ __html: NEXT_CSS }} />
+        {/* Kufam is the display face: fetched while the HTML parses, before the
+            giant type needs it (Kufam chosen by Ali, 2026-09-27). */}
+        <link rel="preload" as="font" type="font/woff2" href="/fonts/kufam-800-arabic.woff2" crossOrigin="" />
         <Seo path="/next" />
         <Helmet>
           <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -184,12 +184,6 @@ export default function NextLanding() {
             rel="stylesheet"
             href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@800&display=swap"
           />
-          {font === "kufam" ? (
-            <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Kufam:wght@800&display=swap" />
-          ) : null}
-          {font === "lalezar" ? (
-            <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lalezar&display=swap" />
-          ) : null}
         </Helmet>
 
         <Starfield density={cfg ? cfg.stars : 0} />
