@@ -28,6 +28,7 @@ export default function Giant({ lines, as: Tag = "h2", reveal = "view", classNam
                   {w}
                 </span>
                 {wi < all.length - 1 ? " " : null}
+                {line.mbreak === wi + 1 ? <span className="fx-mbr" aria-hidden="true" /> : null}
               </span>
             );
           })}

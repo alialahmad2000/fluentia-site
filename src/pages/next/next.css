@@ -373,6 +373,8 @@ html.fx-intro:not(.fx-intro-done) .fx-stars { z-index: 81; }
   margin-top: calc(min(88vw, 520px) * -0.34);
 }
 .fx-hero-title { font-size: clamp(50px, 14.2vw, 200px); }
+.fx-hero-title .fx-line { white-space: nowrap; }
+.fx-mbr { display: block; }
 .fx-hero-sub {
   margin: 22px 0 0;
   max-width: 36ch;
@@ -414,6 +416,7 @@ html.fx-js .fx-hero-after {
   /* Two lines, each held whole: the longer one is 10.8em wide. */
   .fx-hero-title { font-size: min(6.5vw, 150px); }
   .fx-hero-title .fx-line { white-space: nowrap; }
+  .fx-mbr { display: none; }
   .fx-hero-sub { font-size: 19px; }
 }
 

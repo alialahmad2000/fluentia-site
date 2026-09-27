@@ -8,9 +8,11 @@
  */
 export const CTA_LABEL = "احجز لقاءك المبدئي";
 
+// `mbreak`: on a phone each line breaks after that many words. Fixed breaks, so
+// the layout never depends on which font has loaded (no re-wrap, no shift).
 export const HERO_LINES = [
-  { text: "نُزيل ما يمنعك", tone: "cream" },
-  { text: "من امتلاك الإنجليزية", tone: "ice" },
+  { text: "نُزيل ما يمنعك", tone: "cream", mbreak: 2 },
+  { text: "من امتلاك الإنجليزية", tone: "ice", mbreak: 2 },
 ];
 export const SEE_INSIDE = "شاهد المنصة من الداخل";
 
