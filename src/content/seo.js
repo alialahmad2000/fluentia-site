@@ -125,6 +125,15 @@ export const PAGE_SEO = {
     noindex: true,
   },
 
+  // «الصعود» — scroll-driven mountain ascent preview. Prerendered (the hero is
+  // in the first paint) but noindex, unlinked, and absent from the sitemap.
+  "/ascent": {
+    title: "أكاديمية طلاقة | دورات إنجليزي أونلاين للكبار مع مدربين سعوديين",
+    description:
+      "دورات إنجليزي أونلاين للكبار في السعودية: مجموعات صغيرة (7 طلاب) أو حصص فردية مع مدربين سعوديين، متابعة يومية، واختبار تحديد مستوى مجاني. باقات تبدأ من 500 ريال.",
+    noindex: true,
+  },
+
   "/terms": {
     title: "شروط الاستخدام | أكاديمية طلاقة",
     description:

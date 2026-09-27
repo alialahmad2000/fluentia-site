@@ -146,6 +146,10 @@
       "destination": "/next.html"
     },
     {
+      "source": "/ascent",
+      "destination": "/ascent.html"
+    },
+    {
       "source": "/terms",
       "destination": "/terms.html"
     },
