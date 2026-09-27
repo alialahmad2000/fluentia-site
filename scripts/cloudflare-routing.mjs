@@ -71,6 +71,9 @@ export const CLIENT_ONLY_ROUTES = [
 export const REDIRECTS = [
   { from: "/test", to: "/level-test", status: 308 },
   { from: "/legacy", to: "/", status: 308 },
+  // The cinematic landing previewed at /next IS the homepage since 2026-09-27.
+  // One canonical URL; Pages carries the query string across the redirect.
+  { from: "/next", to: "/", status: 301 },
 ];
 
 /**

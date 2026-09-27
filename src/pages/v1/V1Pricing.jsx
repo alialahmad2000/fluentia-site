@@ -208,9 +208,12 @@ export default function V1Pricing() {
                   <button type="button" data-open-form data-tier={t.id} className="v1-cta v1-cta-ghost v1p-cta v1p-vip-cta">
                     احجز استشارة
                   </button>
+                  {/* A campaign page (useCta) keeps the visitor on the page. */}
+                  {!cta && (
                   <a href={privateHref(t.id, qs)} className="v1p-vip-more" data-cta={`pricing_private_${t.id}`}>
                     اكتشف التجربة كاملة <span aria-hidden>←</span>
                   </a>
+                  )}
                 </div>
               </article>
             ))}

@@ -106,7 +106,14 @@ function inject(html, seo) {
       "SOCIAL_META markers missing from dist/index.html — did index.html get edited?",
     );
   }
-  const withMeta = html.slice(0, start) + metaBlock(seo) + html.slice(end + END.length);
+  let withMeta = html.slice(0, start) + metaBlock(seo) + html.slice(end + END.length);
+  // index.html's site-wide «index, follow» would sit beside the block's
+  // «noindex, nofollow»: two contradicting robots tags. A noindex page keeps one.
+  if (seo.noindex) {
+    const robots = /\n[ \t]*<meta name="robots" content="index, follow[^"]*" \/>/;
+    if (!robots.test(withMeta)) throw new Error("index.html's robots tag changed — update prerender-meta.mjs");
+    withMeta = withMeta.replace(robots, "");
+  }
   return scopeHomeJsonLd(withMeta, seo.path);
 }
 

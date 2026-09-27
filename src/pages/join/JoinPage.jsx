@@ -65,10 +65,8 @@ export default function JoinPage() {
   const cookieOpen = useCookieBannerOpen();
   const cta = useMemo(() => ({ label: CTA }), []);
 
-  useEffect(() => {
-    // Parity with /start: TikTok PageView for this landing.
-    if (window.ttq) { try { window.ttq.page(); } catch (e) { /* pixel is best-effort */ } }
-  }, []);
+  // No ttq.page() here: index.html's pixel snippet already sends the PageView,
+  // and a second call counted every visit twice.
 
   // Sticky bar: only once the form has scrolled away ABOVE the viewport, and
   // never while any of it is on screen.

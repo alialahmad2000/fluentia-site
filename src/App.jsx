@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef, lazy, Suspense } from "react";
-import V5LandingHome from './pages/v5/V5Landing';
 import { BrowserRouter, Routes, Route, Link, Navigate, useLocation } from "react-router-dom";
 import { getStoredRef, getVisitorId } from './utils/affiliateTracking';
 import { buildWhatsAppUrl, WA_MESSAGES } from './lib/whatsapp';
@@ -35,6 +34,24 @@ const WorkEnglishHub = lazy(() => import('./pages/work/WorkEnglishHub'));
 const WorkEnglishPage = lazy(() => import('./pages/work/WorkEnglishPage'));
 
 /* Branded chunk-loading screen for the candidate pages (pulsing real mark) */
+/*
+ * LAUNCH SWITCH (2026-09-27): the cinematic /next page is the homepage and the
+ * TikTok /join page. Rollback is one line each — set to "classic" and push:
+ *   HOME_VARIANT "classic" → / renders the V5 homepage again (it stays at /classic)
+ *   JOIN_VARIANT "classic" → /join renders the v2 join page again (it stays at /join-classic)
+ */
+const HOME_VARIANT = "next";
+const JOIN_VARIANT = "next";
+
+const NEXT_FALLBACK = <div style={{ minHeight: '100vh', background: '#050b16' }} />;
+const JOIN_CLASSIC_FALLBACK = <div style={{ minHeight: '100vh', background: '#060e1c' }} />;
+
+/** /next was the preview URL of today's homepage: one canonical URL, query kept. */
+function NextToHome() {
+  const { search, hash } = useLocation();
+  return <Navigate to={{ pathname: '/', search, hash }} replace />;
+}
+
 const VFallback = (
   <div style={{ minHeight: '100vh', background: '#04070e', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
     <style>{`@keyframes vfb-pulse { 0%,100% { opacity: .35; transform: scale(.96); } 50% { opacity: .9; transform: scale(1); } }`}</style>
@@ -1183,7 +1200,11 @@ section+section::before{content:'';display:block;height:1px;background:linear-gr
 function AppRoutes(){
   const location = useLocation();
 
+  // index.html's gtag('config') already sends the landing page_view; this effect
+  // only reports in-app navigations after it (it used to send the first one twice).
+  const firstView = useRef(true);
   useEffect(() => {
+    if (firstView.current) { firstView.current = false; return; }
     if (window.gtag) {
       window.gtag('config', 'G-19G2SJ1WYL', {
         page_path: location.pathname,
@@ -1204,15 +1225,21 @@ function AppRoutes(){
       <Route path="/atelier" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#060e1c'}} />}><AtelierLanding /></Suspense>} />
       <Route path="/aurora" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#070b14'}} />}><AuroraHero /></Suspense>} />
       <Route path="/legacy" element={<HomePage />} />
-      {/* Official homepage = V5 "Dawn Stage" (promoted 2026-07-07), eager-bundled
-          for instant first paint. The previous homepage stays reachable at /v2. */}
-      <Route path="/" element={<V5LandingHome />} />
+      {/* Homepage = the cinematic landing (HOME_VARIANT). The V5 "Dawn Stage"
+          homepage it replaced stays at /classic (noindex) for rollback. */}
+      <Route path="/" element={HOME_VARIANT === "next"
+        ? <Suspense fallback={NEXT_FALLBACK}><NextLanding seoPath="/" /></Suspense>
+        : <Suspense fallback={VFallback}><V5Landing /></Suspense>} />
+      <Route path="/classic" element={<Suspense fallback={VFallback}><V5Landing /></Suspense>} />
       <Route path="/start" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#0A0A0A'}} />}><StartPage /></Suspense>} />
       {/* TikTok campaign landing (noindex). /start stays the Google Ads page. */}
-      <Route path="/join" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#060e1c'}} />}><JoinPage /></Suspense>} />
+      <Route path="/join" element={JOIN_VARIANT === "next"
+        ? <Suspense fallback={NEXT_FALLBACK}><NextLanding campaign /></Suspense>
+        : <Suspense fallback={JOIN_CLASSIC_FALLBACK}><JoinPage /></Suspense>} />
+      <Route path="/join-classic" element={<Suspense fallback={JOIN_CLASSIC_FALLBACK}><JoinPage /></Suspense>} />
       <Route path="/private" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#060e1c'}} />}><PrivatePage /></Suspense>} />
-      {/* Cinematic landing preview (noindex, unlinked, not in the sitemap). / is unchanged. */}
-      <Route path="/next" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#050b16'}} />}><NextLanding /></Suspense>} />
+      {/* /next → / (301 at the edge, scripts/cloudflare-routing.mjs; this covers in-app links). */}
+      <Route path="/next" element={<NextToHome />} />
       {/* «الصعود» — scroll-driven mountain ascent preview (noindex, unlinked, not in the sitemap). / is unchanged. */}
       <Route path="/ascent" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#dfe8f1'}} />}><AscentLanding /></Suspense>} />
       {/* «رحلة صوتك» landing preview (noindex, unlinked, not in the sitemap). / is unchanged. */}

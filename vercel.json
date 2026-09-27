@@ -18,6 +18,11 @@
       "permanent": true
     },
     {
+      "source": "/next",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
       "source": "/",
       "has": [
         {
@@ -142,8 +147,12 @@
       "destination": "/private.html"
     },
     {
-      "source": "/next",
-      "destination": "/next.html"
+      "source": "/classic",
+      "destination": "/classic.html"
+    },
+    {
+      "source": "/join-classic",
+      "destination": "/join-classic.html"
     },
     {
       "source": "/ascent",

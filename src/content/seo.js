@@ -115,13 +115,19 @@ export const PAGE_SEO = {
     ogTitle: "التدريب الفردي | برنامج إنجليزي مبني عليك",
   },
 
-  // Cinematic landing preview. Prerendered (so the headline is in the first
-  // paint) but noindex, unlinked, and deliberately absent from the sitemap.
-  // It carries the homepage's own title and description.
-  "/next": {
+  // Rollback copies of the pre-launch pages (2026-09-27: /next became / and
+  // /join). Prerendered so they paint like the originals, noindex, unlinked,
+  // absent from the sitemap. Switch back in src/App.jsx (HOME_VARIANT / JOIN_VARIANT).
+  "/classic": {
     title: "أكاديمية طلاقة | دورات إنجليزي أونلاين للكبار مع مدربين سعوديين",
     description:
       "دورات إنجليزي أونلاين للكبار في السعودية: مجموعات صغيرة (7 طلاب) أو حصص فردية مع مدربين سعوديين، متابعة يومية، واختبار تحديد مستوى مجاني. باقات تبدأ من 500 ريال.",
+    noindex: true,
+  },
+  "/join-classic": {
+    title: "احجز لقاءك المبدئي المجاني | أكاديمية طلاقة",
+    description:
+      "مجموعات صغيرة، حصص مباشرة، ومنصّة تتدرب عليها كل يوم. ابدأ بلقاء مبدئي مجاني بدون أي التزام.",
     noindex: true,
   },
 
