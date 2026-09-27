@@ -14,6 +14,7 @@ const JoinPage = lazy(() => import('./pages/join/JoinPage'));
 const PrivatePage = lazy(() => import('./pages/private/PrivatePage'));
 const NextLanding = lazy(() => import('./pages/next/NextLanding'));
 const AscentLanding = lazy(() => import('./pages/ascent/AscentLanding'));
+const JourneyLanding = lazy(() => import('./pages/journey/JourneyLanding'));
 const AboutPage = lazy(() => import('./pages/AboutPage'));
 const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
 const TermsOfService = lazy(() => import('./pages/TermsOfService'));
@@ -1214,6 +1215,8 @@ function AppRoutes(){
       <Route path="/next" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#050b16'}} />}><NextLanding /></Suspense>} />
       {/* «الصعود» — scroll-driven mountain ascent preview (noindex, unlinked, not in the sitemap). / is unchanged. */}
       <Route path="/ascent" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#dfe8f1'}} />}><AscentLanding /></Suspense>} />
+      {/* «رحلة صوتك» landing preview (noindex, unlinked, not in the sitemap). / is unchanged. */}
+      <Route path="/journey" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#050b16'}} />}><JourneyLanding /></Suspense>} />
       {/* Adaptive CEFR placement exam. /test is the short alias for ads and bios. */}
       <Route path="/level-test" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#04070e'}} />}><LevelTestPage /></Suspense>} />
       <Route path="/test" element={<Navigate to="/level-test" replace />} />

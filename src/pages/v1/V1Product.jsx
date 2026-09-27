@@ -106,7 +106,7 @@ export function SpeakingMock() {
 }
 
 /* In-code vocab SRS mock */
-function VocabMock() {
+export function VocabMock() {
   const cards = [
     { w: "commute", due: "الآن", strength: 0.35, hot: true },
     { w: "routine", due: "بعد يومين", strength: 0.7 },

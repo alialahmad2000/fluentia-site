@@ -150,6 +150,10 @@
       "destination": "/ascent.html"
     },
     {
+      "source": "/journey",
+      "destination": "/journey.html"
+    },
+    {
       "source": "/terms",
       "destination": "/terms.html"
     },

@@ -134,6 +134,16 @@ export const PAGE_SEO = {
     noindex: true,
   },
 
+  // «رحلة صوتك» landing preview. Prerendered (the hero headline is in the first
+  // paint) but noindex, unlinked, and deliberately absent from the sitemap.
+  // It carries the homepage's own title and description.
+  "/journey": {
+    title: "أكاديمية طلاقة | دورات إنجليزي أونلاين للكبار مع مدربين سعوديين",
+    description:
+      "دورات إنجليزي أونلاين للكبار في السعودية: مجموعات صغيرة (7 طلاب) أو حصص فردية مع مدربين سعوديين، متابعة يومية، واختبار تحديد مستوى مجاني. باقات تبدأ من 500 ريال.",
+    noindex: true,
+  },
+
   "/terms": {
     title: "شروط الاستخدام | أكاديمية طلاقة",
     description:
