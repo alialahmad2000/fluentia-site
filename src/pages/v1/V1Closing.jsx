@@ -78,19 +78,19 @@ export function V1Stories() {
 /* ────────────────────────────────────────────────────────────
  * FAQ — honest accordion
  * ──────────────────────────────────────────────────────────── */
-export function V1FAQ() {
+export function V1FAQ({ data = FAQ } = {}) {
   const [open, setOpen] = useState(0);
   return (
     <section className="v1-section" id="faq" style={{ paddingTop: 0 }}>
       <div className="v1-container" style={{ maxWidth: 860 }}>
         <Reveal>
-          <span className="v1-eyebrow">{FAQ.eyebrow}</span>
-          <h2 className="v1-headline">{FAQ.headline}</h2>
-          <p className="v1-intro">{FAQ.intro}</p>
+          <span className="v1-eyebrow">{data.eyebrow}</span>
+          <h2 className="v1-headline">{data.headline}</h2>
+          {data.intro ? <p className="v1-intro">{data.intro}</p> : null}
         </Reveal>
 
         <div style={{ marginTop: 52, display: "flex", flexDirection: "column", gap: 12 }}>
-          {FAQ.items.map((item, i) => {
+          {data.items.map((item, i) => {
             const isOpen = open === i;
             return (
               <Reveal key={item.q} delay={i * 0.04}>
@@ -213,7 +213,7 @@ export function V1Founder() {
 /* ────────────────────────────────────────────────────────────
  * Final CTA — wordmark moment + single button
  * ──────────────────────────────────────────────────────────── */
-export function V1FinalCTA() {
+export function V1FinalCTA({ data = FINAL_CTA } = {}) {
   const cta = useCta();
   return (
     <section className="v1-section hi-cta v5-has-film" id="final-cta" style={{ position: "relative", overflow: "clip" }}>
@@ -238,21 +238,21 @@ export function V1FinalCTA() {
       <div className="v1-container" style={{ textAlign: "center", position: "relative" }}>
         <Reveal>
           <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-            <span className="v1-eyebrow">{FINAL_CTA.eyebrow}</span>
+            <span className="v1-eyebrow">{data.eyebrow}</span>
             <h2 style={{
               fontFamily: "var(--v1-display)",
               fontSize: "clamp(2.1rem, 5.6vw, 3.8rem)",
               fontWeight: 800, lineHeight: 1.38, letterSpacing: 0,
               color: "var(--v1-t-strong)", margin: "22px 0 0", maxWidth: 760,
             }}>
-              {FINAL_CTA.headline}
+              {data.headline}
             </h2>
             <p style={{ fontSize: "var(--v1-lead)", lineHeight: 2, color: "var(--v1-t-mute)", maxWidth: 560, margin: "22px auto 0", fontWeight: 300 }}>
-              {FINAL_CTA.sub}
+              {data.sub}
             </p>
             <Magnetic>
               <button type="button" data-open-form className="v1-cta v1-cta-primary" style={{ marginTop: 40, padding: "19px 52px", fontSize: "1.1rem" }}>
-                {cta ? cta.label : FINAL_CTA.primaryCTA}
+                {cta ? cta.label : data.primaryCTA}
                 <span aria-hidden style={{ fontSize: "1.1em", lineHeight: 1 }}>←</span>
               </button>
             </Magnetic>

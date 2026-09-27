@@ -106,6 +106,15 @@ export const PAGE_SEO = {
     noindex: true,
   },
 
+  // The 1:1 programmes (التدريب الفردي + المكثّف). Indexable, in the sitemap;
+  // paid ads point here too.
+  "/private": {
+    title: "التدريب الفردي | برنامج إنجليزي مبني عليك | أكاديمية طلاقة",
+    description:
+      "معلم خاص، مرشد أكاديمي، ومنهج مصمم لمجالك. تجربة إنجليزي فردية مكثفة لأسرع تقدّم ممكن.",
+    ogTitle: "التدريب الفردي | برنامج إنجليزي مبني عليك",
+  },
+
   "/terms": {
     title: "شروط الاستخدام | أكاديمية طلاقة",
     description:

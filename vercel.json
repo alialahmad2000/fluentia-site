@@ -138,6 +138,10 @@
       "destination": "/join.html"
     },
     {
+      "source": "/private",
+      "destination": "/private.html"
+    },
+    {
       "source": "/terms",
       "destination": "/terms.html"
     },

@@ -358,6 +358,15 @@ export const PRICING = {
       note: "تبي برنامجاً أكثف بجلسات ممارسة؟ اختر التدريب الفردي المكثّف.",
     },
     ctaLabel: "احجز استشارة VIP",
+    // Homepage 1:1 card (2026-09-27): one-line promise + «داخل الباقة» rows,
+    // every row restating a feature above — nothing the list doesn't already say.
+    promise: "حصص فردية كاملة — أنت ومدربك فقط. منهج مخصّص، وتركيز كامل على هدفك.",
+    inside: [
+      { icon: "teacher", label: "حصص فردية فقط", detail: "أنت ومدربك، والعدد نتفق عليه معك" },
+      { icon: "curriculum", label: "منهج مخصّص", detail: "يتكيّف معك ومع هدفك" },
+      { icon: "followup", label: "متابعة يومية مباشرة", detail: "تصحيح كتابي ونطق غير محدود" },
+      { icon: "career", label: "تدريب مهني", detail: "مقابلات العمل والعروض التقديمية والإلقاء" },
+    ],
   },
 
   intensiveTier: {
@@ -379,6 +388,14 @@ export const PRICING = {
     ],
     priceNote: "12 حصة فردية + 8 جلسات ممارسة كل شهر.",
     ctaLabel: "احجز استشارة المكثّف",
+    // Homepage 1:1 card (2026-09-27) — facts from Ali's package spec.
+    promise: "أسرع تقدّم ممكن — تتكلم إنجليزي تقريباً كل يوم.",
+    inside: [
+      { icon: "teacher", label: "معلم خاص", detail: "12 حصة فردية في الشهر" },
+      { icon: "mentor", label: "مرشد أكاديمي", detail: "8 جلسات ممارسة على نقاط ضعفك" },
+      { icon: "curriculum", label: "منهج مصمم لمجالك", detail: "يبدأ بجلسة تشخيص مطوّلة" },
+      { icon: "platform", label: "المنصّة كاملة", detail: "طوال اشتراكك" },
+    ],
   },
 
   footer: {

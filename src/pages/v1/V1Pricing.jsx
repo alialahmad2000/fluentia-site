@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import V5SectionFilm from "../v5/V5SectionFilm";
 import { motion } from "framer-motion";
 import { PRICING } from "../landing-v2/content";
@@ -6,6 +6,9 @@ import { buildWhatsAppUrl } from "../../lib/whatsapp";
 import { track } from "../../lib/track";
 import { Reveal, staggerParent, staggerItem } from "./motion";
 import { useCta } from "./ctaContext";
+import { UserRound, Compass, PenLine, LayoutGrid, MessageSquareText, Presentation } from "lucide-react";
+
+const INSIDE_ICONS = { teacher: UserRound, mentor: Compass, curriculum: PenLine, platform: LayoutGrid, followup: MessageSquareText, career: Presentation };
 
 const fmt = (n) => n.toLocaleString("en-US");
 
@@ -37,6 +40,9 @@ export default function V1Pricing() {
   const { entryTier: entry, tiers, vipTier: vip, intensiveTier: intensive } = PRICING;
   const heroId = (tiers.find((t) => t.isHero) || tiers[0]).id;
   const [active, setActive] = useState(heroId);
+  // The visitor's query string (utm_*), read after mount so the prerendered markup matches.
+  const [qs, setQs] = useState("");
+  useEffect(() => { setQs(window.location.search); }, []);
   const trust = PRICING.trust.split("·").map((s) => s.trim()).filter(Boolean);
   const headline = PRICING.headline.split(/(?<=\.)\s/);
 
@@ -161,61 +167,53 @@ export default function V1Pricing() {
         {/* ── 1:1 programmes: regular + intensive ── */}
         <Reveal delay={0.05}>
           <div className="v1p-solo">
-            <article className="v1-card v1p-vip" aria-labelledby="v1p-vip-name">
-              <span className="v1p-vip-badge">{vip.badge}</span>
-              <h3 id="v1p-vip-name" className="v1p-vip-name">{vip.name}</h3>
-              <p className="v1p-vip-aud">{vip.audienceLabel}</p>
-              <p className="v1p-tagline">{vip.tagline}</p>
-              <div className="v1p-price">
-                <div className="v1p-price-row">
-                  <span className="v1p-from">من</span>
-                  <span className="v1p-amount v1-num">{fmt(vip.priceLow)}</span>
-                  <span className="v1p-cur">ر.س</span>
-                  <span className="v1p-per">/ شهرياً</span>
+            {[
+              { t: vip, id: "vip", from: true, price: vip.priceLow, note: vip.priceNote },
+              { t: intensive, id: "int", from: false, price: intensive.price, note: null, strong: true },
+            ].map(({ t, id, from, price, note, strong }) => (
+              <article key={t.id} className={`v1-card v1p-vip${strong ? " is-intensive" : ""}`} aria-labelledby={`v1p-${id}-name`}>
+                {strong && <div className="v1p-vip-line" aria-hidden />}
+                <div className="v1p-vip-head">
+                  <span className="v1p-vip-badge">{t.badge}</span>
+                  <h3 id={`v1p-${id}-name`} className="v1p-vip-name">{t.name}</h3>
+                  <p className="v1p-vip-promise">{t.promise}</p>
                 </div>
-                <p className="v1p-vip-note">{vip.priceNote}</p>
-              </div>
-              <ul className="v1p-feats">
-                {vip.features.map((f) => (
-                  <li key={f}><Check gold /><span className="v1-num">{f}</span></li>
-                ))}
-              </ul>
-              <button type="button" data-open-form data-tier={vip.id} className="v1-cta v1-cta-ghost v1p-cta v1p-vip-cta">
-                {vip.ctaLabel}
-              </button>
-            </article>
-
-            <article className="v1-card v1p-vip is-intensive" aria-labelledby="v1p-int-name">
-              <div className="v1p-vip-line" aria-hidden />
-              <span className="v1p-vip-badge">{intensive.badge}</span>
-              <h3 id="v1p-int-name" className="v1p-vip-name">{intensive.name}</h3>
-              <p className="v1p-vip-aud">{intensive.audienceLabel}</p>
-              <p className="v1p-tagline">{intensive.tagline}</p>
-              <div className="v1p-price">
-                <div className="v1p-price-row">
-                  <span className="v1p-amount v1-num">{fmt(intensive.price)}</span>
-                  <span className="v1p-cur">ر.س</span>
-                  <span className="v1p-per">/ شهرياً</span>
+                <div className="v1p-price">
+                  <div className="v1p-price-row">
+                    {from && <span className="v1p-from">من</span>}
+                    <span className="v1p-amount v1-num">{fmt(price)}</span>
+                    <span className="v1p-cur">ر.س</span>
+                    <span className="v1p-per">/ شهرياً</span>
+                  </div>
+                  {note && <p className="v1p-vip-note">{note}</p>}
                 </div>
-              </div>
-              <ul className="v1p-solo-glance">
-                {intensive.glance.map((g) => (
-                  <li key={g.label} className="v1p-solo-stat">
-                    <span className="v1p-solo-num v1-num">{g.value}</span>
-                    <span className="v1p-solo-lbl">{g.label}</span>
-                    <span className="v1p-solo-sub v1-num">{g.sub}</span>
-                  </li>
-                ))}
-              </ul>
-              <ul className="v1p-feats">
-                {intensive.features.map((f) => (
-                  <li key={f}><Check gold /><span className="v1-num">{f}</span></li>
-                ))}
-              </ul>
-              <button type="button" data-open-form data-tier={intensive.id} className="v1-cta v1-cta-ghost v1p-cta v1p-vip-cta">
-                {intensive.ctaLabel}
-              </button>
-            </article>
+                <div className="v1p-inside">
+                  <div className="v1p-inside-label">داخل الباقة</div>
+                  <ul className="v1p-inside-list">
+                    {t.inside.map((r) => {
+                      const Icon = INSIDE_ICONS[r.icon] || UserRound;
+                      return (
+                        <li key={r.label} className="v1p-inside-row">
+                          <span className="v1p-inside-icon"><Icon size={18} strokeWidth={1.8} aria-hidden="true" /></span>
+                          <span className="v1p-inside-text">
+                            <b>{r.label}</b>
+                            <span className="v1-num">{r.detail}</span>
+                          </span>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+                <div className="v1p-vip-actions">
+                  <button type="button" data-open-form data-tier={t.id} className="v1-cta v1-cta-ghost v1p-cta v1p-vip-cta">
+                    احجز استشارة
+                  </button>
+                  <a href={privateHref(t.id, qs)} className="v1p-vip-more" data-cta={`pricing_private_${t.id}`}>
+                    اكتشف التجربة كاملة <span aria-hidden>←</span>
+                  </a>
+                </div>
+              </article>
+            ))}
           </div>
         </Reveal>
 
@@ -327,14 +325,20 @@ export default function V1Pricing() {
           .v1-scope .v1p-tier:not(.is-hero):hover { translate: 0 -3px; border-color: var(--v1-line-strong); }
         }
 
-        /* 1:1 programmes — two outlined cards, never a second gold slab */
+        /* 1:1 programmes — two outlined cards, never a second gold slab. Subgrid rows so
+           head / price / «داخل الباقة» / actions line up across both cards. */
         .v1-scope .v1p-solo {
           margin-top: 22px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; align-items: stretch;
         }
         .v1-scope .v1p-vip {
-          position: relative; display: flex; flex-direction: column; padding: clamp(26px, 3vw, 38px);
+          position: relative; display: grid; grid-row: span 4; grid-template-rows: subgrid; row-gap: 0;
+          padding: clamp(26px, 3vw, 38px);
           border-color: rgba(242, 193, 78, 0.28);
           background: linear-gradient(170deg, rgba(148, 197, 255, 0.05), rgba(148, 197, 255, 0.012) 60%);
+        }
+        @supports not (grid-template-rows: subgrid) {
+          .v1-scope .v1p-vip { display: flex; flex-direction: column; }
+          .v1-scope .v1p-vip-actions { margin-top: auto; }
         }
         .v1-scope .v1p-vip.is-intensive {
           border-color: rgba(242, 193, 78, 0.5);
@@ -349,21 +353,32 @@ export default function V1Pricing() {
           display: inline-flex; font: 700 0.74rem/1 var(--v1-display); letter-spacing: 0.04em; color: var(--v1-gold-soft);
           padding: 8px 13px; border-radius: 99px; border: 1px solid var(--v1-line-gold); background: rgba(242, 193, 78, 0.06);
         }
+        .v1-scope .v1p-vip-head { display: flex; flex-direction: column; }
         .v1-scope .v1p-vip-name { margin: 16px 0 0; font: 800 clamp(1.35rem, 2.3vw, 1.65rem)/1.3 var(--v1-display); color: var(--v1-t-strong); }
-        .v1-scope .v1p-vip-aud { margin: 6px 0 0; font-size: 0.9rem; font-weight: 500; color: var(--v1-t); }
-        .v1-scope .v1p-vip .v1p-tagline { min-height: 3.7em; }
+        .v1-scope .v1p-vip-promise { margin: 8px 0 0; font-size: 0.95rem; line-height: 1.85; color: var(--v1-t); font-weight: 400; text-wrap: pretty; }
         .v1-scope .v1p-vip-note { margin: 10px 0 0; font-size: 0.8rem; line-height: 1.9; color: var(--v1-t-mute); }
+
+        .v1-scope .v1p-inside { margin-top: 22px; }
+        .v1-scope .v1p-inside-label { font: 700 0.78rem/1 var(--v1-display); letter-spacing: 0.04em; color: var(--v1-gold-soft); }
+        .v1-scope .v1p-inside-list { list-style: none; padding: 0; margin: 12px 0 0; }
+        .v1-scope .v1p-inside-row { display: flex; align-items: center; gap: 14px; padding: 13px 0; }
+        .v1-scope .v1p-inside-row + .v1p-inside-row { border-top: 1px solid var(--v1-line); }
+        .v1-scope .v1p-inside-icon {
+          width: 36px; height: 36px; flex-shrink: 0; border-radius: 11px; display: grid; place-items: center;
+          color: var(--v1-gold-soft); background: rgba(242, 193, 78, 0.06); border: 1px solid var(--v1-line-gold);
+        }
+        .v1-scope .v1p-inside-text { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+        .v1-scope .v1p-inside-text b { font: 700 0.95rem/1.4 var(--v1-display); color: var(--v1-t-strong); }
+        .v1-scope .v1p-inside-text span { font-size: 0.85rem; line-height: 1.7; color: var(--v1-t-mute); }
+
+        .v1-scope .v1p-vip-actions { display: flex; flex-direction: column; align-items: center; gap: 6px; align-self: end; }
         .v1-scope .v1p-vip-cta { border-color: rgba(242, 193, 78, 0.55); color: var(--v1-gold-soft); }
         .v1-scope .v1p-vip-cta:hover { border-color: var(--v1-gold); background: rgba(242, 193, 78, 0.06); }
-
-        .v1-scope .v1p-solo-glance { list-style: none; padding: 0; margin: 20px 0 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
-        .v1-scope .v1p-solo-stat {
-          display: flex; flex-direction: column; align-items: center; text-align: center; gap: 4px;
-          padding: 14px 10px; border-radius: 14px; border: 1px solid var(--v1-line); background: rgba(4, 7, 14, 0.35);
+        .v1-scope .v1p-vip-more {
+          display: inline-flex; align-items: center; gap: 6px; min-height: 48px; padding-inline: 8px;
+          font: 600 0.9rem/1 var(--v1-display); color: var(--v1-gold-soft); text-decoration: none;
         }
-        .v1-scope .v1p-solo-num { font: 800 2rem/1 var(--v1-num); color: var(--v1-t-strong); letter-spacing: -0.02em; }
-        .v1-scope .v1p-solo-lbl { font: 600 0.86rem/1.5 var(--v1-display); color: var(--v1-t); }
-        .v1-scope .v1p-solo-sub { font-size: 0.76rem; color: var(--v1-t-faint); }
+        .v1-scope .v1p-vip-more:hover { color: var(--v1-t-strong); }
 
         /* platform only — slim line */
         .v1-scope .v1p-self {
@@ -410,7 +425,6 @@ export default function V1Pricing() {
           .v1-scope .v1p-tier[data-active="true"] { animation: v1p-in 0.42s var(--v1-ease); }
           .v1-scope .v1p-tagline { min-height: 0; }
           .v1-scope .v1p-solo { grid-template-columns: minmax(0, 1fr); max-width: 520px; margin-inline: auto; }
-          .v1-scope .v1p-vip .v1p-tagline { min-height: 0; }
           .v1-scope .v1p-self { max-width: 520px; margin-inline: auto; }
         }
         @keyframes v1p-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
@@ -427,6 +441,13 @@ export default function V1Pricing() {
       `}</style>
     </section>
   );
+}
+
+/** /private for one package, keeping the visitor's query string (UTM survives the hop). */
+function privateHref(pkgId, search) {
+  const p = new URLSearchParams(search || "");
+  p.set("pkg", pkgId);
+  return `/private?${p.toString()}`;
 }
 
 function Check({ gold }) {

@@ -156,7 +156,7 @@ export function V1Worth() {
 /**
  * V1WhoFor — honest qualification split. Green/red twin columns.
  */
-export function V1WhoFor() {
+export function V1WhoFor({ data = WHO_FOR, after = null } = {}) {
   const col = (data, positive) => (
     <motion.div
       variants={staggerItem}
@@ -199,9 +199,9 @@ export function V1WhoFor() {
     <section className="v1-section" id="whofor" style={{ paddingTop: 0 }}>
       <div className="v1-container">
         <Reveal>
-          <span className="v1-eyebrow">{WHO_FOR.eyebrow}</span>
-          <h2 className="v1-headline">{WHO_FOR.headline}</h2>
-          <p className="v1-intro">{WHO_FOR.intro}</p>
+          <span className="v1-eyebrow">{data.eyebrow}</span>
+          <h2 className="v1-headline">{data.headline}</h2>
+          <p className="v1-intro">{data.intro}</p>
         </Reveal>
         <motion.div
           variants={staggerParent}
@@ -211,9 +211,10 @@ export function V1WhoFor() {
           className="v1-whofor-grid"
           style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 18, marginTop: 56 }}
         >
-          {col(WHO_FOR.forYou, true)}
-          {col(WHO_FOR.notForYou, false)}
+          {col(data.forYou, true)}
+          {col(data.notForYou, false)}
         </motion.div>
+        {after}
       </div>
       <style>{`
         @media (max-width: 760px) {
