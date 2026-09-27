@@ -170,15 +170,23 @@ html.fx-intro.fx-skip .fx-next { --fx-hd: 0ms; }
   z-index: 70;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  padding: 96px var(--fx-gut) 48px;
+  /* «safe»: when the list is taller than the screen it starts at the top and
+     scrolls, instead of centring and cutting both ends off out of reach. */
+  justify-content: safe center;
+  padding: 88px var(--fx-gut) max(32px, env(safe-area-inset-bottom));
   overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
   background: var(--fx-void);
 }
+/* Browsers without «safe»: the list centres itself with auto margins, which
+   collapse to 0 when it overflows — same result. */
+.fx-menu > nav { margin-block: auto; }
 /* The starfield keeps drifting over the menu's void ground. */
 html.fx-menu-open .fx-stars { z-index: 71; }
 .fx-menu-close {
-  position: absolute;
+  position: fixed;
+  z-index: 72; /* above the drifting stars (71) and the list */
   top: max(10px, env(safe-area-inset-top));
   inset-inline-end: var(--fx-gut);
   width: 52px;
@@ -199,9 +207,13 @@ html.fx-menu-open .fx-stars { z-index: 71; }
   text-decoration: none;
   font-family: var(--fx-display);
   font-weight: 800;
-  font-size: clamp(34px, 9.4vw, 88px);
+  /* Sized by the screen's HEIGHT as well as its width: seven lines must fit a
+     laptop window (they ran off the bottom at 88px) and a phone held sideways. */
+  font-size: clamp(24px, min(9.4vw, 7.4vh), 88px);
+  font-size: clamp(24px, min(9.4vw, 7.4svh), 88px);
   line-height: 1.12;
 }
+.fx-menu-cta { margin-top: clamp(20px, 4vh, 40px); }
 .fx-menu-link .fx-w { transition: transform 900ms var(--fx-ease), color 300ms ease; transition-delay: calc(var(--i) * 35ms), 0s; transform: translateY(180%); }
 .fx-menu.is-in .fx-menu-link .fx-w { transform: none; }
 .fx-menu-link:focus-visible .fx-w { color: var(--fx-ice); }

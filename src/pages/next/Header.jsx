@@ -154,6 +154,14 @@ export default function Header() {
                 </li>
               ))}
             </ul>
+            {/* The header's button is under the overlay: the menu carries its own.
+                It closes the menu; the page's [data-open-form] handler does the rest. */}
+            <div className="fx-menu-cta">
+              <button type="button" data-open-form className="fx-btn fx-btn--primary" onClick={() => setOpen(false)}>
+                {CTA_LABEL}
+                <span aria-hidden="true">←</span>
+              </button>
+            </div>
           </nav>
         </div>
       )}
