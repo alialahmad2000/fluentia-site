@@ -8,7 +8,6 @@ import { Reveal, staggerParent, staggerItem } from "./motion";
 import { useCta } from "./ctaContext";
 
 const fmt = (n) => n.toLocaleString("en-US");
-const perDay = (n) => Math.round(n / 30);
 
 const GLANCE_ROWS = [
   { key: "group", label: "حصص جماعية شهرياً" },
@@ -24,7 +23,7 @@ const GLANCE_ROWS = [
  * compare at a glance; then the two 1:1 programmes side by side (regular, and the
  * intensive schedule with practice sessions); then the platform-only plan as
  * a slim line for the self-directed. No struck-through "before" prices: a premium
- * product states its price once, and anchors it to the day (≈ 40 ر.س) instead.
+ * product states its price once, per month, and nothing else (no per-day figure: owner's call).
  *
  * Gold is spent once: the recommended card's edge, its badge, ticks and button.
  * VIP is outlined, not a second gold slab competing with the recommendation.
@@ -122,9 +121,6 @@ export default function V1Pricing() {
                       <span className="v1p-cur">ر.س</span>
                       <span className="v1p-per">/ شهرياً</span>
                     </div>
-                    <div className="v1p-daily">
-                      حوالي <b className="v1-num">{perDay(t.price)}</b> ر.س في اليوم
-                    </div>
                   </div>
 
                   {t.glance && (
@@ -200,9 +196,6 @@ export default function V1Pricing() {
                   <span className="v1p-amount v1-num">{fmt(intensive.price)}</span>
                   <span className="v1p-cur">ر.س</span>
                   <span className="v1p-per">/ شهرياً</span>
-                </div>
-                <div className="v1p-daily">
-                  حوالي <b className="v1-num">{perDay(intensive.price)}</b> ر.س في اليوم
                 </div>
               </div>
               <ul className="v1p-solo-glance">
@@ -311,9 +304,6 @@ export default function V1Pricing() {
         .v1-scope .v1p-cur { font: 700 1.05rem/1 var(--v1-display); color: var(--v1-t); }
         .v1-scope .v1p-per { font-size: 0.85rem; color: var(--v1-t-faint); }
         .v1-scope .v1p-from { font: 600 0.95rem/1 var(--v1-display); color: var(--v1-t-mute); }
-        .v1-scope .v1p-daily { margin-top: 10px; font-size: 0.82rem; color: var(--v1-t-faint); }
-        .v1-scope .v1p-daily b { color: var(--v1-azure-soft); font-weight: 700; }
-        .v1-scope .v1p-tier.is-hero .v1p-daily b { color: var(--v1-gold-soft); }
 
         .v1-scope .v1p-glance {
           margin: 22px 0 0; border-radius: 14px; overflow: hidden;
@@ -363,7 +353,6 @@ export default function V1Pricing() {
         .v1-scope .v1p-vip-aud { margin: 6px 0 0; font-size: 0.9rem; font-weight: 500; color: var(--v1-t); }
         .v1-scope .v1p-vip .v1p-tagline { min-height: 3.7em; }
         .v1-scope .v1p-vip-note { margin: 10px 0 0; font-size: 0.8rem; line-height: 1.9; color: var(--v1-t-mute); }
-        .v1-scope .v1p-vip.is-intensive .v1p-daily b { color: var(--v1-gold-soft); }
         .v1-scope .v1p-vip-cta { border-color: rgba(242, 193, 78, 0.55); color: var(--v1-gold-soft); }
         .v1-scope .v1p-vip-cta:hover { border-color: var(--v1-gold); background: rgba(242, 193, 78, 0.06); }
 
