@@ -1,7 +1,8 @@
 /* ============================================================
  * /next — the cinematic landing. Everything is scoped to .fx-next
  * (or keyed on html classes the boot script sets for this page).
- * Designed at 390×844 first, then widened.
+ * Designed at 390×844 first, then widened. Display weight is 800: the face
+ * the main bundle already loads, so the giant type never re-wraps on a late font.
  * ============================================================ */
 
 .fx-next {
@@ -181,7 +182,7 @@ html.fx-menu-open .fx-stars { z-index: 71; }
   color: var(--fx-cream);
   text-decoration: none;
   font-family: var(--fx-display);
-  font-weight: 900;
+  font-weight: 800;
   font-size: clamp(34px, 9.4vw, 88px);
   line-height: 1.12;
 }
@@ -196,7 +197,7 @@ html.fx-menu-open .fx-stars { z-index: 71; }
 .fx-giant {
   margin: 0;
   font-family: var(--fx-display);
-  font-weight: 900;
+  font-weight: 800;
   font-size: clamp(56px, 15vw, 200px);
   line-height: 0.95;
   letter-spacing: 0;
@@ -295,7 +296,7 @@ html.fx-intro:not(.fx-intro-done) .fx-stars { z-index: 81; }
 .fx-intro-l2 {
   display: inline-block;
   font-family: var(--fx-display);
-  font-weight: 900;
+  font-weight: 800;
   font-size: clamp(96px, 29vw, 340px);
   line-height: 1;
   color: #fff;
@@ -713,7 +714,7 @@ html.fx-js .fx-act-title.fx-rv.is-in { transform: none; }
 .fx-row-titles { display: grid; gap: 6px; }
 .fx-row-essence {
   font-family: var(--fx-display);
-  font-weight: 900;
+  font-weight: 800;
   font-size: clamp(38px, 10.5vw, 72px);
   line-height: 1.12;
   color: var(--fx-cream);
@@ -905,7 +906,7 @@ html.fx-js .fx-stat.is-in .fx-bar i { transform: none; }
   max-width: 13ch;
   text-align: center;
   font-family: var(--fx-display);
-  font-weight: 900;
+  font-weight: 800;
   font-size: clamp(40px, 11.5vw, 140px);
   line-height: 1.08;
   opacity: 0;

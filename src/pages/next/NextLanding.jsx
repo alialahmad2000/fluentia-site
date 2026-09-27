@@ -1,11 +1,13 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { MotionConfig } from "framer-motion";
-import "@fontsource/alexandria/900.css";
 import "../../styles/v1-tokens.css";
 import "../../styles/v5-tokens.css";
 import "../v5/V5Hero.css";
-import "./next.css";
+// Inlined into the markup, not linked: this route is a lazy chunk, and a chunk's
+// stylesheet only arrives with its JavaScript — the prerendered page would paint
+// unstyled for a second and then jump (measured: CLS 0.53 on a throttled phone).
+import NEXT_CSS from "./next.css?inline";
 import Seo from "../../components/Seo";
 import V1LeadModal from "../v1/V1LeadModal";
 import { detectTier, forcedTier, tierConfig, writeStore, TIER_KEY } from "./perf";
@@ -173,6 +175,7 @@ export default function NextLanding() {
         {/* The client and server bundles may stringify boot() differently; the
             script has already run by the time React hydrates it. */}
         <script suppressHydrationWarning dangerouslySetInnerHTML={{ __html: BOOT }} />
+        <style dangerouslySetInnerHTML={{ __html: NEXT_CSS }} />
         <Seo path="/next" />
         <Helmet>
           <link rel="preconnect" href="https://fonts.googleapis.com" />
