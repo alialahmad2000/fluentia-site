@@ -93,8 +93,8 @@ export function How() {
   );
 }
 
-/* ── الأرقام كما هي — each stat a row: a giant number counting up once, a bar
-   that fills in the same breath (it measures the count, not a made-up score) ── */
+/* ── الأرقام كما هي — each stat a row: a giant number counting up once. No bars:
+   none of these numbers has an honest maximum to draw against. ── */
 function parseStat(v) {
   const m = String(v).match(/^(\+?)(\d+)(K?)$/);
   if (!m) return null;
@@ -103,7 +103,7 @@ function parseStat(v) {
 const fmt = (n) => n.toLocaleString("en-US");
 const COUNT_MS = 1600;
 
-export function Stats({ still = false }) {
+export function Stats({ still = false, bars = false }) {
   const listRef = useRef(null);
 
   useEffect(() => {
@@ -172,9 +172,12 @@ export function Stats({ still = false }) {
                 <span className="fx-stat-n">{p ? fmt(p.to) : s.value}</span>
               </span>
               <span className="fx-stat-label">{s.label}</span>
-              <span className="fx-bar" aria-hidden="true">
-                <i />
-              </span>
+              {/* /join keeps its launch layout (bars) until it is switched to the showcase */}
+              {bars ? (
+                <span className="fx-bar" aria-hidden="true">
+                  <i />
+                </span>
+              ) : null}
             </li>
           );
         })}

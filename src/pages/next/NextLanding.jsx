@@ -23,6 +23,10 @@ import Hero from "./Hero";
 import PhoneSection from "./PhoneSection";
 import { Pains, How, Stats } from "./Acts";
 import Stage from "./Stage";
+// /join (paid TikTok traffic) keeps the stage and stylesheet it launched with,
+// frozen as of 2026-09-27; the homepage gets the real-footage showcase.
+import StageClassic from "./StageClassic";
+import NEXT_CLASSIC_CSS from "./next-classic.css?inline";
 import { Pricing, FitFaq, Final, Footer } from "./Closing";
 import { CTA_LABEL } from "./copy";
 
@@ -246,20 +250,21 @@ export default function NextLanding({ seoPath = "/next", campaign = false }) {
         {/* The client and server bundles may stringify boot() differently; the
             script has already run by the time React hydrates it. */}
         <script suppressHydrationWarning dangerouslySetInnerHTML={{ __html: BOOT }} />
-        <style dangerouslySetInnerHTML={{ __html: NEXT_CSS }} />
+        <style dangerouslySetInnerHTML={{ __html: campaign ? NEXT_CLASSIC_CSS : NEXT_CSS }} />
         {/* Kufam is the display face: fetched while the HTML parses, before the
             giant type needs it (Kufam chosen by Ali, 2026-09-27). */}
         <link rel="preload" as="font" type="font/woff2" href="/fonts/kufam-800-arabic.woff2" crossOrigin="" />
         {campaign ? <style dangerouslySetInnerHTML={{ __html: JOIN_CSS + FORM_BLOCK_CSS }} /> : null}
         <Seo path={campaign ? "/join" : seoPath} />
-        <Helmet>
-          <link rel="preconnect" href="https://fonts.googleapis.com" />
-          <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-          <link
-            rel="stylesheet"
-            href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@800&display=swap"
-          />
-        </Helmet>
+        {campaign ? (
+          <Helmet>
+            <link rel="preconnect" href="https://fonts.googleapis.com" />
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+            <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@800&display=swap" />
+          </Helmet>
+        ) : (
+          <link rel="preload" as="font" type="font/woff2" href="/fonts/barlow-condensed-800-latin.woff2" crossOrigin="" />
+        )}
 
         <Starfield density={cfg ? cfg.stars : 0} />
         <Intro gl={introCfg} onDone={onIntroDone} />
@@ -270,8 +275,8 @@ export default function NextLanding({ seoPath = "/next", campaign = false }) {
           <PhoneSection tilt={Boolean(cfg && cfg.tilt)} />
           <Pains />
           <How />
-          <Stats still={tier === "low"} />
-          <Stage gl={cfg} />
+          <Stats still={tier === "low"} bars={campaign} />
+          {campaign ? <StageClassic gl={cfg} /> : <Stage gl={cfg} tier={tier} />}
           <Pricing />
           <FitFaq />
           {campaign ? (
