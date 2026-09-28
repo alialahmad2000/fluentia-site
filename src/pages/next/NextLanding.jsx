@@ -28,7 +28,7 @@ import Stage from "./Stage";
 // frozen stage, left /join on 2026-09-28 — see the Steps comment below.)
 import NEXT_CLASSIC_CSS from "./next-classic.css?inline";
 import { Pricing, FitFaq, Final, Footer } from "./Closing";
-import { CTA_LABEL, CAMPAIGN_PRICING_FOOT, STICKY_NOTE, SOLO_PRICING, SOLO_FORM_SUB } from "./copy";
+import { CTA_LABEL, CAMPAIGN_PRICING_FOOT, STICKY_NOTE, SOLO_PRICING } from "./copy";
 
 /**
  * The cinematic landing — the homepage at `/` and, in campaign mode, the TikTok
@@ -137,7 +137,8 @@ html.fx-js .fx-next[data-campaign] .fx-hero-sub.fx-hero-after { animation: none;
 // script execution, so boot runs as the chunk loads — still before first render.
 if (typeof window !== "undefined") boot();
 
-// /join sells the 1:1 programmes only: the form lists them and opens on the first.
+// /join sells the 1:1 programmes only: the form lists them. It opens undecided —
+// only a pricing card's own button ([data-tier]) ever sets a package.
 const SOLO_IDS = [PRICING.vipTier.id, PRICING.intensiveTier.id];
 const TIER_IDS = new Set(SOLO_IDS);
 const CAMPAIGN_CTA = { label: CTA_LABEL, pricingFoot: CAMPAIGN_PRICING_FOOT, solo: SOLO_PRICING };
@@ -210,13 +211,21 @@ export default function NextLanding({ seoPath = "/next", campaign = false }) {
   const onIntroDone = useCallback(() => setIntroDone(true), []);
 
   // ── campaign mode: the /join lead form ──
-  const [pkgId, setPkgId] = useState(campaign ? SOLO_IDS[0] : "");
+  const [pkgId, setPkgId] = useState("");
+  // What the visitor picked in the select themselves. A pricing card's button
+  // sets its package; every other button puts back this (or "undecided").
+  const manualPkg = useRef("");
+  const pickPkg = useCallback((v) => {
+    manualPkg.current = v;
+    setPkgId(v);
+  }, []);
   const nameRef = useRef(null);
   const formRef = useRef(null);
   const nameRefB = useRef(null);
   const formRefB = useRef(null);
   const [doneIn, setDoneIn] = useState(null); // "top" | "bottom" once a lead is sent
   const [sticky, setSticky] = useState(false);
+  const [stickyLift, setStickyLift] = useState(0); // px above the cookie bar
 
   // Every call to action goes to the NEARER of the two forms.
   const goToForm = useCallback(() => {
@@ -229,8 +238,15 @@ export default function NextLanding({ seoPath = "/next", campaign = false }) {
     const [el, ref] = cards[0];
     const reduce = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
     const focusName = () => ref.current?.focus({ preventScroll: true });
+    // Card top under the fixed header — unless the card is taller than the
+    // screen (825 px on a 360×740 phone): then just enough that the submit
+    // button is on screen, so nothing has to be scrolled or dismissed to send.
+    const cardTop = el.getBoundingClientRect().top + window.scrollY;
+    const submit = el.querySelector("[type=submit]");
+    const submitBottom = submit ? submit.getBoundingClientRect().bottom + window.scrollY : cardTop;
+    const top = Math.max(cardTop - 80, submitBottom - window.innerHeight + 16);
     if (reduce) {
-      el.scrollIntoView({ block: "start" });
+      window.scrollTo(0, top);
       focusName();
       return;
     }
@@ -244,7 +260,7 @@ export default function NextLanding({ seoPath = "/next", campaign = false }) {
     };
     window.addEventListener("scrollend", land);
     window.setTimeout(land, 1600);
-    el.scrollIntoView({ behavior: "smooth", block: "start" });
+    window.scrollTo({ top, behavior: "smooth" });
   }, []);
 
   useEffect(() => {
@@ -254,7 +270,7 @@ export default function NextLanding({ seoPath = "/next", campaign = false }) {
       if (!trigger) return;
       e.preventDefault();
       const t = trigger.getAttribute("data-tier");
-      if (t && TIER_IDS.has(t)) setPkgId(t);
+      setPkgId(t && TIER_IDS.has(t) ? t : manualPkg.current);
       goToForm();
     };
     document.addEventListener("click", onClick);
@@ -279,8 +295,11 @@ export default function NextLanding({ seoPath = "/next", campaign = false }) {
         const r = c.getBoundingClientRect();
         return r.top < vh && r.bottom > 0;
       });
-      const cookie = Boolean(document.querySelector(".flu-cookie-btn"));
-      setSticky(pastHero && !formOnScreen && !cookie);
+      // The cookie bar (until the visitor chooses) sits at the bottom too:
+      // the sticky call rides just above it rather than waiting behind it.
+      const cookie = document.querySelector("[aria-labelledby=fluentia-cookie-title]");
+      setStickyLift(cookie ? Math.round(window.innerHeight - cookie.getBoundingClientRect().top) : 0);
+      setSticky(pastHero && !formOnScreen);
     };
     const onScroll = () => {
       if (!raf) raf = requestAnimationFrame(check);
@@ -351,10 +370,9 @@ export default function NextLanding({ seoPath = "/next", campaign = false }) {
               <div className="v1-card j-card" id="join-form" ref={formRef}>
                 <LeadForm
                   pkgId={pkgId}
-                  setPkgId={setPkgId}
+                  setPkgId={pickPkg}
                   nameRef={nameRef}
                   tierIds={SOLO_IDS}
-                  sub={SOLO_FORM_SUB}
                   onDone={() => setDoneIn("top")}
                   onBack={backToPlatform}
                 />
@@ -378,11 +396,10 @@ export default function NextLanding({ seoPath = "/next", campaign = false }) {
                   <div className="v1-card j-card" id="join-form-bottom" ref={formRefB}>
                     <LeadForm
                       pkgId={pkgId}
-                      setPkgId={setPkgId}
+                      setPkgId={pickPkg}
                       nameRef={nameRefB}
                       idPrefix="join-b"
                       tierIds={SOLO_IDS}
-                      sub={SOLO_FORM_SUB}
                       onDone={() => setDoneIn("bottom")}
                       onBack={backToTop}
                     />
@@ -395,7 +412,12 @@ export default function NextLanding({ seoPath = "/next", campaign = false }) {
           )}
         </main>
         {campaign ? (
-          <div className="fx-sticky" data-on={sticky ? "" : undefined} aria-hidden={!sticky}>
+          <div
+            className="fx-sticky"
+            data-on={sticky ? "" : undefined}
+            aria-hidden={!sticky}
+            style={stickyLift ? { bottom: stickyLift, paddingBottom: 12, borderBottom: "1px solid var(--fx-rule)" } : undefined}
+          >
             <button type="button" data-open-form className="fx-btn fx-btn--primary" tabIndex={sticky ? 0 : -1}>
               {CTA_LABEL}
             </button>

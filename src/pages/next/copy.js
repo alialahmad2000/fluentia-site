@@ -73,10 +73,9 @@ export const CAMPAIGN_PLATFORM_TAGLINE = "بُنيت من الصفر: تقييم
 // The homepage pricing footer names Dr. Ali, who no longer teaches (2026-09-21).
 export const CAMPAIGN_PRICING_FOOT = "محتار بين الباقتين؟ نرشّح لك الأنسب في اللقاء المبدئي.";
 // /join sells the 1:1 programmes only (Ali, 2026-09-28): pricing shows the two
-// individual cards, the form lists only them and opens on التدريب الفردي.
+// individual cards, the form lists only them (and opens undecided).
 export const SOLO_PRICING = {
   headline: "تدريب فردي. أنت ومدرّبك فقط.",
   intro: "بدون قاعة ولا زملاء. منهج مبني على هدفك ومجالك، ومدرّب يتابعك كل يوم. وتبدأ بلقاء مبدئي مجاني قبل أن تدفع أي شيء.",
 };
-export const SOLO_FORM_SUB = "للتدريب الفردي. 30 ثانية، ونتواصل معك على واتساب خلال ساعات.";
 export const STICKY_NOTE = "مجاني وبدون التزام";

@@ -50,6 +50,9 @@ export default function CookieBanner() {
   // /join (paid TikTok traffic): the same choices in a slim bar. The full card
   // covered a third of a phone screen — half the lead form under the hero.
   const [compact, setCompact] = useState(false);
+  // …and steps aside while a lead form is on screen or being filled, so it
+  // never sits over the submit button. Hidden, not dismissed: nothing is written.
+  const [overForm, setOverForm] = useState(false);
   const dialogRef = useRef(null);
 
   // Decide whether to show the banner
@@ -60,6 +63,35 @@ export default function CookieBanner() {
     const t = setTimeout(() => setVisible(true), 1000);
     return () => clearTimeout(t);
   }, []);
+
+  useEffect(() => {
+    if (!compact || !visible) return undefined;
+    let raf = 0;
+    const check = () => {
+      raf = 0;
+      const vh = window.innerHeight;
+      const forms = document.querySelectorAll('#join-form, #join-form-bottom');
+      const inView = [...forms].some((f) => {
+        const r = f.getBoundingClientRect();
+        return r.top < vh && r.bottom > 0;
+      });
+      const focused = [...forms].some((f) => f.contains(document.activeElement));
+      setOverForm(inView || focused);
+    };
+    const later = () => { if (!raf) raf = requestAnimationFrame(check); };
+    check();
+    window.addEventListener('scroll', later, { passive: true });
+    window.addEventListener('resize', later);
+    document.addEventListener('focusin', later);
+    document.addEventListener('focusout', later);
+    return () => {
+      if (raf) cancelAnimationFrame(raf);
+      window.removeEventListener('scroll', later);
+      window.removeEventListener('resize', later);
+      document.removeEventListener('focusin', later);
+      document.removeEventListener('focusout', later);
+    };
+  }, [compact, visible]);
 
   // Keyboard: Escape = reject all
   useEffect(() => {
@@ -87,7 +119,7 @@ export default function CookieBanner() {
   const handleSaveCustom = () =>
     closeAfter({ ...choices, essential: true });
 
-  if (!visible) return null;
+  if (!visible || (overForm && !showCustomize)) return null;
   const slim = compact && !showCustomize;
 
   return (
