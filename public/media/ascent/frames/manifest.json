@@ -1,0 +1,69 @@
+{
+ "count": 224,
+ "fps_note": "scrubbed by scroll, not played",
+ "chapters": [
+  {
+   "start": 0,
+   "end": 31
+  },
+  {
+   "start": 32,
+   "end": 63
+  },
+  {
+   "start": 64,
+   "end": 95
+  },
+  {
+   "start": 96,
+   "end": 127
+  },
+  {
+   "start": 128,
+   "end": 159
+  },
+  {
+   "start": 160,
+   "end": 191
+  },
+  {
+   "start": 192,
+   "end": 223
+  }
+ ],
+ "formats": [
+  "avif",
+  "webp"
+ ],
+ "sets": {
+  "d": {
+   "crop": "land",
+   "size": [
+    1600,
+    900
+   ]
+  },
+  "dm": {
+   "crop": "land",
+   "size": [
+    1280,
+    720
+   ]
+  },
+  "m": {
+   "crop": "port",
+   "size": [
+    720,
+    1280
+   ]
+  },
+  "mm": {
+   "crop": "port",
+   "size": [
+    540,
+    960
+   ]
+  }
+ },
+ "source": "Copernicus DEM GLO-30 (\u00a9 DLR e.V. 2010-2014 and \u00a9 Airbus Defence and Space GmbH 2014-2018, provided under COPERNICUS by the EU and ESA)"
+}

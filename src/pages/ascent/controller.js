@@ -90,10 +90,10 @@ export function createController(root, opts) {
       const start = i === 0 ? vh * 0.5 : chapters[i].top;
       const end = i + 1 < n ? chapters[i + 1].top : chapters[i].bottom;
       if (y < end || i === n - 1) {
-        return Math.min(6, i + edgeMap(y - start, end - start));
+        return Math.min(7, i + edgeMap(y - start, end - start));
       }
     }
-    return 6;
+    return 7;
   }
 
   function writeDom(p) {

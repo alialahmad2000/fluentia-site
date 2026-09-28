@@ -410,6 +410,10 @@ export function Below({ mode, onMode }) {
         <div className="as-perf-wrap">
           <PerfControl mode={mode} onMode={onMode} />
         </div>
+        <p className="as-credits" dir="ltr">
+          Terrain: Copernicus DEM GLO-30 — © DLR e.V. 2010–2014 and © Airbus Defence and Space GmbH 2014–2018, provided under
+          COPERNICUS by the European Union and ESA; all rights reserved. Rendered along the South Col route.
+        </p>
       </div>
     </section>
   );

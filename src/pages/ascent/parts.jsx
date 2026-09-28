@@ -190,7 +190,7 @@ export function Intro() {
 const STILLS = import.meta.glob("./stills/*.webp", { eager: true, query: "?url", import: "default" });
 const still = (set, i) => STILLS[`./stills/${set}${i}.webp`] || null;
 
-export function Backdrop({ canvasRef, stillSet, showStills }) {
+export function Backdrop({ canvasRef, fxRef, stillSet, showStills }) {
   const list = [0, 1, 2, 3, 4, 5, 6].map((i) => (stillSet ? still(stillSet, i) : null));
   return (
     <div className="as-backdrop" aria-hidden="true">
@@ -211,6 +211,7 @@ export function Backdrop({ canvasRef, stillSet, showStills }) {
         )}
       </div>
       <canvas ref={canvasRef} className="as-canvas" />
+      <canvas ref={fxRef} className="as-fx" />
       <div className="as-white" data-white="" />
     </div>
   );

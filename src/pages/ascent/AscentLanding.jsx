@@ -19,9 +19,9 @@ import { BaseCamp, Icefall, Basin, Rope, HighZone, Summit, Below } from "./chapt
  * /ascent — «الصعود». Learning English is the climb; fluency is the summit.
  * (noindex, unlinked, not in the sitemap. `/` is untouched.)
  *
- * One procedural mountain in one fixed canvas (scene/engine.js, three.js,
- * loaded after first paint and never on the low tier). Scroll climbs it: six
- * camps, each carrying one part of the homepage. Every primary action is the
+ * The real Everest massif (Copernicus GLO-30 DEM), rendered offline in Blender
+ * along the real route and scrubbed by scroll (player.js; never on the low tier,
+ * which cross-fades seven stills). Six camps, each carrying one part of the homepage. Every primary action is the
  * homepage's own `[data-open-form]` → V1LeadModal (same TikTok / GA4 / Supabase /
  * WhatsApp flow); pricing, fit, FAQ and footer are the homepage components.
  */
@@ -92,6 +92,7 @@ if (typeof window !== "undefined") boot();
 export default function AscentLanding() {
   const rootRef = useRef(null);
   const canvasRef = useRef(null);
+  const fxRef = useRef(null);
   const ctrlRef = useRef(null);
   const soundRef = useRef(null);
   const [tier, setTier] = useState(null);
@@ -158,41 +159,46 @@ export default function AscentLanding() {
     ctrlRef.current.setCalm(tier === "low" || window.matchMedia("(prefers-reduced-motion: reduce)").matches);
   }, [tier]);
 
-  /* the mountain: three.js arrives after first paint, in its own chunk, never on the low tier */
+  /* the mountain: the rendered climb streams in after first paint, never on the low tier */
   useEffect(() => {
     if (!tier || tier === "low") return undefined;
-    let engine = null;
+    let player = null;
     let dead = false;
     const start = () => {
-      import("./scene/engine")
-        .then(({ createAscent }) => {
-          if (dead || !canvasRef.current) return;
-          try {
-            engine = createAscent({
-              canvas: canvasRef.current,
-              tier,
-              onLost: () => {
-                // the GPU let go: the stills take over for the rest of the visit
-                if (ctrlRef.current) ctrlRef.current.setEngine(null);
-                setEngineOn(false);
-                setTier("low");
-              },
-              onFirstFrame: () => !dead && setEngineOn(true),
-            });
-            if (ctrlRef.current) ctrlRef.current.setEngine(engine);
-          } catch {
-            setTier("low");
+      import("./player")
+        .then(({ createPlayer }) =>
+          createPlayer({
+            canvas: canvasRef.current,
+            fxCanvas: fxRef.current,
+            tier,
+            onFirstFrame: () => !dead && setEngineOn(true),
+            // streaming progress, readable from the console / measurement scripts
+            onProgress: (m) => {
+              const w = window.__asFrames || (window.__asFrames = { t0: performance.now() });
+              w.loaded = m.loaded;
+              w.count = m.count;
+              if (m.coarse && !w.coarseAt) w.coarseAt = performance.now();
+              if (m.loaded === m.count && !w.allAt) w.allAt = performance.now();
+            },
+          })
+        )
+        .then((p) => {
+          if (dead) {
+            p.dispose();
+            return;
           }
+          player = p;
+          if (ctrlRef.current) ctrlRef.current.setEngine(p);
         })
-        .catch(() => setTier("low"));
+        .catch(() => !dead && setTier("low"));
     };
     const idle = window.requestIdleCallback || ((cb) => window.setTimeout(cb, 200));
-    const handle = idle(start, { timeout: 1500 });
+    const handle = idle(start, { timeout: 1200 });
     return () => {
       dead = true;
       if (window.cancelIdleCallback && typeof handle === "number") window.cancelIdleCallback(handle);
       if (ctrlRef.current) ctrlRef.current.setEngine(null);
-      if (engine) engine.dispose();
+      if (player) player.dispose();
       setEngineOn(false);
     };
   }, [tier]);
@@ -293,7 +299,7 @@ export default function AscentLanding() {
           </Helmet>
         ) : null}
 
-        <Backdrop canvasRef={canvasRef} stillSet={stillSet} showStills={!engineOn} />
+        <Backdrop canvasRef={canvasRef} fxRef={fxRef} stillSet={stillSet} showStills={!engineOn} />
         <Intro />
         <Header sound={sound} onSound={onSound} />
         <Hud onJump={onJump} />

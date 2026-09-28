@@ -1,10 +1,10 @@
 /**
  * Performance tiers for /ascent — high / medium / low.
  *
- *   high    WebGL mountain: 256² terrain, DPR ≤ 2, 4,000 snow flakes, full cloud sea, intro
- *   medium  WebGL mountain: 128² terrain, DPR ≤ 1.25, 1,200 flakes, simpler clouds, 30 fps, intro
- *   low     no WebGL and no three.js download: seven stills rendered from the high
- *           tier, cross-fading with scroll; no intro; every reveal already in place
+ *   high    the rendered climb at full crops (1600×900 / 720×1280), live snow + stars, intro
+ *   medium  smaller crops (1280×720 / 540×960), fewer snow flakes, intro
+ *   low     no frame sequence: seven stills from the same render, cross-fading with
+ *           scroll; no intro; every reveal already in place
  *
  * Reduced motion and save-data are low. TikTok / Instagram / Facebook / Snapchat
  * in-app browsers cap at medium. Override: ?tier=low|medium|high, or
@@ -43,17 +43,9 @@ export function forcedTier() {
   return TIERS.includes(s) ? s : null;
 }
 
-function hasWebGL2() {
-  try {
-    const c = document.createElement("canvas");
-    const gl = c.getContext("webgl2", { failIfMajorPerformanceCaveat: true });
-    if (!gl) return false;
-    const lose = gl.getExtension("WEBGL_lose_context");
-    if (lose) lose.loseContext();
-    return true;
-  } catch {
-    return false;
-  }
+/** The frame player decodes in a worker with createImageBitmap. */
+function canPlay() {
+  return typeof Worker !== "undefined" && typeof createImageBitmap === "function";
 }
 
 /** Mean frame time over `n` frames, in ms. */
@@ -82,7 +74,7 @@ export async function detectTier() {
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return "low";
   const conn = navigator.connection;
   if (conn && conn.saveData) return "low";
-  if (!hasWebGL2()) return "low";
+  if (!canPlay()) return "low";
 
   const mem = navigator.deviceMemory;
   const cores = navigator.hardwareConcurrency;
