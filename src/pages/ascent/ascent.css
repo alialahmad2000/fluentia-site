@@ -383,6 +383,12 @@ html.as-intro-out .as-intro-layer { animation: as-layer-out 450ms ease forwards;
   -webkit-mask-image: linear-gradient(180deg, transparent 0, transparent 68px, #000 132px);
   mask-image: linear-gradient(180deg, transparent 0, transparent 68px, #000 132px);
 }
+/* the hero's own track stays unmasked: a mask composites the LCP paragraph and delayed
+   its first paint by ~0.5 s on a throttled phone. The frosted header band covers it. */
+.as-ch--base .as-track-inner {
+  -webkit-mask-image: none;
+  mask-image: none;
+}
 .as-track-copy {
   width: min(100%, 1040px);
   opacity: calc(1 - var(--out, 0));
@@ -776,7 +782,7 @@ html.as-js:not([data-as-tier="low"]) .as-rv:not(.is-in) { opacity: 0; transform:
   .as-body { padding: 0 20px 72vh; }
   .as-header::before,
   .as-header::after { inset: 0 0 -34px; }
-  .as-track-inner {
+  .as-ch:not(.as-ch--base) .as-track-inner {
     -webkit-mask-image: linear-gradient(180deg, transparent 0, transparent 92px, #000 150px);
     mask-image: linear-gradient(180deg, transparent 0, transparent 92px, #000 150px);
   }
