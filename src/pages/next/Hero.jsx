@@ -22,8 +22,8 @@ import { CTA_LABEL, HERO_LINES, SEE_INSIDE } from "./copy";
 const VIG_PHONE = [0, -0.62, 1.05, 0.62];
 const VIG_DESK = [0.78, -0.05, 0.95, 0.58];
 
-// The homepage hero sub-copy, verbatim — its first sentence (the brief caps it at two lines).
-const SUB = HERO.sub.slice(0, HERO.sub.indexOf(".") + 1);
+// The hero's line under the headline (two lines at most on a phone).
+const SUB = HERO.lead;
 
 export default function Hero({ gl }) {
   const ref = useRef(null);

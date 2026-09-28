@@ -6,6 +6,9 @@
 export const HERO = {
   eyebrow: "أكاديمية طلاقة · دورات إنجليزي أونلاين",
   headline: "تعلّم إنجليزي تتكلّمه — لا تحفظه.",
+  // The cinematic hero's line (/ and /join) — Ali's wording, 2026-09-28. `sub`
+  // below is still read in full by the older heroes, /private and /ascent.
+  lead: "انجلش يبيض وجهك. أكاديمية سعودية بمنهج علمي ومنصة تعلّم بمعايير عالمية.",
   sub: "أكاديمية أونلاين للراشدين السعوديين، مبنية على منهج علمي ومنصة تعلّم بحجم منتج عالمي. مدرّبون أكاديميون · متابعة شخصية · لن نعدك بنتائج معجزة، لكن سنعطيك كل ما يلزم.",
   primaryCTA: "ابدأ بمحادثة",
   secondaryCTA: "جرّب درساً عن شغلك",
