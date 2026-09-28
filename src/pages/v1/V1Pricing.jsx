@@ -240,7 +240,7 @@ export default function V1Pricing() {
 
         <Reveal delay={0.05}>
           <p className="v1p-foot">
-            {PRICING.footer.line}{" "}
+            {cta?.pricingFoot || PRICING.footer.line}{" "}
             {cta ? (
               <button type="button" data-open-form className="v1p-foot-cta">{cta.label} ←</button>
             ) : (

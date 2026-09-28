@@ -3,6 +3,7 @@ import BrandMark from "../../components/BrandMark";
 import { NAV } from "../landing-v2/content";
 import { track } from "./scroll";
 import { CTA_LABEL } from "./copy";
+import { useCta } from "../v1/ctaContext";
 
 /**
  * Header — fixed and minimal. The wordmark on the right; on the left the
@@ -25,6 +26,15 @@ export const MENU = [
 ];
 
 export default function Header() {
+  // /join: «بين الحصص» is not on the page, «كيف تبدأ» is.
+  const campaign = Boolean(useCta());
+  const menu = campaign
+    ? [
+        ...MENU.filter((m) => m.href !== "#fx-between" && m.href !== "#fx-pricing" && m.href !== "#fx-faq"),
+        { href: "#fx-steps", label: "كيف تبدأ" },
+        ...MENU.filter((m) => m.href === "#fx-pricing" || m.href === "#fx-faq"),
+      ]
+    : MENU;
   const headRef = useRef(null);
   const overlayRef = useRef(null);
   const toggleRef = useRef(null);
@@ -133,7 +143,7 @@ export default function Header() {
           </button>
           <nav>
             <ul className="fx-menu-list">
-              {MENU.map((m) => (
+              {menu.map((m) => (
                 <li key={m.href}>
                   <a href={m.href} onClick={(e) => go(e, m.href)} className="fx-menu-link">
                     <span className="fx-line">

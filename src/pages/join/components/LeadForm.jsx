@@ -29,7 +29,7 @@ function fallbackWaUrl() {
   return buildWhatsAppUrl(`السلام عليكم، أبي أحجز لقاء مبدئي مجاني\nالمصدر: ${getSource()}`);
 }
 
-export default function LeadForm({ pkgId, setPkgId, nameRef, onDone }) {
+export default function LeadForm({ pkgId, setPkgId, nameRef, onDone, onBack, idPrefix = "join" }) {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState(""); // 9-digit suffix after +966
   const [goalId, setGoalId] = useState("");
@@ -101,6 +101,7 @@ export default function LeadForm({ pkgId, setPkgId, nameRef, onDone }) {
   }
 
   function backToPage() {
+    if (onBack) { onBack(); return; }
     const top = document.getElementById("top");
     if (top) top.scrollIntoView({ behavior: "smooth", block: "start" });
   }
@@ -128,10 +129,10 @@ export default function LeadForm({ pkgId, setPkgId, nameRef, onDone }) {
       <p className="j-form-sub">30 ثانية، ونتواصل معك على واتساب خلال ساعات.</p>
 
       <div className="j-field">
-        <label htmlFor="join-name" className="j-label">الاسم</label>
+        <label htmlFor={`${idPrefix}-name`} className="j-label">الاسم</label>
         <input
           ref={nameRef}
-          id="join-name"
+          id={`${idPrefix}-name`}
           name="name"
           type="text"
           autoComplete="given-name"
@@ -141,19 +142,19 @@ export default function LeadForm({ pkgId, setPkgId, nameRef, onDone }) {
           onChange={(e) => setName(e.target.value)}
           onBlur={() => setTouched((t) => ({ ...t, name: true }))}
           aria-invalid={showNameErr}
-          aria-describedby="join-name-err"
+          aria-describedby={`${idPrefix}-name-err`}
           required
         />
-        <p id="join-name-err" className="j-err" aria-live="polite">{showNameErr ? "اكتب اسمك" : ""}</p>
+        <p id={`${idPrefix}-name-err`} className="j-err" aria-live="polite">{showNameErr ? "اكتب اسمك" : ""}</p>
       </div>
 
       <div className="j-field">
-        <label htmlFor="join-phone" className="j-label">رقم الجوال (واتساب)</label>
+        <label htmlFor={`${idPrefix}-phone`} className="j-label">رقم الجوال (واتساب)</label>
         <div className={`j-phone${showPhoneErr ? " is-invalid" : ""}`} dir="ltr">
           <span className="j-phone-prefix" aria-hidden="true">+966</span>
           <input
             ref={phoneRef}
-            id="join-phone"
+            id={`${idPrefix}-phone`}
             name="phone"
             type="tel"
             inputMode="numeric"
@@ -164,11 +165,11 @@ export default function LeadForm({ pkgId, setPkgId, nameRef, onDone }) {
             onChange={(e) => setPhone(stripPhone(toAsciiDigits(e.target.value)))}
             onBlur={() => setTouched((t) => ({ ...t, phone: true }))}
             aria-invalid={showPhoneErr}
-            aria-describedby="join-phone-err"
+            aria-describedby={`${idPrefix}-phone-err`}
             required
           />
         </div>
-        <p id="join-phone-err" className="j-err" aria-live="polite">
+        <p id={`${idPrefix}-phone-err`} className="j-err" aria-live="polite">
           {showPhoneErr ? "اكتب رقم جوال سعودي يبدأ بـ 5 (9 أرقام)" : ""}
         </p>
       </div>
@@ -195,9 +196,9 @@ export default function LeadForm({ pkgId, setPkgId, nameRef, onDone }) {
       </fieldset>
 
       <div className="j-field">
-        <label htmlFor="join-pkg" className="j-label">الباقة</label>
+        <label htmlFor={`${idPrefix}-pkg`} className="j-label">الباقة</label>
         <div className="j-select-wrap">
-          <select id="join-pkg" name="pkg" className="j-input j-select" value={pkgId} onChange={(e) => setPkgId(e.target.value)}>
+          <select id={`${idPrefix}-pkg`} name="pkg" className="j-input j-select" value={pkgId} onChange={(e) => setPkgId(e.target.value)}>
             <option value="">{UNDECIDED_LABEL}</option>
             {TIERS.map((t) => (
               <option key={t.id} value={t.id}>
@@ -211,8 +212,8 @@ export default function LeadForm({ pkgId, setPkgId, nameRef, onDone }) {
 
       {/* Honeypot: off-screen, unfocusable. A filled value marks a bot. */}
       <div className="j-hp" aria-hidden="true">
-        <label htmlFor="join-company">الشركة</label>
-        <input id="join-company" name="company" type="text" tabIndex={-1} autoComplete="off" value={hp} onChange={(e) => setHp(e.target.value)} />
+        <label htmlFor={`${idPrefix}-company`}>الشركة</label>
+        <input id={`${idPrefix}-company`} name="company" type="text" tabIndex={-1} autoComplete="off" value={hp} onChange={(e) => setHp(e.target.value)} />
       </div>
 
       <button type="submit" className="v1-cta v1-cta-primary j-btn j-submit" disabled={sending} aria-busy={sending}>

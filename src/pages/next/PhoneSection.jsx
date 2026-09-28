@@ -2,7 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import V5HeroShowcase from "../v5/V5HeroShowcase";
 import { SOLUTION, TRUSTED_LOGOS } from "../landing-v2/content";
 import { track } from "./scroll";
-import { CTA_LABEL } from "./copy";
+import { CTA_LABEL, CAMPAIGN_PLATFORM_TAGLINE } from "./copy";
+import { useCta } from "../v1/ctaContext";
 
 /**
  * «من داخل المنصة» — a phone in 3D that straightens as the section rises.
@@ -74,6 +75,7 @@ function Marquee() {
 }
 
 export default function PhoneSection({ tilt }) {
+  const campaign = Boolean(useCta());
   const secRef = useRef(null);
   const phoneRef = useRef(null);
 
@@ -135,7 +137,7 @@ export default function PhoneSection({ tilt }) {
 
         <div className="fx-card fx-rv fx-fade">
           <h2 className="fx-card-title">{PLATFORM.title}</h2>
-          <p className="fx-card-lede">{PLATFORM.tagline}</p>
+          <p className="fx-card-lede">{campaign ? CAMPAIGN_PLATFORM_TAGLINE : PLATFORM.tagline}</p>
           <ul className="fx-card-points">
             {PLATFORM.points.map((pt) => (
               <li key={pt}>{pt}</li>

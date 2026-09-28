@@ -39,7 +39,8 @@ export function FitFaq() {
   );
 }
 
-export function Final({ gl }) {
+/** `children` (/join) replaces the closing button — there it is the lead form itself. */
+export function Final({ gl, children }) {
   return (
     <section className="fx-final">
       <div className="fx-final-orb">
@@ -47,12 +48,14 @@ export function Final({ gl }) {
       </div>
       <Giant lines={TITLES.final} className="fx-center-title fx-final-title" />
       <p className="fx-final-sub fx-rv fx-fade">{FINAL_CTA.sub}</p>
-      <div className="fx-rv fx-fade">
-        <button type="button" data-open-form className="fx-btn fx-btn--primary fx-btn--lg">
-          {CTA_LABEL}
-          <span aria-hidden="true">←</span>
-        </button>
-      </div>
+      {children || (
+        <div className="fx-rv fx-fade">
+          <button type="button" data-open-form className="fx-btn fx-btn--primary fx-btn--lg">
+            {CTA_LABEL}
+            <span aria-hidden="true">←</span>
+          </button>
+        </div>
+      )}
     </section>
   );
 }

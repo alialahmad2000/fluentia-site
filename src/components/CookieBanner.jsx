@@ -47,12 +47,16 @@ export default function CookieBanner() {
   const [visible, setVisible] = useState(false);
   const [showCustomize, setShowCustomize] = useState(false);
   const [choices, setChoices] = useState(defaultConsent);
+  // /join (paid TikTok traffic): the same choices in a slim bar. The full card
+  // covered a third of a phone screen — half the lead form under the hero.
+  const [compact, setCompact] = useState(false);
   const dialogRef = useRef(null);
 
   // Decide whether to show the banner
   useEffect(() => {
     const existing = readConsent();
     if (existing) return; // user already chose
+    setCompact(/^\/join\/?$/.test(window.location.pathname));
     const t = setTimeout(() => setVisible(true), 1000);
     return () => clearTimeout(t);
   }, []);
@@ -84,6 +88,7 @@ export default function CookieBanner() {
     closeAfter({ ...choices, essential: true });
 
   if (!visible) return null;
+  const slim = compact && !showCustomize;
 
   return (
     <div
@@ -96,7 +101,7 @@ export default function CookieBanner() {
         position: 'fixed',
         insetInlineStart: '1rem',
         insetInlineEnd: '1rem',
-        bottom: '1rem',
+        bottom: slim ? '0.5rem' : '1rem',
         zIndex: 9999,
         maxWidth: '560px',
         marginInlineStart: 'auto',
@@ -105,7 +110,7 @@ export default function CookieBanner() {
         backdropFilter: 'blur(12px)',
         border: '1px solid rgba(56,189,248,0.25)',
         borderRadius: '1rem',
-        padding: '1.25rem',
+        padding: slim ? '0.75rem 0.875rem' : '1.25rem',
         boxShadow: '0 20px 60px rgba(0,0,0,0.5)',
         fontFamily: "'Tajawal', 'Segoe UI', sans-serif",
         color: '#e2e8f0',
@@ -143,6 +148,7 @@ export default function CookieBanner() {
           color: #94a3b8;
         }
         .flu-cookie-btn-ghost:hover { color: #38bdf8; }
+        .flu-cookie-slim .flu-cookie-btn { padding: 0.5rem 0.875rem; font-size: 0.875rem; min-height: 40px; }
         .flu-cookie-toggle {
           display: flex;
           align-items: center;
@@ -157,7 +163,7 @@ export default function CookieBanner() {
 
       <h2
         id="fluentia-cookie-title"
-        style={{
+        style={slim ? { position: 'absolute', width: 1, height: 1, overflow: 'hidden', clipPath: 'inset(50%)', margin: 0 } : {
           fontSize: '1rem',
           fontWeight: 800,
           color: '#f8fafc',
@@ -169,14 +175,16 @@ export default function CookieBanner() {
       <p
         id="fluentia-cookie-body"
         style={{
-          fontSize: '0.9375rem',
+          fontSize: slim ? '0.8125rem' : '0.9375rem',
           lineHeight: 1.7,
           color: '#cbd5e1',
-          margin: '0 0 1rem',
+          margin: slim ? '0 0 0.5rem' : '0 0 1rem',
         }}
       >
+        {slim ? 'نستخدم ملفات تعريف الارتباط للتشغيل والتحليلات والإعلانات. ' : <>
         نستخدم ملفات تعريف الارتباط الضرورية لتشغيل الموقع، وملفات اختيارية للتحليلات والإعلانات.
         تحكّم في خياراتك، أو اقرأ{' '}
+        </>}
         <a
           href="/privacy"
           style={{ color: '#38bdf8', textDecoration: 'underline' }}
@@ -249,6 +257,7 @@ export default function CookieBanner() {
           gap: '0.5rem',
           justifyContent: 'flex-start',
         }}
+        className={slim ? 'flu-cookie-slim' : undefined}
       >
         {showCustomize ? (
           <>

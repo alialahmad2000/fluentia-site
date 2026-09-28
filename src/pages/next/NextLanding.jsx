@@ -21,14 +21,14 @@ import Intro from "./Intro";
 import Header from "./Header";
 import Hero from "./Hero";
 import PhoneSection from "./PhoneSection";
-import { Pains, How, Stats } from "./Acts";
+import { Pains, How, Stats, Steps } from "./Acts";
 import Stage from "./Stage";
-// /join (paid TikTok traffic) keeps the stage and stylesheet it launched with,
-// frozen as of 2026-09-27; the homepage gets the real-footage showcase.
-import StageClassic from "./StageClassic";
+// /join (paid TikTok traffic) keeps the stylesheet it launched with, frozen as of
+// 2026-09-27; the homepage gets the real-footage showcase. (StageClassic.jsx, its
+// frozen stage, left /join on 2026-09-28 — see the Steps comment below.)
 import NEXT_CLASSIC_CSS from "./next-classic.css?inline";
 import { Pricing, FitFaq, Final, Footer } from "./Closing";
-import { CTA_LABEL } from "./copy";
+import { CTA_LABEL, CAMPAIGN_PRICING_FOOT, STICKY_NOTE } from "./copy";
 
 /**
  * The cinematic landing — the homepage at `/` and, in campaign mode, the TikTok
@@ -102,10 +102,31 @@ function boot() {
 }
 const BOOT = `(${boot.toString()})();`;
 
-/* The /join form card inside /next's ground: centred, clear of the fixed header. */
+/* The /join form cards inside /next's ground: centred, clear of the fixed header.
+   The first sits right under the hero — a paid visitor meets it on the second
+   screen, not the twentieth; the second closes the page under the final title. */
 const FORM_BLOCK_CSS = `
-.fx-next .fx-joinform { display: flex; justify-content: center; padding: clamp(96px, 16vh, 180px) var(--fx-gut, 20px) 0; }
+.fx-next .fx-joinform { display: flex; justify-content: center; padding: 8px var(--fx-gut, 20px) 0; }
 .fx-next .fx-joinform .j-card { position: relative; z-index: 2; }
+.fx-next .fx-final .j-card { position: relative; z-index: 2; margin: 8px auto 0; text-align: start; }
+.fx-next .fx-final-form { display: flex; justify-content: center; }
+.fx-next .fx-steps-cta { margin-top: 36px; }
+/* Sticky call on a phone: only while no form is on screen. */
+.fx-next .fx-sticky {
+  position: fixed; inset-inline: 0; bottom: 0; z-index: 40;
+  display: flex; align-items: center; gap: 14px;
+  padding: 12px var(--fx-gut, 20px) max(12px, env(safe-area-inset-bottom));
+  background: rgba(5, 11, 22, 0.92);
+  border-top: 1px solid var(--fx-rule);
+  -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+  transform: translateY(110%); transition: transform 280ms var(--fx-ease-soft);
+}
+.fx-next .fx-sticky[data-on] { transform: none; }
+.fx-next .fx-sticky .fx-btn { flex: 1; justify-content: center; min-height: 52px; }
+.fx-next .fx-sticky-note { font-size: 13px; color: var(--fx-faint); white-space: nowrap; }
+html.fx-menu-open .fx-next .fx-sticky { transform: translateY(110%); }
+@media (min-width: 900px) { .fx-next .fx-sticky { display: none; } }
+@media (prefers-reduced-motion: reduce) { .fx-next .fx-sticky { transition: none; } }
 /* The hero's sub line is the page's LCP element on a phone, and an element is
    not counted while its opacity is 0: its delayed fade cost /join ~1.5 s of LCP
    on a throttled phone (measured live). Paid traffic gets it at once. */
@@ -117,7 +138,7 @@ html.fx-js .fx-next[data-campaign] .fx-hero-sub.fx-hero-after { animation: none;
 if (typeof window !== "undefined") boot();
 
 const TIER_IDS = new Set(TIERS.map((t) => t.id));
-const CAMPAIGN_CTA = { label: CTA_LABEL };
+const CAMPAIGN_CTA = { label: CTA_LABEL, pricingFoot: CAMPAIGN_PRICING_FOOT };
 
 /**
  * `seoPath`  — the PAGE_SEO entry to emit ("/" when this is the homepage).
@@ -190,12 +211,22 @@ export default function NextLanding({ seoPath = "/next", campaign = false }) {
   const [pkgId, setPkgId] = useState("");
   const nameRef = useRef(null);
   const formRef = useRef(null);
+  const nameRefB = useRef(null);
+  const formRefB = useRef(null);
+  const [doneIn, setDoneIn] = useState(null); // "top" | "bottom" once a lead is sent
+  const [sticky, setSticky] = useState(false);
 
+  // Every call to action goes to the NEARER of the two forms.
   const goToForm = useCallback(() => {
-    const el = formRef.current;
-    if (!el) return;
+    const cards = [
+      [formRef.current, nameRef],
+      [formRefB.current, nameRefB],
+    ].filter(([c]) => c);
+    if (!cards.length) return;
+    cards.sort((a, b) => Math.abs(a[0].getBoundingClientRect().top) - Math.abs(b[0].getBoundingClientRect().top));
+    const [el, ref] = cards[0];
     const reduce = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
-    const focusName = () => nameRef.current?.focus({ preventScroll: true });
+    const focusName = () => ref.current?.focus({ preventScroll: true });
     if (reduce) {
       el.scrollIntoView({ block: "start" });
       focusName();
@@ -227,6 +258,47 @@ export default function NextLanding({ seoPath = "/next", campaign = false }) {
     document.addEventListener("click", onClick);
     return () => document.removeEventListener("click", onClick);
   }, [campaign, goToForm]);
+
+  // The phone's sticky call: past the hero, no form card on screen, no cookie
+  // banner up (it sits at the bottom too), and never once a lead is sent.
+  useEffect(() => {
+    if (!campaign || doneIn) {
+      setSticky(false);
+      return undefined;
+    }
+    let raf = 0;
+    const check = () => {
+      raf = 0;
+      const vh = window.innerHeight;
+      const hero = document.getElementById("fx-top");
+      const pastHero = hero ? hero.getBoundingClientRect().bottom < vh * 0.4 : window.scrollY > vh;
+      const formOnScreen = [formRef.current, formRefB.current].some((c) => {
+        if (!c) return false;
+        const r = c.getBoundingClientRect();
+        return r.top < vh && r.bottom > 0;
+      });
+      const cookie = Boolean(document.querySelector(".flu-cookie-btn"));
+      setSticky(pastHero && !formOnScreen && !cookie);
+    };
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(check);
+    };
+    check();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      if (raf) cancelAnimationFrame(raf);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, [campaign, doneIn]);
+
+  const backToPlatform = useCallback(() => {
+    document.getElementById("fx-platform")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, []);
+  const backToTop = useCallback(() => {
+    document.getElementById("fx-top")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, []);
 
   const onMode = useCallback((v) => {
     setMode(v);
@@ -272,22 +344,58 @@ export default function NextLanding({ seoPath = "/next", campaign = false }) {
 
         <main className="fx-main">
           <Hero gl={introDone ? cfg : null} />
+          {campaign ? (
+            <section className="fx-block join-page fx-joinform" aria-label={CTA_LABEL}>
+              <div className="v1-card j-card" id="join-form" ref={formRef}>
+                <LeadForm
+                  pkgId={pkgId}
+                  setPkgId={setPkgId}
+                  nameRef={nameRef}
+                  onDone={() => setDoneIn("top")}
+                  onBack={backToPlatform}
+                />
+              </div>
+            </section>
+          ) : null}
           <PhoneSection tilt={Boolean(cfg && cfg.tilt)} />
           <Pains />
           <How />
           <Stats still={tier === "low"} bars={campaign} />
-          {campaign ? <StageClassic gl={cfg} /> : <Stage gl={cfg} tier={tier} />}
+          {/* /join drops the between-classes stage: ~4,900 px of pinned scroll
+              between a paid visitor and the price, for detail the phone above
+              already shows. «كيف تبدأ» — what happens after the form — takes its place. */}
+          {campaign ? <Steps /> : <Stage gl={cfg} tier={tier} />}
           <Pricing />
           <FitFaq />
           {campaign ? (
-            <section className="fx-block join-page fx-joinform" aria-label={CTA_LABEL}>
-              <div className="v1-card j-card" id="join-form" ref={formRef}>
-                <LeadForm pkgId={pkgId} setPkgId={setPkgId} nameRef={nameRef} />
-              </div>
-            </section>
-          ) : null}
-          <Final gl={cfg} />
+            <Final gl={cfg}>
+              {doneIn === "top" ? null : (
+                <div className="join-page fx-final-form">
+                  <div className="v1-card j-card" id="join-form-bottom" ref={formRefB}>
+                    <LeadForm
+                      pkgId={pkgId}
+                      setPkgId={setPkgId}
+                      nameRef={nameRefB}
+                      idPrefix="join-b"
+                      onDone={() => setDoneIn("bottom")}
+                      onBack={backToTop}
+                    />
+                  </div>
+                </div>
+              )}
+            </Final>
+          ) : (
+            <Final gl={cfg} />
+          )}
         </main>
+        {campaign ? (
+          <div className="fx-sticky" data-on={sticky ? "" : undefined} aria-hidden={!sticky}>
+            <button type="button" data-open-form className="fx-btn fx-btn--primary" tabIndex={sticky ? 0 : -1}>
+              {CTA_LABEL}
+            </button>
+            <span className="fx-sticky-note">{STICKY_NOTE}</span>
+          </div>
+        ) : null}
 
         <Footer mode={mode} onMode={onMode} />
         {campaign ? null : <V1LeadModal />}

@@ -2,7 +2,7 @@ import { useEffect, useId, useRef, useState } from "react";
 import { PROBLEM, WORTH, SOCIAL_PROOF } from "../landing-v2/content";
 import Giant from "./Giant";
 import { track } from "./scroll";
-import { TITLES } from "./copy";
+import { CTA_LABEL, TITLES, STEPS, STEPS_LEDE } from "./copy";
 
 /**
  * The three "acts": a two-line giant title that slides in from the right edge
@@ -182,6 +182,31 @@ export function Stats({ still = false, bars = false }) {
           );
         })}
       </ul>
+    </Act>
+  );
+}
+
+/* ── كيف تبدأ — /join only: what happens after the form, in the pains' own layout ── */
+export function Steps() {
+  const listRef = useRef(null);
+  useEffect(() => track(listRef.current, { mode: "through" }), []);
+  return (
+    <Act id="fx-steps" title={TITLES.steps} lede={STEPS_LEDE}>
+      <ol ref={listRef} className="fx-pains">
+        {STEPS.map((s, i) => (
+          <li key={s.title} className="fx-pain fx-rv fx-fade">
+            <span className="fx-num" aria-hidden="true">
+              {String(i + 1).padStart(2, "0")}
+            </span>
+            <h3 className="fx-pain-title">{s.title}</h3>
+            <p className="fx-pain-body">{s.body}</p>
+          </li>
+        ))}
+      </ol>
+      <button type="button" data-open-form className="fx-btn fx-btn--primary fx-steps-cta fx-rv fx-fade">
+        {CTA_LABEL}
+        <span aria-hidden="true">←</span>
+      </button>
     </Act>
   );
 }

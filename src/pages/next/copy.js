@@ -41,6 +41,10 @@ export const TITLES = {
     { text: "أسئلة", tone: "cream" },
     { text: "صريحة", tone: "ice" },
   ],
+  steps: [
+    { text: "كيف", tone: "cream" },
+    { text: "تبدأ", tone: "ice" },
+  ],
   final: [
     { text: "لنبدأ", tone: "cream" },
     { text: "بلقاء مبدئي", tone: "sky" },
@@ -53,3 +57,19 @@ export const PERF_OPTIONS = [
   { value: "high", label: "كامل" },
   { value: "low", label: "خفيف" },
 ];
+
+/* ── /join (campaign mode) only ── */
+
+// «كيف تبدأ» — Ali's locked copy from the /join brief (2026-09-26).
+export const STEPS = [
+  { title: "سجّل بياناتك", body: "اسمك ورقمك، 30 ثانية." },
+  { title: "لقاء مبدئي مجاني", body: "نعرف مستواك وهدفك ووقتك، ونرشّح لك المسار والباقة المناسبة." },
+  { title: "تبدأ مع مجموعتك", body: "تنضم لمجموعة صغيرة بمستواك، وتدخل المنصّة من أول يوم." },
+];
+export const STEPS_LEDE = "لقاء مبدئي مجاني قبل أي دفع، وبدون التزام.";
+
+// The homepage's platform tagline ends in an English word; paid traffic reads Arabic.
+export const CAMPAIGN_PLATFORM_TAGLINE = "بُنيت من الصفر: تقييم فوري بالذكاء الاصطناعي، متابعة لتقدّمك، وتحديات تحمّسك.";
+// The homepage pricing footer names Dr. Ali, who no longer teaches (2026-09-21).
+export const CAMPAIGN_PRICING_FOOT = "محتار بين الباقات؟ نرشّح لك الأنسب في اللقاء المبدئي.";
+export const STICKY_NOTE = "مجاني وبدون التزام";
