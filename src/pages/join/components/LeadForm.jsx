@@ -29,7 +29,7 @@ function fallbackWaUrl() {
   return buildWhatsAppUrl(`السلام عليكم، أبي أحجز لقاء مبدئي مجاني\nالمصدر: ${getSource()}`);
 }
 
-export default function LeadForm({ pkgId, setPkgId, nameRef, onDone, onBack, idPrefix = "join" }) {
+export default function LeadForm({ pkgId, setPkgId, nameRef, onDone, onBack, idPrefix = "join", tierIds = null, sub = null }) {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState(""); // 9-digit suffix after +966
   const [goalId, setGoalId] = useState("");
@@ -126,7 +126,7 @@ export default function LeadForm({ pkgId, setPkgId, nameRef, onDone, onBack, idP
   return (
     <form className="j-form-inner" onSubmit={onSubmit} noValidate>
       <h2 className="j-form-title">احجز لقاءك المبدئي</h2>
-      <p className="j-form-sub">30 ثانية، ونتواصل معك على واتساب خلال ساعات.</p>
+      <p className="j-form-sub">{sub || "30 ثانية، ونتواصل معك على واتساب خلال ساعات."}</p>
 
       <div className="j-field">
         <label htmlFor={`${idPrefix}-name`} className="j-label">الاسم</label>
@@ -200,7 +200,7 @@ export default function LeadForm({ pkgId, setPkgId, nameRef, onDone, onBack, idP
         <div className="j-select-wrap">
           <select id={`${idPrefix}-pkg`} name="pkg" className="j-input j-select" value={pkgId} onChange={(e) => setPkgId(e.target.value)}>
             <option value="">{UNDECIDED_LABEL}</option>
-            {TIERS.map((t) => (
+            {(tierIds ? TIERS.filter((t) => tierIds.includes(t.id)) : TIERS).map((t) => (
               <option key={t.id} value={t.id}>
                 {t.name}: {t.priceFrom ? "من " : ""}{formatPrice(t.price)} ر.س شهريًا
               </option>

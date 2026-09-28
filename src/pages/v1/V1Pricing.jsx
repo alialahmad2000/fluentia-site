@@ -44,7 +44,9 @@ export default function V1Pricing() {
   const [qs, setQs] = useState("");
   useEffect(() => { setQs(window.location.search); }, []);
   const trust = PRICING.trust.split("·").map((s) => s.trim()).filter(Boolean);
-  const headline = PRICING.headline.split(/(?<=\.)\s/);
+  // A campaign page may sell only the 1:1 programmes (cta.solo = { headline, intro }).
+  const solo = cta?.solo || null;
+  const headline = (solo ? solo.headline : PRICING.headline).split(/(?<=\.)\s/);
 
   const pick = (id) => {
     setActive(id);
@@ -63,7 +65,7 @@ export default function V1Pricing() {
                 <span key={i} className="v1p-hl">{i ? " " : ""}{s}</span>
               ))}
             </h2>
-            <p className="v1-intro">{PRICING.intro}</p>
+            <p className="v1-intro">{solo ? solo.intro : PRICING.intro}</p>
             <ul className="v1p-trust">
               {trust.map((t) => (
                 <li key={t}><Check />{t}</li>
@@ -72,6 +74,7 @@ export default function V1Pricing() {
           </header>
         </Reveal>
 
+        {!solo && (
         <div className="v1p-compare">
           {/* ── phone switcher ── */}
           <div className="v1p-switch" role="tablist" aria-label="اختر الباقة">
@@ -163,6 +166,7 @@ export default function V1Pricing() {
             })}
           </motion.div>
         </div>
+        )}
 
         {/* ── 1:1 programmes: regular + intensive ── */}
         <Reveal delay={0.05}>
@@ -221,6 +225,7 @@ export default function V1Pricing() {
         </Reveal>
 
         {/* ── platform only ── */}
+        {!solo && (
         <Reveal delay={0.05}>
           <article className="v1p-self" aria-labelledby="v1p-self-name">
             <div className="v1p-self-copy">
@@ -237,6 +242,7 @@ export default function V1Pricing() {
             </button>
           </article>
         </Reveal>
+        )}
 
         <Reveal delay={0.05}>
           <p className="v1p-foot">
@@ -398,7 +404,8 @@ export default function V1Pricing() {
         .v1-scope .v1p-self-cta { padding-inline: 26px; }
 
         .v1-scope .v1p-foot { text-align: center; margin-top: 44px; font-size: 0.95rem; color: var(--v1-t-mute); line-height: 1.9; }
-        .v1-scope .v1p-foot a { color: var(--v1-azure-soft); font-weight: 600; text-decoration: none; border-bottom: 1px solid var(--v1-line-azure); padding-bottom: 2px; }
+        .v1-scope .v1p-foot a, .v1-scope .v1p-foot-cta { color: var(--v1-azure-soft); font-weight: 600; text-decoration: none; border-bottom: 1px solid var(--v1-line-azure); padding-bottom: 2px; }
+        .v1-scope .v1p-foot-cta { background: none; border-width: 0 0 1px; border-radius: 0; font: inherit; font-weight: 600; cursor: pointer; }
 
         @media (max-width: 980px) {
           .v1-scope .v1p-switch {

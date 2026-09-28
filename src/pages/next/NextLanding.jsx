@@ -12,7 +12,7 @@ import Seo from "../../components/Seo";
 import V1LeadModal from "../v1/V1LeadModal";
 import { CtaContext } from "../v1/ctaContext";
 import LeadForm from "../join/components/LeadForm";
-import { TIERS } from "../join/joinContent";
+import { PRICING } from "../landing-v2/content";
 // The /join form card's own styles (its j-* classes live under .join-page).
 import JOIN_CSS from "../join/join.css?inline";
 import { detectTier, forcedTier, tierConfig, writeStore, TIER_KEY } from "./perf";
@@ -28,7 +28,7 @@ import Stage from "./Stage";
 // frozen stage, left /join on 2026-09-28 — see the Steps comment below.)
 import NEXT_CLASSIC_CSS from "./next-classic.css?inline";
 import { Pricing, FitFaq, Final, Footer } from "./Closing";
-import { CTA_LABEL, CAMPAIGN_PRICING_FOOT, STICKY_NOTE } from "./copy";
+import { CTA_LABEL, CAMPAIGN_PRICING_FOOT, STICKY_NOTE, SOLO_PRICING, SOLO_FORM_SUB } from "./copy";
 
 /**
  * The cinematic landing — the homepage at `/` and, in campaign mode, the TikTok
@@ -137,8 +137,10 @@ html.fx-js .fx-next[data-campaign] .fx-hero-sub.fx-hero-after { animation: none;
 // script execution, so boot runs as the chunk loads — still before first render.
 if (typeof window !== "undefined") boot();
 
-const TIER_IDS = new Set(TIERS.map((t) => t.id));
-const CAMPAIGN_CTA = { label: CTA_LABEL, pricingFoot: CAMPAIGN_PRICING_FOOT };
+// /join sells the 1:1 programmes only: the form lists them and opens on the first.
+const SOLO_IDS = [PRICING.vipTier.id, PRICING.intensiveTier.id];
+const TIER_IDS = new Set(SOLO_IDS);
+const CAMPAIGN_CTA = { label: CTA_LABEL, pricingFoot: CAMPAIGN_PRICING_FOOT, solo: SOLO_PRICING };
 
 /**
  * `seoPath`  — the PAGE_SEO entry to emit ("/" when this is the homepage).
@@ -208,7 +210,7 @@ export default function NextLanding({ seoPath = "/next", campaign = false }) {
   const onIntroDone = useCallback(() => setIntroDone(true), []);
 
   // ── campaign mode: the /join lead form ──
-  const [pkgId, setPkgId] = useState("");
+  const [pkgId, setPkgId] = useState(campaign ? SOLO_IDS[0] : "");
   const nameRef = useRef(null);
   const formRef = useRef(null);
   const nameRefB = useRef(null);
@@ -351,6 +353,8 @@ export default function NextLanding({ seoPath = "/next", campaign = false }) {
                   pkgId={pkgId}
                   setPkgId={setPkgId}
                   nameRef={nameRef}
+                  tierIds={SOLO_IDS}
+                  sub={SOLO_FORM_SUB}
                   onDone={() => setDoneIn("top")}
                   onBack={backToPlatform}
                 />
@@ -377,6 +381,8 @@ export default function NextLanding({ seoPath = "/next", campaign = false }) {
                       setPkgId={setPkgId}
                       nameRef={nameRefB}
                       idPrefix="join-b"
+                      tierIds={SOLO_IDS}
+                      sub={SOLO_FORM_SUB}
                       onDone={() => setDoneIn("bottom")}
                       onBack={backToTop}
                     />
