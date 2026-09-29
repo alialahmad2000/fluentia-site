@@ -44,7 +44,7 @@ export function Final({ gl, children }) {
   return (
     <section className="fx-final">
       <div className="fx-final-orb">
-        <Orb variant="planet" gl={gl} scale={0.72} />
+        <Orb variant="planet" gl={gl} scale={0.72} mark="center" />
       </div>
       <Giant lines={TITLES.final} className="fx-center-title fx-final-title" />
       <p className="fx-final-sub fx-rv fx-fade">{FINAL_CTA.sub}</p>

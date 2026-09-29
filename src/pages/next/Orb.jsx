@@ -14,8 +14,8 @@ import { markCanvas } from "../../lib/brandMark";
  *   gl       tier config from perf.js: { webgl, fps, dpr }
  *   vignette [x, y, radius, strength] in disc space (-1..1, y up): darkens the
  *            region the headline sits over, so the type keeps its contrast
- *   mark     paint the feather-F on the planet: it brushes on once (after the
- *            intro, if one plays), then breathes in the planet's own light
+ *   mark     true | "center" — paint the feather-F on the planet: it brushes on once it is seen
+ *            (after the intro, if one plays), then breathes in the planet's own light
  *
  * Off screen or in a background tab it stops drawing. A lost context falls
  * back to the static orb for good.
@@ -112,7 +112,7 @@ void main(){
   c*=(.16+.98*dif)*mix(.5,1.,lim);
   float fres=pow(1.-z,2.6);
   c+=halo*fres*(uMode>.5?.3:.95)*(.3+.7*clamp(dot(n,L)+.45,0.,1.));
-  if(uMarkOn>.5&&dot(n,uMC)>.5){
+  if(uMarkOn>.5&&dot(n,uMC)>.15){
     // the feather-F, painted on the sphere: brushed up the stem, then out along each feather
     vec2 mu=vec2(dot(n,uME),dot(n,uMN))/uMHalf*.5+.5;
     if(mu.x>0.&&mu.x<1.&&mu.y>0.&&mu.y<1.){
@@ -122,16 +122,27 @@ void main(){
       float laid=smoothstep(0.,.05,wet);
       float bristle=noise(vec2(mu.x*4.,mu.y*170.))*.6+noise(vec2(mu.x*9.,mu.y*60.))*.4;
       float fray=noise(mu*90.)*.6+noise(mu*24.)*.4;
-      float body=smoothstep(.2+fray*.5,.6+fray*.35,mk.r);
-      vec3 ink=mix(vec3(.118,.91,1.),vec3(.184,.56,.91),mk.b*.75)*(.62+.55*bristle);
-      float breath=.82+.18*sin(t*1.3);
-      float sheen=smoothstep(.1,0.,abs(mu.x*.7+mu.y*.3-(mod(t*.16,1.6)-.3)))*body;
+      // a clean hand: the edge frays only a hair, so the letter reads at a glance
+      float body=smoothstep(.3+fray*.18,.52+fray*.12,mk.r);
+      float rim=smoothstep(.12,.34,mk.r)*smoothstep(.72,.45,mk.r);
+      vec3 ice=vec3(.86,.98,1.);
+      vec3 cyan=vec3(.118,.91,1.);
+      vec3 deep=vec3(.16,.55,.95);
+      // lit from above: ice at the crown of the top feather, cyan through the body, deep in the stem shading
+      vec3 ink=mix(cyan,deep,mk.b*.7);
+      ink=mix(ink,ice,smoothstep(.45,.95,mu.y)*(1.-mk.b)*.55);
+      ink*=.82+.3*bristle;
+      float breath=.85+.15*sin(t*1.3);
+      float sheen=smoothstep(.08,0.,abs(mu.x*.7+mu.y*.3-(mod(t*.16,1.6)-.3)))*body;
       float we=smoothstep(.035,0.,abs(wet-.03))*(1.-uPaint)*(body*.8+mk.g*.15);
-      vec3 paint=ink*body*(.5+.2*breath)*(.55+.6*dif);
-      // the letter lights the planet around it, the way the limb lights space
-      paint+=halo*mk.g*(1.-body*.85)*.55*breath;
-      paint+=vec3(.75,.95,1.)*(sheen*.3+we*1.2);
-      c=mix(c,c*.55,body*laid*.6)+paint*laid;
+      // a dark bed under and around the letter lifts it off the moving currents
+      c*=1.-laid*(body*.72+mk.g*(1.-body)*.38);
+      vec3 paint=ink*body*(.78+.22*breath)*(.7+.45*dif);
+      paint+=ice*rim*.55*breath;
+      // and it lights the planet around it, the way the limb lights space
+      paint+=halo*mk.g*(1.-body)*.42*breath;
+      paint+=ice*(sheen*.35+we*1.2);
+      c+=paint*laid;
     }
   }
   float vd=length(p-uVig.xy);
@@ -225,8 +236,8 @@ export default function Orb({
     gl.uniform1f(u("uFill"), fill ? 1 : 0);
     gl.uniform1f(u("uScale"), scale);
 
-    // The mark sits on the planet's upper left: clear of the headline on a phone
-    // (below the orb) and on a desktop (over its right half).
+    // The mark stands large, a touch left of centre and high: on a desktop the
+    // headline runs over the planet's right half, on a phone over its lower third.
     const withMark = mark && variant === "planet" && !fill;
     let tex = null;
     const uPaint = u("uPaint");
@@ -241,7 +252,8 @@ export default function Orb({
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
         gl.uniform1i(u("uMark"), 0);
-        const [cx, cy] = [-0.3, 0.3];
+        // mark="center": nothing overlays the planet (the closing one), so the letter owns it
+        const [cx, cy] = mark === "center" ? [0, 0.02] : [-0.2, 0.14];
         const cz = Math.sqrt(1 - cx * cx - cy * cy);
         // east = up × centre, north = centre × east: the letter stands upright
         const el = Math.hypot(cz, cx);
@@ -250,7 +262,7 @@ export default function Orb({
         gl.uniform3f(u("uMC"), cx, cy, cz);
         gl.uniform3f(u("uME"), E[0], E[1], E[2]);
         gl.uniform3f(u("uMN"), N[0], N[1], N[2]);
-        gl.uniform2f(u("uMHalf"), 0.5, 0.6);
+        gl.uniform2f(u("uMHalf"), 0.64, 0.77);
         gl.uniform1f(u("uMarkOn"), 1);
       } catch {
         tex = null;
