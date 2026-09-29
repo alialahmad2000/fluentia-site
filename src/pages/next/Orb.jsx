@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { markCanvas } from "../../lib/brandMark";
 
 /**
  * Orb — the Fluentia planet (and its moon), one fragment shader on raw WebGL.
@@ -13,6 +14,8 @@ import { useEffect, useRef, useState } from "react";
  *   gl       tier config from perf.js: { webgl, fps, dpr }
  *   vignette [x, y, radius, strength] in disc space (-1..1, y up): darkens the
  *            region the headline sits over, so the type keeps its contrast
+ *   mark     paint the feather-F on the planet: it brushes on once (after the
+ *            intro, if one plays), then breathes in the planet's own light
  *
  * Off screen or in a background tab it stops drawing. A lost context falls
  * back to the static orb for good.
@@ -29,6 +32,13 @@ uniform float uMode;
 uniform float uFill;
 uniform float uScale;
 uniform vec4 uVig;
+uniform sampler2D uMark;
+uniform float uMarkOn;
+uniform float uPaint;
+uniform vec3 uMC;
+uniform vec3 uME;
+uniform vec3 uMN;
+uniform vec2 uMHalf;
 
 float hash(vec2 p){p=fract(p*vec2(123.34,456.21));p+=dot(p,p+45.32);return fract(p.x*p.y);}
 float noise(vec2 p){vec2 i=floor(p),f=fract(p);vec2 u=f*f*(3.-2.*f);
@@ -102,6 +112,28 @@ void main(){
   c*=(.16+.98*dif)*mix(.5,1.,lim);
   float fres=pow(1.-z,2.6);
   c+=halo*fres*(uMode>.5?.3:.95)*(.3+.7*clamp(dot(n,L)+.45,0.,1.));
+  if(uMarkOn>.5&&dot(n,uMC)>.5){
+    // the feather-F, painted on the sphere: brushed up the stem, then out along each feather
+    vec2 mu=vec2(dot(n,uME),dot(n,uMN))/uMHalf*.5+.5;
+    if(mu.x>0.&&mu.x<1.&&mu.y>0.&&mu.y<1.){
+      vec3 mk=texture2D(uMark,mu).rgb;
+      float nz=noise(mu*vec2(7.,9.));
+      float wet=uPaint*1.25-((1.-mu.y)*.55+mu.x*.45+(nz-.5)*.14);
+      float laid=smoothstep(0.,.05,wet);
+      float bristle=noise(vec2(mu.x*4.,mu.y*170.))*.6+noise(vec2(mu.x*9.,mu.y*60.))*.4;
+      float fray=noise(mu*90.)*.6+noise(mu*24.)*.4;
+      float body=smoothstep(.2+fray*.5,.6+fray*.35,mk.r);
+      vec3 ink=mix(vec3(.118,.91,1.),vec3(.184,.56,.91),mk.b*.75)*(.62+.55*bristle);
+      float breath=.82+.18*sin(t*1.3);
+      float sheen=smoothstep(.1,0.,abs(mu.x*.7+mu.y*.3-(mod(t*.16,1.6)-.3)))*body;
+      float we=smoothstep(.035,0.,abs(wet-.03))*(1.-uPaint)*(body*.8+mk.g*.15);
+      vec3 paint=ink*body*(.5+.2*breath)*(.55+.6*dif);
+      // the letter lights the planet around it, the way the limb lights space
+      paint+=halo*mk.g*(1.-body*.85)*.55*breath;
+      paint+=vec3(.75,.95,1.)*(sheen*.3+we*1.2);
+      c=mix(c,c*.55,body*laid*.6)+paint*laid;
+    }
+  }
   float vd=length(p-uVig.xy);
   c*=1.-uVig.w*smoothstep(uVig.z,0.,vd);
   float edge=smoothstep(1.,1.-2.5/(hs*uScale),r);
@@ -128,6 +160,7 @@ export default function Orb({
   gl: cfg,
   vignette = NO_VIG,
   scale = 0.84,
+  mark = false,
   className = "",
   onLive,
 }) {
@@ -192,6 +225,41 @@ export default function Orb({
     gl.uniform1f(u("uFill"), fill ? 1 : 0);
     gl.uniform1f(u("uScale"), scale);
 
+    // The mark sits on the planet's upper left: clear of the headline on a phone
+    // (below the orb) and on a desktop (over its right half).
+    const withMark = mark && variant === "planet" && !fill;
+    let tex = null;
+    const uPaint = u("uPaint");
+    if (withMark) {
+      try {
+        tex = gl.createTexture();
+        gl.bindTexture(gl.TEXTURE_2D, tex);
+        gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, markCanvas());
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+        gl.uniform1i(u("uMark"), 0);
+        const [cx, cy] = [-0.3, 0.3];
+        const cz = Math.sqrt(1 - cx * cx - cy * cy);
+        // east = up × centre, north = centre × east: the letter stands upright
+        const el = Math.hypot(cz, cx);
+        const E = [cz / el, 0, -cx / el];
+        const N = [cy * E[2] - cz * E[1], cz * E[0] - cx * E[2], cx * E[1] - cy * E[0]];
+        gl.uniform3f(u("uMC"), cx, cy, cz);
+        gl.uniform3f(u("uME"), E[0], E[1], E[2]);
+        gl.uniform3f(u("uMN"), N[0], N[1], N[2]);
+        gl.uniform2f(u("uMHalf"), 0.5, 0.6);
+        gl.uniform1f(u("uMarkOn"), 1);
+      } catch {
+        tex = null;
+      }
+    }
+    // The brush waits for the hero to be seen: after the intro, if one plays.
+    const root = document.documentElement;
+    let paintAt = -1;
+
     let w = 0;
     let h = 0;
     const size = () => {
@@ -243,6 +311,12 @@ export default function Orb({
       gl.uniform1f(uTime, (now - t0) / 1000);
       gl.uniform2f(uLight, light.x, light.y);
       gl.uniform4f(uVig, v[0], v[1], v[2], v[3]);
+      if (tex) {
+        if (paintAt < 0 && (!root.classList.contains("fx-intro") || root.classList.contains("fx-intro-done"))) paintAt = now + 700;
+        const k = paintAt < 0 ? 0 : Math.min(1, Math.max(0, (now - paintAt) / 3200));
+        // an even hand: the brush keeps a steady pace instead of snapping through the middle
+        gl.uniform1f(uPaint, k * k * (3 - 2 * k));
+      }
       gl.drawArrays(gl.TRIANGLES, 0, 3);
       if (first) {
         first = false;
@@ -289,12 +363,13 @@ export default function Orb({
       document.removeEventListener("visibilitychange", onVis);
       canvas.removeEventListener("webglcontextlost", onLost);
       gl.deleteBuffer(buf);
+      if (tex) gl.deleteTexture(tex);
       gl.deleteProgram(prog);
       gl.getExtension("WEBGL_lose_context")?.loseContext();
       canvas.remove();
       setLive(false);
     };
-  }, [enabled, variant, fill, scale, fps, dprCap]);
+  }, [enabled, variant, fill, scale, mark, fps, dprCap]);
 
   return (
     <div

@@ -47,7 +47,7 @@ export default function Hero({ gl }) {
   return (
     <section id="fx-top" ref={ref} className="fx-hero">
       <div className="fx-hero-orb">
-        <Orb variant="planet" gl={gl} vignette={vig} />
+        <Orb variant="planet" gl={gl} vignette={vig} mark />
       </div>
       <div className="fx-hero-copy">
         <Giant as="h1" reveal="hero" lines={HERO_LINES} className="fx-hero-title" />

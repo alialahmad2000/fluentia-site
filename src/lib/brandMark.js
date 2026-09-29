@@ -1,7 +1,8 @@
 /**
  * The feather-F (fluentia-brand/assets/fluentia-mark.svg), as [tone, path] in
  * SVG order. tone 0 = the bright cyan feathers … 3 = the deep stem shading.
- * viewBox 215.68 182.32 154.72 194.56.
+ * viewBox 215.68 182.32 154.72 194.56. Painted on the /journey globe and the
+ * homepage planet.
  */
 export const MARK_BOX = [215.68, 182.32, 154.72, 194.56];
 export const MARK_PATHS = [
@@ -17,3 +18,59 @@ export const MARK_PATHS = [
   [1, "M 363.4 188.6 C 362.6 188.5 362.1 188.4 361.5 188.4 C 329.8 188.4 298.1 188.3 266.3 188.5 C 264.4 188.5 262.5 188.6 260.5 188.8 L 260.5 233.4 C 261 233.4 261.5 233.3 262 233.3 C 276.1 232.4 290.4 233.6 304.6 233.5 C 313.7 233.4 323 233.8 331.9 232.1 C 346.6 229.4 356.1 219.9 361 206.4 C 363.1 200.8 365.2 194.9 363.4 188.6"],
   [1, "M 317.9 243.6 C 300.5 243.6 283 243.5 265.6 243.7 C 264 243.7 262.3 243.8 260.7 244 L 260.7 289.3 C 262 289.3 263.2 289.3 264.6 289.3 C 275.2 289.7 286.1 289.9 296.3 285.8 C 312.6 279.2 320.6 261.7 321.4 246.3 C 321.5 243.5 319.8 243.6 317.9 243.6"],
 ];
+
+/**
+ * The mark as one RGB mask, for painting it inside a shader: r = silhouette (softened a touch so the brush edge
+ * can fray it), g = its glow, b = the logo's own shading (0 bright feather ..
+ * 1 deep stem). y runs north, so the letter reads upright on a planet.
+ */
+export function markCanvas() {
+  const W = 400;
+  const H = 480;
+  const [bx, by, bw, bh] = MARK_BOX;
+  const k = (H * 0.72) / bh;
+  const layer = (draw) => {
+    const c = document.createElement("canvas");
+    c.width = W;
+    c.height = H;
+    const g = c.getContext("2d");
+    g.fillStyle = "#000";
+    g.fillRect(0, 0, W, H);
+    g.setTransform(k, 0, 0, k, (W - bw * k) / 2 - bx * k, (H - bh * k) / 2 - by * k);
+    draw(g);
+    return g.getImageData(0, 0, W, H).data;
+  };
+  const paths = MARK_PATHS.map(([t, d]) => [t, new Path2D(d)]);
+  const sil = layer((g) => {
+    g.fillStyle = "#fff";
+    g.shadowColor = "#fff";
+    g.shadowBlur = 3;
+    for (const [, p] of paths) g.fill(p);
+  });
+  const glow = layer((g) => {
+    g.fillStyle = "#fff";
+    g.shadowColor = "#fff";
+    g.shadowBlur = 38;
+    for (let i = 0; i < 3; i++) for (const [, p] of paths) g.fill(p);
+  });
+  const shade = layer((g) => {
+    for (const [t, p] of paths) {
+      const v = Math.round((t / 3) * 255);
+      g.fillStyle = `rgb(${v},${v},${v})`;
+      g.fill(p);
+    }
+  });
+  const c = document.createElement("canvas");
+  c.width = W;
+  c.height = H;
+  const g = c.getContext("2d");
+  const img = g.createImageData(W, H);
+  for (let i = 0; i < img.data.length; i += 4) {
+    img.data[i] = sil[i];
+    img.data[i + 1] = glow[i];
+    img.data[i + 2] = shade[i];
+    img.data[i + 3] = 255;
+  }
+  g.putImageData(img, 0, 0);
+  return c;
+}

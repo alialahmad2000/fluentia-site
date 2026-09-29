@@ -40,7 +40,7 @@ import {
 } from "three";
 import DOTS from "../data/globe-dots.json";
 import { HOMES, DESTS } from "../copy";
-import { MARK_BOX, MARK_PATHS } from "./mark";
+import { markCanvas } from "../../../lib/brandMark";
 
 const DEG = Math.PI / 180;
 const SKY = new Color("#38bdf8");
@@ -149,61 +149,6 @@ const DOT_FS = /* glsl */ `
     a *= mix(0.55, 1.0, step(0.01, vLit));
     gl_FragColor = vec4(col, a);
   }`;
-/**
- * The mark as one RGB mask: r = silhouette (softened a touch so the brush edge
- * can fray it), g = its glow, b = the logo's own shading (0 bright feather ..
- * 1 deep stem). y runs north, so the letter reads upright on the globe.
- */
-function markTexture() {
-  const W = 400;
-  const H = 480;
-  const [bx, by, bw, bh] = MARK_BOX;
-  const k = (H * 0.72) / bh;
-  const layer = (draw) => {
-    const c = document.createElement("canvas");
-    c.width = W;
-    c.height = H;
-    const g = c.getContext("2d");
-    g.fillStyle = "#000";
-    g.fillRect(0, 0, W, H);
-    g.setTransform(k, 0, 0, k, (W - bw * k) / 2 - bx * k, (H - bh * k) / 2 - by * k);
-    draw(g);
-    return g.getImageData(0, 0, W, H).data;
-  };
-  const paths = MARK_PATHS.map(([t, d]) => [t, new Path2D(d)]);
-  const sil = layer((g) => {
-    g.fillStyle = "#fff";
-    g.shadowColor = "#fff";
-    g.shadowBlur = 3;
-    for (const [, p] of paths) g.fill(p);
-  });
-  const glow = layer((g) => {
-    g.fillStyle = "#fff";
-    g.shadowColor = "#fff";
-    g.shadowBlur = 38;
-    for (let i = 0; i < 3; i++) for (const [, p] of paths) g.fill(p);
-  });
-  const shade = layer((g) => {
-    for (const [t, p] of paths) {
-      const v = Math.round((t / 3) * 255);
-      g.fillStyle = `rgb(${v},${v},${v})`;
-      g.fill(p);
-    }
-  });
-  const c = document.createElement("canvas");
-  c.width = W;
-  c.height = H;
-  const g = c.getContext("2d");
-  const img = g.createImageData(W, H);
-  for (let i = 0; i < img.data.length; i += 4) {
-    img.data[i] = sil[i];
-    img.data[i + 1] = glow[i];
-    img.data[i + 2] = shade[i];
-    img.data[i + 3] = 255;
-  }
-  g.putImageData(img, 0, 0);
-  return new CanvasTexture(c);
-}
 
 const MARK_VS = /* glsl */ `
   varying vec3 vP; varying float vF;
@@ -325,7 +270,7 @@ export function create(renderer, cfg) {
   // the mark sits under the land dots, just north of home — clear of the headline on every width
   const ML = { lat: 45, lon: 38 };
   const MC = latLon(ML.lat, ML.lon);
-  const markTex = keep(markTexture());
+  const markTex = keep(new CanvasTexture(markCanvas()));
   const markMat = keep(
     new ShaderMaterial({
       vertexShader: MARK_VS,
