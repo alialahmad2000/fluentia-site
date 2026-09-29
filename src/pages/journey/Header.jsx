@@ -17,8 +17,7 @@ import { scrollToEl } from "./motion";
 
 const MENU = [
   { id: "jn-first", label: TITLES.firstWord[0] },
-  { id: "jn-path", label: TITLES.path[0] },
-  { id: "jn-sea", label: TITLES.sea[0] },
+  { id: "jn-road", label: TITLES.path[0] },
   { id: "jn-pricing", label: TITLES.pricing },
   { id: "jn-faq", label: TITLES.faq },
 ];
@@ -134,7 +133,7 @@ export default function Header() {
           </ol>
         </nav>
         <div className="jn-menu-foot">
-          <button type="button" data-open-form className="jn-btn jn-btn--primary" onClick={() => setOpen(false)}>
+          <button type="button" data-open-form className="jn-btn jn-btn--cream" onClick={() => setOpen(false)}>
             {HEADER_CTA}
           </button>
           <a className="jn-menu-login" href={NAV.studentLogin.href}>

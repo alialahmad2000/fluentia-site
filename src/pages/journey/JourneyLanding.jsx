@@ -4,58 +4,73 @@ import { MotionConfig } from "framer-motion";
 import "../../styles/v1-tokens.css";
 import "../../styles/v5-tokens.css";
 import "../v5/V5Hero.css";
-// Inlined into the prerendered markup, not linked: a lazy route's stylesheet
-// only arrives with its JavaScript, and the page would paint unstyled first.
+// Inlined into the prerendered markup: a lazy route's stylesheet only arrives
+// with its JavaScript, and the page would paint unstyled first.
 import JOURNEY_CSS from "./journey.css?inline";
 import Seo from "../../components/Seo";
 import V1LeadModal from "../v1/V1LeadModal";
+import { MobileCtaBar } from "../v1/V1Interactive";
 import { JourneyContext } from "./context";
-import { detectTier, forcedTier, tierConfig, writeStore, TIER_KEY } from "./perf";
+import { decideTier, tierConfig, writeStore, TIER_KEY } from "./perf";
 import { loadGsap, startLenis, finePointer } from "./motion";
-import Preloader from "./Preloader";
+import { initViewport, relayout, onLayout } from "./core/viewport";
+import VoiceLayer from "./core/VoiceLayer";
+import * as gl from "./gl/manager";
+import Intro from "./legs/Intro";
 import Header from "./Header";
-import Hero from "./Hero";
-import LineLayer from "./LineLayer";
-import Day from "./Day";
-import FirstWord from "./FirstWord";
-import Route from "./Route";
-import Sea from "./Sea";
-import Arrival from "./Arrival";
-import Below from "./Below";
+import Hero from "./legs/Hero";
+import Day from "./legs/Day";
+import FirstWord from "./legs/FirstWord";
+import YourVoice from "./legs/YourVoice";
+import Road from "./legs/Road";
+import Sea from "./legs/Sea";
+import Arrival from "./legs/Arrival";
+import Closing from "./legs/Closing";
 import Cursor from "./Cursor";
 
 /**
- * /journey — «رحلة صوتك», one continuous journey (noindex, unlinked, not in
- * the sitemap). The homepage at `/` is untouched.
+ * /journey — «رحلة صوتك» (noindex, unlinked, not in the sitemap).
  *
- * The protagonist is the visitor's voice: one sky-blue line that starts silent
- * and ends as a full waveform, carried through seven legs —
- *   0 void → 1 night globe → 2 fall into day → 3 the first word (phone)
- *   → 4 the road → 5 a sea of voices at night → 6 gold arrival → 7 below.
- * Every leg reads the same line state (line.js), and every hand-off happens
- * where the last leg left the line.
+ * The protagonist is the visitor's voice: one sky line, and in the middle of
+ * the journey it is literally their voice — they say (or type) one sentence,
+ * the line moves with their microphone, and the real product answers.
  *
- * Every primary action is the homepage's `[data-open-form]` → V1LeadModal
- * (TikTok / GA4 / Supabase / WhatsApp); pricing, FAQ and footer are the
- * homepage components. Three performance tiers (perf.js); reduced motion = low.
+ *   night globe → the fall → day, silence → the first word (a phone lowered
+ *   like a crane load lifts the line) → your voice (live) → the road
+ *   (how it works, the founder, a fork: for you / not yet) → a sea of voices
+ *   at night (who is already here) → a gold horizon (arrival, the offer) →
+ *   pricing → before you start → the map home.
+ *
+ * Every primary action is the homepage's `[data-open-form]` → V1LeadModal;
+ * pricing / FAQ / footer are the homepage components.
  */
 
 /*
- * Boot — an inline script in the prerendered markup, run BEFORE the hero is
- * parsed, so the first paint already knows:
- *   · html.jn-js        JS is on: reveal states may start hidden
- *   · html.jn-intro     the preloader plays (first visit, not low, not reduced motion)
- *   · [data-jn-tier]    a forced tier (?tier=, the footer control) or low for
- *                       reduced motion / save-data
- * If the bundle never arrives, the classes come off after 9 s and the page
- * shows everything, still. ?intro=1 replays the intro. ES5: in-app browsers.
+ * Boot — inline, before the hero is parsed. Decides everything the first paint
+ * needs, synchronously, once:
+ *   · --jn-vh            the viewport height, frozen (every pinned length uses it)
+ *   · [data-jn-tier]     low | medium | high — renderers only, never layout
+ *   · html.jn-js         JS is on: reveal states may start hidden
+ *   · html.jn-intro      the intro plays: fine pointer, not in-app, first visit
+ * If the bundle never arrives the classes come off after 3 s. ES5 on purpose.
  */
 function boot() {
   try {
     var d = document.documentElement;
     if (d.getAttribute("data-jn-boot")) return;
     d.setAttribute("data-jn-boot", "1");
+    window.__jnVH = window.innerHeight;
+    d.style.setProperty("--jn-vh", window.innerHeight + "px");
+    // the tallest viewport (toolbar collapsed): what every fixed canvas is sized to
+    var pr = document.createElement("div");
+    pr.style.cssText = "position:fixed;top:0;left:0;width:0;height:100vh;height:100lvh;visibility:hidden;pointer-events:none";
+    (document.body || d).appendChild(pr);
+    window.__jnLVH = pr.offsetHeight;
+    pr.parentNode.removeChild(pr);
     var q = new URLSearchParams(window.location.search);
+    var ok = function (v) {
+      return v === "low" || v === "medium" || v === "high";
+    };
     var t = q.get("tier");
     var s = null;
     var seen = null;
@@ -65,21 +80,27 @@ function boot() {
     } catch (e) {
       /* storage blocked */
     }
-    var ok = function (v) {
-      return v === "low" || v === "medium" || v === "high";
+    var mm = function (m) {
+      return window.matchMedia && window.matchMedia(m).matches;
     };
+    var inApp = /TikTok|musical_ly|Bytedance|Instagram|FBAN|FBAV|Snapchat/i.test(navigator.userAgent);
+    var rm = mm("(prefers-reduced-motion: reduce)");
     if (!ok(t)) t = ok(s) ? s : null;
-    var rm = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    var sd = navigator.connection && navigator.connection.saveData;
-    if (!t && (rm || sd)) t = "low";
-    if (t) d.setAttribute("data-jn-tier", t);
+    if (!t) {
+      if (rm || (navigator.connection && navigator.connection.saveData)) t = "low";
+      else if (inApp || mm("(pointer: coarse)")) t = "medium";
+      else t = "high";
+    }
+    d.setAttribute("data-jn-tier", t);
+    if (rm) d.classList.add("jn-rm");
     d.classList.add("jn-js");
-    if (t !== "low" && !rm && (!seen || q.get("intro") === "1")) {
+    d.classList.add("jn-page");
+    if (t !== "low" && !rm && mm("(pointer: fine)") && !inApp && (!seen || q.get("intro") === "1")) {
       d.classList.add("jn-intro");
       try {
         window.localStorage.setItem("fl-journey-intro", "1");
       } catch (e) {
-        /* storage blocked: the intro plays again next time */
+        /* storage blocked */
       }
     }
     setTimeout(function () {
@@ -87,7 +108,7 @@ function boot() {
         d.classList.remove("jn-js");
         d.classList.remove("jn-intro");
       }
-    }, 9000);
+    }, 3000);
   } catch (e) {
     /* never block the page */
   }
@@ -96,6 +117,16 @@ const BOOT = `(${boot.toString()})();`;
 
 if (typeof window !== "undefined") boot();
 
+function GLCanvas({ cfg }) {
+  const ref = useRef(null);
+  useEffect(() => {
+    if (!cfg?.webgl) return undefined;
+    gl.attach(ref.current, cfg);
+    return () => gl.detach();
+  }, [cfg]);
+  return <canvas ref={ref} className="jn-gl" aria-hidden="true" />;
+}
+
 export default function JourneyLanding() {
   const rootRef = useRef(null);
   const [tier, setTier] = useState(null);
@@ -103,19 +134,20 @@ export default function JourneyLanding() {
   const [font, setFont] = useState(null);
   const [fx, setFx] = useState(null);
   const [intro, setIntro] = useState(false);
-  const [introDone, setIntroDone] = useState(false);
+  const [introDone, setIntroDone] = useState(true);
+  const [glAlive, setGlAlive] = useState(true);
+  const [reduce, setReduce] = useState(false);
 
-  // Tier: the boot guess first, then the real probe.
   useEffect(() => {
     boot();
     window.__jnReady = true;
     window.__jnMounted = (window.__jnMounted || 0) + 1;
     const d = document.documentElement;
-    const pre = d.getAttribute("data-jn-tier");
-    if (pre) setTier(pre);
+    setTier(d.getAttribute("data-jn-tier") || decideTier());
+    setReduce(d.classList.contains("jn-rm"));
     const playing = d.classList.contains("jn-intro");
     setIntro(playing);
-    if (!playing) setIntroDone(true);
+    setIntroDone(!playing);
     let stored = null;
     try {
       stored = window.localStorage.getItem(TIER_KEY);
@@ -125,152 +157,130 @@ export default function JourneyLanding() {
     if (stored === "high" || stored === "low") setMode(stored);
     const f = new URLSearchParams(window.location.search).get("font");
     if (f === "kufam" || f === "lalezar") setFont(f);
-    let alive = true;
-    detectTier().then((t) => alive && setTier(t));
+    const offVp = initViewport();
+    const offGl = gl.onGLState((s) => setGlAlive(s !== "lost"));
+    document.fonts?.ready.then(relayout);
     return () => {
-      alive = false;
+      offVp();
+      offGl();
       window.__jnMounted -= 1;
-      // Only a real unmount clears the page state — not StrictMode's remount.
+      // only a real unmount clears the page state — not StrictMode's remount
       setTimeout(() => {
         if (window.__jnMounted > 0) return;
         window.__jnReady = false;
-        d.classList.remove("jn-js", "jn-intro", "jn-intro-done", "jn-cursor-on");
+        d.classList.remove("jn-js", "jn-intro", "jn-intro-done", "jn-cursor-on", "jn-page", "jn-rm");
         d.removeAttribute("data-jn-tier");
         d.removeAttribute("data-jn-boot");
+        d.removeAttribute("data-jn-gl");
+        d.style.removeProperty("--jn-vh");
       }, 0);
     };
   }, []);
 
-  useEffect(() => {
-    if (tier) document.documentElement.setAttribute("data-jn-tier", tier);
-  }, [tier]);
-
   const cfg = useMemo(() => (tier ? tierConfig(tier) : null), [tier]);
 
-  // The motion stack: after first paint, never on the low tier.
+  // the motion stack (text reveals) on every tier except reduced motion
   useEffect(() => {
-    if (!cfg || !cfg.webgl) {
-      setFx(null);
-      return undefined;
-    }
+    if (!cfg || reduce) return undefined;
     let alive = true;
     loadGsap().then((m) => alive && setFx(m));
     return () => {
       alive = false;
     };
-  }, [cfg]);
+  }, [cfg, reduce]);
 
-  // Lenis: fine pointers only (touch keeps native scroll and its momentum).
+  // Lenis on fine pointers only (touch keeps native momentum)
   useEffect(() => {
-    if (!fx || !finePointer()) return undefined;
+    if (!fx || !finePointer() || cfg?.tier === "low") return undefined;
     let stop = null;
     let alive = true;
-    startLenis(fx).then((s) => {
-      if (alive) stop = s;
-      else s();
-    });
+    startLenis(fx).then((s) => (alive ? (stop = s) : s()));
     return () => {
       alive = false;
       stop?.();
     };
-  }, [fx]);
+  }, [fx, cfg]);
 
-  // Every giant title (the hero's waits for the preloader) rises once, by word.
+  // every giant title (not the hero's, not the scrubbed ones) rises once, by word
   useEffect(() => {
     if (!fx) return undefined;
-    const { gsap, ScrollTrigger } = fx;
+    const { gsap } = fx;
     const ctx = gsap.context(() => {
-      gsap.utils.toArray(".jn-giant:not(.jn-hero-title)").forEach((g) => {
+      gsap.utils.toArray(".jn-giant:not(.jn-hero-title):not(.jn-scrubbed)").forEach((g) => {
         gsap.fromTo(
           g.querySelectorAll(".jn-wi"),
           { yPercent: 110, y: 0 },
-          {
-            yPercent: 0,
-            y: 0,
-            duration: 1.1,
-            ease: "expo.out",
-            stagger: 0.06,
-            scrollTrigger: { trigger: g, start: "top 88%", once: true },
-          }
+          { yPercent: 0, y: 0, duration: 1.1, ease: "expo.out", stagger: 0.06, scrollTrigger: { trigger: g, start: "top 88%", once: true } }
         );
       });
     }, rootRef.current);
-    const r = requestAnimationFrame(() => ScrollTrigger.refresh());
-    return () => {
-      cancelAnimationFrame(r);
-      ctx.revert();
-    };
+    return () => ctx.revert();
   }, [fx]);
 
-  // The header takes the colours of the leg under it.
+  // the header takes the colours of the innermost zone under it
   useEffect(() => {
     const head = document.querySelector(".jn-head");
     if (!head) return undefined;
-    // the innermost zone under the header wins (the route's navy wash is a
-    // night zone nested inside the day route)
-    const zones = [...rootRef.current.querySelectorAll("[data-theme]")].filter((el) => !el.closest(".jn-head"));
+    // zones measured on layout; each frame only compares numbers
+    let zones = [];
+    const measure = () => {
+      zones = [...rootRef.current.querySelectorAll("[data-theme]")]
+        .filter((el) => !el.closest(".jn-head"))
+        .map((el) => {
+          const r = el.getBoundingClientRect();
+          return { el, top: r.top + window.scrollY, bottom: r.bottom + window.scrollY, sticky: el.classList.contains("jn-stage") };
+        });
+    };
+    measure();
+    const offLayout = onLayout(measure);
+    const ro = new ResizeObserver(measure);
+    ro.observe(rootRef.current);
     let raf = 0;
+    let lastTheme = "";
+    let lastSolid = null;
     const tick = () => {
       raf = 0;
+      const y = window.scrollY + 34;
       let theme = "night";
-      for (const el of zones) {
-        const r = el.getBoundingClientRect();
-        if (r.top <= 32 && r.bottom > 32) theme = el.getAttribute("data-theme") || theme;
+      for (const z of zones) if (z.top <= y && z.bottom > y) theme = z.el.getAttribute("data-theme") || theme;
+      if (theme !== lastTheme) {
+        head.setAttribute("data-theme", theme);
+        lastTheme = theme;
       }
-      if (head.getAttribute("data-theme") !== theme) head.setAttribute("data-theme", theme);
-      head.toggleAttribute("data-solid", window.scrollY > 40);
+      const solid = window.scrollY > 40;
+      if (solid !== lastSolid) {
+        head.toggleAttribute("data-solid", solid);
+        lastSolid = solid;
+      }
     };
     const onScroll = () => {
       if (!raf) raf = requestAnimationFrame(tick);
     };
     window.addEventListener("scroll", onScroll, { passive: true });
+    // the hero flips its own theme mid-pin: re-read it on scroll (attribute, not layout)
     tick();
     return () => {
       window.removeEventListener("scroll", onScroll);
       cancelAnimationFrame(raf);
+      offLayout();
+      ro.disconnect();
     };
   }, []);
 
-  // After a tier change the layout changes height: re-measure every trigger.
-  useEffect(() => {
-    if (!fx) return undefined;
-    const r = requestAnimationFrame(() => fx.ScrollTrigger.refresh());
-    return () => cancelAnimationFrame(r);
-  }, [fx, tier]);
-
-  const dropToLow = useCallback(() => setTier("low"), []);
-
   const onMode = useCallback((v) => {
     setMode(v);
-    if (v === "auto") {
-      writeStore(TIER_KEY, null);
-      detectTier().then(setTier);
-    } else {
-      writeStore(TIER_KEY, v);
-      setTier(forcedTier() || v);
-    }
+    writeStore(TIER_KEY, v === "auto" ? null : v);
+    // renderers, stills and chunks all follow from the tier: start clean
+    window.location.reload();
   }, []);
 
   const onIntroDone = useCallback(() => {
     setIntroDone(true);
     document.documentElement.classList.remove("jn-intro");
+    document.documentElement.classList.add("jn-intro-done");
   }, []);
 
-  // What the preloader's counter waits for: real loading, not a timer.
-  const sources = useMemo(() => {
-    if (typeof window === "undefined") return [];
-    return [
-      loadGsap(),
-      import("./gl/globe"),
-      new Promise((res) => {
-        window.__jnGlobeReady = res;
-        setTimeout(res, 1500);
-      }),
-      document.fonts ? document.fonts.ready : Promise.resolve(),
-    ];
-  }, [intro]);
-
-  const ctx = useMemo(() => ({ cfg, fx, introDone, dropToLow }), [cfg, fx, introDone, dropToLow]);
+  const ctx = useMemo(() => ({ cfg, fx, introDone, reduce, glAlive }), [cfg, fx, introDone, reduce, glAlive]);
 
   return (
     <MotionConfig reducedMotion="user">
@@ -278,34 +288,31 @@ export default function JourneyLanding() {
         <div ref={rootRef} className="v1-scope v5-scope jn" dir="rtl" data-font={font || undefined}>
           <script suppressHydrationWarning dangerouslySetInnerHTML={{ __html: BOOT }} />
           <style dangerouslySetInnerHTML={{ __html: JOURNEY_CSS }} />
+          <link rel="preload" href="/fonts/barlow-condensed-800-latin.woff2" as="font" type="font/woff2" crossOrigin="" />
           <Seo path="/journey" />
           <Helmet>
-            <link rel="preconnect" href="https://fonts.googleapis.com" />
-            <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-            <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@800&display=swap" />
-            {font === "kufam" ? (
-              <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Kufam:wght@800;900&display=swap" />
-            ) : null}
-            {font === "lalezar" ? (
-              <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lalezar&display=swap" />
-            ) : null}
+            {font === "kufam" ? <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Kufam:wght@800;900&display=swap" /> : null}
+            {font === "lalezar" ? <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lalezar&display=swap" /> : null}
           </Helmet>
 
-          <Preloader active={intro && !introDone} sources={sources} onDone={onIntroDone} />
+          <GLCanvas cfg={cfg} />
+          <VoiceLayer />
+          <Intro active={intro && !introDone} onDone={onIntroDone} />
           <Header />
-          {cfg && cfg.webgl ? <LineLayer /> : null}
 
           <main className="jn-main">
             <Hero />
             <Day />
             <FirstWord />
-            <Route />
+            <YourVoice />
+            <Road />
             <Sea />
             <Arrival />
           </main>
-          <Below mode={mode} onMode={onMode} />
+          <Closing mode={mode} onMode={onMode} />
 
           <Cursor />
+          <MobileCtaBar />
           <V1LeadModal />
         </div>
       </JourneyContext.Provider>

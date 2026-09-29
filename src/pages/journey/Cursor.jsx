@@ -15,10 +15,22 @@ export default function Cursor() {
 
   useEffect(() => {
     if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return undefined;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return undefined;
     const dot = dotRef.current;
     const ring = ringRef.current;
     const arc = arcRef.current;
-    const legs = [...document.querySelectorAll("[data-leg]")];
+    // leg bounds measured on resize, not per frame
+    let legs = [];
+    const measure = () => {
+      legs = [...document.querySelectorAll("[data-leg]")].map((el) => {
+        const r = el.getBoundingClientRect();
+        return { top: r.top + window.scrollY, h: r.height };
+      });
+    };
+    measure();
+    window.addEventListener("resize", measure);
+    const ro = new ResizeObserver(measure);
+    ro.observe(document.body);
     let x = -100;
     let y = -100;
     let rx = -100;
@@ -49,12 +61,11 @@ export default function Cursor() {
       big += (bigT - big) * 0.18;
       dot.style.transform = `translate3d(${x}px, ${y}px, 0)`;
       ring.style.transform = `translate3d(${rx}px, ${ry}px, 0) scale(${(1 + big * 0.7).toFixed(3)})`;
-      const mid = window.innerHeight / 2;
+      const mid = window.scrollY + window.innerHeight / 2;
       let p = 0;
-      for (const el of legs) {
-        const r = el.getBoundingClientRect();
-        if (r.top <= mid && r.bottom > mid) {
-          p = Math.min(1, Math.max(0, (mid - r.top) / Math.max(1, r.height)));
+      for (const l of legs) {
+        if (l.top <= mid && l.top + l.h > mid) {
+          p = Math.min(1, Math.max(0, (mid - l.top) / Math.max(1, l.h)));
           break;
         }
       }
@@ -66,6 +77,8 @@ export default function Cursor() {
     return () => {
       cancelAnimationFrame(raf);
       window.removeEventListener("pointermove", move);
+      window.removeEventListener("resize", measure);
+      ro.disconnect();
       document.removeEventListener("pointerleave", leave);
       document.documentElement.classList.remove("jn-cursor-on");
     };

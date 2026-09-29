@@ -1,41 +1,49 @@
 /**
- * The night globe (leg 1) and the fall through its atmosphere (leg 2).
+ * Scene: the night globe (leg 1) and the start of the fall (leg 1→2).
  *
- * Dotted continents are the baked Natural Earth grid (../data/globe-dots.json)
- * as one Points draw. The planet body carries a fresnel rim — gold on the upper
- * limb, sky on the lower — and a back-face atmosphere shell glows past the edge.
- * Voice arcs leave RUH / JED / DMM for world cities, each a thin tube whose
- * head travels and lands on an airport tag (DOM, so the type stays crisp).
+ * Dots: the baked Natural Earth grid, one Points draw; dots shrink toward the
+ * limb (fake foreshortening) and fade on the back hemisphere. Body: void, with
+ * a thin gold fresnel band on the upper limb only; a back-face shell glows sky
+ * below. Arcs: tubes that hug the surface (lift 4·alt·t(1−t)) and draw on /
+ * draw off in the fragment shader; each landing pulses a ring at its city.
+ * RUH breathes — that dot is "you".
  *
- * The page drives two inputs: setDive(0..1) while the visitor scrolls into
- * the Gulf, and the pointer (drag rotates, and springs back). Rendering stops
- * off screen and on a hidden tab; a lost context calls onLost (→ low tier).
+ * params (written by the Hero leg):
+ *   dive     0..1  the fall: arcs retract into RUH, the camera closes on the Gulf
+ *   dragX    radians of user drag (desktop)
+ * outputs (read by the Hero leg):
+ *   ruh      {x, y, f} RUH on screen (px) and how much it faces the camera
+ *   tags     [{ code, x, y, a, home }]
  */
 import {
   AdditiveBlending,
   BackSide,
   BufferAttribute,
   BufferGeometry,
-  CubicBezierCurve3,
   Color,
+  Curve,
+  DoubleSide,
   Group,
   Mesh,
+  MeshBasicMaterial,
   PerspectiveCamera,
   Points,
+  RingGeometry,
   Scene,
   ShaderMaterial,
   SphereGeometry,
   TubeGeometry,
   Vector3,
-  WebGLRenderer,
 } from "three";
 import DOTS from "../data/globe-dots.json";
 import { HOMES, DESTS } from "../copy";
 
 const DEG = Math.PI / 180;
 const SKY = new Color("#38bdf8");
-const ICE = new Color("#7dd3fc");
 const GOLD = new Color("#fbbf24");
+const clamp01 = (v) => Math.min(1, Math.max(0, v));
+const lerp = (a, b, t) => a + (b - a) * t;
+const inOut = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
 
 export function latLon(lat, lon, r = 1) {
   const p = lat * DEG;
@@ -50,142 +58,143 @@ function landPositions() {
     const lat = DOTS.lat0 + Number(ri) * DOTS.step;
     const lonStep = DOTS.step / Math.max(0.2, Math.cos(lat * DEG));
     for (const k of cols.split(",")) {
-      const v = latLon(lat, -180 + Number(k) * lonStep, 1.003);
+      const v = latLon(lat, -180 + Number(k) * lonStep, 1.002);
       out.push(v.x, v.y, v.z);
     }
   }
   return new Float32Array(out);
 }
 
-const easeInOut = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
-const clamp01 = (v) => Math.min(1, Math.max(0, v));
-const lerp = (a, b, t) => a + (b - a) * t;
+/** Great-circle path lifted off the surface: 1 + 4·alt·t(1−t). */
+class ArcCurve extends Curve {
+  constructor(a, b, alt) {
+    super();
+    this.a = a.clone().normalize();
+    this.b = b.clone().normalize();
+    this.w = this.a.angleTo(this.b);
+    this.alt = alt;
+  }
+  getPoint(t, out = new Vector3()) {
+    const s = Math.sin(this.w) || 1;
+    const k1 = Math.sin((1 - t) * this.w) / s;
+    const k2 = Math.sin(t * this.w) / s;
+    out.copy(this.a).multiplyScalar(k1).addScaledVector(this.b, k2).normalize();
+    return out.multiplyScalar(1.003 + 4 * this.alt * t * (1 - t));
+  }
+}
 
-/* ── shaders ── */
 const BODY_VS = /* glsl */ `
-  varying vec3 vN; varying vec3 vWN; varying vec3 vV;
+  varying vec3 vWN; varying vec3 vV;
   void main(){
     vec4 wp = modelMatrix * vec4(position,1.0);
     vWN = normalize(mat3(modelMatrix) * normal);
-    vN = normalize(normalMatrix * normal);
     vV = normalize(cameraPosition - wp.xyz);
     gl_Position = projectionMatrix * viewMatrix * wp;
   }`;
 const BODY_FS = /* glsl */ `
   uniform vec3 uSky; uniform vec3 uGold; uniform float uDive;
-  varying vec3 vN; varying vec3 vWN; varying vec3 vV;
+  varying vec3 vWN; varying vec3 vV;
   void main(){
     float f = 1.0 - max(dot(vWN, vV), 0.0);
-    float rim = pow(f, 3.2);
-    float top = smoothstep(-0.15, 0.55, vWN.y);
-    vec3 rimC = mix(uSky, uGold, top);
-    vec3 base = mix(vec3(0.012,0.028,0.058), vec3(0.03,0.08,0.16), uDive);
-    // a whisper of sky on the lower hemisphere, like light scattered up from below
-    base += uSky * 0.05 * smoothstep(0.2, -0.9, vWN.y);
-    gl_FragColor = vec4(base + rimC * rim * 1.35, 1.0);
+    // a thin gold band on the upper limb only, a wider sky band below
+    float top = smoothstep(0.05, 0.75, vWN.y);
+    float bot = smoothstep(0.1, -0.8, vWN.y);
+    // committed colour, not haze: one crisp gold limb above, one crisp sky limb below
+    float goldRim = smoothstep(0.9, 0.93, f) * top;
+    float skyRim = smoothstep(0.9, 0.93, f) * bot;
+    // closing in, the limbs leave the frame: the rims fade, the body turns to deep sky
+    vec3 c = mix(vec3(0.012, 0.022, 0.045), uGold, goldRim * (1.0 - uDive));
+    c = mix(c, uSky, skyRim * (1.0 - uDive));
+    c = mix(c, vec3(0.03, 0.12, 0.26), uDive);
+    gl_FragColor = vec4(c, 1.0);
   }`;
-
-const ATMO_VS = BODY_VS;
 const ATMO_FS = /* glsl */ `
-  uniform vec3 uSky; uniform vec3 uGold; uniform float uPower; uniform float uGain;
-  varying vec3 vN; varying vec3 vWN; varying vec3 vV;
+  uniform vec3 uSky; uniform vec3 uGold; uniform float uGain;
+  varying vec3 vWN; varying vec3 vV;
   void main(){
-    float d = dot(vWN, vV);            // back faces: negative at the limb's far side
-    float i = pow(clamp(0.62 + d, 0.0, 1.0), uPower);
-    float top = smoothstep(-0.1, 0.6, vWN.y);
+    float d = dot(vWN, vV);
+    float i = pow(clamp(0.66 + d, 0.0, 1.0), 6.0);
+    float top = smoothstep(0.1, 0.7, vWN.y);
     vec3 c = mix(uSky, uGold, top);
-    // the lower limb glows wider and bluer, the upper limb thinner and gold
-    float w = mix(1.25, 0.8, top);
+    float w = mix(1.3, 0.55, top);
     gl_FragColor = vec4(c * i * uGain * w, i * w);
   }`;
-
 const DOT_VS = /* glsl */ `
-  uniform float uSize; uniform float uPR;
+  uniform float uSize; uniform float uPR; uniform float uTime;
   attribute float aSeed;
-  varying float vA; varying float vSeed;
+  varying float vA; varying float vLit;
   void main(){
     vec4 wp = modelMatrix * vec4(position,1.0);
     vec3 n = normalize(wp.xyz - (modelMatrix * vec4(0.0,0.0,0.0,1.0)).xyz);
-    float facing = dot(n, normalize(cameraPosition - wp.xyz));
-    vA = smoothstep(-0.05, 0.35, facing);
-    vSeed = aSeed;
+    float ndv = dot(n, normalize(cameraPosition - wp.xyz));
+    vA = smoothstep(0.0, 0.3, ndv);
+    vLit = step(0.986, aSeed) * (0.65 + 0.35 * sin(uTime * 1.6 + aSeed * 50.0));
     vec4 mv = viewMatrix * wp;
-    gl_PointSize = uSize * uPR * (3.0 / -mv.z);
+    gl_PointSize = uSize * uPR * mix(0.55, 1.0, smoothstep(0.0, 0.3, ndv)) * (3.0 / -mv.z);
     gl_Position = projectionMatrix * mv;
   }`;
 const DOT_FS = /* glsl */ `
-  uniform vec3 uColor; uniform float uTime; uniform float uAlpha;
-  varying float vA; varying float vSeed;
+  uniform vec3 uColor; uniform float uAlpha;
+  varying float vA; varying float vLit;
   void main(){
     vec2 c = gl_PointCoord - 0.5;
     float d = length(c);
     if (d > 0.5) discard;
-    float a = smoothstep(0.5, 0.2, d) * vA * uAlpha;
-    // the odd dot is a lit city: warmer, and it breathes
-    float lit = step(0.985, vSeed);
-    vec3 col = mix(uColor, vec3(1.0, 0.82, 0.45), lit);
-    a *= mix(0.62, 1.0, lit * (0.6 + 0.4 * sin(uTime * 1.7 + vSeed * 40.0)));
+    float a = smoothstep(0.5, 0.25, d) * vA * uAlpha;
+    vec3 col = mix(uColor, vec3(1.0, 0.8, 0.42), step(0.01, vLit));
+    a *= mix(0.55, 1.0, step(0.01, vLit));
     gl_FragColor = vec4(col, a);
   }`;
-
-const ARC_VS = /* glsl */ `
-  varying float vU;
-  void main(){ vU = uv.x; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }`;
+const ARC_VS = /* glsl */ `varying float vU; void main(){ vU = uv.x; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }`;
 const ARC_FS = /* glsl */ `
-  uniform float uHead; uniform float uFade; uniform vec3 uA; uniform vec3 uB;
+  uniform float uTime; uniform float uOffset; uniform float uRetract; uniform vec3 uColor;
   varying float vU;
   void main(){
-    if (vU > uHead) discard;
-    float trail = smoothstep(uHead - 0.55, uHead, vU);
-    float head = smoothstep(uHead - 0.05, uHead, vU);
-    vec3 c = mix(uA, uB, vU) + head * 0.8;
-    float a = (0.28 + 0.72 * trail) * uFade;
-    gl_FragColor = vec4(c, a);
+    // draw on, then draw off; the fall pulls every head back home
+    float pr = mod(uTime * 0.42 + uOffset, 2.6);
+    float st = clamp(pr - 1.15, 0.0, 1.0);
+    float en = clamp(pr, 0.0, 1.0);
+    en = min(en, 1.0 - uRetract);
+    st = min(st, en);
+    if (vU < st || vU > en) discard;
+    float tail = smoothstep(st, en + 0.001, vU);
+    float head = smoothstep(en - 0.04, en, vU);
+    gl_FragColor = vec4(uColor + head * 0.9, 0.25 + 0.75 * tail);
   }`;
+const STAR_VS = /* glsl */ `uniform float uPR; attribute float aS; varying float vS; void main(){ vS = aS; vec4 mv = modelViewMatrix * vec4(position,1.0); gl_PointSize = (1.0 + aS * 1.5) * uPR; gl_Position = projectionMatrix * mv; }`;
+const STAR_FS = /* glsl */ `uniform float uAlpha; uniform float uTime; varying float vS; void main(){ vec2 c = gl_PointCoord - 0.5; float d = length(c); if (d > 0.5) discard; float tw = 0.6 + 0.4 * sin(uTime * (0.6 + vS) + vS * 30.0); gl_FragColor = vec4(0.85,0.92,1.0, (0.18 + 0.45 * vS) * tw * smoothstep(0.5,0.0,d) * uAlpha); }`;
 
-const STAR_VS = /* glsl */ `
-  uniform float uPR; attribute float aS;
-  varying float vS;
-  void main(){ vS = aS; vec4 mv = modelViewMatrix * vec4(position,1.0); gl_PointSize = (1.0 + aS * 1.6) * uPR; gl_Position = projectionMatrix * mv; }`;
-const STAR_FS = /* glsl */ `
-  uniform float uAlpha; varying float vS;
-  void main(){ vec2 c = gl_PointCoord - 0.5; float d = length(c); if (d > 0.5) discard; gl_FragColor = vec4(0.85,0.92,1.0, (0.25 + 0.5 * vS) * smoothstep(0.5,0.0,d) * uAlpha); }`;
-
-export function createGlobe(canvas, { cfg, labels, onLost, reduced = false }) {
-  const renderer = new WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: "high-performance" });
-  const pr = Math.min(window.devicePixelRatio || 1, cfg.dpr);
-  renderer.setPixelRatio(pr);
-  renderer.setClearColor(0x000000, 0);
-
+export function create(renderer, cfg) {
   const scene = new Scene();
   const camera = new PerspectiveCamera(35, 1, 0.05, 200);
   const TAN = Math.tan((35 / 2) * DEG);
+  const pr = renderer.getPixelRatio();
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  const world = new Group(); // placed on screen
-  const earth = new Group(); // rotated
+  const world = new Group();
+  const earth = new Group();
   world.add(earth);
   scene.add(world);
+  const disposables = [];
+  const keep = (...xs) => (disposables.push(...xs), xs[0]);
 
-  const bodyGeo = new SphereGeometry(1, 96, 96);
-  const bodyMat = new ShaderMaterial({
-    vertexShader: BODY_VS,
-    fragmentShader: BODY_FS,
-    uniforms: { uSky: { value: SKY }, uGold: { value: GOLD }, uDive: { value: 0 } },
-  });
+  const bodyGeo = keep(new SphereGeometry(1, 96, 96));
+  const bodyMat = keep(new ShaderMaterial({ vertexShader: BODY_VS, fragmentShader: BODY_FS, uniforms: { uSky: { value: SKY }, uGold: { value: GOLD }, uDive: { value: 0 } } }));
   earth.add(new Mesh(bodyGeo, bodyMat));
 
-  const atmoGeo = new SphereGeometry(1.2, 64, 64);
-  const atmoMat = new ShaderMaterial({
-    vertexShader: ATMO_VS,
-    fragmentShader: ATMO_FS,
-    uniforms: { uSky: { value: SKY }, uGold: { value: GOLD }, uPower: { value: 5.5 }, uGain: { value: 1.6 } },
-    side: BackSide,
-    blending: AdditiveBlending,
-    transparent: true,
-    depthWrite: false,
-  });
-  const atmo = new Mesh(atmoGeo, atmoMat);
-  world.add(atmo); // does not rotate: the light comes from a fixed sun
+  const atmoGeo = keep(new SphereGeometry(1.16, 64, 64));
+  const atmoMat = keep(
+    new ShaderMaterial({
+      vertexShader: BODY_VS,
+      fragmentShader: ATMO_FS,
+      uniforms: { uSky: { value: SKY }, uGold: { value: GOLD }, uGain: { value: 1.25 } },
+      side: BackSide,
+      blending: AdditiveBlending,
+      transparent: true,
+      depthWrite: false,
+    })
+  );
+  // (the additive atmosphere shell is kept but not added: the limb carries the light)
 
   const pos = landPositions();
   const seeds = new Float32Array(pos.length / 3);
@@ -193,273 +202,181 @@ export function createGlobe(canvas, { cfg, labels, onLost, reduced = false }) {
     const h = Math.sin(i * 12.9898) * 43758.5453;
     seeds[i] = h - Math.floor(h);
   }
-  const dotGeo = new BufferGeometry();
+  const dotGeo = keep(new BufferGeometry());
   dotGeo.setAttribute("position", new BufferAttribute(pos, 3));
   dotGeo.setAttribute("aSeed", new BufferAttribute(seeds, 1));
-  const dotMat = new ShaderMaterial({
-    vertexShader: DOT_VS,
-    fragmentShader: DOT_FS,
-    uniforms: {
-      uSize: { value: 2.3 },
-      uPR: { value: pr },
-      uColor: { value: new Color("#dbeeff") },
-      uTime: { value: 0 },
-      uAlpha: { value: 1 },
-    },
-    transparent: true,
-    depthWrite: false,
-  });
+  const dotMat = keep(
+    new ShaderMaterial({
+      vertexShader: DOT_VS,
+      fragmentShader: DOT_FS,
+      uniforms: { uSize: { value: 2.2 }, uPR: { value: pr }, uTime: { value: 0 }, uColor: { value: new Color("#c9d8ea") }, uAlpha: { value: 0.72 } },
+      transparent: true,
+      depthWrite: false,
+    })
+  );
   earth.add(new Points(dotGeo, dotMat));
 
-  // stars — a shell far behind
-  const starN = cfg.tier === "high" ? 900 : 450;
+  const starN = cfg.tier === "high" ? 700 : 350;
   const sp = new Float32Array(starN * 3);
   const ss = new Float32Array(starN);
   for (let i = 0; i < starN; i++) {
     const u = Math.random() * 2 - 1;
-    const t = Math.random() * Math.PI * 2;
+    const th = Math.random() * Math.PI * 2;
     const r = 40 + Math.random() * 30;
     const s = Math.sqrt(1 - u * u);
-    sp[i * 3] = r * s * Math.cos(t);
+    sp[i * 3] = r * s * Math.cos(th);
     sp[i * 3 + 1] = r * u;
-    sp[i * 3 + 2] = -Math.abs(r * s * Math.sin(t)) - 10;
+    sp[i * 3 + 2] = -Math.abs(r * s * Math.sin(th)) - 10;
     ss[i] = Math.random();
   }
-  const starGeo = new BufferGeometry();
+  const starGeo = keep(new BufferGeometry());
   starGeo.setAttribute("position", new BufferAttribute(sp, 3));
   starGeo.setAttribute("aS", new BufferAttribute(ss, 1));
-  const starMat = new ShaderMaterial({
-    vertexShader: STAR_VS,
-    fragmentShader: STAR_FS,
-    uniforms: { uPR: { value: pr }, uAlpha: { value: 1 } },
-    transparent: true,
-    depthWrite: false,
-  });
+  const starMat = keep(new ShaderMaterial({ vertexShader: STAR_VS, fragmentShader: STAR_FS, uniforms: { uPR: { value: pr }, uAlpha: { value: 1 }, uTime: { value: 0 } }, transparent: true, depthWrite: false }));
   scene.add(new Points(starGeo, starMat));
 
-  // voice arcs
   const arcs = [];
-  const dests = DESTS.slice(0, cfg.arcs);
-  dests.forEach((d, i) => {
+  DESTS.slice(0, cfg.arcs || 6).forEach((d, i) => {
     const h = HOMES[i % HOMES.length];
-    const a = latLon(h.lat, h.lon, 1.004);
-    const b = latLon(d.lat, d.lon, 1.004);
-    const dist = a.angleTo(b);
-    const lift = 1 + 0.18 + dist * 0.16;
-    const c1 = a.clone().lerp(b, 0.25).normalize().multiplyScalar(lift);
-    const c2 = a.clone().lerp(b, 0.75).normalize().multiplyScalar(lift);
-    const curve = new CubicBezierCurve3(a, c1, c2, b);
-    const geo = new TubeGeometry(curve, 96, 0.0042, 6, false);
-    const mat = new ShaderMaterial({
-      vertexShader: ARC_VS,
-      fragmentShader: ARC_FS,
-      uniforms: { uHead: { value: 0 }, uFade: { value: 0 }, uA: { value: SKY.clone() }, uB: { value: ICE.clone() } },
-      transparent: true,
-      depthWrite: false,
-      blending: AdditiveBlending,
-    });
-    const mesh = new Mesh(geo, mat);
-    earth.add(mesh);
-    const tag = document.createElement("span");
-    tag.className = "jn-tag";
-    tag.textContent = d.code;
-    labels.appendChild(tag);
-    arcs.push({ mesh, mat, geo, end: b, tag, offset: i * 0.83, period: 7.5 + (i % 3) * 0.9 });
-  });
-  const homeTags = HOMES.map((h) => {
-    const el = document.createElement("span");
-    el.className = "jn-tag jn-tag--home";
-    el.textContent = h.code;
-    labels.appendChild(el);
-    return { el, p: latLon(h.lat, h.lon, 1.004) };
+    const a = latLon(h.lat, h.lon);
+    const b = latLon(d.lat, d.lon);
+    const curve = new ArcCurve(a, b, 0.02 + Math.min(0.24, a.angleTo(b) * 0.09));
+    const geo = keep(new TubeGeometry(curve, 96, 0.0038, 6, false));
+    const off = ((i * 0.618034) % 1) * 2.6;
+    const mat = keep(
+      new ShaderMaterial({
+        vertexShader: ARC_VS,
+        fragmentShader: ARC_FS,
+        uniforms: { uTime: { value: 0 }, uOffset: { value: off }, uRetract: { value: 0 }, uColor: { value: SKY.clone() } },
+        transparent: true,
+        depthWrite: false,
+        blending: AdditiveBlending,
+      })
+    );
+    earth.add(new Mesh(geo, mat));
+    const ringGeo = keep(new RingGeometry(0.012, 0.018, 32));
+    const ringMat = keep(new MeshBasicMaterial({ color: SKY, transparent: true, opacity: 0, side: DoubleSide, depthWrite: false, blending: AdditiveBlending }));
+    const ring = new Mesh(ringGeo, ringMat);
+    ring.position.copy(b.clone().multiplyScalar(1.004));
+    ring.lookAt(b.clone().multiplyScalar(2));
+    earth.add(ring);
+    arcs.push({ code: d.code, end: b, mat, ring, ringMat, off, land: 0 });
   });
 
-  // layout: where the globe sits on screen, and how big
+  const homes = HOMES.map((h) => {
+    const p = latLon(h.lat, h.lon, 1.004);
+    const g = keep(new RingGeometry(0.0, 0.014, 24));
+    const m = keep(new MeshBasicMaterial({ color: GOLD, transparent: true, opacity: 0.95, side: DoubleSide, depthWrite: false }));
+    const mesh = new Mesh(g, m);
+    mesh.position.copy(p);
+    mesh.lookAt(p.clone().multiplyScalar(2));
+    earth.add(mesh);
+    return { code: h.code, p, m };
+  });
+  const haloGeo = keep(new RingGeometry(0.02, 0.025, 40));
+  const haloMat = keep(new MeshBasicMaterial({ color: GOLD, transparent: true, opacity: 0.6, side: DoubleSide, depthWrite: false, blending: AdditiveBlending }));
+  const halo = new Mesh(haloGeo, haloMat);
+  halo.position.copy(homes[0].p);
+  halo.lookAt(homes[0].p.clone().multiplyScalar(2));
+  earth.add(halo);
+
+  const params = { dive: 0, dragX: 0, ruh: { x: 0, y: 0, f: 1 }, tags: [] };
   let W = 1;
   let H = 1;
-  let layout = { cx: -0.5, cy: -0.2, r: 1 };
-  function resize() {
-    const rect = canvas.getBoundingClientRect();
-    W = Math.max(1, rect.width);
-    H = Math.max(1, rect.height);
-    renderer.setSize(W, H, false);
-    camera.aspect = W / H;
+  let L = { cx: -0.44, cy: -0.04, r: 0.98 };
+  function resize(w, h) {
+    W = w;
+    H = h;
+    camera.aspect = w / h;
     camera.updateProjectionMatrix();
-    const aspect = W / H;
-    if (aspect < 0.8) layout = { cx: 0.06, cy: -0.64, r: 0.62 };
-    else if (aspect < 1.2) layout = { cx: -0.1, cy: -0.42, r: 0.8 };
-    else layout = { cx: -0.46, cy: -0.14, r: 1.02 };
+    const a = w / h;
+    // phone: the globe owns the top of the screen, the headline sits on its lower glow
+    if (a < 0.8) L = { cx: 0.0, cy: 0.3, r: 0.6 };
+    else if (a < 1.2) L = { cx: 0.0, cy: 0.2, r: 0.7 };
+    else L = { cx: -0.44, cy: -0.04, r: 0.98 };
   }
-  resize();
 
-  // orientation: the Gulf a little right of centre, Europe over the upper limb
-  const base = { x: 18 * DEG, y: -34 * DEG };
-  const gulf = { x: 25 * DEG, y: -50 * DEG };
-  const drag = { vx: 0, vy: 0, ox: 0, oy: 0, down: false, lx: 0, ly: 0 };
-  let dive = 0;
-  let divePrev = -1;
-
-  const onDown = (e) => {
-    if (e.pointerType === "mouse" && e.button !== 0) return;
-    drag.down = true;
-    drag.lx = e.clientX;
-    drag.ly = e.clientY;
-    canvas.setPointerCapture?.(e.pointerId);
-  };
-  const onMove = (e) => {
-    if (!drag.down) return;
-    const dx = e.clientX - drag.lx;
-    const dy = e.clientY - drag.ly;
-    drag.lx = e.clientX;
-    drag.ly = e.clientY;
-    drag.vy = dx * 0.0042;
-    drag.vx = e.pointerType === "touch" ? 0 : dy * 0.0028;
-    drag.oy += drag.vy;
-    drag.ox = Math.max(-0.5, Math.min(0.5, drag.ox + drag.vx));
-  };
-  const onUp = () => {
-    drag.down = false;
-  };
-  canvas.addEventListener("pointerdown", onDown);
-  window.addEventListener("pointermove", onMove);
-  window.addEventListener("pointerup", onUp);
-  window.addEventListener("pointercancel", onUp);
-
-  let lost = false;
-  const onContextLost = (e) => {
-    e.preventDefault();
-    lost = true;
-    onLost?.();
-  };
-  canvas.addEventListener("webglcontextlost", onContextLost);
-
+  const base = { x: 20 * DEG, y: -44 * DEG };
+  const gulf = { x: 24.7 * DEG, y: -46.7 * DEG };
+  let spin = 0;
   const v = new Vector3();
-  function placeTag(el, p, show) {
+  const q = new Vector3();
+  const cam = new Vector3();
+
+  function project(p, out) {
     v.copy(p).applyMatrix4(earth.matrixWorld);
-    const n = v.clone().sub(world.position).normalize();
-    const facing = n.dot(camera.position.clone().sub(v).normalize());
+    q.copy(v).sub(world.position).normalize();
+    cam.copy(camera.position).sub(v).normalize();
+    out.f = q.dot(cam);
     v.project(camera);
-    const vis = show * clamp01((facing - 0.05) * 5) * (1 - clamp01(dive * 3));
-    el.style.opacity = vis.toFixed(3);
-    if (vis > 0.01) el.style.transform = `translate3d(${((v.x + 1) / 2) * W}px, ${((1 - v.y) / 2) * H}px, 0)`;
+    out.x = ((v.x + 1) / 2) * W;
+    out.y = ((1 - v.y) / 2) * H;
+    return out;
   }
 
-  let t0 = performance.now();
-  let last = 0;
-  let raf = 0;
-  let running = false;
-  const minDt = cfg.fps >= 60 ? 0 : 1000 / cfg.fps - 2;
+  function update(t, dt) {
+    const time = t / 1000;
+    const dive = clamp01(params.dive);
+    const k = 1 - clamp01(dive * 4); // ambient life fades as the fall begins
+    if (!reduce) spin += dt * 0.25 * k; // a 25 s sway: ~20 px/s on a phone, visible at a glance
+    const e = inOut(clamp01((dive - 0.02) / 0.4));
+    earth.rotation.x = lerp(base.x, gulf.x, e);
+    earth.rotation.y = lerp(base.y + (Math.sin(spin) * 0.3 + params.dragX) * (1 - e), gulf.y, e);
 
-  function frame(now) {
-    raf = requestAnimationFrame(frame);
-    if (lost) return;
-    if (now - last < minDt) return;
-    const dt = Math.min(0.05, (now - (last || now)) / 1000);
-    last = now;
-    const t = (now - t0) / 1000;
-
-    // pointer inertia, then a slow spring back to the home view
-    if (!drag.down) {
-      drag.vy *= 0.94;
-      drag.vx *= 0.9;
-      drag.oy += drag.vy;
-      drag.ox += drag.vx;
-      drag.oy *= 1 - dt * 0.35;
-      drag.ox *= 1 - dt * 0.8;
-    }
-    const idle = reduced ? 0 : Math.sin(t * 0.13) * 0.22;
-    const e = easeInOut(dive);
-    earth.rotation.x = lerp(base.x + drag.ox, gulf.x, e);
-    earth.rotation.y = lerp(base.y + idle + drag.oy, gulf.y, e);
-
-    // camera: fall toward the Gulf, the globe sliding to the centre as it grows
-    const r = lerp(layout.r, 7.5, Math.pow(e, 1.6));
+    const zoom = inOut(clamp01((dive - 0.2) / 0.5));
+    // screen radius in half-heights; 2.6 keeps the camera ~0.22 above the surface
+    const r = lerp(L.r, 2.6, Math.pow(zoom, 1.4));
     const d = 1 / (r * TAN);
     camera.position.set(0, 0, d);
     const Hh = d * TAN;
-    world.position.set(lerp(layout.cx, 0, e) * Hh * camera.aspect, lerp(layout.cy, 0, e) * Hh, 0);
-    camera.lookAt(world.position.x * 0.0, world.position.y * 0.0, 0);
-    bodyMat.uniforms.uDive.value = e;
-    atmoMat.uniforms.uGain.value = 1.6 + e * 2.4;
-    dotMat.uniforms.uTime.value = t;
-    dotMat.uniforms.uAlpha.value = 1 - clamp01((dive - 0.3) * 4);
-    starMat.uniforms.uAlpha.value = 1 - clamp01(dive * 2.2);
-    dotMat.uniforms.uSize.value = 2.3 * (1 + e * 0.25);
+    world.position.set(lerp(L.cx, 0, e) * Hh * camera.aspect, lerp(L.cy, 0, e) * Hh, 0);
+    camera.lookAt(0, 0, 0);
 
-    earth.updateMatrixWorld();
+    const retract = inOut(clamp01((dive - 0.04) / 0.24));
     for (const a of arcs) {
-      const ph = reduced ? 0.6 : (((t + a.offset) / a.period) % 1 + 1) % 1;
-      let head;
-      let fade;
-      if (ph < 0.42) {
-        head = easeInOut(ph / 0.42);
-        fade = 1;
-      } else if (ph < 0.8) {
-        head = 1;
-        fade = 1 - ((ph - 0.42) / 0.38) * 0.45;
-      } else {
-        head = 1;
-        fade = 0.55 * (1 - (ph - 0.8) / 0.2);
-      }
-      const gone = 1 - clamp01(dive * 2.5);
-      a.mat.uniforms.uHead.value = head;
-      a.mat.uniforms.uFade.value = fade * gone;
-      const landed = ph >= 0.4 && ph < 0.86 ? 1 : 0;
-      placeTag(a.tag, a.end, landed);
+      a.mat.uniforms.uTime.value = reduce ? 0.6 : time;
+      a.mat.uniforms.uRetract.value = retract;
+      const prc = (((time * 0.42 + a.off) % 2.6) + 2.6) % 2.6;
+      a.land = prc > 1 && prc < 1.7 ? 1 - (prc - 1) / 0.7 : 0;
+      a.ring.scale.setScalar(1 + (1 - a.land) * 1.8);
+      a.ringMat.opacity = a.land * 0.9 * (1 - retract);
+      a.ring.visible = a.facing !== false;
     }
-    for (const h of homeTags) placeTag(h.el, h.p, 1);
+    const breath = 0.5 + 0.5 * Math.sin(time * 2.4);
+    // the bead takes over from RUH: the city marks leave before the close-up
+    const gone = 1 - clamp01(zoom * 8);
+    halo.scale.setScalar(1 + breath * 0.9 + retract * 1.2);
+    haloMat.opacity = (0.3 + breath * 0.4 + retract * 0.3) * gone;
+    for (const h of homes) h.m.opacity = 0.95 * gone;
+    dotMat.uniforms.uTime.value = time;
+    dotMat.uniforms.uAlpha.value = 0.72 * (1 - clamp01((dive - 0.3) / 0.25));
+    starMat.uniforms.uTime.value = time;
+    starMat.uniforms.uAlpha.value = 1 - clamp01(dive * 2.5);
+    bodyMat.uniforms.uDive.value = zoom;
+    atmoMat.uniforms.uGain.value = 1.25 * (1 - zoom);
 
-    renderer.render(scene, camera);
-    if (divePrev !== dive) divePrev = dive;
-  }
-
-  function start() {
-    if (running || lost) return;
-    running = true;
-    last = 0;
-    raf = requestAnimationFrame(frame);
-  }
-  function stop() {
-    running = false;
-    cancelAnimationFrame(raf);
+    earth.updateMatrixWorld(true);
+    const o = {};
+    project(homes[0].p, o);
+    params.ruh = { x: o.x, y: o.y, f: o.f };
+    const tags = [];
+    for (const h of homes) {
+      project(h.p, o);
+      tags.push({ code: h.code, x: o.x, y: o.y, a: clamp01((o.f - 0.1) * 5) * k, home: true });
+    }
+    for (const a of arcs) {
+      project(a.end, o);
+      a.facing = o.f > 0.1;
+      tags.push({ code: a.code, x: o.x, y: o.y, a: clamp01((o.f - 0.1) * 5) * Math.min(1, a.land * 3) * k, home: false });
+    }
+    params.tags = tags;
   }
 
   return {
-    start,
-    stop,
+    params,
+    update,
+    render: (r) => r.render(scene, camera),
     resize,
-    setDive(p) {
-      dive = clamp01(p);
-    },
-    /** One synchronous frame (for stills and the first paint behind the preloader). */
-    renderOnce() {
-      frame(performance.now() + 1000);
-      cancelAnimationFrame(raf);
-      if (running) raf = requestAnimationFrame(frame);
-    },
-    dispose() {
-      stop();
-      canvas.removeEventListener("pointerdown", onDown);
-      window.removeEventListener("pointermove", onMove);
-      window.removeEventListener("pointerup", onUp);
-      window.removeEventListener("pointercancel", onUp);
-      canvas.removeEventListener("webglcontextlost", onContextLost);
-      for (const a of arcs) {
-        a.geo.dispose();
-        a.mat.dispose();
-        a.tag.remove();
-      }
-      for (const h of homeTags) h.el.remove();
-      bodyGeo.dispose();
-      bodyMat.dispose();
-      atmoGeo.dispose();
-      atmoMat.dispose();
-      dotGeo.dispose();
-      dotMat.dispose();
-      starGeo.dispose();
-      starMat.dispose();
-      renderer.dispose();
-      renderer.forceContextLoss?.();
-    },
+    dispose: () => disposables.forEach((x) => x.dispose()),
   };
 }

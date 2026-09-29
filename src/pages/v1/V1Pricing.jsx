@@ -35,7 +35,9 @@ const GLANCE_ROWS = [
  * opening on طلاقة instead of three tall cards stacked. All three cards stay in
  * the markup (prerender, SEO); the switcher only toggles which one shows under 980px.
  */
-export default function V1Pricing() {
+/* `embedded` (optional): a page that titles this section itself hides the
+   eyebrow and headline; everything else is exactly the homepage's. */
+export default function V1Pricing({ embedded = false } = {}) {
   const cta = useCta();
   const { entryTier: entry, tiers, vipTier: vip, intensiveTier: intensive } = PRICING;
   const heroId = (tiers.find((t) => t.isHero) || tiers[0]).id;
@@ -59,12 +61,16 @@ export default function V1Pricing() {
       <div className="v1-container">
         <Reveal>
           <header className="v1p-head">
+            {!embedded && (
             <span className="v1-eyebrow" style={{ color: "var(--v1-gold)" }}>{PRICING.eyebrow}</span>
+            )}
+            {!embedded && (
             <h2 className="v1-headline">
               {headline.map((s, i) => (
                 <span key={i} className="v1p-hl">{i ? " " : ""}{s}</span>
               ))}
             </h2>
+            )}
             <p className="v1-intro">{solo ? solo.intro : PRICING.intro}</p>
             <ul className="v1p-trust">
               {trust.map((t) => (

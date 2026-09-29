@@ -17,9 +17,9 @@ function Words({ text }) {
   ));
 }
 
-export default function Giant({ lines, as: Tag = "h2", className = "", tones = [], id }) {
+export default function Giant({ lines, as: Tag = "h2", className = "", tones = [], id, srText }) {
   return (
-    <Tag id={id} className={`jn-giant ${className}`}>
+    <Tag id={id} className={`jn-giant ${className}`} aria-label={srText || undefined}>
       {lines.map((line, i) => (
         <span key={i} className={`jn-l${tones[i] ? ` jn-tone-${tones[i]}` : ""}`}>
           {Array.isArray(line)

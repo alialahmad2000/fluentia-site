@@ -1,9 +1,9 @@
 import { createContext, useContext } from "react";
 
 /**
- * What every leg needs from the page: the tier's config (null until known),
- * the motion stack once loaded ({ gsap, ScrollTrigger, SplitText } or null —
- * it stays null on the low tier), and whether the intro has finished.
+ * What every leg reads: the tier config (null only during SSR), the motion
+ * stack once loaded ({ gsap, SplitText } or null), whether the intro is over,
+ * whether reduced motion is on, and whether WebGL is currently alive.
  */
-export const JourneyContext = createContext({ cfg: null, fx: null, introDone: false, dropToLow: () => {} });
+export const JourneyContext = createContext({ cfg: null, fx: null, introDone: true, reduce: false, glAlive: false });
 export const useJourney = () => useContext(JourneyContext);

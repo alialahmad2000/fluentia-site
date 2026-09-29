@@ -78,16 +78,19 @@ export function V1Stories() {
 /* ────────────────────────────────────────────────────────────
  * FAQ — honest accordion
  * ──────────────────────────────────────────────────────────── */
-export function V1FAQ({ data = FAQ } = {}) {
+/* `embedded` (optional): the page titles the section itself; default = homepage. */
+export function V1FAQ({ data = FAQ, embedded = false } = {}) {
   const [open, setOpen] = useState(0);
   return (
     <section className="v1-section" id="faq" style={{ paddingTop: 0 }}>
       <div className="v1-container" style={{ maxWidth: 860 }}>
+        {!embedded && (
         <Reveal>
           <span className="v1-eyebrow">{data.eyebrow}</span>
           <h2 className="v1-headline">{data.headline}</h2>
           {data.intro ? <p className="v1-intro">{data.intro}</p> : null}
         </Reveal>
+        )}
 
         <div style={{ marginTop: 52, display: "flex", flexDirection: "column", gap: 12 }}>
           {data.items.map((item, i) => {
