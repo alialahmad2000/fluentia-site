@@ -13,12 +13,13 @@ const self = PRICING.entryTier;
 const vip = PRICING.vipTier;
 const intensive = PRICING.intensiveTier;
 
-/** Every tier a pricing card can preselect (its `data-tier` is the id). */
+/** Every tier a pricing card can preselect (its `data-tier` is the id), in the
+ *  form's order: self-study and the group tiers first, the 1:1 programmes last. */
 export const TIERS = [
+  { id: self.id, name: self.name, price: self.price },
   ...PRICING.tiers.map((t) => ({ id: t.id, name: t.name, price: t.price })),
   { id: vip.id, name: vip.name, price: vip.priceLow, priceFrom: true },
   { id: intensive.id, name: intensive.name, price: intensive.price },
-  { id: self.id, name: self.name, price: self.price },
 ];
 
 export const formatPrice = (n) => n.toLocaleString("en-US");

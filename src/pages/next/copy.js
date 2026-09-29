@@ -64,18 +64,12 @@ export const PERF_OPTIONS = [
 export const STEPS = [
   { title: "سجّل بياناتك", body: "اسمك ورقمك، 30 ثانية." },
   { title: "لقاء مبدئي مجاني", body: "نعرف مستواك وهدفك ووقتك، ونرشّح لك المسار والباقة المناسبة." },
-  { title: "تبدأ مع مدرّبك", body: "حصص فردية، أنت ومدرّبك فقط، بمنهج مبني على هدفك ومجالك، وتدخل المنصّة من أول يوم." },
+  { title: "تبدأ رحلتك", body: "في مجموعة صغيرة بمستواك أو حصص فردية مع مدرّبك، وتدخل المنصّة من أول يوم." },
 ];
 export const STEPS_LEDE = "لقاء مبدئي مجاني قبل أي دفع، وبدون التزام.";
 
 // The homepage's platform tagline ends in an English word; paid traffic reads Arabic.
 export const CAMPAIGN_PLATFORM_TAGLINE = "بُنيت من الصفر: تقييم فوري بالذكاء الاصطناعي، متابعة لتقدّمك، وتحديات تحمّسك.";
 // The homepage pricing footer names Dr. Ali, who no longer teaches (2026-09-21).
-export const CAMPAIGN_PRICING_FOOT = "محتار بين الباقتين؟ نرشّح لك الأنسب في اللقاء المبدئي.";
-// /join sells the 1:1 programmes only (Ali, 2026-09-28): pricing shows the two
-// individual cards, the form lists only them (and opens undecided).
-export const SOLO_PRICING = {
-  headline: "تدريب فردي. أنت ومدرّبك فقط.",
-  intro: "بدون قاعة ولا زملاء. منهج مبني على هدفك ومجالك، ومدرّب يتابعك كل يوم. وتبدأ بلقاء مبدئي مجاني قبل أن تدفع أي شيء.",
-};
+export const CAMPAIGN_PRICING_FOOT = "محتار بين الباقات؟ نرشّح لك الأنسب في اللقاء المبدئي.";
 export const STICKY_NOTE = "مجاني وبدون التزام";

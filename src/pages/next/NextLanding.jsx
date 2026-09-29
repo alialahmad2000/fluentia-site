@@ -12,7 +12,7 @@ import Seo from "../../components/Seo";
 import V1LeadModal from "../v1/V1LeadModal";
 import { CtaContext } from "../v1/ctaContext";
 import LeadForm from "../join/components/LeadForm";
-import { PRICING } from "../landing-v2/content";
+import { TIERS } from "../join/joinContent";
 // The /join form card's own styles (its j-* classes live under .join-page).
 import JOIN_CSS from "../join/join.css?inline";
 import { detectTier, forcedTier, tierConfig, writeStore, TIER_KEY } from "./perf";
@@ -28,7 +28,7 @@ import Stage from "./Stage";
 // frozen stage, left /join on 2026-09-28 — see the Steps comment below.)
 import NEXT_CLASSIC_CSS from "./next-classic.css?inline";
 import { Pricing, FitFaq, Final, Footer } from "./Closing";
-import { CTA_LABEL, CAMPAIGN_PRICING_FOOT, STICKY_NOTE, SOLO_PRICING } from "./copy";
+import { CTA_LABEL, CAMPAIGN_PRICING_FOOT, STICKY_NOTE } from "./copy";
 
 /**
  * The cinematic landing — the homepage at `/` and, in campaign mode, the TikTok
@@ -137,11 +137,10 @@ html.fx-js .fx-next[data-campaign] .fx-hero-sub.fx-hero-after { animation: none;
 // script execution, so boot runs as the chunk loads — still before first render.
 if (typeof window !== "undefined") boot();
 
-// /join sells the 1:1 programmes only: the form lists them. It opens undecided —
+// /join sells all six packages, like the homepage. The form opens undecided —
 // only a pricing card's own button ([data-tier]) ever sets a package.
-const SOLO_IDS = [PRICING.vipTier.id, PRICING.intensiveTier.id];
-const TIER_IDS = new Set(SOLO_IDS);
-const CAMPAIGN_CTA = { label: CTA_LABEL, pricingFoot: CAMPAIGN_PRICING_FOOT, solo: SOLO_PRICING };
+const TIER_IDS = new Set(TIERS.map((t) => t.id));
+const CAMPAIGN_CTA = { label: CTA_LABEL, pricingFoot: CAMPAIGN_PRICING_FOOT };
 
 /**
  * `seoPath`  — the PAGE_SEO entry to emit ("/" when this is the homepage).
@@ -372,7 +371,6 @@ export default function NextLanding({ seoPath = "/next", campaign = false }) {
                   pkgId={pkgId}
                   setPkgId={pickPkg}
                   nameRef={nameRef}
-                  tierIds={SOLO_IDS}
                   onDone={() => setDoneIn("top")}
                   onBack={backToPlatform}
                 />
@@ -399,7 +397,6 @@ export default function NextLanding({ seoPath = "/next", campaign = false }) {
                       setPkgId={pickPkg}
                       nameRef={nameRefB}
                       idPrefix="join-b"
-                      tierIds={SOLO_IDS}
                       onDone={() => setDoneIn("bottom")}
                       onBack={backToTop}
                     />
