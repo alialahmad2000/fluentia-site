@@ -6,7 +6,8 @@
  * a thin gold fresnel band on the upper limb only; a back-face shell glows sky
  * below. Arcs: tubes that hug the surface (lift 4·alt·t(1−t)) and draw on /
  * draw off in the fragment shader; each landing pulses a ring at its city.
- * RUH breathes — that dot is "you".
+ * RUH breathes — that dot is "you". The feather-F is painted on the globe
+ * itself: it brushes on once, then breathes in the same light as the limb.
  *
  * params (written by the Hero leg):
  *   dive     0..1  the fall: arcs retract into RUH, the camera closes on the Gulf
@@ -20,6 +21,7 @@ import {
   BackSide,
   BufferAttribute,
   BufferGeometry,
+  CanvasTexture,
   Color,
   Curve,
   DoubleSide,
@@ -33,10 +35,12 @@ import {
   ShaderMaterial,
   SphereGeometry,
   TubeGeometry,
+  Vector2,
   Vector3,
 } from "three";
 import DOTS from "../data/globe-dots.json";
 import { HOMES, DESTS } from "../copy";
+import { MARK_BOX, MARK_PATHS } from "./mark";
 
 const DEG = Math.PI / 180;
 const SKY = new Color("#38bdf8");
@@ -145,6 +149,110 @@ const DOT_FS = /* glsl */ `
     a *= mix(0.55, 1.0, step(0.01, vLit));
     gl_FragColor = vec4(col, a);
   }`;
+/**
+ * The mark as one RGB mask: r = silhouette (softened a touch so the brush edge
+ * can fray it), g = its glow, b = the logo's own shading (0 bright feather ..
+ * 1 deep stem). y runs north, so the letter reads upright on the globe.
+ */
+function markTexture() {
+  const W = 400;
+  const H = 480;
+  const [bx, by, bw, bh] = MARK_BOX;
+  const k = (H * 0.72) / bh;
+  const layer = (draw) => {
+    const c = document.createElement("canvas");
+    c.width = W;
+    c.height = H;
+    const g = c.getContext("2d");
+    g.fillStyle = "#000";
+    g.fillRect(0, 0, W, H);
+    g.setTransform(k, 0, 0, k, (W - bw * k) / 2 - bx * k, (H - bh * k) / 2 - by * k);
+    draw(g);
+    return g.getImageData(0, 0, W, H).data;
+  };
+  const paths = MARK_PATHS.map(([t, d]) => [t, new Path2D(d)]);
+  const sil = layer((g) => {
+    g.fillStyle = "#fff";
+    g.shadowColor = "#fff";
+    g.shadowBlur = 3;
+    for (const [, p] of paths) g.fill(p);
+  });
+  const glow = layer((g) => {
+    g.fillStyle = "#fff";
+    g.shadowColor = "#fff";
+    g.shadowBlur = 38;
+    for (let i = 0; i < 3; i++) for (const [, p] of paths) g.fill(p);
+  });
+  const shade = layer((g) => {
+    for (const [t, p] of paths) {
+      const v = Math.round((t / 3) * 255);
+      g.fillStyle = `rgb(${v},${v},${v})`;
+      g.fill(p);
+    }
+  });
+  const c = document.createElement("canvas");
+  c.width = W;
+  c.height = H;
+  const g = c.getContext("2d");
+  const img = g.createImageData(W, H);
+  for (let i = 0; i < img.data.length; i += 4) {
+    img.data[i] = sil[i];
+    img.data[i + 1] = glow[i];
+    img.data[i + 2] = shade[i];
+    img.data[i + 3] = 255;
+  }
+  g.putImageData(img, 0, 0);
+  return new CanvasTexture(c);
+}
+
+const MARK_VS = /* glsl */ `
+  varying vec3 vP; varying float vF;
+  void main(){
+    vP = position;
+    vec4 wp = modelMatrix * vec4(position,1.0);
+    vec3 n = normalize(mat3(modelMatrix) * normal);
+    vF = dot(n, normalize(cameraPosition - wp.xyz));
+    gl_Position = projectionMatrix * viewMatrix * wp;
+  }`;
+const MARK_FS = /* glsl */ `
+  uniform sampler2D uTex; uniform vec3 uC; uniform vec3 uE; uniform vec3 uN; uniform vec2 uHalf;
+  uniform float uPaint; uniform float uTime; uniform float uAlpha;
+  uniform vec3 uSky; uniform vec3 uCyan; uniform vec3 uDeep;
+  varying vec3 vP; varying float vF;
+  float h21(vec2 p){ return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
+  float vn(vec2 p){
+    vec2 i = floor(p); vec2 f = fract(p); f = f * f * (3.0 - 2.0 * f);
+    return mix(mix(h21(i), h21(i + vec2(1,0)), f.x), mix(h21(i + vec2(0,1)), h21(i + vec2(1,1)), f.x), f.y);
+  }
+  void main(){
+    vec3 p = normalize(vP);
+    if (dot(p, uC) < 0.5) discard;
+    vec2 uv = vec2(dot(p, uE), dot(p, uN)) / uHalf * 0.5 + 0.5;
+    if (uv.x < 0.0 || uv.x > 1.0 || uv.y < 0.0 || uv.y > 1.0) discard;
+    vec3 m = texture2D(uTex, uv).rgb;
+    // the brush: stroke order runs up the stem, then out along each feather
+    float n = vn(uv * vec2(7.0, 9.0));
+    float order = (1.0 - uv.y) * 0.55 + uv.x * 0.45 + (n - 0.5) * 0.14;
+    float wet = uPaint * 1.25 - order;
+    float laid = smoothstep(0.0, 0.05, wet);
+    // bristle streaks run along the feathers; the edge frays like dry paint
+    float bristle = vn(vec2(uv.x * 4.0, uv.y * 170.0)) * 0.6 + vn(vec2(uv.x * 9.0, uv.y * 60.0)) * 0.4;
+    float fray = vn(uv * 90.0) * 0.6 + vn(uv * 24.0) * 0.4;
+    float body = smoothstep(0.2 + fray * 0.5, 0.6 + fray * 0.35, m.r);
+    vec3 ink = mix(uCyan, uDeep, m.b * 0.75);
+    ink *= 0.62 + 0.55 * bristle;
+    // it breathes with the globe, and a slow sheen sweeps the letter
+    float breath = 0.82 + 0.18 * sin(uTime * 1.3);
+    float sweep = mod(uTime * 0.16, 1.6) - 0.3;
+    float sheen = smoothstep(0.1, 0.0, abs(uv.x * 0.7 + uv.y * 0.3 - sweep)) * body;
+    // the wet edge of the brush: a thin bright line riding the paint, gone once it dries
+    float edge = smoothstep(0.035, 0.0, abs(wet - 0.03)) * (1.0 - uPaint) * (body * 0.8 + m.g * 0.15);
+    vec3 c = ink * body * laid * (0.4 + 0.18 * breath);
+    c += uSky * m.g * (1.0 - body) * laid * 0.42 * breath;
+    c += vec3(0.75, 0.95, 1.0) * (sheen * 0.3 * laid + edge * 1.2);
+    float face = smoothstep(0.05, 0.4, vF);
+    gl_FragColor = vec4(c * face * uAlpha, 1.0);
+  }`;
 const ARC_VS = /* glsl */ `varying float vU; void main(){ vU = uv.x; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }`;
 const ARC_FS = /* glsl */ `
   uniform float uTime; uniform float uOffset; uniform float uRetract; uniform vec3 uColor;
@@ -214,6 +322,34 @@ export function create(renderer, cfg) {
       depthWrite: false,
     })
   );
+  // the mark sits under the land dots, just north of home — clear of the headline on every width
+  const ML = { lat: 45, lon: 38 };
+  const MC = latLon(ML.lat, ML.lon);
+  const markTex = keep(markTexture());
+  const markMat = keep(
+    new ShaderMaterial({
+      vertexShader: MARK_VS,
+      fragmentShader: MARK_FS,
+      uniforms: {
+        uTex: { value: markTex },
+        uC: { value: MC },
+        uE: { value: new Vector3(Math.cos(ML.lon * DEG), 0, -Math.sin(ML.lon * DEG)) },
+        uN: { value: new Vector3(-Math.sin(ML.lat * DEG) * Math.sin(ML.lon * DEG), Math.cos(ML.lat * DEG), -Math.sin(ML.lat * DEG) * Math.cos(ML.lon * DEG)) },
+        uHalf: { value: new Vector2(0.28, 0.336) },
+        uPaint: { value: reduce ? 1 : 0 },
+        uTime: { value: 0 },
+        uAlpha: { value: 1 },
+        uSky: { value: SKY },
+        uCyan: { value: new Color("#1ee8ff") },
+        uDeep: { value: new Color("#2f8fe8") },
+      },
+      transparent: true,
+      depthWrite: false,
+      blending: AdditiveBlending,
+    })
+  );
+  const markGeo = keep(new SphereGeometry(1.0012, 96, 96));
+  earth.add(new Mesh(markGeo, markMat));
   earth.add(new Points(dotGeo, dotMat));
 
   const starN = cfg.tier === "high" ? 700 : 350;
@@ -299,6 +435,7 @@ export function create(renderer, cfg) {
   const base = { x: 20 * DEG, y: -44 * DEG };
   const gulf = { x: 24.7 * DEG, y: -46.7 * DEG };
   let spin = 0;
+  let born = -1; // the brush waits for the globe's own first frame, not page load
   const v = new Vector3();
   const q = new Vector3();
   const cam = new Vector3();
@@ -349,6 +486,11 @@ export function create(renderer, cfg) {
     haloMat.opacity = (0.3 + breath * 0.4 + retract * 0.3) * gone;
     for (const h of homes) h.m.opacity = 0.95 * gone;
     dotMat.uniforms.uTime.value = time;
+    // brushed on once, 1.2 s in, over 2.6 s; then it only breathes
+    if (born < 0) born = time;
+    markMat.uniforms.uPaint.value = reduce ? 1 : inOut(clamp01((time - born - 1.2) / 2.6));
+    markMat.uniforms.uTime.value = reduce ? 0 : time;
+    markMat.uniforms.uAlpha.value = 1 - clamp01((dive - 0.2) / 0.2);
     dotMat.uniforms.uAlpha.value = 0.72 * (1 - clamp01((dive - 0.3) / 0.25));
     starMat.uniforms.uTime.value = time;
     starMat.uniforms.uAlpha.value = 1 - clamp01(dive * 2.5);
