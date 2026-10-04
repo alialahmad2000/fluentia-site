@@ -146,6 +146,35 @@ html.fx-intro.fx-skip .fx-next { --fx-hd: 0ms; }
   color: var(--fx-cream);
 }
 .fx-head-actions { display: flex; align-items: center; gap: 8px; }
+/* Inline section links — the classic homepage's V1Header row. Shown only where
+   all of them fit beside the brand and the action; «القائمة» takes over below. */
+.fx-nav { display: none; }
+@media (min-width: 1200px) {
+  .fx-nav {
+    display: flex;
+    align-items: center;
+    gap: clamp(18px, 1.6vw, 28px);
+    margin-inline: auto;
+  }
+  .fx-head .fx-menu-toggle { display: none; }
+}
+.fx-nav-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  color: var(--fx-faint);
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 400;
+  white-space: nowrap;
+  transition: color 300ms ease;
+}
+.fx-nav-link[aria-current] { color: var(--fx-cream); }
+.fx-nav-link:focus-visible { color: var(--fx-cream); }
+.fx-nav-login { font-size: 14px; }
+@media (hover: hover) {
+  .fx-nav-link:hover { color: var(--fx-cream); }
+}
 .fx-menu-toggle {
   min-height: 48px;
   min-width: 48px;

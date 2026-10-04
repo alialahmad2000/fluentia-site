@@ -6,8 +6,11 @@ import { CTA_LABEL } from "./copy";
 import { useCta } from "../v1/ctaContext";
 
 /**
- * Header — fixed and minimal. The wordmark on the right; on the left the
- * primary action (the homepage's `[data-open-form]` → V1LeadModal) and «القائمة».
+ * Header — fixed. The wordmark on the right; on the left the primary action
+ * (the homepage's `[data-open-form]` → V1LeadModal). On wide screens the
+ * section links sit inline between them, as on the classic homepage's
+ * V1Header (muted, brightening on hover; «دخول الطلاب» after them) — the one
+ * whose section is on screen stays lit. Narrower, they fold into «القائمة».
  * Transparent over the hero; a blurred void ground after 80 px of scroll.
  *
  * The menu is a full-screen overlay: void ground (the starfield keeps drifting
@@ -39,6 +42,25 @@ export default function Header() {
   const overlayRef = useRef(null);
   const toggleRef = useRef(null);
   const [open, setOpen] = useState(false);
+  const [current, setCurrent] = useState(null);
+
+  // Which section is under the middle of the screen → its inline link stays lit.
+  useEffect(() => {
+    if (typeof IntersectionObserver === "undefined") return undefined;
+    const els = menu.map((m) => document.querySelector(m.href)).filter(Boolean);
+    if (!els.length) return undefined;
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting) setCurrent(`#${e.target.id}`);
+          else setCurrent((c) => (c === `#${e.target.id}` ? null : c));
+        }
+      },
+      { rootMargin: "-45% 0px -54% 0px" },
+    );
+    els.forEach((el) => io.observe(el));
+    return () => io.disconnect();
+  }, [campaign]);
 
   // The backdrop comes on after 80 px — measured by the shared scroll loop.
   useEffect(() => {
@@ -112,6 +134,22 @@ export default function Header() {
           <BrandMark size={30} />
           <span className="fx-brand-ar">{NAV.brand.ar}</span>
         </a>
+        <nav className="fx-nav" aria-label="أقسام الصفحة">
+          {menu.map((m) => (
+            <a
+              key={m.href}
+              href={m.href}
+              onClick={(e) => go(e, m.href)}
+              className="fx-nav-link"
+              aria-current={current === m.href ? "location" : undefined}
+            >
+              {m.label}
+            </a>
+          ))}
+          <a href={NAV.studentLogin.href} target="_blank" rel="noopener noreferrer" className="fx-nav-link fx-nav-login">
+            {NAV.studentLogin.label}
+          </a>
+        </nav>
         <div className="fx-head-actions">
           <button type="button" data-open-form className="fx-btn fx-btn--primary fx-btn--sm">
             {CTA_LABEL}

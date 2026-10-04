@@ -31,8 +31,8 @@ const GLANCE_ROWS = [
  * Gold is spent once: the recommended card's edge, its badge, ticks and button.
  * VIP is outlined, not a second gold slab competing with the recommendation.
  *
- * Phones get a sticky segmented switcher (أساس | طلاقة | تميّز, with prices)
- * opening on طلاقة instead of three tall cards stacked. All three cards stay in
+ * Phones get a sticky segmented switcher (one segment per tier, with prices)
+ * opening on the recommended one instead of three tall cards stacked. All three cards stay in
  * the markup (prerender, SEO); the switcher only toggles which one shows under 980px.
  */
 /* `embedded` (optional): a page that titles this section itself hides the
@@ -81,7 +81,7 @@ export default function V1Pricing({ embedded = false } = {}) {
         </Reveal>
 
         {!solo && (
-        <div className="v1p-compare">
+        <div className="v1p-compare" style={{ "--v1p-n": tiers.length }}>
           {/* ── phone switcher ── */}
           <div className="v1p-switch" role="tablist" aria-label="اختر الباقة">
             {tiers.map((t) => (
@@ -279,7 +279,8 @@ export default function V1Pricing({ embedded = false } = {}) {
         .v1-scope .v1p-switch { display: none; }
 
         .v1-scope .v1p-tiers {
-          display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+          display: grid; grid-template-columns: repeat(var(--v1p-n, 3), minmax(0, 1fr));
+          max-width: calc(var(--v1p-n, 3) * 380px); margin-inline: auto;
           gap: 18px; margin-top: clamp(48px, 6vw, 72px); align-items: stretch;
         }
         .v1-scope .v1p-tier { display: flex; flex-direction: column; padding: clamp(26px, 2.8vw, 34px); }
@@ -416,7 +417,7 @@ export default function V1Pricing({ embedded = false } = {}) {
         @media (max-width: 980px) {
           .v1-scope .v1p-switch {
             position: sticky; top: 76px; z-index: 5;
-            display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; padding: 5px;
+            display: grid; grid-template-columns: repeat(var(--v1p-n, 3), 1fr); gap: 4px; padding: 5px;
             max-width: 420px; margin: 36px auto 0; border-radius: 999px;
             background: var(--v1-ink-2); border: 1px solid var(--v1-line-strong);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);

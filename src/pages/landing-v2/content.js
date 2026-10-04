@@ -295,6 +295,32 @@ export const PRICING = {
       ],
     },
     {
+      id: "tamayuz",
+      name: "تميّز",
+      variant: "hero",
+      isHero: true,
+      tagline: "أسرع تقدّم — متابعة مكثفة و4 حصص فردية شهرياً.",
+      price: 1500,
+      originalPrice: 2200,
+      savings: 700,
+      priceSuffix: "ر.س / شهرياً",
+      ctaLabel: "اختر تميّز",
+      glance: { group: "8", solo: "4", followUp: "يومية مكثّفة" },
+      features: [
+        { text: "كل مزايا أساس", bold: false },
+        { text: "4 حصص فردية شهرياً (حصة كل أسبوع)", bold: true },
+        { text: "متابعة يومية مكثفة", bold: false, inGlance: true },
+        { text: "تقييم أسبوعي + خطة تطوير شخصية", bold: false },
+        { text: "بنك أسئلة حصري + مكتبة دروس كاملة", bold: false },
+        { text: "محتوى مسجّل ترجع له أي وقت", bold: false },
+      ],
+    },
+  ],
+
+  // Hidden 2026-10-04 (Ali): «طلاقة» is off sale; «تميّز» is the recommended
+  // package now. Kept here, unrendered — move it back into `tiers` to restore.
+  hiddenTiers: [
+    {
       id: "talaqa",
       name: "طلاقة",
       variant: "hero",
@@ -312,25 +338,6 @@ export const PRICING = {
         { text: "حصة فردية شهرية مع مدربك", bold: true, inGlance: true },
         { text: "تقييم كل أسبوعين + تقرير شهري", bold: false },
         { text: "محتوى مسجّل ترجع له أي وقت", bold: false },
-      ],
-    },
-    {
-      id: "tamayuz",
-      name: "تميّز",
-      variant: "standard",
-      tagline: "أسرع تقدّم — متابعة مكثفة و4 حصص فردية شهرياً.",
-      price: 1500,
-      originalPrice: 2200,
-      savings: 700,
-      priceSuffix: "ر.س / شهرياً",
-      ctaLabel: "اختر تميّز",
-      glance: { group: "8", solo: "4", followUp: "يومية مكثّفة" },
-      features: [
-        { text: "كل مزايا طلاقة", bold: false },
-        { text: "4 حصص فردية شهرياً (حصة كل أسبوع)", bold: true },
-        { text: "متابعة يومية مكثفة", bold: false, inGlance: true },
-        { text: "تقييم أسبوعي + خطة تطوير شخصية", bold: false },
-        { text: "بنك أسئلة حصري + مكتبة دروس كاملة", bold: false },
       ],
     },
   ],
@@ -491,8 +498,9 @@ export const FORM = {
   tierOptions: [
     { value: "self_study", label: "التعلم الذاتي · 500 ر.س / شهر", price: 500 },
     { value: "asas", label: "أساس · 750 ر.س / شهر", price: 750 },
-    { value: "talaqa", label: "طلاقة · 1,200 ر.س / شهر", price: 1200, recommended: true },
-    { value: "tamayuz", label: "تميّز · 1,500 ر.س / شهر", price: 1500 },
+    // «طلاقة» hidden 2026-10-04 (see PRICING.hiddenTiers):
+    // { value: "talaqa", label: "طلاقة · 1,200 ر.س / شهر", price: 1200 },
+    { value: "tamayuz", label: "تميّز · 1,500 ر.س / شهر", price: 1500, recommended: true },
     { value: "fardi", label: "التدريب الفردي · من 2,000 ر.س / شهر", price: 2000 },
     { value: "fardi_intensive", label: "التدريب الفردي المكثّف · 3,000 ر.س / شهر", price: 3000 },
     { value: "unsure", label: "غير متأكد — أريد استشارة", price: 0 },
