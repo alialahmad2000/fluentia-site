@@ -1,5 +1,21 @@
 {
   "version": 1,
   "include": ["/tour", "/tour/*"],
-  "exclude": []
+  "exclude": [
+    "/tour/*.mp3",
+    "/tour/*.webp",
+    "/tour/*.png",
+    "/tour/*.jpg",
+    "/tour/*.jpeg",
+    "/tour/*.svg",
+    "/tour/*.gif",
+    "/tour/*.avif",
+    "/tour/*.mp4",
+    "/tour/*.webm",
+    "/tour/*.m4a",
+    "/tour/*.ogg",
+    "/tour/*.wav",
+    "/tour/*.json",
+    "/tour/*.vtt"
+  ]
 }
