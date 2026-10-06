@@ -3,11 +3,25 @@ const VISITOR_COOKIE = 'flu_vid';
 const COOKIE_DAYS = 30;
 const SUPABASE_URL = 'https://nmjexpuycmqcxuxljier.supabase.co';
 
+// localStorage THROWS (not just returns null) when site data is blocked —
+// Safari's «Block All Cookies», some in-app browsers. main.jsx calls
+// captureRefFromUrl() before React mounts, so one unguarded read blanked every
+// page of the site for those visitors. Same behaviour otherwise.
+function lsGet(key) {
+  try { return localStorage.getItem(key); } catch { return null; }
+}
+function lsSet(key, value) {
+  try { localStorage.setItem(key, value); } catch { /* this visit only */ }
+}
+function lsRemove(key) {
+  try { localStorage.removeItem(key); } catch { /* nothing stored */ }
+}
+
 export function getVisitorId() {
-  let v = localStorage.getItem(VISITOR_COOKIE);
+  let v = lsGet(VISITOR_COOKIE);
   if (!v) {
     v = 'v_' + Math.random().toString(36).slice(2) + Date.now().toString(36);
-    localStorage.setItem(VISITOR_COOKIE, v);
+    lsSet(VISITOR_COOKIE, v);
   }
   return v;
 }
@@ -26,12 +40,12 @@ function getCookie(name) {
 export function getStoredRef() {
   const c = getCookie(REF_COOKIE);
   if (c) return c;
-  const ls = localStorage.getItem(REF_COOKIE);
+  const ls = lsGet(REF_COOKIE);
   if (!ls) return null;
   try {
     const { code, at } = JSON.parse(ls);
     if (Date.now() - at > COOKIE_DAYS * 24 * 60 * 60 * 1000) {
-      localStorage.removeItem(REF_COOKIE);
+      lsRemove(REF_COOKIE);
       return null;
     }
     return code;
@@ -50,7 +64,7 @@ export function captureRefFromUrl() {
   if (existing) return existing;
 
   setCookie(REF_COOKIE, cleanRef, COOKIE_DAYS);
-  localStorage.setItem(REF_COOKIE, JSON.stringify({ code: cleanRef, at: Date.now() }));
+  lsSet(REF_COOKIE, JSON.stringify({ code: cleanRef, at: Date.now() }));
 
   // Fire click tracker (non-blocking)
   fireClickTracker(cleanRef);

@@ -15,6 +15,8 @@
  * add the path to PRERENDER_ROUTES below, and list it in public/sitemap.xml.
  */
 
+import { VERB_COUNT } from "./irregularVerbs.js";
+
 export const SITE = "https://fluentia.academy";
 
 /** Absolute, always-present fallbacks (also hard-coded in index.html). */
@@ -150,6 +152,20 @@ export const PAGE_SEO = {
     noindex: true,
   },
 
+  // «الأفعال الشاذة» — the free public irregular-verbs tool. Indexable, in the
+  // sitemap; carries its own share image (public/og/verbs.png). The count is
+  // read from the data so the snippet can never disagree with the table.
+  "/verbs": {
+    title: "جدول الأفعال الشاذة في اللغة الإنجليزية مع النطق والأمثلة | أكاديمية طلاقة",
+    description:
+      `جدول الأفعال الشاذة في اللغة الإنجليزية: تصريف الأفعال الثلاثة لـ ${VERB_COUNT} فعلاً مع المعنى بالعربي والنطق والأمثلة، وتدريب مجاني بالبطاقات والاختبار.`,
+    ogTitle: "الأفعال الشاذة في اللغة الإنجليزية — مع النطق والتدريب",
+    ogDescription:
+      `${VERB_COUNT} فعلاً شاذاً بتصريفاتها الثلاثة ومعناها بالعربي ونطقها، مع بطاقات حفظ واختبار سريع. مجاناً وبدون تسجيل.`,
+    ogImage: `${SITE}/og/verbs.png`,
+    ogImageAlt: "جدول الأفعال الشاذة في اللغة الإنجليزية — أكاديمية طلاقة",
+  },
+
   "/terms": {
     title: "شروط الاستخدام | أكاديمية طلاقة",
     description:
@@ -188,6 +204,8 @@ export function normalizeSeo(entry) {
     twDescription: entry.twDescription || ogDescription,
     keywords: entry.keywords || null,
     noindex: entry.noindex === true,
+    ogImage: entry.ogImage || null,
+    ogImageAlt: entry.ogImageAlt || null,
   };
 }
 

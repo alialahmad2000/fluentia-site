@@ -5,6 +5,7 @@ import { FINAL_CTA } from "../landing-v2/content";
 import Giant from "./Giant";
 import Orb from "./Orb";
 import { CTA_LABEL, PERF_LABEL, PERF_OPTIONS, TITLES } from "./copy";
+import { useCta } from "../v1/ctaContext";
 
 /**
  * The close: the homepage's pricing, fit and FAQ components, unchanged, inside
@@ -61,9 +62,16 @@ export function Final({ gl, children }) {
 }
 
 export function Footer({ mode, onMode }) {
+  // /join (campaign) shares this footer; the free-tools link is homepage-only.
+  const campaign = Boolean(useCta());
   return (
     <div className="fx-footer">
       <V1Footer />
+      {campaign ? null : (
+        <p style={{ margin: 0, padding: "0 var(--fx-gut)", textAlign: "center", fontSize: 14 }}>
+          <a href="/verbs" className="fx-quiet">أدوات مجانية: الأفعال الشاذة</a>
+        </p>
+      )}
       <div className="fx-perf" role="group" aria-label={PERF_LABEL}>
         <span className="fx-perf-label">{PERF_LABEL}</span>
         {PERF_OPTIONS.map((o, i) => (
