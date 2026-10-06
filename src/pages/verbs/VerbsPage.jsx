@@ -88,11 +88,13 @@ function Chip({ on, onClick, children, title, className = "" }) {
   );
 }
 
-/** The bar: after 30 s or 25% of the page, once per visitor, never over the cookie banner. */
+/** The bar: after 30 s or 25% of the page, once per visitor. Never over the
+ *  cookie banner, and never over the practice card — it would sit on «أعرفه». */
 function StickyCta() {
   const [show, setShow] = useState(false);
   const [dismissed, setDismissed] = useState(true);
   const [cookieUp, setCookieUp] = useState(false);
+  const [practicing, setPracticing] = useState(false);
 
   useEffect(() => {
     if (readJson(KEYS.barDismissed, false)) return undefined;
@@ -112,7 +114,14 @@ function StickyCta() {
     cookie();
     const poll = setInterval(cookie, 800);
     window.addEventListener("scroll", onScroll, { passive: true });
+    let io = null;
+    const practice = document.getElementById("vb-practice");
+    if (practice && typeof IntersectionObserver !== "undefined") {
+      io = new IntersectionObserver(([e]) => setPracticing(e.isIntersecting), { rootMargin: "0px 0px -15% 0px" });
+      io.observe(practice);
+    }
     return () => {
+      io?.disconnect();
       clearTimeout(t);
       clearInterval(poll);
       if (raf) cancelAnimationFrame(raf);
@@ -126,7 +135,7 @@ function StickyCta() {
     track("verbs_bar_dismiss");
   }, []);
 
-  const on = show && !dismissed && !cookieUp;
+  const on = show && !dismissed && !cookieUp && !practicing;
   return (
     <aside className="vb-bar" data-on={on ? "" : undefined} aria-hidden={!on} aria-label="أكاديمية طلاقة">
       <p>{CTA.bar}</p>

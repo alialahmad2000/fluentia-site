@@ -256,7 +256,7 @@
 .vb-chip {
   display: inline-flex; align-items: center; gap: 6px;
   min-height: 44px; padding: 0 16px;
-  background: transparent; border: 1px solid var(--vb-line-2); border-radius: 999px;
+  background: var(--vb-panel); border: 1px solid var(--vb-line-2); border-radius: 999px;
   color: var(--vb-text); font-size: 14px; cursor: pointer; white-space: nowrap;
   -webkit-tap-highlight-color: transparent;
   transition: background-color 200ms ease, border-color 200ms ease, color 200ms ease;
@@ -273,7 +273,7 @@
   flex-direction: column; align-items: flex-start; justify-content: center; gap: 2px;
   min-height: 66px; padding: 10px 14px; border-radius: 16px; white-space: normal; text-align: start;
 }
-.vb-gchip-top { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+.vb-gchip-top { display: flex; flex-direction: column; align-items: flex-start; gap: 0; }
 .vb-chip-k { font-family: var(--vb-latin); font-weight: 700; font-size: 12px; letter-spacing: 0.08em; color: var(--vb-ice); }
 .vb-chip-l { font-size: 14px; line-height: 1.45; }
 .vb-chip-ex { font-family: var(--vb-latin); font-size: 12px; color: var(--vb-faint); line-height: 1.4; white-space: nowrap; }
@@ -357,7 +357,7 @@
 
 .vb-detail { padding: 2px 12px 14px; border-top: 1px solid var(--vb-line); }
 .vb-detail[hidden] { display: none; }
-.vb-ex-en { margin: 12px 0 2px; font-family: var(--vb-latin); font-size: 1.05rem; line-height: 1.6; color: var(--vb-cream); text-align: left; }
+.vb-ex-en { margin: 12px 0 2px; font-family: var(--vb-latin); font-size: 1.05rem; line-height: 1.6; color: var(--vb-cream); text-align: right; }
 .vb-hl { background: none; color: var(--vb-v2); font-weight: 700; }
 .vb-ex-ar { margin: 0 0 12px; color: var(--vb-text); font-size: 15px; }
 .vb-facts { margin: 0; display: grid; gap: 6px; }
@@ -368,6 +368,8 @@
 .vb-note dt { color: var(--vb-v2); }
 .vb-note dd { color: var(--vb-cream); }
 .vb bdi { unicode-bidi: isolate; }
+/* A quoted English phrase broken across two lines reads as two phrases. */
+.vb-facts bdi, .vb-qa bdi { white-space: nowrap; }
 
 /* ─── The table — desktop: one long panel of rows ─── */
 @media (min-width: 900px) {
