@@ -1,0 +1,396 @@
+/**
+ * IRREGULAR_VERBS — the data behind /verbs («الأفعال الشاذة»), the free public tool.
+ *
+ * Written at build time, never fetched: the page prerenders every verb into the
+ * HTML (crawlers read the whole table) and needs no network to work.
+ *
+ * Shares its teaching decisions with the LMS ladder «سُلّم الأفعال»
+ * (fluentia-lms scripts/verb-catalogue.cjs) so a visitor who later joins does not
+ * meet a second set of answers:
+ *   - order is frequency, the ladder's LADDER array (be/have/do first);
+ *   - the -ed form is the one we TEACH (learned), the -t form is ACCEPTED
+ *     (learnt); got is taught, gotten accepted; proved taught, proven accepted;
+ *   - the colour grammar on the page (ivory / amber / violet) is the ladder's.
+ *
+ * Row shape (authoring): [base, past, participle, arabicMeaning, exampleEn,
+ * exampleAr, family, extras?]. `past`/`participle` are the taught forms;
+ * `extras.pa` / `extras.pp` are further forms we accept and show smaller.
+ * `be` is the one verb with two taught pasts: «was / were».
+ *
+ * `group` is DERIVED from the spelling, never typed by hand — a reference that
+ * gets its own pattern label wrong loses the reader. The four groups answer one
+ * practical question: does the third form need learning on its own?
+ *   AAA  the three are one word            put / put / put
+ *   ABA  the third goes back to the base   come / came / come
+ *   ABB  the second and third are one      buy / bought / bought
+ *   ABC  the third is a form of its own    go / went / gone, beat / beat / beaten
+ *
+ * `tier`: 1 = the 50 most frequent, 2 = the next 75, 3 = the rest.
+ *
+ * Checked 2026-10-06 by two reviewers (English forms + teaching notes; Saudi
+ * Arabic + gender agreement). A "She" sentence whose Arabic verb could read as
+ * «I» carries «هي» so the gender survives translation.
+ */
+
+/** Rhyme families — the fastest way to learn the list (see the FAQ). */
+export const FAMILIES = {
+  same3: { name: "لا يتغيّر أبداً", rule: "التصريفات الثلاثة متطابقة: put / put / put." },
+  ought: { name: "عائلة ought", rule: "الثاني والثالث ينتهيان بالمقطع ought أو aught: think / thought / thought." },
+  "i-a-u": { name: "عائلة i → a → u", rule: "حرف العلّة يتدرّج: sing / sang / sung." },
+  "i-u-u": { name: "عائلة i → u → u", rule: "حرف العلّة يتحوّل إلى u ويثبت: stick / stuck / stuck." },
+  "ew-own": { name: "عائلة ew → own", rule: "الثاني ينتهي بالمقطع ew والثالث بالمقطع own أو awn: know / knew / known." },
+  "ow-ed-own": { name: "ماضٍ منتظم، ثالثٌ شاذّ", rule: "الثاني يأخذ ed والثالث ينتهي بالحرف n: show / showed / shown." },
+  "eep-ept": { name: "عائلة ept", rule: "الصوت الطويل يقصر وينتهي بالحرف t: keep / kept / kept." },
+  "d-t": { name: "عائلة d → t", rule: "الدال في آخر الفعل تصير تاءً: send / sent / sent." },
+  "ee-ed": { name: "عائلة الصوت القصير", rule: "الصوت الطويل يقصر: feed / fed / fed." },
+  "oke-oken": { name: "عائلة oke → oken", rule: "الثاني فيه الحرف o والثالث يضيف en: speak / spoke / spoken." },
+  "ore-orn": { name: "عائلة ore → orn", rule: "الثاني ينتهي بالمقطع ore والثالث بالمقطع orn: wear / wore / worn." },
+  "ide-idden": { name: "عائلة ide → ode → idden", rule: "الثاني فيه الحرف o والثالث يضيف en: write / wrote / written." },
+  "ind-ound": { name: "عائلة ind → ound", rule: "ind تصير ound: find / found / found." },
+  "t-ed": { name: "الوجهان: ed أو t", rule: "كلاهما صحيح: learned أو learnt. نعلّم ed ونقبل t." },
+  aid: { name: "عائلة aid", rule: "الياء تسقط ويحلّ محلّها aid: pay / paid / paid." },
+  old: { name: "عائلة old", rule: "ell تصير old: sell / sold / sold." },
+  "ake-ook-aken": { name: "عائلة ake → ook → aken", rule: "take / took / taken، وكل مركّباته." },
+  "oot-ot": { name: "عائلة الصوت القصير ot", rule: "shoot / shot / shot، get / got / got." },
+  "ite-itten": { name: "عائلة الحرف المضاعف", rule: "الثالث يضاعف الحرف ويضيف en: hide / hid / hidden." },
+  unique: { name: "وحيد في نمطه", rule: "لا ينتمي لعائلة قافية — يُحفظ هو ومركّباته (give → forgive)." },
+};
+
+/** The four spelling patterns, in the order the filter chips show them. */
+export const GROUPS = {
+  AAA: { label: "الثلاثة واحد", hint: "لا يتغيّر أبداً", example: "put · put · put" },
+  ABA: { label: "الثالث يرجع للأصل", hint: "الأول والثالث متطابقان", example: "come · came · come" },
+  ABB: { label: "الثاني والثالث واحد", hint: "يُحفظ شكلان فقط", example: "buy · bought · bought" },
+  ABC: { label: "الثالث شكل جديد", hint: "يُحفظ الثالث وحده", example: "go · went · gone" },
+};
+
+export const TIERS = {
+  1: { label: "أساسي", hint: "أكثر 50 فعلاً استخداماً" },
+  2: { label: "متوسط", hint: "الـ 75 التالية" },
+  3: { label: "متقدم", hint: "البقية" },
+};
+
+const TIER_SIZES = [50, 75];
+
+// prettier-ignore
+const ROWS = [
+  // ── tier 1 — the fifty that carry ordinary speech ─────────────────────────
+  ["be", "was / were", "been", "يكون", "The room was empty when we arrived.", "الغرفة كانت فاضية لما وصلنا.", "unique",
+    { note: "الماضي شكلان: was مع I / he / she / it، و were مع you / we / they. والتصريف الثالث been دائماً." }],
+  ["have", "had", "had", "يملك، عنده", "We had a long meeting about the budget.", "كان عندنا اجتماع طويل عن الميزانية.", "unique"],
+  ["do", "did", "done", "يفعل، يسوّي", "He did the exercises without any help.", "سوّى التمارين بدون أي مساعدة.", "unique",
+    { note: "did للماضي البسيط، و done مع have / has / had وفي المبني للمجهول (it was done). «I have did» خطأ شائع جداً." }],
+  ["say", "said", "said", "يقول", "The manager said the meeting would start at nine.", "المدير قال إن الاجتماع بيبدأ الساعة تسع.", "aid",
+    { note: "تُكتب said لا sayed، وتُنطق «سِد» لا «سيد»." }],
+  ["go", "went", "gone", "يذهب، يروح", "She went to the clinic on Tuesday morning.", "راحت للعيادة يوم الثلاثاء الصبح.", "unique",
+    { note: "الخطأ الأشهر على الإطلاق: «I have went». التصريف الثالث gone، و went لا يأتي أبداً بعد have أو has." }],
+  ["get", "got", "got", "يحصل على", "I got my results by email last night.", "وصلتني نتيجتي على الإيميل أمس بالليل.", "oot-ot",
+    { pp: ["gotten"], note: "got هو الثاني والثالث معاً في الإنجليزية البريطانية، و gotten أمريكية وصحيحة أيضاً." }],
+  ["make", "made", "made", "يصنع، يسوّي", "We made a plan before the presentation.", "سوّينا خطة قبل العرض.", "unique"],
+  ["know", "knew", "known", "يعرف", "I knew the answer, but I stayed quiet.", "كنت أعرف الجواب، بس سكتّ.", "ew-own",
+    { note: "حرف k في البداية لا يُنطق لكنه يُكتب: knew و known — لا new ولا nown." }],
+  ["think", "thought", "thought", "يفكّر، يظن", "He thought about the offer for two days.", "فكّر في العرض يومين.", "ought"],
+  ["take", "took", "taken", "يأخذ", "She took the bus to the airport.", "هي ركبت الباص للمطار.", "ake-ook-aken"],
+  ["see", "saw", "seen", "يرى، يشوف", "We saw the doctor at four o'clock.", "شفنا الدكتور الساعة أربع.", "unique",
+    { note: "saw للماضي البسيط، و seen مع have / has / had وفي المبني للمجهول. «I seen it» خطأ." }],
+  ["come", "came", "come", "يأتي، يجي", "They came late because of the traffic.", "جوا متأخرين بسبب الزحمة.", "unique",
+    { note: "التصريف الثالث يرجع للأصل: come. كثيرون يكتبون «has came» وهو خطأ." }],
+  ["give", "gave", "given", "يعطي", "The trainer gave us extra time.", "المدرّب عطانا وقت زيادة.", "unique"],
+  ["find", "found", "found", "يجد، يلقى", "He found his keys under the sofa.", "لقى مفاتيحه تحت الكنب.", "ind-ound"],
+  ["tell", "told", "told", "يخبر، يقول لـ", "I told her the truth right away.", "قلت لها الصدق على طول.", "old"],
+  ["become", "became", "become", "يصبح، يصير", "The project became too expensive.", "المشروع صار مكلّف زيادة عن اللزوم.", "unique",
+    { note: "مثل come تماماً: التصريف الثالث يرجع للأصل become." }],
+  ["leave", "left", "left", "يغادر، يترك", "They left the office before sunset.", "طلعوا من المكتب قبل المغرب.", "unique"],
+  ["feel", "felt", "felt", "يشعر، يحس", "I felt nervous before the interview.", "حسّيت بتوتر قبل المقابلة.", "eep-ept",
+    { note: "felt لا feeled — الفعل من عائلة keep / kept و sleep / slept." }],
+  ["put", "put", "put", "يضع، يحط", "She put the documents in the folder.", "حطّت الأوراق في الملف.", "same3",
+    { note: "لا يتغيّر أبداً: put / put / put، ولا تُضاف له ed." }],
+  ["mean", "meant", "meant", "يقصد، يعني", "I meant it as a compliment.", "كان قصدي مدح.", "eep-ept",
+    { note: "meant تُنطق «مِنت» وتُكتب بالحرفين ea — لا meaned." }],
+  ["keep", "kept", "kept", "يحتفظ بـ، يخلّي", "He kept the receipt for the warranty.", "احتفظ بالفاتورة عشان الضمان.", "eep-ept"],
+  ["let", "let", "let", "يسمح، يخلّي", "They let us leave early on Thursday.", "خلّونا نطلع بدري يوم الخميس.", "same3",
+    { note: "ثابت في التصريفات الثلاثة، ولا يُخلط مع left التي هي من leave." }],
+  ["begin", "began", "begun", "يبدأ", "The new project began in September.", "المشروع الجديد بدأ في سبتمبر.", "i-a-u",
+    { note: "عائلة i → a → u: begin / began / begun، مثل sing / sang / sung تماماً." }],
+  ["show", "showed", "shown", "يعرض، يورّي", "She showed us the new dashboard.", "ورّتنا لوحة التحكم الجديدة.", "ow-ed-own",
+    { note: "الماضي منتظم showed، والتصريف الثالث شاذّ shown." }],
+  ["hear", "heard", "heard", "يسمع", "I heard the announcement clearly.", "سمعت الإعلان بوضوح.", "unique",
+    { note: "heard لا heared — وتُنطق مثل bird و word، لا «هيرد»." }],
+  ["run", "ran", "run", "يركض، يدير", "She ran the whole meeting without notes.", "أدارت الاجتماع كله بدون أوراق.", "unique",
+    { note: "run / ran / run — التصريف الثالث يرجع للأصل، لا runned ولا ranned." }],
+  ["hold", "held", "held", "يمسك، يعقد", "The committee held the meeting online.", "اللجنة عقدت الاجتماع أونلاين.", "unique"],
+  ["bring", "brought", "brought", "يجلب، يجيب", "He brought his laptop to the session.", "جاب اللابتوب معه للجلسة.", "ought",
+    { note: "«bringed» غير موجودة. الفعل من عائلة ought: brought." }],
+  ["write", "wrote", "written", "يكتب", "She wrote the summary in one hour.", "هي كتبت الملخص في ساعة.", "ide-idden",
+    { note: "التصريف الثالث written بحرف t مضاعف — لا writen." }],
+  ["sit", "sat", "sat", "يجلس", "They sat near the window.", "جلسوا جنب الشباك.", "unique",
+    { note: "sat بحرف t واحد، ولا تُخلط مع set التي معناها «يضبط»." }],
+  ["stand", "stood", "stood", "يقف", "We stood at the back of the hall.", "وقفنا في آخر القاعة.", "unique"],
+  ["lose", "lost", "lost", "يخسر، يضيّع", "He lost his ID card at the station.", "ضيّع بطاقة هويته في المحطة.", "unique",
+    { note: "lost بحرف o واحد، و lose تنتهي بالحرفين se — أما loose فكلمة ثانية معناها «واسع، مرخي»." }],
+  ["pay", "paid", "paid", "يدفع", "She paid the fees online.", "هي دفعت الرسوم أونلاين.", "aid",
+    { note: "paid لا payed — الياء تسقط، تماماً مثل say / said." }],
+  ["meet", "met", "met", "يقابل، يلتقي", "We met the new trainer yesterday.", "قابلنا المدرّب الجديد أمس.", "ee-ed"],
+  ["set", "set", "set", "يضبط، يحدّد", "He set a reminder for the deadline.", "ضبط تذكير لموعد التسليم.", "same3"],
+  ["learn", "learned", "learned", "يتعلّم", "He learned the whole list in a week.", "حفظ القائمة كلها في أسبوع.", "t-ed",
+    { pa: ["learnt"], pp: ["learnt"], note: "learned هي الأشيع في الإنجليزية كلها، و learnt أكثر استخداماً في البريطانية — وكلاهما صحيح." }],
+  ["understand", "understood", "understood", "يفهم", "She understood the question right away.", "هي فهمت السؤال على طول.", "unique"],
+  ["speak", "spoke", "spoken", "يتكلّم", "He spoke to the director this morning.", "كلّم المدير اليوم الصبح.", "oke-oken"],
+  ["read", "read", "read", "يقرأ", "He read the article twice before replying.", "قرأ المقال مرتين قبل لا يرد.", "ee-ed",
+    { note: "الكتابة واحدة في الثلاثة، لكن النطق يتغيّر: «ريد» في الأول، و«رِد» في الثاني والثالث." }],
+  ["spend", "spent", "spent", "يقضي (وقتاً)، يصرف", "We spent the afternoon revising.", "قضينا العصر كله نراجع.", "d-t"],
+  ["grow", "grew", "grown", "ينمو، يكبر", "The company grew quickly after 2020.", "الشركة كبرت بسرعة بعد 2020.", "ew-own"],
+  ["win", "won", "won", "يفوز", "Our team won the final round.", "فريقنا فاز في الجولة الأخيرة.", "i-u-u",
+    { note: "won تُنطق مثل one تماماً — ولا تُكتب أبداً winned." }],
+  ["teach", "taught", "taught", "يعلّم، يدرّس", "She taught grammar for eight years.", "هي درّست القواعد ثمان سنين.", "ought",
+    { note: "«teached» غير موجودة. taught تُكتب بالمقطع augh مثل caught." }],
+  ["buy", "bought", "bought", "يشتري", "She bought the tickets in advance.", "اشترت التذاكر من بدري.", "ought"],
+  ["send", "sent", "sent", "يرسل", "I sent the file an hour ago.", "أرسلت الملف قبل ساعة.", "d-t",
+    { note: "عائلة d → t: send / sent، spend / spent، lend / lent، build / built." }],
+  ["build", "built", "built", "يبني", "They built the extension in six months.", "بنوا الملحق في ست شهور.", "d-t"],
+  ["fall", "fell", "fallen", "يسقط، يطيح", "The price fell sharply last month.", "السعر نزل بقوة الشهر اللي فات.", "unique",
+    { note: "fell ماضي fall. أما felt فهي من feel — والخلط بينهما شائع." }],
+  ["cut", "cut", "cut", "يقطع، يقص", "He cut the last paragraph from the report.", "حذف آخر فقرة من التقرير.", "same3"],
+  ["sell", "sold", "sold", "يبيع", "They sold the car last week.", "باعوا السيارة الأسبوع اللي فات.", "old",
+    { note: "sell / sold و tell / told — نفس العائلة تماماً." }],
+  ["break", "broke", "broken", "يكسر، يتعطّل", "The machine broke down on Sunday.", "المكينة خربت يوم الأحد.", "oke-oken"],
+
+  // ── tier 2 — the next seventy-five ────────────────────────────────────────
+  ["hit", "hit", "hit", "يضرب، يصيب", "The news hit the market hard.", "الخبر أثّر على السوق بقوة.", "same3"],
+  ["eat", "ate", "eaten", "يأكل", "We ate before the lecture.", "أكلنا قبل المحاضرة.", "unique",
+    { note: "ate للماضي، و eaten بعد have / has. «I have ate» خطأ شائع." }],
+  ["catch", "caught", "caught", "يمسك، يلحق على", "She caught the early flight.", "هي لحقت على الرحلة الصبحية.", "ought",
+    { note: "caught تُكتب بالمقطع augh لا ough — مثل taught، وهما الاستثناءان داخل عائلة ought." }],
+  ["draw", "drew", "drawn", "يرسم، يسحب", "The engineer drew the plan by hand.", "المهندس رسم المخطط بيده.", "ew-own"],
+  ["choose", "chose", "chosen", "يختار", "They chose the second option.", "اختاروا الخيار الثاني.", "oke-oken",
+    { note: "choose بحرفي o و chose بحرف واحد — والفرق في النطق أيضاً." }],
+  ["lead", "led", "led", "يقود، يرأس", "She led the team for two years.", "قادت الفريق سنتين.", "ee-ed",
+    { note: "led بلا a — و lead بهذه الكتابة هي المضارع، أو معدن الرصاص." }],
+  ["drive", "drove", "driven", "يقود (سيارة)، يسوق", "He drove to Jeddah in five hours.", "ساق السيارة لجدة في خمس ساعات.", "ide-idden"],
+  ["ride", "rode", "ridden", "يركب", "They rode the metro to the exhibition.", "ركبوا المترو للمعرض.", "ide-idden"],
+  ["rise", "rose", "risen", "يرتفع، يطلع", "Prices rose by twelve percent.", "الأسعار ارتفعت 12 بالمية.", "ide-idden",
+    { note: "rise لا يأخذ مفعولاً (الشيء يرتفع بنفسه)، أما raise فيأخذ مفعولاً وهو فعل منتظم: raised." }],
+  ["wear", "wore", "worn", "يلبس", "She wore the blue abaya to the ceremony.", "هي لبست العباية الزرقاء في الحفل.", "ore-orn"],
+  ["fight", "fought", "fought", "يقاتل، يكافح", "They fought the decision for months.", "قاوموا القرار شهور.", "ought"],
+  ["throw", "threw", "thrown", "يرمي", "He threw the old draft away.", "رمى المسودة القديمة.", "ew-own",
+    { note: "threw (ماضٍ) و through (حرف جر) تُنطقان بالطريقة نفسها وتُكتبان مختلفتين." }],
+  ["sleep", "slept", "slept", "ينام", "I slept badly before the exam.", "ما نمت زين قبل الاختبار.", "eep-ept"],
+  ["fly", "flew", "flown", "يطير، يسافر بالطيارة", "We flew to Cairo on Thursday.", "سافرنا للقاهرة بالطيارة يوم الخميس.", "ew-own"],
+  ["sing", "sang", "sung", "يغنّي", "The children sang together at the event.", "الأطفال غنّوا مع بعض في الحفل.", "i-a-u"],
+  ["drink", "drank", "drunk", "يشرب", "He drank three cups of coffee.", "شرب ثلاث فناجين قهوة.", "i-a-u",
+    { note: "drink / drank / drunk — نفس نمط sing و swim و begin." }],
+  ["forget", "forgot", "forgotten", "ينسى", "I forgot my password again.", "نسيت كلمة المرور مرة ثانية.", "oot-ot",
+    { note: "forgot للماضي، و forgotten بعد have / has — بحرف t مضاعف." }],
+  ["hide", "hid", "hidden", "يخبّي، يخفي", "She hid the gift in the cupboard.", "خبّت الهدية في الدولاب.", "ite-itten",
+    { note: "hid للماضي، و hidden بعد have / has — بحرف d مضاعف." }],
+  ["lie", "lay", "lain", "يستلقي، ينسدح", "She lay on the sofa for an hour.", "انسدحت على الكنبة ساعة.", "unique",
+    { note: "فعلان مختلفان: lie / lay / lain معناه «يستلقي»، و lay / laid / laid معناه «يضع شيئاً». أما lie بمعنى «يكذب» فمنتظم: lied." }],
+  ["lay", "laid", "laid", "يضع، يمدّد", "He laid the report on the table.", "حطّ التقرير على الطاولة.", "aid",
+    { note: "laid لا layed. وكلمة lay نفسها هي أيضاً ماضي lie بمعنى «يستلقي» — وهنا مصدر الخلط الأكبر." }],
+  ["hurt", "hurt", "hurt", "يؤلم، يجرح", "The criticism hurt more than he expected.", "الانتقاد جرحه أكثر مما توقّع.", "same3"],
+  ["cost", "cost", "cost", "يكلّف", "The repair cost more than the phone.", "التصليح كلّف أكثر من سعر الجوال.", "same3"],
+  ["shut", "shut", "shut", "يقفل، يسكّر", "He shut the door quietly.", "سكّر الباب بهدوء.", "same3"],
+  ["wake", "woke", "woken", "يصحى، يستيقظ", "She woke at five for the flight.", "صحت الساعة خمس عشان الرحلة.", "oke-oken"],
+  ["steal", "stole", "stolen", "يسرق", "Someone stole her bag at the station.", "أحد سرق شنطتها في المحطة.", "oke-oken"],
+  ["swim", "swam", "swum", "يسبح", "He swam for thirty minutes.", "سبح نص ساعة.", "i-a-u"],
+  ["blow", "blew", "blown", "ينفخ، يهبّ", "The wind blew the papers off the desk.", "الهوا طيّر الأوراق من على المكتب.", "ew-own"],
+  ["beat", "beat", "beaten", "يهزم، يغلب", "Our team beat theirs by one point.", "فريقنا غلب فريقهم بفارق نقطة.", "unique",
+    { note: "الماضي beat بلا تغيير، أما التصريف الثالث فهو beaten." }],
+  ["feed", "fed", "fed", "يُطعم، يأكّل", "She fed the cat before leaving.", "أكّلت القطوة قبل لا تطلع.", "ee-ed"],
+  ["shoot", "shot", "shot", "يطلق النار، يصوّر", "The photographer shot the whole event.", "المصوّر صوّر الفعالية كلها.", "oot-ot"],
+  ["hang", "hung", "hung", "يعلّق", "She hung the certificate on the wall.", "هي علّقت شهادتها على الجدار.", "i-u-u",
+    { note: "hung للأشياء المعلّقة. أما hanged فتُستخدم للإعدام فقط." }],
+  ["stick", "stuck", "stuck", "يلصق، يلتزم بـ", "We stuck to the original plan.", "التزمنا بالخطة الأصلية.", "i-u-u"],
+  ["strike", "struck", "struck", "يضرب، يخطر على البال", "The idea struck her during the lecture.", "الفكرة خطرت على بالها في المحاضرة.", "i-u-u"],
+  ["ring", "rang", "rung", "يرنّ، يتصل", "The phone rang three times.", "الجوال رنّ ثلاث مرات.", "i-a-u"],
+  ["seek", "sought", "sought", "يسعى، يطلب", "She sought advice before deciding.", "طلبت النصيحة قبل لا تقرر.", "ought"],
+  ["deal", "dealt", "dealt", "يتعامل مع", "She dealt with the complaint herself.", "تعاملت مع الشكوى بنفسها.", "eep-ept",
+    { note: "dealt تُنطق «دِلت» وتُكتب بالحرفين ea — لا dealed." }],
+  ["burn", "burned", "burned", "يحرق، يحترق", "The bread burned while she was on the phone.", "الخبز احترق وهي تكلّم بالجوال.", "t-ed",
+    { pa: ["burnt"], pp: ["burnt"] }],
+  ["spell", "spelled", "spelled", "يتهجّى", "He spelled his name for the receptionist.", "تهجّى اسمه لموظف الاستقبال.", "t-ed",
+    { pa: ["spelt"], pp: ["spelt"] }],
+  ["smell", "smelled", "smelled", "يشم، تفوح منه رائحة", "The kitchen smelled of cardamom.", "المطبخ كانت ريحته هيل.", "t-ed",
+    { pa: ["smelt"], pp: ["smelt"] }],
+  ["spoil", "spoiled", "spoiled", "يخرّب، يُفسد", "The rain spoiled the whole trip.", "المطر خرّب الطلعة كلها.", "t-ed",
+    { pa: ["spoilt"], pp: ["spoilt"] }],
+  ["dream", "dreamed", "dreamed", "يحلم", "He dreamed about the trip for months.", "كان يحلم بالرحلة شهور.", "t-ed",
+    { pa: ["dreamt"], pp: ["dreamt"], note: "dreamed هي الأشيع في الإنجليزية كلها، و dreamt أكثر استخداماً في البريطانية — وكلاهما صحيح." }],
+  ["shake", "shook", "shaken", "يهز، يصافح", "He shook the client's hand at the door.", "صافح العميل عند الباب.", "ake-ook-aken"],
+  ["sink", "sank", "sunk", "يغرق", "The boat sank within minutes.", "القارب غرق في دقايق.", "i-a-u",
+    { pa: ["sunk"], note: "sank للماضي و sunk بعد have / has. أما sunken فصفة لا فعل." }],
+  ["bite", "bit", "bitten", "يعضّ", "The dog bit the delivery man.", "الكلب عضّ مندوب التوصيل.", "ite-itten"],
+  ["freeze", "froze", "frozen", "يتجمّد، يعلّق", "The screen froze during the call.", "الشاشة علّقت وقت المكالمة.", "oke-oken"],
+  ["forgive", "forgave", "forgiven", "يسامح", "He forgave the mistake right away.", "سامح وعدّى الغلطة على طول.", "unique",
+    { note: "يتبع give تماماً: forgive / forgave / forgiven." }],
+  ["lend", "lent", "lent", "يُقرض، يسلّف", "She lent me two hundred riyals.", "سلّفتني ميتين ريال.", "d-t",
+    { note: "lend معناه «يُقرض» و borrow معناه «يستلف» — والخلط بينهما شائع جداً." }],
+  ["light", "lit", "lit", "يشعل، يولّع", "He lit a candle when the power went out.", "ولّع شمعة لما طفت الكهربا.", "unique",
+    { pa: ["lighted"], pp: ["lighted"] }],
+  ["sweep", "swept", "swept", "يكنس", "She swept the floor before the guests arrived.", "هي كنست الأرض قبل لا يوصلون الضيوف.", "eep-ept"],
+  ["tear", "tore", "torn", "يمزّق، يشقّ", "He tore the page out by accident.", "شقّ الصفحة بالغلط.", "ore-orn",
+    { note: "tear بمعنى «يشقّ» تُنطق مثل care، أما tear بمعنى «دمعة» فتُنطق مثل here، وفعلها منتظم: her eyes teared up." }],
+  ["swear", "swore", "sworn", "يحلف", "He swore he had sent the message.", "حلف إنه أرسل الرسالة.", "ore-orn"],
+  ["dig", "dug", "dug", "يحفر", "They dug a channel for the cables.", "حفروا قناة للكيابل.", "i-u-u"],
+  ["split", "split", "split", "يقسّم", "We split the work between four people.", "قسّمنا الشغل على أربعة أشخاص.", "same3"],
+  ["spread", "spread", "spread", "ينتشر، ينشر", "The news spread within an hour.", "الخبر انتشر في ساعة.", "same3",
+    { note: "الكتابة واحدة، والنطق واحد أيضاً: «سبرِد» في الثلاثة — على عكس read." }],
+  ["bet", "bet", "bet", "يراهن", "He bet on the wrong team.", "راهن على الفريق الغلط.", "same3",
+    { pa: ["betted"], pp: ["betted"] }],
+  ["quit", "quit", "quit", "يترك، يستقيل", "She quit her job in March.", "تركت وظيفتها في مارس.", "same3",
+    { pa: ["quitted"], pp: ["quitted"] }],
+  ["prove", "proved", "proved", "يُثبت", "The test proved his point.", "الاختبار أثبت كلامه.", "unique",
+    { pp: ["proven"], note: "proved و proven كلاهما صحيح للتصريف الثالث، و proven أشيع كصفة: a proven method." }],
+  ["slide", "slid", "slid", "ينزلق، يتزحلق", "The box slid across the floor.", "الكرتون تزحلق على الأرض.", "unique"],
+  ["spin", "spun", "spun", "يدور، يلفّ", "The wheel spun for a few seconds.", "العجلة دارت كم ثانية.", "i-u-u"],
+  ["weave", "wove", "woven", "ينسج، يحيك", "She wove the pattern by hand.", "هي نسجت النقشة بيدها.", "oke-oken",
+    { pa: ["weaved"], pp: ["weaved"] }],
+  ["bend", "bent", "bent", "يثني، ينحني", "He bent the wire into shape.", "ثنى السلك على الشكل اللي يبيه.", "d-t"],
+  ["bind", "bound", "bound", "يربط، يُلزم", "They bound the pages together.", "جلّدوا الأوراق مع بعض.", "ind-ound"],
+  ["burst", "burst", "burst", "ينفجر", "The pipe burst during the night.", "الماسورة انفجرت في الليل.", "same3"],
+  ["cast", "cast", "cast", "يرمي، يُدلي (بصوته)", "She cast her vote early.", "أدلت بصوتها من بدري.", "same3"],
+  ["flee", "fled", "fled", "يهرب", "The family fled the storm.", "العايلة هربت من العاصفة.", "ee-ed"],
+  ["grind", "ground", "ground", "يطحن", "She ground the coffee too finely.", "هي طحنت القهوة ناعمة زيادة.", "ind-ound"],
+  ["wind", "wound", "wound", "يلفّ، يعبّي (الساعة)", "He wound the cable around the hook.", "لفّ السلك على العلّاقة.", "ind-ound",
+    { note: "wound هنا تُنطق «واوند» وهي ماضي wind. أما wound بمعنى «جرح» فتُنطق «ووند» وفعلها منتظم." }],
+  ["mistake", "mistook", "mistaken", "يخلط بين، يظن غلط", "I mistook her for her sister.", "حسبتها أختها.", "ake-ook-aken"],
+  ["upset", "upset", "upset", "يزعّل، يضايق", "The result upset the whole team.", "النتيجة زعّلت الفريق كله.", "same3"],
+  ["misunderstand", "misunderstood", "misunderstood", "يسيء الفهم", "He misunderstood the instructions completely.", "فهم التعليمات غلط تماماً.", "unique"],
+  ["overcome", "overcame", "overcome", "يتغلّب على", "She overcame her fear of public speaking.", "تغلّبت على خوفها من الكلام قدام الناس.", "unique",
+    { note: "يتبع come: overcome / overcame / overcome — التصريف الثالث يرجع للأصل." }],
+  ["undergo", "underwent", "undergone", "يمرّ بـ، يخضع لـ", "The building underwent a full renovation.", "المبنى خضع لترميم كامل.", "unique"],
+  ["undertake", "undertook", "undertaken", "يتولّى، يتعهّد بـ", "She undertook the project alone.", "تولّت المشروع لحالها.", "ake-ook-aken"],
+  ["undo", "undid", "undone", "يتراجع عن، يلغي", "He undid the last change by mistake.", "لغى آخر تعديل بالغلط.", "unique"],
+  ["withdraw", "withdrew", "withdrawn", "يسحب، ينسحب", "She withdrew her application.", "سحبت طلبها.", "ew-own"],
+
+  // ── tier 3 — the rest ─────────────────────────────────────────────────────
+  ["mislead", "misled", "misled", "يضلّل", "The headline misled a lot of readers.", "العنوان ضلّل ناس كثير.", "ee-ed"],
+  ["speed", "sped", "sped", "يُسرع", "The car sped past the exit.", "السيارة عدّت المخرج بسرعة.", "ee-ed",
+    { pa: ["speeded"], pp: ["speeded"] }],
+  ["swell", "swelled", "swollen", "ينتفخ، يتورّم", "Her ankle swelled after the fall.", "كاحلها تورّم بعد الطيحة.", "ow-ed-own",
+    { pp: ["swelled"], note: "الماضي منتظم swelled، والتصريف الثالث الأشيع swollen." }],
+  ["rid", "rid", "rid", "يتخلّص من", "They rid the system of old accounts.", "نظّفوا النظام من الحسابات القديمة.", "same3",
+    { note: "أشهر استخدام له: get rid of — «يتخلّص من»." }],
+  ["broadcast", "broadcast", "broadcast", "يبثّ، يذيع", "The channel broadcast the match live.", "القناة نقلت المباراة على الهوا.", "same3",
+    { pa: ["broadcasted"], pp: ["broadcasted"] }],
+  ["bleed", "bled", "bled", "ينزف", "The cut bled for a minute.", "الجرح نزف دقيقة.", "ee-ed"],
+  ["breed", "bred", "bred", "يربّي (حيوانات)", "They bred horses on that farm.", "كانوا يربّون خيل في المزرعة ذيك.", "ee-ed"],
+  ["cling", "clung", "clung", "يتشبّث، يتعلّق بـ", "The child clung to her mother.", "الطفلة تعلّقت بأمها.", "i-u-u"],
+  ["creep", "crept", "crept", "يزحف، يتسلّل", "Doubt crept into the discussion.", "الشك تسلّل للنقاش.", "eep-ept"],
+  ["weep", "wept", "wept", "يبكي", "She wept when she read the letter.", "بكت لما قرت الرسالة.", "eep-ept"],
+  ["spit", "spat", "spat", "يبصق، يتفل", "The engine spat smoke for a moment.", "المكينة طلّعت دخان لحظة.", "unique",
+    { pa: ["spit"], pp: ["spit"] }],
+  ["fling", "flung", "flung", "يقذف، يرمي بقوة", "He flung his bag onto the seat.", "رمى شنطته على الكرسي.", "i-u-u"],
+  ["forbid", "forbade", "forbidden", "يمنع", "The rules forbade phones in the exam.", "النظام منع الجوالات في الاختبار.", "unique",
+    { pa: ["forbad"] }],
+  ["kneel", "knelt", "knelt", "يجثو، ينزل على ركبته", "He knelt to tie his shoe.", "نزل على ركبته يربط جزمته.", "eep-ept",
+    { pa: ["kneeled"], pp: ["kneeled"] }],
+  ["sew", "sewed", "sewn", "يخيط", "She sewed the button back on.", "هي خيّطت الزر مكانه.", "ow-ed-own",
+    { pp: ["sewed"], note: "الماضي منتظم sewed، والتصريف الثالث الأشيع sewn. ويُنطق مثل so لا مثل sue." }],
+  ["sow", "sowed", "sown", "يزرع (بذوراً)", "The farmers sowed the seeds in autumn.", "المزارعين زرعوا البذور في الخريف.", "ow-ed-own",
+    { pp: ["sowed"] }],
+  ["sting", "stung", "stung", "يلسع، يقرص", "A bee stung her on the hand.", "نحلة قرصتها في يدها.", "i-u-u"],
+  ["spring", "sprang", "sprung", "يقفز، ينبثق", "He sprang out of his chair.", "نطّ من كرسيه.", "i-a-u",
+    { pa: ["sprung"] }],
+  ["swing", "swung", "swung", "يتأرجح، يتحرّك بقوة", "The door swung shut behind him.", "الباب تسكّر وراه.", "i-u-u"],
+  ["arise", "arose", "arisen", "ينشأ، يطرأ", "A problem arose during the test.", "طلعت مشكلة وقت التجربة.", "ide-idden"],
+  ["awake", "awoke", "awoken", "يستيقظ", "He awoke to the sound of rain.", "صحى على صوت المطر.", "oke-oken"],
+  ["bear", "bore", "borne", "يتحمّل", "She bore the pressure without complaining.", "تحمّلت الضغط بدون ما تشتكي.", "ore-orn",
+    { pp: ["born"], note: "born للولادة في المبني للمجهول فقط: she was born in Riyadh. وفي غير ذلك borne: has borne the cost." }],
+  ["overtake", "overtook", "overtaken", "يتجاوز، يتخطّى", "The smaller firm overtook its rival.", "الشركة الأصغر تجاوزت منافستها.", "ake-ook-aken"],
+  ["uphold", "upheld", "upheld", "يؤيّد، يحافظ على", "The court upheld the original decision.", "المحكمة أيّدت القرار الأصلي.", "unique"],
+  ["withhold", "withheld", "withheld", "يحجب، يمسك عن", "They withheld the results for a week.", "حجبوا النتايج أسبوع.", "unique"],
+  ["withstand", "withstood", "withstood", "يصمد أمام", "The bridge withstood the flood.", "الجسر صمد قدام السيل.", "unique"],
+  ["stink", "stank", "stunk", "تفوح منه رائحة كريهة", "The kitchen stank after the power cut.", "المطبخ صارت ريحته خايسة بعد ما انقطعت الكهربا.", "i-a-u",
+    { pa: ["stunk"] }],
+  ["stride", "strode", "stridden", "يمشي بخطوات واسعة", "He strode into the room without knocking.", "دخل الغرفة بخطوات واسعة بدون ما يدق الباب.", "ide-idden"],
+  ["strive", "strove", "striven", "يسعى جاهداً", "They strove to finish before the deadline.", "اجتهدوا يخلّصون قبل الموعد.", "ide-idden",
+    { pa: ["strived"], pp: ["strived"] }],
+  ["thrust", "thrust", "thrust", "يدفع بقوة", "He thrust the papers into her hand.", "دفّ الأوراق في يدها.", "same3"],
+  ["tread", "trod", "trodden", "يدوس، يخطو", "She trod carefully on the wet floor.", "مشت بحذر على الأرض المبلولة.", "unique",
+    { pp: ["trod"] }],
+  ["wring", "wrung", "wrung", "يعصر", "She wrung the cloth over the sink.", "هي عصرت الخرقة فوق المغسلة.", "i-u-u"],
+  ["forsake", "forsook", "forsaken", "يتخلّى عن، يهجر", "He forsook his old habits after graduation.", "ترك عاداته القديمة بعد التخرّج.", "ake-ook-aken"],
+  ["foresee", "foresaw", "foreseen", "يتوقّع، يتنبّأ", "Nobody foresaw the delay.", "محد توقّع التأخير.", "unique"],
+  ["oversleep", "overslept", "overslept", "يغلبه النوم فيتأخر", "I overslept and missed the first meeting.", "راحت علي نومة وفاتني أول اجتماع.", "eep-ept"],
+  ["overhear", "overheard", "overheard", "يسمع بالصدفة", "She overheard the news in the elevator.", "هي سمعت الخبر بالصدفة في المصعد.", "unique"],
+  ["oversee", "oversaw", "overseen", "يشرف على", "He oversaw the whole project from Riyadh.", "أشرف على المشروع كله من الرياض.", "unique"],
+  ["overthink", "overthought", "overthought", "يفكّر زيادة عن اللزوم", "I overthought the email and sent it late.", "فكّرت في الإيميل زيادة عن اللزوم وأرسلته متأخر.", "ought"],
+  ["overspend", "overspent", "overspent", "يصرف فوق الميزانية", "We overspent on the launch event.", "صرفنا فوق الميزانية على حفل الإطلاق.", "d-t"],
+  ["overpay", "overpaid", "overpaid", "يدفع زيادة", "We overpaid the bill by mistake.", "دفعنا الفاتورة زيادة بالغلط.", "aid"],
+  ["overeat", "overate", "overeaten", "يأكل بزيادة", "I overate at the wedding dinner.", "أكلت زيادة في عشاء الزواج.", "unique"],
+  ["rewrite", "rewrote", "rewritten", "يعيد كتابة", "She rewrote the introduction three times.", "أعادت كتابة المقدمة ثلاث مرات.", "ide-idden"],
+  ["redo", "redid", "redone", "يعيد عمل الشيء", "We redid the slides after the feedback.", "سوّينا الشرايح من جديد بعد الملاحظات.", "unique"],
+  ["rebuild", "rebuilt", "rebuilt", "يعيد بناء", "They rebuilt the website from scratch.", "بنوا الموقع من الصفر من جديد.", "d-t"],
+  ["rethink", "rethought", "rethought", "يعيد التفكير في", "The team rethought the whole plan.", "الفريق أعاد التفكير في الخطة كلها.", "ought"],
+  ["reset", "reset", "reset", "يعيد ضبط", "I reset my password this morning.", "سوّيت كلمة مرور جديدة اليوم الصبح.", "same3"],
+  ["input", "input", "input", "يُدخل (بيانات)", "She input all the numbers into the system.", "هي دخّلت كل الأرقام في النظام.", "same3",
+    { pa: ["inputted"], pp: ["inputted"] }],
+  ["proofread", "proofread", "proofread", "يراجع النص ويدقّقه", "He proofread the contract before signing.", "راجع العقد كلمة كلمة قبل لا يوقّع.", "ee-ed",
+    { note: "مثل read تماماً: الكتابة واحدة، والنطق «ريد» في الأول و«رِد» في الثاني والثالث." }],
+  ["forecast", "forecast", "forecast", "يتوقّع، يتنبّأ", "The bank forecast slower growth this year.", "البنك توقّع نمو أبطأ هالسنة.", "same3",
+    { pa: ["forecasted"], pp: ["forecasted"] }],
+  ["shed", "shed", "shed", "يتخلّص من، يفقد", "He shed five kilos before Ramadan.", "نزّل خمسة كيلو قبل رمضان.", "same3"],
+  ["bid", "bid", "bid", "يقدّم عرضاً، يزايد", "Three companies bid for the contract.", "ثلاث شركات قدّمت عروض على العقد.", "same3"],
+  ["fit", "fit", "fit", "يناسب (المقاس)", "The jacket fit perfectly.", "الجاكيت جا مقاسه مضبوط.", "same3",
+    { pa: ["fitted"], pp: ["fitted"], note: "بمعنى «جا مقاسه»: fit أمريكية و fitted بريطانية. وبمعنى «ركّب» fitted في الاثنتين." }],
+  ["unwind", "unwound", "unwound", "يسترخي، يفكّ", "We unwound at the beach after the exams.", "ارتحنا على البحر بعد الاختبارات.", "ind-ound",
+    { note: "unwound تُنطق «أنواوند» مثل wound ماضي wind." }],
+  ["rewind", "rewound", "rewound", "يرجّع (التسجيل)", "He rewound the recording to check the number.", "رجّع التسجيل عشان يتأكد من الرقم.", "ind-ound"],
+  ["babysit", "babysat", "babysat", "يرعى الأطفال", "My sister babysat the kids on Thursday night.", "أختي جلست مع العيال ليلة الجمعة.", "unique"],
+  ["outgrow", "outgrew", "outgrown", "يكبر على الشيء", "The startup outgrew its first office.", "الشركة الناشئة صار مكتبها الأول ضيّق عليها.", "ew-own"],
+  ["dive", "dived", "dived", "يغوص، يغطس", "He dived into the pool.", "غطس في المسبح.", "unique",
+    { pa: ["dove"], note: "dived صحيحة في كل الإنجليزية، و dove شائعة جداً في الأمريكية للماضي فقط." }],
+  ["spill", "spilled", "spilled", "يكبّ، ينسكب", "I spilled coffee on my laptop.", "كبّيت القهوة على اللابتوب.", "t-ed",
+    { pa: ["spilt"], pp: ["spilt"] }],
+  ["misspell", "misspelled", "misspelled", "يخطئ في الإملاء", "She misspelled the client's name.", "هي كتبت اسم العميل غلط.", "t-ed",
+    { pa: ["misspelt"], pp: ["misspelt"] }],
+  ["mishear", "misheard", "misheard", "يسمع غلط", "I misheard the time of the meeting.", "سمعت وقت الاجتماع غلط.", "unique"],
+  ["override", "overrode", "overridden", "يتجاوز (قراراً)، يلغي", "The manager overrode the system's decision.", "المدير تجاوز قرار النظام.", "ide-idden"],
+  ["overwrite", "overwrote", "overwritten", "يحفظ فوق (ملف)", "I overwrote the old file by accident.", "حفظت فوق الملف القديم بالغلط.", "ide-idden"],
+  ["shine", "shone", "shone", "يلمع، يسطع", "The sun shone all afternoon.", "الشمس كانت طالعة العصر كله.", "unique",
+    { pa: ["shined"], pp: ["shined"], note: "shone عندما يلمع الشيء بنفسه، أما shined فعند تلميع شيء باليد: he shined his shoes." }],
+  ["shrink", "shrank", "shrunk", "ينكمش، يصغر", "My shirt shrank in the wash.", "قميصي انكمش بعد الغسيل.", "i-a-u",
+    { pa: ["shrunk"] }],
+  ["lean", "leaned", "leaned", "يتّكئ، يميل", "She leaned against the wall while waiting.", "هي اتّكت على الجدار وهي تنتظر.", "t-ed",
+    { pa: ["leant"], pp: ["leant"] }],
+  ["leap", "leaped", "leaped", "يقفز، يثب", "Sales leaped after the new campaign.", "المبيعات قفزت بعد الحملة الجديدة.", "t-ed",
+    { pa: ["leapt"], pp: ["leapt"] }],
+];
+
+/** "was / were" → ["was", "were"] */
+const forms = (s) => s.split("/").map((f) => f.trim()).filter(Boolean);
+
+function groupOf(base, past, participle) {
+  const a = base.toLowerCase();
+  const b = forms(past)[0].toLowerCase();
+  const c = participle.toLowerCase();
+  if (a === b && b === c) return "AAA";
+  if (a === c) return "ABA";
+  if (b === c) return "ABB";
+  return "ABC";
+}
+
+export const IRREGULAR_VERBS = ROWS.map(([base, past, participle, ar, exampleEn, exampleAr, family, extra = {}], i) => ({
+  id: base,
+  base,
+  past,
+  participle,
+  ar,
+  exampleEn,
+  exampleAr,
+  group: groupOf(base, past, participle),
+  tier: i < TIER_SIZES[0] ? 1 : i < TIER_SIZES[0] + TIER_SIZES[1] ? 2 : 3,
+  family,
+  pastAlt: extra.pa || [],
+  participleAlt: extra.pp || [],
+  note: extra.note || null,
+}));
+
+/** Every form a learner may type for a slot — taught first, then accepted. */
+export function acceptedForms(verb, slot) {
+  if (slot === "past") return [...forms(verb.past), ...verb.pastAlt];
+  return [verb.participle, ...verb.participleAlt];
+}
+
+export const VERB_COUNT = IRREGULAR_VERBS.length;
