@@ -32,6 +32,7 @@ const LandingV2 = lazy(() => import('./pages/LandingV2'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 const WorkEnglishHub = lazy(() => import('./pages/work/WorkEnglishHub'));
 const WorkEnglishPage = lazy(() => import('./pages/work/WorkEnglishPage'));
+const VerbsPage = lazy(() => import('./pages/verbs/VerbsPage'));
 
 /* Branded chunk-loading screen for the candidate pages (pulsing real mark) */
 /*
@@ -1256,6 +1257,8 @@ function AppRoutes(){
       {/* «الإنجليزي للعمل» — field glossaries for «مصطلحات <مجال> بالانجليزي» searches */}
       <Route path="/work-english" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#0a0e1a'}} />}><WorkEnglishHub /></Suspense>} />
       <Route path="/work-english/:slug" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#0a0e1a'}} />}><WorkEnglishPage /></Suspense>} />
+      {/* «الأفعال الشاذة» — free public irregular-verbs reference + trainer (prerendered, indexable). */}
+      <Route path="/verbs" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#050b16'}} />}><VerbsPage /></Suspense>} />
       <Route path="/privacy" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#060e1c'}} />}><PrivacyPolicy /></Suspense>} />
       <Route path="/terms" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#060e1c'}} />}><TermsOfService /></Suspense>} />
       <Route path="/w" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#0a1225'}} />}><WhatsAppRedirect /></Suspense>} />

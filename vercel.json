@@ -163,6 +163,10 @@
       "destination": "/journey.html"
     },
     {
+      "source": "/verbs",
+      "destination": "/verbs.html"
+    },
+    {
       "source": "/terms",
       "destination": "/terms.html"
     },

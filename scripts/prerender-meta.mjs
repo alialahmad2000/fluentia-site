@@ -114,7 +114,29 @@ function inject(html, seo) {
     if (!robots.test(withMeta)) throw new Error("index.html's robots tag changed — update prerender-meta.mjs");
     withMeta = withMeta.replace(robots, "");
   }
-  return scopeHomeJsonLd(withMeta, seo.path);
+  return scopeHomeJsonLd(withOgImage(withMeta, seo), seo.path);
+}
+
+/** og:image / twitter:image are invariant tags in index.html (Helmet never
+ *  touches them). A route with its own share card swaps them here, at build
+ *  time — which is the only copy link-preview crawlers ever read. */
+function withOgImage(html, seo) {
+  if (!seo.ogImage) return html;
+  const swaps = [
+    [/(<meta property="og:image" content=")[^"]*(")/, seo.ogImage],
+    [/(<meta property="og:image:secure_url" content=")[^"]*(")/, seo.ogImage],
+    [/(<meta name="twitter:image" content=")[^"]*(")/, seo.ogImage],
+  ];
+  if (seo.ogImageAlt) {
+    swaps.push([/(<meta property="og:image:alt" content=")[^"]*(")/, seo.ogImageAlt]);
+    swaps.push([/(<meta name="twitter:image:alt" content=")[^"]*(")/, seo.ogImageAlt]);
+  }
+  let out = html;
+  for (const [re, value] of swaps) {
+    if (!re.test(out)) throw new Error(`index.html lost a share-image tag (${re}) — update prerender-meta.mjs`);
+    out = out.replace(re, (_, a, b) => `${a}${attr(value)}${b}`);
+  }
+  return out;
 }
 
 /** /level-test → dist/level-test.html ; /partners/terms → dist/partners/terms.html */
