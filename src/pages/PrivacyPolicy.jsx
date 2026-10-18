@@ -56,13 +56,13 @@ const Ul = (props) => (
 
 export default function PrivacyPolicy() {
   return (
-    <LegalLayout updated={{ iso: '2026-04-15', display: '15 أبريل 2026' }}>
+    <LegalLayout updated={{ iso: '2026-10-18', display: '18 أكتوبر 2026' }}>
       <Seo path="/privacy" />
 
       <H1>سياسة الخصوصية</H1>
       <div style={{ fontSize: '0.875rem', color: '#7e8a9a', marginBottom: '2rem' }}>
         تاريخ السريان: <time dateTime="2026-03-23">23 مارس 2026</time> · آخر تحديث:{' '}
-        <time dateTime="2026-04-15">15 أبريل 2026</time>
+        <time dateTime="2026-10-18">18 أكتوبر 2026</time>
       </div>
 
       <H2>1. مقدمة</H2>
@@ -215,6 +215,41 @@ export default function PrivacyPolicy() {
         الصادر بالمرسوم الملكي رقم م/19 بتاريخ 1443/2/9هـ.
       </P>
 
+
+      <H2 id="apps">13. تطبيقات طلاقة (ماك، آيفون، آيباد) والمنصّة</H2>
+      <P>
+        التطبيقات الأصلية للأكاديمية وتطبيق الويب (app.fluentia.academy) تعمل على الحساب نفسه والبيانات نفسها الموضّحة
+        أعلاه. لتشغيلها بثبات وتحسينها، تجمع التطبيقات والمنصّة أيضًا:
+      </P>
+      <Ul>
+        <li>
+          <strong>تقارير الأعطال والأخطاء</strong> عبر Sentry (خوادم في الاتحاد الأوروبي): نوع الجهاز، إصدار النظام،
+          إصدار التطبيق، الشاشة المفتوحة، وتفاصيل العطل التقنية، مع معرّف حسابك ودورك (طالب/مدرّب). لا تتضمن اسمك ولا بريدك
+          ولا ما تكتبه.
+        </li>
+        <li>
+          <strong>إحصاءات الاستخدام</strong> عبر PostHog (خوادم في الاتحاد الأوروبي): الشاشات التي تفتحها، الإجراءات
+          الرئيسية (مثل تأكيد حصة أو إرسال واجب)، ومدة الجلسة، مرتبطة بمعرّف حسابك ودورك. على تطبيق الويب قد تُسجَّل
+          الجلسة كتسجيل تفاعلي مع إخفاء كل حقول الإدخال؛ لا تسجيل جلسات في تطبيقات ماك وآيفون وآيباد.
+        </li>
+        <li>
+          <strong>الإشعارات:</strong> عند تفعيلها، يُخزَّن رمز الجهاز لإرسال تنبيهات الحصص والرسائل. يمكنك إيقافها من
+          إعدادات الجهاز في أي وقت.
+        </li>
+        <li>
+          <strong>الميكروفون:</strong> يُستخدم فقط عند ضغطك على زر التسجيل في تمارين التحدث، ويُحلَّل التسجيل بالذكاء
+          الاصطناعي لإعطائك ملاحظات. لا تسجيل في الخلفية.
+        </li>
+      </Ul>
+      <P>لا تحتوي التطبيقات على أي عملية شراء؛ الاشتراك يُدار مع فريق الأكاديمية خارجها.</P>
+
+      <H2 id="deletion">14. حذف الحساب من داخل التطبيق</H2>
+      <P>
+        يمكنك طلب حذف حسابك من إعدادات التطبيق (الحساب ← حذف الحساب) أو بمراسلتنا. عند الطلب يتوقف الدخول فورًا على كل
+        الأجهزة، ويُغلق الحساب نهائيًا خلال 30 يومًا: تُحذف بيانات التواصل والتعريف، ويُحتفظ بالسجل التعليمي مجهول
+        الهوية وبالمستندات المالية المطلوبة نظامًا (المادة 8). خلال الثلاثين يومًا يمكنك التراجع بمراسلة فريق الدعم.
+      </P>
+
       {/* English section */}
       <details
         style={{
@@ -240,7 +275,7 @@ export default function PrivacyPolicy() {
         >
           <h3 style={{ color: '#f8fafc', fontSize: '1.25rem' }}>Privacy Policy — Fluentia Academy</h3>
           <p>
-            <strong>Effective:</strong> March 23, 2026 · <strong>Updated:</strong> April 15, 2026
+            <strong>Effective:</strong> March 23, 2026 · <strong>Updated:</strong> October 18, 2026
           </p>
           <p>
             Fluentia Academy ("we", "us") respects your privacy. This policy explains what personal
@@ -275,6 +310,25 @@ export default function PrivacyPolicy() {
             <strong>Security:</strong> TLS 1.3 in transit, AES-256 at rest. <strong>Retention:</strong>{' '}
             active subscription + 2 years, then deleted or anonymised. <strong>Children:</strong> we do
             not knowingly serve under-13s without guardian consent.
+          </p>
+          <p>
+            <strong>Apps (Mac, iPhone, iPad) and the platform:</strong> the native apps and the web app
+            (app.fluentia.academy) use the same account and data. To keep them stable and improve them they
+            also collect crash and error reports through Sentry (EU servers: device model, OS and app version,
+            the open screen, technical crash details, your account id and role — never your name, email or
+            typed text) and usage analytics through PostHog (EU servers: screens opened, key actions such as
+            confirming a class or submitting homework, session length, tied to your account id and role).
+            On the web app a session may be recorded as an interactive replay with every input field masked;
+            there is no session recording in the Mac, iPhone or iPad apps. Push notification tokens are stored
+            only when you enable notifications; the microphone is used only when you tap record in a speaking
+            exercise. The apps sell nothing; subscriptions are handled with the academy team outside them.
+          </p>
+          <p>
+            <strong>Account deletion:</strong> request it from the app's Settings (Account → Delete account)
+            or by email. Sign-in stops immediately on every device and the account is closed within 30 days:
+            contact and identifying data are deleted, the learning record is kept anonymised and financial
+            records required by law are retained (section 8). You can cancel the request within the 30 days
+            by contacting support.
           </p>
           <p>Governing law: Kingdom of Saudi Arabia (PDPL, Royal Decree No. M/19).</p>
         </div>

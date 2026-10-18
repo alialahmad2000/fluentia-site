@@ -57,13 +57,13 @@ const Ul = (props) => (
 
 export default function TermsOfService() {
   return (
-    <LegalLayout updated={{ iso: '2026-04-15', display: '15 أبريل 2026' }}>
+    <LegalLayout updated={{ iso: '2026-10-18', display: '18 أكتوبر 2026' }}>
       <Seo path="/terms" />
 
       <H1>شروط الاستخدام</H1>
       <div style={{ fontSize: '0.875rem', color: '#7e8a9a', marginBottom: '2rem' }}>
         تاريخ السريان: <time dateTime="2026-03-23">23 مارس 2026</time> · آخر تحديث:{' '}
-        <time dateTime="2026-04-15">15 أبريل 2026</time>
+        <time dateTime="2026-10-18">18 أكتوبر 2026</time>
       </div>
 
       <H2>1. قبول الشروط</H2>
@@ -159,6 +159,15 @@ export default function TermsOfService() {
         </a>
       </P>
 
+
+      <H2 id="apps">12. تطبيقات طلاقة</H2>
+      <P>
+        تتيح الأكاديمية تطبيقات أصلية لأجهزة ماك وآيفون وآيباد إلى جانب منصّة الويب، وكلها واجهات للحساب نفسه وتخضع
+        لهذه الشروط ولسياسة الخصوصية. التطبيقات لا تبيع شيئًا ولا تتضمن أي عملية دفع؛ الاشتراك وتجديده يُدار مع فريق
+        الأكاديمية. يمكنك حذف حسابك من إعدادات التطبيق في أي وقت (انظر سياسة الخصوصية، المادة 14)، وقد نطلب تحديث
+        التطبيق إلى إصدار أدنى مدعوم لمواصلة استخدامه.
+      </P>
+
       {/* English section */}
       <details
         style={{
@@ -184,7 +193,7 @@ export default function TermsOfService() {
         >
           <h3 style={{ color: '#f8fafc', fontSize: '1.25rem' }}>Terms of Service — Fluentia Academy</h3>
           <p>
-            <strong>Effective:</strong> March 23, 2026 · <strong>Updated:</strong> April 15, 2026
+            <strong>Effective:</strong> March 23, 2026 · <strong>Updated:</strong> October 18, 2026
           </p>
           <p>
             By subscribing to Fluentia Academy you agree to these terms. The service provides online
@@ -212,6 +221,13 @@ export default function TermsOfService() {
           <p>
             <strong>Liability:</strong> capped at the current month's subscription value.{' '}
             <strong>Governing law:</strong> Saudi Arabia; disputes heard in Riyadh courts.
+          </p>
+          <p>
+            <strong>Apps:</strong> the academy offers native apps for Mac, iPhone and iPad alongside the web
+            platform; all are front doors to the same account under these terms and the privacy policy. The
+            apps sell nothing and contain no payment flow; subscriptions are handled with the academy team.
+            You can delete your account from the app's Settings at any time (privacy policy, section 14), and
+            we may require an update to a minimum supported version to keep using an app.
           </p>
           <p>
             Contact:{' '}
