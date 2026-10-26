@@ -17,12 +17,38 @@ export const UTM_MAP = {
   whatsapp:  'واتساب',
   telegram:  'تيليجرام',
   organic:   'بحث مباشر',
+  bing:      'إعلان Bing',
 };
 
+// AI assistants, matched on utm_source (ChatGPT appends ?utm_source=chatgpt.com)
+// or on the referrer host that lib/attribution.js stored in its place.
+const AI_SOURCES = [
+  [/^(chatgpt(\.com)?|chat\.openai\.com|openai(\.com)?)$/, 'ChatGPT'],
+  [/^perplexity(\.ai)?$/, 'Perplexity'],
+  [/^gemini(\.google\.com)?$/, 'Gemini'],
+  [/^(copilot(\.microsoft\.com)?|bing\.com\/chat)$/, 'Copilot'],
+  [/^claude(\.ai)?$/, 'Claude'],
+];
+
+/**
+ * The readable «المصدر:» label for a WhatsApp booking message. «دليل طلاقة»
+ * (the /guide hub) carries its page slug, because each page is its own entry.
+ */
+export function sourceLabel({ utm_source, utm_medium, utm_campaign } = {}) {
+  const s = String(utm_source || '').trim().toLowerCase();
+  if (!s) return 'مباشر';
+  const ai = AI_SOURCES.find(([re]) => re.test(s));
+  if (ai) return ai[1];
+  if (s === 'guide') return utm_campaign ? `دليل طلاقة · ${utm_campaign}` : 'دليل طلاقة';
+  const organic = String(utm_medium || '').toLowerCase() === 'organic';
+  if (organic && s === 'google') return 'بحث جوجل';
+  if (organic && s === 'bing') return 'بحث Bing';
+  return UTM_MAP[s] || s;
+}
+
+/** Label for this visit: URL → this session's landing touch → the stored first touch. */
 export function getSource() {
-  const params = new URLSearchParams(window.location.search);
-  const utm = params.get('utm_source') || sessionStorage.getItem('utm_source');
-  return UTM_MAP[utm?.toLowerCase()] || 'مباشر';
+  return sourceLabel(getAttribution());
 }
 
 export const TT_URL = 'https://www.tiktok.com/@fluentia_';

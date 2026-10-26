@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useMemo } from 'react';
 import { fireTikTokRedirectEvents } from '../lib/tiktokPixel';
+import { sourceLabel } from '../utils/tracking';
 
 /**
  * TikTok Click-to-WhatsApp Redirect Page
@@ -34,7 +35,7 @@ function getSourceLabel() {
     const params = new URLSearchParams(window.location.search);
     const utmSource = (params.get('utm_source') || '').toLowerCase();
     const utmCampaign = params.get('utm_campaign') || '';
-    const label = SOURCE_LABELS[utmSource] || utmSource || 'مباشر';
+    const label = SOURCE_LABELS[utmSource] || (utmSource ? sourceLabel({ utm_source: utmSource }) : 'مباشر');
     return utmCampaign ? `${label} (${utmCampaign})` : label;
   } catch {
     return 'مباشر';

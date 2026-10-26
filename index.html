@@ -31,7 +31,7 @@
     <meta name="geo.placename" content="Saudi Arabia" />
 
     <!-- Open Graph — invariant tags only (og:type/url/title/description live in SOCIAL_META above) -->
-    <meta property="og:site_name" content="Fluentia Academy" />
+    <meta property="og:site_name" content="أكاديمية طلاقة — Fluentia Academy" />
     <meta property="og:locale" content="ar_SA" />
     <meta property="og:locale:alternate" content="en_US" />
     <meta property="og:image" content="https://fluentia.academy/og-image.png" />
@@ -39,7 +39,7 @@
     <meta property="og:image:type" content="image/png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Fluentia Academy — تعلَّم الإنجليزي بطلاقة" />
+    <meta property="og:image:alt" content="أكاديمية طلاقة (Fluentia Academy) — أكاديمية سعودية لتعليم الإنجليزي أونلاين" />
 
     <!-- Twitter Cards -->
     <meta name="twitter:card" content="summary_large_image" />
@@ -111,9 +111,14 @@
       "@context": "https://schema.org",
       "@type": "EducationalOrganization",
       "@id": "https://fluentia.academy/#organization",
-      "name": "Fluentia Academy",
-      "alternateName": "أكاديمية طلاقة",
-      "url": "https://fluentia.academy",
+      "name": "أكاديمية طلاقة",
+      "alternateName": [
+        "Fluentia Academy",
+        "Fluentia",
+        "طلاقة",
+        "أكاديمية طلاقة للغة الإنجليزية"
+      ],
+      "url": "https://fluentia.academy/",
       "logo": {
         "@type": "ImageObject",
         "url": "https://fluentia.academy/logo.png",
@@ -121,26 +126,29 @@
         "height": 512
       },
       "image": "https://fluentia.academy/og-image.png",
-      "description": "Premium online English language academy for Arabic speakers. Small-group classes, daily trainer follow-up, structured A1–C1 curriculum, and IELTS preparation.",
+      "description": "أكاديمية طلاقة (Fluentia Academy): أكاديمية سعودية لتعليم اللغة الإنجليزية أونلاين للبالغين — حصص مباشرة في مجموعات صغيرة (7 طلاب كحد أقصى) أو تدريب فردي، متابعة يومية، ومنصّة تعلّم من Pre-A1 إلى C1. الباقات من 500 ر.س شهرياً، والبداية بلقاء مبدئي مجاني.",
+      "disambiguatingDescription": "أكاديمية سعودية لتعليم اللغة الإنجليزية أونلاين للبالغين، موقعها fluentia.academy — ليست مرتبطة بأي جهة أخرى تحمل اسم Fluentia (مثل fluentia.us).",
       "email": "hi@fluentia.academy",
       "telephone": "+966558669974",
-      "foundingDate": "2021",
       "founder": {
         "@type": "Person",
         "@id": "https://fluentia.academy/#founder",
         "name": "Dr. Ali Alahmad",
         "alternateName": "د. علي الأحمد",
-        "jobTitle": "Founder & Head Trainer"
+        "jobTitle": "Founder"
       },
       "address": {
         "@type": "PostalAddress",
-        "addressCountry": "SA",
-        "addressRegion": "Riyadh"
+        "addressCountry": "SA"
       },
       "areaServed": {
         "@type": "Country",
         "name": "Saudi Arabia"
       },
+      "knowsLanguage": [
+        "ar",
+        "en"
+      ],
       "sameAs": [
         "https://www.tiktok.com/@fluentia_",
         "https://www.instagram.com/fluentia__"
@@ -149,7 +157,12 @@
         "@type": "ContactPoint",
         "telephone": "+966558669974",
         "contactType": "customer service",
-        "availableLanguage": ["Arabic", "English"],
+        "url": "https://wa.me/966558669974",
+        "email": "hi@fluentia.academy",
+        "availableLanguage": [
+          "Arabic",
+          "English"
+        ],
         "areaServed": "SA"
       }
     }
@@ -162,9 +175,9 @@
       "@type": "WebSite",
       "@id": "https://fluentia.academy/#website",
       "url": "https://fluentia.academy",
-      "name": "Fluentia Academy",
-      "alternateName": "أكاديمية طلاقة",
-      "description": "Premium online English language academy for Arabic speakers.",
+      "name": "أكاديمية طلاقة",
+      "alternateName": ["Fluentia Academy", "Fluentia"],
+      "description": "أكاديمية سعودية لتعليم اللغة الإنجليزية أونلاين للبالغين.",
       "publisher": { "@id": "https://fluentia.academy/#organization" },
       "inLanguage": "ar-SA"
     }
@@ -174,89 +187,148 @@
          BreadcrumbList). scripts/prerender-meta.mjs removes this whole block from
          every other route's HTML: an FAQPage on /privacy describes questions that
          page does not show. Organization + WebSite above stay site-wide. -->
-    <!-- JSON-LD: Course — Level 1 (A1) -->
+    <!-- JSON-LD: Course — one per package on sale, generated from scripts/guide/org.mjs coursesLd()
+         (prices read from src/pages/landing-v2/content.js). build-guide.mjs fails the build if they drift. -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "Course",
-      "name": "English Level 1 (A1) — Elementary",
-      "description": "Foundation course for Arabic speakers starting their English journey. Covers present tenses, basic conversation, numbers, and daily routines.",
-      "provider": { "@id": "https://fluentia.academy/#organization" },
-      "educationalLevel": "Beginner (CEFR A1)",
-      "inLanguage": "ar-SA",
-      "teaches": "English as a Second Language",
+      "name": "التعلم الذاتي — أكاديمية طلاقة",
+      "alternateName": "Self-study (platform only) — Fluentia Academy",
+      "description": "المنصة الذكية كاملة، تتعلّم بوتيرتك الخاصة — بدون حصص مباشرة. يشمل: وصول كامل للمنصة الذكية، منهج 6 مستويات (Pre-A1 → C1) · 72 وحدة · +12,000 كلمة، تمارين قواعد + مفردات + قراءة + استماع، مساعد AI للتدريب على المحادثة والنطق، تقدّمك بنظام نقاط ومكافآت.",
+      "provider": {
+        "@id": "https://fluentia.academy/#organization"
+      },
+      "inLanguage": "ar",
+      "teaches": "English as a foreign language",
+      "educationalLevel": "CEFR Pre-A1 → C1",
       "hasCourseInstance": {
         "@type": "CourseInstance",
-        "courseMode": "online",
-        "courseWorkload": "PT8H",
-        "instructor": { "@id": "https://fluentia.academy/#founder" }
+        "courseMode": "online"
       },
       "offers": {
         "@type": "Offer",
         "category": "Subscription",
-        "price": "750",
         "priceCurrency": "SAR",
+        "price": 500,
         "availability": "https://schema.org/InStock",
         "url": "https://fluentia.academy/"
       }
     }
     </script>
-
-    <!-- JSON-LD: Course — Level 3 (B1) Fluency -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "Course",
-      "name": "English Fluency Track (B1 — Intermediate)",
-      "description": "Intermediate English for Arabic speakers. All tenses, expressing opinions, work English, reading articles. Most popular Fluentia tier.",
-      "provider": { "@id": "https://fluentia.academy/#organization" },
-      "educationalLevel": "Intermediate (CEFR B1)",
-      "inLanguage": "ar-SA",
-      "teaches": "English as a Second Language",
+      "name": "أساس — أكاديمية طلاقة",
+      "alternateName": "Asas — small-group classes — Fluentia Academy",
+      "description": "ابدأ مع مجموعة صغيرة وكلاسات مباشرة. يشمل: 8 حصص جماعية شهرياً، حد أقصى 7 طلاب في الكلاس، كل مزايا التعلم الذاتي (المنصة كاملة)، تقييم شهري + متابعة من المدرّب، مجتمع تيليجرام داعم.",
+      "provider": {
+        "@id": "https://fluentia.academy/#organization"
+      },
+      "inLanguage": "ar",
+      "teaches": "English as a foreign language",
+      "educationalLevel": "CEFR Pre-A1 → C1",
       "hasCourseInstance": {
         "@type": "CourseInstance",
-        "courseMode": "online",
-        "courseWorkload": "PT8H",
-        "instructor": { "@id": "https://fluentia.academy/#founder" }
+        "courseMode": "online"
       },
       "offers": {
         "@type": "Offer",
         "category": "Subscription",
-        "price": "1200",
         "priceCurrency": "SAR",
+        "price": 750,
         "availability": "https://schema.org/InStock",
         "url": "https://fluentia.academy/"
       }
     }
     </script>
-
-    <!-- JSON-LD: Course — Self-study (platform only) -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "Course",
-      "name": "التعلم الذاتي — Self-Study Platform",
-      "description": "Full access to the Fluentia smart platform: 6 CEFR levels (Pre-A1 → C1), 72 units, 12,000+ words, grammar/vocabulary/reading/listening exercises, and an AI speaking-and-pronunciation coach — at your own pace, without live classes.",
-      "provider": { "@id": "https://fluentia.academy/#organization" },
-      "educationalLevel": "All levels (CEFR Pre-A1 → C1)",
-      "inLanguage": "ar-SA",
-      "teaches": "English as a Second Language",
+      "name": "تميّز — أكاديمية طلاقة",
+      "alternateName": "Tamayuz — small group + private classes — Fluentia Academy",
+      "description": "أسرع تقدّم — متابعة مكثفة و4 حصص فردية شهرياً. يشمل: كل مزايا أساس، 4 حصص فردية شهرياً (حصة كل أسبوع)، متابعة يومية مكثفة، تقييم أسبوعي + خطة تطوير شخصية، بنك أسئلة حصري + مكتبة دروس كاملة، محتوى مسجّل ترجع له أي وقت.",
+      "provider": {
+        "@id": "https://fluentia.academy/#organization"
+      },
+      "inLanguage": "ar",
+      "teaches": "English as a foreign language",
+      "educationalLevel": "CEFR Pre-A1 → C1",
       "hasCourseInstance": {
         "@type": "CourseInstance",
-        "courseMode": "online",
-        "instructor": { "@id": "https://fluentia.academy/#founder" }
+        "courseMode": "online"
       },
       "offers": {
         "@type": "Offer",
         "category": "Subscription",
-        "price": "500",
         "priceCurrency": "SAR",
+        "price": 1500,
         "availability": "https://schema.org/InStock",
         "url": "https://fluentia.academy/"
       }
     }
     </script>
-
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Course",
+      "name": "التدريب الفردي — أكاديمية طلاقة",
+      "alternateName": "1-on-1 training — Fluentia Academy",
+      "description": "حصص فردية كاملة — أنت ومدربك فقط. منهج مخصّص، وتركيز كامل على هدفك. السعر حسب عدد الحصص الأسبوعية التي نتفق عليها معك في اللقاء المبدئي. يشمل: حصص فردية فقط (أنت ومدربك)، منهج مخصّص يتكيّف معك ومع هدفك، متابعة يومية مباشرة + تصحيح كتابي ونطق غير محدود، تدريب على مقابلات العمل والعروض التقديمية والإلقاء، أولوية في الرد + تواصل مباشر مع مدربك.",
+      "provider": {
+        "@id": "https://fluentia.academy/#organization"
+      },
+      "inLanguage": "ar",
+      "teaches": "English as a foreign language",
+      "educationalLevel": "CEFR Pre-A1 → C1",
+      "hasCourseInstance": {
+        "@type": "CourseInstance",
+        "courseMode": "online"
+      },
+      "offers": {
+        "@type": "Offer",
+        "category": "Subscription",
+        "priceCurrency": "SAR",
+        "priceSpecification": {
+          "@type": "UnitPriceSpecification",
+          "minPrice": 2000,
+          "priceCurrency": "SAR",
+          "unitText": "MONTH"
+        },
+        "availability": "https://schema.org/InStock",
+        "url": "https://fluentia.academy/"
+      }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Course",
+      "name": "التدريب الفردي المكثّف — أكاديمية طلاقة",
+      "alternateName": "Intensive 1-on-1 (12 classes + 8 practice sessions / month) — Fluentia Academy",
+      "description": "5 لقاءات كل أسبوع — تتكلّم الإنجليزي تقريباً كل يوم. 12 حصة فردية + 8 جلسات ممارسة كل شهر. يشمل: كل مزايا التدريب الفردي، جلسات الممارسة عادةً مع متحدث أصلي للإنجليزية، كل جلسة ممارسة مخصّصة لتقوية نقاط ضعفك.",
+      "provider": {
+        "@id": "https://fluentia.academy/#organization"
+      },
+      "inLanguage": "ar",
+      "teaches": "English as a foreign language",
+      "educationalLevel": "CEFR Pre-A1 → C1",
+      "hasCourseInstance": {
+        "@type": "CourseInstance",
+        "courseMode": "online"
+      },
+      "offers": {
+        "@type": "Offer",
+        "category": "Subscription",
+        "priceCurrency": "SAR",
+        "price": 3000,
+        "availability": "https://schema.org/InStock",
+        "url": "https://fluentia.academy/"
+      }
+    }
+    </script>
     <!-- JSON-LD: Service -->
     <script type="application/ld+json">
     {
@@ -267,27 +339,47 @@
       "areaServed": { "@type": "Country", "name": "Saudi Arabia" },
       "audience": {
         "@type": "EducationalAudience",
-        "audienceType": "Arabic-speaking learners"
+        "audienceType": "Adults in Saudi Arabia"
       },
       "hasOfferCatalog": {
         "@type": "OfferCatalog",
-        "name": "Fluentia Packages",
+        "name": "باقات أكاديمية طلاقة",
         "itemListElement": [
-          { "@type": "Offer", "name": "التعلم الذاتي (Self-Study)", "price": "500", "priceCurrency": "SAR" },
-          { "@type": "Offer", "name": "أساس (Foundation)", "price": "750", "priceCurrency": "SAR" },
-          { "@type": "Offer", "name": "طلاقة (Fluency)", "price": "1200", "priceCurrency": "SAR" },
-          { "@type": "Offer", "name": "تميّز (Excellence)", "price": "1500", "priceCurrency": "SAR" },
           {
             "@type": "Offer",
-            "name": "التدريب الفردي (1-on-1 VIP)",
+            "name": "التعلم الذاتي (Self-study (platform only))",
+            "price": 500,
+            "priceCurrency": "SAR"
+          },
+          {
+            "@type": "Offer",
+            "name": "أساس (Asas — small-group classes)",
+            "price": 750,
+            "priceCurrency": "SAR"
+          },
+          {
+            "@type": "Offer",
+            "name": "تميّز (Tamayuz — small group + private classes)",
+            "price": 1500,
+            "priceCurrency": "SAR"
+          },
+          {
+            "@type": "Offer",
+            "name": "التدريب الفردي (1-on-1 training)",
             "priceCurrency": "SAR",
             "priceSpecification": {
-              "@type": "PriceSpecification",
-              "minPrice": "2000",
-              "priceCurrency": "SAR"
+              "@type": "UnitPriceSpecification",
+              "minPrice": 2000,
+              "priceCurrency": "SAR",
+              "unitText": "MONTH"
             }
           },
-          { "@type": "Offer", "name": "التدريب الفردي المكثّف (Intensive 1-on-1: 12 classes + 8 practice sessions / month)", "price": "3000", "priceCurrency": "SAR" }
+          {
+            "@type": "Offer",
+            "name": "التدريب الفردي المكثّف (Intensive 1-on-1 (12 classes + 8 practice sessions / month))",
+            "price": 3000,
+            "priceCurrency": "SAR"
+          }
         ]
       }
     }

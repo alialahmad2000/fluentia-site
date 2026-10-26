@@ -43,7 +43,7 @@ export function buildWAMessage({ name, phoneLocal, path, pkgName, pkgPrice, goal
     `الباقة: ${pkgName}${pkgPrice ? ` (${pkgPrice} ر.س)` : ''}\n` +
     (goal ? `الهدف: ${goal}\n` : '') +
     `المصدر: ${sourceLabel}` +
-    (utm.campaign ? ` · ${utm.campaign}` : '')
+    (utm.campaign && !sourceLabel.includes(utm.campaign) ? ` · ${utm.campaign}` : '')
   );
 }
 

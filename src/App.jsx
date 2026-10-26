@@ -5,6 +5,7 @@ import { buildWhatsAppUrl, WA_MESSAGES } from './lib/whatsapp';
 import { fireTikTokLeadEvents, fireTikTokViewContent } from './lib/tiktokPixel';
 import CookieBanner from './components/CookieBanner';
 
+import { getSource } from './utils/tracking';
 const PartnersLanding = lazy(() => import('./pages/partners/PartnersLanding'));
 const PartnersSubmitted = lazy(() => import('./pages/partners/PartnersSubmitted'));
 const PartnersTerms = lazy(() => import('./pages/partners/PartnersTerms'));
@@ -60,23 +61,7 @@ const VFallback = (
   </div>
 );
 
-/* ─── UTM Source ─── */
-const UTM_MAP = {
-  'tiktok': 'تيك توك',
-  'google': 'إعلان جوجل',
-  'instagram': 'انستقرام',
-  'twitter': 'تويتر',
-  'snapchat': 'سناب شات',
-  'facebook': 'فيسبوك',
-  'whatsapp': 'واتساب',
-  'telegram': 'تيليجرام',
-  'organic': 'بحث مباشر',
-};
-const getSource = () => {
-  const params = new URLSearchParams(window.location.search);
-  const utm = params.get('utm_source') || sessionStorage.getItem('utm_source');
-  return UTM_MAP[utm?.toLowerCase()] || 'مباشر';
-};
+/* ─── UTM Source ─── shared with every other booking form (AI assistants, «دليل طلاقة», organic search) */
 
 /* ─── WhatsApp ─── */
 const buildWA = (data) => buildWhatsAppUrl(

@@ -140,6 +140,10 @@ export function V1FAQ({ data = FAQ, embedded = false } = {}) {
                       </motion.div>
                     )}
                   </AnimatePresence>
+                  {/* A closed answer stays in the markup (hidden, like any collapsed
+                      accordion) so the prerendered HTML carries every answer that the
+                      FAQPage JSON-LD in index.html states — crawlers don't click. */}
+                  {!isOpen && <p hidden>{item.a}</p>}
                 </div>
               </Reveal>
             );

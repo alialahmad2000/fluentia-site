@@ -37,8 +37,15 @@ const CLICK_IDS = [
   ["msclkid", "bing", "cpc"],
 ];
 
-/** Referrer host → source/medium, for visits that arrive with no tags at all. */
+/** Referrer host → source/medium, for visits that arrive with no tags at all.
+ *  AI assistants come FIRST: gemini.google.com would otherwise read as google
+ *  organic. (ChatGPT links usually carry ?utm_source=chatgpt.com already.) */
 const REFERRERS = [
+  [/(^|\.)(chatgpt\.com|chat\.openai\.com)$/, "chatgpt.com", "ai"],
+  [/(^|\.)perplexity\.ai$/, "perplexity.ai", "ai"],
+  [/^gemini\.google\.com$/, "gemini.google.com", "ai"],
+  [/^copilot\.microsoft\.com$/, "copilot.microsoft.com", "ai"],
+  [/(^|\.)claude\.ai$/, "claude.ai", "ai"],
   [/(^|\.)google\./, "google", "organic"],
   [/(^|\.)bing\.com$/, "bing", "organic"],
   [/(^|\.)duckduckgo\.com$/, "duckduckgo", "organic"],
@@ -52,7 +59,6 @@ const REFERRERS = [
   [/(^|\.)youtube\.com$/, "youtube", "social"],
   [/(^|\.)linkedin\.com$/, "linkedin", "social"],
   [/(^|\.)(whatsapp\.com|wa\.me)$/, "whatsapp", "social"],
-  [/(^|\.)(chatgpt\.com|openai\.com|perplexity\.ai|claude\.ai|gemini\.google\.com)$/, "ai_assistant", "referral"],
 ];
 
 const OWN_HOSTS = /(^|\.)(fluentia\.academy|fluentia\.online|fluentia-site\.vercel\.app|localhost|127\.0\.0\.1)$/;
@@ -87,10 +93,17 @@ function readTouch() {
   }
 
   let refHost = "";
-  try { refHost = document.referrer ? new URL(document.referrer).hostname : ""; } catch { /* opaque */ }
+  let refPath = "";
+  try {
+    if (document.referrer) ({ hostname: refHost, pathname: refPath } = new URL(document.referrer));
+  } catch { /* opaque */ }
   const external = refHost && !OWN_HOSTS.test(refHost);
   if (external) touch.referrer = refHost;
 
+  if (!touch.utm_source && external && /(^|\.)bing\.com$/.test(refHost) && refPath.startsWith("/chat")) {
+    touch.utm_source = "copilot.microsoft.com"; // Copilot inside Bing
+    touch.utm_medium = "ai";
+  }
   if (!touch.utm_source && external) {
     const hit = REFERRERS.find(([re]) => re.test(refHost));
     touch.utm_source = hit ? hit[1] : refHost;

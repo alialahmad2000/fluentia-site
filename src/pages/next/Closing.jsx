@@ -61,6 +61,15 @@ export function Final({ gl, children }) {
   );
 }
 
+const GUIDE_LINKS = [
+  { href: "/guide/pricing", label: "الأسعار" },
+  { href: "/guide/faq", label: "الأسئلة الشائعة" },
+  { href: "/guide/how-it-works", label: "كيف تبدأ" },
+  { href: "/guide/private-training", label: "التدريب الفردي" },
+  { href: "/guide/about", label: "عن الأكاديمية" },
+  { href: "/en/about", label: "English", lang: "en" },
+];
+
 export function Footer({ mode, onMode }) {
   // /join (campaign) shares this footer; the free-tools link is homepage-only.
   const campaign = Boolean(useCta());
@@ -68,9 +77,28 @@ export function Footer({ mode, onMode }) {
     <div className="fx-footer">
       <V1Footer />
       {campaign ? null : (
-        <p style={{ margin: 0, padding: "0 var(--fx-gut)", textAlign: "center", fontSize: 14 }}>
-          <a href="/verbs" className="fx-quiet">أدوات مجانية: الأفعال الشاذة</a>
-        </p>
+        <>
+          {/* «باختصار»: the homepage in one quotable paragraph (facts: docs/seo/FACTS.md). */}
+          <p style={{ maxWidth: 760, margin: "0 auto", padding: "0 var(--fx-gut)", textAlign: "center", fontSize: 14, lineHeight: 2, color: "var(--fx-faint)" }}>
+            <strong style={{ fontWeight: 600 }}>باختصار:</strong> أكاديمية طلاقة (Fluentia Academy) أكاديمية سعودية لتعليم
+            الإنجليزي أونلاين للبالغين — حصص مباشرة عبر Google Meet في مجموعات صغيرة (7 طلاب كحد أقصى) أو تدريب فردي،
+            ومنصّة تعلّم من Pre-A1 إلى C1. الباقات من 500 ر.س شهرياً، وكل باقة تبدأ بلقاء مبدئي مجاني قبل أي دفع.
+          </p>
+          {/* «دليل طلاقة» — the static fact pages at /guide/ (scripts/build-guide.mjs).
+              Plain <a>: they are not router routes, so a full load is required. */}
+          <nav aria-label="دليل طلاقة" style={{ margin: 0, padding: "0 var(--fx-gut)", textAlign: "center", fontSize: 14, lineHeight: 2.2 }}>
+            <a href="/guide/" className="fx-quiet">دليل طلاقة: كل ما تحتاج معرفته</a>
+            {GUIDE_LINKS.map((l) => (
+              <span key={l.href}>
+                <span aria-hidden="true"> · </span>
+                <a href={l.href} className="fx-quiet" lang={l.lang}>{l.label}</a>
+              </span>
+            ))}
+          </nav>
+          <p style={{ margin: 0, padding: "0 var(--fx-gut)", textAlign: "center", fontSize: 14 }}>
+            <a href="/verbs" className="fx-quiet">أدوات مجانية: الأفعال الشاذة</a>
+          </p>
+        </>
       )}
       <div className="fx-perf" role="group" aria-label={PERF_LABEL}>
         <span className="fx-perf-label">{PERF_LABEL}</span>

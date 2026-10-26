@@ -15,3 +15,12 @@
   Cache-Control: no-cache
 /404.html
   Cache-Control: no-cache
+
+# «دليل طلاقة» markdown mirrors and the llms files (scripts/build-guide.mjs).
+# Explicit types so AI fetchers read them as text, never as a download.
+/guide/*.md
+  Content-Type: text/markdown; charset=utf-8
+/llms.txt
+  Content-Type: text/plain; charset=utf-8
+/llms-full.txt
+  Content-Type: text/plain; charset=utf-8

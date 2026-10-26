@@ -11,6 +11,7 @@
  */
 import { fireTikTokContact } from "./tiktokPixel";
 import { getAttribution } from "./attribution";
+import { sourceLabel } from "../utils/tracking";
 
 export function track(event, params = {}) {
   if (typeof window === "undefined") return;
@@ -43,9 +44,9 @@ function withSourceText(href) {
   try {
     const url = new URL(href);
     if (!/wa\.me|api\.whatsapp\.com/i.test(url.hostname) || url.searchParams.get("text")) return href;
-    const { utm_source, utm_medium } = getAttribution();
+    const attr = getAttribution();
     const lines = ["السلام عليكم، وصلت لكم من موقع طلاقة وأبي أستفسر."];
-    if (utm_source) lines.push(`(المصدر: ${utm_source}${utm_medium ? ` / ${utm_medium}` : ""})`);
+    if (attr.utm_source) lines.push(`(المصدر: ${sourceLabel(attr)})`);
     url.searchParams.set("text", lines.join("\n"));
     return url.toString();
   } catch {

@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { FORM, REGISTRATION, getRegistrationStatus } from "./content";
 import { fireTikTokLeadEvents, normalizePhoneE164 } from "../../lib/tiktokPixel";
-import { saveLead } from "../../utils/tracking";
+import { saveLead, sourceLabel } from "../../utils/tracking";
 
 // ────────────────────────────────────────────────────────────
 // Constants
@@ -45,8 +45,10 @@ function buildWhatsAppMessage({ name, phone, tierLabel, goal, utm }) {
     `الباقة التي تهمّني: ${tierLabel}`,
   ];
   if (goal) lines.push(`الهدف: ${goal}`);
-  if (utm.utm_source)
-    lines.push(`المصدر: ${utm.utm_source}${utm.utm_campaign ? ` · ${utm.utm_campaign}` : ""}`);
+  if (utm.utm_source) {
+    const label = sourceLabel(utm);
+    lines.push(`المصدر: ${label}${utm.utm_campaign && !label.includes(utm.utm_campaign) ? ` · ${utm.utm_campaign}` : ""}`);
+  }
   return lines.join("\n");
 }
 
