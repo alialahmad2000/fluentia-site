@@ -24,7 +24,14 @@ export function render(url) {
     sink.on('finish', () => {
       if (failed) return reject(failed)
       // Concatenate bytes before decoding: an Arabic character can straddle chunks.
-      resolve({ html: Buffer.concat(chunks).toString('utf8'), helmet: helmetContext.helmet })
+      // Then drop U+0000: React 18.3's Node stream writer, when a string overflows
+      // its 2048-byte view, flushes the WHOLE view — including the 1–2 unused zero
+      // bytes left where a multi-byte Arabic character did not fit. Those NULs land
+      // mid-word («إ\0ن») in every prerendered page, split words for crawlers, and
+      // mismatch the client text on hydration. They are only ever inserted, never
+      // replace a character, so removing them restores the exact text.
+      const html = Buffer.concat(chunks).toString('utf8').replace(/\u0000/g, '')
+      resolve({ html, helmet: helmetContext.helmet })
     })
     const { pipe, abort } = renderToPipeableStream(
       <React.StrictMode>
