@@ -157,7 +157,15 @@
 }
 .st-who-text { display: grid; line-height: 1.35; min-width: 0; }
 .st-who-name { font-weight: 700; font-size: 15px; color: var(--st-cream); }
-.st-who-role { font-size: 12.5px; color: var(--st-faint); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.st-who-role {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2; /* a full job title wraps once, never clips mid-word */
+  overflow: hidden;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--st-faint);
+}
 
 /* ─── Feature: one story = a composed spread, several = a snap row ─── */
 .st-feature { padding: 0 var(--st-gut, 20px); }
