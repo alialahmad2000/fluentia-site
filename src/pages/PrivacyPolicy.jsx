@@ -242,6 +242,10 @@ export default function PrivacyPolicy() {
           توجد محادثات عامة ولا بحث عن مستخدمين آخرين.
         </li>
         <li>
+          <strong>«مشاهد»:</strong> المقاطع تُعرض داخل التطبيق بمشغّل YouTube الرسمي، فتصل Google عنوان IP ونوع الجهاز والمقطع
+          المعروض عند التشغيل، دون ملفات تعريف دائمة ودون ربط بالإعلانات.
+        </li>
+        <li>
           <strong>الميكروفون:</strong> يُستخدم فقط عند ضغطك على زر التسجيل في تمارين التحدث، ويُحلَّل التسجيل بالذكاء
           الاصطناعي لإعطائك ملاحظات. لا تسجيل في الخلفية.
         </li>
@@ -328,7 +332,8 @@ export default function PrivacyPolicy() {
             only when you enable notifications. Messages you exchange with your trainer or the academy team inside
             the app and the platform (text, voice or images) are stored in the platform's database and are seen only by
             the people in that conversation and the academy staff who follow your learning; there are no public posts
-            and no way to find other users. The microphone is used only when you tap record in a speaking
+            and no way to find other users. Film scenes play inside the app in YouTube's official embedded player, so Google receives the IP address,
+            device type and the clip being played; no persistent identifiers and nothing linked to advertising. The microphone is used only when you tap record in a speaking
             exercise. The apps sell nothing; subscriptions are handled with the academy team outside them.
           </p>
           <p>
