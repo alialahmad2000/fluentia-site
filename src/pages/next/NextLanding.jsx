@@ -27,7 +27,10 @@ import Stage from "./Stage";
 // 2026-09-27; the homepage gets the real-footage showcase. (StageClassic.jsx, its
 // frozen stage, left /join on 2026-09-28 — see the Steps comment below.)
 import NEXT_CLASSIC_CSS from "./next-classic.css?inline";
-import { Pricing, FitFaq, Final, Footer } from "./Closing";
+import { Pricing, Stories, FitFaq, Final, Footer } from "./Closing";
+import StoriesProvider from "../../components/stories/StoriesProvider";
+import STORIES_CSS from "../../components/stories/stories.css?inline";
+import { STORIES } from "../../data/stories";
 import { CTA_LABEL, CAMPAIGN_PRICING_FOOT, STICKY_NOTE } from "./copy";
 
 /**
@@ -338,6 +341,7 @@ export default function NextLanding({ seoPath = "/next", campaign = false }) {
   return (
     <MotionConfig reducedMotion="user">
      <CtaContext.Provider value={campaign ? CAMPAIGN_CTA : null}>
+     <StoriesProvider stories={campaign ? [] : STORIES}>
       <div ref={rootRef} className="v1-scope v5-scope fx-next" dir="rtl" data-campaign={campaign ? "" : undefined}>
         {/* The client and server bundles may stringify boot() differently; the
             script has already run by the time React hydrates it. */}
@@ -346,7 +350,7 @@ export default function NextLanding({ seoPath = "/next", campaign = false }) {
         {/* Kufam is the display face: fetched while the HTML parses, before the
             giant type needs it (Kufam chosen by Ali, 2026-09-27). */}
         <link rel="preload" as="font" type="font/woff2" href="/fonts/kufam-800-arabic.woff2" crossOrigin="" />
-        {campaign ? <style dangerouslySetInnerHTML={{ __html: JOIN_CSS + FORM_BLOCK_CSS }} /> : null}
+        {campaign ? <style dangerouslySetInnerHTML={{ __html: JOIN_CSS + FORM_BLOCK_CSS }} /> : <style dangerouslySetInnerHTML={{ __html: STORIES_CSS }} />}
         <Seo path={campaign ? "/join" : seoPath} />
         {campaign ? (
           <Helmet>
@@ -386,6 +390,7 @@ export default function NextLanding({ seoPath = "/next", campaign = false }) {
               already shows. «كيف تبدأ» — what happens after the form — takes its place. */}
           {campaign ? <Steps /> : <Stage gl={cfg} tier={tier} />}
           <Pricing />
+          {campaign ? null : <Stories />}
           <FitFaq />
           {campaign ? (
             <Final gl={cfg}>
@@ -425,6 +430,7 @@ export default function NextLanding({ seoPath = "/next", campaign = false }) {
         <Footer mode={mode} onMode={onMode} />
         {campaign ? null : <V1LeadModal />}
       </div>
+     </StoriesProvider>
      </CtaContext.Provider>
     </MotionConfig>
   );

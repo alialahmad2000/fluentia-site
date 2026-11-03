@@ -117,6 +117,14 @@ export const PAGE_SEO = {
     ogTitle: "التدريب الفردي | برنامج إنجليزي مبني عليك",
   },
 
+  // Student stories — short vertical videos, in the students' own words.
+  "/stories": {
+    title: "قصص طلابنا | تجارب حقيقية من طلاب أكاديمية طلاقة",
+    description:
+      "شاهد تجارب طلاب أكاديمية طلاقة بكلامهم: كيف بنينا لكل طالب منهج إنجليزي يخص مجاله وشغله، ووش تغيّر معه بعد التدريب.",
+    ogTitle: "قصص طلابنا | تجارب حقيقية من طلاب طلاقة",
+  },
+
   // Rollback copies of the pre-launch pages (2026-09-27: /next became / and
   // /join). Prerendered so they paint like the originals, noindex, unlinked,
   // absent from the sitemap. Switch back in src/App.jsx (HOME_VARIANT / JOIN_VARIANT).

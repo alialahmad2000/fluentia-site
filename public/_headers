@@ -24,3 +24,7 @@
   Content-Type: text/plain; charset=utf-8
 /llms-full.txt
   Content-Type: text/plain; charset=utf-8
+
+# Student story media (public/stories/<id>/). Not hashed: a week, then revalidate.
+/stories/*
+  Cache-Control: public, max-age=604800

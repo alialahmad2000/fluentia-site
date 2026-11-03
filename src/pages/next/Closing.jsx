@@ -4,7 +4,9 @@ import { V1FAQ, V1Footer } from "../v1/V1Closing";
 import { FINAL_CTA } from "../landing-v2/content";
 import Giant from "./Giant";
 import Orb from "./Orb";
-import { CTA_LABEL, PERF_LABEL, PERF_OPTIONS, TITLES } from "./copy";
+import { CTA_LABEL, PERF_LABEL, PERF_OPTIONS, STORIES_SUB, TITLES } from "./copy";
+import StoriesFeature from "../../components/stories/StoriesFeature";
+import { STORIES } from "../../data/stories";
 import { useCta } from "../v1/ctaContext";
 
 /**
@@ -20,6 +22,23 @@ export function Pricing() {
         <Giant lines={TITLES.pricing} className="fx-center-title" />
       </div>
       <V1Pricing />
+    </section>
+  );
+}
+
+/**
+ * «قصص طلابنا» — right after the price: the moment a visitor asks «does this
+ * actually work?», a student answers in her own voice, before fit and FAQ.
+ * Reads src/data/stories.js only; the page wraps it in StoriesProvider.
+ */
+export function Stories() {
+  return (
+    <section id="fx-stories" className="fx-block fx-block--stories st-scope" aria-labelledby="fx-stories-h">
+      <div className="fx-block-head">
+        <Giant id="fx-stories-h" lines={TITLES.stories} className="fx-center-title" />
+        <p className="st-sub fx-rv fx-fade">{STORIES_SUB}</p>
+      </div>
+      <StoriesFeature stories={STORIES} />
     </section>
   );
 }

@@ -34,6 +34,13 @@ import { SpotlightController } from "../v1/V1Interactive";
 import { Reveal, staggerParent, staggerItem } from "../v1/motion";
 import { CtaContext } from "../v1/ctaContext";
 import PrivateLeadForm from "./PrivateLeadForm";
+import StoriesProvider from "../../components/stories/StoriesProvider";
+import StoriesFeature from "../../components/stories/StoriesFeature";
+import storiesCss from "../../components/stories/stories.css?inline";
+import { storiesFor } from "../../data/stories";
+
+// Stories from 1:1 students — beside «منهج مبني على مجالك».
+const PRIVATE_STORIES = storiesFor("private");
 import {
   PACKAGES, DEFAULT_PKG, CTA, HERO, ORBIT, TEAM, CURRICULUM, WEEK, COMPARE,
   FIT, FAQ_PRIVATE, FINAL, STICKY,
@@ -183,10 +190,12 @@ export default function PrivatePage() {
   return (
     <MotionConfig reducedMotion="user">
       <CtaContext.Provider value={cta}>
+       <StoriesProvider stories={PRIVATE_STORIES}>
         <div className="v1-scope v5-scope join-page private-page" dir="rtl" lang="ar">
           <Seo path="/private" />
           <style>{joinCss}</style>
           <style>{privateCss}</style>
+          {PRIVATE_STORIES.length ? <style>{storiesCss}</style> : null}
           <DawnArc />
           <div style={{ position: "relative", zIndex: 1 }}>
             <V1Header />
@@ -269,6 +278,16 @@ export default function PrivatePage() {
                   </motion.ol>
                 </div>
               </section>
+              {/* A 1:1 student, in her own words, right after the curriculum promise. */}
+              {PRIVATE_STORIES.length ? (
+                <section className="p-stories st-scope" aria-labelledby="p-stories-h">
+                  <div className="st-head">
+                    <span className="p-stories-eyebrow">من طلاب التدريب الفردي</span>
+                    <h2 id="p-stories-h" className="p-stories-title">منهج على مقاس مجالك، بكلام من جرّبه</h2>
+                  </div>
+                  <StoriesFeature stories={PRIVATE_STORIES} allHref={null} />
+                </section>
+              ) : null}
               <V1TrialBand />
 
               {/* ── 03 Week ── */}
@@ -417,6 +436,7 @@ export default function PrivatePage() {
             )}
           </AnimatePresence>
         </div>
+       </StoriesProvider>
       </CtaContext.Provider>
     </MotionConfig>
   );

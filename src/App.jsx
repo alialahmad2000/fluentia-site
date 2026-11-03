@@ -12,6 +12,7 @@ const PartnersTerms = lazy(() => import('./pages/partners/PartnersTerms'));
 const StartPage = lazy(() => import('./pages/StartPage'));
 const JoinPage = lazy(() => import('./pages/join/JoinPage'));
 const PrivatePage = lazy(() => import('./pages/private/PrivatePage'));
+const StoriesPage = lazy(() => import('./pages/stories/StoriesPage'));
 const NextLanding = lazy(() => import('./pages/next/NextLanding'));
 const AscentLanding = lazy(() => import('./pages/ascent/AscentLanding'));
 const JourneyLanding = lazy(() => import('./pages/journey/JourneyLanding'));
@@ -1224,6 +1225,8 @@ function AppRoutes(){
         : <Suspense fallback={JOIN_CLASSIC_FALLBACK}><JoinPage /></Suspense>} />
       <Route path="/join-classic" element={<Suspense fallback={JOIN_CLASSIC_FALLBACK}><JoinPage /></Suspense>} />
       <Route path="/private" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#060e1c'}} />}><PrivatePage /></Suspense>} />
+      {/* «قصص طلابنا» — every story (src/data/stories.js); ?s=<id> opens the viewer. */}
+      <Route path="/stories" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#050b16'}} />}><StoriesPage /></Suspense>} />
       {/* /next → / (301 at the edge, scripts/cloudflare-routing.mjs; this covers in-app links). */}
       <Route path="/next" element={<NextToHome />} />
       {/* «الصعود» — scroll-driven mountain ascent preview (noindex, unlinked, not in the sitemap). / is unchanged. */}

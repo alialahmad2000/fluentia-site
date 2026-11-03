@@ -45,11 +45,17 @@ export const TITLES = {
     { text: "كيف", tone: "cream" },
     { text: "تبدأ", tone: "ice" },
   ],
+  stories: [
+    { text: "قصص", tone: "cream" },
+    { text: "طلابنا", tone: "ice" },
+  ],
   final: [
     { text: "لنبدأ", tone: "cream" },
     { text: "بلقاء مبدئي", tone: "sky" },
   ],
 };
+
+export const STORIES_SUB = "تجارب حقيقية من طلاب طلاقة، بكلامهم.";
 
 export const PERF_LABEL = "وضع الأداء:";
 export const PERF_OPTIONS = [

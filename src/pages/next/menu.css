@@ -1,0 +1,253 @@
+/*
+ * Phone menu — a sheet from the right (RTL) over a dimmed page.
+ * Portalled to <body>, so it carries its own tokens and one z-index layer
+ * (10050) above everything on the page, the cookie bar (9999) included;
+ * only the story viewer (10100) sits higher.
+ * Type scale: rows 18px · group labels 12.5px · logo row 20px. 8px rhythm.
+ */
+.fxm {
+  --m-void: #050b16;
+  --m-panel: #08121f;
+  --m-sky: #38bdf8;
+  --m-ice: #7dd3fc;
+  --m-cream: #f3ede2;
+  --m-text: rgba(243, 237, 226, 0.86);
+  --m-faint: rgba(243, 237, 226, 0.5);
+  --m-rule: rgba(243, 237, 226, 0.09);
+  --m-display: "Kufam", "Alexandria", "Tajawal", system-ui, sans-serif;
+  --m-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --m-pad: 20px;
+
+  position: fixed;
+  inset: 0;
+  z-index: 10050;
+  direction: rtl;
+  font-family: var(--m-display);
+  -webkit-tap-highlight-color: transparent;
+}
+.fxm *,
+.fxm *::before,
+.fxm *::after { box-sizing: border-box; }
+
+.fxm-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(2, 6, 12, 0.72);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  opacity: 0;
+  transition: opacity 240ms ease;
+}
+.fxm[data-shown] .fxm-backdrop { opacity: 1; }
+
+.fxm-sheet {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 0; /* RTL: the right edge */
+  width: min(88vw, 400px);
+  display: flex;
+  flex-direction: column;
+  background: var(--m-panel);
+  box-shadow: -24px 0 64px rgba(0, 0, 0, 0.5);
+  border-inline-end: 1px solid var(--m-rule);
+  color: var(--m-text);
+  transform: translateX(100%);
+  transition: transform 240ms cubic-bezier(0.4, 0, 1, 1);
+  outline: none;
+}
+.fxm[data-shown] .fxm-sheet {
+  transform: none;
+  transition: transform 280ms var(--m-ease);
+}
+
+/* ─ Logo row (fixed) ─ */
+.fxm-top {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: max(8px, env(safe-area-inset-top)) var(--m-pad) 8px;
+  padding-inline-start: max(var(--m-pad), env(safe-area-inset-right));
+  min-height: calc(64px + env(safe-area-inset-top));
+  border-bottom: 1px solid var(--m-rule);
+}
+.fxm-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 48px;
+  color: var(--m-cream);
+  text-decoration: none;
+  font-weight: 800;
+  font-size: 20px;
+  line-height: 1;
+}
+.fxm-close {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  margin-inline-end: -6px;
+  border: 1px solid rgba(243, 237, 226, 0.16);
+  border-radius: 50%;
+  background: rgba(243, 237, 226, 0.04);
+  color: var(--m-cream);
+  cursor: pointer;
+}
+
+/* ─ The list (the only part that scrolls) ─ */
+.fxm-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  padding: 8px var(--m-pad) 16px;
+  padding-inline-start: max(var(--m-pad), env(safe-area-inset-right));
+}
+.fxm-group + .fxm-group { margin-top: 16px; }
+.fxm-label {
+  margin: 0;
+  padding: 16px 0 8px;
+  font-family: var(--m-display);
+  font-size: 12.5px;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: 0;
+  color: var(--m-faint);
+}
+.fxm-list { list-style: none; margin: 0; padding: 0; }
+.fxm-list li + li .fxm-link { border-top: 1px solid var(--m-rule); }
+.fxm-link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 52px;
+  padding: 8px 0;
+  color: var(--m-text);
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.5;
+  opacity: 0;
+  transform: translateX(16px);
+  transition: color 160ms ease, opacity 220ms ease, transform 280ms var(--m-ease);
+}
+.fxm[data-shown] .fxm-link {
+  opacity: 1;
+  transform: none;
+  transition-delay: 0s, calc(40ms + var(--i, 0) * 18ms), calc(40ms + var(--i, 0) * 18ms);
+}
+.fxm-chev { flex: none; color: var(--m-faint); transition: color 160ms ease, transform 160ms ease; }
+.fxm-link[aria-current] { color: var(--m-ice); }
+.fxm-link[aria-current]::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: calc(-1 * var(--m-pad));
+  top: 14px;
+  bottom: 14px;
+  width: 3px;
+  border-radius: 0 3px 3px 0;
+  background: var(--m-sky);
+}
+.fxm-link[aria-current] .fxm-chev { color: var(--m-ice); }
+.fxm-link:active { color: var(--m-cream); }
+.fxm-link:focus-visible,
+.fxm-close:focus-visible,
+.fxm-cta:focus-visible,
+.fxm-minor-link:focus-visible,
+.fxm-brand:focus-visible {
+  outline: 2px solid var(--m-ice);
+  outline-offset: 2px;
+  border-radius: 10px;
+}
+@media (hover: hover) {
+  .fxm-link:hover { color: var(--m-cream); }
+  .fxm-link:hover .fxm-chev { color: var(--m-cream); transform: translateX(-3px); }
+}
+
+/* ─ Footer (fixed): the booking call + WhatsApp / login ─ */
+.fxm-foot {
+  flex: none;
+  padding: 16px var(--m-pad) max(16px, env(safe-area-inset-bottom));
+  padding-inline-start: max(var(--m-pad), env(safe-area-inset-right));
+  border-top: 1px solid var(--m-rule);
+  background: var(--m-panel);
+}
+.fxm-cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 52px;
+  padding: 0 16px;
+  border: 0;
+  border-radius: 14px;
+  background: var(--m-sky);
+  color: #04121f;
+  font-family: var(--m-display);
+  font-size: 17px;
+  font-weight: 800;
+  line-height: 1.3;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(56, 189, 248, 0.22);
+}
+.fxm-cta:active { transform: scale(0.985); }
+.fxm-minor {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+.fxm-minor-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  padding: 0 8px;
+  color: var(--m-text);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.fxm-minor-link svg { color: #4ade80; }
+.fxm-dot { color: var(--m-faint); }
+
+/* Phone held sideways: tighter rows, the call on one line with the links. */
+@media (max-height: 500px) {
+  .fxm-sheet { width: min(72vw, 420px); }
+  .fxm-top { min-height: calc(52px + env(safe-area-inset-top)); padding-block: max(4px, env(safe-area-inset-top)) 4px; }
+  .fxm-label { padding: 8px 0 4px; }
+  .fxm-group + .fxm-group { margin-top: 8px; }
+  .fxm-link { min-height: 48px; padding: 4px 0; font-size: 17px; }
+  .fxm-foot { display: flex; align-items: center; gap: 8px; padding-top: 8px; padding-bottom: max(8px, env(safe-area-inset-bottom)); }
+  .fxm-cta { flex: 1; min-height: 48px; font-size: 15px; white-space: nowrap; }
+  .fxm-minor { margin-top: 0; flex: none; }
+  .fxm-minor .fxm-dot,
+  .fxm-minor a + .fxm-dot + a { display: none; }
+}
+
+/* The burger glyph in «القائمة». */
+.fxm-burger {
+  display: inline-grid;
+  gap: 4px;
+  width: 16px;
+  margin-inline-end: 8px;
+  vertical-align: middle;
+}
+.fxm-burger i { display: block; height: 1.6px; border-radius: 2px; background: currentColor; }
+.fxm-burger i:last-child { width: 11px; }
+.fx-menu-toggle { display: inline-flex; align-items: center; }
+
+@media (prefers-reduced-motion: reduce) {
+  .fxm-sheet,
+  .fxm[data-shown] .fxm-sheet,
+  .fxm-backdrop,
+  .fxm-link,
+  .fxm[data-shown] .fxm-link { transition: none; }
+}

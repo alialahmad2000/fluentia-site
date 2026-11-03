@@ -1,0 +1,500 @@
+/* ============================================================
+ * «قصص طلابنا» — cards, the feature row, the full-screen viewer.
+ * Self-contained: carries its own tokens (the homepage /next palette) so the
+ * same card reads the same on /, /stories and /private (a v1 page).
+ * Inlined by every host page, like next.css, so prerendered markup paints styled.
+ * ============================================================ */
+.st-scope,
+.st-viewer {
+  --st-void: #050b16;
+  --st-sky: #38bdf8;
+  --st-ice: #7dd3fc;
+  --st-gold: #fbbf24;
+  --st-cream: #f3ede2;
+  --st-text: rgba(243, 237, 226, 0.78);
+  --st-faint: rgba(243, 237, 226, 0.56);
+  --st-rule: rgba(243, 237, 226, 0.12);
+  --st-display: "Kufam", "Alexandria", "Tajawal", system-ui, sans-serif;
+  --st-num: "Barlow Condensed", "Barlow Fallback", "Inter", sans-serif;
+  --st-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --st-gut: var(--fx-gut, 20px);
+}
+
+/* ─── Card ─── */
+.st-card {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 9 / 16;
+  padding: 0;
+  border: 0;
+  border-radius: 28px;
+  overflow: hidden;
+  background: #0a1426;
+  color: var(--st-cream);
+  text-align: start;
+  font: inherit;
+  cursor: pointer;
+  isolation: isolate;
+  -webkit-tap-highlight-color: transparent;
+  box-shadow:
+    0 0 0 1px rgba(125, 211, 252, 0.14),
+    0 30px 80px -30px rgba(56, 189, 248, 0.35),
+    0 18px 40px -20px rgba(0, 0, 0, 0.8);
+  transition: transform 500ms var(--st-ease), box-shadow 500ms var(--st-ease);
+}
+.st-card:active { transform: scale(0.985); }
+@media (hover: hover) {
+  .st-card:hover { transform: translateY(-4px); }
+  .st-card:hover .st-play { background: var(--st-sky); color: #03101e; transform: scale(1.06); }
+}
+.st-card:focus-visible { outline: 2px solid var(--st-ice); outline-offset: 4px; }
+.st-card-media,
+.st-card-media img,
+.st-card-media video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.st-card-media video { opacity: 0; transition: opacity 600ms ease; }
+.st-card-media video[data-on] { opacity: 1; }
+/* Ground under the copy: the burned-in caption sits low in the frame, so the
+   scrim starts high enough to keep the headline clear of it. */
+.st-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(to top, rgba(5, 11, 22, 0.98) 0%, rgba(5, 11, 22, 0.97) 38%, rgba(5, 11, 22, 0) 62%),
+    linear-gradient(to bottom, rgba(5, 11, 22, 0.55) 0%, rgba(5, 11, 22, 0) 22%);
+  pointer-events: none;
+}
+.st-card-top,
+.st-card-copy,
+.st-play { position: absolute; z-index: 2; }
+.st-card-top {
+  top: 14px;
+  inset-inline: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.st-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 28px;
+  padding: 0 11px;
+  border-radius: 999px;
+  background: rgba(5, 11, 22, 0.55);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(243, 237, 226, 0.14);
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--st-cream);
+  white-space: nowrap;
+}
+.st-chip-num { font-family: var(--st-num); font-size: 14px; letter-spacing: 0.02em; direction: ltr; }
+.st-live {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--st-sky);
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.25);
+}
+.st-play {
+  top: 50%;
+  left: 50%;
+  width: 64px;
+  height: 64px;
+  margin: -32px 0 0 -32px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(243, 237, 226, 0.16);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(243, 237, 226, 0.3);
+  color: var(--st-cream);
+  transition: transform 400ms var(--st-ease), background-color 300ms ease, color 300ms ease;
+}
+.st-play svg { margin-inline-start: 3px; } /* optical centre of the triangle */
+.st-card-copy {
+  inset-inline: 18px;
+  bottom: 18px;
+  display: grid;
+  gap: 12px;
+}
+.st-card-quote {
+  margin: 0;
+  font-family: var(--st-display);
+  font-weight: 800;
+  font-size: clamp(21px, 6.2vw, 27px);
+  line-height: 1.35;
+  color: var(--st-cream);
+  text-wrap: balance;
+}
+.st-card-quote .st-q { color: var(--st-ice); }
+.st-who { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.st-avatar {
+  flex: none;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(140deg, var(--st-sky), #1d4ed8);
+  color: #fff;
+  font-family: var(--st-display);
+  font-weight: 800;
+  font-size: 15px;
+}
+.st-who-text { display: grid; line-height: 1.35; min-width: 0; }
+.st-who-name { font-weight: 700; font-size: 15px; color: var(--st-cream); }
+.st-who-role { font-size: 12.5px; color: var(--st-faint); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* ─── Feature: one story = a composed spread, several = a snap row ─── */
+.st-feature { padding: 0 var(--st-gut, 20px); }
+.st-head { text-align: center; max-width: 720px; margin: 0 auto; }
+.st-sub {
+  margin: 18px auto 0;
+  max-width: 36ch;
+  font-size: clamp(16px, 4.2vw, 19px);
+  line-height: 1.9;
+  color: var(--st-text);
+}
+.st-spread {
+  display: grid;
+  justify-items: center;
+  gap: 28px;
+  margin: clamp(36px, 6vh, 64px) auto 0;
+  max-width: 1040px;
+}
+.st-spread .st-card-wrap { width: min(78vw, 340px); position: relative; }
+/* A halo under the lone card, so one story reads as the centre of the stage. */
+.st-spread .st-card-wrap::before {
+  content: "";
+  position: absolute;
+  inset: 12% -18% -6%;
+  z-index: -1;
+  background: radial-gradient(closest-side, rgba(56, 189, 248, 0.22), rgba(56, 189, 248, 0));
+  filter: blur(20px);
+  pointer-events: none;
+}
+.st-aside { display: grid; gap: 16px; max-width: 30rem; text-align: center; justify-items: center; }
+.st-aside-mark {
+  font-family: var(--st-display);
+  font-weight: 800;
+  font-size: 72px;
+  line-height: 0.6;
+  height: 32px;
+  color: var(--st-sky);
+}
+.st-aside-quote {
+  margin: 0;
+  font-family: var(--st-display);
+  font-weight: 800;
+  font-size: clamp(24px, 3vw, 36px);
+  line-height: 1.45;
+  color: var(--st-cream);
+  text-wrap: balance;
+}
+.st-aside-quote span { color: var(--st-ice); }
+.st-aside-cite { font-size: 15px; color: var(--st-faint); font-style: normal; }
+.st-aside-cite b { color: var(--st-cream); font-weight: 700; }
+.st-watch {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 0 20px;
+  border: 1px solid rgba(125, 211, 252, 0.4);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--st-cream);
+  font: inherit;
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background-color 300ms ease, border-color 300ms ease;
+}
+@media (hover: hover) { .st-watch:hover { background: rgba(56, 189, 248, 0.12); border-color: var(--st-ice); } }
+.st-watch-num { font-family: var(--st-num); font-size: 16px; color: var(--st-faint); direction: ltr; }
+/* Phone: the card IS the call — the aside keeps only the excerpt and name. */
+@media (max-width: 799px) {
+  .st-aside-mark, .st-aside .st-watch { display: none; }
+  .st-aside-quote { font-size: clamp(19px, 5.2vw, 22px); font-weight: 700; color: var(--st-text); }
+}
+@media (min-width: 800px) {
+  .st-spread {
+    grid-template-columns: minmax(280px, 360px) minmax(0, 1fr);
+    align-items: center;
+    justify-items: start;
+    gap: clamp(48px, 7vw, 110px);
+  }
+  .st-spread .st-card-wrap { width: 100%; }
+  .st-aside { text-align: start; justify-items: start; }
+}
+
+.st-row {
+  display: flex;
+  gap: 16px;
+  margin: clamp(36px, 6vh, 64px) calc(-1 * var(--st-gut, 20px)) 0;
+  padding: 8px var(--st-gut, 20px) 24px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--st-gut, 20px);
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+}
+.st-row::-webkit-scrollbar { display: none; }
+.st-row > li { flex: none; width: min(72vw, 300px); scroll-snap-align: start; list-style: none; }
+@media (min-width: 1100px) { .st-row { justify-content: center; } }
+
+.st-all {
+  display: flex;
+  justify-content: center;
+  margin-top: 28px;
+}
+.st-all a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 48px;
+  color: var(--st-ice);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.st-grid {
+  list-style: none;
+  margin: 0 auto;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
+  gap: 20px;
+  max-width: 1120px;
+}
+.st-grid.is-one { grid-template-columns: min(100%, 340px); justify-content: center; }
+
+/* ─── Viewer ─── */
+.st-viewer {
+  position: fixed;
+  inset: 0;
+  z-index: 10100; /* above the menu (10050) and the cookie bar (9999) */
+  display: flex;
+  flex-direction: column;
+  background: #000;
+  color: var(--st-cream);
+  font-family: "Readex Pro", "Tajawal", system-ui, sans-serif;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 220ms ease, visibility 0s linear 220ms;
+  touch-action: none;
+}
+.st-viewer[data-open] {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 220ms ease, visibility 0s;
+}
+/* Wide screens: the poster, blurred, fills the bars beside the 9:16 frame. */
+.st-viewer-bg {
+  position: absolute;
+  inset: -40px;
+  background-size: cover;
+  background-position: center;
+  filter: blur(40px) brightness(0.35) saturate(1.2);
+  transform: scale(1.1);
+}
+.st-viewer-stage {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.st-viewer-frame {
+  position: relative;
+  height: 100%;
+  max-width: 100%;
+  aspect-ratio: 9 / 16;
+}
+.st-viewer-frame video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #000;
+}
+@media (min-width: 700px) {
+  .st-viewer-frame { border-radius: 18px; overflow: hidden; box-shadow: 0 30px 120px rgba(0, 0, 0, 0.6); }
+}
+.st-viewer-top {
+  position: absolute;
+  z-index: 3;
+  top: 0;
+  inset-inline: 0;
+  padding: max(10px, env(safe-area-inset-top)) 14px 24px;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.62), rgba(0, 0, 0, 0));
+}
+.st-bars { display: flex; gap: 4px; }
+.st-bar {
+  flex: 1;
+  height: 3px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.28);
+  overflow: hidden;
+}
+.st-bar i {
+  display: block;
+  height: 100%;
+  background: #fff;
+  transform-origin: right center; /* fills right-to-left, like the reading direction */
+  transform: scaleX(var(--p, 0));
+}
+.st-viewer-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 10px;
+}
+.st-viewer-row .st-who-name { font-size: 15px; }
+.st-viewer-row .st-who-role { color: rgba(255, 255, 255, 0.7); }
+.st-viewer-btns { display: flex; gap: 8px; flex: none; }
+.st-icon-btn {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 0;
+  background: rgba(0, 0, 0, 0.36);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  color: #fff;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.st-icon-btn:focus-visible,
+.st-viewer-cta:focus-visible,
+.st-sound:focus-visible { outline: 2px solid var(--st-ice); outline-offset: 3px; }
+.st-tap {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.st-paused {
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  left: 50%;
+  width: 76px;
+  height: 76px;
+  margin: -38px 0 0 -38px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.45);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  pointer-events: none;
+}
+.st-paused svg { margin-inline-start: 4px; }
+.st-sound {
+  position: absolute;
+  z-index: 3;
+  top: calc(max(10px, env(safe-area-inset-top)) + 72px);
+  left: 50%;
+  transform: translateX(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 18px;
+  border: 0;
+  border-radius: 999px;
+  background: #fff;
+  color: #03101e;
+  font: inherit;
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+  white-space: nowrap;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+.st-viewer-bottom {
+  position: relative;
+  z-index: 3;
+  flex: none;
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  padding: 12px 16px max(14px, env(safe-area-inset-bottom));
+  background: #000;
+}
+@media (min-width: 700px) {
+  .st-viewer-bottom { background: transparent; padding-top: 16px; }
+}
+.st-viewer-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: min(100%, 420px);
+  min-height: 54px;
+  padding: 0 24px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--st-sky);
+  color: #03101e;
+  font-family: var(--st-display);
+  font-weight: 800;
+  font-size: 17px;
+  cursor: pointer;
+  transition: transform 300ms var(--st-ease), background-color 300ms ease;
+}
+.st-viewer-cta:active { transform: scale(0.98); }
+@media (hover: hover) { .st-viewer-cta:hover { background: var(--st-ice); } }
+.st-viewer-note { font-size: 12.5px; color: rgba(255, 255, 255, 0.6); }
+.st-viewer-nav { position: absolute; z-index: 3; inset-inline-start: 14px; top: 50%; display: none; flex-direction: column; gap: 10px; transform: translateY(-50%); }
+@media (min-width: 900px) { .st-viewer-nav[data-many] { display: flex; } }
+/* Landscape phone: the CTA row shrinks so the video keeps the height. */
+@media (max-height: 500px) and (orientation: landscape) {
+  .st-viewer-bottom { position: absolute; bottom: 0; inset-inline-end: 0; background: transparent; justify-items: end; }
+  .st-viewer-cta { width: auto; min-height: 48px; font-size: 15px; }
+  .st-viewer-note { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .st-card, .st-play, .st-card-media video, .st-viewer { transition: none; }
+}
+
+/* ─── Host sections ─── */
+.fx-block--stories { padding: clamp(110px, 18vh, 200px) 0 clamp(24px, 5vh, 56px); }
+.fx-block--stories .st-sub { margin-bottom: clamp(32px, 6vh, 56px); text-align: center; }
+
+/* /stories */
+.st-page-hero { padding: calc(clamp(112px, 18vh, 180px) + env(safe-area-inset-top)) var(--st-gut) clamp(32px, 6vh, 56px); text-align: center; }
+.st-page-hero .st-sub { margin-inline: auto; }
+.st-page-grid { padding: 0 var(--st-gut) clamp(64px, 12vh, 120px); }
+.st-page-cta { display: grid; justify-items: center; gap: 12px; padding: 0 var(--st-gut) clamp(80px, 14vh, 140px); text-align: center; }
+.st-page-cta p { margin: 0; color: var(--st-faint); font-size: 14px; }
+
+/* /private: the card beside the custom-curriculum chapter */
+.p-stories { padding: clamp(56px, 10vh, 104px) 0; }
+.p-stories .st-head { padding: 0 var(--st-gut); margin-bottom: clamp(28px, 5vh, 48px); }
+.p-stories-title { margin: 0; font-family: var(--st-display); font-weight: 800; font-size: clamp(26px, 6vw, 40px); line-height: 1.35; color: var(--st-cream); }
+.p-stories-eyebrow { display: block; margin-bottom: 10px; font-size: 13px; font-weight: 600; color: var(--st-ice); }
