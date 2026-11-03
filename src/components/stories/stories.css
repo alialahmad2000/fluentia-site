@@ -292,7 +292,7 @@
   flex-direction: column;
   background: #000;
   color: var(--st-cream);
-  font-family: "Readex Pro", "Tajawal", system-ui, sans-serif;
+  font-family: var(--st-display); /* Kufam: already on the page — a hidden viewer must not pull a font of its own */
   opacity: 0;
   visibility: hidden;
   transition: opacity 220ms ease, visibility 0s linear 220ms;
