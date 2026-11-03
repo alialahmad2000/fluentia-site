@@ -56,13 +56,13 @@ const Ul = (props) => (
 
 export default function PrivacyPolicy() {
   return (
-    <LegalLayout updated={{ iso: '2026-10-18', display: '18 أكتوبر 2026' }}>
+    <LegalLayout updated={{ iso: '2026-11-03', display: '3 نوفمبر 2026' }}>
       <Seo path="/privacy" />
 
       <H1>سياسة الخصوصية</H1>
       <div style={{ fontSize: '0.875rem', color: '#7e8a9a', marginBottom: '2rem' }}>
         تاريخ السريان: <time dateTime="2026-03-23">23 مارس 2026</time> · آخر تحديث:{' '}
-        <time dateTime="2026-10-18">18 أكتوبر 2026</time>
+        <time dateTime="2026-11-03">3 نوفمبر 2026</time>
       </div>
 
       <H2>1. مقدمة</H2>
@@ -81,7 +81,7 @@ export default function PrivacyPolicy() {
           <strong>معلومات الطالب:</strong> مستواك اللغوي، أهدافك، ملاحظات الأداء، سجل الحضور، نتائج الاختبارات.
         </li>
         <li>
-          <strong>بيانات استخدام الموقع:</strong> IP، نوع المتصفح، الصفحات التي زرتها، مصدر الإحالة — عبر Google Analytics 4، TikTok Pixel، Vercel Analytics.
+          <strong>بيانات استخدام الموقع:</strong> IP، نوع المتصفح، الصفحات التي زرتها، مصدر الإحالة — عبر Google Analytics 4 و TikTok Pixel.
         </li>
         <li>
           <strong>تسجيلات صوتية:</strong> عند إرسالك تسجيلات تدريب داخل منصة LMS فقط، وبإذنك الصريح. لا نسجّل كلاساتك الحية إلا بإخطار مسبق.
@@ -112,7 +112,7 @@ export default function PrivacyPolicy() {
           <strong>Supabase</strong> — قاعدة بيانات الطلاب والمنصة التعليمية.
         </li>
         <li>
-          <strong>Vercel</strong> — استضافة الموقع وتحليلات الأداء.
+          <strong>Cloudflare</strong> — استضافة الموقع والمنصّة.
         </li>
         <li>
           <strong>ElevenLabs</strong> — توليد الصوت لتدريب النطق داخل LMS.
@@ -169,7 +169,7 @@ export default function PrivacyPolicy() {
           <strong>ضرورية:</strong> لتشغيل الموقع وحفظ جلستك. لا يمكن تعطيلها.
         </li>
         <li>
-          <strong>تحليلية:</strong> GA4 و Vercel لفهم كيف يستخدم الزوار الموقع. اختيارية.
+          <strong>تحليلية:</strong> GA4 لفهم كيف يستخدم الزوار الموقع. اختيارية.
         </li>
         <li>
           <strong>تسويقية:</strong> TikTok Pixel و Google Ads لقياس أداء الإعلانات. اختيارية.
@@ -237,6 +237,11 @@ export default function PrivacyPolicy() {
           إعدادات الجهاز في أي وقت.
         </li>
         <li>
+          <strong>الرسائل:</strong> الرسائل التي تتبادلها مع مدرّبك أو فريق الأكاديمية داخل التطبيق والمنصّة (نصًا أو صوتًا
+          أو صورًا) تُحفظ في قاعدة بيانات المنصّة، ولا يراها إلا أطراف المحادثة وفريق الأكاديمية المسؤول عن متابعتك. لا
+          توجد محادثات عامة ولا بحث عن مستخدمين آخرين.
+        </li>
+        <li>
           <strong>الميكروفون:</strong> يُستخدم فقط عند ضغطك على زر التسجيل في تمارين التحدث، ويُحلَّل التسجيل بالذكاء
           الاصطناعي لإعطائك ملاحظات. لا تسجيل في الخلفية.
         </li>
@@ -275,7 +280,7 @@ export default function PrivacyPolicy() {
         >
           <h3 style={{ color: '#f8fafc', fontSize: '1.25rem' }}>Privacy Policy — Fluentia Academy</h3>
           <p>
-            <strong>Effective:</strong> March 23, 2026 · <strong>Updated:</strong> October 18, 2026
+            <strong>Effective:</strong> March 23, 2026 · <strong>Updated:</strong> November 3, 2026
           </p>
           <p>
             Fluentia Academy ("we", "us") respects your privacy. This policy explains what personal
@@ -284,14 +289,14 @@ export default function PrivacyPolicy() {
           <p>
             <strong>Data we collect:</strong> name, email, phone, language level and goals,
             performance notes, voice recordings (LMS only, with consent), site analytics (GA4,
-            TikTok Pixel, Vercel Analytics). We do not store payment card data.
+            TikTok Pixel). We do not store payment card data.
           </p>
           <p>
             <strong>How we use it:</strong> to deliver lessons, communicate with you, improve our
             curriculum, and (with your consent) run targeted ads.
           </p>
           <p>
-            <strong>We share data with:</strong> Google Workspace, Supabase, Vercel, ElevenLabs,
+            <strong>We share data with:</strong> Google Workspace, Supabase, Cloudflare, ElevenLabs,
             Anthropic, Resend, Google Ads, TikTok Ads. We do not sell your data.
           </p>
           <p>
@@ -320,7 +325,10 @@ export default function PrivacyPolicy() {
             confirming a class or submitting homework, session length, tied to your account id and role).
             On the web app a session may be recorded as an interactive replay with every input field masked;
             there is no session recording in the Mac, iPhone or iPad apps. Push notification tokens are stored
-            only when you enable notifications; the microphone is used only when you tap record in a speaking
+            only when you enable notifications. Messages you exchange with your trainer or the academy team inside
+            the app and the platform (text, voice or images) are stored in the platform's database and are seen only by
+            the people in that conversation and the academy staff who follow your learning; there are no public posts
+            and no way to find other users. The microphone is used only when you tap record in a speaking
             exercise. The apps sell nothing; subscriptions are handled with the academy team outside them.
           </p>
           <p>
