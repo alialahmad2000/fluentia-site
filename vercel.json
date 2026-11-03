@@ -147,6 +147,10 @@
       "destination": "/private.html"
     },
     {
+      "source": "/stories",
+      "destination": "/stories.html"
+    },
+    {
       "source": "/classic",
       "destination": "/classic.html"
     },
