@@ -28,6 +28,7 @@ import { mkdir, readFile, readdir, writeFile } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { JOURNAL, JOURNAL_MANIFESTO, journalPath } from "../src/content/journal/index.js";
 
 import {
   DISAMBIGUATION_AR,
@@ -594,13 +595,17 @@ ${list((p) => p.section === "intent" || p.section === "decision")}
 ## صفحات تعليمية
 ${list((p) => p.section === "learn")}
 
+## مجلة طلاقة — مقالات مطوّلة عن الإنجليزي في بيئة العمل
+${JOURNAL_MANIFESTO} [فهرس المجلة](${SITE}/journal)
+${JOURNAL.map((a) => `- [${a.title}](${SITE}${journalPath(a.slug)}): ${a.description}`).join("\n")}
+
 ## Other pages on fluentia.academy
 - [الصفحة الرئيسية والباقات](${SITE}/)
 - [التدريب الفردي — /private](${SITE}/private)
 - [اختبار تحديد المستوى المجاني](${SITE}/level-test)
 - [جدول الأفعال الشاذة (${"191"} فعلاً، مع النطق)](${SITE}/verbs)
 - [الإنجليزي للعمل — مصطلحات 11 مجالاً](${SITE}/work-english)
-- [مقالات](${SITE}/articles)
+- [مقالات](${SITE}/articles) · [مجلة طلاقة](${SITE}/journal)
 - [من نحن](${SITE}/about) · [الخصوصية](${SITE}/privacy) · [الشروط](${SITE}/terms)
 - [تطبيق طلاقة لأجهزة الماك](${SITE}/mac/)
 

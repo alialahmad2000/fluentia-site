@@ -40,6 +40,7 @@ export function sourceLabel({ utm_source, utm_medium, utm_campaign } = {}) {
   const ai = AI_SOURCES.find(([re]) => re.test(s));
   if (ai) return ai[1];
   if (s === 'guide') return utm_campaign ? `دليل طلاقة · ${utm_campaign}` : 'دليل طلاقة';
+  if (s === 'journal') return utm_campaign && utm_campaign !== 'index' ? `مجلة طلاقة · ${utm_campaign}` : 'مجلة طلاقة';
   const organic = String(utm_medium || '').toLowerCase() === 'organic';
   if (organic && s === 'google') return 'بحث جوجل';
   if (organic && s === 'bing') return 'بحث Bing';

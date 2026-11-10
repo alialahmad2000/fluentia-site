@@ -15,6 +15,7 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 
 import { ARTICLES } from "../src/content/articles.js";
 import { PRERENDER_ROUTES } from "../src/content/seo.js";
+import { JOURNAL, journalPath } from "../src/content/journal/index.js";
 import { WORK_PAGES, WORK_HUB_PATH, workPath } from "../src/content/workEnglish.js";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
@@ -30,6 +31,7 @@ export function prerenderedPaths() {
     ...WORK_PAGES.map((p) => workPath(p.slug)),
     ...PRERENDER_ROUTES.filter((p) => p !== "/" && p !== WORK_HUB_PATH),
     ...ARTICLES.map((a) => `/articles/${a.slug}`),
+    ...JOURNAL.map((a) => journalPath(a.slug)),
   ];
 }
 

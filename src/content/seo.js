@@ -118,6 +118,16 @@ export const PAGE_SEO = {
   },
 
   // Student stories — short vertical videos, in the students' own words.
+  // «مجلة طلاقة» — long-form, art-directed articles (src/content/journal/).
+  "/journal": {
+    title: "مجلة طلاقة | الإنجليزي كما يعيشه الموظف",
+    description:
+      "مجلة طلاقة: مقالات مطوّلة بالعامية السعودية عن الإنجليزي في بيئة العمل — الاجتماعات، والخوف من الغلط، واللكنة، والترجمة الحرفية — مبنية على أبحاث حقيقية وخطوات عملية.",
+    ogTitle: "مجلة طلاقة | الإنجليزي كما يعيشه الموظف",
+    ogImage: `${SITE}/og/journal/index.jpg`,
+    ogImageAlt: "مجلة طلاقة",
+  },
+
   "/stories": {
     title: "قصص طلابنا | تجارب حقيقية من طلاب أكاديمية طلاقة",
     description:
@@ -240,5 +250,19 @@ export function articleSeo(article) {
     ogTitle: article.title,
     ogDescription: article.description,
     keywords: article.keywords?.length ? article.keywords.join(", ") : null,
+  });
+}
+
+/** A «مجلة طلاقة» article (data lives in src/content/journal/<slug>.js). */
+export function journalSeo(article) {
+  return normalizeSeo({
+    path: `/journal/${article.slug}`,
+    title: `${article.title} | مجلة طلاقة`,
+    description: article.description,
+    ogType: "article",
+    ogTitle: article.title,
+    ogDescription: article.description,
+    ogImage: `${SITE}/og/journal/${article.slug}.jpg`,
+    ogImageAlt: article.title,
   });
 }

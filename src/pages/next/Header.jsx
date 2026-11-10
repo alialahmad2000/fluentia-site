@@ -27,70 +27,39 @@ import MENU_CSS from "./menu.css?inline";
  * (anchors become /#… and load the homepage; `current` marks that page's row).
  */
 
-/** Desktop inline row — the page's sections in page order. */
+/**
+ * The essentials (2026-11-10, Ali: «the nav is crowded and confusing»): four
+ * links, the same on desktop and in the phone sheet. The other sections stay on
+ * the page; «أسئلة صريحة» moved to the footer. «دخول الطلاب» is a quiet
+ * secondary link after a hairline. `route` = a real page (never scroll-hijacked);
+ * `page` = where an anchor goes when we are not on the homepage.
+ */
 export const MENU = [
-  { href: "#fx-platform", label: "من داخل المنصة" },
-  { href: "#fx-pains", label: "العائق ليس أنت" },
-  { href: "#fx-how", label: "كيف نُزيله" },
-  { href: "#fx-stats", label: "الأرقام كما هي" },
-  { href: "#fx-between", label: "بين الحصص" },
-  { href: "#fx-pricing", label: "اختر مسارك" },
-  { href: "#fx-stories", label: "قصص طلابنا" },
-  { href: "#fx-faq", label: "أسئلة صريحة" },
+  { href: "#fx-platform", label: "المنصّة" },
+  { href: "#fx-pricing", label: "الباقات" },
+  { href: "#fx-stories", label: "قصص طلابنا", page: "/stories" },
+  { href: "/journal", label: "المجلة", route: true, page: "/journal" },
 ];
 
-/** Phone menu — grouped by what a visitor came for, not by scroll order. */
-const GROUPS = [
-  {
-    label: "البرامج",
-    items: [
-      { href: "#fx-pricing", label: "الباقات والأسعار" },
-      { href: "/private", label: "التدريب الفردي", route: true },
-      { href: "/level-test", label: "اختبار تحديد المستوى", route: true },
-    ],
-  },
-  {
-    label: "اكتشف طلاقة",
-    items: [
-      { href: "#fx-platform", label: "من داخل المنصة" },
-      { href: "#fx-pains", label: "كيف نُزيل العائق" },
-      { href: "#fx-stats", label: "الأرقام كما هي" },
-      { href: "#fx-between", label: "بين الحصص" },
-      { href: "#fx-stories", label: "قصص طلابنا", page: "/stories" },
-      { href: "#fx-faq", label: "أسئلة صريحة" },
-    ],
-  },
-];
+/** Phone menu — the same four. */
+const GROUPS = [{ label: "تصفّح طلاقة", items: MENU }];
 
 /** /join (paid traffic): on-page sections only — no link that leaves the form. */
-const CAMPAIGN_GROUPS = [
-  {
-    label: "أقسام الصفحة",
-    items: [
-      { href: "#fx-platform", label: "من داخل المنصة" },
-      { href: "#fx-pains", label: "كيف نُزيل العائق" },
-      { href: "#fx-stats", label: "الأرقام كما هي" },
-      { href: "#fx-steps", label: "كيف تبدأ" },
-      { href: "#fx-pricing", label: "الباقات والأسعار" },
-      { href: "#fx-faq", label: "أسئلة صريحة" },
-    ],
-  },
+const CAMPAIGN_MENU = [
+  { href: "#fx-platform", label: "المنصّة" },
+  { href: "#fx-steps", label: "كيف تبدأ" },
+  { href: "#fx-pricing", label: "الباقات" },
 ];
+const CAMPAIGN_GROUPS = [{ label: "أقسام الصفحة", items: CAMPAIGN_MENU }];
 
 const KEY = "fxmenu";
 const DUR = 280;
 
 export default function Header({ page = "home" }) {
-  // /join: «بين الحصص» is not on the page, «كيف تبدأ» is.
+  // /join: on-page sections only («كيف تبدأ» is there, the journal is not).
   const campaign = Boolean(useCta());
   const home = page === "home";
-  const inline = campaign
-    ? [
-        ...MENU.filter((m) => !["#fx-between", "#fx-pricing", "#fx-faq", "#fx-stories"].includes(m.href)),
-        { href: "#fx-steps", label: "كيف تبدأ" },
-        ...MENU.filter((m) => m.href === "#fx-pricing" || m.href === "#fx-faq"),
-      ]
-    : MENU;
+  const inline = campaign ? CAMPAIGN_MENU : MENU;
   const groups = campaign ? CAMPAIGN_GROUPS : GROUPS;
   const headRef = useRef(null);
   const sheetRef = useRef(null);
@@ -244,10 +213,10 @@ export default function Header({ page = "home" }) {
   };
 
   /** Inline (desktop) link. */
-  const goInline = (e, href) => {
-    if (!home) return; // a plain link to /#…
+  const goInline = (e, item) => {
+    if (!home || item.route) return; // a plain link (/#… or a page)
     e.preventDefault();
-    scrollTo(href);
+    scrollTo(item.href);
   };
 
   /** Sheet link: close first; scroll / navigate once the page is back. */
@@ -264,7 +233,7 @@ export default function Header({ page = "home" }) {
     }
   };
 
-  const isCurrent = (item) => (home ? current === item.href : item.page === page);
+  const isCurrent = (item) => (home ? !item.route && current === item.href : item.page === page);
 
   return (
     <>
@@ -278,7 +247,7 @@ export default function Header({ page = "home" }) {
             <a
               key={m.href}
               href={hrefOf(m)}
-              onClick={(e) => goInline(e, m.href)}
+              onClick={(e) => goInline(e, m)}
               className="fx-nav-link"
               aria-current={isCurrent(m) ? (home ? "location" : "page") : undefined}
             >
@@ -286,9 +255,12 @@ export default function Header({ page = "home" }) {
             </a>
           ))}
           {campaign ? null : (
-            <a href={NAV.studentLogin.href} target="_blank" rel="noopener noreferrer" className="fx-nav-link fx-nav-login">
-              {NAV.studentLogin.label}
-            </a>
+            <>
+              <span className="fx-nav-sep" aria-hidden="true" />
+              <a href={NAV.studentLogin.href} target="_blank" rel="noopener noreferrer" className="fx-nav-link fx-nav-login">
+                {NAV.studentLogin.label}
+              </a>
+            </>
           )}
         </nav>
         <div className="fx-head-actions">

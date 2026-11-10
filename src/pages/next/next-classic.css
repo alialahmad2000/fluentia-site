@@ -146,19 +146,20 @@ html.fx-intro.fx-skip .fx-next { --fx-hd: 0ms; }
   color: var(--fx-cream);
 }
 .fx-head-actions { display: flex; align-items: center; gap: 8px; }
-/* Inline section links — the classic homepage's V1Header row. Shown only where
-   all of them fit beside the brand and the action; «القائمة» takes over below. */
+/* Inline links — four essentials, then the quiet student login behind a hairline.
+   Four fit beside the brand and the action from 1024 px; «القائمة» takes over below. */
 .fx-nav { display: none; }
-@media (min-width: 1200px) {
+@media (min-width: 1024px) {
   .fx-nav {
     display: flex;
     align-items: center;
-    gap: clamp(18px, 1.6vw, 28px);
+    gap: clamp(26px, 2.4vw, 40px);
     margin-inline: auto;
   }
   .fx-head .fx-menu-toggle { display: none; }
 }
 .fx-nav-link {
+  position: relative;
   display: inline-flex;
   align-items: center;
   min-height: 48px;
@@ -169,11 +170,35 @@ html.fx-intro.fx-skip .fx-next { --fx-hd: 0ms; }
   white-space: nowrap;
   transition: color 300ms ease;
 }
+/* The section under the reader (or this page): cream text + a short sky hairline. */
+.fx-nav-link::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  bottom: 9px;
+  margin-inline: auto;
+  width: 14px;
+  height: 1px;
+  border-radius: 1px;
+  background: var(--fx-sky);
+  opacity: 0;
+  transform: scaleX(0.4);
+  transition: opacity 400ms ease, transform 400ms var(--fx-ease-soft, ease);
+}
 .fx-nav-link[aria-current] { color: var(--fx-cream); }
+.fx-nav-link[aria-current]::after { opacity: 0.7; transform: none; }
 .fx-nav-link:focus-visible { color: var(--fx-cream); }
-.fx-nav-login { font-size: 14px; }
+.fx-nav-sep {
+  width: 1px;
+  height: 16px;
+  background: rgba(243, 237, 226, 0.16);
+  margin-inline: 2px;
+}
+.fx-nav-login { font-size: 13.5px; opacity: 0.78; }
+.fx-nav-login::after { display: none; }
 @media (hover: hover) {
   .fx-nav-link:hover { color: var(--fx-cream); }
+  .fx-nav-login:hover { opacity: 1; }
 }
 .fx-menu-toggle {
   min-height: 48px;

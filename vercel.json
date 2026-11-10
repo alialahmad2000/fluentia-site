@@ -147,6 +147,10 @@
       "destination": "/private.html"
     },
     {
+      "source": "/journal",
+      "destination": "/journal.html"
+    },
+    {
       "source": "/stories",
       "destination": "/stories.html"
     },
@@ -205,6 +209,30 @@
     {
       "source": "/articles/%D8%AC%D9%85%D9%84-%D8%A7%D9%86%D8%AC%D9%84%D9%8A%D8%B2%D9%8A%D8%A9-%D9%84%D9%84%D8%B9%D9%85%D9%84",
       "destination": "/articles/جمل-انجليزية-للعمل.html"
+    },
+    {
+      "source": "/journal/first-ten-minutes",
+      "destination": "/journal/first-ten-minutes.html"
+    },
+    {
+      "source": "/journal/understand-but-cant-speak",
+      "destination": "/journal/understand-but-cant-speak.html"
+    },
+    {
+      "source": "/journal/words-that-betrayed-us",
+      "destination": "/journal/words-that-betrayed-us.html"
+    },
+    {
+      "source": "/journal/accent-is-not-the-problem",
+      "destination": "/journal/accent-is-not-the-problem.html"
+    },
+    {
+      "source": "/journal/fear-of-mistakes",
+      "destination": "/journal/fear-of-mistakes.html"
+    },
+    {
+      "source": "/journal/adults-learn-differently",
+      "destination": "/journal/adults-learn-differently.html"
     },
     {
       "source": "/tour",

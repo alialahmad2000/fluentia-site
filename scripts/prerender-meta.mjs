@@ -33,7 +33,8 @@ import { dirname, join } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
 import { ARTICLES } from "../src/content/articles.js";
-import { PRERENDER_ROUTES, articleSeo, resolveSeo, workPageSeo } from "../src/content/seo.js";
+import { PRERENDER_ROUTES, articleSeo, journalSeo, resolveSeo, workPageSeo } from "../src/content/seo.js";
+import { JOURNAL } from "../src/content/journal/index.js";
 import { WORK_PAGES } from "../src/content/workEnglish.js";
 import { assertRouterClassified, cloudflareRedirectsFile } from "./cloudflare-routing.mjs";
 import { expectedRewrites } from "./sync-vercel-rewrites.mjs";
@@ -136,6 +137,10 @@ function withOgImage(html, seo) {
     if (!re.test(out)) throw new Error(`index.html lost a share-image tag (${re}) — update prerender-meta.mjs`);
     out = out.replace(re, (_, a, b) => `${a}${attr(value)}${b}`);
   }
+  // index.html declares image/png; a JPEG preview (the journal's) says so.
+  if (/\.jpe?g$/i.test(seo.ogImage)) {
+    out = out.replace(/(<meta property="og:image:type" content=")[^"]*(")/, "$1image/jpeg$2");
+  }
   return out;
 }
 
@@ -216,6 +221,7 @@ const targets = [
   ...PRERENDER_ROUTES.map((path) => resolveSeo(path)),
   ...ARTICLES.map((article) => articleSeo(article)),
   ...WORK_PAGES.map((page) => workPageSeo(page)),
+  ...JOURNAL.map((article) => journalSeo(article)),
 ];
 
 let written = 0;

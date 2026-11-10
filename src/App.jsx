@@ -13,6 +13,8 @@ const StartPage = lazy(() => import('./pages/StartPage'));
 const JoinPage = lazy(() => import('./pages/join/JoinPage'));
 const PrivatePage = lazy(() => import('./pages/private/PrivatePage'));
 const StoriesPage = lazy(() => import('./pages/stories/StoriesPage'));
+const JournalIndex = lazy(() => import('./pages/journal/JournalIndex'));
+const JournalArticle = lazy(() => import('./pages/journal/JournalArticle'));
 const NextLanding = lazy(() => import('./pages/next/NextLanding'));
 const AscentLanding = lazy(() => import('./pages/ascent/AscentLanding'));
 const JourneyLanding = lazy(() => import('./pages/journey/JourneyLanding'));
@@ -1242,6 +1244,9 @@ function AppRoutes(){
       <Route path="/about" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#060e1c'}} />}><AboutPage /></Suspense>} />
       <Route path="/articles" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#0a0e1a'}} />}><ArticlesIndex /></Suspense>} />
       <Route path="/articles/:slug" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#0a0e1a'}} />}><ArticlePage /></Suspense>} />
+      {/* «مجلة طلاقة» — art-directed long-form articles (src/content/journal/). */}
+      <Route path="/journal" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#060e1c'}} />}><JournalIndex /></Suspense>} />
+      <Route path="/journal/:slug" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#060e1c'}} />}><JournalArticle /></Suspense>} />
       {/* «الإنجليزي للعمل» — field glossaries for «مصطلحات <مجال> بالانجليزي» searches */}
       <Route path="/work-english" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#0a0e1a'}} />}><WorkEnglishHub /></Suspense>} />
       <Route path="/work-english/:slug" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#0a0e1a'}} />}><WorkEnglishPage /></Suspense>} />

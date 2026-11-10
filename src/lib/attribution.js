@@ -110,6 +110,26 @@ function readTouch() {
     touch.utm_medium = hit ? hit[2] : "referral";
   }
 
+  // «مجلة طلاقة»: a visit to /journal or /journal/<slug> without explicit UTMs is
+  // the journal's own touch — source "journal", campaign = the article slug (as
+  // the guide does with utm_source=guide). Whatever brought the reader here
+  // (google, a referral, this session's earlier touch) is kept in utm_content,
+  // so nothing is lost. Explicit ?utm_source=… (ads) is left untouched.
+  const journal = window.location.pathname.match(/^\/journal(?:\/([^/]+))?\/?$/);
+  if (journal && !params.get("utm_source")) {
+    let prev = null;
+    try { prev = safeGet(window.sessionStorage, LAST_KEY); } catch { /* storage blocked */ }
+    const via = touch.utm_source
+      || (prev && prev.utm_source === "journal" ? (prev.utm_content || "").replace(/^via:/, "") : prev?.utm_source)
+      || "";
+    let slug = "index";
+    try { slug = journal[1] ? decodeURIComponent(journal[1]).slice(0, 100) : "index"; } catch { /* malformed */ }
+    touch.utm_source = "journal";
+    touch.utm_medium = touch.utm_medium || "editorial";
+    touch.utm_campaign = slug;
+    if (via) touch.utm_content = `via:${via}`.slice(0, 100);
+  }
+
   if (!touch.utm_source) return null;
   touch.landing_path = window.location.pathname;
   touch.at = Date.now();

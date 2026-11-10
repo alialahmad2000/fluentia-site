@@ -529,6 +529,8 @@ export const FOOTER = {
     { label: "المنهج", href: "#solution" },
     { label: "الباقات", href: "#pricing" },
     { label: "مقالات", href: "/articles" },
+    { label: "مجلة طلاقة", href: "/journal" },
+    { label: "أسئلة صريحة", href: "/#fx-faq" },
     { label: "دليل طلاقة", href: "/guide/" },
     { label: "الإنجليزي للعمل", href: "/work-english" },
     { label: "دخول الطلاب", href: "https://app.fluentia.academy" },
