@@ -28,7 +28,7 @@ export function PreviewMeta({ title, description }) {
  * by Helmet after first render, a «swap» would reflow the type-led covers (CLS
  * 0.2–0.3 on a cold load). So the page stays visibility:hidden — invisible nodes
  * don't count as layout shift — until the stylesheet is in and the faces in
- * `specs` are loaded, or `cap` ms pass. Faces already loaded (moving between
+ * `specs` (every weight the stylesheet declares) are loaded, or `cap` ms pass. Faces already loaded (moving between
  * pages of one direction) show at once. Returns a style for the root element.
  */
 const SAMPLE = "طلاقة abc";
@@ -39,7 +39,13 @@ const faceLoaded = (spec) => {
   } catch { return true; }
   return false;
 };
-export function useFontGate(href, specs, cap = 900) {
+/** Every family × weight a Google Fonts css2 URL declares, as FontFaceSet.load() specs. */
+export const facesOf = (href) =>
+  [...href.matchAll(/family=([^:&]+):wght@([\d;]+)/g)].flatMap(([, fam, w]) =>
+    w.split(";").map((wt) => `${wt} 1em "${decodeURIComponent(fam).replace(/\+/g, " ")}"`),
+  );
+
+export function useFontGate(href, specs, cap = 1500) {
   const [ready, setReady] = useState(() => typeof document === "undefined" || !document.fonts || specs.every(faceLoaded));
   useEffect(() => {
     if (ready) return undefined;

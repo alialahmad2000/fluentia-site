@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef } from "react";
-import { useFontGate } from "../shared";
+import { useFontGate, facesOf } from "../shared";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import "../../../styles/v1-tokens.css";
@@ -141,7 +141,7 @@ const FONTS = "https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@500;600;7
 export default function Shell({ children, barRef, bodyRef, topId = true }) {
   const rootRef = useRef(null);
   useDuskMotion(rootRef, { barRef, bodyRef });
-  const gate = useFontGate(FONTS, ['700 1em "Reem Kufi"', '400 1em "IBM Plex Sans Arabic"']);
+  const gate = useFontGate(FONTS, facesOf(FONTS));
   return (
     <div className="v1-scope v5-scope fx-next pv-dusk" dir="rtl" ref={rootRef} style={gate}>
       <style dangerouslySetInnerHTML={{ __html: NEXT_CSS + DUSK_CSS }} />

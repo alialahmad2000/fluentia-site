@@ -8,7 +8,7 @@ import INK_CSS from "./ink.css?inline";
 import V1LeadModal from "../../v1/V1LeadModal";
 import { V1Footer } from "../../v1/V1Closing";
 import Header from "../../next/Header";
-import { Art, useFontGate } from "../shared";
+import { Art, useFontGate, facesOf } from "../shared";
 import { PREVIEW_PATH, previewPath } from "../../../content/journal/preview.js";
 import { readLabel } from "../../../content/journal/index.js";
 import { parseInline } from "../../../content/journal/index.js";
@@ -101,7 +101,7 @@ export function Shell({ children, share = null }) {
   const barRef = useRef(null);
   const glowRef = useRef(null);
   useAtmosphere(rootRef, barRef, glowRef);
-  const gate = useFontGate(FONTS, ['700 1em "Aref Ruqaa"', '400 1em "IBM Plex Sans Arabic"']);
+  const gate = useFontGate(FONTS, facesOf(FONTS));
   useEffect(() => {
     const h = document.documentElement, b = document.body;
     const prev = [h.style.backgroundColor, b.style.backgroundColor];

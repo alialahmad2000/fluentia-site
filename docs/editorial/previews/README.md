@@ -33,7 +33,10 @@ Image sources, prompts and spend: `../image-prompts.md`.
   clickable behind a modal. The header is hidden while a sheet is open.
 - **All** — a cold load swapped the Google display faces after first paint and
   reflowed the type-led covers (CLS 0.2–0.3 on desktop homes). The page now stays
-  invisible until its faces load (capped at 900 ms); measured CLS ≈ 0.
+  invisible until its faces load (every declared weight, capped at 1.5 s). On
+  production: CLS 0 on all 22 URLs at 375 px. A load slow enough that the fonts
+  miss the cap can still shift the Gallery/Ink covers once (seen at ~0.17 on a
+  12-second desktop load).
 - **Dusk** — the portrait (4:5) home cards cropped their subject (door, tree, gong)
   under the dune band and off the frame edge; the photo is lifted, the dunes
   lowered, and the crop anchored at 74 % where the subjects sit.

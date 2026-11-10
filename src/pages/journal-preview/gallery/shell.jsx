@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useFontGate } from "../shared";
+import { useFontGate, facesOf } from "../shared";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 import "../../../styles/v1-tokens.css";
@@ -49,7 +49,7 @@ export function useReveal(dep) {
 
 /** Page chrome: header, fonts, lead modal, footer, quiet link to all directions. */
 export default function Shell({ children, grid = true }) {
-  const gate = useFontGate(FONTS, ['800 1em "Alexandria"', '400 1em "IBM Plex Sans Arabic"']);
+  const gate = useFontGate(FONTS, facesOf(FONTS));
   useEffect(() => {
     document.documentElement.classList.add("pv-gallery-on");
     return () => document.documentElement.classList.remove("pv-gallery-on");
