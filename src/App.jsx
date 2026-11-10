@@ -15,6 +15,9 @@ const PrivatePage = lazy(() => import('./pages/private/PrivatePage'));
 const StoriesPage = lazy(() => import('./pages/stories/StoriesPage'));
 const JournalIndex = lazy(() => import('./pages/journal/JournalIndex'));
 const JournalArticle = lazy(() => import('./pages/journal/JournalArticle'));
+const PreviewChooser = lazy(() => import('./pages/journal-preview/Chooser'));
+const PreviewHome = lazy(() => import('./pages/journal-preview/PreviewHome'));
+const PreviewArticle = lazy(() => import('./pages/journal-preview/PreviewArticle'));
 const NextLanding = lazy(() => import('./pages/next/NextLanding'));
 const AscentLanding = lazy(() => import('./pages/ascent/AscentLanding'));
 const JourneyLanding = lazy(() => import('./pages/journey/JourneyLanding'));
@@ -1246,6 +1249,10 @@ function AppRoutes(){
       <Route path="/articles/:slug" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#0a0e1a'}} />}><ArticlePage /></Suspense>} />
       {/* «مجلة طلاقة» — art-directed long-form articles (src/content/journal/). */}
       <Route path="/journal" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#060e1c'}} />}><JournalIndex /></Suspense>} />
+      {/* «مجلة طلاقة» art-direction previews — noindex, client-rendered (src/content/journal/preview.js). */}
+      <Route path="/journal/preview" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#0b0b0b'}} />}><PreviewChooser /></Suspense>} />
+      <Route path="/journal/preview/:dir" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#0b0b0b'}} />}><PreviewHome /></Suspense>} />
+      <Route path="/journal/preview/:dir/:slug" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#0b0b0b'}} />}><PreviewArticle /></Suspense>} />
       <Route path="/journal/:slug" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#060e1c'}} />}><JournalArticle /></Suspense>} />
       {/* «الإنجليزي للعمل» — field glossaries for «مصطلحات <مجال> بالانجليزي» searches */}
       <Route path="/work-english" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#0a0e1a'}} />}><WorkEnglishHub /></Suspense>} />

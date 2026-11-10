@@ -28,3 +28,9 @@
 # Student story media (public/stories/<id>/). Not hashed: a week, then revalidate.
 /stories/*
   Cache-Control: public, max-age=604800
+
+# «مجلة طلاقة» art-direction previews: never indexed, whatever a crawler renders.
+/journal/preview
+  X-Robots-Tag: noindex, nofollow
+/journal/preview/*
+  X-Robots-Tag: noindex, nofollow

@@ -36,6 +36,7 @@ import { fileURLToPath } from "node:url";
 
 import { PRERENDER_ROUTES } from "../src/content/seo.js";
 import { WORK_HUB_PATH } from "../src/content/workEnglish.js";
+import { PREVIEW_ROUTES } from "../src/content/journal/preview.js";
 import { prerenderedPaths } from "./sync-vercel-rewrites.mjs";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
@@ -58,6 +59,9 @@ export const CLIENT_ONLY_ROUTES = [
   "/v4",
   "/v5",
   "/w",
+  // «مجلة طلاقة» art-direction previews: client-rendered, noindex (meta + the
+  // X-Robots-Tag in public/_headers), never in the sitemap or llms.txt.
+  ...PREVIEW_ROUTES,
 ];
 
 /**
