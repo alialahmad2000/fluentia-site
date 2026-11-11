@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useLocation } from 'react-router-dom';
 
 /**
  * Privacy-first cookie consent banner (custom, zero dependencies).
@@ -49,7 +50,11 @@ export default function CookieBanner() {
   const [choices, setChoices] = useState(defaultConsent);
   // /join (paid TikTok traffic): the same choices in a slim bar. The full card
   // covered a third of a phone screen — half the lead form under the hero.
-  const [compact, setCompact] = useState(false);
+  // /start («مستشار طلاقة» chat): the composer and the contact card live at the
+  // bottom of a full-screen chat, so the slim bar sits at the TOP there instead.
+  const { pathname } = useLocation();
+  const onChat = /^\/start\/?$/.test(pathname);
+  const compact = onChat || /^\/join\/?$/.test(pathname);
   // …and steps aside while a lead form is on screen or being filled, so it
   // never sits over the submit button. Hidden, not dismissed: nothing is written.
   const [overForm, setOverForm] = useState(false);
@@ -59,19 +64,19 @@ export default function CookieBanner() {
   useEffect(() => {
     const existing = readConsent();
     if (existing) return; // user already chose
-    setCompact(/^\/join\/?$/.test(window.location.pathname));
     const t = setTimeout(() => setVisible(true), 1000);
     return () => clearTimeout(t);
   }, []);
 
   useEffect(() => {
-    if (!compact || !visible) return undefined;
+    if (!compact || !visible) { setOverForm(false); return undefined; }
     let raf = 0;
     const check = () => {
       raf = 0;
       const vh = window.innerHeight;
-      const forms = document.querySelectorAll('#join-form, #join-form-bottom');
-      const inView = [...forms].some((f) => {
+      // The chat's input is always on screen, so there only focus counts (typing → keyboard up).
+      const forms = document.querySelectorAll(onChat ? '.adv-compose, .adv-card' : '#join-form, #join-form-bottom');
+      const inView = !onChat && [...forms].some((f) => {
         const r = f.getBoundingClientRect();
         return r.top < vh && r.bottom > 0;
       });
@@ -91,7 +96,7 @@ export default function CookieBanner() {
       document.removeEventListener('focusin', later);
       document.removeEventListener('focusout', later);
     };
-  }, [compact, visible]);
+  }, [compact, onChat, visible]);
 
   // Keyboard: Escape = reject all
   useEffect(() => {
@@ -133,7 +138,9 @@ export default function CookieBanner() {
         position: 'fixed',
         insetInlineStart: '1rem',
         insetInlineEnd: '1rem',
-        bottom: slim ? '0.5rem' : '1rem',
+        ...(onChat && slim
+          ? { top: 'calc(env(safe-area-inset-top, 0px) + 0.5rem)' }
+          : { bottom: slim ? '0.5rem' : '1rem' }),
         zIndex: 9999,
         maxWidth: '560px',
         marginInlineStart: 'auto',

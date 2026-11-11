@@ -9,7 +9,7 @@ export default function Home({ direction }) {
   const [a0, a1, a2, a3, a4, a5] = JOURNAL;
   return (
     <Shell>
-      <PreviewMeta title={`${JOURNAL_NAME} · العدد 1 | ${direction.name}`} description={JOURNAL_MANIFESTO} />
+      <PreviewMeta title={`${JOURNAL_NAME} · العدد 1 | ${direction.name}`} description={JOURNAL_MANIFESTO} image="/images/journal/ink/cover-og.jpg" />
 
       <header id="fx-top" className="ink-cover">
         <div className="ink-cover-art" aria-hidden="true">

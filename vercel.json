@@ -119,6 +119,10 @@
       "destination": "/start.html"
     },
     {
+      "source": "/start/form",
+      "destination": "/start/form.html"
+    },
+    {
       "source": "/partners",
       "destination": "/partners.html"
     },

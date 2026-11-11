@@ -10,6 +10,7 @@ const PartnersLanding = lazy(() => import('./pages/partners/PartnersLanding'));
 const PartnersSubmitted = lazy(() => import('./pages/partners/PartnersSubmitted'));
 const PartnersTerms = lazy(() => import('./pages/partners/PartnersTerms'));
 const StartPage = lazy(() => import('./pages/StartPage'));
+const AdvisorChat = lazy(() => import('./pages/start/AdvisorChat'));
 const JoinPage = lazy(() => import('./pages/join/JoinPage'));
 const CareersPage = lazy(() => import('./pages/careers/CareersPage'));
 const PrivatePage = lazy(() => import('./pages/private/PrivatePage'));
@@ -1224,8 +1225,11 @@ function AppRoutes(){
         ? <Suspense fallback={NEXT_FALLBACK}><NextLanding seoPath="/" /></Suspense>
         : <Suspense fallback={VFallback}><V5Landing /></Suspense>} />
       <Route path="/classic" element={<Suspense fallback={VFallback}><V5Landing /></Suspense>} />
-      <Route path="/start" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#0A0A0A'}} />}><StartPage /></Suspense>} />
-      {/* TikTok campaign landing (noindex). /start stays the Google Ads page. */}
+      {/* «مستشار طلاقة» — the AI admissions chat (admissions-bot edge function). The old
+          form it replaced stays reachable at /start/form, linked at the bottom of the chat. */}
+      <Route path="/start" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#060e1c'}} />}><AdvisorChat /></Suspense>} />
+      <Route path="/start/form" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#0A0A0A'}} />}><StartPage /></Suspense>} />
+      {/* TikTok campaign landing (noindex). /start is the Google Ads page. */}
       <Route path="/join" element={JOIN_VARIANT === "next"
         ? <Suspense fallback={NEXT_FALLBACK}><NextLanding campaign /></Suspense>
         : <Suspense fallback={JOIN_CLASSIC_FALLBACK}><JoinPage /></Suspense>} />

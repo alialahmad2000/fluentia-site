@@ -7,18 +7,36 @@ import { Helmet } from "react-helmet-async";
  * completely; only these helpers are common.
  */
 
-/** Previews are never indexed: robots meta here + X-Robots-Tag in public/_headers. */
-export function PreviewMeta({ title, description }) {
-  // The shell's static «index, follow» tag would sit beside ours; a preview keeps
-  // only «noindex, nofollow» (the X-Robots-Tag header in public/_headers is the backstop).
+/**
+ * Previews are never indexed: robots meta here + X-Robots-Tag in public/_headers.
+ * `image` (a path under /images/journal/<dir>/, 1200×630 JPEG) becomes og:image / twitter:image.
+ */
+const SITE = "https://fluentia.academy";
+export function PreviewMeta({ title, description, image }) {
+  // The shell's static «index, follow» and og:image tags would sit beside ours; while a
+  // preview is mounted they are taken out, and put back when it unmounts.
   useEffect(() => {
-    document.querySelectorAll('meta[name="robots"]:not([data-rh])').forEach((m) => m.remove());
-  }, []);
+    const sel = ['meta[name="robots"]:not([data-rh])'];
+    if (image) sel.push('meta[property^="og:image"]:not([data-rh])', 'meta[name^="twitter:image"]:not([data-rh])');
+    const gone = [...document.querySelectorAll(sel.join(","))].map((m) => [m, m.parentNode, m.nextSibling]);
+    gone.forEach(([m]) => m.remove());
+    return () => gone.forEach(([m, parent, next]) => { if (parent && !m.isConnected) parent.insertBefore(m, next && next.isConnected ? next : null); });
+  }, [image]);
+  const abs = image ? `${SITE}${image}` : null;
   return (
     <Helmet>
       <title>{title}</title>
       {description ? <meta name="description" content={description} /> : null}
       <meta name="robots" content="noindex, nofollow" />
+      <meta property="og:title" content={title} />
+      {description ? <meta property="og:description" content={description} /> : null}
+      {abs ? <meta property="og:image" content={abs} /> : null}
+      {abs ? <meta property="og:image:secure_url" content={abs} /> : null}
+      {abs ? <meta property="og:image:type" content="image/jpeg" /> : null}
+      {abs ? <meta property="og:image:width" content="1200" /> : null}
+      {abs ? <meta property="og:image:height" content="630" /> : null}
+      {abs ? <meta property="og:image:alt" content={title} /> : null}
+      {abs ? <meta name="twitter:image" content={abs} /> : null}
     </Helmet>
   );
 }
