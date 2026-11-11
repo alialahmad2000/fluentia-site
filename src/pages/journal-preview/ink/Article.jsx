@@ -57,7 +57,7 @@ export default function Article({ direction, article }) {
 
   return (
     <Shell share={share ? <ShareSheet article={article} quote={share} onClose={() => setShare(null)} /> : null}>
-      <PreviewMeta title={`${article.title} | ${direction.name}`} description={article.description} />
+      <PreviewMeta title={`${article.title} | ${direction.name}`} description={article.description} image={`/images/journal/ink/plate-${article.slug}-og.jpg`} />
       <article>
         <header id="fx-top" className="ink-plate">
           <div className="ink-plate-art" aria-hidden="true">

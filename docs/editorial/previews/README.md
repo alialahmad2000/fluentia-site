@@ -45,3 +45,13 @@ Image sources, prompts and spend: `../image-prompts.md`.
   ≤ 683 px measure; the flagship meeting game played to the end by touch in all
   three; share cards generate story + post PNGs; «احجز لقاءك المبدئي» opens the
   same lead form as the live site (same `data-open-form`, same tracking).
+
+## Self-critique — round 3 (spec re-audit, independent read)
+
+- **All** — the OG backgrounds existed but no page pointed at them; `PreviewMeta` now emits
+  `og:image` / `twitter:image` (cover on homes, the article's plate on articles) and lifts the
+  shell's default image tags while a preview is mounted. Every direction has 7 OG JPEGs (cover + 6).
+- **Gallery** — the flagship's clock scene had no photography; it now sits on a monochrome
+  still (five plinths, one per station) at 30 %, under the lime line work.
+- **Drop cap** — kept as an "equivalent opening device" (ember rule / sun dome / lime bar on the
+  lede): a CSS `initial-letter` on Arabic detaches the first letter from its word.

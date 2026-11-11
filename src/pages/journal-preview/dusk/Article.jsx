@@ -27,7 +27,7 @@ export default function Article({ direction, article }) {
 
   return (
     <Shell barRef={barRef} bodyRef={bodyRef}>
-      <PreviewMeta title={`${article.title} | ${direction.name}`} description={article.description} />
+      <PreviewMeta title={`${article.title} | ${direction.name}`} description={article.description} image={`/images/journal/dusk/plate-${article.slug}-og.jpg`} />
       <article>
         <header id="fx-top" className={`dk-plate${photo ? " dk-plate--photo" : ""}`}>
           <div className="dk-plate-bg" data-plx="0.22">

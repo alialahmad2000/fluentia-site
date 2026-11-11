@@ -187,7 +187,7 @@ function SwapArt({ p }) {
 }
 
 const SCENES = {
-  clock: { Art: ClockArt, caps: ["أول عشر دقائق في الاجتماع فيها خمس محطات ثابتة.", "لكل محطة جملتين أو ثلاث، جاهزة قبل ما نحتاجها.", "وباقي الاجتماع؟ نخلّيه للإبداع."] },
+  clock: { Art: ClockArt, img: "scene-clock", caps: ["أول عشر دقائق في الاجتماع فيها خمس محطات ثابتة.", "لكل محطة جملتين أو ثلاث، جاهزة قبل ما نحتاجها.", "وباقي الاجتماع؟ نخلّيه للإبداع."] },
   table: { Art: TableArt, caps: ["في الاجتماع الجاي، فيه كرسي لنا.", "عشر جمل تقريباً تكفي لأول عشر دقائق.", "وكل اجتماع بعده يضيف جملة للقائمة."] },
   plug: { Art: PlugArt, caps: ["الفكرة سليمة، والكلمات سليمة…", "…بس شكل الفيش عربي، والجدار إنجليزي.", "لما نتعلّم شكل الجملة الإنجليزية، تركب."] },
   swap: { Art: SwapArt, caps: ["ثلاث جمل تتكرر كثير في بيئة العمل.", "تصليح صغير في كل وحدة…", "…وتصير الجملة إنجليزية فعلاً."] },
@@ -200,11 +200,16 @@ export default function Scene({ id }) {
   const p = useSceneProgress(ref);
   const scene = SCENES[id];
   if (!scene) return null;
-  const { Art, caps } = scene;
+  const { Art, caps, img } = scene;
   const active = Math.min(caps.length - 1, Math.floor(p * caps.length * 1.05));
   return (
     <div className="g-scene" ref={ref}>
       <div className="g-scene-stick">
+        {img ? (
+          <picture className="g-scene-img" aria-hidden="true">
+            <img src={`/images/journal/gallery/${img}-w1280.webp`} srcSet={`/images/journal/gallery/${img}-w800.webp 800w, /images/journal/gallery/${img}-w1280.webp 1280w, /images/journal/gallery/${img}-w1920.webp 1920w`} sizes="100vw" alt="" loading="lazy" decoding="async" width="1920" height="1080" onError={(e) => { e.currentTarget.parentElement.style.display = "none"; }} />
+          </picture>
+        ) : null}
         <div className="g-stage"><Art p={p} /></div>
         <div className="g-caps">
           <i className="g-rail" style={{ transform: `scaleX(${p.toFixed(3)})` }} aria-hidden="true" />

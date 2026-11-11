@@ -8,7 +8,7 @@ export default function Home({ direction }) {
   const [hero, a, b, c, d, e] = JOURNAL;
   return (
     <Shell>
-      <PreviewMeta title={`${JOURNAL_NAME} · العدد 1 | ${direction.name}`} description={JOURNAL_MANIFESTO} />
+      <PreviewMeta title={`${JOURNAL_NAME} · العدد 1 | ${direction.name}`} description={JOURNAL_MANIFESTO} image="/images/journal/dusk/cover-og.jpg" />
 
       <header id="fx-top" className="dk-cover">
         <div className="dk-cover-bg" data-plx="0.22">

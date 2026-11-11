@@ -15,14 +15,19 @@ Rules every prompt follows: no text, letters, numbers, signage or logos in the i
 | Shoot-out (one test frame per direction per model) | fal.ai: nano-banana, seedream, flux 3, ultra, recraft | 13 | ≈ $1.62 |
 | Everything after the shoot-out | — fal.ai returned `403 User is locked. Reason: TOP_UP`; Higgsfield had no credits | 0 | $0 |
 | Missing plates (Gallery ×4 B&W, Dusk ×5) | Z-Image-Turbo 4-bit, run locally on the Mac (mflux, 9 steps) | 9 + 1 test | $0 |
-| **Total** | | **23 generated** | **≈ $1.62** (budget ≈ $25) |
+| Gallery flagship scene backdrop `scene-clock` (its second candidate and the table pair were cancelled: the Mac hit two watchdog kernel panics while rendering under heavy load, so local rendering was stopped) | Z-Image-Turbo, local | 1 | $0 |
+| **Total** | | **24 generated** | **≈ $1.62** (budget ≈ $25) |
 
 The fal key was used only from a local script, never in client code, never committed.
+
+OG backgrounds (1200×630 JPEG): one for the cover and one per article in every direction (7 × 3), cropped from the
+slot's 16:9 art and served as `og:image` / `twitter:image` by `PreviewMeta`; a few sources are 1099 px wide, so
+those OGs are slightly upscaled.
 
 Slot sources:
 - **Ink & Ember:** all slots are crops and re-grades of the four ink shoot-out frames (night boardroom, ember lamp). See `image-prompts/ink.md` for the per-slot prompts to re-run when fal is topped up.
 - **Desert Dusk:** cover = seedream shoot-out, first-ten-minutes plate = nano-banana shoot-out (table on a dune), `scene-table` = flux 3, `scene-clock` = ultra, the other five plates + quote-card backgrounds = local Z-Image-Turbo. Recipe in `image-prompts/dusk.md`.
-- **Gallery:** cover + two plates = crops of the nano-banana shoot-out (chair, window and clock shadow); four plates = local Z-Image-Turbo, converted to pure grayscale (`hue=s=0`). The lime accent is CSS, never in the photo. Recipe in `image-prompts/gallery.md`.
+- **Gallery:** cover + two plates = crops of the nano-banana shoot-out (chair, window and clock shadow); four plates = local Z-Image-Turbo, converted to pure grayscale (`hue=s=0`). Flagship scene `scene-clock` (five plinths = five stations) = local Z-Image-Turbo, grayscale, shown at 30 % behind the SVG; the table scene stays pure SVG. The lime accent is CSS, never in the photo. Recipe in `image-prompts/gallery.md`.
 
 ## Local Z-Image-Turbo prompts (exact)
 
@@ -35,3 +40,4 @@ Slot sources:
 - gallery plate-fear-of-mistakes 1536x864 seed 11 :: A single simple wooden stool placed very close to a bare white wall in an empty dark gallery, hard narrow spotlight from above making a small circle of light, the rest in deep darkness, subject on the right third. STRICTLY MONOCHROME black-and-white fine-art photograph, zero colour, contemporary design-museum interior, Swiss minimalism, hard raking museum light with crisp edged shadows, deep true blacks and crisp clean whites, one single object per frame, strict geometry, large areas of calm empty negative space, subtle film grain, 50mm medium-format lens, quiet and precise. NO text, NO letters, NO numbers, NO signage, NO logos, NO people, NO colour tint.
 - dusk plate-adults-learn-differently 1536x864 seed 21 :: STYLE: Fine-art desert photography at dusk, medium-format film, matte, soft grain, minimalist and abstracted. Layered smooth sand dunes receding into warm haze. Sky graded from deep plum and aubergine at the top through dusty rose into apricot and burnt sand at the horizon. Palette strictly plum, aubergine, burnt sand, apricot, dusty rose. Vast calm negative space in the sky, long soft shadows, no sky blue, no navy. Surreal-poetic, quiet, warm. NO text, NO letters, NO numbers, NO people, NO logos. SUBJECT: a single lone ghaf tree with a wide flat crown standing on a dune crest, small in the frame on the right, a line of footprints winding up the dune toward it, long shadow.
 - gallery plate-adults-learn-differently 1536x864 seed 11 :: A single minimal wooden desk with one closed notebook and one pencil, set against a white gallery wall, hard window light making a sharp diagonal shadow across the wall, subject on the right third. STRICTLY MONOCHROME black-and-white fine-art photograph, zero colour, contemporary design-museum interior, Swiss minimalism, hard raking museum light with crisp edged shadows, deep true blacks and crisp clean whites, one single object per frame, strict geometry, large areas of calm empty negative space, subtle film grain, 50mm medium-format lens, quiet and precise. NO text, NO letters, NO numbers, NO signage, NO logos, NO people, NO colour tint.
+- gallery scene-clock 1536x864 seed 11 :: Five identical plain white cube plinths standing in one straight row receding into a dark gallery hall, evenly spaced, each lit by its own hard spotlight from above, long crisp shadows on a dark polished floor, nothing on top of them. STRICTLY MONOCHROME black-and-white fine-art photograph, zero colour, contemporary design-museum interior, Swiss minimalism, hard raking museum light with crisp edged shadows, deep true blacks and crisp clean whites, one single object per frame, strict geometry, large areas of calm empty negative space, subtle film grain, 50mm medium-format lens, quiet and precise. NO text, NO letters, NO numbers, NO signage, NO logos, NO people, NO colour tint.

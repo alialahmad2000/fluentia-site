@@ -9,3 +9,6 @@ Style: STRICTLY MONOCHROME black-and-white fine-art photograph, contemporary des
 
 ## What actually shipped
 fal returned 403 "User is locked (TOP_UP)" for every job, so $0 was spent under `gallery/`. (The earlier shoot-out under `shoot/gallery` cost about $0.68, before this build.) Plates and cover are crops, grayscale and contrast tone derived with tools/img.mjs from the four shoot-out photos (winner: nano-0.jpg, chair + window shadow + clock shadow), plus SVG/CSS geometry. Re-run jobs.json once the account is topped up to replace the derived crops.
+
+
+Added after review: `scene-clock` (five white plinths in a row, one per station of the first ten minutes), local Z-Image-Turbo seed 11, grayscale + contrast 1.08, used as a 30 % backdrop in the flagship's clock scene. Prompt in `../image-prompts.md`.

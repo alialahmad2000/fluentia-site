@@ -54,7 +54,7 @@ function ArticleView({ direction, article }) {
 
   return (
     <Shell>
-      <PreviewMeta title={`${article.title} | ${direction.name}`} description={article.description} />
+      <PreviewMeta title={`${article.title} | ${direction.name}`} description={article.description} image={`/images/journal/gallery/plate-${article.slug}-og.jpg`} />
       <div className="g-progress" aria-hidden="true"><i ref={barRef} /></div>
       <main>
         <article>

@@ -27,7 +27,7 @@ export default function Home({ direction }) {
   const [lead, two, three, ...rest] = JOURNAL;
   return (
     <Shell>
-      <PreviewMeta title={`مجلة طلاقة · العدد 1 | ${direction.name}`} description={JOURNAL_MANIFESTO} />
+      <PreviewMeta title={`مجلة طلاقة · العدد 1 | ${direction.name}`} description={JOURNAL_MANIFESTO} image="/images/journal/gallery/cover-og.jpg" />
       <main>
         <header id="fx-top" className="g-cover g-paper">
           <div className="g-wrap">
