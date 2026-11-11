@@ -442,7 +442,7 @@ function BookedCard({ booking, title, body }) {
   );
 }
 
-function SlotPicker({ outcome, slots, onBook, busy, error, gender }) {
+function SlotPicker({ outcome, slots, loading, onBook, busy, error, gender }) {
   const [sel, setSel] = useState(null);
   const days = useMemo(() => {
     const m = new Map();
@@ -453,7 +453,9 @@ function SlotPicker({ outcome, slots, onBook, busy, error, gender }) {
     <div className="cr-card cr-done">
       <h2>{outcome.title_ar}</h2>
       <p className="cr-lead">{outcome.body_ar}</p>
-      {slots.length === 0 ? <p className="cr-hint">ما فيه مواعيد متاحة الآن. سنتواصل معك على واتساب لتحديد الموعد.</p> : (
+      {loading ? <p className="cr-hint" role="status">لحظات، نجهّز المواعيد المتاحة…</p> : slots.length === 0 ? (
+        error ? <p className="cr-err cr-err-box" role="alert">{error}</p> : <p className="cr-hint">ما فيه مواعيد متاحة الآن. سنتواصل معك على واتساب لتحديد الموعد.</p>
+      ) : (
         <div className="cr-slots">
           <h3>{g(gender, "اختر/ي الوقت المناسب لك", "اختر الوقت المناسب لك", "اختاري الوقت المناسب لك")}</h3>
           {days.map(([day, list]) => (
@@ -490,6 +492,7 @@ export default function CareersPage() {
   const [notice, setNotice] = useState("");
   const [outcome, setOutcome] = useState(null);
   const [slots, setSlots] = useState([]);
+  const [slotsLoading, setSlotsLoading] = useState(false);
   const [booking, setBooking] = useState(null);
   const formRef = useRef(null);
   const gender = app?.basics?.gender || "";
@@ -521,8 +524,10 @@ export default function CareersPage() {
     setOutcome(o); setStage("outcome"); setError("");
     if (o.kind === "booked" && o.booking) setBooking(o.booking);
     if (o.kind === "book") {
+      setSlotsLoading(true);
       try { const r = await call("slots", { application_id: a.id, token: a.token }); setSlots(r.slots || []); }
       catch (x) { setSlots([]); setError(x.messageAr || ""); }
+      finally { setSlotsLoading(false); }
     }
     window.scrollTo?.(0, 0);
   }, []);
@@ -727,7 +732,7 @@ export default function CareersPage() {
 
           {stage === "outcome" && outcome && (
             booking ? <BookedCard booking={booking} title={outcome.kind === "booked" ? outcome.title_ar : "تم تأكيد موعدك"} body={outcome.kind === "booked" ? outcome.body_ar : ""} />
-              : outcome.kind === "book" ? <SlotPicker outcome={outcome} slots={slots} onBook={book} busy={busy} error={error} gender={gender} />
+              : outcome.kind === "book" ? <SlotPicker outcome={outcome} slots={slots} loading={slotsLoading} onBook={book} busy={busy} error={error} gender={gender} />
                 : (
                   <div className="cr-card cr-done" role="status">
                     <div className="cr-check" aria-hidden="true">✓</div>
