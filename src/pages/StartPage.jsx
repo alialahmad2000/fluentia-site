@@ -338,7 +338,7 @@ export default function StartPage() {
         overflowX: 'hidden',
       }}
     >
-      <Seo path="/start" />
+      <Seo path="/start/form" />
       {/* Fonts + keyframes + media queries */}
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap');
