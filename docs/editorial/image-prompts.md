@@ -27,7 +27,7 @@ those OGs are slightly upscaled.
 Slot sources:
 - **Ink & Ember:** all slots are crops and re-grades of the four ink shoot-out frames (night boardroom, ember lamp). See `image-prompts/ink.md` for the per-slot prompts to re-run when fal is topped up.
 - **Desert Dusk:** cover = seedream shoot-out, first-ten-minutes plate = nano-banana shoot-out (table on a dune), `scene-table` = flux 3, `scene-clock` = ultra, the other five plates + quote-card backgrounds = local Z-Image-Turbo. Recipe in `image-prompts/dusk.md`.
-- **Gallery:** cover + two plates = crops of the nano-banana shoot-out (chair, window and clock shadow); four plates = local Z-Image-Turbo, converted to pure grayscale (`hue=s=0`). Flagship scene `scene-clock` (five plinths = five stations) = local Z-Image-Turbo, grayscale, shown at 30 % behind the SVG; the table scene stays pure SVG. The lime accent is CSS, never in the photo. Recipe in `image-prompts/gallery.md`.
+- **Gallery:** cover + two plates = crops of the nano-banana shoot-out (chair, window and clock shadow); four plates = local Z-Image-Turbo, converted to pure grayscale (`hue=s=0`). Flagship scene `scene-clock` (five plinths = five stations) = local Z-Image-Turbo, grayscale, shown at 18 % behind the SVG (15 % on phones); the table scene stays pure SVG. The lime accent is CSS, never in the photo. Recipe in `image-prompts/gallery.md`.
 
 ## Local Z-Image-Turbo prompts (exact)
 
