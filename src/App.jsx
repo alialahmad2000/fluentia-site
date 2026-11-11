@@ -11,6 +11,7 @@ const PartnersSubmitted = lazy(() => import('./pages/partners/PartnersSubmitted'
 const PartnersTerms = lazy(() => import('./pages/partners/PartnersTerms'));
 const StartPage = lazy(() => import('./pages/StartPage'));
 const JoinPage = lazy(() => import('./pages/join/JoinPage'));
+const CareersPage = lazy(() => import('./pages/careers/CareersPage'));
 const PrivatePage = lazy(() => import('./pages/private/PrivatePage'));
 const StoriesPage = lazy(() => import('./pages/stories/StoriesPage'));
 const JournalIndex = lazy(() => import('./pages/journal/JournalIndex'));
@@ -1229,6 +1230,7 @@ function AppRoutes(){
         ? <Suspense fallback={NEXT_FALLBACK}><NextLanding campaign /></Suspense>
         : <Suspense fallback={JOIN_CLASSIC_FALLBACK}><JoinPage /></Suspense>} />
       <Route path="/join-classic" element={<Suspense fallback={JOIN_CLASSIC_FALLBACK}><JoinPage /></Suspense>} />
+      <Route path="/careers" element={<Suspense fallback={<div style={{minHeight:'100dvh',background:'#04070e'}} />}><CareersPage /></Suspense>} />
       <Route path="/private" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#060e1c'}} />}><PrivatePage /></Suspense>} />
       {/* «قصص طلابنا» — every story (src/data/stories.js); ?s=<id> opens the viewer. */}
       <Route path="/stories" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#050b16'}} />}><StoriesPage /></Suspense>} />

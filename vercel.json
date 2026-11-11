@@ -143,6 +143,10 @@
       "destination": "/join.html"
     },
     {
+      "source": "/careers",
+      "destination": "/careers.html"
+    },
+    {
       "source": "/private",
       "destination": "/private.html"
     },

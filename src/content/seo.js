@@ -108,6 +108,14 @@ export const PAGE_SEO = {
     noindex: true,
   },
 
+  // Public careers page (admissions/sales + trainers). Indexable, in the sitemap.
+  "/careers": {
+    title: "انضم لفريق طلاقة | وظائف أونلاين | أكاديمية طلاقة",
+    description:
+      "نبحث عن مستشاري قبول ومبيعات ومدرّبي لغة إنجليزية للعمل عن بُعد مع أكاديمية طلاقة. قدّم بياناتك وتحدّث مع مساعد التوظيف في دقائق.",
+    ogTitle: "انضم لفريق طلاقة",
+  },
+
   // The 1:1 programmes (التدريب الفردي + المكثّف). Indexable, in the sitemap;
   // paid ads point here too.
   "/private": {

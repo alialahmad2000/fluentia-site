@@ -355,6 +355,7 @@ export function V1Footer() {
           <span style={{ display: "flex", gap: 20 }}>
             <a href="/privacy" style={{ fontSize: "0.78rem", color: "var(--v1-t-faint)", textDecoration: "none" }}>الخصوصية</a>
             <a href="/terms" style={{ fontSize: "0.78rem", color: "var(--v1-t-faint)", textDecoration: "none" }}>الشروط</a>
+            <a href="/careers" style={{ fontSize: "0.78rem", color: "var(--v1-t-faint)", textDecoration: "none" }}>انضم لفريقنا</a>
           </span>
         </div>
       </div>
