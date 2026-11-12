@@ -84,14 +84,25 @@
       }
     </style>
 
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-19G2SJ1WYL"></script>
+    <!-- Google tag (gtag.js). The library (~190 KB) loads after the page's own load
+         event so it never competes with the first screen; calls made before then
+         wait in dataLayer and are sent when it arrives. -->
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
       gtag('config', 'G-19G2SJ1WYL');
       gtag('config', 'AW-9314838750');
+      window.__afterLoad = function (fn) {
+        if (document.readyState === 'complete') setTimeout(fn, 0);
+        else window.addEventListener('load', function () { setTimeout(fn, 0); }, { once: true });
+      };
+      window.__afterLoad(function () {
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=G-19G2SJ1WYL';
+        document.head.appendChild(s);
+      });
     </script>
 
     <!-- TikTok Pixel Code Start -->
@@ -99,8 +110,11 @@
     !function (w, d, t) {
       w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js",o=n&&n.partner;ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};n=document.createElement("script");n.type="text/javascript",n.async=!0,n.src=r+"?sdkid="+e+"&lib="+t;e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(n,e)};
 
-      ttq.load('D79DFR3C77UA3HU6E70G');
-      ttq.page();
+      // Same as gtag: the pixel script loads after the page's load event; calls queue until then.
+      w.__afterLoad(function () {
+        ttq.load('D79DFR3C77UA3HU6E70G');
+        ttq.page();
+      });
     }(window, document, 'ttq');
     </script>
     <!-- TikTok Pixel Code End -->

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { MotionConfig } from "framer-motion";
 import "../../styles/v1-tokens.css";
@@ -86,7 +86,10 @@ function boot() {
     d.classList.add("fx-js");
     // Paid traffic lands on /join and sees the hero at once: no intro there.
     var camp = /^\/join\/?$/.test(window.location.pathname);
-    if (!camp && t !== "low" && !rm && (!seen || q.get("intro") === "1")) {
+    // The first-visit intro is off since 2026-11-12: its 3.4 s held the hero
+    // back (mobile LCP 10.8 s, the LCP element was the intro's «وأنت؟»).
+    // ?intro=1 still plays it. `seen` stays read so turning it back on is one line.
+    if (!camp && t !== "low" && !rm && q.get("intro") === "1") {
       d.classList.add("fx-intro");
       try {
         window.localStorage.setItem("fl-intro-seen", "1");
@@ -136,6 +139,17 @@ html.fx-menu-open .fx-next .fx-sticky { transform: translateY(110%); }
    on a throttled phone (measured live). Paid traffic gets it at once. */
 html.fx-js .fx-next[data-campaign] .fx-hero-sub.fx-hero-after { animation: none; opacity: 1; }
 `;
+
+// The sections that take no props are memoised: the page re-renders when the
+// tier resolves (and the intro finishes), and re-rendering the whole tree on a
+// phone was a ~1 s long task during load.
+const MemoPains = memo(Pains);
+const MemoHow = memo(How);
+const MemoPricing = memo(Pricing);
+const MemoStories = memo(Stories);
+const MemoFitFaq = memo(FitFaq);
+const MemoHeader = memo(Header);
+const MemoLeadModal = memo(V1LeadModal);
 
 // Client-only renders (dev, or arriving by in-app navigation) get no inline
 // script execution, so boot runs as the chunk loads — still before first render.
@@ -355,15 +369,17 @@ export default function NextLanding({ seoPath = "/next", campaign = false }) {
     }
   }, []);
 
-  const cfg = tier ? tierConfig(tier) : null;
+  // Stable per tier, so memoised children (and the orbs' effects) see the same object.
+  const cfg = useMemo(() => (tier ? tierConfig(tier) : null), [tier]);
   // The intro can start before the probe finishes; it only ever runs above the low tier.
-  const introCfg = tierConfig(tier && tier !== "low" ? tier : "medium");
+  const introTier = tier && tier !== "low" ? tier : "medium";
+  const introCfg = useMemo(() => tierConfig(introTier), [introTier]);
 
   return (
     <MotionConfig reducedMotion="user">
      <CtaContext.Provider value={campaign ? CAMPAIGN_CTA : null}>
      <StoriesProvider stories={campaign ? [] : STORIES}>
-      <div ref={rootRef} className="v1-scope v5-scope fx-next" dir="rtl" data-campaign={campaign ? "" : undefined}>
+      <div ref={rootRef} className={`v1-scope v5-scope fx-next${campaign ? "" : " fx-home"}`} dir="rtl" data-campaign={campaign ? "" : undefined}>
         {/* The client and server bundles may stringify boot() differently; the
             script has already run by the time React hydrates it. */}
         <script suppressHydrationWarning dangerouslySetInnerHTML={{ __html: BOOT }} />
@@ -385,10 +401,10 @@ export default function NextLanding({ seoPath = "/next", campaign = false }) {
 
         <Starfield density={cfg ? cfg.stars : 0} />
         <Intro gl={introCfg} onDone={onIntroDone} />
-        <Header />
+        <MemoHeader />
 
         <main className="fx-main">
-          <Hero gl={introDone ? cfg : null} />
+          <Hero gl={introDone ? cfg : null} campaign={campaign} />
           {campaign ? (
             <section className="fx-block join-page fx-joinform" aria-label={CTA_LABEL}>
               <div className="v1-card j-card" id="join-form" ref={formRef}>
@@ -403,16 +419,16 @@ export default function NextLanding({ seoPath = "/next", campaign = false }) {
             </section>
           ) : null}
           <PhoneSection tilt={Boolean(cfg && cfg.tilt)} />
-          <Pains />
-          <How />
+          <MemoPains />
+          <MemoHow />
           <Stats still={tier === "low"} bars={campaign} />
           {/* /join drops the between-classes stage: ~4,900 px of pinned scroll
               between a paid visitor and the price, for detail the phone above
               already shows. «كيف تبدأ» — what happens after the form — takes its place. */}
           {campaign ? <Steps /> : <Stage gl={cfg} tier={tier} />}
-          <Pricing />
-          {campaign ? null : <Stories />}
-          <FitFaq />
+          <MemoPricing />
+          {campaign ? null : <MemoStories />}
+          <MemoFitFaq />
           {campaign ? (
             <Final gl={cfg}>
               {doneIn === "top" ? null : (
@@ -449,7 +465,7 @@ export default function NextLanding({ seoPath = "/next", campaign = false }) {
         ) : null}
 
         <Footer mode={mode} onMode={onMode} />
-        {campaign ? null : <V1LeadModal />}
+        {campaign ? null : <MemoLeadModal />}
       </div>
      </StoriesProvider>
      </CtaContext.Provider>

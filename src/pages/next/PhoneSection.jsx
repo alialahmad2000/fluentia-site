@@ -130,7 +130,7 @@ export default function PhoneSection({ tilt }) {
               <span className="fx-phone-btn fx-phone-btn--a" aria-hidden="true" />
               <span className="fx-phone-btn fx-phone-btn--b" aria-hidden="true" />
               <div className="fx-phone-screen">
-                <V5HeroShowcase />
+                <V5HeroShowcase lazyArt />
               </div>
             </div>
           </div>

@@ -14,7 +14,15 @@ export const HERO_LINES = [
   { text: "نُزيل ما يمنعك", tone: "cream", mbreak: 2 },
   { text: "من امتلاك الإنجليزية", tone: "ice", mbreak: 2 },
 ];
+// The homepage's phone headline: three lines, the first held whole (it fits at 360 px).
+export const HERO_LINES_HOME = [
+  { text: "نُزيل ما يمنعك", tone: "cream" },
+  { text: "من امتلاك الإنجليزية", tone: "ice", mbreak: 2 },
+];
 export const SEE_INSIDE = "شاهد المنصة من الداخل";
+
+// The quiet line under the hero's call (2026-11-12): what the call costs — nothing.
+export const HERO_TRUST = "لقاء مبدئي مجاني · بدون التزام";
 
 export const TITLES = {
   pains: [

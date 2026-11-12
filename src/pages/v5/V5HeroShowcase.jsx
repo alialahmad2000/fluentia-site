@@ -107,7 +107,7 @@ function SpeakBtn({ id, playing, onListen, label, compact = false }) {
 }
 
 /* ─── 1 · A word tapped in a unit reading ─── */
-function ReadingScene({ anim, playing, onListen }) {
+function ReadingScene({ anim, playing, onListen, lazyArt = false }) {
   const r = M.reading;
   const [artLoaded, setArtLoaded] = useState(false);
   const at = r.sentence.search(new RegExp(`\\b${r.word}\\b`));
@@ -145,8 +145,16 @@ function ReadingScene({ anim, playing, onListen }) {
       {r.image && (
         <div className="hs-art" data-loaded={artLoaded} aria-hidden>
           {/* the reading's own art, as the student sees it above the passage; it is the
-              first scene, so it loads with the card rather than lazily */}
-          <img src={r.image} alt="" decoding="async" fetchpriority="high" onLoad={() => setArtLoaded(true)} />
+              first scene, so it loads with the card rather than lazily — unless the
+              card itself is below the fold (the homepage's phone: `lazyArt`) */}
+          <img
+            src={r.image}
+            alt=""
+            decoding="async"
+            loading={lazyArt ? "lazy" : undefined}
+            fetchpriority={lazyArt ? undefined : "high"}
+            onLoad={() => setArtLoaded(true)}
+          />
         </div>
       )}
       <p className="hs-cap">تضغط على أي كلمة، فيظهر معناها ونطقها</p>
@@ -396,7 +404,7 @@ const MOMENTS = [
   },
 ];
 
-export default function V5HeroShowcase() {
+export default function V5HeroShowcase({ lazyArt = false }) {
   const cta = useCta();
   const [active, setActive] = useState(0);
   const [run, setRun] = useState(0); // bump to replay the same moment
@@ -614,7 +622,7 @@ export default function V5HeroShowcase() {
               exit={{ opacity: 0, y: -6 }}
               transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
             >
-              <Scene anim={live} playing={playing} onListen={onListen} />
+              <Scene anim={live} playing={playing} onListen={onListen} lazyArt={lazyArt} />
             </motion.div>
           </AnimatePresence>
         </div>
