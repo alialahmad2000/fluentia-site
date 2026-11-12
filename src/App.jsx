@@ -27,7 +27,6 @@ const AboutPage = lazy(() => import('./pages/AboutPage'));
 const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
 const TermsOfService = lazy(() => import('./pages/TermsOfService'));
 const WhatsAppRedirect = lazy(() => import('./pages/WhatsAppRedirect'));
-const AtelierLanding = lazy(() => import('./pages/atelier/AtelierLanding'));
 const ArticlesIndex = lazy(() => import('./pages/articles/ArticlesIndex'));
 const ArticlePage = lazy(() => import('./pages/articles/ArticlePage'));
 const AuroraHero = lazy(() => import('./pages/aurora/AuroraHero'));
@@ -1216,7 +1215,6 @@ function AppRoutes(){
   return(
     <Routes>
       <Route path="/v2" element={<Suspense fallback={VFallback}><LandingV2 /></Suspense>} />
-      <Route path="/atelier" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#060e1c'}} />}><AtelierLanding /></Suspense>} />
       <Route path="/aurora" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#070b14'}} />}><AuroraHero /></Suspense>} />
       <Route path="/legacy" element={<HomePage />} />
       {/* Homepage = the cinematic landing (HOME_VARIANT). The V5 "Dawn Stage"

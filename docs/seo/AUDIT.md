@@ -19,7 +19,7 @@ changed, and what is left for Ali. Facts live in `FACTS.md`; open questions in
   `/work-english` (+11), `/verbs`, `/partners`, `/partners/terms`, `/privacy`, `/terms`, `/tour`.
 - **noindex previews / rollbacks** (prerendered, not in the sitemap): `/join`,
   `/classic`, `/join-classic`, `/ascent`, `/journey`. Client-only, robots-disallowed:
-  `/v1`, `/v2`, `/v4`, `/v5`, `/aurora`, `/atelier`, `/cine`, `/cine2`, `/w`.
+  `/v1`, `/v2`, `/v4`, `/v5`, `/aurora`, `/cine`, `/cine2`, `/w`.
 - **Static pages outside the SPA:** `/mac/` (public/mac/index.html).
 
 ## 2. Crawlability test (before this branch)

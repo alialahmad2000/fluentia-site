@@ -49,7 +49,6 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
  * in ads, so it must answer 200 with a working page, not a 404.
  */
 export const CLIENT_ONLY_ROUTES = [
-  "/atelier",
   "/aurora",
   "/cine",
   "/cine2",

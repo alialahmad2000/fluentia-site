@@ -39,7 +39,6 @@ Disallow: /v2
 Disallow: /v4
 Disallow: /v5
 Disallow: /aurora
-Disallow: /atelier
 
 # AI-readable summaries: https://fluentia.academy/llms.txt · https://fluentia.academy/llms-full.txt
 Sitemap: https://fluentia.academy/sitemap.xml
