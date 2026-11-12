@@ -1,0 +1,37 @@
+/* /preview — the direction chooser. Neutral on purpose: the cards carry the colour. */
+.pv.pv-choose {
+  --bg: #0d1017;
+  --text: #eef0f5;
+  --heading: #ffffff;
+  --mute: #a6adbd;
+  --line: rgba(255, 255, 255, 0.1);
+  --line-strong: rgba(255, 255, 255, 0.3);
+  --action: #ffffff;
+  --action-ink: #0d1017;
+  --action-hover: #e8ebf2;
+  --focus: #7fb0ff;
+  --link: #eef0f5;
+  padding-bottom: 96px;
+}
+.pvc-head { display: grid; gap: 16px; padding-top: 32px; padding-bottom: 48px; }
+.pvc-head .pv-brand { justify-self: start; margin-bottom: 24px; }
+.pvc-title { font-family: var(--display); font-weight: 800; font-size: clamp(34px, 5vw, 60px); line-height: 1.25; color: #fff; }
+.pvc-sub { max-width: 60ch; color: var(--mute); font-size: 18px; }
+.pvc-list { display: grid; gap: 40px; }
+.pvc-card { display: grid; gap: 24px; padding: 16px; border-radius: 28px; background: #141823; box-shadow: inset 0 0 0 1px var(--line); }
+.pvc-shots { position: relative; display: block; padding-bottom: 28px; }
+.pvc-desk { width: 100%; height: auto; border-radius: 16px; box-shadow: 0 0 0 1px var(--line); }
+.pvc-phone { position: absolute; inset-inline-end: 12px; bottom: 0; width: 26%; max-width: 180px; height: auto; border-radius: 18px; box-shadow: 0 0 0 4px #141823, 0 0 0 5px var(--line), 0 20px 40px -10px rgba(0, 0, 0, 0.7); }
+.pvc-copy { display: grid; gap: 12px; justify-items: start; padding: 0 8px 8px; }
+.pvc-name { display: flex; align-items: center; gap: 12px; font-family: var(--display); font-weight: 800; font-size: 32px; line-height: 1.3; color: #fff; }
+.pvc-letter { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 12px; background: rgba(255, 255, 255, 0.08); font-size: 22px; }
+.pvc-line { color: var(--mute); max-width: 52ch; }
+.pvc-swatches { display: flex; gap: 8px; }
+.pvc-swatches li { width: 28px; height: 28px; border-radius: 50%; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.25); }
+.pvc-open { margin-top: 8px; }
+.pvc-foot { text-align: center; color: var(--mute); font-size: 15px; }
+@media (min-width: 1024px) {
+  .pvc-head { padding-top: 48px; padding-bottom: 64px; }
+  .pvc-card { grid-template-columns: 1.6fr 1fr; align-items: center; gap: 40px; padding: 24px; }
+  .pvc-copy { padding: 0 8px; }
+}
