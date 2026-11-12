@@ -48,7 +48,7 @@ export const ORG_LD = {
     alternateName: "د. علي الأحمد",
     jobTitle: "Founder",
   },
-  address: { "@type": "PostalAddress", addressCountry: "SA" },
+  address: { "@type": "PostalAddress", addressLocality: "المدينة المنورة", addressCountry: "SA" },
   areaServed: { "@type": "Country", name: "Saudi Arabia" },
   knowsLanguage: ["ar", "en"],
   sameAs: PROFILES.map((p) => p.url),

@@ -64,13 +64,12 @@ All prices are monthly, in Saudi riyals (SAR). There are five packages:
 
 The academic mentor in the intensive programme is usually a native English speaker and is a different person from the teacher. The SAR 2,000 programme includes no mentor and no practice sessions. Private packages are priced monthly only. More detail in Arabic: [pricing](/guide/pricing) and [private training](/guide/private-training).
 
-## What are the payment, cancellation and refund rules?
+## What are the payment and cancellation rules?
 
 - Payment is monthly, in advance, at the start of each Gregorian month.
 - Prices are in SAR and include everything in the chosen package.
 - No long-term commitment: a subscription can stop at the end of any month.
 - Cancel any time: the next month is not charged; the current month counts.
-- Full refund within 7 days of the start of the month, only if no class has been attended. After any class, no refund.
 - Package changes (up or down) take effect at the start of the next month; no mid-month price change.
 - The academy does not store card data; payments are processed by payment providers.
 - The apps contain no payments; subscriptions are handled with the academy team.
@@ -132,9 +131,6 @@ A maximum of 7, all at the same level.
 
 ### Do I have to pay before the first meeting?
 No. The initial meeting is free, comes before any payment, and carries no commitment.
-
-### Can I get a refund?
-Yes: a full refund within 7 days of the start of the month, provided no class has been attended. After any class there is no refund, but cancellation is possible at any time and the next month is not charged.
 
 ### Is Fluentia Academy the same as fluentia.us?
 No. Fluentia Academy (fluentia.academy) is an independent Saudi academy with no connection to any other organisation named "Fluentia".
