@@ -86,7 +86,8 @@
   .pb-arch--hero { animation: pb-rise 1200ms 80ms var(--ease) both; }
   .pb-hero-device { animation: pb-rise 1200ms 360ms var(--ease) both; }
 }
-@keyframes pb-rise { from { opacity: 0; transform: translateY(24px); } }
+/* transform-only: the hero photo is the LCP element, so it paints on its first frame */
+@keyframes pb-rise { from { transform: translateY(20px); } }
 @media (max-height: 720px) and (max-width: 639px) {
   .pb-hero { padding-top: 84px; }
   .pb-hero-copy { gap: 14px; }

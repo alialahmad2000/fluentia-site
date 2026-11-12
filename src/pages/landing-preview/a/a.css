@@ -95,7 +95,8 @@
 @media (prefers-reduced-motion: no-preference) {
   .pa-planet--rise { animation: pa-rise 2.4s 200ms var(--ease) both; }
 }
-@keyframes pa-rise { from { transform: translateY(60px); opacity: 0; } to { transform: none; opacity: 1; } }
+/* transform-only: the planet is an LCP candidate, so it must paint on its first frame */
+@keyframes pa-rise { from { transform: translateY(48px); } to { transform: none; } }
 
 .pa-hero-logos { display: grid; justify-items: center; gap: 12px; margin-top: 12px; padding-top: 20px; border-top: 1px solid rgba(169, 203, 255, 0.16); width: min(100%, 720px); }
 .pa-logos-lead { font-size: 14px; color: #c3cbea; }
