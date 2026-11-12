@@ -247,6 +247,7 @@
   .adv-id h1 { font-size: 26px; }
   .adv-log { padding: 18px 16px 22px; margin-inline: -16px; margin-block: 6px 12px; }
 }
+@media (max-width: 520px) { .adv-sub-long { display: none; } }
 @media (max-width: 380px) {
   .adv-chips, .adv-slots, .adv-card, .adv-booked { padding-inline-start: 0; margin-inline-start: 0; }
   .adv-bub { max-inline-size: 88%; }
