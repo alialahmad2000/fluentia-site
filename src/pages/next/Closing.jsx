@@ -1,13 +1,15 @@
+import { useEffect, useState } from "react";
 import V1Pricing from "../v1/V1Pricing";
 import { V1WhoFor } from "../v1/V1Worth";
 import { V1FAQ, V1Footer } from "../v1/V1Closing";
 import { FINAL_CTA } from "../landing-v2/content";
 import Giant from "./Giant";
 import Orb from "./Orb";
-import { CTA_LABEL, PERF_LABEL, PERF_OPTIONS, STORIES_SUB, TITLES } from "./copy";
+import { CTA_LABEL, LEVEL_TEST_LINK, PERF_LABEL, PERF_OPTIONS, STORIES_SUB, TITLES } from "./copy";
 import StoriesFeature from "../../components/stories/StoriesFeature";
 import { STORIES } from "../../data/stories";
 import { useCta } from "../v1/ctaContext";
+import { bookingHref } from "../../lib/booking";
 
 /**
  * The close: the homepage's pricing, fit and FAQ components, unchanged, inside
@@ -69,11 +71,15 @@ export function Final({ gl, children }) {
       <Giant lines={TITLES.final} className="fx-center-title fx-final-title" />
       <p className="fx-final-sub fx-rv fx-fade">{FINAL_CTA.sub}</p>
       {children || (
-        <div className="fx-rv fx-fade">
-          <button type="button" data-open-form className="fx-btn fx-btn--primary fx-btn--lg">
+        <div className="fx-rv fx-fade fx-final-actions">
+          <a href={bookingHref()} data-open-form className="fx-btn fx-btn--primary fx-btn--lg">
             {CTA_LABEL}
             <span aria-hidden="true">←</span>
-          </button>
+          </a>
+          {/* The free placement test the meta description promises (/level-test). */}
+          <a href="/level-test" className="fx-quiet fx-final-test">
+            {LEVEL_TEST_LINK}
+          </a>
         </div>
       )}
     </section>
@@ -92,6 +98,17 @@ const GUIDE_LINKS = [
 export function Footer({ mode, onMode }) {
   // /join (campaign) shares this footer; the free-tools link is homepage-only.
   const campaign = Boolean(useCta());
+  // «وضع الأداء» is a testing control, not something a visitor should read:
+  // shown only with ?debug=1. The automatic tier (perf.js) and ?tier= still work.
+  // Decided after hydration, so the prerendered markup never carries it.
+  const [debug, setDebug] = useState(false);
+  useEffect(() => {
+    try {
+      setDebug(new URLSearchParams(window.location.search).get("debug") === "1");
+    } catch {
+      /* no URL API: stay hidden */
+    }
+  }, []);
   return (
     <div className="fx-footer">
       <V1Footer />
@@ -115,10 +132,13 @@ export function Footer({ mode, onMode }) {
             ))}
           </nav>
           <p style={{ margin: 0, padding: "0 var(--fx-gut)", textAlign: "center", fontSize: 14 }}>
-            <a href="/verbs" className="fx-quiet">أدوات مجانية: الأفعال الشاذة</a>
+            أدوات مجانية: <a href="/level-test" className="fx-quiet">اختبار تحديد المستوى</a>
+            <span aria-hidden="true"> · </span>
+            <a href="/verbs" className="fx-quiet">الأفعال الشاذة</a>
           </p>
         </>
       )}
+      {debug ? (
       <div className="fx-perf" role="group" aria-label={PERF_LABEL}>
         <span className="fx-perf-label">{PERF_LABEL}</span>
         {PERF_OPTIONS.map((o, i) => (
@@ -130,6 +150,7 @@ export function Footer({ mode, onMode }) {
           </span>
         ))}
       </div>
+      ) : null}
     </div>
   );
 }

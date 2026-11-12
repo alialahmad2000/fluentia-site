@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { bookingHref } from "../../lib/booking";
 import V5HeroShowcase from "../v5/V5HeroShowcase";
 import { SOLUTION, TRUSTED_LOGOS } from "../landing-v2/content";
 import { track } from "./scroll";
@@ -143,10 +144,10 @@ export default function PhoneSection({ tilt }) {
               <li key={pt}>{pt}</li>
             ))}
           </ul>
-          <button type="button" data-open-form className="fx-btn fx-btn--primary">
+          <a href={bookingHref()} data-open-form className="fx-btn fx-btn--primary">
             {CTA_LABEL}
             <span aria-hidden="true">←</span>
-          </button>
+          </a>
         </div>
       </div>
       <Marquee />

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { bookingHref } from "../../lib/booking";
 import { HERO } from "../landing-v2/content";
 import Giant from "./Giant";
 import Orb from "./Orb";
@@ -53,10 +54,10 @@ export default function Hero({ gl }) {
         <Giant as="h1" reveal="hero" lines={HERO_LINES} className="fx-hero-title" />
         <p className="fx-hero-sub fx-hero-after">{SUB}</p>
         <div className="fx-hero-actions fx-hero-after">
-          <button type="button" data-open-form className="fx-btn fx-btn--primary">
+          <a href={bookingHref()} data-open-form className="fx-btn fx-btn--primary">
             {CTA_LABEL}
             <span aria-hidden="true">←</span>
-          </button>
+          </a>
           <a href="#fx-platform" className="fx-quiet" onClick={seeInside}>
             {SEE_INSIDE}
           </a>

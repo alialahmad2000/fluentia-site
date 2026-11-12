@@ -32,6 +32,7 @@ import StoriesProvider from "../../components/stories/StoriesProvider";
 import STORIES_CSS from "../../components/stories/stories.css?inline";
 import { STORIES } from "../../data/stories";
 import { CTA_LABEL, CAMPAIGN_PRICING_FOOT, STICKY_NOTE } from "./copy";
+import { isModifiedClick } from "../../lib/booking";
 
 /**
  * The cinematic landing — the homepage at `/` and, in campaign mode, the TikTok
@@ -140,7 +141,7 @@ html.fx-js .fx-next[data-campaign] .fx-hero-sub.fx-hero-after { animation: none;
 // script execution, so boot runs as the chunk loads — still before first render.
 if (typeof window !== "undefined") boot();
 
-// /join sells all six packages, like the homepage. The form opens undecided —
+// /join sells every package on sale, like the homepage. The form opens undecided —
 // only a pricing card's own button ([data-tier]) ever sets a package.
 const TIER_IDS = new Set(TIERS.map((t) => t.id));
 const CAMPAIGN_CTA = { label: CTA_LABEL, pricingFoot: CAMPAIGN_PRICING_FOOT };
@@ -270,6 +271,7 @@ export default function NextLanding({ seoPath = "/next", campaign = false }) {
     const onClick = (e) => {
       const trigger = e.target.closest?.("[data-open-form]");
       if (!trigger) return;
+      if (trigger.hasAttribute("href") && isModifiedClick(e)) return;
       e.preventDefault();
       const t = trigger.getAttribute("data-tier");
       setPkgId(t && TIER_IDS.has(t) ? t : manualPkg.current);

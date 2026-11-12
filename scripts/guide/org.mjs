@@ -31,6 +31,7 @@ export const ORG_LD = {
   "@type": "EducationalOrganization",
   "@id": ORG_ID,
   name: "أكاديمية طلاقة",
+  legalName: "معهد الطلاقة والمعرفة",
   alternateName: ["Fluentia Academy", "Fluentia", "طلاقة", "أكاديمية طلاقة للغة الإنجليزية"],
   url: `${SITE}/`,
   logo: { "@type": "ImageObject", url: `${SITE}/logo.png`, width: 512, height: 512 },

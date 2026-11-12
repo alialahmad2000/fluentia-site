@@ -57,6 +57,13 @@ export const TITLES = {
 
 export const STORIES_SUB = "تجارب حقيقية من طلاب طلاقة، بكلامهم.";
 
+// Under the final call: the free placement test (/level-test) — the meta
+// description promises it, so the page names it too.
+export const LEVEL_TEST_LINK = "أو اعرف مستواك الآن: اختبار تحديد المستوى المجاني";
+
+// «كيف نُزيله»: how classes actually happen (facts: docs/seo/FACTS.md).
+export const LIVE_NOTE = "الحصص مباشرة عبر Google Meet، في مجموعة صغيرة (7 طلاب كحد أقصى) أو فردية مع مدرّبك.";
+
 export const PERF_LABEL = "وضع الأداء:";
 export const PERF_OPTIONS = [
   { value: "auto", label: "تلقائي" },

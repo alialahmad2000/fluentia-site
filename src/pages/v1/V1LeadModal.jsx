@@ -7,6 +7,7 @@ import { getAttribution } from "../../lib/attribution";
 import { track } from "../../lib/track";
 import { EASE } from "./motion";
 import BrandMark from "../../components/BrandMark";
+import { isModifiedClick } from "../../lib/booking";
 
 /**
  * V1LeadModal — identical tracking flow to the live LeadFormModal
@@ -86,6 +87,8 @@ export default function V1LeadModal() {
     const onClick = (e) => {
       const trigger = e.target.closest("[data-open-form]");
       if (!trigger) return;
+      // A trigger that is a real link (→ /start) opens in a new tab as asked.
+      if (trigger.hasAttribute("href") && isModifiedClick(e)) return;
       e.preventDefault();
       const t = trigger.getAttribute("data-tier") || "";
       setTier(t);

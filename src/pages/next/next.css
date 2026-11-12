@@ -95,6 +95,7 @@ html.fx-intro.fx-skip .fx-next { --fx-hd: 0ms; }
 /* ─── Buttons ─── */
 .fx-btn {
   display: inline-flex;
+  text-decoration: none; /* calls to action are real links (→ /start) */
   align-items: center;
   justify-content: center;
   gap: 10px;
@@ -1208,6 +1209,11 @@ html.fx-js .fx-act-title.fx-rv.is-in { transform: none; }
   font-size: 20px;
   cursor: pointer;
 }
+.fx-rail-arrows button { display: inline-flex; align-items: center; justify-content: center; transition: opacity 200ms ease, border-color 200ms ease; }
+.fx-rail-arrows button:disabled { opacity: 0.32; cursor: default; }
+@media (hover: hover) { .fx-rail-arrows button:not(:disabled):hover { border-color: rgba(243, 237, 226, 0.5); } }
+.fx-rail-arrows button:focus-visible { outline: 2px solid var(--fx-sky); outline-offset: 3px; }
+.fx-rail-arrows[hidden] { display: none !important; }
 .fx-rail {
   list-style: none;
   margin: 30px 0 0;
@@ -1258,6 +1264,12 @@ html.fx-js .fx-act-title.fx-rv.is-in { transform: none; }
 .fx-final-orb { width: min(58vw, 280px); aspect-ratio: 1; margin-bottom: -34px; }
 .fx-final-title { position: relative; font-size: clamp(48px, 14vw, 170px); }
 .fx-final-sub { max-width: 46ch; margin: 28px auto 32px; font-size: clamp(16px, 4.2vw, 18px); line-height: 2; }
+
+/* Under the final call: the booking button, then the free placement test, quietly. */
+.fx-final-actions { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.fx-final-test { font-size: 15px; color: var(--fx-text); padding-inline: var(--fx-gut, 20px); text-align: center; }
+/* «كيف نُزيله»: one plain line on how classes happen (Google Meet). */
+.fx-act-note { margin: 16px 0 0; font-size: 15px; line-height: 1.9; color: var(--fx-faint); }
 
 /* ─── Footer + performance mode ─── */
 .fx-footer { background: var(--fx-void); }

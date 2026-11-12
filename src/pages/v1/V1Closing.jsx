@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useId, useState } from "react";
 import V5SectionFilm from "../v5/V5SectionFilm";
 import { motion, AnimatePresence } from "framer-motion";
 import { STORIES, FAQ, FOUNDER, FINAL_CTA, FOOTER, NAV } from "../landing-v2/content";
@@ -81,6 +81,7 @@ export function V1Stories() {
 /* `embedded` (optional): the page titles the section itself; default = homepage. */
 export function V1FAQ({ data = FAQ, embedded = false } = {}) {
   const [open, setOpen] = useState(0);
+  const uid = useId();
   return (
     <section className="v1-section" id="faq" style={{ paddingTop: 0 }}>
       <div className="v1-container" style={{ maxWidth: 860 }}>
@@ -102,6 +103,8 @@ export function V1FAQ({ data = FAQ, embedded = false } = {}) {
                     type="button"
                     onClick={() => setOpen(isOpen ? -1 : i)}
                     aria-expanded={isOpen}
+                    aria-controls={`${uid}-a${i}`}
+                    id={`${uid}-q${i}`}
                     style={{
                       width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 18,
                       padding: "22px clamp(20px, 3vw, 30px)", background: "none", border: "none", cursor: "pointer",
@@ -128,6 +131,9 @@ export function V1FAQ({ data = FAQ, embedded = false } = {}) {
                     {isOpen && (
                       <motion.div
                         key="body"
+                        id={`${uid}-a${i}`}
+                        role="region"
+                        aria-labelledby={`${uid}-q${i}`}
                         className="v1-acc-body"
                         initial={{ height: 0, opacity: 0 }}
                         animate={{ height: "auto", opacity: 1 }}
@@ -143,7 +149,7 @@ export function V1FAQ({ data = FAQ, embedded = false } = {}) {
                   {/* A closed answer stays in the markup (hidden, like any collapsed
                       accordion) so the prerendered HTML carries every answer that the
                       FAQPage JSON-LD in index.html states — crawlers don't click. */}
-                  {!isOpen && <p hidden>{item.a}</p>}
+                  {!isOpen && <p hidden id={`${uid}-a${i}`}>{item.a}</p>}
                 </div>
               </Reveal>
             );
@@ -284,6 +290,18 @@ export function V1FinalCTA({ data = FINAL_CTA } = {}) {
 /* ────────────────────────────────────────────────────────────
  * Footer
  * ──────────────────────────────────────────────────────────── */
+/** «معهد الطلاقة والمعرفة · الرقم الوطني الموحد … · …» — each part shows only when it is filled. */
+function LegalLine() {
+  const l = FOOTER.legal;
+  if (!l || !l.name) return null;
+  const parts = [l.name, l.cr ? `${l.crLabel} ${l.cr}` : null, l.place || null].filter(Boolean);
+  return (
+    <span style={{ fontSize: "0.74rem", color: "var(--v1-t-faint)" }} className="v1-num">
+      {parts.join(" · ")}
+    </span>
+  );
+}
+
 export function V1Footer() {
   const cta = useCta();
   return (
@@ -351,7 +369,10 @@ export function V1Footer() {
         </div>
 
         <div style={{ marginTop: 52, paddingTop: 26, borderTop: "1px solid var(--v1-line)", display: "flex", justifyContent: "space-between", gap: 14, flexWrap: "wrap", alignItems: "center" }}>
-          <span style={{ fontSize: "0.78rem", color: "var(--v1-t-faint)" }} className="v1-num">{FOOTER.copyright}</span>
+          <span style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+            <span style={{ fontSize: "0.78rem", color: "var(--v1-t-faint)" }} className="v1-num">{FOOTER.copyright}</span>
+            <LegalLine />
+          </span>
           <span style={{ display: "flex", gap: 20 }}>
             <a href="/privacy" style={{ fontSize: "0.78rem", color: "var(--v1-t-faint)", textDecoration: "none" }}>الخصوصية</a>
             <a href="/terms" style={{ fontSize: "0.78rem", color: "var(--v1-t-faint)", textDecoration: "none" }}>الشروط</a>
