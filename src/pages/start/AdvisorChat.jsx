@@ -5,6 +5,9 @@ import { MARK_BOX, MARK_PATHS } from '../../lib/brandMark';
 import { getVisitorId } from '../../utils/affiliateTracking';
 import { track } from '../../lib/track';
 import { fireTikTokContact } from '../../lib/tiktokPixel';
+import Orb from '../next/Orb';
+import Starfield from '../next/Starfield';
+import { detectTier, tierConfig } from '../next/perf';
 import './advisor.css';
 
 /* «مستشار طلاقة» — fluentia.academy/start.
@@ -175,6 +178,16 @@ const OFFLINE = 'ما قدرت أوصل للخادم 🙏 تأكد من الإن
 
 export default function AdvisorChat() {
   const [msgs, setMsgs] = useState([]);           // {role, body, id}
+  // The home page's sky behind the chat: its starfield, and its planet rising as the horizon.
+  // Same device tiers as the home page; the planet is capped at 30 fps since it runs while people type.
+  const [tier, setTier] = useState(null);
+  useEffect(() => {
+    let alive = true;
+    detectTier().then((t) => { if (alive) setTier(t); }).catch(() => {});
+    return () => { alive = false; };
+  }, []);
+  const space = tier ? tierConfig(tier) : null;
+  const planetGl = space && space.webgl ? { webgl: true, fps: Math.min(space.fps, 30), dpr: Math.min(space.dpr, 1.5) } : null;
   const [chips, setChips] = useState([]);
   const [card, setCard] = useState(null);
   const [booking, setBooking] = useState(null);
@@ -293,7 +306,10 @@ export default function AdvisorChat() {
   return (
     <div className="adv-page" dir="rtl" lang="ar">
       <Seo path="/start" />
-      <div className="adv-glow" aria-hidden="true" />
+      <div className="adv-world" aria-hidden="true">
+        <Starfield density={space ? space.stars : 0} />
+        <div className="adv-planet"><Orb variant="planet" gl={planetGl} scale={0.9} /></div>
+      </div>
       <main className="adv-shell">
         <header className="adv-head">
           <Avatar />
