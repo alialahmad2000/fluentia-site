@@ -353,7 +353,7 @@ export default function AdvisorChat() {
 
           {!typing && !!replies.length && (
             <div className="adv-chips" role="group" aria-label="ردود سريعة">
-              {replies.map((c, i) => <button key={i} type="button" className="adv-chip" disabled={busy} onClick={() => onChip(c)}>{c.label}</button>)}
+              {replies.map((c, i) => <button key={i} type="button" className="adv-chip" style={{ '--i': i }} disabled={busy} onClick={() => onChip(c)}>{c.label}</button>)}
             </div>
           )}
 
