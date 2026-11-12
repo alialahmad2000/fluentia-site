@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>حالة منصة طلاقة</title>
+<meta name="description" content="حالة منصة طلاقة الآن: هل المنصة تعمل؟">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0a0e1a">
+<link rel="icon" href="/favicon.ico">
+<!--
+  fluentia.academy/status, the public status page (2026-11-12, reliability guardrails).
+  Static on Cloudflare Pages: no Supabase, no app bundle, no external font, so it loads while the platform is down.
+  It reads /status-data (functions/status-data.js → status.json, written by the ops watchdog in fluentia-autopilot)
+  once a minute while open. The LMS login page links here when it cannot reach the server.
+-->
+<style>
+  :root {
+    --bg: #0a0e1a; --raised: #0f1525; --line: rgba(255,255,255,.08); --ink: #eef1f7; --muted: #9aa4b8;
+    --ok: #34d399; --warn: #fbbf24; --down: #f87171; --unknown: #94a3b8;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--bg); color: var(--ink); }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Arabic", "Segoe UI", Tahoma, "Noto Sans Arabic", Arial, sans-serif;
+    line-height: 1.8; min-height: 100dvh; display: flex; flex-direction: column; align-items: center;
+    padding: max(32px, env(safe-area-inset-top)) 16px max(32px, env(safe-area-inset-bottom));
+  }
+  main { width: 100%; max-width: 560px; }
+  .brand { display: flex; align-items: center; gap: 10px; color: var(--muted); font-size: 15px; margin-block-end: 28px; text-decoration: none; }
+  .brand img { width: 30px; height: 30px; border-radius: 8px; }
+  .card { background: var(--raised); border: 1px solid var(--line); border-radius: 20px; padding: 28px 24px; }
+  .state { display: flex; align-items: center; gap: 14px; }
+  .dot { flex: none; width: 14px; height: 14px; border-radius: 50%; background: var(--unknown); box-shadow: 0 0 0 6px color-mix(in srgb, var(--unknown) 18%, transparent); }
+  .dot.ok { background: var(--ok); box-shadow: 0 0 0 6px color-mix(in srgb, var(--ok) 18%, transparent); }
+  .dot.warn { background: var(--warn); box-shadow: 0 0 0 6px color-mix(in srgb, var(--warn) 18%, transparent); }
+  .dot.down { background: var(--down); box-shadow: 0 0 0 6px color-mix(in srgb, var(--down) 18%, transparent); }
+  @media (prefers-reduced-motion: no-preference) { .dot.down, .dot.warn { animation: pulse 2s ease-in-out infinite; } }
+  @keyframes pulse { 50% { opacity: .55; } }
+  h1 { font-size: 22px; line-height: 1.5; margin: 0; font-weight: 700; }
+  .msg { color: var(--muted); margin: 14px 0 0; font-size: 16px; }
+  ul { list-style: none; padding: 0; margin: 24px 0 0; border-top: 1px solid var(--line); }
+  li { display: flex; justify-content: space-between; align-items: center; padding: 14px 0; border-bottom: 1px solid var(--line); font-size: 15px; }
+  li span:last-child { color: var(--muted); font-size: 14px; }
+  .meta { color: var(--muted); font-size: 13px; margin-top: 18px; }
+  .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+  .actions a { color: var(--ink); text-decoration: none; border: 1px solid var(--line); border-radius: 999px; padding: 10px 18px; font-size: 15px; min-height: 44px; display: inline-flex; align-items: center; }
+  .actions a.primary { background: #ffffff; color: #0a0e1a; border-color: #ffffff; font-weight: 600; }
+  .bdi { unicode-bidi: isolate; direction: ltr; display: inline-block; }
+</style>
+</head>
+<body>
+<main>
+  <a class="brand" href="/"><img src="/logo.png" alt="" width="30" height="30">أكاديمية طلاقة</a>
+  <section class="card" aria-live="polite">
+    <div class="state"><span class="dot" id="dot" aria-hidden="true"></span><h1 id="title">نتحقّق من حالة المنصة…</h1></div>
+    <p class="msg" id="msg">لحظات.</p>
+    <ul>
+      <li><span>المنصة والدروس</span><span id="c-platform">—</span></li>
+      <li><span>تسجيل الدخول</span><span id="c-login">—</span></li>
+      <li><span>موقع طلاقة</span><span id="c-site">—</span></li>
+    </ul>
+    <p class="meta" id="meta"></p>
+    <div class="actions">
+      <a class="primary" href="https://app.fluentia.academy/login">افتح المنصة</a>
+      <a href="javascript:location.reload()">تحديث</a>
+    </div>
+  </section>
+</main>
+<script>
+(function () {
+  var TITLE = { operational: 'المنصة تعمل بشكل طبيعي', degraded: 'المنصة أبطأ من المعتاد', down: 'نواجه ضغطاً مؤقتاً', unknown: 'لا تتوفر معلومات حديثة' };
+  var MSG = {
+    operational: 'كل الأنظمة تعمل بشكل طبيعي.',
+    degraded: 'نواجه ضغطاً مؤقتاً وقد تكون المنصة أبطأ من المعتاد. نعمل على حلّه.',
+    down: 'نواجه ضغطاً مؤقتاً، نعمل على حلّه. حاول بعد دقائق.',
+    unknown: 'لم نستطع قراءة حالة المنصة الآن. إن واجهت مشكلة، حاول بعد دقائق.'
+  };
+  var COMP = { operational: 'يعمل', degraded: 'أبطأ من المعتاد', down: 'متوقف مؤقتاً', unknown: '—' };
+  var DOT = { operational: 'ok', degraded: 'warn', down: 'down', unknown: '' };
+  var $ = function (id) { return document.getElementById(id); };
+
+  function ago(iso) {
+    var m = Math.max(0, Math.round((Date.now() - new Date(iso).getTime()) / 60000));
+    if (m < 1) return 'الآن';
+    if (m < 60) return 'قبل ' + m + ' دقيقة';
+    var h = Math.round(m / 60);
+    return 'قبل ' + h + ' ساعة';
+  }
+  function clock(iso) {
+    try { return new Date(iso).toLocaleTimeString('ar-SA-u-nu-latn', { hour: 'numeric', minute: '2-digit', timeZone: 'Asia/Riyadh' }); } catch (e) { return ''; }
+  }
+
+  function render(s) {
+    var state = s && TITLE[s.state] ? s.state : 'unknown';
+    // the watchdog republishes at least every 6 h; much older than that means the monitor itself is offline
+    if (state !== 'unknown' && (!s.updated_at || Date.now() - new Date(s.updated_at).getTime() > 7 * 3600000)) state = 'unknown';
+    $('dot').className = 'dot ' + DOT[state];
+    $('title').textContent = TITLE[state];
+    $('msg').textContent = (state !== 'unknown' && s.message_ar) || MSG[state];
+    var c = (s && s.components) || {};
+    ['platform', 'login', 'site'].forEach(function (k) { $('c-' + k).textContent = COMP[state === 'unknown' ? 'unknown' : (c[k] || state)] || '—'; });
+    var meta = [];
+    if (s && s.updated_at) meta.push('آخر تحديث: ' + ago(s.updated_at));
+    if (state !== 'operational' && state !== 'unknown' && s.since) meta.push('منذ الساعة ' + clock(s.since) + ' بتوقيت الرياض');
+    $('meta').textContent = meta.join(' · ');
+    document.title = TITLE[state] + ' · حالة منصة طلاقة';
+  }
+
+  function load() {
+    var ctl = 'AbortController' in window ? new AbortController() : null;
+    var t = ctl && setTimeout(function () { ctl.abort(); }, 10000);
+    fetch('/status-data?t=' + Math.floor(Date.now() / 30000), { cache: 'no-store', signal: ctl && ctl.signal })
+      .then(function (r) { return r.json(); })
+      .then(render)
+      .catch(function () { render(null); })
+      .then(function () { if (t) clearTimeout(t); });
+  }
+  load();
+  setInterval(function () { if (!document.hidden) load(); }, 60000);
+  document.addEventListener('visibilitychange', function () { if (!document.hidden) load(); });
+})();
+</script>
+</body>
+</html>
