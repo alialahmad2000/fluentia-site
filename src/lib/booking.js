@@ -3,17 +3,20 @@
  * a plain link — no JavaScript yet, middle-click, «open in new tab», a crawler.
  *
  * With JavaScript on, the page's own `[data-open-form]` listener still takes a
- * plain left click (the homepage lead modal, /join's form) and the href is
- * never followed. `/start` is the live admissions route («مستشار طلاقة»,
+ * plain left click and the href is never followed: on `/` a general CTA goes to
+ * HOME_BOOKING via NextLanding, a pricing card opens V1LeadModal with its
+ * package; /join and the campaign page open their own form. `/start` is the live admissions route («مستشار طلاقة»,
  * src/pages/start/AdvisorChat.jsx) and records the full landing URL, so the
  * package travels with the visitor as `?pkg=<tier id>` — the same ids the
  * pricing cards' `data-tier` carry (asas, tamayuz, fardi, fardi_intensive,
  * self_study; there is no separate self-study checkout).
  */
 export const BOOKING_PATH = "/start";
+/** A general «احجز لقاءك المبدئي» on the site — same URL the JS click goes to. */
+export const HOME_BOOKING = `${BOOKING_PATH}?src=site_home`;
 
 export function bookingHref(tier) {
-  return tier ? `${BOOKING_PATH}?pkg=${encodeURIComponent(tier)}` : BOOKING_PATH;
+  return tier ? `${BOOKING_PATH}?pkg=${encodeURIComponent(tier)}` : HOME_BOOKING;
 }
 
 /**

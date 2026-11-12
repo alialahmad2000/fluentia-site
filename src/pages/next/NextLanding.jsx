@@ -32,7 +32,7 @@ import StoriesProvider from "../../components/stories/StoriesProvider";
 import STORIES_CSS from "../../components/stories/stories.css?inline";
 import { STORIES } from "../../data/stories";
 import { CTA_LABEL, CAMPAIGN_PRICING_FOOT, STICKY_NOTE } from "./copy";
-import { isModifiedClick } from "../../lib/booking";
+import { HOME_BOOKING, isModifiedClick } from "../../lib/booking";
 
 /**
  * The cinematic landing — the homepage at `/` and, in campaign mode, the TikTok
@@ -275,9 +275,11 @@ export default function NextLanding({ seoPath = "/next", campaign = false }) {
     const onClick = (e) => {
       const trigger = e.target.closest?.("[data-open-form]");
       if (!trigger || trigger.getAttribute("data-tier")) return;
+      // cmd/ctrl/middle-click on a real link: let the browser open its new tab.
+      if (trigger.hasAttribute("href") && isModifiedClick(e)) return;
       e.preventDefault();
       e.stopImmediatePropagation();
-      window.location.assign("/start?src=site_home");
+      window.location.assign(HOME_BOOKING);
     };
     document.addEventListener("click", onClick, true);
     return () => document.removeEventListener("click", onClick, true);
