@@ -59,6 +59,10 @@
   --fx-faint: rgba(243, 237, 226, 0.52);
   --fx-rule: rgba(243, 237, 226, 0.1);
   --fx-gut: 20px;
+  /* One container: content never wider than 1312 px; the edge is the gutter
+     until the screen is wider than that, then the centred margin. */
+  --fx-wrap: 1312px;
+  --fx-edge: max(var(--fx-gut), calc((100% - var(--fx-wrap)) / 2));
   --fx-hd: 150ms; /* when the hero headline starts rising */
 
   background: var(--fx-void);
@@ -95,6 +99,7 @@ html.fx-intro.fx-skip .fx-next { --fx-hd: 0ms; }
 /* ─── Buttons ─── */
 .fx-btn {
   display: inline-flex;
+  text-decoration: none; /* calls to action are real links (→ /start) */
   align-items: center;
   justify-content: center;
   gap: 10px;
@@ -143,14 +148,15 @@ html.fx-intro.fx-skip .fx-next { --fx-hd: 0ms; }
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  padding: max(10px, env(safe-area-inset-top)) var(--fx-gut) 10px;
-  transition: background-color 500ms var(--fx-ease-soft), box-shadow 500ms var(--fx-ease-soft);
+  min-height: 68px;
+  padding: max(10px, env(safe-area-inset-top)) var(--fx-edge) 10px;
+  transition: background-color 400ms var(--fx-ease-soft), box-shadow 400ms var(--fx-ease-soft);
 }
 .fx-head[data-solid] {
-  background: rgba(5, 11, 22, 0.72);
-  -webkit-backdrop-filter: blur(20px);
-  backdrop-filter: blur(20px);
-  box-shadow: 0 1px 0 rgba(125, 211, 252, 0.1);
+  background: rgba(5, 11, 22, 0.88);
+  -webkit-backdrop-filter: blur(14px) saturate(1.2);
+  backdrop-filter: blur(14px) saturate(1.2);
+  box-shadow: 0 1px 0 var(--fx-rule);
 }
 .fx-brand {
   display: inline-flex;
@@ -182,11 +188,11 @@ html.fx-intro.fx-skip .fx-next { --fx-hd: 0ms; }
   position: relative;
   display: inline-flex;
   align-items: center;
-  min-height: 48px;
-  color: var(--fx-faint);
+  min-height: 44px;
+  color: var(--fx-text);
   text-decoration: none;
   font-size: 15px;
-  font-weight: 400;
+  font-weight: 500;
   white-space: nowrap;
   transition: color 300ms ease;
 }
@@ -209,20 +215,44 @@ html.fx-intro.fx-skip .fx-next { --fx-hd: 0ms; }
 .fx-nav-link[aria-current]::after { opacity: 0.7; transform: none; }
 .fx-nav-link:focus-visible { color: var(--fx-cream); }
 .fx-nav-sep {
+  align-self: center;
   width: 1px;
-  height: 16px;
-  background: rgba(243, 237, 226, 0.16);
-  margin-inline: 2px;
+  height: 18px;
+  background: rgba(243, 237, 226, 0.18);
+  margin-inline: -8px;
 }
-.fx-nav-login { font-size: 13.5px; opacity: 0.78; }
+.fx-nav-login { font-size: 14px; font-weight: 400; color: var(--fx-faint); }
 .fx-nav-login::after { display: none; }
 @media (hover: hover) {
   .fx-nav-link:hover { color: var(--fx-cream); }
-  .fx-nav-login:hover { opacity: 1; }
+  .fx-nav-link:hover::after { opacity: 0.45; transform: none; }
+  .fx-nav-login:hover { color: var(--fx-cream); }
+}
+/* On a phone at the top of the homepage the hero's own call is on screen:
+   the header's appears once the hero scrolls away. */
+@media (max-width: 1023px) {
+  .fx-head--home .fx-btn--nav { transition: opacity 300ms ease, visibility 0s linear 300ms; }
+  .fx-head--home:not([data-solid]) .fx-btn--nav { opacity: 0; visibility: hidden; }
+  .fx-head--home[data-solid] .fx-btn--nav { transition: opacity 300ms ease; }
+}
+/* The header's call is the quiet one: the hero's filled button is the page's
+   primary. Outline, 44 px, centred on the nav row. (/join's frozen stylesheet
+   has no --nav rule, so its header keeps the filled button.) */
+.fx-head .fx-btn--nav {
+  min-height: 44px;
+  padding: 0 18px;
+  font-size: 14px;
+  background: transparent;
+  color: var(--fx-cream);
+  box-shadow: inset 0 0 0 1px rgba(125, 211, 252, 0.45);
+  transition: background-color 300ms ease, box-shadow 300ms ease, color 300ms ease;
+}
+@media (hover: hover) {
+  .fx-head .fx-btn--nav:hover { background: rgba(125, 211, 252, 0.1); box-shadow: inset 0 0 0 1px var(--fx-ice); }
 }
 .fx-menu-toggle {
-  min-height: 48px;
-  min-width: 48px;
+  min-height: 44px;
+  min-width: 44px;
   padding: 0 16px;
   border: 1px solid rgba(243, 237, 226, 0.2);
   border-radius: 999px;
@@ -393,45 +423,86 @@ html.fx-intro:not(.fx-intro-done) .fx-stars { z-index: 81; }
 }
 .fx-orb[data-live] .fx-orb-gl { opacity: 1; }
 .fx-orb[data-live] .fx-orb-static { opacity: 0; }
+/* The poster is a frame of the shader itself: it stays under the canvas while
+   that fades in, then steps out, so the planet never dims mid-swap. */
+.fx-orb-poster { position: absolute; inset: 0; transition: opacity 300ms ease 1500ms; background: center / 100% 100% no-repeat; }
+.fx-orb-poster[data-ready] { background-image: none !important; }
+.fx-orb-poster img { display: block; width: 100%; height: 100%; }
+.fx-orb[data-live] .fx-orb-poster { opacity: 0; }
 
-/* ─── Hero ─── */
+/* ─── Hero ───
+   Phone: a small planet on top, the copy under it — the headline, its line,
+   the call and the reassurance all inside the first screen (360×740 up).
+   ≥ 1024 px: a grid — copy right (7/12), planet left (5/12), no overlap.
+   Rhythm (8 px scale): title → line 24, line → call 40, call → trust 32. */
 .fx-hero {
   position: relative;
   min-height: 100vh;
   min-height: 100svh;
-  padding: calc(72px + env(safe-area-inset-top)) var(--fx-gut) 56px;
+  padding: calc(76px + env(safe-area-inset-top)) var(--fx-edge) 40px;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: stretch;
 }
 .fx-hero-orb {
-  width: min(88vw, 520px);
+  align-self: center;
+  width: clamp(150px, min(46vw, 25svh), 300px);
   aspect-ratio: 1;
-  transform: translateY(calc(var(--p, 0) * -16vh)) scale(calc(1 - var(--p, 0) * 0.15));
+  flex: none;
+  transform: translateY(calc(var(--p, 0) * -8vh)) scale(calc(1 - var(--p, 0) * 0.1));
   will-change: transform;
 }
 .fx-hero-copy {
   position: relative;
   z-index: 2;
   width: 100%;
-  margin-top: calc(min(88vw, 520px) * -0.34);
+  margin-top: 16px;
 }
-.fx-hero-title { font-size: clamp(50px, 14.2vw, 200px); }
+.fx-hero-title {
+  font-size: clamp(40px, 12.2vw, 60px);
+  line-height: 1.3;
+  text-wrap: balance;
+}
 .fx-hero-title .fx-line { white-space: nowrap; }
 .fx-mbr { display: block; }
 .fx-hero-sub {
-  margin: 22px 0 0;
-  max-width: 36ch;
-  font-size: clamp(16px, 4.3vw, 19px);
-  line-height: 1.9;
+  margin: 20px 0 0;
+  max-width: 38ch;
+  font-size: 17px;
+  line-height: 1.75;
   color: var(--fx-text);
+  text-wrap: pretty;
 }
 .fx-hero-actions {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 8px 24px;
-  margin-top: 24px;
+  gap: 4px 28px;
+  margin-top: 28px;
+}
+.fx-hero-actions .fx-quiet { min-height: 44px; }
+.fx-hero-trust { margin-top: 20px; }
+.fx-hero-note {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--fx-faint);
+}
+.fx-hero-logos {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 18px;
+  margin: 16px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.fx-hero-logos li { display: flex; }
+.fx-hero-logos img {
+  display: block;
+  width: auto;
+  height: calc(var(--h, 24px) * 0.84);
+  opacity: 0.62;
 }
 html.fx-js .fx-hero-rv .fx-w {
   animation: fx-rise 1100ms var(--fx-ease) both;
@@ -442,26 +513,39 @@ html.fx-js .fx-hero-after {
   animation-delay: calc(var(--fx-hd) + 380ms);
 }
 
-@media (min-width: 900px) {
-  .fx-hero {
-    flex-direction: row;
-    align-items: center;
-    padding-top: 110px;
-    padding-bottom: 80px;
-  }
-  .fx-hero-orb {
-    position: absolute;
-    left: 3vw;
-    top: 50%;
-    width: min(50vw, 84vh);
-    transform: translateY(calc(-50% + var(--p, 0) * -16vh)) scale(calc(1 - var(--p, 0) * 0.15));
-  }
-  .fx-hero-copy { width: min(76%, 1120px); margin: 0; }
-  /* Two lines, each held whole: the longer one is 10.8em wide. */
-  .fx-hero-title { font-size: min(6.5vw, 150px); }
-  .fx-hero-title .fx-line { white-space: nowrap; }
+/* Tablet: two headline lines, sized to the column. */
+@media (min-width: 720px) {
   .fx-mbr { display: none; }
-  .fx-hero-sub { font-size: 19px; }
+  .fx-hero-title { font-size: min(64px, calc((100vw - 2 * var(--fx-gut)) / 11.6)); }
+  .fx-hero-orb { width: clamp(200px, 30svh, 320px); }
+  .fx-hero-sub { font-size: 18px; }
+  .fx-hero-actions { margin-top: 36px; }
+}
+
+@media (min-width: 1024px) {
+  .fx-hero {
+    display: grid;
+    grid-template-columns: 7fr 5fr;
+    column-gap: clamp(32px, 4vw, 64px);
+    align-items: center;
+    padding-top: 108px;
+    padding-bottom: 72px;
+  }
+  .fx-hero-copy { grid-column: 1; grid-row: 1; margin: 0; }
+  .fx-hero-orb {
+    grid-column: 2;
+    grid-row: 1;
+    justify-self: center;
+    width: min(100%, 560px, 68svh);
+    transform: translateY(calc(var(--p, 0) * -10vh)) scale(calc(1 - var(--p, 0) * 0.1));
+  }
+  /* Two lines, each held whole: the longer one is ~10.8em, the column ~11.2em. */
+  .fx-hero-title { font-size: clamp(46px, 5vw, 72px); }
+  .fx-hero-sub { margin-top: 24px; font-size: 19px; }
+  .fx-hero-actions { margin-top: 40px; }
+  .fx-hero-trust { margin-top: 32px; }
+  .fx-hero-logos { flex-wrap: nowrap; gap: 32px; }
+  .fx-hero-logos img { height: var(--h, 24px); }
 }
 
 /* ─── Platform: the phone ─── */
@@ -1208,6 +1292,11 @@ html.fx-js .fx-act-title.fx-rv.is-in { transform: none; }
   font-size: 20px;
   cursor: pointer;
 }
+.fx-rail-arrows button { display: inline-flex; align-items: center; justify-content: center; transition: opacity 200ms ease, border-color 200ms ease; }
+.fx-rail-arrows button:disabled { opacity: 0.32; cursor: default; }
+@media (hover: hover) { .fx-rail-arrows button:not(:disabled):hover { border-color: rgba(243, 237, 226, 0.5); } }
+.fx-rail-arrows button:focus-visible { outline: 2px solid var(--fx-sky); outline-offset: 3px; }
+.fx-rail-arrows[hidden] { display: none !important; }
 .fx-rail {
   list-style: none;
   margin: 30px 0 0;
@@ -1258,6 +1347,12 @@ html.fx-js .fx-act-title.fx-rv.is-in { transform: none; }
 .fx-final-orb { width: min(58vw, 280px); aspect-ratio: 1; margin-bottom: -34px; }
 .fx-final-title { position: relative; font-size: clamp(48px, 14vw, 170px); }
 .fx-final-sub { max-width: 46ch; margin: 28px auto 32px; font-size: clamp(16px, 4.2vw, 18px); line-height: 2; }
+
+/* Under the final call: the booking button, then the free placement test, quietly. */
+.fx-final-actions { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.fx-final-test { font-size: 15px; color: var(--fx-text); padding-inline: var(--fx-gut, 20px); text-align: center; }
+/* «كيف نُزيله»: one plain line on how classes happen (Google Meet). */
+.fx-act-note { margin: 16px 0 0; font-size: 15px; line-height: 1.9; color: var(--fx-faint); }
 
 /* ─── Footer + performance mode ─── */
 .fx-footer { background: var(--fx-void); }
@@ -1326,3 +1421,76 @@ html[data-fx-tier="low"] .fx-next .fx-panel { position: relative; max-height: no
   }
   .fx-next .fx-logos-track { animation: none; }
 }
+
+/* ═══ Homepage consistency pass (2026-11-12) ═══════════════════════════════
+   .fx-home is the homepage root only (not /join, the journal or /stories, which
+   share this stylesheet). One chapter-title size, one section rhythm, one
+   sub-heading style, two button styles, readable faint text. */
+.fx-home {
+  --fx-h2: clamp(56px, 9vw, 136px);       /* every chapter title */
+  --fx-h2-sub: clamp(28px, 3vw, 42px);    /* the line under it (pricing, fit, FAQ) */
+  --fx-sec: clamp(80px, 8.9vw, 128px);    /* space above a section */
+  --fx-sec-end: clamp(40px, 4.4vw, 64px); /* space under it */
+}
+/* faint text was 0.38 alpha ≈ 2.9:1 on the night sky; 0.58 ≈ 5:1 */
+.v1-scope.fx-home { --v1-t-faint: rgba(214, 228, 243, 0.58); }
+
+.fx-home .fx-giant:not(.fx-hero-title) { font-size: var(--fx-h2); }
+
+.fx-home .fx-platform,
+.fx-home .fx-moonrise,
+.fx-home .fx-block-head { padding-top: var(--fx-sec); }
+.fx-home .fx-act,
+.fx-home .fx-rail-sec,
+.fx-home .fx-block--stories { padding-top: var(--fx-sec); padding-bottom: var(--fx-sec-end); }
+/* the section carries an inline padding-top: 0 */
+.fx-home .fx-block--fit .v1-section { padding-top: var(--fx-sec) !important; padding-bottom: 0; }
+.fx-home .fx-final { padding-top: var(--fx-sec); padding-bottom: var(--fx-sec); }
+
+.fx-home .v1-headline {
+  font-family: var(--fx-display);
+  font-weight: 800;
+  font-size: var(--fx-h2-sub);
+  line-height: 1.3;
+  color: var(--fx-cream);
+  text-wrap: balance;
+}
+.fx-home #whofor .v1-container > :first-child,
+.fx-home #faq .v1-container > :first-child { text-align: center; }
+.fx-home #whofor .v1-intro,
+.fx-home #faq .v1-intro { margin-inline: auto; text-wrap: pretty; }
+
+/* Buttons: the sky primary and the outline secondary, the same height everywhere. */
+.v1-scope.fx-home .v1-cta {
+  min-height: 52px;
+  padding: 0 28px;
+  font-family: var(--fx-display);
+  font-size: 16px;
+  line-height: 1;
+  box-sizing: border-box;
+}
+.v1-scope.fx-home .v1-cta-gold,
+.v1-scope.fx-home .v1-cta-primary {
+  background: var(--fx-sky);
+  color: #03101e;
+  box-shadow: none;
+}
+.v1-scope.fx-home .v1-cta-ghost,
+.v1-scope.fx-home .v1p-vip-cta {
+  background: transparent;
+  color: var(--fx-cream);
+  border: 0;
+  box-shadow: inset 0 0 0 1px rgba(125, 211, 252, 0.45);
+}
+@media (hover: hover) {
+  .v1-scope.fx-home .v1-cta:hover { transform: none; }
+  .v1-scope.fx-home .v1-cta-gold:hover,
+  .v1-scope.fx-home .v1-cta-primary:hover { background: var(--fx-ice); box-shadow: none; }
+  .v1-scope.fx-home .v1-cta-ghost:hover,
+  .v1-scope.fx-home .v1p-vip-cta:hover { background: rgba(125, 211, 252, 0.07); box-shadow: inset 0 0 0 1px var(--fx-ice); }
+}
+.v1-scope.fx-home .v1-cta:focus-visible,
+.fx-home .fx-btn:focus-visible { outline: 2px solid var(--fx-ice); outline-offset: 3px; }
+/* the same gap between a chapter title and the line under it (#faq carries an inline padding-top: 0) */
+.fx-home .fx-block--pricing .v1p { padding-top: var(--fx-sec-end); }
+.fx-home .fx-block--faq #faq { padding-top: var(--fx-sec-end) !important; }

@@ -35,7 +35,7 @@ import "@fontsource/alexandria/700.css";
 import "@fontsource/alexandria/800.css";
 import "@fontsource/aref-ruqaa/400.css"; // founder signature only
 
-// Atelier landing fonts (/atelier) — Cairo headings + Cormorant Garamond serif
+// Cairo + Cormorant Garamond (tour rooms, verbs, /next, /v5)
 import "@fontsource/cairo/700.css";
 import "@fontsource/cairo/800.css";
 import "@fontsource/cormorant-garamond/500.css";

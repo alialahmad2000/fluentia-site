@@ -63,7 +63,7 @@ export default function TermsOfService() {
       <H1>شروط الاستخدام</H1>
       <div style={{ fontSize: '0.875rem', color: '#7e8a9a', marginBottom: '2rem' }}>
         تاريخ السريان: <time dateTime="2026-03-23">23 مارس 2026</time> · آخر تحديث:{' '}
-        <time dateTime="2026-10-18">18 أكتوبر 2026</time>
+        <time dateTime="2026-11-12">12 نوفمبر 2026</time>
       </div>
 
       <H2>1. قبول الشروط</H2>
@@ -96,10 +96,7 @@ export default function TermsOfService() {
         <li>
           <strong>لا يوجد التزام طويل الأمد</strong> — يمكنك إيقاف اشتراكك في نهاية أي شهر.
         </li>
-        <li>
-          <strong>سياسة الاسترداد:</strong> يُسترد كامل المبلغ خلال 7 أيام من بداية الشهر{' '}
-          <u>وبشرط عدم حضور أي حصة</u>. بعد حضور أي حصة، لا يوجد استرداد.
-        </li>
+        <li>المبالغ المدفوعة غير قابلة للاسترداد.</li>
         <li>
           <strong>تغيير الباقة:</strong> يمكنك الترقية أو التخفيض في بداية الشهر التالي. لا يُعدَّل
           السعر في منتصف الشهر.
@@ -113,7 +110,7 @@ export default function TermsOfService() {
         <li>عدم تسجيل أو نشر محتوى الكلاسات.</li>
         <li>عدم مشاركة بيانات حسابك مع الآخرين.</li>
       </Ul>
-      <P>يحق للأكاديمية إنهاء اشتراك أي طالب يُخلّ بهذه السلوكيات دون استرداد للمبلغ المتبقي.</P>
+      <P>يحق للأكاديمية إنهاء اشتراك أي طالب يُخلّ بهذه السلوكيات.</P>
 
       <H2>6. الملكية الفكرية</H2>
       <P>
@@ -193,7 +190,7 @@ export default function TermsOfService() {
         >
           <h3 style={{ color: '#f8fafc', fontSize: '1.25rem' }}>Terms of Service — Fluentia Academy</h3>
           <p>
-            <strong>Effective:</strong> March 23, 2026 · <strong>Updated:</strong> October 18, 2026
+            <strong>Effective:</strong> March 23, 2026 · <strong>Updated:</strong> November 12, 2026
           </p>
           <p>
             By subscribing to Fluentia Academy you agree to these terms. The service provides online
@@ -202,8 +199,7 @@ export default function TermsOfService() {
           </p>
           <p>
             <strong>Payment:</strong> monthly in advance, in Saudi Riyals (SAR). No long-term
-            commitment; cancel at the end of any month. <strong>Refund policy:</strong> full refund
-            within 7 days of the month only if no class was attended.
+            commitment; cancel at the end of any month. Amounts paid are non-refundable.
           </p>
           <p>
             <strong>Conduct:</strong> respect trainers and peers, attend on time, do not record or

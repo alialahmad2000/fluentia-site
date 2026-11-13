@@ -6,6 +6,7 @@ import { buildWhatsAppUrl } from "../../lib/whatsapp";
 import { track } from "../../lib/track";
 import { Reveal, staggerParent, staggerItem } from "./motion";
 import { useCta } from "./ctaContext";
+import { bookingHref } from "../../lib/booking";
 import { UserRound, Compass, PenLine, LayoutGrid, MessageSquareText, Presentation } from "lucide-react";
 
 const INSIDE_ICONS = { teacher: UserRound, mentor: Compass, curriculum: PenLine, platform: LayoutGrid, followup: MessageSquareText, career: Presentation };
@@ -159,14 +160,14 @@ export default function V1Pricing({ embedded = false } = {}) {
                     ))}
                   </ul>
 
-                  <button
-                    type="button"
+                  <a
+                    href={bookingHref(t.id)}
                     data-open-form
                     data-tier={t.id}
                     className={`v1-cta ${hero ? "v1-cta-gold" : "v1-cta-ghost"} v1p-cta`}
                   >
                     {t.ctaLabel}
-                  </button>
+                  </a>
                 </motion.article>
               );
             })}
@@ -215,9 +216,9 @@ export default function V1Pricing({ embedded = false } = {}) {
                   </ul>
                 </div>
                 <div className="v1p-vip-actions">
-                  <button type="button" data-open-form data-tier={t.id} className="v1-cta v1-cta-ghost v1p-cta v1p-vip-cta">
+                  <a href={bookingHref(t.id)} data-open-form data-tier={t.id} className="v1-cta v1-cta-ghost v1p-cta v1p-vip-cta">
                     احجز استشارة
-                  </button>
+                  </a>
                   {/* A campaign page (useCta) keeps the visitor on the page. */}
                   {!cta && (
                   <a href={privateHref(t.id, qs)} className="v1p-vip-more" data-cta={`pricing_private_${t.id}`}>
@@ -243,9 +244,9 @@ export default function V1Pricing({ embedded = false } = {}) {
               <span className="v1p-self-amount v1-num">{fmt(entry.price)}</span>
               <span className="v1p-per">ر.س / شهرياً</span>
             </div>
-            <button type="button" data-open-form data-tier={entry.id} className="v1-cta v1-cta-ghost v1p-self-cta">
+            <a href={bookingHref(entry.id)} data-open-form data-tier={entry.id} className="v1-cta v1-cta-ghost v1p-self-cta">
               {entry.ctaLabel}
-            </button>
+            </a>
           </article>
         </Reveal>
         )}

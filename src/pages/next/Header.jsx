@@ -7,6 +7,7 @@ import { lockScroll, unlockScroll, popOverlayEntry, triggerOpenForm } from "../.
 import { track } from "./scroll";
 import { CTA_LABEL } from "./copy";
 import { useCta } from "../v1/ctaContext";
+import { bookingHref } from "../../lib/booking";
 import MENU_CSS from "./menu.css?inline";
 
 /**
@@ -237,7 +238,7 @@ export default function Header({ page = "home" }) {
 
   return (
     <>
-      <header ref={headRef} className="fx-head">
+      <header ref={headRef} className={`fx-head${home && !campaign ? " fx-head--home" : ""}`}>
         <a href={home ? "#fx-top" : "/"} className="fx-brand" aria-label={home ? `${NAV.brand.ar} — أعلى الصفحة` : `${NAV.brand.ar} — الصفحة الرئيسية`}>
           <BrandMark size={30} />
           <span className="fx-brand-ar">{NAV.brand.ar}</span>
@@ -264,9 +265,9 @@ export default function Header({ page = "home" }) {
           )}
         </nav>
         <div className="fx-head-actions">
-          <button type="button" data-open-form className="fx-btn fx-btn--primary fx-btn--sm">
+          <a href={bookingHref()} data-open-form className="fx-btn fx-btn--primary fx-btn--sm fx-btn--nav">
             {CTA_LABEL}
-          </button>
+          </a>
           <button
             ref={toggleRef}
             type="button"

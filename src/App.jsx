@@ -20,6 +20,10 @@ const JournalArticle = lazy(() => import('./pages/journal/JournalArticle'));
 const PreviewChooser = lazy(() => import('./pages/journal-preview/Chooser'));
 const PreviewHome = lazy(() => import('./pages/journal-preview/PreviewHome'));
 const PreviewArticle = lazy(() => import('./pages/journal-preview/PreviewArticle'));
+const HomePreviewChooser = lazy(() => import('./pages/landing-preview/Chooser'));
+const HomePreviewA = lazy(() => import('./pages/landing-preview/a/PreviewA'));
+const HomePreviewB = lazy(() => import('./pages/landing-preview/b/PreviewB'));
+const HomePreviewC = lazy(() => import('./pages/landing-preview/c/PreviewC'));
 const NextLanding = lazy(() => import('./pages/next/NextLanding'));
 const AscentLanding = lazy(() => import('./pages/ascent/AscentLanding'));
 const JourneyLanding = lazy(() => import('./pages/journey/JourneyLanding'));
@@ -27,7 +31,6 @@ const AboutPage = lazy(() => import('./pages/AboutPage'));
 const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
 const TermsOfService = lazy(() => import('./pages/TermsOfService'));
 const WhatsAppRedirect = lazy(() => import('./pages/WhatsAppRedirect'));
-const AtelierLanding = lazy(() => import('./pages/atelier/AtelierLanding'));
 const ArticlesIndex = lazy(() => import('./pages/articles/ArticlesIndex'));
 const ArticlePage = lazy(() => import('./pages/articles/ArticlePage'));
 const AuroraHero = lazy(() => import('./pages/aurora/AuroraHero'));
@@ -1210,13 +1213,14 @@ function AppRoutes(){
     // Fire TikTok ViewContent on initial page load (upper-funnel signal).
     // No PII at this stage — goes through the helper so all ttq.track
     // calls in src/ live in src/lib/tiktokPixel.js.
+    // Not on the homepage previews (/preview*): PageView only there.
+    if (/^\/preview(\/|$)/.test(window.location.pathname)) return;
     fireTikTokViewContent();
   }, []); // empty dependency array = fire once on mount
 
   return(
     <Routes>
       <Route path="/v2" element={<Suspense fallback={VFallback}><LandingV2 /></Suspense>} />
-      <Route path="/atelier" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#060e1c'}} />}><AtelierLanding /></Suspense>} />
       <Route path="/aurora" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#070b14'}} />}><AuroraHero /></Suspense>} />
       <Route path="/legacy" element={<HomePage />} />
       {/* Homepage = the cinematic landing (HOME_VARIANT). The V5 "Dawn Stage"
@@ -1227,7 +1231,7 @@ function AppRoutes(){
       <Route path="/classic" element={<Suspense fallback={VFallback}><V5Landing /></Suspense>} />
       {/* «مستشار طلاقة» — the AI admissions chat (admissions-bot edge function). The old
           form it replaced stays reachable at /start/form, linked at the bottom of the chat. */}
-      <Route path="/start" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#060e1c'}} />}><AdvisorChat /></Suspense>} />
+      <Route path="/start" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#050b16'}} />}><AdvisorChat /></Suspense>} />
       <Route path="/start/form" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#0A0A0A'}} />}><StartPage /></Suspense>} />
       {/* TikTok campaign landing (noindex). /start is the Google Ads page. */}
       <Route path="/join" element={JOIN_VARIANT === "next"
@@ -1256,6 +1260,11 @@ function AppRoutes(){
       {/* «مجلة طلاقة» — art-directed long-form articles (src/content/journal/). */}
       <Route path="/journal" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#060e1c'}} />}><JournalIndex /></Suspense>} />
       {/* «مجلة طلاقة» art-direction previews — noindex, client-rendered (src/content/journal/preview.js). */}
+      {/* Homepage visual-direction previews — noindex, client-rendered (src/pages/landing-preview/routes.js). / is unchanged. */}
+      <Route path="/preview" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#0a0d16'}} />}><HomePreviewChooser /></Suspense>} />
+      <Route path="/preview/a" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#060a1c'}} />}><HomePreviewA /></Suspense>} />
+      <Route path="/preview/b" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#f6f1e7'}} />}><HomePreviewB /></Suspense>} />
+      <Route path="/preview/c" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#080b14'}} />}><HomePreviewC /></Suspense>} />
       <Route path="/journal/preview" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#0b0b0b'}} />}><PreviewChooser /></Suspense>} />
       <Route path="/journal/preview/:dir" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#0b0b0b'}} />}><PreviewHome /></Suspense>} />
       <Route path="/journal/preview/:dir/:slug" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#0b0b0b'}} />}><PreviewArticle /></Suspense>} />

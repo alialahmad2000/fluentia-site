@@ -492,7 +492,7 @@ export default function StartPage() {
             </h1>
 
             <p style={{ fontSize: 16, color: T.text, lineHeight: 1.8, marginBottom: 22 }}>
-              مدربون سعوديون · مجموعات صغيرة (٧ طلاب) · متابعة يومية · 6 باقات تناسبك
+              مدربون سعوديون · مجموعات صغيرة (7 طلاب) · متابعة يومية · 5 باقات تناسبك
             </p>
 
             <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 20px', display: 'grid', gap: 10 }}>

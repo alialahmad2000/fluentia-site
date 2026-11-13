@@ -16,9 +16,15 @@ import { markCanvas } from "../../lib/brandMark";
  *            region the headline sits over, so the type keeps its contrast
  *   mark     true | "center" — paint the feather-F on the planet: it brushes on once it is seen
  *            (after the intro, if one plays), then breathes in the planet's own light
+ *   painted  the F starts fully painted (no brush) — the poster already shows it
+ *   dim      0..1 overall brightness (the homepage hero tones the planet down)
+ *   poster   { base, widths, sizes, lqip? } — an AVIF/WebP frame of this very shader,
+ *            shown in place of the CSS disc until the canvas is live
  *
  * Off screen or in a background tab it stops drawing. A lost context falls
- * back to the static orb for good.
+ * back to the static orb for good. The WebGL context itself is only created
+ * once the orb comes within ~a screen of the viewport: the closing planet and
+ * the stage's moon no longer compile their shaders during the page's load.
  */
 
 const VERT = "attribute vec2 a;void main(){gl_Position=vec4(a,0.,1.);}";
@@ -39,6 +45,7 @@ uniform vec3 uMC;
 uniform vec3 uME;
 uniform vec3 uMN;
 uniform vec2 uMHalf;
+uniform float uDim;
 
 float hash(vec2 p){p=fract(p*vec2(123.34,456.21));p+=dot(p,p+45.32);return fract(p.x*p.y);}
 float noise(vec2 p){vec2 i=floor(p),f=fract(p);vec2 u=f*f*(3.-2.*f);
@@ -98,7 +105,7 @@ void main(){
   float ha=exp(-max(r-1.,0.)*13.)*(uMode>.5?.28:.5);
   // The halo must reach zero before the canvas edge, or the square shows.
   ha*=smoothstep(1.,.8,max(abs(uv.x),abs(uv.y)));
-  if(r>1.02){gl_FragColor=vec4(halo*ha,ha);return;}
+  if(r>1.02){gl_FragColor=vec4(halo*ha*uDim,ha);return;}
   float z=sqrt(max(0.,1.-r*r));
   vec3 n=vec3(p,z);
   float lon=atan(n.x,n.z);
@@ -149,6 +156,7 @@ void main(){
   c*=1.-uVig.w*smoothstep(uVig.z,0.,vd);
   float edge=smoothstep(1.,1.-2.5/(hs*uScale),r);
   gl_FragColor=mix(vec4(halo*ha,ha),vec4(c,1.),edge);
+  gl_FragColor.rgb*=uDim;
 }`;
 
 function compile(gl, type, src) {
@@ -172,6 +180,9 @@ export default function Orb({
   vignette = NO_VIG,
   scale = 0.84,
   mark = false,
+  painted = false,
+  dim = 1,
+  poster = null,
   className = "",
   onLive,
 }) {
@@ -180,10 +191,47 @@ export default function Orb({
   const onLiveRef = useRef(onLive);
   const [live, setLive] = useState(false);
   const [dead, setDead] = useState(false);
+  const [near, setNear] = useState(false);
+  // The poster's inline placeholder (poster.lqip) goes once the real image has decoded,
+  // so the two never stack their halos.
+  const posterRef = useRef(null);
+  const [posterReady, setPosterReady] = useState(false);
+  useEffect(() => {
+    const img = posterRef.current;
+    if (!img) return undefined;
+    const done = () => setPosterReady(true);
+    if (img.complete && img.naturalWidth) {
+      done();
+      return undefined;
+    }
+    img.addEventListener("load", done, { once: true });
+    return () => img.removeEventListener("load", done);
+  }, []);
   vigRef.current = vignette;
   onLiveRef.current = onLive;
 
-  const enabled = Boolean(cfg && cfg.webgl) && !dead;
+  const wants = Boolean(cfg && cfg.webgl) && !dead;
+  const enabled = wants && near;
+
+  useEffect(() => {
+    const wrap = wrapRef.current;
+    if (!wants || near || !wrap) return undefined;
+    if (!("IntersectionObserver" in window)) {
+      setNear(true);
+      return undefined;
+    }
+    const io = new IntersectionObserver(
+      ([e]) => {
+        if (e.isIntersecting) {
+          setNear(true);
+          io.disconnect();
+        }
+      },
+      { rootMargin: "100% 0px" }
+    );
+    io.observe(wrap);
+    return () => io.disconnect();
+  }, [wants, near]);
   const fps = cfg ? cfg.fps : 0;
   const dprCap = cfg ? cfg.dpr : 1;
 
@@ -235,6 +283,7 @@ export default function Orb({
     gl.uniform1f(u("uMode"), variant === "moon" ? 1 : 0);
     gl.uniform1f(u("uFill"), fill ? 1 : 0);
     gl.uniform1f(u("uScale"), scale);
+    gl.uniform1f(u("uDim"), dim);
 
     // The mark stands large, a touch left of centre and high: on a desktop the
     // headline runs over the planet's right half, on a phone over its lower third.
@@ -325,7 +374,7 @@ export default function Orb({
       gl.uniform4f(uVig, v[0], v[1], v[2], v[3]);
       if (tex) {
         if (paintAt < 0 && (!root.classList.contains("fx-intro") || root.classList.contains("fx-intro-done"))) paintAt = now + 700;
-        const k = paintAt < 0 ? 0 : Math.min(1, Math.max(0, (now - paintAt) / 3200));
+        const k = painted ? 1 : paintAt < 0 ? 0 : Math.min(1, Math.max(0, (now - paintAt) / 3200));
         // an even hand: the brush keeps a steady pace instead of snapping through the middle
         gl.uniform1f(uPaint, k * k * (3 - 2 * k));
       }
@@ -381,7 +430,7 @@ export default function Orb({
       canvas.remove();
       setLive(false);
     };
-  }, [enabled, variant, fill, scale, mark, fps, dprCap]);
+  }, [enabled, variant, fill, scale, mark, painted, dim, fps, dprCap]);
 
   return (
     <div
@@ -390,7 +439,28 @@ export default function Orb({
       data-live={enabled && live ? "" : undefined}
       aria-hidden="true"
     >
-      {!fill && <div className="fx-orb-static" />}
+      {fill ? null : poster ? (
+        <picture
+          className="fx-orb-poster"
+          data-ready={posterReady ? "" : undefined}
+          style={poster.lqip ? { backgroundImage: `url(${poster.lqip})` } : undefined}
+        >
+          <source type="image/avif" srcSet={poster.widths.map((w) => `${poster.base}-${w}.avif ${w}w`).join(", ")} sizes={poster.sizes} />
+          <img
+            src={`${poster.base}-${poster.widths[1]}.webp`}
+            srcSet={poster.widths.map((w) => `${poster.base}-${w}.webp ${w}w`).join(", ")}
+            sizes={poster.sizes}
+            alt=""
+            width="1040"
+            height="1040"
+            fetchpriority="high"
+            decoding="async"
+            ref={posterRef}
+          />
+        </picture>
+      ) : (
+        <div className="fx-orb-static" />
+      )}
     </div>
   );
 }

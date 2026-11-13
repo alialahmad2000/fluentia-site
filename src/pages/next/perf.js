@@ -3,7 +3,7 @@
  *
  *   high   shader at full fps, DPR ≤ 2, intro, full starfield, phone tilt/drag
  *   medium shader at 30 fps, DPR ≤ 1.5, intro, half the stars
- *   low    no WebGL (the static CSS orb), no intro, no starfield, no tilt,
+ *   low    no WebGL (the poster / static CSS orb), no intro, no starfield, no tilt,
  *          every reveal already in place
  *
  * Override: ?tier=low|medium|high, or localStorage["fl-perf-tier"] (the footer
@@ -84,6 +84,8 @@ export async function detectTier() {
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return "low";
   const conn = navigator.connection;
   if (conn && conn.saveData) return "low";
+  // A slow connection keeps the poster: the shader is the page's heaviest moment.
+  if (conn && /^(slow-2g|2g|3g)$/.test(conn.effectiveType || "")) return "low";
   if (!hasWebGL()) return "low";
 
   const mem = navigator.deviceMemory;

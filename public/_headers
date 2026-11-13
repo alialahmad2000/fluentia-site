@@ -34,3 +34,9 @@
   X-Robots-Tag: noindex, nofollow
 /journal/preview/*
   X-Robots-Tag: noindex, nofollow
+
+# Homepage visual-direction previews (/preview, /preview/a|b|c): never indexed.
+/preview
+  X-Robots-Tag: noindex, nofollow
+/preview/*
+  X-Robots-Tag: noindex, nofollow

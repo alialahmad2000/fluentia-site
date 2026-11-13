@@ -81,18 +81,6 @@ export default {
           emerald: 'var(--accent-emerald)',
           rose: 'var(--accent-rose)',
         },
-        atelier: {
-          canvas:         '#0F0D0B',
-          surface:        '#1A1612',
-          elevated:       '#252019',
-          ink:            '#F5EFE4',
-          'ink-muted':    '#B5AA97',
-          'ink-whisper':  '#6E6558',
-          jewel:          '#14926A',
-          'jewel-hover':  '#1DB07E',
-          gold:           '#C9A464',
-          rule:           'rgba(245, 239, 228, 0.06)',
-        },
         // Backward compat aliases
         surface: 'var(--color-bg-surface)',
         'surface-raised': 'var(--color-bg-surface-raised)',

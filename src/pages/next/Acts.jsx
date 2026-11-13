@@ -2,7 +2,7 @@ import { useEffect, useId, useRef, useState } from "react";
 import { PROBLEM, WORTH, SOCIAL_PROOF } from "../landing-v2/content";
 import Giant from "./Giant";
 import { track } from "./scroll";
-import { CTA_LABEL, TITLES, STEPS, STEPS_LEDE } from "./copy";
+import { CTA_LABEL, LIVE_NOTE, TITLES, STEPS, STEPS_LEDE } from "./copy";
 
 /**
  * The three "acts": a two-line giant title that slides in from the right edge
@@ -89,6 +89,7 @@ export function How() {
         ))}
       </ul>
       <p className="fx-bridge fx-rv fx-fade">{WORTH.closing.lead}</p>
+      <p className="fx-act-note fx-rv fx-fade">{LIVE_NOTE}</p>
     </Act>
   );
 }

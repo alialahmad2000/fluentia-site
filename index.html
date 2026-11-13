@@ -43,8 +43,8 @@
 
     <!-- Twitter Cards -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@fluentia_" />
-    <meta name="twitter:creator" content="@fluentia_" />
+    <!-- No twitter:site/creator: no X account is confirmed (docs/seo/NEEDS-ALI.md #25).
+         @fluentia_ is the TikTok handle; add it back only with a real, linked X profile. -->
     <meta name="twitter:image" content="https://fluentia.academy/og-image.png" />
     <meta name="twitter:image:alt" content="Fluentia Academy" />
 
@@ -84,14 +84,25 @@
       }
     </style>
 
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-19G2SJ1WYL"></script>
+    <!-- Google tag (gtag.js). The library (~190 KB) loads after the page's own load
+         event so it never competes with the first screen; calls made before then
+         wait in dataLayer and are sent when it arrives. -->
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
       gtag('config', 'G-19G2SJ1WYL');
       gtag('config', 'AW-9314838750');
+      window.__afterLoad = function (fn) {
+        if (document.readyState === 'complete') setTimeout(fn, 0);
+        else window.addEventListener('load', function () { setTimeout(fn, 0); }, { once: true });
+      };
+      window.__afterLoad(function () {
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=G-19G2SJ1WYL';
+        document.head.appendChild(s);
+      });
     </script>
 
     <!-- TikTok Pixel Code Start -->
@@ -99,8 +110,11 @@
     !function (w, d, t) {
       w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js",o=n&&n.partner;ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};n=document.createElement("script");n.type="text/javascript",n.async=!0,n.src=r+"?sdkid="+e+"&lib="+t;e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(n,e)};
 
-      ttq.load('D79DFR3C77UA3HU6E70G');
-      ttq.page();
+      // Same as gtag: the pixel script loads after the page's load event; calls queue until then.
+      w.__afterLoad(function () {
+        ttq.load('D79DFR3C77UA3HU6E70G');
+        ttq.page();
+      });
     }(window, document, 'ttq');
     </script>
     <!-- TikTok Pixel Code End -->
@@ -112,6 +126,7 @@
       "@type": "EducationalOrganization",
       "@id": "https://fluentia.academy/#organization",
       "name": "أكاديمية طلاقة",
+      "legalName": "معهد الطلاقة والمعرفة",
       "alternateName": [
         "Fluentia Academy",
         "Fluentia",
@@ -139,6 +154,7 @@
       },
       "address": {
         "@type": "PostalAddress",
+        "addressLocality": "المدينة المنورة",
         "addressCountry": "SA"
       },
       "areaServed": {
@@ -412,7 +428,7 @@
           "name": "لماذا الأسعار بهذا الشكل؟",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "السعر يغطّي تكلفة حقيقية: مدرّب مؤهَّل ومتفرّغ، منصة LMS كاملة، تكلفة تقييم الـ AI الفعلية (Whisper + Claude)، تطوير المنهج، والمتابعة الشخصية اليومية. لا رمزٌ للجودة، ولا قطعٌ للزاوية — وكل باقة تبدأ بمحادثة مجانية حتى تتأكد قبل أن تدفع. إذا كان السعر أكثر مما تستطيع، فهذا قرارك المحترم."
+            "text": "السعر يغطّي تكلفة حقيقية: مدرّب مؤهَّل ومتفرّغ، منصة LMS كاملة، تكلفة تقييم الذكاء الاصطناعي لنطقك وكتابتك، تطوير المنهج، والمتابعة الشخصية اليومية. لا رمزٌ للجودة، ولا قطعٌ للزاوية — وكل باقة تبدأ بمحادثة مجانية حتى تتأكد قبل أن تدفع. إذا كان السعر أكثر مما تستطيع، فهذا قرارك المحترم."
           }
         },
         {
@@ -420,7 +436,7 @@
           "name": "هل تضمنون نتيجة؟",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "لا نضمن نتيجة في أي باقة — لأن النتيجة تعتمد على ممارستك، ولا نستطيع التحكم بها. نضمن جودة المنهج والكلاسات والمتابعة."
+            "text": "لا نضمن نتيجة في أي باقة — لأن النتيجة تعتمد على ممارستك، ولا نستطيع التحكم بها. الذي نضمنه: مدرّب يعرفك ويتابعك، منهج ومسار مبني على مستواك وهدفك، وجودة الكلاسات والمتابعة. والذي نطلبه منك بالمقابل: 3-5 ساعات أسبوعياً (داخل الكلاسات وخارجها)، والاستمرار 3 أشهر على الأقل حتى ترى فرقاً حقيقياً."
           }
         },
         {
@@ -428,7 +444,7 @@
           "name": "ماذا لو لم يناسبني بعد الاشتراك؟",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "تستطيع الإلغاء في أي وقت. الشهر القادم لن نأخذ منك. الشهر الحالي محسوب — لأن المدرّب فعلياً خصّص وقته لك. ليس لدينا 'صفقات' أو 'فترات حبس'."
+            "text": "لهذا نبدأ دائماً بلقاء مبدئي مجاني قبل أي دفع: نفهم هدفك ومستواك، ونقول لك بصراحة إذا كان البرنامج يناسبك أو لا. وبعد الاشتراك، الاشتراك شهري بلا التزام طويل؛ إذا قررت التوقف، توقف في نهاية الشهر ولن يتجدد."
           }
         }
       ]

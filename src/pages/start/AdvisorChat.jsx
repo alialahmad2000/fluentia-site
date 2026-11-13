@@ -315,7 +315,7 @@ export default function AdvisorChat() {
           <Avatar />
           <div className="adv-id">
             <h1>مستشار طلاقة</h1>
-            <p><span className="adv-dot" aria-hidden="true" />متصل الآن · المساعد الذكي لأكاديمية طلاقة</p>
+            <p><span className="adv-dot" aria-hidden="true" />متصل الآن · المساعد الذكي<span className="adv-sub-long">&nbsp;لأكاديمية طلاقة</span></p>
           </div>
           <a className="adv-home" href="/" aria-label="الصفحة الرئيسية لأكاديمية طلاقة">طلاقة</a>
         </header>

@@ -1,6 +1,10 @@
 {
   "version": 1,
-  "include": ["/tour", "/tour/*"],
+  "include": [
+    "/tour",
+    "/tour/*",
+    "/status-data"
+  ],
   "exclude": [
     "/tour/*.mp3",
     "/tour/*.webp",

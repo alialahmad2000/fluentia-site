@@ -1,13 +1,13 @@
 /* «مجلة طلاقة» — /journal and /journal/<slug>.
- * Velvet Midnight: #060e1c → #1a2d50, sky for light, gold only for the rare spark,
- * cream (never pure white) for text. Atelier laws: reveal not pop · glow not flash ·
- * cinematic not advertising. Every animation is decoration on top of a complete,
+ * Night palette: #060e1c → #1a2d50, sky for light, gold only for the rare spark,
+ * cream (never pure white) for text. Motion: reveal not pop · glow not flash.
+ * Every animation is decoration on top of a complete,
  * visible end state — prefers-reduced-motion just removes the motion.
  */
 .jr {
   --jr-void: #060e1c;
   --jr-deep: #0b1830;
-  --jr-velvet: #1a2d50;
+  --jr-dusk: #1a2d50;
   --jr-sky: #38bdf8;
   --jr-ice: #7dd3fc;
   --jr-gold: #fbbf24;
@@ -34,7 +34,7 @@
   background:
     radial-gradient(120% 70% at 85% -10%, rgba(56, 189, 248, 0.08), transparent 60%),
     radial-gradient(90% 60% at 0% 110%, rgba(26, 45, 80, 0.9), transparent 70%),
-    linear-gradient(180deg, var(--jr-void) 0%, var(--jr-deep) 55%, var(--jr-velvet) 130%);
+    linear-gradient(180deg, var(--jr-void) 0%, var(--jr-deep) 55%, var(--jr-dusk) 130%);
 }
 
 .jr-en {

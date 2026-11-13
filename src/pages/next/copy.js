@@ -14,7 +14,15 @@ export const HERO_LINES = [
   { text: "نُزيل ما يمنعك", tone: "cream", mbreak: 2 },
   { text: "من امتلاك الإنجليزية", tone: "ice", mbreak: 2 },
 ];
+// The homepage's phone headline: three lines, the first held whole (it fits at 360 px).
+export const HERO_LINES_HOME = [
+  { text: "نُزيل ما يمنعك", tone: "cream" },
+  { text: "من امتلاك الإنجليزية", tone: "ice", mbreak: 2 },
+];
 export const SEE_INSIDE = "شاهد المنصة من الداخل";
+
+// The quiet line under the hero's call (2026-11-12): what the call costs — nothing.
+export const HERO_TRUST = "لقاء مبدئي مجاني · بدون التزام";
 
 export const TITLES = {
   pains: [
@@ -56,6 +64,13 @@ export const TITLES = {
 };
 
 export const STORIES_SUB = "تجارب حقيقية من طلاب طلاقة، بكلامهم.";
+
+// Under the final call: the free placement test (/level-test) — the meta
+// description promises it, so the page names it too.
+export const LEVEL_TEST_LINK = "أو اعرف مستواك الآن: اختبار تحديد المستوى المجاني";
+
+// «كيف نُزيله»: how classes actually happen (facts: docs/seo/FACTS.md).
+export const LIVE_NOTE = "الحصص مباشرة عبر Google Meet، في مجموعة صغيرة (7 طلاب كحد أقصى) أو فردية مع مدرّبك.";
 
 export const PERF_LABEL = "وضع الأداء:";
 export const PERF_OPTIONS = [
