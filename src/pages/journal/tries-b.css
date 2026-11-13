@@ -1,0 +1,37 @@
+/* «جرّبوها» B — five-seconds, stress, understood, edge */
+.jg .g-try .g-c { text-align: center; justify-content: center; }
+.jg .g-try button:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+.jg .g-try .g-pbtn { min-height: 48px; }
+
+.jg .g-five-sit { font-family: var(--g-disp); font-weight: 800; font-size: clamp(20px, 2.6vw, 28px) !important; line-height: 1.6 !important; border-inline-start: 6px solid var(--lime); padding-inline-start: 14px; }
+.jg .g-five-timer { position: relative; width: 132px; height: 132px; margin: 8px auto 12px; display: grid; place-items: center; }
+.jg .g-five-timer svg { position: absolute; inset: 0; width: 100%; height: 100%; transform: rotate(-90deg); }
+.jg .g-five-timer b { position: relative; font-family: var(--g-disp); font-weight: 900; font-size: 52px; line-height: 1; direction: ltr; }
+
+.jg .g-stress-ar { margin-block-start: 12px !important; font-family: var(--g-disp); font-weight: 900; font-size: clamp(24px, 3vw, 34px) !important; }
+.jg .g-stress-syl { display: flex; flex-wrap: wrap; gap: 8px; margin-block: 4px 12px; }
+.jg .g-stress-syl button { flex: 1 1 0; min-width: 64px; min-height: 64px; padding: 8px 10px; border: 2px solid var(--ink); border-radius: 0; background: transparent; color: var(--ink); cursor: pointer; font-family: "IBM Plex Sans Arabic", system-ui, sans-serif; font-weight: 700; font-size: clamp(22px, 5vw, 34px); direction: ltr; transition: background 0.3s, color 0.3s; }
+@media (hover: hover) { .jg .g-stress-syl button:hover { background: var(--ink); color: #fff; } }
+.jg .g-stress-syl button.is-right { background: var(--lime); color: var(--ink); }
+.jg .g-stress-syl button.is-wrong { background: var(--ink); color: #fff; text-decoration: line-through; }
+
+.jg .g-und-s { margin: 16px 0 !important; }
+.jg .g-und-s .g-en-line { font-family: "IBM Plex Sans Arabic", system-ui, sans-serif; font-weight: 700; font-size: clamp(20px, 2.6vw, 28px); line-height: 1.4; direction: ltr; text-align: left; }
+.jg .g-und-list { list-style: none; margin: 14px 0 0; padding: 0; border-block-start: 2px solid var(--ink); }
+.jg .g-und-list li { display: grid; gap: 2px; padding: 12px 4px; border-block-end: 1px solid var(--hair-paper); }
+.jg .g-und-bad, .jg .g-und-ok { direction: ltr; text-align: left; unicode-bidi: isolate; font-family: "IBM Plex Sans Arabic", system-ui, sans-serif; font-size: clamp(16px, 2vw, 20px); line-height: 1.5; overflow-wrap: anywhere; }
+.jg .g-und-bad { color: var(--mute-paper); text-decoration: line-through; text-decoration-thickness: 0.08em; }
+.jg .g-und-ok { font-weight: 700; background: var(--lime); color: var(--ink); justify-self: start; padding-inline: 6px; }
+
+.jg .g-edge-chips { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border: 2px solid var(--ink); }
+.jg .g-edge-chips div { padding: 12px 6px; text-align: center; font-family: var(--g-disp); font-weight: 900; font-size: clamp(15px, 2.4vw, 20px); color: var(--mute-paper); border-inline-start: 1px solid var(--hair-paper); transition: background 0.3s, color 0.3s; }
+.jg .g-edge-chips div:first-child { border-inline-start: 0; }
+.jg .g-edge-chips div.is-lit { background: var(--lime); color: var(--ink); }
+.jg .g-edge-q { margin-block-start: 14px !important; font-weight: 700; }
+.jg .g-edge-tips { list-style: none; margin: 14px 0 0; padding: 0; border-block-start: 2px solid var(--ink); }
+.jg .g-edge-tips li { display: grid; gap: 4px; padding: 12px 4px; border-block-end: 1px solid var(--hair-paper); font-size: 16px; line-height: 1.8; }
+.jg .g-edge-tips b { font-family: var(--g-disp); font-weight: 900; }
+
+@media (prefers-reduced-motion: reduce) {
+  .jg .g-try * { transition: none !important; animation: none !important; }
+}

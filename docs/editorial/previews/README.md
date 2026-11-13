@@ -1,5 +1,7 @@
 # «مجلة طلاقة» — art-direction previews
 
+> **Retired 2026-11-12.** Ali chose «معرض» (Gallery). It is now the design of `/journal` and all six articles (code in `src/pages/journal/`). Every `/journal/preview…` URL 301-redirects to `/journal`; the Ink & Ember and Desert Dusk code and images are deleted. Final screenshots: `docs/editorial/gallery-final/`. This file is kept as the design record.
+
 Three redesigns of the journal, built side by side so one can be picked.
 Live (noindex, nofollow; not in sitemap or llms.txt):
 

@@ -1,14 +1,6 @@
+import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import "../../styles/v1-tokens.css";
-import "../../styles/v5-tokens.css";
-// Inlined, as on the homepage: the prerendered page paints styled at once.
-import NEXT_CSS from "../next/next.css?inline";
-import JOURNAL_CSS from "./journal.css?inline";
 import Seo from "../../components/Seo";
-import V1LeadModal from "../v1/V1LeadModal";
-import { V1Footer } from "../v1/V1Closing";
-import Header from "../next/Header";
-import { Cover } from "./parts";
 import { SITE } from "../../content/seo";
 import {
   JOURNAL,
@@ -17,13 +9,36 @@ import {
   JOURNAL_NAME,
   JOURNAL_PATH,
   journalPath,
+  readLabel,
 } from "../../content/journal/index.js";
+import Shell, { Art, pad2, useReveal } from "./shell";
+
+const to = (a) => journalPath(a.slug);
+const plate = (a) => `plate-${a.slug}`;
+
+function Card({ a, i, variant }) {
+  return (
+    <Link to={to(a)} className={`g-card g-card--${variant} g-rv`}>
+      <div className="g-card-top">
+        <span className="g-num" aria-hidden="true">{pad2(i + 1)}</span>
+        <span className="g-label">{a.category} · {readLabel(a)}</span>
+      </div>
+      <div className="g-img g-duo"><Art name={plate(a)} alt="" sizes="(min-width: 900px) 40vw, 100vw" /></div>
+      <h3>{a.title}</h3>
+      <p>{a.dek}</p>
+      <span className="g-more">اقرؤوا المقال <i>←</i></span>
+    </Link>
+  );
+}
 
 /**
- * /journal — «مجلة طلاقة»: a masthead, one line of manifesto, and the covers.
- * The first article is the cover story. Content: src/content/journal/.
+ * /journal — «مجلة طلاقة» in the «معرض» (Gallery) design: the issue cover,
+ * the cover story, two features, the manifesto band and the rest of the issue.
+ * Content: src/content/journal/.
  */
 export default function JournalIndex() {
+  useReveal();
+  const [lead, two, three, ...rest] = JOURNAL;
   const ld = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
@@ -31,6 +46,7 @@ export default function JournalIndex() {
     description: JOURNAL_DESCRIPTION,
     url: `${SITE}${JOURNAL_PATH}`,
     inLanguage: "ar-SA",
+    image: `${SITE}/og/journal/gallery/index.jpg`,
     publisher: {
       "@type": "Organization",
       name: "أكاديمية طلاقة",
@@ -47,36 +63,113 @@ export default function JournalIndex() {
       })),
     },
   };
-  const [lead, ...rest] = JOURNAL;
 
   return (
-    <div className="v1-scope v5-scope fx-next jr" dir="rtl">
-      <style dangerouslySetInnerHTML={{ __html: NEXT_CSS + JOURNAL_CSS }} />
+    <Shell preloadImage="cover">
       <Seo path={JOURNAL_PATH} />
       <Helmet>
-        <link rel="preload" as="font" type="font/woff2" href="/fonts/kufam-800-arabic.woff2" crossOrigin="" />
         <script type="application/ld+json">{JSON.stringify(ld)}</script>
       </Helmet>
-      <Header page={JOURNAL_PATH} />
-
       <main>
-        <header id="fx-top" className="jr-mast">
-          <p className="jr-mast-k jr-rise">من أكاديمية طلاقة</p>
-          <h1 className="jr-rise jr-rise-2">{JOURNAL_NAME}</h1>
-          <p className="jr-mast-line jr-rise jr-rise-3">{JOURNAL_MANIFESTO}</p>
-          <div className="jr-mast-rule" aria-hidden="true" />
+        <header id="fx-top" className="g-cover g-paper">
+          <div className="g-wrap">
+            <div className="g-bar">
+              <span>العدد 1</span>
+              <span>نوفمبر 2026</span>
+              <span>{JOURNAL.length} مقالات</span>
+              <span>من أكاديمية طلاقة</span>
+            </div>
+            <h1 className="g-mega" aria-label={JOURNAL_NAME}>
+              <small aria-hidden="true">مجلة</small>
+              <span aria-hidden="true">طلاقة<i className="g-dot" /></span>
+            </h1>
+            <div className="g-12 g-cover-grid">
+              <figure className="g-cover-photo">
+                <div className="g-duo"><Art name="cover" eager alt="كرسي واحد أمام جدار أبيض، وظل ساعة على الحائط" /></div>
+                <span className="g-block" aria-hidden="true" />
+                <figcaption className="g-rot" aria-hidden="true">العدد الأول · نوفمبر 2026</figcaption>
+              </figure>
+              <div className="g-cover-side">
+                <div className="g-issue">
+                  <span className="g-num" aria-hidden="true">01</span>
+                  <span>العدد<br />الأول</span>
+                </div>
+                <p className="g-manifesto">{JOURNAL_MANIFESTO}</p>
+                <ol className="g-toc" aria-label="محتويات العدد">
+                  {JOURNAL.map((a, i) => (
+                    <li key={a.slug}><Link to={to(a)}><b>{pad2(i + 1)}</b><span>{a.title}</span></Link></li>
+                  ))}
+                </ol>
+              </div>
+            </div>
+            <div className="g-cover-end" />
+          </div>
         </header>
 
-        <section className="jr-index" aria-label="المقالات">
-          <div className="jr-covers">
-            <Cover article={lead} index={0} lead level={2} />
-            {rest.map((a, i) => <Cover key={a.slug} article={a} index={i + 1} level={2} />)}
+        <section className="g-ink g-hero" aria-label="قصة العدد">
+          <div className="g-wrap">
+            <div className="g-hero-head g-rv">
+              <span className="g-tag">قصة العدد</span>
+              <span className="g-label">{readLabel(lead)}</span>
+            </div>
+            <Link to={to(lead)} className="g-hero-link">
+              <div className="g-hero-img g-duo g-rv">
+                <Art name={plate(lead)} alt="" sizes="(min-width: 900px) 58vw, 100vw" />
+              </div>
+              <div className="g-hero-txt g-rv" style={{ "--d": ".12s" }}>
+                <span className="g-num g-hero-num" aria-hidden="true">01</span>
+                <h2>{lead.title}</h2>
+                <p>{lead.dek}</p>
+                <span className="g-more">ابدؤوا القراءة <i>←</i></span>
+              </div>
+            </Link>
+          </div>
+        </section>
+
+        <section className="g-paper g-duo-sec" aria-label="مقالان">
+          <div className="g-wrap">
+            <div className="g-12">
+              <Card a={two} i={1} variant="a" />
+              <Card a={three} i={2} variant="b" />
+            </div>
+          </div>
+        </section>
+
+        <section className="g-lime g-band" aria-label="عن المجلة">
+          <div className="g-wrap">
+            <span className="g-label g-rv">عن المجلة</span>
+            <p className="g-rv">{JOURNAL_MANIFESTO}</p>
+          </div>
+        </section>
+
+        <section className="g-paper g-index" aria-label="باقي المقالات">
+          <div className="g-wrap">
+            <div className="g-index-h g-rv">
+              <h2>وباقي العدد</h2>
+              <span className="g-label" dir="ltr">04 — {pad2(JOURNAL.length)}</span>
+            </div>
+            {rest.map((a, k) => (
+              <Link key={a.slug} to={to(a)} className="g-row g-rv">
+                <span className="g-num" aria-hidden="true">{pad2(k + 4)}</span>
+                <div>
+                  <h3>{a.title}</h3>
+                  <span className="g-label">{readLabel(a)}</span>
+                </div>
+                <p>{a.quote}</p>
+                <div className="g-img g-duo"><Art name={plate(a)} alt="" sizes="160px" /></div>
+              </Link>
+            ))}
+          </div>
+        </section>
+
+        <section className="g-ink g-invite" aria-label="دعوة">
+          <div className="g-wrap">
+            <h2 className="g-rv">لقاء واحد، نسمع فيه وين يوقف إنجليزيكم.</h2>
+            <p className="g-rv">بدون وعود كبيرة. نسمعكم، ونقول لكم بصراحة وش الخطوة الجاية. وبعدها القرار لكم.</p>
+            <button type="button" data-open-form className="g-cta g-rv">احجز لقاءك المبدئي</button>
           </div>
         </section>
       </main>
-
-      <div className="fx-footer"><V1Footer /></div>
-      <V1LeadModal />
-    </div>
+    </Shell>
   );
 }

@@ -141,7 +141,7 @@ export const PAGE_SEO = {
     description:
       "مجلة طلاقة: مقالات مطوّلة بالعامية السعودية عن الإنجليزي في بيئة العمل — الاجتماعات، والخوف من الغلط، واللكنة، والترجمة الحرفية — مبنية على أبحاث حقيقية وخطوات عملية.",
     ogTitle: "مجلة طلاقة | الإنجليزي كما يعيشه الموظف",
-    ogImage: `${SITE}/og/journal/index.jpg`,
+    ogImage: `${SITE}/og/journal/gallery/index.jpg`,
     ogImageAlt: "مجلة طلاقة",
   },
 
@@ -279,7 +279,7 @@ export function journalSeo(article) {
     ogType: "article",
     ogTitle: article.title,
     ogDescription: article.description,
-    ogImage: `${SITE}/og/journal/${article.slug}.jpg`,
+    ogImage: `${SITE}/og/journal/gallery/${article.slug}.jpg`,
     ogImageAlt: article.title,
   });
 }

@@ -1,0 +1,11 @@
+/* Gallery scenes, batch B. Injected by the parent; scoped under .jg. */
+.jg .g-stage .g-spot-svg { overflow: hidden; max-height: min(100%, 52vw); }
+.jg .g-spot-svg line { stroke-linecap: square; }
+.jg .g-stg-chip rect, .jg .g-stg-chip text { transition: fill 0.3s var(--g-ease, ease); }
+.jg .g-stg-chip text { font-feature-settings: "kern"; }
+.jg .g-scene--lime .g-stage svg { max-width: 760px; }
+.jg .g-scene--paper .g-stage svg { max-width: 1000px; }
+.jg .g-scene .g-stage svg text { paint-order: normal; }
+@media (max-width: 640px) {
+  .jg .g-stage .g-spot-svg { max-height: 60vw; }
+}

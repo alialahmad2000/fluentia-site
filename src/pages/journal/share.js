@@ -1,220 +1,105 @@
 /**
- * Share cards for «مجلة طلاقة», painted on a canvas in the article's own art.
- *
- *   story  1080×1920  (Instagram / Snapchat story)
- *   post   1080×1350  (4:5 feed post)
- *   og     1200×630   (link preview — generated once, offline, into public/og/journal/)
- *
- * The art is the page's own plate SVG (serialized and drawn as an image), so a
- * card always looks like the article it came from. CSS animations do not run
- * inside an <img>, and every element's base style is its finished state, so the
- * still frame is the finished drawing. Browser-only module: import it lazily.
+ * Quote cards in the gallery look, painted on a canvas: the article's own
+ * monochrome plate (story / post crop), a black gradient, a lime block, the
+ * quote in huge Alexandria. Browser-only; import lazily.
  */
-
-export const SIZES = {
-  story: [1080, 1920],
-  post: [1080, 1350],
-  og: [1200, 630],
-};
-
-const CREAM = "#f3ede2";
-const ICE = "#7dd3fc";
-const GOLD = "#fbbf24";
-const DISPLAY = '"Kufam", "Readex Pro Variable", system-ui, sans-serif';
-const BODY = '"Readex Pro Variable", "Kufam", system-ui, sans-serif';
+export const SIZES = { story: [1080, 1920], post: [1080, 1350] };
+const LIME = "#c6ff3d";
+const INK = "#0b0b0c";
+const DISP = "Alexandria, 'IBM Plex Sans Arabic', system-ui, sans-serif";
+const TXT = "'IBM Plex Sans Arabic', Alexandria, system-ui, sans-serif";
 
 async function fontsReady() {
   if (!document.fonts || !document.fonts.load) return;
   try {
     await Promise.all([
-      document.fonts.load(`800 64px ${DISPLAY}`, "طلاقة"),
-      document.fonts.load(`400 32px ${BODY}`, "طلاقة"),
+      document.fonts.load(`900 64px Alexandria`, "طلاقة"),
+      document.fonts.load(`700 32px "IBM Plex Sans Arabic"`, "طلاقة"),
     ]);
   } catch { /* fall back to system fonts */ }
 }
 
-function svgImage(svgEl) {
+function loadImage(src) {
   return new Promise((resolve) => {
-    if (!svgEl) return resolve(null);
-    try {
-      const clone = svgEl.cloneNode(true);
-      clone.setAttribute("xmlns", "http://www.w3.org/2000/svg");
-      clone.setAttribute("width", "1200");
-      clone.setAttribute("height", "800");
-      const xml = new XMLSerializer().serializeToString(clone);
-      const url = URL.createObjectURL(new Blob([xml], { type: "image/svg+xml;charset=utf-8" }));
-      const img = new Image();
-      img.onload = () => { resolve(img); setTimeout(() => URL.revokeObjectURL(url), 1000); };
-      img.onerror = () => { URL.revokeObjectURL(url); resolve(null); };
-      img.src = url;
-    } catch {
-      resolve(null);
-    }
+    const img = new Image();
+    img.onload = () => resolve(img);
+    img.onerror = () => resolve(null);
+    img.src = src;
   });
 }
 
-/** draw img to cover the box (like object-fit: cover) */
-function cover(ctx, img, x, y, w, h) {
+function cover(ctx, img, w, h) {
   const s = Math.max(w / img.width, h / img.height);
   const iw = img.width * s;
   const ih = img.height * s;
-  ctx.drawImage(img, x + (w - iw) / 2, y + (h - ih) / 2, iw, ih);
+  ctx.drawImage(img, (w - iw) / 2, (h - ih) / 2, iw, ih);
 }
 
-/** greedy word wrap for RTL Arabic; returns lines */
 function wrap(ctx, text, maxW) {
-  const words = String(text).split(/\s+/).filter(Boolean);
+  const words = text.split(/\s+/).filter(Boolean);
   const lines = [];
-  let line = "";
+  let cur = "";
   for (const w of words) {
-    const t = line ? `${line} ${w}` : w;
-    if (ctx.measureText(t).width > maxW && line) {
-      lines.push(line);
-      line = w;
-    } else line = t;
+    const test = cur ? `${cur} ${w}` : w;
+    if (ctx.measureText(test).width > maxW && cur) { lines.push(cur); cur = w; } else cur = test;
   }
-  if (line) lines.push(line);
+  if (cur) lines.push(cur);
   return lines;
 }
 
-/** biggest font size (step 2) at which text fits in maxLines */
-function fit(ctx, text, family, weight, maxW, start, min, maxLines) {
-  let size = start;
-  for (; size > min; size -= 2) {
-    ctx.font = `${weight} ${size}px ${family}`;
-    if (wrap(ctx, text, maxW).length <= maxLines) break;
-  }
-  ctx.font = `${weight} ${size}px ${family}`;
-  return size;
-}
-
-function background(ctx, W, H) {
-  const g = ctx.createLinearGradient(0, 0, 0, H);
-  g.addColorStop(0, "#060e1c");
-  g.addColorStop(0.6, "#0b1830");
-  g.addColorStop(1, "#1a2d50");
-  ctx.fillStyle = g;
-  ctx.fillRect(0, 0, W, H);
-  const r = ctx.createRadialGradient(W * 0.85, -H * 0.05, 0, W * 0.85, -H * 0.05, W);
-  r.addColorStop(0, "rgba(56,189,248,0.14)");
-  r.addColorStop(1, "rgba(56,189,248,0)");
-  ctx.fillStyle = r;
-  ctx.fillRect(0, 0, W, H);
-}
-
-function brand(ctx, W, y, pad, scale = 1) {
-  ctx.save();
-  ctx.fillStyle = CREAM;
-  ctx.globalAlpha = 0.9;
-  ctx.direction = "rtl";
-  ctx.textAlign = "right";
-  ctx.font = `800 ${Math.round(34 * scale)}px ${DISPLAY}`;
-  ctx.fillText("مجلة طلاقة", W - pad, y);
-  ctx.direction = "ltr";
-  ctx.textAlign = "left";
-  ctx.globalAlpha = 0.6;
-  ctx.font = `500 ${Math.round(26 * scale)}px Inter, system-ui, sans-serif`;
-  ctx.fillText("fluentia.academy/journal", pad, y);
-  ctx.restore();
-}
-
-/**
- * paint({ kind, svgEl, quote, title, kicker }) → HTMLCanvasElement
- * kind "story" | "post": the quote is the hero. kind "og": the title is.
- */
-export async function paint({ kind = "post", svgEl = null, quote = "", title = "", kicker = "" }) {
+export async function paint({ kind, slug, quote, title, number }) {
   await fontsReady();
   const [W, H] = SIZES[kind];
   const canvas = document.createElement("canvas");
-  canvas.width = W;
-  canvas.height = H;
+  canvas.width = W; canvas.height = H;
   const ctx = canvas.getContext("2d");
-  background(ctx, W, H);
-  const art = await svgImage(svgEl);
-
-  if (kind === "og") {
-    const pad = 72;
-    if (art) {
-      // put the plate's motif (its --jr-fx focus) in the free left third
-      const fx = parseFloat(svgEl.style.getPropertyValue("--jr-fx")) || 50;
-      const s = Math.max(W / art.width, H / art.height);
-      const iw = art.width * s;
-      const ih = art.height * s;
-      ctx.globalAlpha = 0.95;
-      ctx.drawImage(art, W * 0.27 - (fx / 100) * iw, (H - ih) / 2, iw, ih);
-      ctx.globalAlpha = 1;
-    }
-    // shade the right two-thirds, where the Arabic title sits
-    const sh = ctx.createLinearGradient(W, 0, 0, 0);
-    sh.addColorStop(0, "rgba(6,14,28,0.94)");
-    sh.addColorStop(0.55, "rgba(6,14,28,0.78)");
-    sh.addColorStop(1, "rgba(6,14,28,0.15)");
-    ctx.fillStyle = sh;
-    ctx.fillRect(0, 0, W, H);
-    ctx.direction = "rtl";
-    ctx.textAlign = "right";
-    ctx.fillStyle = ICE;
-    ctx.font = `600 28px ${BODY}`;
-    ctx.fillText(kicker || "مجلة طلاقة", W - pad, pad + 24);
-    const maxW = W * 0.6;
-    const size = fit(ctx, title, DISPLAY, 800, maxW, 88, 40, 3);
-    const lines = wrap(ctx, title, maxW);
-    const lh = size * 1.5;
-    let y = H / 2 - ((lines.length - 1) * lh) / 2 + size * 0.35;
-    ctx.fillStyle = CREAM;
-    ctx.shadowColor = "rgba(56,189,248,0.25)";
-    ctx.shadowBlur = 30;
-    for (const l of lines) { ctx.fillText(l, W - pad, y); y += lh; }
-    ctx.shadowBlur = 0;
-    brand(ctx, W, H - pad + 10, pad, 0.9);
-    return canvas;
+  ctx.fillStyle = INK; ctx.fillRect(0, 0, W, H);
+  const img = await loadImage(`/images/journal/gallery/plate-${slug}-${kind}.webp`);
+  if (img) cover(ctx, img, W, H);
+  const g = ctx.createLinearGradient(0, 0, 0, H);
+  g.addColorStop(0, "rgba(11,11,12,0.55)"); g.addColorStop(0.35, "rgba(11,11,12,0.35)"); g.addColorStop(1, "rgba(11,11,12,0.95)");
+  ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+  const m = 80;
+  // top rule + brand
+  ctx.direction = "rtl"; ctx.textAlign = "right"; ctx.textBaseline = "alphabetic";
+  ctx.fillStyle = "#fff"; ctx.font = `900 46px ${DISP}`;
+  ctx.fillText("طلاقة", W - m, m + 48);
+  ctx.font = `700 28px ${TXT}`; ctx.fillStyle = "rgba(255,255,255,0.75)";
+  ctx.textAlign = "left"; ctx.direction = "ltr";
+  ctx.fillText("01 — 2026", m, m + 46);
+  ctx.fillStyle = "rgba(255,255,255,0.5)"; ctx.fillRect(m, m + 78, W - m * 2, 2);
+  // lime numeral block
+  const blk = kind === "story" ? 300 : 240;
+  ctx.fillStyle = LIME; ctx.fillRect(W - m - blk, kind === "story" ? 420 : 300, blk, blk);
+  ctx.fillStyle = INK; ctx.font = `900 ${blk * 0.72}px ${DISP}`; ctx.textAlign = "center"; ctx.direction = "ltr";
+  ctx.fillText(String(number).padStart(2, "0"), W - m - blk / 2, (kind === "story" ? 420 : 300) + blk * 0.78);
+  // quote
+  ctx.direction = "rtl"; ctx.textAlign = "right";
+  let size = kind === "story" ? 96 : 84;
+  let lines;
+  const maxW = W - m * 2;
+  for (; size >= 52; size -= 4) {
+    ctx.font = `900 ${size}px ${DISP}`;
+    lines = wrap(ctx, quote, maxW);
+    if (lines.length * size * 1.45 < (kind === "story" ? 760 : 560)) break;
   }
-
-  const pad = 96;
-  const artH = kind === "story" ? H * 0.46 : H * 0.42;
-  if (art) {
-    cover(ctx, art, 0, 0, W, artH);
-    const fade = ctx.createLinearGradient(0, artH * 0.35, 0, artH);
-    fade.addColorStop(0, "rgba(6,14,28,0)");
-    fade.addColorStop(1, "rgba(9,20,40,1)");
-    ctx.fillStyle = fade;
-    ctx.fillRect(0, 0, W, artH + 2);
-  }
-  ctx.direction = "rtl";
-  ctx.textAlign = "right";
-  const maxW = W - pad * 2;
-  const size = fit(ctx, quote, DISPLAY, 800, maxW, kind === "story" ? 76 : 66, 40, kind === "story" ? 7 : 5);
-  const lines = wrap(ctx, quote, maxW);
-  const lh = size * 1.6;
-  const blockH = lines.length * lh;
-  const top = artH + (H - artH - 220 - blockH) / 2;
-  // the one gold spark
-  ctx.fillStyle = GOLD;
-  ctx.shadowColor = "rgba(251,191,36,0.7)";
-  ctx.shadowBlur = 24;
-  ctx.beginPath();
-  ctx.arc(W - pad - 6, top - 24, 7, 0, Math.PI * 2);
-  ctx.fill();
-  ctx.shadowBlur = 0;
-  ctx.fillStyle = CREAM;
-  let y = top + size;
-  for (const l of lines) { ctx.fillText(l, W - pad, y); y += lh; }
-  if (title) {
-    ctx.fillStyle = ICE;
-    ctx.globalAlpha = 0.85;
-    const ts = fit(ctx, title, BODY, 500, maxW, 30, 22, 2);
-    let ty = H - 210;
-    for (const l of wrap(ctx, title, maxW)) { ctx.fillText(l, W - pad, ty); ty += ts * 1.5; }
-    ctx.globalAlpha = 1;
-  }
-  ctx.fillStyle = "rgba(243,237,226,0.12)";
-  ctx.fillRect(pad, H - 140, W - pad * 2, 1);
-  brand(ctx, W, H - 84, pad);
+  const lh = size * 1.45;
+  const total = lines.length * lh;
+  const bottom = H - m - 120;
+  let y = bottom - total + lh * 0.8;
+  ctx.fillStyle = "#fff";
+  lines.forEach((ln, i) => {
+    const wdt = ctx.measureText(ln).width;
+    if (i === lines.length - 1) { ctx.fillStyle = LIME; ctx.fillRect(W - m - wdt - 8, y + size * 0.16, wdt + 16, 10); ctx.fillStyle = "#fff"; }
+    ctx.fillText(ln, W - m, y);
+    y += lh;
+  });
+  ctx.font = `700 30px ${TXT}`; ctx.fillStyle = "rgba(255,255,255,0.8)";
+  ctx.fillText(title, W - m, H - m - 36);
+  ctx.fillStyle = LIME; ctx.fillRect(m, H - m - 14, 120, 8);
+  ctx.textAlign = "left"; ctx.direction = "ltr"; ctx.fillStyle = "#fff";
+  ctx.fillText("fluentia.academy/journal", m, H - m - 36);
   return canvas;
 }
 
-export function toBlob(canvas) {
-  return new Promise((resolve) => {
-    try { canvas.toBlob((b) => resolve(b), "image/png"); } catch { resolve(null); }
-  });
-}
+export const toBlob = (canvas) => new Promise((res) => canvas.toBlob((b) => res(b), "image/png"));

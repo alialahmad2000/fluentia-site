@@ -36,7 +36,6 @@ import { fileURLToPath } from "node:url";
 
 import { PRERENDER_ROUTES } from "../src/content/seo.js";
 import { WORK_HUB_PATH } from "../src/content/workEnglish.js";
-import { PREVIEW_ROUTES } from "../src/content/journal/preview.js";
 import { HOME_PREVIEW_ROUTES } from "../src/pages/landing-preview/routes.js";
 import { prerenderedPaths } from "./sync-vercel-rewrites.mjs";
 
@@ -59,10 +58,8 @@ export const CLIENT_ONLY_ROUTES = [
   "/v4",
   "/v5",
   "/w",
-  // «مجلة طلاقة» art-direction previews: client-rendered, noindex (meta + the
-  // X-Robots-Tag in public/_headers), never in the sitemap or llms.txt.
-  ...PREVIEW_ROUTES,
-  // Homepage visual-direction previews (/preview, /preview/a|b|c): same rules.
+  // Homepage visual-direction previews (/preview, /preview/a|b|c): client-rendered,
+  // noindex (meta + the X-Robots-Tag in public/_headers), never in the sitemap.
   ...HOME_PREVIEW_ROUTES,
 ];
 
@@ -80,6 +77,10 @@ export const REDIRECTS = [
   // The cinematic landing previewed at /next IS the homepage since 2026-09-27.
   // One canonical URL; Pages carries the query string across the redirect.
   { from: "/next", to: "/", status: 301 },
+  // «مجلة طلاقة» art-direction previews, retired 2026-11-12 when «معرض»
+  // (Gallery) became the journal's design. Old shared links land on /journal.
+  { from: "/journal/preview", to: "/journal", status: 301 },
+  { from: "/journal/preview/*", to: "/journal", status: 301 },
 ];
 
 /**

@@ -1,0 +1,21 @@
+/* Gallery scenes, set A. Colours come from the scene tone via currentColor. */
+.jg .g-gap { width: 100%; max-width: 1100px; display: grid; gap: clamp(28px, 6vh, 64px); }
+.jg .g-gap-row { display: grid; gap: 12px; }
+.jg .g-gap-label { font-family: var(--g-disp); font-weight: 900; font-size: clamp(20px, 4vw, 54px); line-height: 1.3; }
+.jg .g-gap-row svg { width: 100%; height: clamp(36px, 8vh, 72px); }
+
+.jg .g-bridge { width: 100%; height: 100%; display: grid; place-items: center; }
+.jg .g-bridge svg { max-width: 1000px; }
+
+.jg .g-meters { width: 100%; max-width: 1000px; height: 100%; max-height: 560px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(10px, 3vw, 40px); align-items: stretch; }
+.jg .g-mcol { display: grid; grid-template-rows: minmax(0, 1fr) auto; gap: 12px; min-height: 0; }
+.jg .g-mtrack { position: relative; min-height: 120px; border-block-end: 2px solid currentColor; border-inline: 1px solid rgba(11, 11, 12, 0.25); overflow: hidden; }
+.jg .g-mtrack i { position: absolute; inset: 0; background: currentColor; transform-origin: 50% 100%; transform: scaleY(0.02); will-change: transform; }
+.jg .g-mcol.is-accent .g-mtrack i { background: repeating-linear-gradient(135deg, currentColor 0 6px, transparent 6px 12px); }
+.jg .g-mlabel { display: grid; gap: 2px; font-family: var(--g-disp); font-weight: 800; font-size: clamp(14px, 2.2vw, 26px); line-height: 1.35; }
+.jg .g-men { font-family: var(--g-text); font-weight: 600; font-size: clamp(10px, 1.4vw, 15px); letter-spacing: 0.02em; word-break: break-word; opacity: 0.8; }
+
+.jg .g-waves { width: 100%; height: 100%; display: grid; place-items: center; }
+.jg .g-waves svg { max-width: 1100px; }
+
+@media (prefers-reduced-motion: reduce) { .jg .g-mtrack i { will-change: auto; } }

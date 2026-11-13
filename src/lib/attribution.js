@@ -115,9 +115,7 @@ function readTouch() {
   // the guide does with utm_source=guide). Whatever brought the reader here
   // (google, a referral, this session's earlier touch) is kept in utm_content,
   // so nothing is lost. Explicit ?utm_source=… (ads) is left untouched.
-  // The art-direction previews (/journal/preview[/<dir>[/<slug>]]) count as the
-  // journal too, with the same campaign = slug.
-  const journal = window.location.pathname.match(/^\/journal(?:\/preview(?:\/[^/]+)?)?(?:\/([^/]+))?\/?$/);
+  const journal = window.location.pathname.match(/^\/journal(?:\/([^/]+))?\/?$/);
   if (journal && !params.get("utm_source")) {
     let prev = null;
     try { prev = safeGet(window.sessionStorage, LAST_KEY); } catch { /* storage blocked */ }

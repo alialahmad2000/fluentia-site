@@ -12,7 +12,7 @@
  *   ["punch", text]        a short line standing alone
  *   ["pull", text]         pull quote (also offered as a share card)
  *   ["scene", id]          scrollytelling scene (src/pages/journal/scenes.jsx)
- *   ["try", id]            interactive (src/pages/journal/interactives.jsx)
+ *   ["try", id]            interactive (src/pages/journal/tries.jsx + tries-b.jsx)
  *   ["steps", [[title, text], …]]
  *   ["en", [[english, gloss], …]]   natural English lines, LTR, with an Arabic gloss
  *   ["close", text]        the closing line
