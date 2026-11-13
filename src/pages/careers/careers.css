@@ -68,7 +68,10 @@
 .cr-err{font-size:.88rem;color:var(--red)}
 .cr-err-box{padding:10px 14px;border-radius:12px;background:rgba(248,113,113,.1);border:1px solid rgba(248,113,113,.3)}
 .cr-hp{position:absolute;inset-inline-start:-9999px;width:1px;height:1px;overflow:hidden}
-.cr-turnstile{min-height:65px}
+.cr-turnstile-wrap{display:flex;flex-direction:column;align-items:center;gap:6px}
+.cr-turnstile{min-height:65px;max-width:100%}
+.cr-turnstile[hidden]{display:none}
+.cr-ts-retry{margin-top:8px;min-height:44px}
 .cr-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 
 /* flow / chat */

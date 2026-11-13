@@ -43,47 +43,83 @@ function BotBubbleText({ children }) {
   return <span className="cr-bubble-text" dir="auto">{children}</span>;
 }
 
-/* ───────────────────────── Turnstile (only if sitekey) ───────────────────────── */
+/* ───────────────────────── Turnstile (only if sitekey) ─────────────────────────
+ * Managed widget, dark, Arabic. The start button stays disabled until a token
+ * exists; an expired/errored token clears it, and Turnstile refreshes it by
+ * itself. If Cloudflare's script never arrives (blocked network) the applicant
+ * gets a short Arabic note and a retry button — never a silently dead button. */
+const TS_SRC = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
 function Turnstile({ onToken, resetKey }) {
   const box = useRef(null);
   const widget = useRef(null);
+  const [state, setState] = useState("loading"); // loading | ready | failed
+  const [attempt, setAttempt] = useState(0);
   useEffect(() => {
     if (!TURNSTILE_SITEKEY) return undefined;
     let dead = false;
     const mount = () => {
       if (dead || !box.current || !window.turnstile || widget.current != null) return;
-      widget.current = window.turnstile.render(box.current, {
-        sitekey: TURNSTILE_SITEKEY,
-        theme: "dark",
-        language: "ar",
-        callback: (t) => onToken(t),
-        "expired-callback": () => onToken(null),
-        "error-callback": () => onToken(null),
-      });
+      try {
+        widget.current = window.turnstile.render(box.current, {
+          sitekey: TURNSTILE_SITEKEY,
+          theme: "dark",
+          language: "ar",
+          "refresh-expired": "auto",
+          callback: (t) => onToken(t),
+          "expired-callback": () => onToken(null),
+          "timeout-callback": () => onToken(null),
+          "error-callback": () => { onToken(null); return false; },
+        });
+        setState("ready");
+      } catch { setState("failed"); }
     };
+    const fail = () => { if (!dead && !window.turnstile) setState("failed"); };
+    const timer = setTimeout(fail, 15000);
+    let s = null;
     if (window.turnstile) mount();
     else {
-      let s = document.getElementById("cf-turnstile-api");
+      s = document.getElementById("cf-turnstile-api");
       if (!s) {
         s = document.createElement("script");
         s.id = "cf-turnstile-api";
-        s.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
+        s.src = TS_SRC;
         s.async = true;
         document.head.appendChild(s);
       }
       s.addEventListener("load", mount);
+      s.addEventListener("error", fail);
     }
     return () => {
       dead = true;
+      clearTimeout(timer);
+      if (s) { s.removeEventListener("load", mount); s.removeEventListener("error", fail); }
       try { if (widget.current != null) window.turnstile?.remove(widget.current); } catch { /* ignore */ }
       widget.current = null;
     };
-  }, [onToken]);
+  }, [onToken, attempt]);
   useEffect(() => {
+    if (!resetKey) return;
+    onToken(null); // a token is single-use: after a failed start, wait for a fresh one
     try { if (widget.current != null) window.turnstile?.reset(widget.current); } catch { /* ignore */ }
-  }, [resetKey]);
+  }, [resetKey, onToken]);
+  const retry = () => {
+    document.getElementById("cf-turnstile-api")?.remove();
+    setState("loading");
+    setAttempt((n) => n + 1);
+  };
   if (!TURNSTILE_SITEKEY) return null;
-  return <div ref={box} className="cr-turnstile" />;
+  return (
+    <div className="cr-turnstile-wrap">
+      <div ref={box} className="cr-turnstile" hidden={state === "failed"} />
+      {state === "loading" ? <p className="cr-hint cr-center" aria-live="polite">لحظات، نجهّز خطوة التحقق…</p> : null}
+      {state === "failed" ? (
+        <div className="cr-err cr-err-box" role="alert">
+          <p>ما قدرنا نحمّل خطوة التحقق. نرجو التأكد من الاتصال بالإنترنت ثم إعادة المحاولة.</p>
+          <button type="button" className="cr-btn cr-btn-ghost cr-ts-retry" onClick={retry}>إعادة المحاولة</button>
+        </div>
+      ) : null}
+    </div>
+  );
 }
 
 /* ───────────────────────── Basics form ───────────────────────── */
@@ -198,7 +234,7 @@ function ApplyForm({ role, saved, onSubmit, busy, error, fieldError }) {
       {errs.captcha ? <p className="cr-err" role="alert">{errs.captcha}</p> : null}
       {error ? <p className="cr-err cr-err-box" role="alert">{error}</p> : null}
 
-      <button type="submit" className="cr-btn cr-btn-primary" disabled={busy}>
+      <button type="submit" className="cr-btn cr-btn-primary" disabled={busy || (!!TURNSTILE_SITEKEY && !token)}>
         {busy ? "لحظات…" : g(gd, "ابدأ/ي المحادثة", "ابدأ المحادثة", "ابدئي المحادثة")}
       </button>
       <p className="cr-fine">بياناتك تُستخدم فقط لمراجعة طلب التوظيف، وتبقى سرّية.</p>
