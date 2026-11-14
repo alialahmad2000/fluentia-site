@@ -169,7 +169,7 @@ export default function AboutPage() {
         }}
       >
         <span>
-          تأسست <time dateTime="2026-03-23">23 مارس 2026</time>
+          تأسست عام <time dateTime="2021">2021</time>
         </span>
         <span>·</span>
         <span>
@@ -358,7 +358,7 @@ export default function AboutPage() {
             challenges. Students don't memorise phrases — they learn to think in English.
           </p>
           <p>
-            Founded March 2026. Based in Saudi Arabia. All sessions conducted online via Google Meet.
+            Founded in 2021. Based in Saudi Arabia. All sessions conducted online via Google Meet.
             Contact:{' '}
             <a href="mailto:fluentia.sa@gmail.com" style={{ color: '#38bdf8', display: 'inline-flex', alignItems: 'center', minHeight: '44px' }}>
               fluentia.sa@gmail.com
