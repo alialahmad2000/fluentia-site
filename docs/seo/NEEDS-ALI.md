@@ -7,6 +7,23 @@ regenerates the HTML, the `.md` mirror, `llms.txt`, `llms-full.txt` and JSON-LD.
 These are the questions leads ask most often that the site does not answer today —
 AI assistants cannot quote what is not published.
 
+## Status — follow-up 2026-11-14
+
+**Resolved (Ali, 2026-11-14):**
+- ✅ **Founding year → 2021.** /about «تأسست عام 2021», Organization JSON-LD `foundingDate: "2021"` (index.html = scripts/guide/org.mjs). The «23 مارس 2026» left on /terms and /privacy is the policies' **effective date** («تاريخ السريان»), not a founding or CR date — kept. (#20)
+- ✅ **Saudi trainers → yes, all of them.** «مدربون سعوديون» restored everywhere the audit removed it: title + description (/, /classic, /ascent, /journey), /start/form, the article «تعلم الإنجليزية من الصفر», legacy /v2 and the old App.jsx hero/footer. (#11 — trainer credentials still open)
+- ✅ **Government logo band:** keep as is. Not to be changed or flagged again.
+- ✅ **Search Console:** verified; sitemap.xml resubmitted 2026-11-14, read with no errors (66 pages).
+- ✅ **GA4 ↔ Google Ads:** GA4 property 529704836 (account 388672751) linked to Ads 931-483-8750; `generate_lead` imported as a primary conversion.
+
+**Still open:**
+1. Homepage direction: choose /preview/a, b or c.
+2. Founder photo for /about.
+3. Google Business Profile + real reviews (only then can a rating return).
+4. STEP format (40/40/20 vs 40/30/20/10): check against the ETEC page.
+5. `book_meeting`: once it appears in GA4 (Admin → Events), star it as a key event, then import it into Google Ads 931-483-8750. It fires only when a visitor books a slot in the /start chat (`method: chat_booking`, `source_page` = the `src` tag); no real visitor has booked there yet (0 of 31 chats as of 2026-11-14).
+6. Everything in A–D below not marked ✅.
+
 ## A. Classes and schedule
 1. **Class length** in minutes (group class / 1:1 class / intensive practice session)? → faq, pricing, private-training, about, en/about
 2. **Group times:** which days and hours do أساس / تميّز groups run (evenings? weekends? several slots to choose from)? Can a learner move to another group later? → faq, group-vs-private, how-it-works
@@ -18,7 +35,7 @@ AI assistants cannot quote what is not published.
 8. Is a **Pre-A1 group** open every month, or does a true beginner sometimes wait / go 1:1? Does Pre-A1 start from the alphabet? → english-from-zero
 9. **Follow-up channel:** daily follow-up via Telegram for every package that has it (تميّز, 1:1, intensive)? /start says «يومياً عبر تيليجرام» for all, but أساس is listed as **monthly** follow-up — which is right for أساس? → faq, speaking-fluency, private-training
 10. Is **«تسجيل الحصة»** (class recording in each unit) in every package with live classes? → faq, speaking-fluency, english-for-work
-11. Who teaches the **group classes** — may we write «مدربون سعوديون» (homepage meta and /start say it; /private says the mentor is usually a native speaker)? Any trainer credentials we can publish? → about, faq, is-fluentia-legit
+11. ✅ *(Saudi: yes, Ali 2026-11-14 — credentials still open)* Who teaches the **group classes** — may we write «مدربون سعوديون» (homepage meta and /start say it; /private says the mentor is usually a native speaker)? Any trainer credentials we can publish? → about, faq, is-fluentia-legit
 
 ## B. Packages and payment
 12. **Payment methods** (mada, Apple Pay, card, bank transfer, STC Pay, instalments)? → pricing, faq, how-it-works
@@ -31,7 +48,7 @@ AI assistants cannot quote what is not published.
 19. Can تميّز's 4 private classes be used for **interview / presentation prep**? Do group classes include any work-English content? → english-for-work
 
 ## C. Trust and identity
-20. **Founding date:** /about says «تأسست 23 مارس 2026»; the old schema and hero said 2021. Which is correct? (Removed from the schema until answered.) → about, is-fluentia-legit, Organization JSON-LD
+20. ✅ *(2021, Ali 2026-11-14)* **Founding date:** /about says «تأسست 23 مارس 2026»; the old schema and hero said 2021. Which is correct? (Removed from the schema until answered.) → about, is-fluentia-legit, Organization JSON-LD
 21. **Commercial registration / licence** number or legal name (e.g. «معهد الطلاقة والمعرفة») that may be published? → is-fluentia-legit, Organization `legalName`
 22. **Accreditation:** /start says «معتمدون رسمياً». By whom (e.g. TVTC)? If none, that line should come off /start. → is-fluentia-legit, faq («هل أكاديمية طلاقة معهد معتمد؟»)
 23. **Certificate** at the end of a level/package? What does it state? → faq, about

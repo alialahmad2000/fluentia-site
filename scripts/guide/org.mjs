@@ -5,9 +5,8 @@
  * need it before any script runs); scripts/build-guide.mjs fails the build if
  * the two ever disagree, and the static guide pages embed this object directly.
  *
- * Facts only from docs/seo/FACTS.md. No foundingDate (the site contradicts
- * itself: /about says March 2026, the old schema said 2021 — see NEEDS-ALI.md),
- * no ratings, no student counts.
+ * Facts only from docs/seo/FACTS.md. foundingDate 2021 (confirmed by Ali
+ * 2026-11-14), no ratings, no student counts.
  */
 import { PRICING } from "../../src/pages/landing-v2/content.js";
 
@@ -41,6 +40,7 @@ export const ORG_LD = {
   disambiguatingDescription: DISAMBIGUATION_AR,
   email: EMAIL,
   telephone: `+${WA_NUMBER}`,
+  foundingDate: "2021",
   founder: {
     "@type": "Person",
     "@id": `${SITE}/#founder`,

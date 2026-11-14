@@ -492,7 +492,7 @@ export default function StartPage() {
             </h1>
 
             <p style={{ fontSize: 16, color: T.text, lineHeight: 1.8, marginBottom: 22 }}>
-              مدربون متخصصون · مجموعات صغيرة (7 طلاب) · متابعة يومية · 5 باقات تناسبك
+              مدربون سعوديون · مجموعات صغيرة (7 طلاب) · متابعة يومية · 5 باقات تناسبك
             </p>
 
             <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 20px', display: 'grid', gap: 10 }}>
@@ -767,7 +767,7 @@ export default function StartPage() {
           {[
             { icon: '👥', title: '7 طلاب فقط بالكلاس',        desc: 'لضمان متابعة فردية لكل طالب' },
             { icon: '📅', title: 'متابعة يومية مع المدرب',   desc: 'مو فقط في الكلاس — يومياً عبر تيليجرام' },
-            { icon: '🎓', title: 'مدربون متخصصون', desc: 'يعرفون أين يتعثّر المتعلّم العربي ويفهمون أهدافك' },
+            { icon: '🇸🇦', title: 'مدربون سعوديون متخصصون', desc: 'يفهمون لهجتك وثقافتك ومشاكلك' },
           ].map(c => (
             <div
               key={c.title}
