@@ -9,7 +9,7 @@ crumb: التحضير لـ IELTS
 summary: مهارات IELTS الأربع، والفرق بين Academic وGeneral Training، ومقياس 0–9، وكيف يُخطَّط للتحضير، ودور طلاقة فيه.
 datePublished: 2026-10-27
 dateModified: 2026-10-27
-related: how-it-works, private-training, cefr-levels, pricing
+related: how-it-works, private-training, cefr-levels, pricing, step
 cta: home
 howto: false
 lang: ar

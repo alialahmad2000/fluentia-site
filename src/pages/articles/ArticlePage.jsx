@@ -336,7 +336,7 @@ export default function ArticlePage() {
                   marginBottom: "var(--lp-space-sm)",
                 }}
               >
-                جاهز تكسر الحاجز؟
+                الخطوة الأولى: لقاء مبدئي مجاني
               </h2>
               <p
                 style={{
@@ -347,17 +347,17 @@ export default function ArticlePage() {
                   marginBottom: "var(--lp-space-lg)",
                 }}
               >
-                ابدأ بمحادثةٍ أولى مجانية مع المدرّب — بدون التزام، وتقرّر بعدها إن كانت طلاقة تناسبك.
+                يُحدَّد المستوى والهدف والوقت المتاح، ويُرشَّح المسار والباقة المناسبة — قبل أي دفع وبلا التزام.
               </p>
-              <PrimaryCTA href="/#pricing">
-                شاهد باقات طلاقة
+              {/* Plain <a>: the prerendered page must work before hydration. */}
+              <PrimaryCTA href={`/start?src=article_${encodeURIComponent(article.slug)}`} data-cta="article_book">
+                احجز لقاءك المبدئي المجاني
                 <span aria-hidden style={{ fontSize: "1.1em" }}>
                   ←
                 </span>
               </PrimaryCTA>
-              {/* Every article used to dead-end at pricing. The free placement test
-                  is the natural next step for a reader who is still deciding — and
-                  the internal link tells search engines the two belong together. */}
+              {/* The free placement test stays as the lighter second step for a
+                  reader who is still deciding. */}
               <p style={{ margin: "var(--lp-space-md) 0 0", fontSize: "var(--lp-body)" }}>
                 <a href="/level-test" style={{ color: "var(--lp-amber-bright)" }}>
                   أو ابدأ باختبار تحديد المستوى المجاني — عشر دقائق ←

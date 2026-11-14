@@ -250,8 +250,11 @@ const dateText = (iso, lang) => {
 
 function bookingLinks(page) {
   const campaign = encodeURIComponent(page.slug.replace("/", "-"));
-  const site = page.cta === "private" ? "/private" : "/";
-  const bookHref = `${site}?utm_source=guide&utm_campaign=${campaign}`;
+  // Home-CTA pages book through /start (src= feeds attribution); the 1:1 pages
+  // keep their own /private consultation form.
+  const bookHref = page.cta === "private"
+    ? `/private?utm_source=guide&utm_campaign=${campaign}`
+    : `/start?src=guide_${campaign}`;
   const waText =
     page.cta === "private"
       ? `السلام عليكم، أبي أحجز استشارة للتدريب الفردي\nالمصدر: دليل طلاقة · ${page.slug}`
@@ -261,6 +264,7 @@ function bookingLinks(page) {
 
 function ctaBox(page) {
   const { bookHref, waHref } = bookingLinks(page);
+  const levelHref = `/level-test?src=guide_${encodeURIComponent(page.slug.replace("/", "-"))}`;
   if (page.lang === "en") {
     return `<section class="cta" aria-labelledby="cta-h">
   <h2 id="cta-h">Start with a free initial meeting</h2>
@@ -276,6 +280,7 @@ function ctaBox(page) {
   <h2 id="cta-h">${page.cta === "private" ? "الخطوة الأولى: حجز استشارة" : "الخطوة الأولى: لقاء مبدئي مجاني"}</h2>
   <p>${lead}</p>
   <div class="cta-row"><a class="btn" href="${esc(bookHref)}">${label}</a><a class="btn btn--ghost" href="${esc(waHref)}"><span>واتساب <bdi>${WA_DISPLAY}</bdi></span></a></div>
+  <p class="cta-sub"><a href="${esc(levelHref)}">أو ابدأ باختبار تحديد المستوى المجاني — نحو 10 دقائق</a></p>
 </section>`;
 }
 
