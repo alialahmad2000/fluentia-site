@@ -1070,7 +1070,9 @@ function VipCard({ tier, availability, regStatus }) {
         </div>
       </div>
 
-      {/* RIGHT — how the price is set */}
+      {/* RIGHT — how the price is set (only the flexible 1:1 tier has one; the
+          intensive is a fixed 3,000 and crashed /v2 without this guard) */}
+      {tier.howPriced && (
       <div
         style={{
           background: "rgba(13, 10, 6, 0.6)",
@@ -1123,6 +1125,7 @@ function VipCard({ tier, availability, regStatus }) {
           {tier.howPriced.note}
         </div>
       </div>
+      )}
     </article>
   );
 }
