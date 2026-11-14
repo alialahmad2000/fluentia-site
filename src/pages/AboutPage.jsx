@@ -257,9 +257,11 @@ export default function AboutPage() {
         }}
       >
         {[
-          { v: '+14', l: 'طالب نشط' },
-          { v: '4.9★', l: 'تقييم الأكاديمية' },
-          { v: '+100', l: 'شهادة نجاح' },
+          // Verifiable structure only (docs/seo/FACTS.md). The old +14 / 4.9★ / +100
+          // had no source and are removed until real numbers are confirmed.
+          { v: '6', l: 'مستويات من Pre-A1 إلى C1' },
+          { v: '72', l: 'وحدة تعليمية' },
+          { v: '7', l: 'طلاب كحد أقصى في المجموعة' },
         ].map((item) => (
           <div
             key={item.l}

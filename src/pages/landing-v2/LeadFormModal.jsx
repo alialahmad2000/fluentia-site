@@ -449,7 +449,10 @@ export default function LeadFormModal() {
               lineHeight: 1.5,
             }}
           >
-            {FORM.privacy}
+            {FORM.privacy}{" "}
+            <a href="/privacy" target="_blank" rel="noopener" style={{ color: "inherit", textDecoration: "underline" }}>
+              سياسة الخصوصية
+            </a>
           </p>
         </form>
       </div>

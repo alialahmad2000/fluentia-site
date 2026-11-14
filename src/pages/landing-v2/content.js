@@ -506,7 +506,7 @@ export const FORM = {
     { value: "unsure", label: "غير متأكد — أريد استشارة", price: 0 },
   ],
   submitLabel: "أرسل وانتقل إلى WhatsApp ←",
-  privacy: "بياناتك للتواصل فقط. لا رسائل تسويقية.",
+  privacy: "نستخدم بياناتك للتواصل معك بخصوص طلبك فقط، ولا نبيعها لأحد.",
   errors: {
     nameRequired: "الاسم مطلوب",
     phoneRequired: "الجوّال مطلوب",
