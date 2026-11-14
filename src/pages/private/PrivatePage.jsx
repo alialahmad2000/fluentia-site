@@ -193,9 +193,9 @@ export default function PrivatePage() {
        <StoriesProvider stories={PRIVATE_STORIES}>
         <div className="v1-scope v5-scope join-page private-page" dir="rtl" lang="ar">
           <Seo path="/private" />
-          <style>{joinCss}</style>
-          <style>{privateCss}</style>
-          {PRIVATE_STORIES.length ? <style>{storiesCss}</style> : null}
+          <style dangerouslySetInnerHTML={{ __html: joinCss }} />
+          <style dangerouslySetInnerHTML={{ __html: privateCss }} />
+          {PRIVATE_STORIES.length ? <style dangerouslySetInnerHTML={{ __html: storiesCss }} /> : null}
           <DawnArc />
           <div style={{ position: "relative", zIndex: 1 }}>
             <V1Header />

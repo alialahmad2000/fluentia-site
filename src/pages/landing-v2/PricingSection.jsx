@@ -119,7 +119,7 @@ export default function PricingSection() {
           </p>
         </Reveal>
 
-        {/* Entry tier — التعلم الذاتي (wide, instant access, leads with lowest price) */}
+        {/* Entry tier — التعلم الذاتي (wide, access after a short call, leads with lowest price) */}
         <Reveal delay={0.18}>
           <div style={{ marginBottom: "var(--lp-space-2xl)" }}>
             <EntryCard tier={PRICING.entryTier} />
@@ -518,7 +518,7 @@ function AvailabilityBadge({ availability, regStatus }) {
 }
 
 // ────────────────────────────────────────────────────────────
-// EntryCard — wide card for التعلم الذاتي (platform only, instant access).
+// EntryCard — wide card for التعلم الذاتي (platform only, access after a short call).
 // Friendly, light visual. Right column explains who it's for.
 // ────────────────────────────────────────────────────────────
 
@@ -616,7 +616,7 @@ function EntryCard({ tier }) {
             }}
           >
             <span style={{ width: 6, height: 6, borderRadius: "50%", background: "var(--lp-success)" }} />
-            وصول فوري — تبدأ اليوم
+            يبدأ الوصول بعد مكالمة قصيرة
           </span>
         </div>
 

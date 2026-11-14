@@ -85,6 +85,7 @@
 .adv-home {
   flex: none; font-size: 14px; font-weight: 700; color: var(--adv-text-2); text-decoration: none;
   padding: 8px 12px; border-radius: 999px; border: 1px solid var(--adv-border); background: var(--adv-bg);
+  display: inline-flex; align-items: center; min-block-size: 44px;
 }
 .adv-home:hover { color: var(--adv-text); border-color: var(--adv-border-2); }
 
@@ -102,6 +103,15 @@
   background: rgba(56, 189, 248, 0.16)
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Cpath d='M4 7.2l2 2 4-4.4' fill='none' stroke='%237dd3fc' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 14px no-repeat;
 }
+
+/* «تفضّل واتساب؟» — a quiet way out in the first view; the hit area is padded to 44px without adding height */
+.adv-wa {
+  position: relative; align-self: flex-start; display: inline-flex; align-items: center; gap: 6px;
+  margin-block: 2px 0; font-size: 13px; font-weight: 500; color: var(--adv-text-2); text-decoration: none;
+  border-block-end: 1px solid var(--adv-border-2);
+}
+.adv-wa::after { content: ""; position: absolute; inset: -14px -8px; }
+.adv-wa:hover { color: var(--adv-text); }
 
 /* the conversation */
 .adv-log {
@@ -232,7 +242,8 @@
   margin-block-start: 8px; padding: 6px 14px; border-radius: 999px;
   font-size: 13.5px; color: var(--adv-text-2); background: var(--adv-dock);
 }
-.adv-foot a { color: var(--adv-text); text-decoration: none; border-block-end: 1px solid transparent; }
+.adv-foot a { position: relative; color: var(--adv-text); text-decoration: none; border-block-end: 1px solid transparent; }
+.adv-foot a::after { content: ""; position: absolute; inset: -10px -8px; } /* 44px hit area, no extra height */
 .adv-foot a:hover { color: var(--adv-text); border-block-end-color: var(--adv-border-2); }
 
 .adv-page :focus-visible { outline: 2px solid var(--adv-sky); outline-offset: 2px; }

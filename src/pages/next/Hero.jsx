@@ -147,6 +147,12 @@ export default function Hero({ gl, campaign = false }) {
           </a>
         </div>
         {campaign ? null : (
+          <a href="/level-test?src=site_home" className="fx-quiet fx-hero-level fx-hero-after">
+            أو اختبر مستواك مجاناً
+            <span aria-hidden="true">←</span>
+          </a>
+        )}
+        {campaign ? null : (
           <div className="fx-hero-trust fx-hero-after">
             <p className="fx-hero-note">{HERO_TRUST}</p>
             <TrustLogos />

@@ -1,60 +1,11 @@
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import Seo from "../../components/Seo";
+import SiteHeader from "../../components/SiteHeader";
 import { Container, EyebrowLabel, Reveal } from "../../components/landing";
 import { ARTICLES } from "../../content/articles";
 
 const SITE = "https://fluentia.academy";
-
-function ArticleBar() {
-  return (
-    <div
-      style={{
-        position: "sticky",
-        top: 0,
-        zIndex: 20,
-        borderBottom: "1px solid var(--lp-border-subtle)",
-        background: "var(--lp-bg-overlay)",
-        backdropFilter: "blur(10px)",
-        WebkitBackdropFilter: "blur(10px)",
-      }}
-    >
-      <Container
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          paddingBlock: "var(--lp-space-md)",
-        }}
-      >
-        <Link
-          to="/"
-          dir="ltr"
-          style={{
-            textDecoration: "none",
-            fontFamily: "var(--lp-font-display)",
-            fontWeight: 800,
-            fontSize: "var(--lp-body-l)",
-            color: "var(--lp-text-strong)",
-          }}
-        >
-          <span style={{ color: "var(--lp-amber)" }}>F</span>luentia
-        </Link>
-        <Link
-          to="/"
-          style={{
-            textDecoration: "none",
-            color: "var(--lp-text-muted)",
-            fontSize: "var(--lp-body-s)",
-            fontWeight: 500,
-          }}
-        >
-          الرئيسية ←
-        </Link>
-      </Container>
-    </div>
-  );
-}
 
 export default function ArticlesIndex() {
   const collectionLd = {
@@ -74,7 +25,7 @@ export default function ArticlesIndex() {
         <script type="application/ld+json">{JSON.stringify(collectionLd)}</script>
       </Helmet>
 
-      <ArticleBar />
+      <SiteHeader src="articles" />
 
       <Container style={{ paddingBlock: "var(--lp-space-3xl)" }}>
         <Reveal>
@@ -104,11 +55,27 @@ export default function ArticlesIndex() {
             >
               كتابات صريحة عن تعلّم الإنجليزي للكبار — لماذا تتعثّر المحاولات، وكيف تكسر الحاجز فعلاً.
             </p>
-            <p style={{ fontSize: "var(--lp-body)", margin: "var(--lp-space-md) 0 0" }}>
-              <Link to="/work-english" style={{ color: "var(--lp-amber-bright)" }}>
-                ولمصطلحات كل مجال عمل بالإنجليزي مع الترجمة: الإنجليزي للعمل ←
-              </Link>
-            </p>
+            <Link
+              to="/work-english"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "var(--lp-space-sm)",
+                minHeight: 44,
+                marginTop: "var(--lp-space-lg)",
+                padding: "0 var(--lp-space-lg)",
+                borderRadius: "999px",
+                border: "1px solid var(--lp-border-amber)",
+                background: "linear-gradient(180deg, var(--lp-bg-raised), var(--lp-bg-elevated))",
+                color: "var(--lp-amber-bright)",
+                fontSize: "var(--lp-body-s)",
+                fontWeight: 600,
+                textDecoration: "none",
+              }}
+            >
+              الإنجليزي للعمل: مصطلحات كل مجال
+              <span aria-hidden>←</span>
+            </Link>
           </div>
         </Reveal>
 

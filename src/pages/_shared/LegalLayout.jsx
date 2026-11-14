@@ -1,11 +1,11 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import SiteHeader from '../../components/SiteHeader';
 
 /**
  * Shared layout for legal/info pages (Privacy, Terms, About).
  * Dark theme; 17px body; Tajawal font; max-width reading column.
  */
-export default function LegalLayout({ children, updated }) {
+export default function LegalLayout({ children, updated, src = 'legal' }) {
   return (
     <div
       dir="rtl"
@@ -18,55 +18,7 @@ export default function LegalLayout({ children, updated }) {
         lineHeight: 1.8,
       }}
     >
-      {/* Top bar */}
-      <div
-        style={{
-          borderBottom: '1px solid rgba(56,189,248,0.08)',
-          padding: '1rem 1.25rem',
-          position: 'sticky',
-          top: 0,
-          background: 'rgba(6,14,28,0.85)',
-          backdropFilter: 'blur(8px)',
-          zIndex: 10,
-        }}
-      >
-        <div
-          style={{
-            maxWidth: '860px',
-            margin: '0 auto',
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            gap: '1rem',
-          }}
-        >
-          <Link
-            to="/"
-            style={{
-              color: '#38bdf8',
-              textDecoration: 'none',
-              fontWeight: 700,
-              fontSize: '0.9375rem',
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '0.375rem',
-            }}
-          >
-            <span style={{ fontFamily: "'Playfair Display', serif", color: '#38bdf8' }}>F</span>
-            <span style={{ color: '#f8fafc' }}>luentia</span>
-          </Link>
-          <Link
-            to="/"
-            style={{
-              color: '#94a3b8',
-              textDecoration: 'none',
-              fontSize: '0.875rem',
-            }}
-          >
-            ← العودة للرئيسية
-          </Link>
-        </div>
-      </div>
+      <SiteHeader src={src} />
 
       {/* Content */}
       <main

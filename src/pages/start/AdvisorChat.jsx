@@ -8,6 +8,7 @@ import { fireTikTokContact } from '../../lib/tiktokPixel';
 import Orb from '../next/Orb';
 import Starfield from '../next/Starfield';
 import { detectTier, tierConfig } from '../next/perf';
+import { buildWhatsAppUrl, WA_MESSAGES } from '../../lib/whatsapp';
 import './advisor.css';
 
 /* «مستشار طلاقة» — fluentia.academy/start.
@@ -102,6 +103,24 @@ function downloadIcs(b) {
   } catch { window.open(googleCalUrl(b), '_blank', 'noopener'); }
 }
 
+/* No WebGL sky: small screens, coarse pointers, in-app browsers, reduced motion (see the tier effect). */
+const IN_APP = /TikTok|musical_ly|Bytedance|Instagram|FBAN|FBAV|Snapchat/i;
+function staticSky() {
+  try {
+    const mq = (q) => window.matchMedia(q).matches;
+    return mq('(pointer: coarse)') || mq('(hover: none)') || mq('(max-width: 820px)')
+      || mq('(prefers-reduced-motion: reduce)') || IN_APP.test(navigator.userAgent);
+  } catch { return true; }
+}
+
+/* «تفضّل واتساب؟» — the wa.me link carries the ref code, which only exists in the browser, so the
+   prerendered / hydrating render uses the plain link and the full one replaces it after mount. */
+function useWaHref() {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => { setMounted(true); }, []);
+  return mounted ? buildWhatsAppUrl(WA_MESSAGES.general) : `https://wa.me/966558669974?text=${encodeURIComponent(WA_MESSAGES.general)}`;
+}
+
 /* ── pieces ───────────────────────────────────────────────────────────────── */
 const TONES = ['#7dd3fc', '#38bdf8', '#0ea5e9', '#0369a1'];
 function Mark({ size = 22 }) {
@@ -183,6 +202,9 @@ export default function AdvisorChat() {
   const [tier, setTier] = useState(null);
   useEffect(() => {
     let alive = true;
+    // Phones, touch screens, in-app browsers (TikTok / Instagram / …) and reduced motion get the
+    // static planet + no starfield: no WebGL context at all, so the chat stays light and cool.
+    if (staticSky()) { setTier('low'); return undefined; }
     detectTier().then((t) => { if (alive) setTier(t); }).catch(() => {});
     return () => { alive = false; };
   }, []);
@@ -196,6 +218,7 @@ export default function AdvisorChat() {
   const [text, setText] = useState('');
   const [phoneErr, setPhoneErr] = useState(false);
   const [retry, setRetry] = useState(null);       // the request to resend after a failure
+  const waHref = useWaHref();
   const logRef = useRef(null);
   const inputRef = useRef(null);
   const seq = useRef(0);
@@ -222,7 +245,7 @@ export default function AdvisorChat() {
       } else step();
     };
     setTyping(true);
-    timers.current.push(setTimeout(step, reduce ? 0 : 380));
+    step(); // the first message shows the moment the reply is in — no staged beat before it
   }, [push]);
 
   const apply = useCallback((r) => {
@@ -323,6 +346,10 @@ export default function AdvisorChat() {
         <ul className="adv-trust" aria-label="عن اللقاء">
           <li>لقاء مبدئي مجاني</li><li>أونلاين مباشر</li><li>منهج على هدفك</li>
         </ul>
+        <a className="adv-wa" href={waHref} target="_blank" rel="noopener noreferrer" data-cta="start_wa_fallback">
+          <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.2.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3Z" /></svg>
+          تفضّل واتساب؟ تواصل معنا مباشرة
+        </a>
 
         <section className="adv-log" ref={logRef} aria-live="polite" aria-label="المحادثة" aria-busy={typing}>
           {msgs.map((m, i) => {

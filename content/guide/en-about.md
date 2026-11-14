@@ -56,7 +56,7 @@ All prices are monthly, in Saudi riyals (SAR). There are five packages:
 
 | Package | Monthly price | What is included |
 |---|---|---|
-| Self-study (التعلم الذاتي) | SAR 500 | full platform, instant access, no live classes, no trainer follow-up |
+| Self-study (التعلم الذاتي) | SAR 500 | full platform, access starts after a short call with the academy, no live classes, no trainer follow-up |
 | Asas (أساس) | SAR 750 | 8 group classes a month (max 7 students), full platform, monthly assessment and trainer follow-up, Telegram community |
 | Tamayuz (تميّز), the package the academy recommends | SAR 1,500 | everything in Asas, plus 4 private classes a month (one a week), intensive daily follow-up, weekly assessment and a personal development plan, exclusive question bank, full lesson library, recorded content |
 | Private training (التدريب الفردي) | from SAR 2,000 | private classes only; the number of weekly classes is agreed in the free initial meeting and sets the price; custom curriculum; direct daily follow-up with unlimited writing and pronunciation correction; job-interview, presentation and public-speaking training; priority replies |

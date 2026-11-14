@@ -56,6 +56,15 @@ const P = (props) => (
   />
 );
 
+const contactLink = {
+  display: 'inline-flex',
+  alignItems: 'center',
+  minHeight: '44px',
+  color: '#38bdf8',
+  textDecoration: 'none',
+  fontSize: '1.0625rem',
+};
+
 const Pillar = ({ num, title, text }) => (
   <div
     style={{
@@ -114,7 +123,7 @@ const TeamCard = ({ name, role, text }) => (
 
 export default function AboutPage() {
   return (
-    <LegalLayout updated={{ iso: '2026-04-15', display: '15 أبريل 2026' }}>
+    <LegalLayout src="about" updated={{ iso: '2026-04-15', display: '15 أبريل 2026' }}>
       <Seo path="/about" />
       <Helmet>
         <script type="application/ld+json">{`
@@ -289,17 +298,20 @@ export default function AboutPage() {
       </div>
 
       <H2>تواصل معنا</H2>
-      <P>
-        للاستفسار أو حجز لقاء مبدئي مجاني مع المدرب، تواصل معنا على{' '}
-        <a href={buildWhatsAppUrl(WA_MESSAGES.general)} target="_blank" rel="noopener noreferrer" style={{ color: '#38bdf8', textDecoration: 'none' }}>
-          واتساب: +966 55 866 9974
-        </a>{' '}
-        أو عبر البريد الإلكتروني{' '}
-        <a href="mailto:fluentia.sa@gmail.com" style={{ color: '#38bdf8', textDecoration: 'none' }}>
-          fluentia.sa@gmail.com
+      <P>للاستفسار أو حجز لقاء مبدئي مجاني مع المدرب، تواصل معنا:</P>
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', marginBottom: '1rem' }}>
+        <a
+          href={buildWhatsAppUrl(WA_MESSAGES.general)}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ ...contactLink }}
+        >
+          واتساب: <bdi dir="ltr">+966 55 866 9974</bdi>
         </a>
-        .
-      </P>
+        <a href="mailto:fluentia.sa@gmail.com" style={{ ...contactLink }}>
+          البريد الإلكتروني: <bdi dir="ltr">fluentia.sa@gmail.com</bdi>
+        </a>
+      </div>
 
       {/* English translation */}
       <details
@@ -317,6 +329,8 @@ export default function AboutPage() {
             fontWeight: 700,
             color: '#38bdf8',
             fontSize: '1rem',
+            padding: '0.75rem 0',
+            margin: '-0.75rem 0',
           }}
         >
           English version
@@ -346,7 +360,7 @@ export default function AboutPage() {
           <p>
             Founded March 2026. Based in Saudi Arabia. All sessions conducted online via Google Meet.
             Contact:{' '}
-            <a href="mailto:fluentia.sa@gmail.com" style={{ color: '#38bdf8' }}>
+            <a href="mailto:fluentia.sa@gmail.com" style={{ color: '#38bdf8', display: 'inline-flex', alignItems: 'center', minHeight: '44px' }}>
               fluentia.sa@gmail.com
             </a>
             .
