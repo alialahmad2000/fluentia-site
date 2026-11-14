@@ -163,6 +163,10 @@
       "destination": "/stories.html"
     },
     {
+      "source": "/home-v1",
+      "destination": "/home-v1.html"
+    },
+    {
       "source": "/classic",
       "destination": "/classic.html"
     },

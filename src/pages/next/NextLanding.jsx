@@ -8,6 +8,9 @@ import "../v5/V5Hero.css";
 // stylesheet only arrives with its JavaScript — the prerendered page would paint
 // unstyled for a second and then jump (measured: CLS 0.53 on a throttled phone).
 import NEXT_CSS from "./next.css?inline";
+// «الفجر» (2026-11-14): the homepage's colour system + first screen, on top of next.css.
+import DAWN_TOKENS from "../../styles/dawn-tokens.css?inline";
+import DAWN_CSS from "./dawn.css?inline";
 import Seo from "../../components/Seo";
 import V1LeadModal from "../v1/V1LeadModal";
 import { CtaContext } from "../v1/ctaContext";
@@ -20,6 +23,7 @@ import Starfield from "./Starfield";
 import Intro from "./Intro";
 import Header from "./Header";
 import Hero from "./Hero";
+import DawnHero from "./DawnHero";
 import PhoneSection from "./PhoneSection";
 import { Pains, How, Stats, Steps } from "./Acts";
 import Stage from "./Stage";
@@ -162,13 +166,17 @@ const CAMPAIGN_CTA = { label: CTA_LABEL, pricingFoot: CAMPAIGN_PRICING_FOOT };
 
 /**
  * `seoPath`  — the PAGE_SEO entry to emit ("/" when this is the homepage).
+ * `dawn`     — the «الفجر» homepage (HOMEPAGE_VERSION in src/App.jsx): new
+ *   colour system, DawnHero, the dawn final call. Off, this is the homepage as
+ *   it was on 2026-11-14, frozen at /home-v1. /join never sets it.
  * `campaign` — /join, the TikTok landing: no intro, and every `[data-open-form]`
  *   leads to /join's own lead form (LeadForm → submitLead, source 'join_page',
  *   unchanged) instead of the homepage modal; pricing buttons preselect their
  *   package. Homepage components read CtaContext and drop links that would
  *   leave the page.
  */
-export default function NextLanding({ seoPath = "/next", campaign = false }) {
+export default function NextLanding({ seoPath = "/next", campaign = false, dawn: dawnProp = false }) {
+  const dawn = dawnProp && !campaign;
   const rootRef = useRef(null);
   const [tier, setTier] = useState(null);
   const [mode, setMode] = useState("auto");
@@ -379,11 +387,11 @@ export default function NextLanding({ seoPath = "/next", campaign = false }) {
     <MotionConfig reducedMotion="user">
      <CtaContext.Provider value={campaign ? CAMPAIGN_CTA : null}>
      <StoriesProvider stories={campaign ? [] : STORIES}>
-      <div ref={rootRef} className={`v1-scope v5-scope fx-next${campaign ? "" : " fx-home"}`} dir="rtl" data-campaign={campaign ? "" : undefined}>
+      <div ref={rootRef} className={`v1-scope v5-scope fx-next${campaign ? "" : " fx-home"}${dawn ? " fx-dawn" : ""}`} dir="rtl" data-campaign={campaign ? "" : undefined}>
         {/* The client and server bundles may stringify boot() differently; the
             script has already run by the time React hydrates it. */}
         <script suppressHydrationWarning dangerouslySetInnerHTML={{ __html: BOOT }} />
-        <style dangerouslySetInnerHTML={{ __html: campaign ? NEXT_CLASSIC_CSS : NEXT_CSS }} />
+        <style dangerouslySetInnerHTML={{ __html: campaign ? NEXT_CLASSIC_CSS : dawn ? NEXT_CSS + DAWN_TOKENS + DAWN_CSS : NEXT_CSS }} />
         {/* Kufam is the display face: fetched while the HTML parses, before the
             giant type needs it (Kufam chosen by Ali, 2026-09-27). */}
         <link rel="preload" as="font" type="font/woff2" href="/fonts/kufam-800-arabic.woff2" crossOrigin="" />
@@ -399,12 +407,13 @@ export default function NextLanding({ seoPath = "/next", campaign = false }) {
           <link rel="preload" as="font" type="font/woff2" href="/fonts/barlow-condensed-800-latin.woff2" crossOrigin="" />
         )}
 
-        <Starfield density={cfg ? cfg.stars : 0} />
+        {/* The dawn hero draws its own few CSS stars; no canvas field there. */}
+        {dawn ? null : <Starfield density={cfg ? cfg.stars : 0} />}
         <Intro gl={introCfg} onDone={onIntroDone} />
-        <MemoHeader />
+        <MemoHeader solidAt={dawn ? 40 : 80} />
 
         <main className="fx-main">
-          <Hero gl={introDone ? cfg : null} campaign={campaign} />
+          {dawn ? <DawnHero /> : <Hero gl={introDone ? cfg : null} campaign={campaign} />}
           {campaign ? (
             <section className="fx-block join-page fx-joinform" aria-label={CTA_LABEL}>
               <div className="v1-card j-card" id="join-form" ref={formRef}>
@@ -447,7 +456,7 @@ export default function NextLanding({ seoPath = "/next", campaign = false }) {
               )}
             </Final>
           ) : (
-            <Final gl={cfg} />
+            <Final gl={cfg} dawn={dawn} />
           )}
         </main>
         {campaign ? (

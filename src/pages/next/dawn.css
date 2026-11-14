@@ -1,0 +1,699 @@
+/* ============================================================
+ * «الفجر» — the homepage's dawn layer (since 2026-11-14).
+ * Loaded on / only, AFTER next.css, under .fx-dawn. /home-v1 (the frozen
+ * homepage) and /join never get it. Tokens: src/styles/dawn-tokens.css.
+ * ============================================================ */
+
+/* ─── Remap the page's own variables onto the dawn palette ─── */
+.fx-dawn {
+  --fx-void: var(--night-950);
+  --fx-navy: var(--indigo-800);
+  --fx-cream: var(--cream-50);
+  --fx-gold: var(--dawn-400);
+  --fx-text: rgba(246, 241, 232, 0.78);
+  --fx-faint: rgba(246, 241, 232, 0.6);
+  --fx-rule: rgba(186, 230, 253, 0.1);
+}
+
+/* ─── The primary call: dawn, night text, everywhere ─── */
+.fx-dawn .fx-btn--primary {
+  background: var(--dawn-400);
+  color: var(--dawn-ink);
+  transition: transform 500ms var(--fx-ease-soft), background-color 300ms ease, box-shadow 400ms var(--fx-ease-soft);
+}
+@media (hover: hover) {
+  .fx-dawn .fx-btn--primary:hover {
+    background: #ffc266;
+    box-shadow: 0 0 0 6px rgba(255, 181, 71, 0.12), 0 12px 44px -8px rgba(255, 138, 76, 0.6);
+  }
+}
+.fx-dawn :focus-visible { outline-color: var(--sky-200); }
+
+/* ─── Header: clear over the hero, night glass after 40 px; a small solid dawn call ─── */
+.fx-dawn .fx-head[data-solid] {
+  background: rgba(6, 9, 20, 0.72);
+  -webkit-backdrop-filter: blur(16px) saturate(1.3);
+  backdrop-filter: blur(16px) saturate(1.3);
+  box-shadow: 0 1px 0 var(--hairline);
+}
+.fx-dawn .fx-head .fx-btn--nav {
+  background: var(--dawn-400);
+  color: var(--dawn-ink);
+  box-shadow: none;
+  font-weight: 700;
+}
+@media (hover: hover) {
+  .fx-dawn .fx-head .fx-btn--nav:hover { background: #ffc266; box-shadow: 0 6px 24px -6px rgba(255, 138, 76, 0.55); }
+}
+.fx-dawn .fx-nav-link::after { background: var(--sky-400); }
+.fx-dawn .fx-menu-toggle { border-color: rgba(246, 241, 232, 0.22); }
+
+/* ═══ HERO ═══════════════════════════════════════════════════
+   Phone first: copy, then the dawn scene under it. ≥ 1024: copy right
+   (7/12), scene left (5/12), the whole thing inside 100svh.
+   --hz: the horizon, measured from the hero's bottom edge — the sky's glow
+   line and the scene's sun share it because both sit on that edge. */
+.fx-dawn .dh {
+  --hz: 132px;
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  padding: calc(80px + env(safe-area-inset-top)) var(--fx-edge) 0;
+  overflow: clip;
+}
+
+/* The sky: night, a few stars that fade where the dawn begins, a low horizon
+   glow warming the bottom-left, and a whisper of grain against banding.
+   No z-index on .dh-sky: its layers interleave with the scene's. */
+.fx-dawn .dh-sky { position: absolute; inset: 0; pointer-events: none; }
+.fx-dawn .dh-sky > * { position: absolute; pointer-events: none; }
+.fx-dawn .dh-stars {
+  inset: 0 0 30% 0;
+  z-index: 0;
+  background-image:
+    radial-gradient(circle at 32.7% 9.3%, rgba(246,241,232,0.3) 0 0.7px, transparent 1.6px),
+    radial-gradient(circle at 81.5% 6.2%, rgba(246,241,232,0.3) 0 1.4px, transparent 2.3px),
+    radial-gradient(circle at 90.2% 12.8%, rgba(246,241,232,0.65) 0 0.7px, transparent 1.6px),
+    radial-gradient(circle at 42.0% 14.2%, rgba(246,241,232,0.65) 0 1.4px, transparent 2.3px),
+    radial-gradient(circle at 6.8% 32.1%, rgba(246,241,232,0.8) 0 0.8px, transparent 1.7px),
+    radial-gradient(circle at 93.9% 32.7%, rgba(246,241,232,0.3) 0 1.1px, transparent 2.0px),
+    radial-gradient(circle at 96.7% 3.6%, rgba(246,241,232,0.5) 0 0.8px, transparent 1.7px),
+    radial-gradient(circle at 42.1% 30.7%, rgba(246,241,232,0.5) 0 1.4px, transparent 2.3px),
+    radial-gradient(circle at 55.9% 38.5%, rgba(246,241,232,0.8) 0 0.7px, transparent 1.6px),
+    radial-gradient(circle at 57.0% 11.3%, rgba(246,241,232,0.8) 0 0.7px, transparent 1.6px),
+    radial-gradient(circle at 70.8% 32.0%, rgba(246,241,232,0.4) 0 1.4px, transparent 2.3px),
+    radial-gradient(circle at 49.6% 30.2%, rgba(246,241,232,0.65) 0 0.9px, transparent 1.8px),
+    radial-gradient(circle at 58.4% 25.9%, rgba(246,241,232,0.4) 0 0.9px, transparent 1.8px),
+    radial-gradient(circle at 78.8% 39.4%, rgba(246,241,232,0.3) 0 0.8px, transparent 1.7px),
+    radial-gradient(circle at 57.3% 29.9%, rgba(246,241,232,0.65) 0 0.9px, transparent 1.8px),
+    radial-gradient(circle at 29.2% 54.9%, rgba(246,241,232,0.8) 0 0.7px, transparent 1.6px),
+    radial-gradient(circle at 42.0% 42.6%, rgba(246,241,232,0.65) 0 0.8px, transparent 1.7px),
+    radial-gradient(circle at 42.3% 53.9%, rgba(246,241,232,0.8) 0 0.7px, transparent 1.6px),
+    radial-gradient(circle at 57.2% 49.2%, rgba(246,241,232,0.5) 0 0.9px, transparent 1.8px),
+    radial-gradient(circle at 69.1% 33.7%, rgba(246,241,232,0.65) 0 1.4px, transparent 2.3px),
+    radial-gradient(circle at 7.7% 6.1%, rgba(246,241,232,0.65) 0 0.9px, transparent 1.8px),
+    radial-gradient(circle at 69.3% 4.6%, rgba(246,241,232,0.8) 0 0.9px, transparent 1.8px),
+    radial-gradient(circle at 98.3% 46.2%, rgba(246,241,232,0.65) 0 0.9px, transparent 1.8px),
+    radial-gradient(circle at 87.9% 20.1%, rgba(246,241,232,0.5) 0 1.1px, transparent 2.0px),
+    radial-gradient(circle at 17.5% 7.4%, rgba(246,241,232,0.4) 0 0.7px, transparent 1.6px),
+    radial-gradient(circle at 76.3% 8.1%, rgba(246,241,232,0.65) 0 0.8px, transparent 1.7px),
+    radial-gradient(circle at 39.3% 48.9%, rgba(246,241,232,0.4) 0 0.7px, transparent 1.6px),
+    radial-gradient(circle at 45.0% 31.2%, rgba(246,241,232,0.65) 0 0.8px, transparent 1.7px),
+    radial-gradient(circle at 85.7% 16.3%, rgba(246,241,232,0.5) 0 1.1px, transparent 2.0px),
+    radial-gradient(circle at 67.9% 21.9%, rgba(246,241,232,0.4) 0 0.8px, transparent 1.7px),
+    radial-gradient(circle at 9.1% 9.3%, rgba(246,241,232,0.3) 0 0.8px, transparent 1.7px),
+    radial-gradient(circle at 48.5% 33.4%, rgba(246,241,232,0.5) 0 0.9px, transparent 1.8px),
+    radial-gradient(circle at 1.4% 24.0%, rgba(246,241,232,0.8) 0 0.9px, transparent 1.8px),
+    radial-gradient(circle at 56.5% 53.4%, rgba(246,241,232,0.8) 0 1.4px, transparent 2.3px),
+    radial-gradient(circle at 65.2% 41.7%, rgba(246,241,232,0.8) 0 1.1px, transparent 2.0px),
+    radial-gradient(circle at 39.5% 22.9%, rgba(246,241,232,0.65) 0 0.7px, transparent 1.6px);
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 40%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 0%, #000 40%, transparent 100%);
+  opacity: 0.85;
+}
+.fx-dawn .dh-glow {
+  z-index: 0;
+  inset: auto -20% 0 -20%;
+  height: 92%;
+  background:
+    radial-gradient(ellipse 40% 34% at 32% calc(100% - var(--hz)), rgba(255, 138, 76, 0.55), rgba(255, 138, 76, 0.22) 40%, rgba(255, 181, 71, 0.05) 68%, transparent 80%),
+    radial-gradient(ellipse 62% 62% at 30% 100%, rgba(255, 138, 76, 0.18), transparent 70%),
+    radial-gradient(ellipse 55% 50% at 78% 100%, rgba(24, 32, 74, 0.6), transparent 72%);
+  transform-origin: 32% 100%;
+}
+/* the horizon itself: a hairline of light, brightest under the sun */
+.fx-dawn .dh-horizon {
+  z-index: 0;
+  inset-inline: 0;
+  bottom: var(--hz);
+  height: 1px;
+  /* physical: the bright part sits under the sun, on the left; it fades out before the copy */
+  background: linear-gradient(to left, transparent 0%, transparent 42%, rgba(255, 181, 71, 0.12) 56%, rgba(255, 206, 130, 0.7) 82%, rgba(255, 181, 71, 0.14) 97%, transparent 100%);
+  box-shadow: 0 0 18px 2px rgba(255, 138, 76, 0.25);
+}
+/* below the horizon the ground goes back to night, so the hero meets the next section with no seam */
+.fx-dawn .dh-sky::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: var(--hz);
+  z-index: 2;
+  background: linear-gradient(to bottom, rgba(6, 9, 20, 0) 0%, rgba(6, 9, 20, 0.72) 45%, var(--night-950) 100%);
+}
+.fx-dawn .dh-grain {
+  inset: 0;
+  z-index: 3;
+  opacity: 0.035;
+  -webkit-mask-image: linear-gradient(to bottom, #000 55%, transparent 92%);
+  mask-image: linear-gradient(to bottom, #000 55%, transparent 92%);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ─── Copy ─── */
+.fx-dawn .dh-copy { position: relative; z-index: 5; }
+.fx-dawn .dh-title {
+  margin: 0;
+  font-family: var(--fx-display);
+  font-weight: 800;
+  /* «من امتلاك الإنجليزية» is ~9.7 em wide: sized so it stays ONE line on any phone */
+  font-size: clamp(28px, calc((100vw - 40px) / 9.8), 46px);
+  line-height: 1.2;
+  letter-spacing: 0;
+  color: var(--cream-50);
+}
+/* the mask is padded so tall alef/lam and the hamza under alef are never shaved;
+   the inner span carries the same padding so a gradient fill reaches every glyph */
+.fx-dawn .dh-l {
+  display: block;
+  overflow: hidden;
+  padding: 0.24em 0.1em 0.3em;
+  margin: -0.24em -0.1em -0.3em;
+}
+.fx-dawn .dh-l-in {
+  display: block;
+  width: fit-content;
+  padding: 0.24em 0.1em 0.3em;
+  margin: -0.24em -0.1em -0.3em;
+}
+.fx-dawn .dh-grad {
+  background-image: var(--dawn-grad-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+.fx-dawn .dh-sub {
+  margin: 16px 0 0;
+  max-width: 34ch;
+  font-size: 16px;
+  line-height: 1.75;
+  color: rgba(246, 241, 232, 0.75);
+  text-wrap: pretty;
+}
+.fx-dawn .dh-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 26px;
+  margin-top: 22px;
+}
+.fx-dawn .dh-cta { min-height: 56px; padding: 0 28px; font-size: 17px; gap: 12px; }
+.fx-dawn .dh-cta span { transition: transform 400ms var(--fx-ease-soft); }
+@media (hover: hover) { .fx-dawn .dh-cta:hover span { transform: translateX(-3px); } }
+/* secondary: cream text, a quiet underline that fills in on hover */
+.fx-dawn .dh-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--cream-50);
+  font-weight: 500;
+  text-decoration: none;
+  background:
+    linear-gradient(var(--sky-200), var(--sky-200)) no-repeat right calc(100% - 9px) / 0% 1px,
+    linear-gradient(rgba(246, 241, 232, 0.32), rgba(246, 241, 232, 0.32)) no-repeat right calc(100% - 9px) / 100% 1px;
+  transition: background-size 500ms var(--fx-ease-soft);
+}
+@media (hover: hover) { .fx-dawn .dh-link:hover { background-size: 100% 1px, 100% 1px; } }
+.fx-dawn .dh-link:focus-visible { background-size: 100% 1px, 100% 1px; }
+.fx-dawn .dh-level {
+  display: flex;
+  width: fit-content;
+  align-items: center;
+  gap: 6px;
+  min-height: 40px;
+  font-size: 14px;
+  color: rgba(246, 241, 232, 0.6);
+  text-decoration: none;
+}
+@media (hover: hover) { .fx-dawn .dh-level:hover { color: var(--cream-50); } }
+.fx-dawn .dh-trust { margin-top: 14px; }
+.fx-dawn .dh-note { margin: 0; font-size: 14px; line-height: 1.6; color: rgba(246, 241, 232, 0.66); }
+.fx-dawn .dh-logos {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 14px;
+  margin: 12px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.fx-dawn .dh-logos li {
+  position: relative;
+  display: flex;
+  height: calc(var(--h) * 0.66);
+  width: calc(var(--w) * 0.66);
+}
+.fx-dawn .dh-logos img { display: block; width: 100%; height: 100%; transition: opacity 500ms var(--fx-ease-soft); }
+.fx-dawn .dh-logo-mono { opacity: 0.7; }
+.fx-dawn .dh-logo-color { position: absolute; inset: 0; opacity: 0; }
+@media (hover: hover) {
+  .fx-dawn .dh-logos li:hover .dh-logo-mono { opacity: 0; }
+  .fx-dawn .dh-logos li:hover .dh-logo-color { opacity: 1; }
+}
+
+/* ─── The dawn scene ─── */
+.fx-dawn .dh-scene {
+  position: relative;
+  height: 360px;
+  margin-top: 20px;
+  margin-inline: calc(var(--fx-edge) * -1);
+  direction: ltr; /* positions below are physical: the scene is a picture */
+}
+.fx-dawn .dh-depth { position: absolute; inset: 0; }
+.fx-dawn .dh-depth--sun {
+  z-index: 1;
+  /* the part of the sun under the horizon is hidden: it is rising */
+  -webkit-mask-image: linear-gradient(to top, transparent 0, transparent calc(var(--hz) - 28px), #000 calc(var(--hz) + 30px));
+  mask-image: linear-gradient(to top, transparent 0, transparent calc(var(--hz) - 28px), #000 calc(var(--hz) + 30px));
+}
+.fx-dawn .dh-depth--phone { z-index: 4; }
+.fx-dawn .dh-depth--cards { z-index: 6; }
+
+.fx-dawn .dsun { position: absolute; }
+.fx-dawn .dsun-bloom {
+  position: absolute;
+  inset: -40% -62%;
+  background:
+    radial-gradient(circle closest-side at 50% 52%, rgba(255, 222, 160, 0.5), rgba(255, 181, 71, 0.36) 26%, rgba(255, 138, 76, 0.16) 52%, rgba(255, 138, 76, 0.05) 74%, transparent);
+}
+.fx-dawn .dsun-mark {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 0 18px rgba(255, 181, 71, 0.35));
+}
+.fx-dawn .dh-sun {
+  width: 150px;
+  left: 50%;
+  margin-left: -178px;
+  bottom: calc(var(--hz) - 44px);
+}
+
+.fx-dawn .dh-phone {
+  position: absolute;
+  left: 50%;
+  margin: 0 0 0 -22px;
+  top: 26px;
+  width: 196px;
+  padding: 7px;
+  border-radius: 36px;
+  background: linear-gradient(150deg, #262f52, #0b1024 52%, #1b2246);
+  box-shadow:
+    0 0 0 1px rgba(186, 230, 253, 0.16),
+    0 0 0 5px rgba(6, 9, 20, 0.9),
+    0 0 0 6px rgba(186, 230, 253, 0.07),
+    -22px 10px 60px -26px rgba(255, 138, 76, 0.55),
+    0 40px 80px -30px rgba(0, 0, 0, 0.9);
+}
+.fx-dawn .dh-phone img { display: block; width: 100%; height: auto; border-radius: 29px; }
+.fx-dawn .dh-phone-island {
+  position: absolute;
+  z-index: 2;
+  top: 13px;
+  left: 50%;
+  width: 58px;
+  height: 17px;
+  margin-left: -29px;
+  border-radius: 10px;
+  background: #000;
+}
+/* the phone stands in front of the horizon; its foot fades into the ground */
+.fx-dawn .dh-depth--phone {
+  -webkit-mask-image: linear-gradient(to top, transparent 0, #000 64px);
+  mask-image: linear-gradient(to top, transparent 0, #000 64px);
+}
+
+.fx-dawn .dh-card {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 13px 9px 11px;
+  border-radius: 16px;
+  background: var(--glass);
+  border: 1px solid rgba(186, 230, 253, 0.13);
+  box-shadow: var(--glass-top), 0 18px 40px -18px rgba(0, 0, 0, 0.7);
+  -webkit-backdrop-filter: blur(14px) saturate(1.25);
+  backdrop-filter: blur(14px) saturate(1.25);
+  direction: rtl;
+  white-space: nowrap;
+  color: var(--cream-50);
+}
+.fx-dawn .dh-card-txt { display: grid; gap: 1px; text-align: right; }
+.fx-dawn .dh-card-k { font-size: 11.5px; line-height: 1.5; color: rgba(246, 241, 232, 0.7); }
+.fx-dawn .dh-card-v { font-family: var(--fx-display); font-weight: 800; font-size: 14px; line-height: 1.45; color: var(--cream-50); }
+.fx-dawn .dh-card--a .dh-card-v { font-size: 17px; color: var(--dawn-400); }
+.fx-dawn .dh-card-ico {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  flex: none;
+}
+.fx-dawn .dh-card-ico svg { fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.fx-dawn .dh-card-ico--sky { color: var(--sky-400); background: rgba(56, 189, 248, 0.12); }
+.fx-dawn .dh-card-ico--dawn { color: var(--dawn-400); background: rgba(255, 181, 71, 0.12); }
+.fx-dawn .dh-ring { display: grid; width: 34px; height: 34px; flex: none; }
+.fx-dawn .dh-ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+.fx-dawn .dh-ring circle { fill: none; stroke-width: 3.2; }
+.fx-dawn .dh-ring circle:first-child { stroke: rgba(246, 241, 232, 0.12); }
+.fx-dawn .dh-ring circle:last-child {
+  stroke: var(--dawn-400);
+  stroke-linecap: round;
+  stroke-dasharray: 94.25;
+  stroke-dashoffset: calc(94.25 * (1 - var(--v) / 100));
+}
+/* phone: two cards, tucked against the phone */
+.fx-dawn .dh-card--a { left: 50%; margin-left: -184px; top: 4px; }
+.fx-dawn .dh-card--b { display: none; }
+.fx-dawn .dh-card--c { left: auto; right: 50%; margin-right: -186px; top: 238px; }
+
+/* ─── Entrance (~1.4 s) and idle float — CSS only, no JavaScript needed ─── */
+@keyframes dh-rise { from { transform: translateY(105%); } to { transform: none; } }
+@keyframes dh-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+@keyframes dh-glow-in { from { opacity: 0; transform: translateY(6%) scaleY(0.86); } to { opacity: 1; transform: none; } }
+@keyframes dh-sun-in { from { transform: translateY(24px); filter: brightness(0.55) saturate(0.85); } to { transform: none; filter: none; } }
+@keyframes dh-phone-in { from { transform: translateY(26px) scale(0.985); } to { transform: none; } }
+@keyframes dh-card-in { from { opacity: 0; transform: translateY(14px) scale(0.97); } to { opacity: 1; transform: none; } }
+@keyframes dh-float { 0%, 100% { translate: 0 0; } 50% { translate: 0 -5px; } }
+
+html.fx-js .fx-dawn .dh-l-in { animation: dh-rise 1000ms var(--fx-ease) both; animation-delay: 80ms; }
+html.fx-js .fx-dawn .dh-l + .dh-l .dh-l-in { animation-delay: 150ms; }
+html.fx-js .fx-dawn .dh-after { animation: dh-in 800ms var(--fx-ease-soft) both; animation-delay: 420ms; }
+html.fx-js .fx-dawn .dh-glow { animation: dh-glow-in 1300ms var(--fx-ease-soft) both; }
+html.fx-js .fx-dawn .dh-sun { animation: dh-sun-in 1300ms var(--fx-ease-soft) both 120ms; }
+html.fx-js .fx-dawn .dh-phone { animation: dh-phone-in 1000ms var(--fx-ease-soft) both 400ms; }
+html.fx-js .fx-dawn .dh-card { animation: dh-card-in 800ms var(--fx-ease-soft) both; animation-delay: calc(480ms + var(--k) * 80ms); }
+
+/* ═══ Desktop ═══ */
+@media (min-width: 720px) {
+  .fx-dawn .dh-title { font-size: min(62px, calc((100vw - 2 * var(--fx-gut)) / 10.4)); }
+  .fx-dawn .dh-sub { font-size: 18px; }
+  .fx-dawn .dh-logos { gap: 22px; }
+  .fx-dawn .dh-logos li { height: calc(var(--h) * 0.8); width: calc(var(--w) * 0.8); }
+}
+
+@media (min-width: 1024px) {
+  .fx-dawn .dh {
+    --hz: clamp(120px, 17svh, 170px);
+    grid-template-columns: 7fr 5fr;
+    column-gap: clamp(24px, 3vw, 56px);
+    min-height: 100vh;
+    min-height: 100svh;
+    padding-top: 96px;
+  }
+  .fx-dawn .dh-copy {
+    grid-column: 1;
+    grid-row: 1;
+    align-self: center;
+    padding-bottom: calc(var(--hz) * 0.42);
+  }
+  .fx-dawn .dh-title { font-size: clamp(48px, 5.2vw, 78px); line-height: 1.12; }
+  .fx-dawn .dh-sub { margin-top: 22px; font-size: 19px; }
+  .fx-dawn .dh-actions { margin-top: 34px; gap: 8px 32px; }
+  .fx-dawn .dh-cta { min-height: 60px; padding: 0 34px; font-size: 18px; }
+  .fx-dawn .dh-level { margin-top: 4px; }
+  .fx-dawn .dh-trust { margin-top: 26px; }
+  .fx-dawn .dh-logos { gap: 34px; margin-top: 14px; }
+  .fx-dawn .dh-logos li { height: var(--h); width: var(--w); }
+
+  .fx-dawn .dh-glow { inset: auto -10% 0 -30%; height: 100%; }
+  .fx-dawn .dh-scene {
+    grid-column: 2;
+    grid-row: 1;
+    height: auto;
+    margin: 0;
+    margin-inline-start: calc(var(--fx-edge) * -1 + 8px); /* the scene reaches the screen edge */
+    margin-top: -96px; /* …and the top: the sky is behind the header too */
+  }
+  /* the sun: large and low behind the phone, its foot under the horizon */
+  .fx-dawn .dh-sun { --sw: clamp(200px, 16vw, 250px); width: var(--sw); left: 3%; margin: 0; bottom: calc(var(--hz) - 0.24 * var(--sw)); }
+  .fx-dawn .dh-phone {
+    left: auto;
+    right: 7%;
+    margin: 0;
+    top: max(122px, calc(50% - 318px));
+    width: 272px;
+    padding: 9px;
+    border-radius: 48px;
+  }
+  .fx-dawn .dh-phone img { border-radius: 39px; }
+  .fx-dawn .dh-phone-island { top: 17px; width: 80px; height: 23px; margin-left: -40px; border-radius: 14px; }
+  .fx-dawn .dh-depth--phone {
+    -webkit-mask-image: linear-gradient(to top, transparent 0, transparent calc(var(--hz) - 90px), #000 calc(var(--hz) - 10px));
+    mask-image: linear-gradient(to top, transparent 0, transparent calc(var(--hz) - 90px), #000 calc(var(--hz) - 10px));
+  }
+  .fx-dawn .dh-card { padding: 11px 16px 11px 13px; border-radius: 18px; gap: 12px; }
+  .fx-dawn .dh-card-k { font-size: 12.5px; }
+  .fx-dawn .dh-card-v { font-size: 15.5px; }
+  .fx-dawn .dh-card--a .dh-card-v { font-size: 19px; }
+  .fx-dawn .dh-ring { width: 40px; height: 40px; }
+  .fx-dawn .dh-card--a { left: 5%; margin: 0; top: max(196px, calc(50% - 236px)); }
+  .fx-dawn .dh-card--b { display: flex; left: auto; right: -3%; margin: 0; top: calc(50% - 10px); }
+  .fx-dawn .dh-card--c { left: auto; right: calc(7% - 40px); margin: 0; top: auto; bottom: calc(var(--hz) + 64px); }
+
+  /* parallax: each layer moves a little with the pointer (≤ 10 px), the farthest least */
+  .fx-dawn .dh-depth { transition: transform 900ms var(--fx-ease-soft); }
+  .fx-dawn .dh-depth--sun { transform: translate3d(calc(var(--mx, 0) * -4px), calc(var(--my, 0) * -3px), 0); }
+  .fx-dawn .dh-depth--phone { transform: translate3d(calc(var(--mx, 0) * 6px), calc(var(--my, 0) * 5px), 0); }
+  .fx-dawn .dh-depth--cards { transform: translate3d(calc(var(--mx, 0) * 10px), calc(var(--my, 0) * 8px), 0); }
+
+  /* idle float, after the entrance: slow, small, out of phase */
+  html.fx-js .fx-dawn .dh-phone { animation: dh-phone-in 1000ms var(--fx-ease-soft) both 400ms, dh-float 7.5s ease-in-out 1.6s infinite; }
+  html.fx-js .fx-dawn .dh-card {
+    animation:
+      dh-card-in 800ms var(--fx-ease-soft) both calc(480ms + var(--k) * 80ms),
+      dh-float calc(6s + var(--k) * 1s) ease-in-out calc(1.6s + var(--k) * 0.7s) infinite;
+  }
+}
+
+
+/* ─── Low tier and reduced motion: everything in place, nothing moves ─── */
+html[data-fx-tier="low"] .fx-dawn .dh *,
+html[data-fx-tier="low"] .fx-dawn .dh-glow {
+  animation: none !important;
+  transition: none !important;
+}
+html[data-fx-tier="low"] .fx-dawn .dh-depth { transform: none !important; }
+@media (prefers-reduced-motion: reduce) {
+  .fx-dawn .dh *,
+  .fx-dawn .dh-glow {
+    animation: none !important;
+    transition: none !important;
+  }
+  .fx-dawn .dh-depth { transform: none !important; }
+}
+
+
+/* ═══ THE REST OF THE PAGE — same layout, the dawn palette ═══════════════
+   One journey: the page's own ground warms from night to the final dawn, so
+   the sections stay transparent over it and nothing meets with an edge. */
+.fx-dawn.fx-next {
+  background:
+    linear-gradient(
+      180deg,
+      #060914 0%,
+      #060914 6%,
+      #080b19 18%,
+      #0b1024 34%,
+      #0f1229 50%,
+      #13142d 64%,
+      #17152e 76%,
+      #1d162e 86%,
+      #23172c 93%,
+      #120e1c 97.5%,
+      #0c0a14 100%
+    );
+}
+.fx-dawn .fx-footer { background: transparent; }
+/* the moon's foot fades into whatever the ground is at that height */
+.fx-dawn .fx-moonrise::after { display: none; }
+.fx-dawn .fx-moonrise {
+  -webkit-mask-image: linear-gradient(to bottom, #000 68%, transparent 98%);
+  mask-image: linear-gradient(to bottom, #000 68%, transparent 98%);
+}
+.fx-dawn .fx-floor {
+  background: linear-gradient(to bottom, rgba(24, 32, 74, 0), rgba(24, 32, 74, 0.5) 14%, rgba(24, 32, 74, 0.22) 55%, rgba(24, 32, 74, 0));
+}
+
+/* ─── Cards: indigo glass, a hairline, a soft light along the top edge ─── */
+.fx-dawn .fx-card,
+.fx-dawn .fx-panel {
+  background: var(--glass);
+  border: 1px solid var(--hairline);
+  box-shadow: var(--glass-top);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+}
+.fx-dawn .fx-card-points li::before { background: var(--sky-400); }
+.fx-dawn .fx-sc-panel,
+.fx-dawn .fx-sc .fx-sc-card { background: var(--indigo-800); }
+
+/* the homepage's v1 cards (fit, FAQ, pricing): the same glass.
+   (V1Pricing / V1WhoFor carry their own <style> and inline styles, later in the
+   document, so these use a heavier selector — and !important for inline ones.) */
+.v1-scope.fx-dawn .v1-card {
+  background: var(--glass);
+  border-color: var(--hairline);
+  box-shadow: var(--glass-top);
+}
+.v1-scope.fx-dawn #whofor .v1-card {
+  background: var(--glass) !important;
+  border-color: var(--hairline) !important;
+}
+.v1-scope.fx-dawn #faq .v1-card { box-shadow: var(--glass-top); }
+
+/* ─── Buttons on v1 surfaces: the primary is dawn; the rest are cream ghosts ─── */
+.v1-scope.fx-dawn .v1-cta-gold,
+.v1-scope.fx-dawn .v1-cta-primary {
+  background: var(--dawn-400);
+  color: var(--dawn-ink);
+}
+.v1-scope.fx-dawn .v1-cta-ghost,
+.v1-scope.fx-dawn .v1p-vip-cta {
+  color: var(--cream-50);
+  box-shadow: inset 0 0 0 1px rgba(246, 241, 232, 0.28);
+}
+@media (hover: hover) {
+  .v1-scope.fx-dawn .v1-cta-gold:hover,
+  .v1-scope.fx-dawn .v1-cta-primary:hover {
+    background: #ffc266;
+    box-shadow: 0 0 0 6px rgba(255, 181, 71, 0.12), 0 12px 40px -10px rgba(255, 138, 76, 0.55);
+  }
+  .v1-scope.fx-dawn .v1-cta-ghost:hover,
+  .v1-scope.fx-dawn .v1p-vip-cta:hover {
+    background: rgba(246, 241, 232, 0.06);
+    box-shadow: inset 0 0 0 1px rgba(246, 241, 232, 0.55);
+  }
+}
+.v1-scope.fx-dawn .v1-cta:focus-visible { outline-color: var(--sky-200); }
+
+/* ─── Numbers: the key figures are dawn ─── */
+.fx-dawn .fx-stat-num { color: var(--dawn-400); }
+
+/* ─── Pricing: the recommended plan is the dawn one ─── */
+.v1-scope.fx-dawn .v1p-tier.is-hero {
+  background:
+    linear-gradient(170deg, rgba(255, 181, 71, 0.07), rgba(255, 181, 71, 0) 50%) padding-box,
+    linear-gradient(180deg, #1c2350, #141a3e) padding-box,
+    linear-gradient(180deg, rgba(255, 181, 71, 0.9), rgba(255, 181, 71, 0.32) 40%, rgba(255, 181, 71, 0.12)) border-box;
+  box-shadow: inset 0 1px 0 rgba(255, 233, 196, 0.16), 0 30px 70px -40px rgba(255, 138, 76, 0.45);
+}
+.v1-scope.fx-dawn .v1p-hero-line {
+  background: linear-gradient(90deg, transparent, var(--dawn-400) 30%, #ffe9c4 50%, var(--dawn-400) 70%, transparent);
+}
+.v1-scope.fx-dawn .v1p-tier.is-hero .v1p-amount { color: var(--dawn-400); }
+/* the badge is a label, not a button: tinted, never a dawn fill */
+.v1-scope.fx-dawn .v1p-rec {
+  background: rgba(255, 181, 71, 0.12);
+  color: var(--dawn-400);
+  box-shadow: inset 0 0 0 1px rgba(255, 181, 71, 0.45);
+}
+.v1-scope.fx-dawn .v1p-vip.is-intensive {
+  border-color: rgba(255, 181, 71, 0.32);
+  background: linear-gradient(170deg, rgba(255, 181, 71, 0.05), rgba(255, 181, 71, 0) 50%), var(--glass);
+}
+.v1-scope.fx-dawn .v1p-vip-line {
+  background: linear-gradient(90deg, transparent, rgba(255, 181, 71, 0.6) 35%, rgba(255, 233, 196, 0.85) 50%, rgba(255, 181, 71, 0.6) 65%, transparent);
+}
+.v1-scope.fx-dawn .v1p-vip-badge { color: #ffd08a; border-color: rgba(255, 181, 71, 0.38); background: rgba(255, 181, 71, 0.07); }
+.v1-scope.fx-dawn .v1p-inside-label { color: #ffd08a; }
+/* the phone's plan switch: the recommended tab is tinted dawn, not filled */
+.v1-scope.fx-dawn .v1p-switch-btn.is-hero[aria-selected="true"] { color: var(--dawn-400); }
+.v1-scope.fx-dawn .v1p-switch-btn.is-hero .v1p-pill {
+  background: rgba(255, 181, 71, 0.14);
+  box-shadow: inset 0 0 0 1px rgba(255, 181, 71, 0.55);
+}
+
+/* ─── «قصص طلابنا»: the one light section — sand, night text ─── */
+.fx-dawn .fx-block--stories {
+  background: var(--sand-100);
+  padding-top: var(--fx-sec);
+  padding-bottom: var(--fx-sec);
+  color: rgba(6, 9, 20, 0.78);
+}
+.fx-dawn .fx-block--stories .fx-block-head { padding-top: 0; }
+.fx-dawn .fx-block--stories .fx-tone-cream { color: var(--night-950); }
+.fx-dawn .fx-block--stories .fx-tone-sky,
+.fx-dawn .fx-block--stories .fx-tone-ice { color: #0369a1; }
+.fx-dawn .fx-block--stories .st-sub { color: rgba(6, 9, 20, 0.7); }
+.fx-dawn .fx-block--stories .st-aside-mark { color: #0369a1; }
+.fx-dawn .fx-block--stories .st-aside-quote { color: var(--night-950); }
+.fx-dawn .fx-block--stories .st-aside-quote span { color: #0369a1; }
+.fx-dawn .fx-block--stories .st-aside-cite { color: rgba(6, 9, 20, 0.68); }
+.fx-dawn .fx-block--stories .st-aside-cite b { color: var(--night-950); }
+.fx-dawn .fx-block--stories .st-watch { color: var(--night-950); border-color: rgba(6, 9, 20, 0.28); }
+.fx-dawn .fx-block--stories .st-watch-num { color: rgba(6, 9, 20, 0.62); }
+@media (hover: hover) {
+  .fx-dawn .fx-block--stories .st-watch:hover { background: rgba(6, 9, 20, 0.05); border-color: rgba(6, 9, 20, 0.5); }
+}
+.fx-dawn .fx-block--stories .st-all a { color: #0369a1; }
+.fx-dawn .fx-block--stories .st-spread .st-card-wrap::before { opacity: 0.35; }
+.fx-dawn .fx-block--stories .st-card { box-shadow: 0 30px 60px -30px rgba(6, 9, 20, 0.55); }
+.fx-dawn .fx-block--stories :focus-visible { outline-color: #0369a1; }
+@media (max-width: 799px) {
+  .fx-dawn .fx-block--stories .st-aside-quote { color: rgba(6, 9, 20, 0.84); }
+}
+
+/* ═══ FINAL — the full dawn moment ══════════════════════════════════════
+   The same title and call; under them the horizon, and the F fully risen on it.
+   The ground under the horizon is the footer's. */
+.fx-dawn .fx-final--dawn {
+  --fhz: clamp(70px, 9vw, 120px);
+  --fsw: clamp(150px, 17vw, 230px);
+  isolation: isolate;
+  overflow: clip;
+  padding-bottom: calc(var(--fhz) + var(--fsw) * 1.258 + clamp(48px, 6vw, 80px));
+}
+.fx-dawn .fx-final--dawn > :not(.fd-sky) { position: relative; z-index: 2; }
+.fx-dawn .fd-sky { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+.fx-dawn .fd-glow {
+  position: absolute;
+  inset: 0 -20%;
+  background:
+    radial-gradient(ellipse 34% 30% at 50% calc(100% - var(--fhz)), rgba(255, 181, 71, 0.55), rgba(255, 138, 76, 0.3) 38%, rgba(255, 107, 90, 0.1) 66%, transparent 82%),
+    radial-gradient(ellipse 70% 55% at 50% calc(100% - var(--fhz)), rgba(255, 138, 76, 0.22), transparent 72%),
+    linear-gradient(to bottom, transparent 30%, rgba(255, 138, 76, 0.07) 80%, transparent);
+}
+.fx-dawn .fd-horizon {
+  position: absolute;
+  inset-inline: 0;
+  bottom: var(--fhz);
+  height: 1px;
+  background: linear-gradient(to left, transparent, rgba(255, 181, 71, 0.2) 18%, rgba(255, 214, 150, 0.85) 50%, rgba(255, 181, 71, 0.2) 82%, transparent);
+  box-shadow: 0 0 22px 3px rgba(255, 138, 76, 0.3);
+}
+/* under the horizon: the ground, back to night as it reaches the footer */
+.fx-dawn .fd-sky::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: var(--fhz);
+  background: linear-gradient(to bottom, rgba(18, 14, 28, 0.55), #120e1c 90%);
+}
+.fx-dawn .fd-sun {
+  left: 50%;
+  bottom: calc(var(--fhz) + 10px);
+  width: var(--fsw);
+  margin-left: calc(var(--fsw) / -2);
+}
+.fx-dawn .fd-sun .dsun-bloom { inset: -55% -80%; }
+.fx-dawn .fd-sun .dsun-mark { filter: drop-shadow(0 0 26px rgba(255, 181, 71, 0.5)); }
+.fx-dawn .fx-final--dawn .fx-final-title .fx-tone-sky,
+.fx-dawn .fx-final--dawn .fx-final-title .fx-tone-ice { color: var(--sky-200); }
+.fx-dawn .fx-final-sub { color: rgba(246, 241, 232, 0.8); }
+.fx-dawn .fx-final-test { color: rgba(246, 241, 232, 0.72); }
+.fx-dawn .fx-final .fx-btn--primary {
+  min-height: 60px;
+  padding: 0 34px;
+  font-size: 18px;
+  box-shadow: 0 16px 50px -14px rgba(255, 138, 76, 0.6);
+}
+/* the sun rises into place as the section arrives (transform only) */
+@keyframes fd-rise { from { transform: translateY(60px); } to { transform: none; } }
+html.fx-js .fx-dawn .fd-sun { animation: fd-rise linear both; animation-timeline: view(); animation-range: entry 10% cover 55%; }
+html[data-fx-tier="low"] .fx-dawn .fd-sun { animation: none; }
+@media (prefers-reduced-motion: reduce) { .fx-dawn .fd-sun { animation: none; } }

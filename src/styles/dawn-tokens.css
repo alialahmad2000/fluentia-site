@@ -1,0 +1,35 @@
+/* ============================================================
+ * «الفجر» (Dawn) — the homepage colour system, since 2026-11-14.
+ * ONE source of truth: every dawn colour on the homepage reads these.
+ *
+ * The idea: the visitor starts in the night (blocked) and the page opens
+ * into dawn (fluent). Night is the base; dawn is the warm accent.
+ *
+ *   60 / 30 / 10 — night  /  indigo + cream text  /  dawn + sky
+ *   The primary call is dawn-400 with night text, everywhere. Nothing else
+ *   gets a dawn FILL. Sky stays the brand (logo, links, small accents) and is
+ *   no longer the call colour. Ember: at most twice on the whole page.
+ *
+ * Contrast (WCAG 2.x, `node scripts/dawn-contrast.mjs`, every pair AA):
+ *   cream-50 / night-950 17.7 · night-950 / dawn-400 11.3 · night-950 / sand-100 16.9
+ *   cream 75% / night-950 9.9 · sky-400 / night-950 9.3 · dawn-400 / indigo-800 8.9
+ * ============================================================ */
+.fx-dawn {
+  --night-950: #060914; /* page base */
+  --night-900: #0b1024; /* section alt */
+  --indigo-800: #18204a; /* cards, depth */
+  --sky-400: #38bdf8; /* brand: logo, links, small highlights */
+  --sky-200: #bae6fd; /* soft brand text */
+  --dawn-400: #ffb547; /* primary call fill, key numbers */
+  --dawn-500: #ff8a4c; /* horizon glow, gradient end */
+  --ember-500: #ff6b5a; /* rare highlight (≤ 2 uses) */
+  --cream-50: #f6f1e8; /* headings and body on dark */
+  --sand-100: #f3ece0; /* the one light section */
+
+  /* derived */
+  --dawn-ink: var(--night-950); /* text on a dawn fill */
+  --hairline: rgba(186, 230, 253, 0.1);
+  --glass: linear-gradient(180deg, rgba(37, 47, 100, 0.55), rgba(24, 32, 74, 0.42));
+  --glass-top: inset 0 1px 0 rgba(246, 241, 232, 0.07);
+  --dawn-grad-text: linear-gradient(250deg, #7dd3fc 0%, #bae6fd 30%, #ffd08a 62%, #ffb547 84%, #ff9f5a 100%);
+}

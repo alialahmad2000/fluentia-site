@@ -155,6 +155,12 @@ export const PAGE_SEO = {
   // Rollback copies of the pre-launch pages (2026-09-27: /next became / and
   // /join). Prerendered so they paint like the originals, noindex, unlinked,
   // absent from the sitemap. Switch back in src/App.jsx (HOME_VARIANT / JOIN_VARIANT).
+  // The homepage before «الفجر» (2026-11-14), frozen: noindex, not in the sitemap.
+  "/home-v1": {
+    title: "الصفحة الرئيسية السابقة | أكاديمية طلاقة",
+    description: "النسخة السابقة من الصفحة الرئيسية لأكاديمية طلاقة، محفوظة للمقارنة.",
+    noindex: true,
+  },
   "/classic": {
     title: "أكاديمية طلاقة | دورات إنجليزي أونلاين للكبار في السعودية",
     description:

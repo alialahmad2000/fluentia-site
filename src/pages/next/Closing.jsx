@@ -5,6 +5,7 @@ import { V1FAQ, V1Footer } from "../v1/V1Closing";
 import { FINAL_CTA } from "../landing-v2/content";
 import Giant from "./Giant";
 import Orb from "./Orb";
+import DawnSun from "./DawnSun";
 import { CTA_LABEL, LEVEL_TEST_LINK, PERF_LABEL, PERF_OPTIONS, STORIES_SUB, TITLES } from "./copy";
 import StoriesFeature from "../../components/stories/StoriesFeature";
 import { STORIES } from "../../data/stories";
@@ -62,12 +63,22 @@ export function FitFaq() {
 }
 
 /** `children` (/join) replaces the closing button — there it is the lead form itself. */
-export function Final({ gl, children }) {
+/* `dawn` (the «الفجر» homepage): the page's full dawn moment — the F sun fully
+   risen over a strong horizon glow, in place of the planet. Same title, same call. */
+export function Final({ gl, children, dawn = false }) {
   return (
-    <section className="fx-final">
-      <div className="fx-final-orb">
-        <Orb variant="planet" gl={gl} scale={0.72} mark="center" />
-      </div>
+    <section className={dawn ? "fx-final fx-final--dawn" : "fx-final"}>
+      {dawn ? (
+        <div className="fd-sky" aria-hidden="true">
+          <div className="fd-glow" />
+          <div className="fd-horizon" />
+          <DawnSun id="dsf" className="fd-sun" />
+        </div>
+      ) : (
+        <div className="fx-final-orb">
+          <Orb variant="planet" gl={gl} scale={0.72} mark="center" />
+        </div>
+      )}
       <Giant lines={TITLES.final} className="fx-center-title fx-final-title" />
       <p className="fx-final-sub fx-rv fx-fade">{FINAL_CTA.sub}</p>
       {children || (

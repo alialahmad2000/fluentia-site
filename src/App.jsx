@@ -51,6 +51,12 @@ const VerbsPage = lazy(() => import('./pages/verbs/VerbsPage'));
  *   JOIN_VARIANT "classic" → /join renders the v2 join page again (it stays at /join-classic)
  */
 const HOME_VARIANT = "next";
+/*
+ * HOMEPAGE_VERSION (2026-11-14): "dawn" = the «الفجر» colour system + first screen.
+ * Rollback is this one line: set "v1" and push. The page as it was before stays
+ * at /home-v1 (noindex, not in the sitemap) either way.
+ */
+const HOMEPAGE_VERSION = "dawn";
 const JOIN_VARIANT = "next";
 
 const NEXT_FALLBACK = <div style={{ minHeight: '100vh', background: '#050b16' }} />;
@@ -1223,8 +1229,10 @@ function AppRoutes(){
       {/* Homepage = the cinematic landing (HOME_VARIANT). The V5 "Dawn Stage"
           homepage it replaced stays at /classic (noindex) for rollback. */}
       <Route path="/" element={HOME_VARIANT === "next"
-        ? <Suspense fallback={NEXT_FALLBACK}><NextLanding seoPath="/" /></Suspense>
+        ? <Suspense fallback={NEXT_FALLBACK}><NextLanding seoPath="/" dawn={HOMEPAGE_VERSION === "dawn"} /></Suspense>
         : <Suspense fallback={VFallback}><V5Landing /></Suspense>} />
+      {/* The homepage as it was before «الفجر» (2026-11-14), frozen for comparison and rollback. */}
+      <Route path="/home-v1" element={<Suspense fallback={NEXT_FALLBACK}><NextLanding seoPath="/home-v1" /></Suspense>} />
       <Route path="/classic" element={<Suspense fallback={VFallback}><V5Landing /></Suspense>} />
       {/* «مستشار طلاقة» — the AI admissions chat (admissions-bot edge function). The old
           form it replaced stays reachable at /start/form, linked at the bottom of the chat. */}

@@ -56,7 +56,7 @@ const CAMPAIGN_GROUPS = [{ label: "أقسام الصفحة", items: CAMPAIGN_MEN
 const KEY = "fxmenu";
 const DUR = 280;
 
-export default function Header({ page = "home" }) {
+export default function Header({ page = "home", solidAt = 80 }) {
   // /join: on-page sections only («كيف تبدأ» is there, the journal is not).
   const campaign = Boolean(useCta());
   const home = page === "home";
@@ -99,7 +99,7 @@ export default function Header({ page = "home" }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [campaign, home]);
 
-  // The backdrop comes on after 80 px — measured by the shared scroll loop.
+  // The backdrop comes on after `solidAt` px (80; the dawn homepage: 40) — measured by the shared scroll loop.
   useEffect(() => {
     const head = headRef.current;
     const probe = document.getElementById("fx-top");
@@ -107,9 +107,9 @@ export default function Header({ page = "home" }) {
     return track(probe, {
       mode: "hero",
       write: false,
-      onP: (p, el) => head.toggleAttribute("data-solid", p * el.offsetHeight > 80),
+      onP: (p, el) => head.toggleAttribute("data-solid", p * el.offsetHeight > solidAt),
     });
-  }, []);
+  }, [solidAt]);
 
   const openMenu = useCallback(() => {
     if (openRef.current) return;
