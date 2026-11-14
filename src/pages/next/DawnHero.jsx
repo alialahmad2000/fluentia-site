@@ -72,6 +72,11 @@ function TrustLogos() {
   );
 }
 
+// A 32 px blur of the phone shot, inline (≈ 0.4 kB): it paints on the first
+// frame, so the largest thing on a phone's first screen is never waiting on
+// the network (the same blur-up the old hero's planet poster used).
+const PHONE_LQIP = "url(data:image/webp;base64,UklGRjoBAABXRUJQVlA4IC4BAADwBwCdASogAEUAPtVapUyoJSOiMBZuYQAaiWMAyJAW+LG41VXg4JrFMfELYJjdQW8NCxiuziJwloivJkto7cAUH9dAI3AeJ9AA/uYB1u2ngN2SNXQ84xKI1+yfBKDQZNaDXImaVP/5+rQXF6QQUXZEtGGhkoJ9zONwFLAv1+LED3CRwCRUJx2mTQZHAnpoQ0CcAGWOpniy1QqPlIrT7/P2WJF+CKXtcKVZ97/PY80bNEKJNIZFCDTru6AdThBxKKoJ0vkvFSp/XTep/RRRbA7OdWXX4PbmfGDOJFlslIVVQsDAZB6ShrPxYT4NNRSeFzmo1sMpm/QXRV01h/uI24HnVeg6nc8c1FjvJ+943vR+ND8Sr3v2LQoEwDJ2kZtxd8BBanknF3gRNs85kgAAAA==)";
+
 /* Three UI cards around the phone. Illustrative, like any app screenshot. */
 function Cards() {
   return (
@@ -192,7 +197,7 @@ export default function DawnHero() {
         <div className="dh-depth dh-depth--phone">
           <figure className="dh-phone">
             <span className="dh-phone-island" aria-hidden="true" />
-            <picture>
+            <picture style={{ backgroundImage: PHONE_LQIP }}>
               <source type="image/avif" srcSet="/home/dawn/plan-400.avif 400w, /home/dawn/plan-600.avif 600w" sizes="(min-width: 1024px) 272px, 196px" />
               <img
                 src="/home/dawn/plan-600.webp"

@@ -307,6 +307,12 @@
     -22px 10px 60px -26px rgba(255, 138, 76, 0.55),
     0 40px 80px -30px rgba(0, 0, 0, 0.9);
 }
+.fx-dawn .dh-phone picture {
+  display: block;
+  aspect-ratio: 600 / 1298;
+  border-radius: 29px;
+  background: center / cover no-repeat;
+}
 .fx-dawn .dh-phone img { display: block; width: 100%; height: auto; border-radius: 29px; }
 .fx-dawn .dh-phone-island {
   position: absolute;
@@ -440,7 +446,8 @@ html.fx-js .fx-dawn .dh-card { animation: dh-card-in 800ms var(--fx-ease-soft) b
     padding: 9px;
     border-radius: 48px;
   }
-  .fx-dawn .dh-phone img { border-radius: 39px; }
+  .fx-dawn .dh-phone img,
+  .fx-dawn .dh-phone picture { border-radius: 39px; }
   .fx-dawn .dh-phone-island { top: 17px; width: 80px; height: 23px; margin-left: -40px; border-radius: 14px; }
   .fx-dawn .dh-depth--phone {
     -webkit-mask-image: linear-gradient(to top, transparent 0, transparent calc(var(--hz) - 90px), #000 calc(var(--hz) - 10px));
