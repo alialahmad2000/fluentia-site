@@ -77,6 +77,10 @@ export const REDIRECTS = [
   // The cinematic landing previewed at /next IS the homepage since 2026-09-27.
   // One canonical URL; Pages carries the query string across the redirect.
   { from: "/next", to: "/", status: 301 },
+  // Short, searchable URLs for the two exam guides (Google Trends SA: «ستيب» and
+  // «ايلتس» are typed far more than the guide slugs). Both used to 404.
+  { from: "/step", to: "/guide/step", status: 301 },
+  { from: "/ielts", to: "/guide/ielts", status: 301 },
   // «مجلة طلاقة» art-direction previews, retired 2026-11-12 when «معرض»
   // (Gallery) became the journal's design. Old shared links land on /journal.
   { from: "/journal/preview", to: "/journal", status: 301 },

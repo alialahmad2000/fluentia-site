@@ -9,7 +9,7 @@ crumb: مستويات CEFR
 summary: جدول مختصر لمستويات CEFR الستة وما يستطيعه المتعلّم في كل منها، مع ساعات التعلّم الموجَّه التقريبية من Cambridge English.
 datePublished: 2026-10-27
 dateModified: 2026-10-27
-related: how-long-to-learn-english, english-from-zero, ielts
+related: how-long-to-learn-english, english-from-zero, ielts, step
 cta: home
 howto: false
 lang: ar

@@ -97,6 +97,8 @@ tbody tr+tr th,tbody tr+tr td{border-top:1px solid var(--line)}
 [dir="ltr"] .cta h2{font-family:"Readex Pro",sans-serif;font-weight:700}
 .cta p{max-width:36em;margin:10px auto 0;color:var(--text-2);font-size:16.5px}
 .cta-row{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:20px}
+.cta .cta-sub{margin-top:14px;font-size:15px}
+.cta .cta-sub a{color:var(--sky);text-decoration:underline;text-underline-offset:3px;display:inline-block;padding:8px 4px}
 .btn{display:inline-flex;align-items:center;justify-content:center;min-height:50px;padding:12px 26px;border-radius:999px;background:var(--cta);color:var(--cta-ink);font-weight:700;font-size:16.5px;text-decoration:none;transition:background-color .15s,transform .15s}
 .btn:hover{background:#5ccafa;color:var(--cta-ink);transform:translateY(-1px)}
 .btn--ghost{background:transparent;color:var(--text);border:1px solid var(--line-2)}
