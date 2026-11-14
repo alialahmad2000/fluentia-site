@@ -7,3 +7,4 @@ dist-ssr
 # wrangler reads .dev.vars for `pages dev` — never commit one, it is a secret file
 .dev.vars
 .dev.vars.*
+scripts/level-test-v2/.cache/

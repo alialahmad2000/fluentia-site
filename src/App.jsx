@@ -35,6 +35,7 @@ const V1Landing = lazy(() => import('./pages/v1/V1Landing'));
 const V5Landing = lazy(() => import('./pages/v5/V5Landing'));
 // /cine — the same landing with the 3D cinematic hero backdrop (candidate).
 const LevelTestPage = lazy(() => import('./pages/level-test/LevelTestPage'));
+const LevelTestV2 = lazy(() => import('./pages/level-test-v2/LevelTestV2'));
 // /v2 is a superseded homepage kept reachable; it was eager-imported and put
 // ~124 kB into the main chunk that every visitor to / downloads.
 const LandingV2 = lazy(() => import('./pages/LandingV2'));
@@ -58,6 +59,12 @@ const HOME_VARIANT = "next";
  */
 const HOMEPAGE_VERSION = "dawn";
 const JOIN_VARIANT = "next";
+/*
+ * LEVEL_TEST_VERSION (2026-11-14): "v2" = the multistage level test with the
+ * sun-meter result, CRM lead and intro-meeting booking. Rollback is this one
+ * line: set "v1" and push. v1 stays at /level-test-v1 (noindex) either way.
+ */
+const LEVEL_TEST_VERSION = "v2";
 
 const NEXT_FALLBACK = <div style={{ minHeight: '100vh', background: '#050b16' }} />;
 const JOIN_CLASSIC_FALLBACK = <div style={{ minHeight: '100vh', background: '#060e1c' }} />;
@@ -1254,7 +1261,8 @@ function AppRoutes(){
       {/* «رحلة صوتك» landing preview (noindex, unlinked, not in the sitemap). / is unchanged. */}
       <Route path="/journey" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#050b16'}} />}><JourneyLanding /></Suspense>} />
       {/* Adaptive CEFR placement exam. /test is the short alias for ads and bios. */}
-      <Route path="/level-test" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#04070e'}} />}><LevelTestPage /></Suspense>} />
+      <Route path="/level-test" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#060914'}} />}>{LEVEL_TEST_VERSION === "v2" ? <LevelTestV2 /> : <LevelTestPage />}</Suspense>} />
+      <Route path="/level-test-v1" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#04070e'}} />}><LevelTestPage seoPath="/level-test-v1" /></Suspense>} />
       <Route path="/test" element={<Navigate to="/level-test" replace />} />
       <Route path="/partners" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#060e1c'}} />}><PartnersLanding /></Suspense>} />
       <Route path="/partners/submitted" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#060e1c'}} />}><PartnersSubmitted /></Suspense>} />

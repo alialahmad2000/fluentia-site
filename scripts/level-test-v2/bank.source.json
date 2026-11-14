@@ -1,0 +1,5056 @@
+{
+ "version": "v2.0",
+ "passages": [
+  {
+   "id": "p-pa1-01",
+   "cefr": "Pre-A1",
+   "lvl": 0,
+   "genre": "notice",
+   "title": "Clinic door sign",
+   "text": "CLINIC 3\nDr Reem Al-Qahtani\nSunday – Thursday: 8:00 a.m. – 2:00 p.m.\nFriday and Saturday: CLOSED"
+  },
+  {
+   "id": "p-pa1-02",
+   "cefr": "Pre-A1",
+   "lvl": 0,
+   "genre": "sms",
+   "title": "Message from Daniel",
+   "text": "Hi Majed, I'm at the hotel now. Room 214. Call me on 0503 778 120. Daniel"
+  },
+  {
+   "id": "p-a1-01",
+   "cefr": "A1",
+   "lvl": 1,
+   "genre": "whatsapp",
+   "title": "Message from Noura",
+   "text": "Hi Faisal, sorry! I'm in traffic on King Fahd Road. I'm 20 minutes late. Please start the meeting without me. Noura"
+  },
+  {
+   "id": "p-a1-02",
+   "cefr": "A1",
+   "lvl": 1,
+   "genre": "notice",
+   "title": "Pharmacy opening hours",
+   "text": "AL-NOOR PHARMACY\nSaturday – Thursday: 8 a.m. – 12 midnight\nFriday: 4 p.m. – 12 midnight\nFree delivery on orders over SR 100\nCall 920 004 455"
+  },
+  {
+   "id": "p-a1-03",
+   "cefr": "A1",
+   "lvl": 1,
+   "genre": "card",
+   "title": "Hotel welcome card",
+   "text": "Welcome to Jeddah Bay Hotel\nBreakfast: 6:30 – 10:30 a.m., ground floor\nWi-Fi password: bay2026\nCheck-out time: 12 noon"
+  },
+  {
+   "id": "p-a2-01",
+   "cefr": "A2",
+   "lvl": 2,
+   "genre": "email",
+   "title": "Training day – change of plan",
+   "text": "Hi all,\n\nThe training day on Wednesday will now be on Thursday, 14 May, because the meeting room is not free on Wednesday. It starts at 9:00 and finishes at 3:00. Lunch is included, but please bring your laptop. If you can't come, please tell Reem in HR before Monday.\n\nThanks,\nMajed"
+  },
+  {
+   "id": "p-a2-02",
+   "cefr": "A2",
+   "lvl": 2,
+   "genre": "ad",
+   "title": "Flat for rent",
+   "text": "FOR RENT – Al Malqa, Riyadh\n2-bedroom flat, 3rd floor, with lift. Near the metro station.\nSR 4,000 a month (water and electricity not included).\nCall Sultan after 5 p.m.: 0559 812 330"
+  },
+  {
+   "id": "p-b1-01",
+   "cefr": "B1",
+   "lvl": 3,
+   "genre": "email",
+   "title": "Training day: change of date",
+   "text": "Subject: Training day – change of date\n\nHi all,\n\nThe customer-service training planned for Sunday 9 March has been moved to Tuesday 11 March, because the trainer's flight from Dubai was cancelled. It will still start at 9:00 in Meeting Room 2. Please bring your laptop, as you will practise on the new booking system. If you can't come on Tuesday, tell Hessa in HR by Thursday so she can find you a place in the next session.\n\nThanks,\nMajed"
+  },
+  {
+   "id": "p-b1-02",
+   "cefr": "B1",
+   "lvl": 3,
+   "genre": "notice",
+   "title": "Returns policy",
+   "text": "RETURNS POLICY\nYou can return most items within 14 days of delivery for a full refund, as long as they are unused and in their original box. Electronics must be returned within 7 days. Sale items can be exchanged but not refunded. To start a return, go to My Orders and choose 'Return item'. A driver will collect it from your address free of charge. Refunds are paid to your original payment method within 5 working days of the item reaching our warehouse."
+  },
+  {
+   "id": "p-b1-03",
+   "cefr": "B1",
+   "lvl": 3,
+   "genre": "article",
+   "title": "Groceries at the touch of a button",
+   "text": "More and more families in Saudi cities now buy their groceries online. Shoppers say the biggest advantage is time: instead of spending an hour in traffic and in the supermarket, they can order in ten minutes from their phone. However, not everyone is happy. Some customers complain that fruit and vegetables are not always fresh, and others miss choosing products themselves. Because of this, several apps now let customers chat with the person who is picking their order and ask for photos before the items are packed."
+  },
+  {
+   "id": "p-b2-01",
+   "cefr": "B2",
+   "lvl": 4,
+   "genre": "article",
+   "title": "The office without walls",
+   "text": "When Al-Dana Insurance moved its Riyadh staff into an open-plan office last year, managers expected more teamwork and faster decisions. The walls had been removed precisely so that people would talk more. What happened was almost exactly the opposite. Within months, face-to-face conversations had dropped, and the number of internal emails had nearly doubled. Employees, it seemed, put on headphones to protect themselves from the noise and then messaged the colleague two desks away rather than interrupt them. The company has not gone back to private offices, but it has added small 'quiet rooms' and asked each team to agree on hours when talking is welcome. Early results are encouraging, although the managers admit they are no longer sure what the right design is."
+  },
+  {
+   "id": "p-b2-02",
+   "cefr": "B2",
+   "lvl": 4,
+   "genre": "blog",
+   "title": "Why I ignore the stars",
+   "text": "Online star ratings look simple enough: five stars good, one star bad. Yet anyone who has booked a hotel recently knows the system is far less helpful than it appears. Because almost every hotel now averages between 4.2 and 4.8, the difference between a good hotel and an ordinary one has all but disappeared. Many guests only leave a review when something goes badly wrong, or when the hotel offers them a discount in return. My own habit has changed as a result: I ignore the score and read the three-star reviews instead. They tend to be written by people who are neither angry nor rewarded, and they usually tell you exactly what was good and what wasn't, which is all a traveller really needs."
+  },
+  {
+   "id": "p-c1-01",
+   "cefr": "C1",
+   "lvl": 5,
+   "genre": "article",
+   "title": "The meeting nobody missed",
+   "text": "Few rituals of working life are as widely resented, or as stubbornly preserved, as the weekly status meeting. Ask any team and most members will tell you the hour could be replaced by a two-line email. Yet when one Jeddah logistics firm actually scrapped its Monday meeting, the results were not what its staff had predicted. Productivity barely changed; morale, on the other hand, dipped noticeably. Exit interviews later revealed that newer employees in particular had relied on the meeting not for information, which they could indeed have read elsewhere, but for a sense of who was who and whose opinion carried weight. The firm has since reinstated a shorter version, though it now calls it a 'team check-in' – a change of name that, one manager admits, has fooled nobody. The lesson, perhaps, is not that meetings are better than we think, but that we tend to misjudge what they are for."
+  },
+  {
+   "id": "p-c1-02",
+   "cefr": "C1",
+   "lvl": 5,
+   "genre": "article",
+   "title": "Too old to learn?",
+   "text": "It has become something of a commonplace that adults are poor language learners, and that anyone who did not start as a child should resign themselves to a lifetime of embarrassing mistakes. The research, however, paints a rather more complicated picture. Children do enjoy a clear advantage in one area: accent. Given enough exposure, they come to sound like native speakers in a way few adults ever will. In almost every other respect – vocabulary, grammar, reading, even listening – adults who study seriously tend to progress faster, at least in the early years, precisely because they can draw on what they already know. What adults lack is rarely ability; it is time, and the willingness to sound foolish in public. The first can be scheduled. The second, unfortunately, cannot, and it is this, far more than age, that seems to separate those who succeed from those who quietly give up."
+  }
+ ],
+ "clips": [
+  {
+   "id": "c-pa1-01",
+   "cefr": "Pre-A1",
+   "lvl": 0,
+   "kind": "dialogue",
+   "situation_ar": "في المقهى: طلب مشروبات",
+   "speakers": [
+    {
+     "id": "A",
+     "voice": "us_male"
+    },
+    {
+     "id": "B",
+     "voice": "us_female"
+    }
+   ],
+   "script": [
+    {
+     "speaker": "A",
+     "text": "One coffee and two waters, please."
+    },
+    {
+     "speaker": "B",
+     "text": "That's eighteen riyals."
+    }
+   ]
+  },
+  {
+   "id": "c-pa1-02",
+   "cefr": "Pre-A1",
+   "lvl": 0,
+   "kind": "monologue",
+   "situation_ar": "إعلان في مبنى الشركة",
+   "speakers": [
+    {
+     "id": "A",
+     "voice": "us_female"
+    }
+   ],
+   "script": [
+    {
+     "speaker": "A",
+     "text": "The meeting is in room five, on the second floor."
+    }
+   ]
+  },
+  {
+   "id": "c-pa1-03",
+   "cefr": "Pre-A1",
+   "lvl": 0,
+   "kind": "dialogue",
+   "situation_ar": "في استقبال العيادة",
+   "speakers": [
+    {
+     "id": "A",
+     "voice": "us_male"
+    },
+    {
+     "id": "B",
+     "voice": "us_female"
+    }
+   ],
+   "script": [
+    {
+     "speaker": "A",
+     "text": "Hello. Can I see the doctor today?"
+    },
+    {
+     "speaker": "B",
+     "text": "No, sorry. Tomorrow at ten o'clock."
+    }
+   ]
+  },
+  {
+   "id": "c-pa1-04",
+   "cefr": "Pre-A1",
+   "lvl": 0,
+   "kind": "monologue",
+   "situation_ar": "رسالة صوتية من صديقة",
+   "speakers": [
+    {
+     "id": "A",
+     "voice": "us_female"
+    }
+   ],
+   "script": [
+    {
+     "speaker": "A",
+     "text": "Hi Noura, it's Maria. I'm at the coffee shop, near the bank. See you soon."
+    }
+   ]
+  },
+  {
+   "id": "c-a1-01",
+   "cefr": "A1",
+   "lvl": 1,
+   "kind": "dialogue",
+   "situation_ar": "في استقبال الفندق",
+   "speakers": [
+    {
+     "id": "A",
+     "voice": "us_female"
+    },
+    {
+     "id": "B",
+     "voice": "us_male"
+    }
+   ],
+   "script": [
+    {
+     "speaker": "A",
+     "text": "Welcome to the Bay Hotel. How many nights?"
+    },
+    {
+     "speaker": "B",
+     "text": "Three nights, please. My name is Daniel Brown."
+    }
+   ]
+  },
+  {
+   "id": "c-a1-02",
+   "cefr": "A1",
+   "lvl": 1,
+   "kind": "monologue",
+   "situation_ar": "رسالة صوتية من عيادة",
+   "speakers": [
+    {
+     "id": "A",
+     "voice": "us_female"
+    }
+   ],
+   "script": [
+    {
+     "speaker": "A",
+     "text": "Hello, this is City Clinic. Your appointment with Dr Hessa is on Tuesday at 4:30. Please come ten minutes early."
+    }
+   ]
+  },
+  {
+   "id": "c-a1-03",
+   "cefr": "A1",
+   "lvl": 1,
+   "kind": "monologue",
+   "situation_ar": "إعلان في المول",
+   "speakers": [
+    {
+     "id": "A",
+     "voice": "us_male"
+    }
+   ],
+   "script": [
+    {
+     "speaker": "A",
+     "text": "The mall closes in fifteen minutes. Please go to the main door. Thank you."
+    }
+   ]
+  },
+  {
+   "id": "c-a1-04",
+   "cefr": "A1",
+   "lvl": 1,
+   "kind": "dialogue",
+   "situation_ar": "سؤال عن الطريق في الشارع",
+   "speakers": [
+    {
+     "id": "A",
+     "voice": "us_female"
+    },
+    {
+     "id": "B",
+     "voice": "us_male"
+    }
+   ],
+   "script": [
+    {
+     "speaker": "A",
+     "text": "Excuse me, where is the bank?"
+    },
+    {
+     "speaker": "B",
+     "text": "Go straight, then turn left. It's next to the pharmacy."
+    }
+   ]
+  },
+  {
+   "id": "c-a2-01",
+   "cefr": "A2",
+   "lvl": 2,
+   "kind": "dialogue",
+   "situation_ar": "مكالمة مع عيادة أسنان",
+   "speakers": [
+    {
+     "id": "A",
+     "voice": "us_female"
+    },
+    {
+     "id": "B",
+     "voice": "us_male"
+    }
+   ],
+   "script": [
+    {
+     "speaker": "A",
+     "text": "Good morning, Smile Dental Clinic."
+    },
+    {
+     "speaker": "B",
+     "text": "Hi, I'd like to change my appointment from Monday to Wednesday, please."
+    },
+    {
+     "speaker": "A",
+     "text": "Wednesday at eleven is free."
+    },
+    {
+     "speaker": "B",
+     "text": "Perfect, thanks."
+    }
+   ]
+  },
+  {
+   "id": "c-a2-02",
+   "cefr": "A2",
+   "lvl": 2,
+   "kind": "monologue",
+   "situation_ar": "إعلان في المطار",
+   "speakers": [
+    {
+     "id": "A",
+     "voice": "us_male"
+    }
+   ],
+   "script": [
+    {
+     "speaker": "A",
+     "text": "Passengers on flight 340 to Dammam, please go to gate 18. The flight will now leave at 7:45, not 7:15. We are sorry for the delay."
+    }
+   ]
+  },
+  {
+   "id": "c-a2-03",
+   "cefr": "A2",
+   "lvl": 2,
+   "kind": "monologue",
+   "situation_ar": "رسالة صوتية من مندوب توصيل",
+   "speakers": [
+    {
+     "id": "A",
+     "voice": "us_male"
+    }
+   ],
+   "script": [
+    {
+     "speaker": "A",
+     "text": "Hi, this is Ahmed from FastBox. I came with your package at two, but nobody was home. I'll try again tomorrow morning."
+    }
+   ]
+  },
+  {
+   "id": "c-a2-04",
+   "cefr": "A2",
+   "lvl": 2,
+   "kind": "dialogue",
+   "situation_ar": "حديث بين زميلين في العمل",
+   "speakers": [
+    {
+     "id": "A",
+     "voice": "us_male"
+    },
+    {
+     "id": "B",
+     "voice": "us_female"
+    }
+   ],
+   "script": [
+    {
+     "speaker": "A",
+     "text": "Lama, are you coming to the meeting?"
+    },
+    {
+     "speaker": "B",
+     "text": "Sorry, I can't. I have to take my son to the doctor. Can you send me the notes?"
+    },
+    {
+     "speaker": "A",
+     "text": "Sure, no problem."
+    }
+   ]
+  },
+  {
+   "id": "c-b1-01",
+   "cefr": "B1",
+   "lvl": 3,
+   "kind": "monologue",
+   "situation_ar": "رسالة صوتية من شركة سفر",
+   "speakers": [
+    {
+     "id": "A",
+     "voice": "uk_female"
+    }
+   ],
+   "script": [
+    {
+     "speaker": "A",
+     "text": "Hi Faisal, it's Maria from Gulf Travel. Your flight to London on Friday is still confirmed, but the airline has changed the time. It now leaves at eleven at night, not seven in the evening. If that's a problem, please call me back today."
+    }
+   ]
+  },
+  {
+   "id": "c-b1-02",
+   "cefr": "B1",
+   "lvl": 3,
+   "kind": "dialogue",
+   "situation_ar": "مكالمة هاتفية مع استقبال عيادة",
+   "speakers": [
+    {
+     "id": "A",
+     "voice": "us_female"
+    },
+    {
+     "id": "B",
+     "voice": "uk_male"
+    }
+   ],
+   "script": [
+    {
+     "speaker": "A",
+     "text": "Good morning, Al Noor Clinic."
+    },
+    {
+     "speaker": "B",
+     "text": "Hi, I have an appointment with Dr Reem at ten, but I'm stuck in traffic."
+    },
+    {
+     "speaker": "A",
+     "text": "No problem. She has a free slot at eleven thirty today, or tomorrow at nine."
+    },
+    {
+     "speaker": "B",
+     "text": "Today's better. Thanks."
+    }
+   ]
+  },
+  {
+   "id": "c-b1-03",
+   "cefr": "B1",
+   "lvl": 3,
+   "kind": "monologue",
+   "situation_ar": "إعلان للموظفين في مبنى الشركة",
+   "speakers": [
+    {
+     "id": "A",
+     "voice": "us_male"
+    }
+   ],
+   "script": [
+    {
+     "speaker": "A",
+     "text": "Attention, please. Because of maintenance work, the main car park will be closed tomorrow from seven until noon. Staff who drive to work can park at City Mall next door, and a free bus will bring you here every fifteen minutes. We're sorry for the inconvenience."
+    }
+   ]
+  },
+  {
+   "id": "c-b1-04",
+   "cefr": "B1",
+   "lvl": 3,
+   "kind": "dialogue",
+   "situation_ar": "حوار بين زميلين في العمل",
+   "speakers": [
+    {
+     "id": "A",
+     "voice": "uk_female"
+    },
+    {
+     "id": "B",
+     "voice": "us_male"
+    }
+   ],
+   "script": [
+    {
+     "speaker": "A",
+     "text": "Have you finished the sales presentation?"
+    },
+    {
+     "speaker": "B",
+     "text": "Almost. I just need the March figures, but Sultan still hasn't sent them."
+    },
+    {
+     "speaker": "A",
+     "text": "Again? Right, I'll call him now."
+    },
+    {
+     "speaker": "B",
+     "text": "Thanks. I want to send it to the manager before lunch."
+    }
+   ]
+  },
+  {
+   "id": "c-b2-01",
+   "cefr": "B2",
+   "lvl": 4,
+   "kind": "dialogue",
+   "situation_ar": "نقاش في اجتماع عمل عن إطلاق تطبيق",
+   "speakers": [
+    {
+     "id": "A",
+     "voice": "uk_male"
+    },
+    {
+     "id": "B",
+     "voice": "in_female"
+    }
+   ],
+   "script": [
+    {
+     "speaker": "A",
+     "text": "So, can we launch the app on the first of June as planned?"
+    },
+    {
+     "speaker": "B",
+     "text": "Technically, yes. But we've only tested it on newer phones, and a lot of our customers still use older models. I'd rather wait two weeks than deal with a flood of complaints."
+    },
+    {
+     "speaker": "A",
+     "text": "Fair enough. I'll let the client know."
+    }
+   ]
+  },
+  {
+   "id": "c-b2-02",
+   "cefr": "B2",
+   "lvl": 4,
+   "kind": "monologue",
+   "situation_ar": "رسالة صوتية من موظف في البنك",
+   "speakers": [
+    {
+     "id": "A",
+     "voice": "au_male"
+    }
+   ],
+   "script": [
+    {
+     "speaker": "A",
+     "text": "Hi, this is Liam from Harbour Bank, returning your call about the transfer. I've checked, and the money did leave your account on Monday, but the receiving bank is holding it while they confirm the details. There's nothing you need to do. It should arrive within two working days. If it hasn't by Thursday, call me on extension four one two."
+    }
+   ]
+  },
+  {
+   "id": "c-b2-03",
+   "cefr": "B2",
+   "lvl": 4,
+   "kind": "dialogue",
+   "situation_ar": "نزيل يتحدث مع موظفة الاستقبال في فندق",
+   "speakers": [
+    {
+     "id": "A",
+     "voice": "au_male"
+    },
+    {
+     "id": "B",
+     "voice": "uk_female"
+    }
+   ],
+   "script": [
+    {
+     "speaker": "A",
+     "text": "Hi, I booked a room with a sea view, but mine looks out onto the car park."
+    },
+    {
+     "speaker": "B",
+     "text": "I'm so sorry about that. We're fully booked tonight, I'm afraid, but I can move you first thing tomorrow, and breakfast is on us."
+    },
+    {
+     "speaker": "A",
+     "text": "Well, I suppose that'll have to do."
+    }
+   ]
+  },
+  {
+   "id": "c-b2-04",
+   "cefr": "B2",
+   "lvl": 4,
+   "kind": "monologue",
+   "situation_ar": "تنبيه من الموارد البشرية للموظفين",
+   "speakers": [
+    {
+     "id": "A",
+     "voice": "in_female"
+    }
+   ],
+   "script": [
+    {
+     "speaker": "A",
+     "text": "Good morning, everyone. A quick reminder about the new expenses system. From next month, paper receipts will no longer be accepted. You'll need to photograph them and upload them through the app within seven days. Late claims won't be rejected automatically, but they will need your manager's approval, which may slow things down."
+    }
+   ]
+  },
+  {
+   "id": "c-c1-01",
+   "cefr": "C1",
+   "lvl": 5,
+   "kind": "dialogue",
+   "situation_ar": "مديران يتناقشان بعد مقابلات توظيف",
+   "speakers": [
+    {
+     "id": "A",
+     "voice": "uk_female"
+    },
+    {
+     "id": "B",
+     "voice": "us_male"
+    }
+   ],
+   "script": [
+    {
+     "speaker": "A",
+     "text": "So, what did you make of the second candidate?"
+    },
+    {
+     "speaker": "B",
+     "text": "Well, she certainly knew the theory. I just kept waiting for her to mention a single project she'd actually delivered, and it never came."
+    },
+    {
+     "speaker": "A",
+     "text": "Mm. I had the same feeling, to be honest. Shall we invite the first one back, then?"
+    },
+    {
+     "speaker": "B",
+     "text": "I'd say so, though I wouldn't rule her out entirely."
+    }
+   ]
+  },
+  {
+   "id": "c-c1-02",
+   "cefr": "C1",
+   "lvl": 5,
+   "kind": "monologue",
+   "situation_ar": "مقطع من بودكاست عن التعلّم",
+   "speakers": [
+    {
+     "id": "A",
+     "voice": "au_male"
+    }
+   ],
+   "script": [
+    {
+     "speaker": "A",
+     "text": "There's a popular claim that we only remember ten percent of what we read. It's a neat figure, and it turns up in a lot of training slides. The trouble is, nobody seems able to trace it back to an actual study. That doesn't mean reading is an efficient way to learn. It may well not be. But it does mean we should be rather more careful about the numbers we repeat."
+    }
+   ]
+  },
+  {
+   "id": "c-c1-03",
+   "cefr": "C1",
+   "lvl": 5,
+   "kind": "dialogue",
+   "situation_ar": "تفاوض بين مشترٍ ومورّد",
+   "speakers": [
+    {
+     "id": "A",
+     "voice": "uk_male"
+    },
+    {
+     "id": "B",
+     "voice": "in_female"
+    }
+   ],
+   "script": [
+    {
+     "speaker": "A",
+     "text": "If we doubled the order, could you come down on the price per unit?"
+    },
+    {
+     "speaker": "B",
+     "text": "I'd love to say yes. The thing is, our margins on that range are already very thin, and our costs went up again in March. What I could do is speed up delivery at no extra charge."
+    },
+    {
+     "speaker": "A",
+     "text": "I see. Let me take that back to my team."
+    }
+   ]
+  },
+  {
+   "id": "c-c1-04",
+   "cefr": "C1",
+   "lvl": 5,
+   "kind": "monologue",
+   "situation_ar": "رسالة صوتية من زميلة عن مسودة تقرير",
+   "speakers": [
+    {
+     "id": "A",
+     "voice": "us_female"
+    }
+   ],
+   "script": [
+    {
+     "speaker": "A",
+     "text": "Hi Abdullah, it's Maria. I've just read through the draft. The structure works well, and the market section is really strong. I'd just take another look at the conclusion. At the moment it promises rather more than the data can support, and the board will pick up on that. Happy to talk it through if it helps."
+    }
+   ]
+  }
+ ],
+ "items": [
+  {
+   "id": "g-pa1-01",
+   "cefr": "Pre-A1",
+   "lvl": 0,
+   "skill": "grammar",
+   "subskill": "be_present",
+   "difficulty": 0.02,
+   "stem": "Hello, I ___ Faisal. I work here.",
+   "options": [
+    "am",
+    "is",
+    "are",
+    "be"
+   ],
+   "answer": 0,
+   "rationale_ar": "مع I نستخدم am دائماً: I am",
+   "tags": [
+    "work",
+    "greetings"
+   ]
+  },
+  {
+   "id": "g-pa1-02",
+   "cefr": "Pre-A1",
+   "lvl": 0,
+   "skill": "grammar",
+   "subskill": "possessive_adjectives",
+   "difficulty": 0.08,
+   "stem": "This is Reem. ___ phone number is 0551 234 567.",
+   "options": [
+    "She",
+    "Her",
+    "Hers",
+    "His"
+   ],
+   "answer": 1,
+   "rationale_ar": "ريم أنثى، وقبل كلمة phone نستخدم Her يعني «رقمها»",
+   "tags": [
+    "personal_info",
+    "l1_pronoun"
+   ]
+  },
+  {
+   "id": "g-pa1-03",
+   "cefr": "Pre-A1",
+   "lvl": 0,
+   "skill": "grammar",
+   "subskill": "plural_nouns",
+   "difficulty": 0.11,
+   "stem": "Two ___ and one water, please.",
+   "options": [
+    "sandwich",
+    "sandwichs",
+    "sandwiches",
+    "sandwiche"
+   ],
+   "answer": 2,
+   "rationale_ar": "الكلمة اللي تنتهي بـ ch نضيف لها es في الجمع: sandwiches",
+   "tags": [
+    "cafe",
+    "l1_plural"
+   ]
+  },
+  {
+   "id": "g-pa1-04",
+   "cefr": "Pre-A1",
+   "lvl": 0,
+   "skill": "grammar",
+   "subskill": "be_questions",
+   "difficulty": 0.06,
+   "stem": "A: ___ you Mr Chen?\nB: Yes, I am.",
+   "options": [
+    "Is",
+    "Do",
+    "Am",
+    "Are"
+   ],
+   "answer": 3,
+   "rationale_ar": "مع you نستخدم Are في السؤال",
+   "tags": [
+    "work",
+    "greetings"
+   ]
+  },
+  {
+   "id": "g-pa1-05",
+   "cefr": "Pre-A1",
+   "lvl": 0,
+   "skill": "grammar",
+   "subskill": "there_is_are",
+   "difficulty": 0.13,
+   "stem": "There ___ two banks on this street.",
+   "options": [
+    "are",
+    "is",
+    "have",
+    "has"
+   ],
+   "answer": 0,
+   "rationale_ar": "two banks جمع، فنقول There are وليس There have",
+   "tags": [
+    "city",
+    "l1_there_have"
+   ]
+  },
+  {
+   "id": "g-pa1-06",
+   "cefr": "Pre-A1",
+   "lvl": 0,
+   "skill": "grammar",
+   "subskill": "modal_can",
+   "difficulty": 0.16,
+   "stem": "I can ___ English a little.",
+   "options": [
+    "speaks",
+    "speak",
+    "speaking",
+    "to speak"
+   ],
+   "answer": 1,
+   "rationale_ar": "بعد can يجي الفعل بدون to وبدون s",
+   "tags": [
+    "personal_info",
+    "l1_can_to"
+   ]
+  },
+  {
+   "id": "v-pa1-02",
+   "cefr": "Pre-A1",
+   "lvl": 0,
+   "skill": "vocab",
+   "subskill": "numbers",
+   "difficulty": 0.07,
+   "stem": "The price is SR 15. That is ___ riyals.",
+   "options": [
+    "fifty",
+    "five",
+    "fifty-five",
+    "fifteen"
+   ],
+   "answer": 3,
+   "rationale_ar": "15 تُقرأ fifteen، أما fifty فهي 50",
+   "tags": [
+    "shopping",
+    "numbers"
+   ]
+  },
+  {
+   "id": "v-pa1-03",
+   "cefr": "Pre-A1",
+   "lvl": 0,
+   "skill": "vocab",
+   "subskill": "food_drink",
+   "difficulty": 0.03,
+   "stem": "I'd like a cup of ___, please.",
+   "options": [
+    "bread",
+    "coffee",
+    "chicken",
+    "eggs"
+   ],
+   "answer": 1,
+   "rationale_ar": "a cup of تكون مع المشروبات، والقهوة مشروب",
+   "tags": [
+    "cafe"
+   ]
+  },
+  {
+   "id": "v-pa1-04",
+   "cefr": "Pre-A1",
+   "lvl": 0,
+   "skill": "vocab",
+   "subskill": "family",
+   "difficulty": 0.09,
+   "stem": "My name is Sultan. Abdullah is my father. I am his ___.",
+   "options": [
+    "brother",
+    "wife",
+    "sister",
+    "son"
+   ],
+   "answer": 3,
+   "rationale_ar": "سلطان ولد عبدالله، والولد بالإنجليزي son",
+   "tags": [
+    "family"
+   ]
+  },
+  {
+   "id": "v-pa1-05",
+   "cefr": "Pre-A1",
+   "lvl": 0,
+   "skill": "vocab",
+   "subskill": "times_of_day",
+   "difficulty": 0.12,
+   "stem": "I work from 8 in the ___ to 4 in the afternoon.",
+   "options": [
+    "morning",
+    "night",
+    "evening",
+    "week"
+   ],
+   "answer": 0,
+   "rationale_ar": "الساعة 8 قبل الظهر تكون in the morning",
+   "tags": [
+    "work",
+    "time"
+   ]
+  },
+  {
+   "id": "u-pa1-01",
+   "cefr": "Pre-A1",
+   "lvl": 0,
+   "skill": "use",
+   "subskill": "leave_taking",
+   "difficulty": 0.05,
+   "stem": "You leave the office at 5 p.m. You say to your colleague:",
+   "options": [
+    "Good morning.",
+    "Nice to meet you.",
+    "See you tomorrow.",
+    "How are you?"
+   ],
+   "answer": 2,
+   "rationale_ar": "عند المغادرة آخر الدوام نقول See you tomorrow",
+   "tags": [
+    "work",
+    "greetings"
+   ]
+  },
+  {
+   "id": "u-pa1-02",
+   "cefr": "Pre-A1",
+   "lvl": 0,
+   "skill": "use",
+   "subskill": "introductions",
+   "difficulty": 0.08,
+   "stem": "You meet Mr Chen for the first time. You say:",
+   "options": [
+    "Nice to meet you.",
+    "See you later.",
+    "Good night.",
+    "You're welcome."
+   ],
+   "answer": 0,
+   "rationale_ar": "نقولها لما نتعرف على شخص لأول مرة",
+   "tags": [
+    "work",
+    "greetings"
+   ]
+  },
+  {
+   "id": "u-pa1-03",
+   "cefr": "Pre-A1",
+   "lvl": 0,
+   "skill": "use",
+   "subskill": "ordering",
+   "difficulty": 0.04,
+   "stem": "In a coffee shop, the waiter asks: 'What would you like?' You say:",
+   "options": [
+    "Yes, please.",
+    "Here you are.",
+    "No, thank you.",
+    "A coffee, please."
+   ],
+   "answer": 3,
+   "rationale_ar": "الرد على What would you like هو اسم الطلب + please",
+   "tags": [
+    "cafe"
+   ]
+  },
+  {
+   "id": "u-pa1-04",
+   "cefr": "Pre-A1",
+   "lvl": 0,
+   "skill": "use",
+   "subskill": "spelling_names",
+   "difficulty": 0.1,
+   "stem": "Your name is Faisal. The receptionist asks: 'How do you spell your name?' You say:",
+   "options": [
+    "I am Faisal.",
+    "F-A-I-S-A-L.",
+    "Yes, I do.",
+    "I'm fine, thanks."
+   ],
+   "answer": 1,
+   "rationale_ar": "How do you spell يعني: قل الاسم حرفاً حرفاً",
+   "tags": [
+    "clinic",
+    "personal_info"
+   ]
+  },
+  {
+   "id": "u-pa1-05",
+   "cefr": "Pre-A1",
+   "lvl": 0,
+   "skill": "use",
+   "subskill": "responding_to_apology",
+   "difficulty": 0.15,
+   "stem": "A man bumps into you and says: 'Sorry!' You say:",
+   "options": [
+    "You're welcome.",
+    "Thank you.",
+    "That's OK.",
+    "Excuse me."
+   ],
+   "answer": 2,
+   "rationale_ar": "لما أحد يعتذر نرد بـ That's OK، وYou're welcome رد على الشكر",
+   "tags": [
+    "city",
+    "l1_pragmatics"
+   ]
+  },
+  {
+   "id": "r-pa1-01a",
+   "cefr": "Pre-A1",
+   "lvl": 0,
+   "skill": "reading",
+   "subskill": "detail",
+   "difficulty": 0.06,
+   "stem": "What time does the clinic close on Sunday?",
+   "options": [
+    "8:00 a.m.",
+    "3:00 p.m.",
+    "2:00 p.m.",
+    "12:00 p.m."
+   ],
+   "answer": 2,
+   "rationale_ar": "في اللوحة: من 8 الصبح إلى 2 الظهر، فالإغلاق الساعة 2",
+   "tags": [
+    "clinic"
+   ],
+   "passage_id": "p-pa1-01"
+  },
+  {
+   "id": "r-pa1-02a",
+   "cefr": "Pre-A1",
+   "lvl": 0,
+   "skill": "reading",
+   "subskill": "detail",
+   "difficulty": 0.03,
+   "stem": "Where is Daniel now?",
+   "options": [
+    "At the airport.",
+    "At the hotel.",
+    "At work.",
+    "At home."
+   ],
+   "answer": 1,
+   "rationale_ar": "دانيال كتب: I'm at the hotel now",
+   "tags": [
+    "travel",
+    "hotel"
+   ],
+   "passage_id": "p-pa1-02"
+  },
+  {
+   "id": "r-pa1-02b",
+   "cefr": "Pre-A1",
+   "lvl": 0,
+   "skill": "reading",
+   "subskill": "detail",
+   "difficulty": 0.09,
+   "stem": "What is Daniel's room number?",
+   "options": [
+    "241",
+    "124",
+    "204",
+    "214"
+   ],
+   "answer": 3,
+   "rationale_ar": "في الرسالة: Room 214",
+   "tags": [
+    "hotel",
+    "numbers"
+   ],
+   "passage_id": "p-pa1-02"
+  },
+  {
+   "id": "l-pa1-01a",
+   "cefr": "Pre-A1",
+   "lvl": 0,
+   "skill": "listening",
+   "subskill": "detail_number",
+   "difficulty": 0.1,
+   "stem": "How much is it?",
+   "options": [
+    "SR 18",
+    "SR 80",
+    "SR 8",
+    "SR 28"
+   ],
+   "answer": 0,
+   "rationale_ar": "قالت eighteen وهي 18، أما eighty فهي 80",
+   "tags": [
+    "cafe",
+    "numbers"
+   ],
+   "clip_id": "c-pa1-01"
+  },
+  {
+   "id": "l-pa1-01b",
+   "cefr": "Pre-A1",
+   "lvl": 0,
+   "skill": "listening",
+   "subskill": "detail_number",
+   "difficulty": 0.05,
+   "stem": "How many waters does he want?",
+   "options": [
+    "One",
+    "Three",
+    "Two",
+    "Four"
+   ],
+   "answer": 2,
+   "rationale_ar": "الطلب: one coffee and two waters",
+   "tags": [
+    "cafe",
+    "numbers"
+   ],
+   "clip_id": "c-pa1-01"
+  },
+  {
+   "id": "l-pa1-02a",
+   "cefr": "Pre-A1",
+   "lvl": 0,
+   "skill": "listening",
+   "subskill": "detail_number",
+   "difficulty": 0.08,
+   "stem": "Which room is the meeting in?",
+   "options": [
+    "Room 2",
+    "Room 15",
+    "Room 9",
+    "Room 5"
+   ],
+   "answer": 3,
+   "rationale_ar": "قالت room five، أما second floor فهو رقم الدور",
+   "tags": [
+    "work"
+   ],
+   "clip_id": "c-pa1-02"
+  },
+  {
+   "id": "l-pa1-03a",
+   "cefr": "Pre-A1",
+   "lvl": 0,
+   "skill": "listening",
+   "subskill": "detail_time",
+   "difficulty": 0.13,
+   "stem": "When can he see the doctor?",
+   "options": [
+    "Today at 10:00",
+    "Tomorrow at 10:00",
+    "Tomorrow at 2:00",
+    "Today at 2:00"
+   ],
+   "answer": 1,
+   "rationale_ar": "الموظفة قالت: No, sorry. Tomorrow at ten",
+   "tags": [
+    "clinic",
+    "time"
+   ],
+   "clip_id": "c-pa1-03"
+  },
+  {
+   "id": "l-pa1-04a",
+   "cefr": "Pre-A1",
+   "lvl": 0,
+   "skill": "listening",
+   "subskill": "detail_place",
+   "difficulty": 0.14,
+   "stem": "Where is Maria?",
+   "options": [
+    "At the bank",
+    "At home",
+    "At the hotel",
+    "At the coffee shop"
+   ],
+   "answer": 3,
+   "rationale_ar": "ماريا في المقهى، والبنك مجرد مكان قريب (near)",
+   "tags": [
+    "city"
+   ],
+   "clip_id": "c-pa1-04"
+  },
+  {
+   "id": "g-a1-01",
+   "cefr": "A1",
+   "lvl": 1,
+   "skill": "grammar",
+   "subskill": "present_simple_3rd_person",
+   "difficulty": 0.18,
+   "stem": "Abdullah ___ in a bank in Dammam.",
+   "options": [
+    "work",
+    "working",
+    "works",
+    "is work"
+   ],
+   "answer": 2,
+   "rationale_ar": "مع he/she أو اسم شخص نضيف s للفعل في المضارع البسيط",
+   "tags": [
+    "work",
+    "l1_third_person_s"
+   ]
+  },
+  {
+   "id": "g-a1-02",
+   "cefr": "A1",
+   "lvl": 1,
+   "skill": "grammar",
+   "subskill": "present_simple_negative",
+   "difficulty": 0.22,
+   "stem": "My wife ___ coffee. She drinks tea.",
+   "options": [
+    "don't drink",
+    "doesn't drink",
+    "isn't drink",
+    "not drink"
+   ],
+   "answer": 1,
+   "rationale_ar": "مع she نستخدم doesn't + الفعل بدون s",
+   "tags": [
+    "family",
+    "l1_be_do_confusion"
+   ]
+  },
+  {
+   "id": "g-a1-03",
+   "cefr": "A1",
+   "lvl": 1,
+   "skill": "grammar",
+   "subskill": "question_word_order",
+   "difficulty": 0.25,
+   "stem": "Choose the correct question:",
+   "options": [
+    "Where do you work?",
+    "Where you work?",
+    "Where you are work?",
+    "Where does you work?"
+   ],
+   "answer": 0,
+   "rationale_ar": "في السؤال نحط do قبل الفاعل: Where do you work?",
+   "tags": [
+    "work",
+    "l1_question_order"
+   ]
+  },
+  {
+   "id": "g-a1-04",
+   "cefr": "A1",
+   "lvl": 1,
+   "skill": "grammar",
+   "subskill": "present_continuous",
+   "difficulty": 0.27,
+   "stem": "Please call later. Sultan ___ to a customer right now.",
+   "options": [
+    "is talking",
+    "talks",
+    "talking",
+    "talk"
+   ],
+   "answer": 0,
+   "rationale_ar": "right now يعني الحين، فنستخدم is + ing",
+   "tags": [
+    "work",
+    "l1_be_drop"
+   ]
+  },
+  {
+   "id": "g-a1-05",
+   "cefr": "A1",
+   "lvl": 1,
+   "skill": "grammar",
+   "subskill": "prepositions_time",
+   "difficulty": 0.21,
+   "stem": "The office opens ___ 8 a.m.",
+   "options": [
+    "in",
+    "on",
+    "to",
+    "at"
+   ],
+   "answer": 3,
+   "rationale_ar": "مع الساعة نستخدم at",
+   "tags": [
+    "work",
+    "l1_prepositions"
+   ]
+  },
+  {
+   "id": "g-a1-06",
+   "cefr": "A1",
+   "lvl": 1,
+   "skill": "grammar",
+   "subskill": "object_pronouns",
+   "difficulty": 0.26,
+   "stem": "This is Mr Chen. Please call ___ at 4 p.m.",
+   "options": [
+    "he",
+    "him",
+    "his",
+    "he's"
+   ],
+   "answer": 1,
+   "rationale_ar": "بعد الفعل call نستخدم him وليس he",
+   "tags": [
+    "work"
+   ]
+  },
+  {
+   "id": "g-a1-07",
+   "cefr": "A1",
+   "lvl": 1,
+   "skill": "grammar",
+   "subskill": "have_has",
+   "difficulty": 0.19,
+   "stem": "Faisal and Reem ___ three children.",
+   "options": [
+    "has",
+    "are",
+    "have",
+    "is"
+   ],
+   "answer": 2,
+   "rationale_ar": "Faisal and Reem شخصين، فنستخدم have",
+   "tags": [
+    "family"
+   ]
+  },
+  {
+   "id": "g-a1-08",
+   "cefr": "A1",
+   "lvl": 1,
+   "skill": "grammar",
+   "subskill": "how_much_many",
+   "difficulty": 0.24,
+   "stem": "How ___ is this bag?",
+   "options": [
+    "much",
+    "many",
+    "cost",
+    "price"
+   ],
+   "answer": 0,
+   "rationale_ar": "How much للسؤال عن السعر",
+   "tags": [
+    "shopping"
+   ]
+  },
+  {
+   "id": "g-a1-09",
+   "cefr": "A1",
+   "lvl": 1,
+   "skill": "grammar",
+   "subskill": "past_simple_be",
+   "difficulty": 0.31,
+   "stem": "Where ___ you yesterday? We called you three times.",
+   "options": [
+    "are",
+    "was",
+    "were",
+    "did"
+   ],
+   "answer": 2,
+   "rationale_ar": "مع you نستخدم were في الماضي حتى لو شخص واحد",
+   "tags": [
+    "work",
+    "l1_was_were"
+   ]
+  },
+  {
+   "id": "g-a1-10",
+   "cefr": "A1",
+   "lvl": 1,
+   "skill": "grammar",
+   "subskill": "possessive_s",
+   "difficulty": 0.29,
+   "stem": "Is this ___ car? It is in my parking space.",
+   "options": [
+    "Majed",
+    "Majeds",
+    "of Majed",
+    "Majed's"
+   ],
+   "answer": 3,
+   "rationale_ar": "للملكية نضيف 's بعد اسم المالك: Majed's car",
+   "tags": [
+    "work",
+    "l1_idafa"
+   ]
+  },
+  {
+   "id": "v-a1-01",
+   "cefr": "A1",
+   "lvl": 1,
+   "skill": "vocab",
+   "subskill": "adjectives_opposites",
+   "difficulty": 0.18,
+   "stem": "This bag is not expensive. It's ___.",
+   "options": [
+    "tall",
+    "cheap",
+    "late",
+    "heavy"
+   ],
+   "answer": 1,
+   "rationale_ar": "not expensive = cheap يعني رخيص",
+   "tags": [
+    "shopping"
+   ]
+  },
+  {
+   "id": "v-a1-02",
+   "cefr": "A1",
+   "lvl": 1,
+   "skill": "vocab",
+   "subskill": "jobs",
+   "difficulty": 0.2,
+   "stem": "Hessa works in a hospital. She helps the doctors and looks after patients. She is a ___.",
+   "options": [
+    "pilot",
+    "chef",
+    "nurse",
+    "driver"
+   ],
+   "answer": 2,
+   "rationale_ar": "اللي تساعد الأطباء وتهتم بالمرضى اسمها nurse",
+   "tags": [
+    "clinic",
+    "jobs"
+   ]
+  },
+  {
+   "id": "v-a1-03",
+   "cefr": "A1",
+   "lvl": 1,
+   "skill": "vocab",
+   "subskill": "places",
+   "difficulty": 0.23,
+   "stem": "I need some medicine. Is there a ___ near here?",
+   "options": [
+    "library",
+    "bakery",
+    "stadium",
+    "pharmacy"
+   ],
+   "answer": 3,
+   "rationale_ar": "الدواء نشتريه من الصيدلية pharmacy",
+   "tags": [
+    "city",
+    "clinic"
+   ]
+  },
+  {
+   "id": "v-a1-04",
+   "cefr": "A1",
+   "lvl": 1,
+   "skill": "vocab",
+   "subskill": "phrasal_verbs_daily",
+   "difficulty": 0.28,
+   "stem": "I ___ up at 6 a.m. every day.",
+   "options": [
+    "get",
+    "go",
+    "stand",
+    "make"
+   ],
+   "answer": 0,
+   "rationale_ar": "get up يعني يقوم من النوم",
+   "tags": [
+    "daily_routine"
+   ]
+  },
+  {
+   "id": "v-a1-05",
+   "cefr": "A1",
+   "lvl": 1,
+   "skill": "vocab",
+   "subskill": "frequency_adverbs",
+   "difficulty": 0.27,
+   "stem": "Our office is closed on Fridays, so I ___ go to work on Fridays.",
+   "options": [
+    "always",
+    "never",
+    "often",
+    "usually"
+   ],
+   "answer": 1,
+   "rationale_ar": "المكتب مقفل يوم الجمعة، يعني ما أروح أبداً: never",
+   "tags": [
+    "work",
+    "time"
+   ]
+  },
+  {
+   "id": "v-a1-06",
+   "cefr": "A1",
+   "lvl": 1,
+   "skill": "vocab",
+   "subskill": "shopping_clothes",
+   "difficulty": 0.32,
+   "stem": "These shoes are too small. Do you have a bigger ___?",
+   "options": [
+    "price",
+    "size",
+    "colour",
+    "number"
+   ],
+   "answer": 1,
+   "rationale_ar": "مقاس الحذاء أو الملابس اسمه size وليس number",
+   "tags": [
+    "shopping",
+    "l1_word_choice"
+   ]
+  },
+  {
+   "id": "v-a1-07",
+   "cefr": "A1",
+   "lvl": 1,
+   "skill": "vocab",
+   "subskill": "months",
+   "difficulty": 0.22,
+   "stem": "Today is 31 January. Tomorrow is 1 ___.",
+   "options": [
+    "March",
+    "December",
+    "Friday",
+    "February"
+   ],
+   "answer": 3,
+   "rationale_ar": "بعد يناير يجي فبراير February",
+   "tags": [
+    "time"
+   ]
+  },
+  {
+   "id": "u-a1-01",
+   "cefr": "A1",
+   "lvl": 1,
+   "skill": "use",
+   "subskill": "accepting_offer",
+   "difficulty": 0.2,
+   "stem": "Your host asks: 'Would you like some tea?' You want some. You say:",
+   "options": [
+    "Yes, I like.",
+    "Yes, I do.",
+    "Yes, please.",
+    "Yes, I would like."
+   ],
+   "answer": 2,
+   "rationale_ar": "لقبول عرض نقول Yes, please، أما Yes, I like فغلط هنا",
+   "tags": [
+    "family",
+    "l1_like_want"
+   ]
+  },
+  {
+   "id": "u-a1-02",
+   "cefr": "A1",
+   "lvl": 1,
+   "skill": "use",
+   "subskill": "asking_about_job",
+   "difficulty": 0.3,
+   "stem": "You want to know your new colleague's job. You ask:",
+   "options": [
+    "What do you do?",
+    "What are you doing?",
+    "How do you do?",
+    "What you do?"
+   ],
+   "answer": 0,
+   "rationale_ar": "What do you do تسأل عن الوظيفة، وWhat are you doing عن الحين",
+   "tags": [
+    "work",
+    "l1_question_order"
+   ]
+  },
+  {
+   "id": "u-a1-03",
+   "cefr": "A1",
+   "lvl": 1,
+   "skill": "use",
+   "subskill": "telephone_request",
+   "difficulty": 0.25,
+   "stem": "You call a company. You want to talk to Mr Chen. You say:",
+   "options": [
+    "Is Mr Chen speaking English, please?",
+    "This is Mr Chen speaking, please.",
+    "Can I speak to Mr Chen, please?",
+    "Where is Mr Chen from, please?"
+   ],
+   "answer": 2,
+   "rationale_ar": "لطلب شخص بالهاتف نقول Can I speak to ...?",
+   "tags": [
+    "work",
+    "phone"
+   ]
+  },
+  {
+   "id": "u-a1-04",
+   "cefr": "A1",
+   "lvl": 1,
+   "skill": "use",
+   "subskill": "restaurant_bill",
+   "difficulty": 0.24,
+   "stem": "You finish lunch in a restaurant. You want to pay. You say to the waiter:",
+   "options": [
+    "Can I have the menu, please?",
+    "Can I have a table, please?",
+    "Can I have the order, please?",
+    "Can I have the bill, please?"
+   ],
+   "answer": 3,
+   "rationale_ar": "لطلب الحساب نقول Can I have the bill",
+   "tags": [
+    "restaurant"
+   ]
+  },
+  {
+   "id": "u-a1-05",
+   "cefr": "A1",
+   "lvl": 1,
+   "skill": "use",
+   "subskill": "telephone_wrong_number",
+   "difficulty": 0.22,
+   "stem": "Someone calls you and asks for \"Ahmed\". There is no Ahmed at this number. You say:",
+   "options": [
+    "Sorry, wrong number.",
+    "Sorry, call me later.",
+    "Sorry, I'm on holiday.",
+    "Sorry, I'm very busy."
+   ],
+   "answer": 0,
+   "rationale_ar": "لما أحد يتصل على رقم غلط نقول Sorry, wrong number",
+   "tags": [
+    "phone"
+   ]
+  },
+  {
+   "id": "u-a1-06",
+   "cefr": "A1",
+   "lvl": 1,
+   "skill": "use",
+   "subskill": "asking_permission",
+   "difficulty": 0.29,
+   "stem": "In a waiting room, you want to sit on the empty chair next to a man. You ask:",
+   "options": [
+    "Is this seat new?",
+    "Is this seat free?",
+    "Is this seat cheap?",
+    "Is this seat clean?"
+   ],
+   "answer": 1,
+   "rationale_ar": "free هنا يعني «فاضي ومو محجوز»",
+   "tags": [
+    "clinic",
+    "l1_word_choice"
+   ]
+  },
+  {
+   "id": "r-a1-01a",
+   "cefr": "A1",
+   "lvl": 1,
+   "skill": "reading",
+   "subskill": "detail",
+   "difficulty": 0.19,
+   "stem": "Why is Noura late?",
+   "options": [
+    "She is ill.",
+    "She is at the bank.",
+    "She is at home.",
+    "She is in traffic."
+   ],
+   "answer": 3,
+   "rationale_ar": "نورة كتبت: I'm in traffic",
+   "tags": [
+    "work",
+    "city"
+   ],
+   "passage_id": "p-a1-01"
+  },
+  {
+   "id": "r-a1-01b",
+   "cefr": "A1",
+   "lvl": 1,
+   "skill": "reading",
+   "subskill": "writer_request",
+   "difficulty": 0.26,
+   "stem": "What does Noura want Faisal to do?",
+   "options": [
+    "Wait for her.",
+    "Call her.",
+    "Start the meeting.",
+    "Go home."
+   ],
+   "answer": 2,
+   "rationale_ar": "طلبت: Please start the meeting without me",
+   "tags": [
+    "work"
+   ],
+   "passage_id": "p-a1-01"
+  },
+  {
+   "id": "r-a1-02a",
+   "cefr": "A1",
+   "lvl": 1,
+   "skill": "reading",
+   "subskill": "detail",
+   "difficulty": 0.23,
+   "stem": "What time does the pharmacy open on Friday?",
+   "options": [
+    "8 a.m.",
+    "4 p.m.",
+    "12 midnight",
+    "12 noon"
+   ],
+   "answer": 1,
+   "rationale_ar": "يوم الجمعة الصيدلية تفتح الساعة 4 العصر",
+   "tags": [
+    "clinic",
+    "city"
+   ],
+   "passage_id": "p-a1-02"
+  },
+  {
+   "id": "r-a1-02b",
+   "cefr": "A1",
+   "lvl": 1,
+   "skill": "reading",
+   "subskill": "detail_calculation",
+   "difficulty": 0.33,
+   "stem": "Your order is SR 80. Is the delivery free?",
+   "options": [
+    "No, it isn't.",
+    "Yes, it is.",
+    "Only on Friday.",
+    "Only after midnight."
+   ],
+   "answer": 0,
+   "rationale_ar": "التوصيل مجاني فوق 100 ريال، و80 أقل من 100",
+   "tags": [
+    "shopping"
+   ],
+   "passage_id": "p-a1-02"
+  },
+  {
+   "id": "r-a1-03a",
+   "cefr": "A1",
+   "lvl": 1,
+   "skill": "reading",
+   "subskill": "detail",
+   "difficulty": 0.17,
+   "stem": "Where is breakfast?",
+   "options": [
+    "On the ground floor",
+    "In your room",
+    "On the first floor",
+    "Next to the pool"
+   ],
+   "answer": 0,
+   "rationale_ar": "في البطاقة: Breakfast ... ground floor",
+   "tags": [
+    "hotel",
+    "travel"
+   ],
+   "passage_id": "p-a1-03"
+  },
+  {
+   "id": "r-a1-03b",
+   "cefr": "A1",
+   "lvl": 1,
+   "skill": "reading",
+   "subskill": "detail",
+   "difficulty": 0.21,
+   "stem": "What time must you leave your room on your last day?",
+   "options": [
+    "At 6:30 a.m.",
+    "At 12 noon",
+    "At 10:30 a.m.",
+    "At 12 midnight"
+   ],
+   "answer": 1,
+   "rationale_ar": "Check-out يعني وقت تسليم الغرفة، وهو 12 الظهر",
+   "tags": [
+    "hotel",
+    "travel"
+   ],
+   "passage_id": "p-a1-03"
+  },
+  {
+   "id": "l-a1-01a",
+   "cefr": "A1",
+   "lvl": 1,
+   "skill": "listening",
+   "subskill": "detail_number",
+   "difficulty": 0.18,
+   "stem": "How many nights is Daniel staying?",
+   "options": [
+    "Two",
+    "Four",
+    "One",
+    "Three"
+   ],
+   "answer": 3,
+   "rationale_ar": "قال: Three nights, please",
+   "tags": [
+    "hotel",
+    "travel"
+   ],
+   "clip_id": "c-a1-01"
+  },
+  {
+   "id": "l-a1-02a",
+   "cefr": "A1",
+   "lvl": 1,
+   "skill": "listening",
+   "subskill": "detail_day",
+   "difficulty": 0.21,
+   "stem": "What day is the appointment?",
+   "options": [
+    "Monday",
+    "Thursday",
+    "Tuesday",
+    "Today"
+   ],
+   "answer": 2,
+   "rationale_ar": "الرسالة قالت: on Tuesday",
+   "tags": [
+    "clinic",
+    "time"
+   ],
+   "clip_id": "c-a1-02"
+  },
+  {
+   "id": "l-a1-02b",
+   "cefr": "A1",
+   "lvl": 1,
+   "skill": "listening",
+   "subskill": "detail_time",
+   "difficulty": 0.3,
+   "stem": "What time is the appointment?",
+   "options": [
+    "4:00",
+    "4:20",
+    "4:30",
+    "4:10"
+   ],
+   "answer": 2,
+   "rationale_ar": "الموعد 4:30، وطلبوا الحضور قبله بعشر دقائق فقط",
+   "tags": [
+    "clinic",
+    "time"
+   ],
+   "clip_id": "c-a1-02"
+  },
+  {
+   "id": "l-a1-03a",
+   "cefr": "A1",
+   "lvl": 1,
+   "skill": "listening",
+   "subskill": "detail_time",
+   "difficulty": 0.27,
+   "stem": "When does the mall close?",
+   "options": [
+    "In 5 minutes",
+    "In 15 minutes",
+    "In 50 minutes",
+    "In 30 minutes"
+   ],
+   "answer": 1,
+   "rationale_ar": "قال in fifteen minutes يعني بعد 15 دقيقة",
+   "tags": [
+    "shopping",
+    "city"
+   ],
+   "clip_id": "c-a1-03"
+  },
+  {
+   "id": "l-a1-04a",
+   "cefr": "A1",
+   "lvl": 1,
+   "skill": "listening",
+   "subskill": "detail_place",
+   "difficulty": 0.24,
+   "stem": "Where is the bank?",
+   "options": [
+    "Next to the pharmacy",
+    "Opposite the pharmacy",
+    "Next to the hotel",
+    "Behind the pharmacy"
+   ],
+   "answer": 0,
+   "rationale_ar": "قال: It's next to the pharmacy يعني جنب الصيدلية",
+   "tags": [
+    "city",
+    "directions"
+   ],
+   "clip_id": "c-a1-04"
+  },
+  {
+   "id": "g-a2-01",
+   "cefr": "A2",
+   "lvl": 2,
+   "skill": "grammar",
+   "subskill": "past_simple_irregular",
+   "difficulty": 0.35,
+   "stem": "Last week Reem ___ her car to the service centre.",
+   "options": [
+    "take",
+    "taked",
+    "took",
+    "has taken"
+   ],
+   "answer": 2,
+   "rationale_ar": "last week ماضي، وماضي take هو took",
+   "tags": [
+    "daily_life",
+    "l1_tense_transfer"
+   ]
+  },
+  {
+   "id": "g-a2-02",
+   "cefr": "A2",
+   "lvl": 2,
+   "skill": "grammar",
+   "subskill": "past_simple_questions",
+   "difficulty": 0.37,
+   "stem": "___ you call the bank yesterday?",
+   "options": [
+    "Do",
+    "Did",
+    "Were",
+    "Have"
+   ],
+   "answer": 1,
+   "rationale_ar": "سؤال الماضي البسيط يبدأ بـ Did + الفعل الأساسي",
+   "tags": [
+    "bank",
+    "l1_be_do_confusion"
+   ]
+  },
+  {
+   "id": "g-a2-03",
+   "cefr": "A2",
+   "lvl": 2,
+   "skill": "grammar",
+   "subskill": "comparatives",
+   "difficulty": 0.36,
+   "stem": "The new office is ___ than the old one.",
+   "options": [
+    "more big",
+    "biggest",
+    "more bigger",
+    "bigger"
+   ],
+   "answer": 3,
+   "rationale_ar": "للمقارنة بين شيئين مع than نقول bigger",
+   "tags": [
+    "work"
+   ]
+  },
+  {
+   "id": "g-a2-04",
+   "cefr": "A2",
+   "lvl": 2,
+   "skill": "grammar",
+   "subskill": "superlatives",
+   "difficulty": 0.4,
+   "stem": "This is the ___ hotel in Jeddah. It costs SR 3,000 a night.",
+   "options": [
+    "most expensive",
+    "expensivest",
+    "more expensive",
+    "much expensive"
+   ],
+   "answer": 0,
+   "rationale_ar": "الصفة الطويلة في التفضيل: the most expensive",
+   "tags": [
+    "hotel",
+    "travel"
+   ]
+  },
+  {
+   "id": "g-a2-05",
+   "cefr": "A2",
+   "lvl": 2,
+   "skill": "grammar",
+   "subskill": "uncountable_nouns",
+   "difficulty": 0.42,
+   "stem": "Can you send me more ___ about the job?",
+   "options": [
+    "informations",
+    "an information",
+    "many information",
+    "information"
+   ],
+   "answer": 3,
+   "rationale_ar": "information ما تنجمع وما تاخذ an",
+   "tags": [
+    "work",
+    "l1_uncountable"
+   ]
+  },
+  {
+   "id": "g-a2-06",
+   "cefr": "A2",
+   "lvl": 2,
+   "skill": "grammar",
+   "subskill": "be_going_to",
+   "difficulty": 0.44,
+   "stem": "I've bought the tickets. We ___ visit Abha next month.",
+   "options": [
+    "will to",
+    "going to",
+    "are going to",
+    "are go to"
+   ],
+   "answer": 2,
+   "rationale_ar": "للخطة المقررة مسبقاً نستخدم be going to + الفعل",
+   "tags": [
+    "travel",
+    "family"
+   ]
+  },
+  {
+   "id": "g-a2-07",
+   "cefr": "A2",
+   "lvl": 2,
+   "skill": "grammar",
+   "subskill": "present_perfect_experience",
+   "difficulty": 0.46,
+   "stem": "___ you ever been to London?",
+   "options": [
+    "Did",
+    "Have",
+    "Were",
+    "Are"
+   ],
+   "answer": 1,
+   "rationale_ar": "Have you ever been...? للسؤال عن تجربة في حياتك",
+   "tags": [
+    "travel",
+    "l1_tense_transfer"
+   ]
+  },
+  {
+   "id": "g-a2-08",
+   "cefr": "A2",
+   "lvl": 2,
+   "skill": "grammar",
+   "subskill": "gerund_after_verbs",
+   "difficulty": 0.39,
+   "stem": "My father enjoys ___ in the park after dinner.",
+   "options": [
+    "walking",
+    "walk",
+    "to walk",
+    "walks"
+   ],
+   "answer": 0,
+   "rationale_ar": "بعد enjoy يجي الفعل مع ing",
+   "tags": [
+    "family",
+    "l1_infinitive_gerund"
+   ]
+  },
+  {
+   "id": "g-a2-09",
+   "cefr": "A2",
+   "lvl": 2,
+   "skill": "grammar",
+   "subskill": "have_to_obligation",
+   "difficulty": 0.41,
+   "stem": "All employees ___ wear an ID card in the building.",
+   "options": [
+    "has to",
+    "have to",
+    "must to",
+    "having to"
+   ],
+   "answer": 1,
+   "rationale_ar": "مع الجمع نستخدم have to، وما نقول must to",
+   "tags": [
+    "work",
+    "l1_modal_to"
+   ]
+  },
+  {
+   "id": "g-a2-10",
+   "cefr": "A2",
+   "lvl": 2,
+   "skill": "grammar",
+   "subskill": "past_continuous",
+   "difficulty": 0.48,
+   "stem": "Sorry I missed your call. I ___ when you called.",
+   "options": [
+    "drove",
+    "am driving",
+    "was driving",
+    "have driven"
+   ],
+   "answer": 2,
+   "rationale_ar": "حدث مستمر قطعه حدث ثاني: was + ing",
+   "tags": [
+    "phone",
+    "l1_tense_transfer"
+   ]
+  },
+  {
+   "id": "v-a2-01",
+   "cefr": "A2",
+   "lvl": 2,
+   "skill": "vocab",
+   "subskill": "collocation_make_do",
+   "difficulty": 0.44,
+   "stem": "Can you ___ me a favour? I need a lift to the airport.",
+   "options": [
+    "do",
+    "make",
+    "give",
+    "take"
+   ],
+   "answer": 0,
+   "rationale_ar": "نقول do me a favour، وليس make",
+   "tags": [
+    "daily_life",
+    "l1_make_do"
+   ]
+  },
+  {
+   "id": "v-a2-02",
+   "cefr": "A2",
+   "lvl": 2,
+   "skill": "vocab",
+   "subskill": "say_tell",
+   "difficulty": 0.4,
+   "stem": "Please ___ me your email address.",
+   "options": [
+    "say",
+    "speak",
+    "talk",
+    "tell"
+   ],
+   "answer": 3,
+   "rationale_ar": "tell يجي بعدها الشخص مباشرة: tell me",
+   "tags": [
+    "work",
+    "l1_say_tell"
+   ]
+  },
+  {
+   "id": "v-a2-03",
+   "cefr": "A2",
+   "lvl": 2,
+   "skill": "vocab",
+   "subskill": "borrow_lend",
+   "difficulty": 0.47,
+   "stem": "Can I ___ your pen for a minute? I left mine at home.",
+   "options": [
+    "borrow",
+    "lend",
+    "rent",
+    "give"
+   ],
+   "answer": 0,
+   "rationale_ar": "borrow يعني تاخذ الشيء مؤقتاً، وlend يعني تعطيه",
+   "tags": [
+    "work",
+    "l1_borrow_lend"
+   ]
+  },
+  {
+   "id": "v-a2-04",
+   "cefr": "A2",
+   "lvl": 2,
+   "skill": "vocab",
+   "subskill": "phrasal_verbs",
+   "difficulty": 0.43,
+   "stem": "Please ___ this form and give it to the receptionist.",
+   "options": [
+    "fill at",
+    "fill on",
+    "full in",
+    "fill in"
+   ],
+   "answer": 3,
+   "rationale_ar": "fill in the form يعني تعبّي النموذج",
+   "tags": [
+    "clinic",
+    "government_services"
+   ]
+  },
+  {
+   "id": "v-a2-05",
+   "cefr": "A2",
+   "lvl": 2,
+   "skill": "vocab",
+   "subskill": "travel_vocabulary",
+   "difficulty": 0.46,
+   "stem": "Please show your passport and ___ pass at the gate.",
+   "options": [
+    "flying",
+    "boarding",
+    "entering",
+    "travel"
+   ],
+   "answer": 1,
+   "rationale_ar": "بطاقة صعود الطائرة اسمها boarding pass",
+   "tags": [
+    "travel",
+    "airport"
+   ]
+  },
+  {
+   "id": "v-a2-06",
+   "cefr": "A2",
+   "lvl": 2,
+   "skill": "vocab",
+   "subskill": "word_formation_ed_ing",
+   "difficulty": 0.45,
+   "stem": "The meeting was very long and ___. Everyone wanted to leave.",
+   "options": [
+    "bored",
+    "bore",
+    "boring",
+    "boredom"
+   ],
+   "answer": 2,
+   "rationale_ar": "الشيء الممل boring، والشخص الطفشان bored",
+   "tags": [
+    "work",
+    "word_formation"
+   ]
+  },
+  {
+   "id": "v-a2-07",
+   "cefr": "A2",
+   "lvl": 2,
+   "skill": "vocab",
+   "subskill": "work_vocabulary",
+   "difficulty": 0.38,
+   "stem": "I sent my ___ to five companies, but nobody called me for an interview.",
+   "options": [
+    "salary",
+    "interview",
+    "CV",
+    "holiday"
+   ],
+   "answer": 2,
+   "rationale_ar": "نرسل السيرة الذاتية CV للشركات لما ندوّر وظيفة",
+   "tags": [
+    "work",
+    "jobs"
+   ]
+  },
+  {
+   "id": "v-a2-08",
+   "cefr": "A2",
+   "lvl": 2,
+   "skill": "vocab",
+   "subskill": "phrasal_verbs_money",
+   "difficulty": 0.41,
+   "stem": "I need to ___ some money from the ATM.",
+   "options": [
+    "take out",
+    "take off",
+    "put on",
+    "take away"
+   ],
+   "answer": 0,
+   "rationale_ar": "take out money يعني تسحب فلوس من الصراف",
+   "tags": [
+    "bank",
+    "phrasal_verbs"
+   ]
+  },
+  {
+   "id": "u-a2-01",
+   "cefr": "A2",
+   "lvl": 2,
+   "skill": "use",
+   "subskill": "request_polite",
+   "difficulty": 0.36,
+   "stem": "You need help from a colleague. You ask politely:",
+   "options": [
+    "You help me for a minute.",
+    "Could you help me for a minute?",
+    "Help me for a minute, now.",
+    "I want that you help me for a minute."
+   ],
+   "answer": 1,
+   "rationale_ar": "Could you ...? طريقة مهذبة لطلب المساعدة",
+   "tags": [
+    "work",
+    "l1_politeness"
+   ]
+  },
+  {
+   "id": "u-a2-02",
+   "cefr": "A2",
+   "lvl": 2,
+   "skill": "use",
+   "subskill": "suggestion",
+   "difficulty": 0.42,
+   "stem": "Your colleague says: 'I'm so hungry.' You make a suggestion:",
+   "options": [
+    "Why we don't order a shawarma?",
+    "Let's to order a shawarma.",
+    "How about order a shawarma?",
+    "Why don't we order a shawarma?"
+   ],
+   "answer": 3,
+   "rationale_ar": "للاقتراح: Why don't we + الفعل، بدون تغيير الترتيب",
+   "tags": [
+    "work",
+    "food"
+   ]
+  },
+  {
+   "id": "u-a2-03",
+   "cefr": "A2",
+   "lvl": 2,
+   "skill": "use",
+   "subskill": "congratulating",
+   "difficulty": 0.35,
+   "stem": "Your colleague says: 'I passed my driving test!' You say:",
+   "options": [
+    "Good luck!",
+    "Never mind.",
+    "Congratulations!",
+    "Get well soon."
+   ],
+   "answer": 2,
+   "rationale_ar": "نقول Congratulations بعد النجاح، وGood luck قبل الاختبار",
+   "tags": [
+    "work",
+    "l1_pragmatics"
+   ]
+  },
+  {
+   "id": "u-a2-04",
+   "cefr": "A2",
+   "lvl": 2,
+   "skill": "use",
+   "subskill": "declining_invitation",
+   "difficulty": 0.4,
+   "stem": "A colleague invites you to lunch, but you have a meeting. You say:",
+   "options": [
+    "I'd love to, but I have a meeting.",
+    "No, I don't want lunch with you today.",
+    "Yes, but I have a meeting now.",
+    "I'm agree, but I have a meeting."
+   ],
+   "answer": 0,
+   "rationale_ar": "I'd love to, but ... طريقة لطيفة لرفض الدعوة",
+   "tags": [
+    "work",
+    "l1_i_am_agree"
+   ]
+  },
+  {
+   "id": "u-a2-05",
+   "cefr": "A2",
+   "lvl": 2,
+   "skill": "use",
+   "subskill": "complaint",
+   "difficulty": 0.47,
+   "stem": "You ordered chicken, but the waiter brings fish. You say:",
+   "options": [
+    "Excuse me, I don't order this.",
+    "Excuse me, I didn't order this.",
+    "Excuse me, this is not order.",
+    "Excuse me, I am not ordered this."
+   ],
+   "answer": 1,
+   "rationale_ar": "الطلب صار في الماضي، فنقول I didn't order this",
+   "tags": [
+    "restaurant",
+    "complaint"
+   ]
+  },
+  {
+   "id": "u-a2-06",
+   "cefr": "A2",
+   "lvl": 2,
+   "skill": "use",
+   "subskill": "telephone_message",
+   "difficulty": 0.49,
+   "stem": "You call Faisal at work. His colleague says he is out of the office. You say:",
+   "options": [
+    "Can I left a message?",
+    "Can I do a message?",
+    "Can I put a message?",
+    "Can I leave a message?"
+   ],
+   "answer": 3,
+   "rationale_ar": "لترك رسالة لشخص غايب نقول leave a message",
+   "tags": [
+    "work",
+    "phone"
+   ]
+  },
+  {
+   "id": "r-a2-01a",
+   "cefr": "A2",
+   "lvl": 2,
+   "skill": "reading",
+   "subskill": "detail_reason",
+   "difficulty": 0.38,
+   "stem": "Why did the date change?",
+   "options": [
+    "Majed is busy on Wednesday.",
+    "Reem is on holiday this week.",
+    "Lunch is not ready on Wednesday.",
+    "The room is not free on Wednesday."
+   ],
+   "answer": 3,
+   "rationale_ar": "الإيميل يقول: the meeting room is not free on Wednesday",
+   "tags": [
+    "work"
+   ],
+   "passage_id": "p-a2-01"
+  },
+  {
+   "id": "r-a2-01b",
+   "cefr": "A2",
+   "lvl": 2,
+   "skill": "reading",
+   "subskill": "detail",
+   "difficulty": 0.4,
+   "stem": "What do people need to bring?",
+   "options": [
+    "Lunch",
+    "A laptop",
+    "Money",
+    "A notebook"
+   ],
+   "answer": 1,
+   "rationale_ar": "كتب: please bring your laptop، والغداء موجود",
+   "tags": [
+    "work"
+   ],
+   "passage_id": "p-a2-01"
+  },
+  {
+   "id": "r-a2-01c",
+   "cefr": "A2",
+   "lvl": 2,
+   "skill": "reading",
+   "subskill": "detail",
+   "difficulty": 0.46,
+   "stem": "You can't come to the training day. What should you do?",
+   "options": [
+    "Tell Reem before Monday.",
+    "Email Majed on Thursday.",
+    "Call the meeting room.",
+    "Tell Reem on Thursday."
+   ],
+   "answer": 0,
+   "rationale_ar": "إذا ما تقدر تحضر: tell Reem in HR before Monday",
+   "tags": [
+    "work"
+   ],
+   "passage_id": "p-a2-01"
+  },
+  {
+   "id": "r-a2-02a",
+   "cefr": "A2",
+   "lvl": 2,
+   "skill": "reading",
+   "subskill": "detail",
+   "difficulty": 0.44,
+   "stem": "What do you pay extra for?",
+   "options": [
+    "The lift",
+    "The metro",
+    "Water and electricity",
+    "The third floor"
+   ],
+   "answer": 2,
+   "rationale_ar": "not included يعني مو داخلة في السعر، فتدفعها زيادة",
+   "tags": [
+    "housing",
+    "city"
+   ],
+   "passage_id": "p-a2-02"
+  },
+  {
+   "id": "r-a2-02b",
+   "cefr": "A2",
+   "lvl": 2,
+   "skill": "reading",
+   "subskill": "detail",
+   "difficulty": 0.36,
+   "stem": "When can you call Sultan?",
+   "options": [
+    "Before 5 p.m.",
+    "After 5 p.m.",
+    "Only at 3 p.m.",
+    "Only in the morning"
+   ],
+   "answer": 1,
+   "rationale_ar": "الإعلان يقول: Call Sultan after 5 p.m.",
+   "tags": [
+    "housing"
+   ],
+   "passage_id": "p-a2-02"
+  },
+  {
+   "id": "l-a2-01a",
+   "cefr": "A2",
+   "lvl": 2,
+   "skill": "listening",
+   "subskill": "detail_day",
+   "difficulty": 0.37,
+   "stem": "Which day is the new appointment?",
+   "options": [
+    "Wednesday",
+    "Monday",
+    "Tuesday",
+    "Thursday"
+   ],
+   "answer": 0,
+   "rationale_ar": "طلب التغيير from Monday to Wednesday",
+   "tags": [
+    "clinic",
+    "phone"
+   ],
+   "clip_id": "c-a2-01"
+  },
+  {
+   "id": "l-a2-01b",
+   "cefr": "A2",
+   "lvl": 2,
+   "skill": "listening",
+   "subskill": "detail_time",
+   "difficulty": 0.41,
+   "stem": "What time is the new appointment?",
+   "options": [
+    "10:00",
+    "1:00",
+    "11:00",
+    "11:30"
+   ],
+   "answer": 2,
+   "rationale_ar": "الموظفة قالت: Wednesday at eleven is free",
+   "tags": [
+    "clinic",
+    "time"
+   ],
+   "clip_id": "c-a2-01"
+  },
+  {
+   "id": "l-a2-02a",
+   "cefr": "A2",
+   "lvl": 2,
+   "skill": "listening",
+   "subskill": "detail_time",
+   "difficulty": 0.45,
+   "stem": "What time will the flight leave now?",
+   "options": [
+    "7:15",
+    "7:40",
+    "8:15",
+    "7:45"
+   ],
+   "answer": 3,
+   "rationale_ar": "قال: will now leave at 7:45, not 7:15",
+   "tags": [
+    "airport",
+    "travel"
+   ],
+   "clip_id": "c-a2-02"
+  },
+  {
+   "id": "l-a2-02b",
+   "cefr": "A2",
+   "lvl": 2,
+   "skill": "listening",
+   "subskill": "detail_number",
+   "difficulty": 0.39,
+   "stem": "Which gate should passengers go to?",
+   "options": [
+    "Gate 8",
+    "Gate 80",
+    "Gate 34",
+    "Gate 18"
+   ],
+   "answer": 3,
+   "rationale_ar": "قال: please go to gate 18",
+   "tags": [
+    "airport",
+    "travel"
+   ],
+   "clip_id": "c-a2-02"
+  },
+  {
+   "id": "l-a2-03a",
+   "cefr": "A2",
+   "lvl": 2,
+   "skill": "listening",
+   "subskill": "gist",
+   "difficulty": 0.48,
+   "stem": "What happened?",
+   "options": [
+    "He lost the package.",
+    "He delivered it at two.",
+    "Nobody was at home.",
+    "The address was wrong."
+   ],
+   "answer": 2,
+   "rationale_ar": "قال: nobody was home، وبيحاول مرة ثانية بكرة الصبح",
+   "tags": [
+    "online_shopping"
+   ],
+   "clip_id": "c-a2-03"
+  },
+  {
+   "id": "l-a2-04a",
+   "cefr": "A2",
+   "lvl": 2,
+   "skill": "listening",
+   "subskill": "detail_reason",
+   "difficulty": 0.5,
+   "stem": "Why can't Lama go to the meeting?",
+   "options": [
+    "Her son is seeing a doctor.",
+    "She is sick today.",
+    "She has another meeting.",
+    "She is waiting for the notes."
+   ],
+   "answer": 0,
+   "rationale_ar": "قالت: I have to take my son to the doctor",
+   "tags": [
+    "work",
+    "family"
+   ],
+   "clip_id": "c-a2-04"
+  },
+  {
+   "id": "g-b1-01",
+   "cefr": "A2",
+   "lvl": 2,
+   "skill": "grammar",
+   "subskill": "present_perfect_vs_past",
+   "difficulty": 0.36,
+   "stem": "I ___ the report to Mr Chen yesterday afternoon.",
+   "options": [
+    "sent",
+    "have sent",
+    "send",
+    "am sending"
+   ],
+   "answer": 0,
+   "rationale_ar": "كلمة yesterday وقت منتهي في الماضي، فنستخدم الماضي البسيط sent وليس have sent",
+   "tags": [
+    "work",
+    "l1_tense_transfer"
+   ],
+   "review": {
+    "was": "B1",
+    "by": "blind reviewer"
+   }
+  },
+  {
+   "id": "g-b1-02",
+   "cefr": "B1",
+   "lvl": 3,
+   "skill": "grammar",
+   "subskill": "since_for",
+   "difficulty": 0.52,
+   "stem": "We haven't seen Faisal ___ he moved to Jeddah.",
+   "options": [
+    "for",
+    "from",
+    "since",
+    "after"
+   ],
+   "answer": 2,
+   "rationale_ar": "since تأتي مع نقطة بداية مثل حدث معيّن، وfrom هنا ترجمة حرفية لكلمة «من»",
+   "tags": [
+    "family",
+    "l1_preposition_transfer"
+   ]
+  },
+  {
+   "id": "g-b1-03",
+   "cefr": "B1",
+   "lvl": 3,
+   "skill": "grammar",
+   "subskill": "conditionals_1",
+   "difficulty": 0.54,
+   "stem": "If the flight ___ on time, we'll be in Dammam by six.",
+   "options": [
+    "leaves",
+    "will leave",
+    "would leave",
+    "left"
+   ],
+   "answer": 0,
+   "rationale_ar": "في الشرط الأول نستخدم المضارع البسيط بعد if، وwill في الجملة الثانية فقط",
+   "tags": [
+    "travel",
+    "conditional_mixing"
+   ]
+  },
+  {
+   "id": "g-b1-04",
+   "cefr": "B1",
+   "lvl": 3,
+   "skill": "grammar",
+   "subskill": "conditionals_2",
+   "difficulty": 0.58,
+   "stem": "If I ___ a car, I wouldn't need to take a taxi to work every day.",
+   "options": [
+    "have",
+    "would have",
+    "will have",
+    "had"
+   ],
+   "answer": 3,
+   "rationale_ar": "الشرط الثاني لموقف غير حقيقي: if + الماضي البسيط، ثم would في الجزء الثاني",
+   "tags": [
+    "city_life",
+    "conditional_mixing"
+   ]
+  },
+  {
+   "id": "g-b1-06",
+   "cefr": "B1",
+   "lvl": 3,
+   "skill": "grammar",
+   "subskill": "relative_clauses",
+   "difficulty": 0.55,
+   "stem": "The customer ___ called this morning wants a refund.",
+   "options": [
+    "which",
+    "who",
+    "who he",
+    "whose"
+   ],
+   "answer": 1,
+   "rationale_ar": "نستخدم who للأشخاص، ولا نكرر الضمير he بعدها",
+   "tags": [
+    "customer_service",
+    "pronoun_repetition"
+   ]
+  },
+  {
+   "id": "g-b1-07",
+   "cefr": "B1",
+   "lvl": 3,
+   "skill": "grammar",
+   "subskill": "relative_clauses",
+   "difficulty": 0.64,
+   "stem": "Is this the laptop ___ last week?",
+   "options": [
+    "you bought it",
+    "what you bought",
+    "that you bought it",
+    "that you bought"
+   ],
+   "answer": 3,
+   "rationale_ar": "بعد that لا نعيد الضمير it، لأن that نفسها ترجع على laptop",
+   "tags": [
+    "shopping",
+    "pronoun_repetition"
+   ]
+  },
+  {
+   "id": "g-b1-08",
+   "cefr": "B1",
+   "lvl": 3,
+   "skill": "grammar",
+   "subskill": "used_to",
+   "difficulty": 0.57,
+   "stem": "When I was at university, I ___ walk to my classes every day.",
+   "options": [
+    "used to",
+    "use to",
+    "was used to",
+    "am used to"
+   ],
+   "answer": 0,
+   "rationale_ar": "used to + فعل أساسي تعني عادة في الماضي انتهت الآن",
+   "tags": [
+    "daily_life"
+   ]
+  },
+  {
+   "id": "g-b1-09",
+   "cefr": "B1",
+   "lvl": 3,
+   "skill": "grammar",
+   "subskill": "gerund_after_mind",
+   "difficulty": 0.62,
+   "stem": "Would you mind ___ the door, please? It's a bit noisy outside.",
+   "options": [
+    "to close",
+    "close",
+    "closing",
+    "closed"
+   ],
+   "answer": 2,
+   "rationale_ar": "بعد mind يأتي الفعل بصيغة ing دائماً",
+   "tags": [
+    "work",
+    "polite_request",
+    "ing_vs_to"
+   ]
+  },
+  {
+   "id": "g-b1-10",
+   "cefr": "B1",
+   "lvl": 3,
+   "skill": "grammar",
+   "subskill": "past_continuous",
+   "difficulty": 0.56,
+   "stem": "I ___ dinner with my family when the electricity went off.",
+   "options": [
+    "have",
+    "was having",
+    "have had",
+    "am having"
+   ],
+   "answer": 1,
+   "rationale_ar": "الماضي المستمر لحدث كان جارياً عندما قطعه حدث آخر في الماضي",
+   "tags": [
+    "family",
+    "l1_tense_transfer"
+   ]
+  },
+  {
+   "id": "v-b1-01",
+   "cefr": "B1",
+   "lvl": 3,
+   "skill": "vocab",
+   "subskill": "collocation_make_do",
+   "difficulty": 0.51,
+   "stem": "Sorry, I ___ a mistake in the invoice. I'll send you a corrected one.",
+   "options": [
+    "did",
+    "made",
+    "took",
+    "had"
+   ],
+   "answer": 1,
+   "rationale_ar": "نقول make a mistake دائماً، وليس do a mistake",
+   "tags": [
+    "work",
+    "make_do"
+   ]
+  },
+  {
+   "id": "v-b1-02",
+   "cefr": "B1",
+   "lvl": 3,
+   "skill": "vocab",
+   "subskill": "collocation_make_do",
+   "difficulty": 0.58,
+   "stem": "Our company has ___ business with Mr Chen's firm for over ten years.",
+   "options": [
+    "made",
+    "worked",
+    "done",
+    "taken"
+   ],
+   "answer": 2,
+   "rationale_ar": "التعبير الصحيح do business with، وmake business ترجمة حرفية خاطئة",
+   "tags": [
+    "work",
+    "make_do"
+   ]
+  },
+  {
+   "id": "v-b1-03",
+   "cefr": "B1",
+   "lvl": 3,
+   "skill": "vocab",
+   "subskill": "collocation",
+   "difficulty": 0.53,
+   "stem": "Please ___ attention to the safety instructions before you start the machine.",
+   "options": [
+    "make",
+    "take",
+    "put",
+    "pay"
+   ],
+   "answer": 3,
+   "rationale_ar": "التعبير الثابت هو pay attention بمعنى انتبه",
+   "tags": [
+    "work",
+    "safety"
+   ]
+  },
+  {
+   "id": "v-b1-04",
+   "cefr": "B1",
+   "lvl": 3,
+   "skill": "vocab",
+   "subskill": "say_tell",
+   "difficulty": 0.52,
+   "stem": "Excuse me, can you ___ me how to get to the passport office?",
+   "options": [
+    "tell",
+    "say",
+    "explain",
+    "speak"
+   ],
+   "answer": 0,
+   "rationale_ar": "tell يأتي بعده الشخص مباشرة (tell me)، أما say وexplain فلا",
+   "tags": [
+    "government_services",
+    "say_tell"
+   ]
+  },
+  {
+   "id": "v-b1-05",
+   "cefr": "B1",
+   "lvl": 3,
+   "skill": "vocab",
+   "subskill": "borrow_lend",
+   "difficulty": 0.56,
+   "stem": "Could you ___ me SR 50 until tomorrow? I left my wallet at home.",
+   "options": [
+    "borrow",
+    "rent",
+    "lend",
+    "owe"
+   ],
+   "answer": 2,
+   "rationale_ar": "lend يعني تعطي شخصاً شيئاً مؤقتاً، وborrow يعني تأخذ أنت منه",
+   "tags": [
+    "money",
+    "false_friend"
+   ]
+  },
+  {
+   "id": "v-b1-06",
+   "cefr": "B1",
+   "lvl": 3,
+   "skill": "vocab",
+   "subskill": "phrasal_verbs",
+   "difficulty": 0.61,
+   "stem": "The meeting was ___ because the manager was sick, so we all went back to our desks.",
+   "options": [
+    "turned off",
+    "called off",
+    "taken off",
+    "put on"
+   ],
+   "answer": 1,
+   "rationale_ar": "call off تعني ألغى، أما turn off فهي لإطفاء الأجهزة",
+   "tags": [
+    "work",
+    "phrasal_verbs"
+   ]
+  },
+  {
+   "id": "v-b1-07",
+   "cefr": "B1",
+   "lvl": 3,
+   "skill": "vocab",
+   "subskill": "word_formation_ed_ing",
+   "difficulty": 0.59,
+   "stem": "The new phone was really ___, so I returned it after two days.",
+   "options": [
+    "disappointed",
+    "disappoint",
+    "disappointment",
+    "disappointing"
+   ],
+   "answer": 3,
+   "rationale_ar": "صفة ing تصف الشيء نفسه، وصفة ed تصف شعور الشخص",
+   "tags": [
+    "shopping",
+    "ed_ing"
+   ]
+  },
+  {
+   "id": "v-b1-08",
+   "cefr": "B1",
+   "lvl": 3,
+   "skill": "vocab",
+   "subskill": "phrasal_verbs",
+   "difficulty": 0.55,
+   "stem": "Please ___ this form and give it to the receptionist.",
+   "options": [
+    "fill in",
+    "fill with",
+    "fill on",
+    "fill to"
+   ],
+   "answer": 0,
+   "rationale_ar": "نقول fill in a form بمعنى تعبئة النموذج",
+   "tags": [
+    "clinic",
+    "government_services"
+   ]
+  },
+  {
+   "id": "v-b1-09",
+   "cefr": "B1",
+   "lvl": 3,
+   "skill": "vocab",
+   "subskill": "verb_choice",
+   "difficulty": 0.63,
+   "stem": "I'm sorry, I can't ___ the meeting tomorrow. I'll be in Dammam.",
+   "options": [
+    "attend to",
+    "attend",
+    "join to",
+    "assist"
+   ],
+   "answer": 1,
+   "rationale_ar": "attend الاجتماع بدون حرف جر، أما attend to فمعناها يتولّى أمراً",
+   "tags": [
+    "work",
+    "l1_preposition_transfer"
+   ]
+  },
+  {
+   "id": "u-b1-01",
+   "cefr": "A2",
+   "lvl": 2,
+   "skill": "use",
+   "subskill": "request_polite",
+   "difficulty": 0.35,
+   "stem": "You need a file from a colleague you don't know well. What is the most polite way to ask?",
+   "options": [
+    "Send me the file now.",
+    "I want that you send the file.",
+    "Could you send me the file, please?",
+    "You must send me the file before the end of today."
+   ],
+   "answer": 2,
+   "rationale_ar": "Could you ... please? طلب مهذب مناسب مع زميل لا تعرفه جيداً",
+   "tags": [
+    "work",
+    "politeness"
+   ],
+   "review": {
+    "was": "B1",
+    "by": "blind reviewer"
+   }
+  },
+  {
+   "id": "u-b1-04",
+   "cefr": "A2",
+   "lvl": 2,
+   "skill": "use",
+   "subskill": "telephone",
+   "difficulty": 0.38,
+   "stem": "You phone a company and want to talk to Ms Al-Harbi. You say:",
+   "options": [
+    "Give me Ms Al-Harbi.",
+    "Is Ms Al-Harbi speaking me?",
+    "Is Ms Al-Harbi there? I want speak with her.",
+    "Could I speak to Ms Al-Harbi, please?"
+   ],
+   "answer": 3,
+   "rationale_ar": "في الهاتف نقول Could I speak to ...? وهي مهذبة وطبيعية",
+   "tags": [
+    "work",
+    "telephone"
+   ],
+   "review": {
+    "was": "B1",
+    "by": "blind reviewer"
+   }
+  },
+  {
+   "id": "u-b1-05",
+   "cefr": "B1",
+   "lvl": 3,
+   "skill": "use",
+   "subskill": "complaint",
+   "difficulty": 0.58,
+   "stem": "The air conditioning in your hotel room isn't working. You call reception and say:",
+   "options": [
+    "Fix my air conditioning now.",
+    "I'm afraid the air conditioning in my room isn't working.",
+    "Your hotel is very bad because the air conditioning stopped.",
+    "Is the air conditioning working, please?"
+   ],
+   "answer": 1,
+   "rationale_ar": "I'm afraid تجعل الشكوى مهذبة وواضحة بدون هجوم",
+   "tags": [
+    "hotel",
+    "complaint"
+   ]
+  },
+  {
+   "id": "u-b1-06",
+   "cefr": "B1",
+   "lvl": 3,
+   "skill": "use",
+   "subskill": "declining_invitation",
+   "difficulty": 0.6,
+   "stem": "A colleague invites you to lunch, but you have a deadline today. You say:",
+   "options": [
+    "No, I don't want lunch with you.",
+    "Thanks, but I can't to come today because of work.",
+    "Sorry, I am not free for you today.",
+    "Thanks, I'd love to, but I'm really busy today."
+   ],
+   "answer": 3,
+   "rationale_ar": "نشكر أولاً ثم نعتذر بلطف: I'd love to, but ...",
+   "tags": [
+    "work",
+    "politeness"
+   ]
+  },
+  {
+   "id": "r-b1-01a",
+   "cefr": "B1",
+   "lvl": 3,
+   "skill": "reading",
+   "subskill": "detail",
+   "passage_id": "p-b1-01",
+   "difficulty": 0.54,
+   "stem": "Why has the training been moved?",
+   "options": [
+    "Meeting Room 2 is being used.",
+    "The trainer couldn't travel that day.",
+    "Many staff are on holiday.",
+    "The booking system isn't ready for the training yet."
+   ],
+   "answer": 1,
+   "rationale_ar": "الإيميل يقول إن رحلة المدرّب من دبي أُلغيت",
+   "tags": [
+    "work",
+    "email"
+   ]
+  },
+  {
+   "id": "r-b1-01b",
+   "cefr": "B1",
+   "lvl": 3,
+   "skill": "reading",
+   "subskill": "detail",
+   "passage_id": "p-b1-01",
+   "difficulty": 0.58,
+   "stem": "What should staff do if they can't come on Tuesday?",
+   "options": [
+    "Email Majed before Sunday.",
+    "Go to the next session without telling anyone.",
+    "Contact Hessa by Thursday.",
+    "Bring their laptop on Thursday."
+   ],
+   "answer": 2,
+   "rationale_ar": "المطلوب إبلاغ حصة في الموارد البشرية قبل يوم الخميس",
+   "tags": [
+    "work",
+    "email"
+   ]
+  },
+  {
+   "id": "r-b1-02a",
+   "cefr": "B1",
+   "lvl": 3,
+   "skill": "reading",
+   "subskill": "detail",
+   "passage_id": "p-b1-02",
+   "difficulty": 0.6,
+   "stem": "Noura bought a dress in the sale, but it doesn't fit. What can she do?",
+   "options": [
+    "Get a full refund within 14 days.",
+    "Exchange it for another item.",
+    "Get her money back within 7 days.",
+    "Nothing – sale items can't be returned."
+   ],
+   "answer": 1,
+   "rationale_ar": "منتجات التخفيضات تُستبدل فقط ولا يُسترد مبلغها",
+   "tags": [
+    "online_shopping",
+    "notice"
+   ]
+  },
+  {
+   "id": "r-b1-02b",
+   "cefr": "B1",
+   "lvl": 3,
+   "skill": "reading",
+   "subskill": "detail",
+   "passage_id": "p-b1-02",
+   "difficulty": 0.63,
+   "stem": "When will a customer get their money back?",
+   "options": [
+    "5 working days after the item reaches the warehouse",
+    "5 working days after asking for a return",
+    "14 days after the item was delivered",
+    "on the day the driver collects the item"
+   ],
+   "answer": 0,
+   "rationale_ar": "المبلغ يرجع خلال 5 أيام عمل من وصول المنتج للمستودع، وليس من طلب الإرجاع",
+   "tags": [
+    "online_shopping",
+    "notice"
+   ]
+  },
+  {
+   "id": "r-b1-03a",
+   "cefr": "B1",
+   "lvl": 3,
+   "skill": "reading",
+   "subskill": "gist",
+   "passage_id": "p-b1-03",
+   "difficulty": 0.57,
+   "stem": "What is the article mainly about?",
+   "options": [
+    "Why traffic in big Saudi cities is getting worse",
+    "How families can save money at the supermarket",
+    "Online grocery shopping and its problems",
+    "A new app for ordering food from restaurants"
+   ],
+   "answer": 2,
+   "rationale_ar": "المقال يتكلم عن انتشار شراء البقالة أونلاين وفوائده ومشاكله",
+   "tags": [
+    "online_shopping",
+    "article"
+   ]
+  },
+  {
+   "id": "r-b1-03b",
+   "cefr": "B1",
+   "lvl": 3,
+   "skill": "reading",
+   "subskill": "reason",
+   "passage_id": "p-b1-03",
+   "difficulty": 0.65,
+   "stem": "Why do some apps now let customers chat with the person picking their order?",
+   "options": [
+    "to make deliveries arrive faster",
+    "to deal with complaints about freshness and choice",
+    "to help drivers find customers' addresses more easily",
+    "to offer customers lower prices"
+   ],
+   "answer": 1,
+   "rationale_ar": "Because of this ترجع على شكاوى الطزاجة وعدم اختيار المنتجات بأنفسهم",
+   "tags": [
+    "online_shopping",
+    "article"
+   ]
+  },
+  {
+   "id": "l-b1-01a",
+   "cefr": "B1",
+   "lvl": 3,
+   "skill": "listening",
+   "subskill": "purpose",
+   "clip_id": "c-b1-01",
+   "difficulty": 0.55,
+   "stem": "Why is Maria calling?",
+   "options": [
+    "to cancel Faisal's flight",
+    "to tell Faisal about a new departure time",
+    "to ask Faisal to pay the rest of the money for his ticket",
+    "to offer Faisal a hotel in London"
+   ],
+   "answer": 1,
+   "rationale_ar": "ماريا تبلغه أن الرحلة مؤكدة لكن وقتها تغيّر",
+   "tags": [
+    "travel",
+    "voicemail"
+   ]
+  },
+  {
+   "id": "l-b1-01b",
+   "cefr": "B1",
+   "lvl": 3,
+   "skill": "listening",
+   "subskill": "detail",
+   "clip_id": "c-b1-01",
+   "difficulty": 0.57,
+   "stem": "What should Faisal do if the new time doesn't suit him?",
+   "options": [
+    "Phone Maria today.",
+    "Go to the airport early.",
+    "Book a new flight online.",
+    "Email the airline on Friday."
+   ],
+   "answer": 0,
+   "rationale_ar": "قالت: إذا كان الوقت مشكلة اتصل بي اليوم",
+   "tags": [
+    "travel",
+    "voicemail"
+   ]
+  },
+  {
+   "id": "l-b1-02a",
+   "cefr": "B1",
+   "lvl": 3,
+   "skill": "listening",
+   "subskill": "inference",
+   "clip_id": "c-b1-02",
+   "difficulty": 0.6,
+   "stem": "What does the man decide to do?",
+   "options": [
+    "Come at nine tomorrow.",
+    "Arrive at ten as planned.",
+    "See the doctor at 11:30.",
+    "Cancel his appointment."
+   ],
+   "answer": 2,
+   "rationale_ar": "قال Today's better يعني اختار موعد الحادية عشرة والنصف اليوم",
+   "tags": [
+    "clinic",
+    "telephone"
+   ]
+  },
+  {
+   "id": "l-b1-03a",
+   "cefr": "B1",
+   "lvl": 3,
+   "skill": "listening",
+   "subskill": "detail",
+   "clip_id": "c-b1-03",
+   "difficulty": 0.62,
+   "stem": "What should staff who drive do tomorrow morning?",
+   "options": [
+    "Come to work after twelve.",
+    "Park on the street nearby.",
+    "Take a taxi from home.",
+    "Park at the mall and take the bus."
+   ],
+   "answer": 3,
+   "rationale_ar": "الإعلان يطلب الوقوف عند المول ثم ركوب الباص المجاني",
+   "tags": [
+    "work",
+    "announcement"
+   ]
+  },
+  {
+   "id": "l-b1-04a",
+   "cefr": "B1",
+   "lvl": 3,
+   "skill": "listening",
+   "subskill": "reason",
+   "clip_id": "c-b1-04",
+   "difficulty": 0.54,
+   "stem": "Why isn't the presentation finished yet?",
+   "options": [
+    "The manager asked for changes.",
+    "The man is still waiting for some numbers.",
+    "The computer system in the office isn't working today.",
+    "The man has been too busy."
+   ],
+   "answer": 1,
+   "rationale_ar": "ينتظر أرقام شهر مارس من سلطان",
+   "tags": [
+    "work",
+    "meeting"
+   ]
+  },
+  {
+   "id": "l-b1-04b",
+   "cefr": "B1",
+   "lvl": 3,
+   "skill": "listening",
+   "subskill": "attitude",
+   "clip_id": "c-b1-04",
+   "difficulty": 0.65,
+   "stem": "How does the woman feel about Sultan?",
+   "options": [
+    "annoyed, because it has happened before",
+    "worried that he might be ill",
+    "pleased with his figures",
+    "surprised that he is at work"
+   ],
+   "answer": 0,
+   "rationale_ar": "كلمة Again? بنبرتها تدل أن التأخير تكرر وأنها منزعجة",
+   "tags": [
+    "work",
+    "attitude"
+   ]
+  },
+  {
+   "id": "g-b2-01",
+   "cefr": "B2",
+   "lvl": 4,
+   "skill": "grammar",
+   "subskill": "passive_modals",
+   "difficulty": 0.68,
+   "stem": "All visitors' bags ___ before they enter the building.",
+   "options": [
+    "must check",
+    "must have checked",
+    "must be checked",
+    "must be checking"
+   ],
+   "answer": 2,
+   "rationale_ar": "الحقائب لا تفحص نفسها، فنستخدم المبني للمجهول: must be + التصريف الثالث",
+   "tags": [
+    "work",
+    "passive"
+   ]
+  },
+  {
+   "id": "g-b2-02",
+   "cefr": "B2",
+   "lvl": 4,
+   "skill": "grammar",
+   "subskill": "passive_modals_past",
+   "difficulty": 0.74,
+   "stem": "The leak ___ much earlier if someone had reported it.",
+   "options": [
+    "could fix",
+    "could have been fixed",
+    "could be fixed",
+    "could have fixed"
+   ],
+   "answer": 1,
+   "rationale_ar": "ماضٍ لم يحدث + مبني للمجهول: could have been + التصريف الثالث",
+   "tags": [
+    "home",
+    "passive",
+    "conditional_mixing"
+   ]
+  },
+  {
+   "id": "g-b2-03",
+   "cefr": "B2",
+   "lvl": 4,
+   "skill": "grammar",
+   "subskill": "reported_speech",
+   "difficulty": 0.7,
+   "stem": "Daniel told us he ___ the contract the following week.",
+   "options": [
+    "will sign",
+    "signs",
+    "has signed",
+    "would sign"
+   ],
+   "answer": 3,
+   "rationale_ar": "في الكلام المنقول بعد told تتحول will إلى would، وthe following week تؤكد ذلك",
+   "tags": [
+    "work",
+    "backshift"
+   ]
+  },
+  {
+   "id": "g-b2-04",
+   "cefr": "B2",
+   "lvl": 4,
+   "skill": "grammar",
+   "subskill": "reported_questions",
+   "difficulty": 0.69,
+   "stem": "At the visa office, the officer asked me where ___.",
+   "options": [
+    "did I work",
+    "I worked",
+    "was I working",
+    "do I work"
+   ],
+   "answer": 1,
+   "rationale_ar": "السؤال المنقول يأخذ ترتيب الجملة العادية بدون did ومع رجوع الزمن للماضي",
+   "tags": [
+    "government_services",
+    "question_word_order"
+   ]
+  },
+  {
+   "id": "g-b2-05",
+   "cefr": "B2",
+   "lvl": 4,
+   "skill": "grammar",
+   "subskill": "wish_regret",
+   "difficulty": 0.73,
+   "stem": "I wish I ___ that email to the whole team. It caused so many problems.",
+   "options": [
+    "didn't send",
+    "haven't sent",
+    "hadn't sent",
+    "wouldn't send"
+   ],
+   "answer": 2,
+   "rationale_ar": "للندم على شيء حدث في الماضي: wish + الماضي التام",
+   "tags": [
+    "work",
+    "wish"
+   ]
+  },
+  {
+   "id": "g-b2-06",
+   "cefr": "B2",
+   "lvl": 4,
+   "skill": "grammar",
+   "subskill": "ing_vs_to_meaning",
+   "difficulty": 0.76,
+   "stem": "On the way to the airport, we stopped ___ petrol, so we were a bit late.",
+   "options": [
+    "to get",
+    "getting",
+    "get",
+    "for getting"
+   ],
+   "answer": 0,
+   "rationale_ar": "stop to تعني توقفنا لكي نفعل شيئاً، أما stop getting فمعناها أقلعنا عنه",
+   "tags": [
+    "travel",
+    "ing_vs_to"
+   ]
+  },
+  {
+   "id": "g-b2-07",
+   "cefr": "B2",
+   "lvl": 4,
+   "skill": "grammar",
+   "subskill": "ing_vs_to_meaning",
+   "difficulty": 0.8,
+   "stem": "We regret ___ you that your application has not been successful.",
+   "options": [
+    "informing",
+    "to inform",
+    "inform",
+    "for informing"
+   ],
+   "answer": 1,
+   "rationale_ar": "regret to inform عبارة رسمية لخبر سيئ الآن، وregret informing تعني ندمت أنك أخبرت",
+   "tags": [
+    "work",
+    "formal_letter",
+    "ing_vs_to"
+   ]
+  },
+  {
+   "id": "g-b2-08",
+   "cefr": "B2",
+   "lvl": 4,
+   "skill": "grammar",
+   "subskill": "linkers_concession",
+   "difficulty": 0.67,
+   "stem": "___ the flight was delayed, we got to the meeting on time.",
+   "options": [
+    "Despite",
+    "However",
+    "In spite",
+    "Although"
+   ],
+   "answer": 3,
+   "rationale_ar": "Although يأتي بعدها جملة كاملة، أما Despite فيأتي بعدها اسم",
+   "tags": [
+    "travel",
+    "linkers"
+   ]
+  },
+  {
+   "id": "g-b2-09",
+   "cefr": "B2",
+   "lvl": 4,
+   "skill": "grammar",
+   "subskill": "be_used_to",
+   "difficulty": 0.72,
+   "stem": "After five years in Riyadh, Daniel ___ driving in heavy traffic.",
+   "options": [
+    "used to",
+    "is used to",
+    "is using to",
+    "uses to"
+   ],
+   "answer": 1,
+   "rationale_ar": "be used to + ing تعني معتاد على الشيء الآن",
+   "tags": [
+    "city_life",
+    "used_to"
+   ]
+  },
+  {
+   "id": "v-b2-01",
+   "cefr": "B2",
+   "lvl": 4,
+   "skill": "vocab",
+   "subskill": "phrasal_verbs",
+   "difficulty": 0.68,
+   "stem": "Can we ___ the meeting until Thursday? I'm travelling tomorrow.",
+   "options": [
+    "put off",
+    "put out",
+    "call off",
+    "put up"
+   ],
+   "answer": 0,
+   "rationale_ar": "put off تعني نؤجل، وcall off تعني نلغي، وuntil Thursday تدل على التأجيل",
+   "tags": [
+    "work",
+    "phrasal_verbs"
+   ]
+  },
+  {
+   "id": "v-b2-02",
+   "cefr": "B2",
+   "lvl": 4,
+   "skill": "vocab",
+   "subskill": "phrasal_verbs",
+   "difficulty": 0.71,
+   "stem": "We need someone to ___ Lama's tasks while she is on leave.",
+   "options": [
+    "take over",
+    "take after",
+    "take off",
+    "take in"
+   ],
+   "answer": 0,
+   "rationale_ar": "take over تعني يستلم مسؤولية عمل شخص آخر",
+   "tags": [
+    "work",
+    "phrasal_verbs"
+   ]
+  },
+  {
+   "id": "v-b2-03",
+   "cefr": "B2",
+   "lvl": 4,
+   "skill": "vocab",
+   "subskill": "phrasal_verbs",
+   "difficulty": 0.7,
+   "stem": "I'll ___ the problem with your account and call you back this afternoon.",
+   "options": [
+    "look after",
+    "look up to",
+    "look into",
+    "look out"
+   ],
+   "answer": 2,
+   "rationale_ar": "look into تعني يبحث في المشكلة ويتحقق منها",
+   "tags": [
+    "bank",
+    "customer_service",
+    "phrasal_verbs"
+   ]
+  },
+  {
+   "id": "v-b2-04",
+   "cefr": "B2",
+   "lvl": 4,
+   "skill": "vocab",
+   "subskill": "collocation",
+   "difficulty": 0.74,
+   "stem": "We'll have to work late to ___ the Monday deadline.",
+   "options": [
+    "reach",
+    "catch",
+    "achieve",
+    "meet"
+   ],
+   "answer": 3,
+   "rationale_ar": "التعبير الثابت meet a deadline بمعنى ننجز قبل الموعد النهائي",
+   "tags": [
+    "work",
+    "collocation"
+   ]
+  },
+  {
+   "id": "v-b2-05",
+   "cefr": "B1",
+   "lvl": 3,
+   "skill": "vocab",
+   "subskill": "collocation",
+   "difficulty": 0.51,
+   "stem": "There was very ___ traffic on King Fahd Road this morning, so I was late.",
+   "options": [
+    "heavy",
+    "strong",
+    "big",
+    "crowded"
+   ],
+   "answer": 0,
+   "rationale_ar": "نقول heavy traffic للزحمة، وbig traffic ترجمة حرفية",
+   "tags": [
+    "city_life",
+    "collocation"
+   ],
+   "review": {
+    "was": "B2",
+    "by": "blind reviewer"
+   }
+  },
+  {
+   "id": "v-b2-06",
+   "cefr": "B1",
+   "lvl": 3,
+   "skill": "vocab",
+   "subskill": "word_formation",
+   "difficulty": 0.53,
+   "stem": "Thank you for your ___ while we fix the problem with our system.",
+   "options": [
+    "patient",
+    "patience",
+    "patiently",
+    "patients"
+   ],
+   "answer": 1,
+   "rationale_ar": "بعد your نحتاج اسماً: patience بمعنى الصبر، وpatients تعني المرضى",
+   "tags": [
+    "customer_service",
+    "word_formation"
+   ],
+   "review": {
+    "was": "B2",
+    "by": "blind reviewer"
+   }
+  },
+  {
+   "id": "v-b2-07",
+   "cefr": "B2",
+   "lvl": 4,
+   "skill": "vocab",
+   "subskill": "fixed_phrase",
+   "difficulty": 0.8,
+   "stem": "The 20% discount is ___ to availability and cannot be combined with other offers.",
+   "options": [
+    "due",
+    "according",
+    "liable",
+    "subject"
+   ],
+   "answer": 3,
+   "rationale_ar": "subject to تعني «حسب توفّر» أو «مشروط بـ»",
+   "tags": [
+    "hotel",
+    "online_shopping",
+    "formal"
+   ]
+  },
+  {
+   "id": "v-b2-08",
+   "cefr": "B2",
+   "lvl": 4,
+   "skill": "vocab",
+   "subskill": "collocation",
+   "difficulty": 0.75,
+   "stem": "After months of talks, the two companies have finally ___ an agreement.",
+   "options": [
+    "arrived",
+    "gained",
+    "reached",
+    "made up"
+   ],
+   "answer": 2,
+   "rationale_ar": "نقول reach an agreement، أما arrive فتحتاج at",
+   "tags": [
+    "work",
+    "collocation"
+   ]
+  },
+  {
+   "id": "v-b2-09",
+   "cefr": "B2",
+   "lvl": 4,
+   "skill": "vocab",
+   "subskill": "confusable_words",
+   "difficulty": 0.78,
+   "stem": "The new parking rules will ___ everyone who works in the building.",
+   "options": [
+    "affect",
+    "effect",
+    "infect",
+    "reflect"
+   ],
+   "answer": 0,
+   "rationale_ar": "affect فعل بمعنى يؤثر على، وeffect غالباً اسم بمعنى التأثير",
+   "tags": [
+    "work",
+    "confusables"
+   ]
+  },
+  {
+   "id": "u-b2-01",
+   "cefr": "B2",
+   "lvl": 4,
+   "skill": "use",
+   "subskill": "disagreeing_politely",
+   "difficulty": 0.69,
+   "stem": "In a meeting, a colleague suggests a plan you think is too expensive. You say:",
+   "options": [
+    "That's a silly idea – it costs far too much.",
+    "I can see the advantages, but I'm worried about the cost.",
+    "I agree with you completely; it's perfect.",
+    "You clearly don't understand how our department's budget works."
+   ],
+   "answer": 1,
+   "rationale_ar": "نعترف بالإيجابيات أولاً ثم نذكر القلق بلطف",
+   "tags": [
+    "work",
+    "meeting",
+    "politeness"
+   ]
+  },
+  {
+   "id": "u-b2-02",
+   "cefr": "B2",
+   "lvl": 4,
+   "skill": "use",
+   "subskill": "email_follow_up",
+   "difficulty": 0.72,
+   "stem": "You emailed a supplier a week ago and got no reply. You write:",
+   "options": [
+    "Why you didn't answer my email?",
+    "Answer my email quickly, please.",
+    "I'm just following up on my email from last week.",
+    "I'm following my email from last week."
+   ],
+   "answer": 2,
+   "rationale_ar": "follow up on عبارة مهنية للتذكير بإيميل سابق",
+   "tags": [
+    "work",
+    "email"
+   ]
+  },
+  {
+   "id": "u-b2-03",
+   "cefr": "B2",
+   "lvl": 4,
+   "skill": "use",
+   "subskill": "complaint",
+   "difficulty": 0.7,
+   "stem": "Your online order arrived damaged. You write to customer service. Which first line is most appropriate?",
+   "options": [
+    "I want to complain you about the item.",
+    "I demand my money back right now.",
+    "Please accept our sincere apologies for the damage to your order.",
+    "I'd like to request a replacement for the damaged item."
+   ],
+   "answer": 3,
+   "rationale_ar": "طلب واضح ومهذب، أما accept our apologies فهي جملة الشركة وليست جملة العميل",
+   "tags": [
+    "online_shopping",
+    "customer_service"
+   ]
+  },
+  {
+   "id": "u-b2-05",
+   "cefr": "B1",
+   "lvl": 3,
+   "skill": "use",
+   "subskill": "interrupting",
+   "difficulty": 0.59,
+   "stem": "Your manager is speaking in a meeting and you want to add a point. You say:",
+   "options": [
+    "Stop, I want to say something.",
+    "Sorry to interrupt, but could I just add something?",
+    "Excuse me, let me to say something important about this.",
+    "Wait, wait – listen to me now."
+   ],
+   "answer": 1,
+   "rationale_ar": "Sorry to interrupt طريقة مهذبة للمقاطعة في الاجتماعات",
+   "tags": [
+    "work",
+    "meeting",
+    "politeness"
+   ],
+   "review": {
+    "was": "B2",
+    "by": "blind reviewer"
+   }
+  },
+  {
+   "id": "r-b2-01a",
+   "cefr": "B2",
+   "lvl": 4,
+   "skill": "reading",
+   "subskill": "inference",
+   "passage_id": "p-b2-01",
+   "difficulty": 0.72,
+   "stem": "Why did employees send more emails after the move?",
+   "options": [
+    "They were sitting further apart than before.",
+    "Managers asked them to write more reports.",
+    "They didn't want to disturb colleagues nearby.",
+    "The new office had no meeting rooms."
+   ],
+   "answer": 2,
+   "rationale_ar": "النص يقول إنهم راسلوا الزميل القريب بدل ما يقاطعونه",
+   "tags": [
+    "work",
+    "article"
+   ]
+  },
+  {
+   "id": "r-b2-01b",
+   "cefr": "B2",
+   "lvl": 4,
+   "skill": "reading",
+   "subskill": "inference",
+   "passage_id": "p-b2-01",
+   "difficulty": 0.78,
+   "stem": "What does the last sentence suggest about the managers?",
+   "options": [
+    "They plan to return to private offices.",
+    "They think the quiet rooms have not solved the noise problem.",
+    "They blame the staff for the problem.",
+    "They are less certain about office design than before."
+   ],
+   "answer": 3,
+   "rationale_ar": "اعترفوا أنهم لم يعودوا متأكدين من التصميم الصحيح",
+   "tags": [
+    "work",
+    "article"
+   ]
+  },
+  {
+   "id": "r-b2-01c",
+   "cefr": "B2",
+   "lvl": 4,
+   "skill": "reading",
+   "subskill": "writer_purpose",
+   "passage_id": "p-b2-01",
+   "difficulty": 0.8,
+   "stem": "What is the writer's main purpose?",
+   "options": [
+    "to persuade companies to build private offices",
+    "to describe how a plan had an unexpected result",
+    "to explain how to design a quiet room",
+    "to criticise employees for wearing headphones at their desks"
+   ],
+   "answer": 1,
+   "rationale_ar": "النص يحكي خطة كان هدفها زيادة الكلام فحصل العكس",
+   "tags": [
+    "work",
+    "article"
+   ]
+  },
+  {
+   "id": "r-b2-02a",
+   "cefr": "B2",
+   "lvl": 4,
+   "skill": "reading",
+   "subskill": "detail_paraphrase",
+   "passage_id": "p-b2-02",
+   "difficulty": 0.71,
+   "stem": "According to the writer, why are average scores not very useful?",
+   "options": [
+    "Most guests give hotels one star.",
+    "Hotels are not allowed to see them.",
+    "They are too similar to show real differences.",
+    "They are calculated incorrectly by most booking websites."
+   ],
+   "answer": 2,
+   "rationale_ar": "معظم الفنادق بين 4.2 و4.8 فاختفى الفرق بين الجيد والعادي",
+   "tags": [
+    "hotel",
+    "travel",
+    "blog"
+   ]
+  },
+  {
+   "id": "r-b2-02b",
+   "cefr": "B2",
+   "lvl": 4,
+   "skill": "reading",
+   "subskill": "writer_purpose",
+   "passage_id": "p-b2-02",
+   "difficulty": 0.77,
+   "stem": "Why does the writer mention three-star reviews?",
+   "options": [
+    "to suggest a more reliable way to choose a hotel",
+    "to complain about hotels that pay for reviews",
+    "to show that most hotels are only average",
+    "to explain how online scores are calculated"
+   ],
+   "answer": 0,
+   "rationale_ar": "الكاتب يقترح قراءتها لأنها أصدق وأوضح من النجوم",
+   "tags": [
+    "hotel",
+    "travel",
+    "blog"
+   ]
+  },
+  {
+   "id": "r-b2-02c",
+   "cefr": "B2",
+   "lvl": 4,
+   "skill": "reading",
+   "subskill": "inference",
+   "passage_id": "p-b2-02",
+   "difficulty": 0.82,
+   "stem": "What can we infer about reviews written in return for a discount?",
+   "options": [
+    "They are usually three-star reviews.",
+    "The writer does not fully trust them.",
+    "They are more detailed than other reviews.",
+    "Hotels have stopped asking for them."
+   ],
+   "answer": 1,
+   "rationale_ar": "يفضّل مراجعات أشخاص neither angry nor rewarded، يعني لا يثق بمن أخذ مقابلاً",
+   "tags": [
+    "hotel",
+    "travel",
+    "blog"
+   ]
+  },
+  {
+   "id": "l-b2-01a",
+   "cefr": "B2",
+   "lvl": 4,
+   "skill": "listening",
+   "subskill": "opinion",
+   "clip_id": "c-b2-01",
+   "difficulty": 0.7,
+   "stem": "What does the woman recommend?",
+   "options": [
+    "launching on the first of June",
+    "cancelling the app completely",
+    "delaying the launch for a short time",
+    "buying newer phones for testing"
+   ],
+   "answer": 2,
+   "rationale_ar": "قالت إنها تفضّل الانتظار أسبوعين بدل سيل الشكاوى",
+   "tags": [
+    "work",
+    "meeting"
+   ]
+  },
+  {
+   "id": "l-b2-01b",
+   "cefr": "B2",
+   "lvl": 4,
+   "skill": "listening",
+   "subskill": "attitude",
+   "clip_id": "c-b2-01",
+   "difficulty": 0.74,
+   "stem": "How does the man respond?",
+   "options": [
+    "He accepts her reasoning.",
+    "He insists on the original date.",
+    "He asks for more data first.",
+    "He criticises the testing team."
+   ],
+   "answer": 0,
+   "rationale_ar": "Fair enough تعني «معك حق، مقبول» فوافق على رأيها",
+   "tags": [
+    "work",
+    "meeting"
+   ]
+  },
+  {
+   "id": "l-b2-02a",
+   "cefr": "B2",
+   "lvl": 4,
+   "skill": "listening",
+   "subskill": "gist",
+   "clip_id": "c-b2-02",
+   "difficulty": 0.76,
+   "stem": "What is the main message of the call?",
+   "options": [
+    "The customer must send the money again.",
+    "The money never left the customer's account on Monday.",
+    "The transfer is delayed, but no action is needed.",
+    "The other bank has rejected the transfer."
+   ],
+   "answer": 2,
+   "rationale_ar": "التحويل خرج لكنه متأخر عند البنك المستقبل، ولا يلزم العميل فعل شيء",
+   "tags": [
+    "bank",
+    "voicemail"
+   ]
+  },
+  {
+   "id": "l-b2-03a",
+   "cefr": "B2",
+   "lvl": 4,
+   "skill": "listening",
+   "subskill": "attitude",
+   "clip_id": "c-b2-03",
+   "difficulty": 0.81,
+   "stem": "How does the guest feel about the offer?",
+   "options": [
+    "He's delighted with it.",
+    "He refuses it and asks for a full refund instead.",
+    "He doesn't understand the offer.",
+    "He accepts it, but without enthusiasm."
+   ],
+   "answer": 3,
+   "rationale_ar": "I suppose that'll have to do تعني يقبل على مضض",
+   "tags": [
+    "hotel",
+    "complaint",
+    "attitude"
+   ]
+  },
+  {
+   "id": "l-b2-04a",
+   "cefr": "B2",
+   "lvl": 4,
+   "skill": "listening",
+   "subskill": "detail_inference",
+   "clip_id": "c-b2-04",
+   "difficulty": 0.79,
+   "stem": "What happens to a claim submitted after seven days?",
+   "options": [
+    "It needs extra approval and may take longer.",
+    "It is rejected automatically.",
+    "It must be submitted on paper.",
+    "It is paid at the end of the year."
+   ],
+   "answer": 0,
+   "rationale_ar": "قالت إنه لا يُرفض تلقائياً لكنه يحتاج موافقة المدير وقد يتأخر",
+   "tags": [
+    "work",
+    "announcement"
+   ]
+  },
+  {
+   "id": "l-b2-04b",
+   "cefr": "B2",
+   "lvl": 4,
+   "skill": "listening",
+   "subskill": "gist",
+   "clip_id": "c-b2-04",
+   "difficulty": 0.69,
+   "stem": "What is the main change?",
+   "options": [
+    "Expenses will be paid more quickly.",
+    "Managers will stop approving claims.",
+    "Staff can claim fewer expenses.",
+    "Receipts must be sent as photos."
+   ],
+   "answer": 3,
+   "rationale_ar": "الإيصالات الورقية لن تُقبل، ويجب تصويرها ورفعها عبر التطبيق",
+   "tags": [
+    "work",
+    "announcement"
+   ]
+  },
+  {
+   "id": "g-c1-01",
+   "cefr": "C1",
+   "lvl": 5,
+   "skill": "grammar",
+   "subskill": "inversion_negative_adverbial",
+   "difficulty": 0.86,
+   "stem": "Under no circumstances ___ share your password with anyone, including IT staff.",
+   "options": [
+    "you should",
+    "should you",
+    "you must not",
+    "must not you"
+   ],
+   "answer": 1,
+   "rationale_ar": "بعد Under no circumstances نقلب الترتيب: الفعل المساعد قبل الفاعل، والنفي موجود أصلاً",
+   "tags": [
+    "work",
+    "inversion"
+   ]
+  },
+  {
+   "id": "g-c1-02",
+   "cefr": "C1",
+   "lvl": 5,
+   "skill": "grammar",
+   "subskill": "inversion_not_until",
+   "difficulty": 0.9,
+   "stem": "Not until the auditors arrived ___ how serious the problem was.",
+   "options": [
+    "we realised",
+    "we did realise",
+    "did we realise",
+    "had we realised"
+   ],
+   "answer": 2,
+   "rationale_ar": "Not until في أول الجملة يتبعها قلب: did + الفاعل + الفعل في الجزء الرئيسي",
+   "tags": [
+    "work",
+    "inversion"
+   ]
+  },
+  {
+   "id": "g-c1-03",
+   "cefr": "C1",
+   "lvl": 5,
+   "skill": "grammar",
+   "subskill": "cleft_what",
+   "difficulty": 0.85,
+   "stem": "___ I found most frustrating was the lack of communication from management.",
+   "options": [
+    "What",
+    "That",
+    "Which",
+    "It"
+   ],
+   "answer": 0,
+   "rationale_ar": "What هنا بمعنى «الشيء الذي»، وتُستخدم للتأكيد في أول الجملة",
+   "tags": [
+    "work",
+    "cleft"
+   ]
+  },
+  {
+   "id": "g-c1-04",
+   "cefr": "C1",
+   "lvl": 5,
+   "skill": "grammar",
+   "subskill": "cleft_it",
+   "difficulty": 0.88,
+   "stem": "It was only when the client called ___ we discovered the error.",
+   "options": [
+    "when",
+    "which",
+    "then",
+    "that"
+   ],
+   "answer": 3,
+   "rationale_ar": "تركيب التأكيد It was ... that ثابت، ولا نكرر when",
+   "tags": [
+    "work",
+    "cleft"
+   ]
+  },
+  {
+   "id": "g-c1-05",
+   "cefr": "C1",
+   "lvl": 5,
+   "skill": "grammar",
+   "subskill": "mixed_conditionals",
+   "difficulty": 0.91,
+   "stem": "If I had accepted the job in Dubai, I ___ in a much bigger flat now.",
+   "options": [
+    "would have been living",
+    "would be living",
+    "will be living",
+    "had been living"
+   ],
+   "answer": 1,
+   "rationale_ar": "شرط في الماضي ونتيجة في الحاضر (now): would be + ing",
+   "tags": [
+    "work",
+    "conditional_mixing"
+   ]
+  },
+  {
+   "id": "g-c1-06",
+   "cefr": "C1",
+   "lvl": 5,
+   "skill": "grammar",
+   "subskill": "mixed_conditionals",
+   "difficulty": 0.95,
+   "stem": "If Majed ___ so impatient by nature, he would have waited for the full report.",
+   "options": [
+    "isn't",
+    "hasn't been",
+    "weren't",
+    "wouldn't be"
+   ],
+   "answer": 2,
+   "rationale_ar": "صفة دائمة في الحاضر (by nature) مع نتيجة في الماضي: if + weren't ثم would have",
+   "tags": [
+    "work",
+    "conditional_mixing"
+   ]
+  },
+  {
+   "id": "g-c1-07",
+   "cefr": "C1",
+   "lvl": 5,
+   "skill": "grammar",
+   "subskill": "inversion_should",
+   "difficulty": 0.87,
+   "stem": "___ you require any further information, please do not hesitate to contact our office.",
+   "options": [
+    "Would",
+    "Should",
+    "Were",
+    "Had"
+   ],
+   "answer": 1,
+   "rationale_ar": "Should في أول الجملة بمعنى If، وهي صيغة رسمية شائعة في الإيميلات",
+   "tags": [
+    "work",
+    "formal_letter",
+    "inversion"
+   ]
+  },
+  {
+   "id": "g-c1-08",
+   "cefr": "C1",
+   "lvl": 5,
+   "skill": "grammar",
+   "subskill": "concession_much_as",
+   "difficulty": 0.93,
+   "stem": "___ I respect her experience, I think she is wrong on this point.",
+   "options": [
+    "Much as",
+    "As much",
+    "However much as",
+    "So much as"
+   ],
+   "answer": 0,
+   "rationale_ar": "Much as بمعنى «مع أنني» وتأتي بعدها جملة كاملة",
+   "tags": [
+    "work",
+    "concession"
+   ]
+  },
+  {
+   "id": "v-c1-01",
+   "cefr": "C1",
+   "lvl": 5,
+   "skill": "vocab",
+   "subskill": "idiom",
+   "difficulty": 0.86,
+   "stem": "Our new office is ___ from the cramped building we started in.",
+   "options": [
+    "a long shot",
+    "a far call",
+    "a far cry",
+    "a long cry"
+   ],
+   "answer": 2,
+   "rationale_ar": "a far cry from تعني مختلف تماماً عن",
+   "tags": [
+    "work",
+    "idiom"
+   ]
+  },
+  {
+   "id": "v-c1-02",
+   "cefr": "C1",
+   "lvl": 5,
+   "skill": "vocab",
+   "subskill": "collocation",
+   "difficulty": 0.89,
+   "stem": "Small businesses are likely to ___ the brunt of the new fees.",
+   "options": [
+    "carry",
+    "bear",
+    "hold",
+    "raise"
+   ],
+   "answer": 1,
+   "rationale_ar": "التعبير الثابت bear the brunt of بمعنى يتحمّل الضرر الأكبر",
+   "tags": [
+    "business",
+    "collocation"
+   ]
+  },
+  {
+   "id": "v-c1-03",
+   "cefr": "C1",
+   "lvl": 5,
+   "skill": "vocab",
+   "subskill": "idiom",
+   "difficulty": 0.9,
+   "stem": "His explanation doesn't ___ water – the numbers simply don't add up.",
+   "options": [
+    "keep",
+    "carry",
+    "contain",
+    "hold"
+   ],
+   "answer": 3,
+   "rationale_ar": "hold water تعني أن الحجة مقنعة ومتماسكة",
+   "tags": [
+    "work",
+    "idiom"
+   ]
+  },
+  {
+   "id": "v-c1-04",
+   "cefr": "C1",
+   "lvl": 5,
+   "skill": "vocab",
+   "subskill": "hedging_collocation",
+   "difficulty": 0.85,
+   "stem": "We are ___ optimistic that the deal will go ahead next month.",
+   "options": [
+    "cautiously",
+    "carefully",
+    "fearfully",
+    "doubtfully"
+   ],
+   "answer": 0,
+   "rationale_ar": "cautiously optimistic تعبير ثابت بمعنى متفائل بحذر",
+   "tags": [
+    "business",
+    "hedging"
+   ]
+  },
+  {
+   "id": "v-c1-05",
+   "cefr": "C1",
+   "lvl": 5,
+   "skill": "vocab",
+   "subskill": "word_formation",
+   "difficulty": 0.87,
+   "stem": "The decision was taken without any ___ with the staff it affected.",
+   "options": [
+    "consultant",
+    "consultancy",
+    "consulting",
+    "consultation"
+   ],
+   "answer": 3,
+   "rationale_ar": "consultation اسم بمعنى التشاور، وconsultant شخص وconsultancy شركة استشارات",
+   "tags": [
+    "work",
+    "word_formation"
+   ]
+  },
+  {
+   "id": "v-c1-06",
+   "cefr": "C1",
+   "lvl": 5,
+   "skill": "vocab",
+   "subskill": "collocation",
+   "difficulty": 0.88,
+   "stem": "Delays in the supply chain ___ a serious risk to the project.",
+   "options": [
+    "put",
+    "pose",
+    "make",
+    "set"
+   ],
+   "answer": 1,
+   "rationale_ar": "نقول pose a risk أو pose a threat بمعنى يشكّل خطراً",
+   "tags": [
+    "business",
+    "collocation"
+   ]
+  },
+  {
+   "id": "v-c1-07",
+   "cefr": "C1",
+   "lvl": 5,
+   "skill": "vocab",
+   "subskill": "fixed_phrase",
+   "difficulty": 0.92,
+   "stem": "We tried for weeks to contact the supplier, but ___.",
+   "options": [
+    "by no means",
+    "at no time",
+    "to no avail",
+    "in no way"
+   ],
+   "answer": 2,
+   "rationale_ar": "to no avail تعني بلا فائدة، والباقي تعابير نفي لا تكمل الجملة",
+   "tags": [
+    "business",
+    "fixed_phrase"
+   ]
+  },
+  {
+   "id": "v-c1-08",
+   "cefr": "B2",
+   "lvl": 4,
+   "skill": "vocab",
+   "subskill": "register_formal",
+   "difficulty": 0.67,
+   "stem": "Applicants must ___ written approval from their manager before travelling.",
+   "options": [
+    "obtain",
+    "reach",
+    "attain",
+    "gather"
+   ],
+   "answer": 0,
+   "rationale_ar": "obtain approval بمعنى يحصل على موافقة، وهي الصيغة الرسمية",
+   "tags": [
+    "work",
+    "formal",
+    "collocation"
+   ],
+   "review": {
+    "was": "C1",
+    "by": "blind reviewer"
+   }
+  },
+  {
+   "id": "v-c1-09",
+   "cefr": "C1",
+   "lvl": 5,
+   "skill": "vocab",
+   "subskill": "word_choice",
+   "difficulty": 0.94,
+   "stem": "The rumours turned out to be completely ___; there was no truth in them.",
+   "options": [
+    "unfunded",
+    "undefined",
+    "unrelated",
+    "unfounded"
+   ],
+   "answer": 3,
+   "rationale_ar": "unfounded تعني بلا أساس، وunfunded تعني بلا تمويل",
+   "tags": [
+    "work",
+    "confusables"
+   ]
+  },
+  {
+   "id": "u-c1-01",
+   "cefr": "B2",
+   "lvl": 4,
+   "skill": "use",
+   "subskill": "hedging",
+   "difficulty": 0.69,
+   "stem": "In a report to the board, you want to sound careful rather than certain. You write:",
+   "options": [
+    "The figures prove that there is a slowdown.",
+    "The figures would seem to point to a slowdown.",
+    "The figures are definitely showing a slowdown.",
+    "The figures, maybe they show a slowdown."
+   ],
+   "answer": 1,
+   "rationale_ar": "would seem to تخفف الادعاء بأسلوب رسمي، وprove وdefinitely قاطعة",
+   "tags": [
+    "work",
+    "report",
+    "hedging"
+   ],
+   "review": {
+    "was": "C1",
+    "by": "blind reviewer"
+   }
+  },
+  {
+   "id": "u-c1-02",
+   "cefr": "B2",
+   "lvl": 4,
+   "skill": "use",
+   "subskill": "register",
+   "difficulty": 0.72,
+   "stem": "A senior client has written to complain about a delay. Which reply has the most appropriate tone?",
+   "options": [
+    "Sorry about that – we'll sort it out ASAP.",
+    "It wasn't our fault, but we'll check it.",
+    "We regret for the inconvenience that this has caused to you.",
+    "We sincerely regret the delay and are looking into it."
+   ],
+   "answer": 3,
+   "rationale_ar": "رسمية ومهذبة ودقيقة، أما regret for فخطأ نحوي",
+   "tags": [
+    "work",
+    "email",
+    "register"
+   ],
+   "review": {
+    "was": "C1",
+    "by": "blind reviewer"
+   }
+  },
+  {
+   "id": "u-c1-03",
+   "cefr": "B1",
+   "lvl": 3,
+   "skill": "use",
+   "subskill": "pushing_back_diplomatically",
+   "difficulty": 0.58,
+   "stem": "Your manager wants a project finished in one week. You think that's unrealistic and want to push back diplomatically. You say:",
+   "options": [
+    "That's impossible, and honestly, you must know it as well as I do.",
+    "Fine, whatever you say – one week it is.",
+    "I'm not sure that's realistic. Could we review the timeline?",
+    "I'm not agree with this timeline at all, I'm sorry to say."
+   ],
+   "answer": 2,
+   "rationale_ar": "تعبّر عن الشك بلطف وتقترح حلاً مشتركاً بدل الرفض المباشر",
+   "tags": [
+    "work",
+    "meeting",
+    "politeness"
+   ],
+   "review": {
+    "was": "C1",
+    "by": "blind reviewer"
+   }
+  },
+  {
+   "id": "u-c1-04",
+   "cefr": "B2",
+   "lvl": 4,
+   "skill": "use",
+   "subskill": "irony",
+   "difficulty": 0.77,
+   "stem": "Leaving a long meeting, a colleague sighs and says, 'Well, that was a productive two hours.' He most likely means the meeting was:",
+   "options": [
+    "very useful",
+    "a waste of time",
+    "well organised",
+    "too short"
+   ],
+   "answer": 1,
+   "rationale_ar": "التنهيدة تدل على السخرية، فهو يقصد عكس كلامه: الاجتماع كان مضيعة للوقت",
+   "tags": [
+    "work",
+    "meeting",
+    "irony"
+   ],
+   "review": {
+    "was": "C1",
+    "by": "blind reviewer"
+   }
+  },
+  {
+   "id": "r-c1-01a",
+   "cefr": "C1",
+   "lvl": 5,
+   "skill": "reading",
+   "subskill": "inference",
+   "passage_id": "p-c1-01",
+   "difficulty": 0.88,
+   "stem": "Why did morale fall after the Monday meeting was cancelled?",
+   "options": [
+    "Employees could no longer get the essential information they needed.",
+    "Managers began sending far more emails.",
+    "Productivity dropped and staff were blamed.",
+    "Some staff lost a way of seeing who mattered in the team."
+   ],
+   "answer": 3,
+   "rationale_ar": "الموظفون الجدد كانوا يعرفون من الاجتماع من هو المؤثر، والمعلومات متاحة في مكان آخر",
+   "tags": [
+    "work",
+    "article"
+   ]
+  },
+  {
+   "id": "r-c1-01b",
+   "cefr": "C1",
+   "lvl": 5,
+   "skill": "reading",
+   "subskill": "attitude",
+   "passage_id": "p-c1-01",
+   "difficulty": 0.92,
+   "stem": "What does the manager's comment about the new name suggest?",
+   "options": [
+    "Staff prefer the new name to the old one.",
+    "Renaming the meeting changed nothing about how people saw it.",
+    "The new meeting is completely different from the old one in format.",
+    "Employees were deliberately misled by the firm."
+   ],
+   "answer": 1,
+   "rationale_ar": "has fooled nobody تعني أن الكل يعرف أنه نفس الاجتماع باسم جديد",
+   "tags": [
+    "work",
+    "article"
+   ]
+  },
+  {
+   "id": "r-c1-02a",
+   "cefr": "C1",
+   "lvl": 5,
+   "skill": "reading",
+   "subskill": "attitude",
+   "passage_id": "p-c1-02",
+   "difficulty": 0.86,
+   "stem": "How does the writer view the idea that adults are poor language learners?",
+   "options": [
+    "as completely accurate",
+    "as a new and interesting theory",
+    "as an oversimplification",
+    "as a belief held mainly by children"
+   ],
+   "answer": 2,
+   "rationale_ar": "يقول إن الأبحاث تُظهر صورة أكثر تعقيداً من هذه الفكرة الشائعة",
+   "tags": [
+    "education",
+    "article"
+   ]
+  },
+  {
+   "id": "r-c1-02b",
+   "cefr": "C1",
+   "lvl": 5,
+   "skill": "reading",
+   "subskill": "reference",
+   "passage_id": "p-c1-02",
+   "difficulty": 0.9,
+   "stem": "In the text, 'The first' refers to:",
+   "options": [
+    "accent",
+    "ability",
+    "time",
+    "vocabulary"
+   ],
+   "answer": 2,
+   "rationale_ar": "ذكر شيئين: الوقت ثم الاستعداد للظهور بمظهر محرج، فالأول هو الوقت",
+   "tags": [
+    "education",
+    "article"
+   ]
+  },
+  {
+   "id": "r-c1-02c",
+   "cefr": "C1",
+   "lvl": 5,
+   "skill": "reading",
+   "subskill": "inference",
+   "passage_id": "p-c1-02",
+   "difficulty": 0.97,
+   "stem": "According to the writer, what most often stops adults from succeeding?",
+   "options": [
+    "not having a native-like accent",
+    "starting to learn a language only after childhood",
+    "being unable to master grammar",
+    "fear of looking foolish in front of others"
+   ],
+   "answer": 3,
+   "rationale_ar": "it is this, far more than age ترجع على عدم الاستعداد للظهور بمظهر محرج",
+   "tags": [
+    "education",
+    "article"
+   ]
+  },
+  {
+   "id": "l-c1-01a",
+   "cefr": "C1",
+   "lvl": 5,
+   "skill": "listening",
+   "subskill": "inference",
+   "clip_id": "c-c1-01",
+   "difficulty": 0.87,
+   "stem": "What is the man's main concern about the second candidate?",
+   "options": [
+    "She seemed to lack hands-on experience.",
+    "She asked for too high a salary.",
+    "She didn't seem to understand the theory.",
+    "She spoke for far too long."
+   ],
+   "answer": 0,
+   "rationale_ar": "كان ينتظر أن تذكر مشروعاً نفّذته فعلاً ولم تفعل، يعني خبرتها العملية ضعيفة",
+   "tags": [
+    "work",
+    "hiring"
+   ]
+  },
+  {
+   "id": "l-c1-01b",
+   "cefr": "C1",
+   "lvl": 5,
+   "skill": "listening",
+   "subskill": "inference",
+   "clip_id": "c-c1-01",
+   "difficulty": 0.92,
+   "stem": "What do they decide in the end?",
+   "options": [
+    "to reject both candidates",
+    "to offer the second candidate the job",
+    "to interview the second candidate again before deciding",
+    "to invite the first back, but keep the second in mind"
+   ],
+   "answer": 3,
+   "rationale_ar": "وافق على دعوة الأول، وقال إنه لا يستبعد الثانية تماماً",
+   "tags": [
+    "work",
+    "hiring"
+   ]
+  },
+  {
+   "id": "l-c1-02a",
+   "cefr": "C1",
+   "lvl": 5,
+   "skill": "listening",
+   "subskill": "main_idea",
+   "clip_id": "c-c1-02",
+   "difficulty": 0.89,
+   "stem": "What is the speaker's main point?",
+   "options": [
+    "A widely quoted figure has no clear source.",
+    "Reading is the most efficient way to learn.",
+    "We remember ten percent of what we read.",
+    "Training slides should include more data."
+   ],
+   "answer": 0,
+   "rationale_ar": "يقول إن رقم العشرة بالمئة منتشر لكن لا أحد يعرف أي دراسة جاء منها",
+   "tags": [
+    "education",
+    "podcast"
+   ]
+  },
+  {
+   "id": "l-c1-02b",
+   "cefr": "C1",
+   "lvl": 5,
+   "skill": "listening",
+   "subskill": "attitude",
+   "clip_id": "c-c1-02",
+   "difficulty": 0.94,
+   "stem": "What is the speaker's view of reading as a way to learn?",
+   "options": [
+    "He is certain it is highly efficient.",
+    "He says a study proves it is inefficient.",
+    "He accepts it might not be efficient.",
+    "He thinks it works better than slides."
+   ],
+   "answer": 2,
+   "rationale_ar": "It may well not be تعني أنه لا يستبعد أن القراءة غير فعّالة",
+   "tags": [
+    "education",
+    "podcast",
+    "hedging"
+   ]
+  },
+  {
+   "id": "l-c1-03a",
+   "cefr": "C1",
+   "lvl": 5,
+   "skill": "listening",
+   "subskill": "inference",
+   "clip_id": "c-c1-03",
+   "difficulty": 0.9,
+   "stem": "What does the woman do?",
+   "options": [
+    "She agrees to lower the price.",
+    "She asks him to order less.",
+    "She says faster delivery would cost them extra money.",
+    "She declines a discount but offers something else."
+   ],
+   "answer": 3,
+   "rationale_ar": "I'd love to say yes. The thing is ... رفض مهذب، ثم عرضت توصيلاً أسرع مجاناً",
+   "tags": [
+    "business",
+    "negotiation"
+   ]
+  },
+  {
+   "id": "l-c1-04a",
+   "cefr": "C1",
+   "lvl": 5,
+   "skill": "listening",
+   "subskill": "inference",
+   "clip_id": "c-c1-04",
+   "difficulty": 0.93,
+   "stem": "What does Maria suggest about the conclusion?",
+   "options": [
+    "It claims more than the data shows.",
+    "It is too short to be useful.",
+    "It repeats the market section.",
+    "It should be removed completely."
+   ],
+   "answer": 0,
+   "rationale_ar": "promises more than the data can support تعني أن الخلاصة مبالغ فيها",
+   "tags": [
+    "work",
+    "report",
+    "voicemail"
+   ]
+  },
+  {
+   "id": "v-pa1-01",
+   "cefr": "Pre-A1",
+   "lvl": 0,
+   "skill": "vocab",
+   "subskill": "days_of_week",
+   "difficulty": 0.04,
+   "stem": "The office is closed on Friday and ___.",
+   "options": [
+    "Summer",
+    "Seven",
+    "Saturday",
+    "Sugar"
+   ],
+   "answer": 2,
+   "rationale_ar": "الإجازة الجمعة والسبت، والسبت بالإنجليزي Saturday",
+   "tags": [
+    "work",
+    "time"
+   ],
+   "_dropped": true
+  },
+  {
+   "id": "r-pa1-01b",
+   "cefr": "Pre-A1",
+   "lvl": 0,
+   "skill": "reading",
+   "subskill": "detail",
+   "difficulty": 0.12,
+   "stem": "Can you see Dr Reem on Friday?",
+   "options": [
+    "No, you can't.",
+    "Yes, at 8:00.",
+    "Yes, at 2:00.",
+    "Yes, all day."
+   ],
+   "answer": 0,
+   "rationale_ar": "العيادة مقفلة يومي الجمعة والسبت (CLOSED)",
+   "tags": [
+    "clinic"
+   ],
+   "passage_id": "p-pa1-01",
+   "_dropped": true
+  },
+  {
+   "id": "l-a1-04b",
+   "cefr": "A1",
+   "lvl": 1,
+   "skill": "listening",
+   "subskill": "detail_direction",
+   "difficulty": 0.32,
+   "stem": "After going straight, which way does she turn?",
+   "options": [
+    "Right",
+    "Back",
+    "Up",
+    "Left"
+   ],
+   "answer": 3,
+   "rationale_ar": "قال: then turn left يعني لفّي يسار",
+   "tags": [
+    "city",
+    "directions"
+   ],
+   "clip_id": "c-a1-04",
+   "_dropped": true
+  },
+  {
+   "id": "g-b1-05",
+   "cefr": "B1",
+   "lvl": 3,
+   "skill": "grammar",
+   "subskill": "comparatives",
+   "difficulty": 0.51,
+   "stem": "The new branch in Riyadh is much ___ than the old one.",
+   "options": [
+    "more bigger",
+    "biggest",
+    "bigger",
+    "more big"
+   ],
+   "answer": 2,
+   "rationale_ar": "الصفة القصيرة big نضيف لها er فقط مع than، ولا نجمع more مع er",
+   "tags": [
+    "work",
+    "double_comparative"
+   ],
+   "_dropped": true
+  },
+  {
+   "id": "u-b1-02",
+   "cefr": "B1",
+   "lvl": 3,
+   "skill": "use",
+   "subskill": "apology",
+   "difficulty": 0.53,
+   "stem": "You arrive ten minutes late for a meeting. You say:",
+   "options": [
+    "Sorry I'm late – the traffic was terrible.",
+    "Sorry for I am late, the traffic.",
+    "Excuse me for late, traffic was bad.",
+    "I'm sorry to be lately in traffic."
+   ],
+   "answer": 0,
+   "rationale_ar": "العبارة الطبيعية Sorry I'm late ثم سبب التأخير",
+   "tags": [
+    "work",
+    "city_life"
+   ],
+   "_dropped": true
+  },
+  {
+   "id": "u-b1-03",
+   "cefr": "B1",
+   "lvl": 3,
+   "skill": "use",
+   "subskill": "offer_help",
+   "difficulty": 0.51,
+   "stem": "A visitor in your office building looks lost. You say:",
+   "options": [
+    "Can I help you?",
+    "What you need here?",
+    "Do you want I help you?",
+    "Who are you looking?"
+   ],
+   "answer": 0,
+   "rationale_ar": "Can I help you? هي العبارة المهذبة والصحيحة لعرض المساعدة",
+   "tags": [
+    "work",
+    "question_word_order"
+   ],
+   "_dropped": true
+  },
+  {
+   "id": "u-b2-04",
+   "cefr": "B2",
+   "lvl": 4,
+   "skill": "use",
+   "subskill": "clarification",
+   "difficulty": 0.68,
+   "stem": "On a phone call, you didn't catch a number the client said. You say:",
+   "options": [
+    "Sorry, could you repeat that last figure?",
+    "What? Say again the number.",
+    "Sorry, I didn't hear well the number.",
+    "Repeat, please, what you said."
+   ],
+   "answer": 0,
+   "rationale_ar": "Sorry, could you repeat ...? طلب مهذب وترتيبه صحيح",
+   "tags": [
+    "work",
+    "telephone",
+    "word_order"
+   ],
+   "_dropped": true
+  },
+  {
+   "id": "r-c1-01c",
+   "cefr": "C1",
+   "lvl": 5,
+   "skill": "reading",
+   "subskill": "main_idea",
+   "passage_id": "p-c1-01",
+   "difficulty": 0.95,
+   "stem": "What is the writer's main conclusion?",
+   "options": [
+    "People often misjudge what meetings are really for.",
+    "Weekly meetings should always be kept.",
+    "Emails can never replace meetings.",
+    "New employees need more formal training."
+   ],
+   "answer": 0,
+   "rationale_ar": "الجملة الأخيرة: المشكلة ليست أن الاجتماعات أفضل، بل أننا نخطئ في فهم هدفها",
+   "tags": [
+    "work",
+    "article"
+   ],
+   "_dropped": true
+  }
+ ],
+ "dropped": [
+  "v-pa1-01",
+  "r-pa1-01b",
+  "l-a1-04b",
+  "g-b1-05",
+  "u-b1-02",
+  "u-b1-03",
+  "u-b2-04",
+  "r-c1-01c"
+ ],
+ "review": {
+  "date": "2026-11-14",
+  "method": "two independent blind reviewers (keys withheld), 100 items each",
+  "agreement": "200/200 keys matched",
+  "flagged": 20,
+  "dropped": 8,
+  "retagged": 11,
+  "rewritten": 2
+ }
+}

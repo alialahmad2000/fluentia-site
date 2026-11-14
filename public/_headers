@@ -57,6 +57,8 @@
 # crawler that may not fetch a page can never read its noindex.
 /home-v1
   X-Robots-Tag: noindex, nofollow
+/level-test-v1
+  X-Robots-Tag: noindex, nofollow
 /v1
   X-Robots-Tag: noindex, nofollow
 /v2

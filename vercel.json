@@ -115,6 +115,10 @@
       "destination": "/level-test.html"
     },
     {
+      "source": "/level-test-v1",
+      "destination": "/level-test-v1.html"
+    },
+    {
       "source": "/start",
       "destination": "/start.html"
     },

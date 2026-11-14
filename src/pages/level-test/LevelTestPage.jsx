@@ -25,7 +25,7 @@ function normalizePhone(raw) {
   return null;
 }
 
-export default function LevelTestPage() {
+export default function LevelTestPage({ seoPath = "/level-test" }) {
   const [phase, setPhase] = useState('intro'); // intro|gate1|exam|listenIntro|writing|gate2|result
   const [lead, setLead] = useState({ name: '', age: '', gender: '', phone: '', goal: '' });
   const [attemptId, setAttemptId] = useState(null);
@@ -181,7 +181,7 @@ export default function LevelTestPage() {
 
   return (
     <div className="lt-scope">
-      <Seo path="/level-test" />
+      <Seo path={seoPath} />
 
       <div className="lt-bg" aria-hidden="true" />
       <div className="lt-orb lt-orb-a" aria-hidden="true" />
