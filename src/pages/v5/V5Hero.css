@@ -446,8 +446,9 @@
   direction: rtl;
   transition: border-color 250ms var(--v1-ease), color 250ms var(--v1-ease);
 }
-.v1-scope .hs-speak::after { content: ""; position: absolute; inset: -4px 0; }
+.v1-scope .hs-speak::after { content: ""; position: absolute; inset: -6px 0; } /* 36px pill -> 48px hit area */
 .v1-scope .hs-speak[data-compact] { width: 36px; padding: 0; justify-content: center; }
+.v1-scope .hs-speak[data-compact]::after { inset: -6px; }
 .v1-scope .hs-speak[data-playing="true"] {
   border-color: rgb(var(--hue));
   color: rgb(var(--hue));

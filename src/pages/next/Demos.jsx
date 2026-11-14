@@ -34,7 +34,7 @@ export function NovelDemo({ load }) {
   return (
     <div className="fx-demo fx-demo--novel">
       <p className="fx-demo-meta">
-        <b>{data.book_ar}</b> · <span dir="ltr">{data.book_en}</span> · <span dir="ltr">{data.cefr}</span>
+        <b>{data.book_ar}</b> · <span dir="ltr" lang="en">{data.book_en}</span> · <span dir="ltr">{data.cefr}</span>
       </p>
       <div className="fx-novel" dir="ltr" lang="en">
         {data.sentences.map((s, i) => (
@@ -175,8 +175,8 @@ export function PodcastDemo({ load, active }) {
           )}
         </button>
         <div className="fx-pod-meta">
-          <b dir="ltr">{data.episode_title}</b>
-          <span dir="ltr">{data.show} · {data.level}</span>
+          <b dir="ltr" lang="en">{data.episode_title}</b>
+          <span dir="ltr" lang="en">{data.show} · {data.level}</span>
         </div>
       </div>
       <div className="fx-pod-bar" aria-hidden="true">

@@ -245,10 +245,10 @@ export const PRICING = {
   intro: "ابدأ بلقاء مبدئي مجاني مع المدرّب، ولن تدفع شيئاً قبل أن تتأكد أن الباقة تناسبك.",
   trust: "لقاء مبدئي مجاني · إلغاء بأي وقت · لا التزام طويل",
 
-  // Wide entry card (sits ABOVE the 3-tier grid) — platform only, instant access.
+  // Wide entry card (sits ABOVE the 3-tier grid) — platform only; access starts after a short call (the button opens the advisor chat).
   entryTier: {
     id: "self_study",
-    badge: "ابدأ بنفسك · وصول فوري",
+    badge: "ابدأ بنفسك · تفعيل بعد مكالمة قصيرة",
     name: "التعلم الذاتي",
     tagline: "المنصة الذكية كاملة، تتعلّم بوتيرتك الخاصة — بدون حصص مباشرة.",
     price: 500,

@@ -81,7 +81,7 @@ export default function V1Header() {
         }}
       >
         {/* Brand */}
-        <a href="#top" style={{ display: "flex", alignItems: "center", gap: 11, textDecoration: "none" }}>
+        <a href="#top" style={{ display: "flex", alignItems: "center", gap: 11, textDecoration: "none", minHeight: 44 }}>
           <BrandMark size={30} />
           <span style={{ display: "flex", alignItems: "baseline", gap: 10 }}>
             <span style={{

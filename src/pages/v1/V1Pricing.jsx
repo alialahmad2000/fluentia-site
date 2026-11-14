@@ -413,6 +413,8 @@ export default function V1Pricing({ embedded = false } = {}) {
 
         .v1-scope .v1p-foot { text-align: center; margin-top: 44px; font-size: 0.95rem; color: var(--v1-t-mute); line-height: 1.9; }
         .v1-scope .v1p-foot a, .v1-scope .v1p-foot-cta { color: var(--v1-azure-soft); font-weight: 600; text-decoration: none; border-bottom: 1px solid var(--v1-line-azure); padding-bottom: 2px; }
+        .v1-scope .v1p-foot a, .v1-scope .v1p-foot-cta { position: relative; }
+        .v1-scope .v1p-foot a::after, .v1-scope .v1p-foot-cta::after { content: ""; position: absolute; inset: -13px -6px; } /* 44px hit area on an inline link */
         .v1-scope .v1p-foot-cta { background: none; border-width: 0 0 1px; border-radius: 0; font: inherit; font-weight: 600; cursor: pointer; }
 
         @media (max-width: 980px) {

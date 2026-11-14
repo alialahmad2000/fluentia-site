@@ -131,6 +131,7 @@ html.fx-intro.fx-skip .fx-next { --fx-hd: 0ms; }
   display: inline-flex;
   align-items: center;
   min-height: 48px;
+  min-width: 44px;
   color: var(--fx-cream);
   font-weight: 500;
   text-decoration: underline;
@@ -163,6 +164,7 @@ html.fx-intro.fx-skip .fx-next { --fx-hd: 0ms; }
   align-items: center;
   gap: 10px;
   min-height: 48px;
+  min-width: 44px;
   text-decoration: none;
 }
 .fx-brand-ar {
@@ -429,6 +431,16 @@ html.fx-intro:not(.fx-intro-done) .fx-stars { z-index: 81; }
 .fx-orb-poster[data-ready] { background-image: none !important; }
 .fx-orb-poster img { display: block; width: 100%; height: 100%; }
 .fx-orb[data-live] .fx-orb-poster { opacity: 0; }
+/* Homepage planet: the poster frame and the canvas are square and their backdrop
+   is a hair lighter than the page, which showed as a faint rectangle (worst on
+   desktop, before the shader goes live). Feather the box: the disc (~84% of the
+   half-width) stays untouched, the outer glow fades to nothing before the edges.
+   A static mask — no entrance, so the poster (the LCP) still paints on frame one. */
+.fx-hero--home .fx-orb-poster,
+.fx-hero--home .fx-orb-gl {
+  -webkit-mask-image: radial-gradient(closest-side, #000 86%, transparent 100%);
+  mask-image: radial-gradient(closest-side, #000 86%, transparent 100%);
+}
 
 /* ─── Hero ───
    Phone: a small planet on top, the copy under it — the headline, its line,
@@ -481,7 +493,23 @@ html.fx-intro:not(.fx-intro-done) .fx-stars { z-index: 81; }
   margin-top: 28px;
 }
 .fx-hero-actions .fx-quiet { min-height: 44px; }
-.fx-hero-trust { margin-top: 20px; }
+/* Tertiary path to the free level test — quieter than «شاهد المنصة»: smaller, muted, no underline until hover. */
+.fx-hero-level {
+  display: flex;
+  width: fit-content;
+  gap: 6px;
+  margin-top: 2px;
+  min-height: 44px;
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--fx-faint);
+  text-decoration: none;
+}
+.fx-hero-level:active { color: var(--fx-cream); }
+@media (hover: hover) {
+  .fx-hero-level:hover { color: var(--fx-cream); text-decoration: underline; text-decoration-color: rgba(125, 211, 252, 0.55); text-underline-offset: 6px; }
+}
+.fx-hero-trust { margin-top: 8px; }
 .fx-hero-note {
   margin: 0;
   font-size: 14px;

@@ -322,17 +322,17 @@ export function V1Footer() {
           </div>
 
           {cta ? (
-            <a href={FOOTER.contact.waLink} target="_blank" rel="noopener noreferrer" className="v1-num" dir="ltr" style={{ color: "var(--v1-t-mute)", textDecoration: "none", fontSize: "0.95rem", padding: "12px 0" }}>
+            <a href={FOOTER.contact.waLink} target="_blank" rel="noopener noreferrer" className="v1-num v1-flink" dir="ltr" style={{ color: "var(--v1-t-mute)", textDecoration: "none", fontSize: "0.95rem", padding: "12px 0" }}>
               {FOOTER.contact.whatsapp}
             </a>
           ) : (
           <>
           <div>
             <div style={{ fontSize: "0.8rem", letterSpacing: "0.14em", color: "var(--v1-t-faint)", fontFamily: "var(--v1-display)", fontWeight: 600, marginBottom: 18 }}>روابط</div>
-            <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 12 }}>
+            <ul className="v1-flist v1-flist--cols" style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 12 }}>
               {FOOTER.links.map((l) => (
                 <li key={l.label}>
-                  <a href={l.href} style={{ color: "var(--v1-t-mute)", textDecoration: "none", fontSize: "0.92rem" }}
+                  <a href={l.href} className="v1-flink" style={{ color: "var(--v1-t-mute)", textDecoration: "none", fontSize: "0.92rem" }}
                     onMouseEnter={(e) => (e.currentTarget.style.color = "var(--v1-t-strong)")}
                     onMouseLeave={(e) => (e.currentTarget.style.color = "var(--v1-t-mute)")}>
                     {l.label}
@@ -344,20 +344,20 @@ export function V1Footer() {
 
           <div>
             <div style={{ fontSize: "0.8rem", letterSpacing: "0.14em", color: "var(--v1-t-faint)", fontFamily: "var(--v1-display)", fontWeight: 600, marginBottom: 18 }}>تواصل</div>
-            <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 12 }}>
+            <ul className="v1-flist" style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 12 }}>
               <li>
-                <a href={FOOTER.contact.waLink} target="_blank" rel="noopener noreferrer" className="v1-num" dir="ltr" style={{ color: "var(--v1-t-mute)", textDecoration: "none", fontSize: "0.9rem" }}>
+                <a href={FOOTER.contact.waLink} target="_blank" rel="noopener noreferrer" className="v1-num v1-flink" dir="ltr" style={{ color: "var(--v1-t-mute)", textDecoration: "none", fontSize: "0.9rem" }}>
                   {FOOTER.contact.whatsapp}
                 </a>
               </li>
               <li>
-                <a href={`mailto:${FOOTER.contact.email}`} className="v1-num" style={{ color: "var(--v1-t-mute)", textDecoration: "none", fontSize: "0.9rem" }}>
+                <a href={`mailto:${FOOTER.contact.email}`} className="v1-num v1-flink" style={{ color: "var(--v1-t-mute)", textDecoration: "none", fontSize: "0.9rem" }}>
                   {FOOTER.contact.email}
                 </a>
               </li>
               {FOOTER.social.map((s) => (
                 <li key={s.label}>
-                  <a href={s.href} target="_blank" rel="noopener noreferrer" className="v1-num" style={{ color: "var(--v1-t-mute)", textDecoration: "none", fontSize: "0.9rem" }}>
+                  <a href={s.href} target="_blank" rel="noopener noreferrer" className="v1-num v1-flink" style={{ color: "var(--v1-t-mute)", textDecoration: "none", fontSize: "0.9rem" }}>
                     {s.label} ↖
                   </a>
                 </li>
@@ -374,15 +374,24 @@ export function V1Footer() {
             <LegalLine />
           </span>
           <span style={{ display: "flex", gap: 20 }}>
-            <a href="/privacy" style={{ fontSize: "0.78rem", color: "var(--v1-t-faint)", textDecoration: "none" }}>الخصوصية</a>
-            <a href="/terms" style={{ fontSize: "0.78rem", color: "var(--v1-t-faint)", textDecoration: "none" }}>الشروط</a>
-            <a href="/careers" style={{ fontSize: "0.78rem", color: "var(--v1-t-faint)", textDecoration: "none" }}>انضم لفريقنا</a>
+            <a href="/privacy" className="v1-flink" style={{ fontSize: "0.78rem", color: "var(--v1-t-faint)", textDecoration: "none" }}>الخصوصية</a>
+            <a href="/terms" className="v1-flink" style={{ fontSize: "0.78rem", color: "var(--v1-t-faint)", textDecoration: "none" }}>الشروط</a>
+            <a href="/careers" className="v1-flink" style={{ fontSize: "0.78rem", color: "var(--v1-t-faint)", textDecoration: "none" }}>انضم لفريقنا</a>
           </span>
         </div>
       </div>
       <style>{`
         @media (max-width: 760px) {
           .v1-scope .v1-footer-grid { grid-template-columns: 1fr !important; }
+        }
+        /* Touch: every footer link gets a 44px hit area (WCAG 2.5.5) without growing the
+           footer — the long link list flows into two columns, the rows stay tight. */
+        @media (max-width: 760px), (pointer: coarse) {
+          .v1-scope .v1-flink { display: inline-flex; align-items: center; min-height: 44px; min-width: 44px; }
+          .v1-scope .v1-flist { gap: 0 !important; }
+        }
+        @media (max-width: 760px) {
+          .v1-scope .v1-flist--cols { display: grid !important; grid-template-columns: 1fr 1fr; column-gap: 16px; }
         }
       `}</style>
     </footer>

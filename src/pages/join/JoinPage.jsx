@@ -132,7 +132,7 @@ export default function JoinPage() {
       <CtaContext.Provider value={cta}>
         <div className="v1-scope v5-scope join-page" dir="rtl" lang="ar">
           <Seo path="/join" />
-          <style>{joinCss}</style>
+          <style dangerouslySetInnerHTML={{ __html: joinCss }} />
           <DawnArc />
           <div style={{ position: "relative", zIndex: 1 }}>
             <V1Header />

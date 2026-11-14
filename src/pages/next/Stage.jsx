@@ -64,7 +64,7 @@ function ScenesFrom({ load }) {
   return (
     <p className="fx-from">
       <b>{SCENES_FROM}</b>{" "}
-      <span dir="ltr">{data.titles.join(" · ")}</span>
+      <span dir="ltr" lang="en">{data.titles.join(" · ")}</span>
     </p>
   );
 }
@@ -168,7 +168,7 @@ export default function Stage({ gl, tier }) {
                       <>
                         <PodcastDemo load={near || still} active={live} />
                         <p className="fx-from">
-                          <b>{PODCAST_ALSO}</b> <span dir="ltr">{PODCAST_SHOWS.join(" · ")}</span>
+                          <b>{PODCAST_ALSO}</b> <span dir="ltr" lang="en">{PODCAST_SHOWS.join(" · ")}</span>
                         </p>
                       </>
                     ) : null}

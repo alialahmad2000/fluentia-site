@@ -327,7 +327,7 @@ export default function V1TrialBand() {
           appearance: none; cursor: pointer;
           font-family: inherit; font-size: 0.9rem;
           padding: 10px 16px; border-radius: 100px;
-          min-height: 42px;
+          min-height: 44px;
           color: var(--v1-t-mute);
           background: rgba(148,197,255,0.04);
           border: 1px solid var(--v1-line);

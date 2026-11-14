@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import { Container, PrimaryCTA } from "../components/landing";
-import BrandMark from "../components/BrandMark";
+import { Container } from "../components/landing";
+import SiteHeader from "../components/SiteHeader";
 
 /**
  * NotFound — the catch-all route.
@@ -14,27 +14,33 @@ import BrandMark from "../components/BrandMark";
  */
 export default function NotFound() {
   return (
-    <div className="lp-scope" style={{ minHeight: "100vh", display: "grid", placeItems: "center" }}>
+    <div className="lp-scope" style={{ minHeight: "100vh" }}>
       <Helmet>
         <title>الصفحة غير موجودة | أكاديمية طلاقة</title>
         <meta name="robots" content="noindex, follow" />
       </Helmet>
-      <Container style={{ paddingBlock: "var(--lp-space-4xl)", textAlign: "center" }}>
-        <Link to="/" aria-label="أكاديمية طلاقة — الرئيسية" style={{ display: "inline-block", marginBottom: "var(--lp-space-xl)" }}>
-          <BrandMark size={44} />
-        </Link>
+      <SiteHeader src="404" />
+      <Container style={{ paddingBlock: "var(--lp-space-3xl)", textAlign: "center" }}>
         <h1 style={{ fontSize: "var(--lp-h1)", color: "var(--lp-text-strong)", margin: 0 }}>
           ما لقينا هذي الصفحة
         </h1>
         <p style={{ color: "var(--lp-text-muted)", marginTop: "var(--lp-space-md)", lineHeight: 1.9 }}>
-          ربما تغيّر الرابط أو انكتب بشكل مختلف. هذي أكثر الصفحات طلباً:
+          ربما تغيّر الرابط أو انكتب بشكل مختلف. لكن الطريق للبداية مفتوح:
         </p>
-        <div style={{ display: "flex", gap: "var(--lp-space-md)", justifyContent: "center", flexWrap: "wrap", marginTop: "var(--lp-space-xl)" }}>
-          <PrimaryCTA href="/">الصفحة الرئيسية</PrimaryCTA>
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "var(--lp-space-sm)", marginTop: "var(--lp-space-xl)" }}>
+          <a
+            href="/start?src=404"
+            style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", minHeight: 52, padding: "0 32px", borderRadius: 999, background: "#38bdf8", color: "#03101e", fontWeight: 700, textDecoration: "none" }}
+          >
+            احجز لقاءك المبدئي
+          </a>
+          <Link to="/level-test" style={{ display: "inline-flex", alignItems: "center", minHeight: 44, color: "var(--lp-amber-bright)", textDecoration: "none", fontWeight: 600 }}>
+            أو اختبر مستواك مجاناً
+          </Link>
         </div>
-        <p style={{ marginTop: "var(--lp-space-lg)", display: "flex", gap: "var(--lp-space-lg)", justifyContent: "center", flexWrap: "wrap" }}>
-          <Link to="/level-test" style={{ color: "var(--lp-amber-bright)" }}>اختبار تحديد المستوى المجاني</Link>
-          <Link to="/articles" style={{ color: "var(--lp-amber-bright)" }}>المقالات</Link>
+        <p style={{ marginTop: "var(--lp-space-md)", display: "flex", gap: "var(--lp-space-lg)", justifyContent: "center", flexWrap: "wrap" }}>
+          <Link to="/" style={{ display: "inline-flex", alignItems: "center", minHeight: 44, color: "var(--lp-text-muted)" }}>الصفحة الرئيسية</Link>
+          <Link to="/articles" style={{ display: "inline-flex", alignItems: "center", minHeight: 44, color: "var(--lp-text-muted)" }}>المقالات</Link>
         </p>
       </Container>
     </div>
