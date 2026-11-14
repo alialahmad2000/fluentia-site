@@ -360,7 +360,7 @@ export default function ArticlePage() {
                   reader who is still deciding. */}
               <p style={{ margin: "var(--lp-space-md) 0 0", fontSize: "var(--lp-body)" }}>
                 <a href="/level-test" style={{ color: "var(--lp-amber-bright)" }}>
-                  أو ابدأ باختبار تحديد المستوى المجاني — عشر دقائق ←
+                  أو البدء باختبار تحديد المستوى المجاني — نحو 10 دقائق ←
                 </a>
               </p>
             </div>
