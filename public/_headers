@@ -3,6 +3,22 @@
 # Cloudflare applies every matching rule, last-wins per header name, so the
 # hashed-asset rule cannot be undone by a later, broader one.
 
+# Every response: transport + framing + device-permission hardening.
+# HSTS covers this host only: includeSubDomains/preload are left off until every
+# subdomain (incl. any email link-tracking host) is confirmed HTTPS-only.
+# Nothing embeds these pages in an iframe (checked: no <iframe> of the site in this
+# repo or in fluentia-lms), so framing is limited to the site itself.
+# microphone=(self): the voice demos (src/lib/wavRecorder.js) record on our own
+# pages only; no third-party frame may ask for the mic, camera or location.
+/*
+  Strict-Transport-Security: max-age=31536000
+  X-Frame-Options: SAMEORIGIN
+  Content-Security-Policy: frame-ancestors 'self'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests
+  Permissions-Policy: microphone=(self), camera=(), geolocation=(), payment=(), usb=(), interest-cohort=()
+  Cross-Origin-Opener-Policy: same-origin-allow-popups
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+
 # Hashed filenames: safe to cache forever. This is vercel.json's only header.
 /assets/*
   Cache-Control: public, max-age=31536000, immutable
@@ -34,3 +50,34 @@
   X-Robots-Tag: noindex, nofollow
 /preview/*
   X-Robots-Tag: noindex, nofollow
+
+# Client-only design candidates, superseded homepages and utility pages: the raw
+# shell already says noindex (scripts/prerender-meta.mjs); the header says it to
+# crawlers that never parse HTML. robots.txt no longer Disallows these, because a
+# crawler that may not fetch a page can never read its noindex.
+/v1
+  X-Robots-Tag: noindex, nofollow
+/v2
+  X-Robots-Tag: noindex, nofollow
+/v4
+  X-Robots-Tag: noindex, nofollow
+/v5
+  X-Robots-Tag: noindex, nofollow
+/aurora
+  X-Robots-Tag: noindex, nofollow
+/cine
+  X-Robots-Tag: noindex, nofollow
+/cine2
+  X-Robots-Tag: noindex, nofollow
+/journey
+  X-Robots-Tag: noindex, nofollow
+/partners/submitted
+  X-Robots-Tag: noindex, nofollow
+/w
+  X-Robots-Tag: noindex, nofollow
+/status
+  X-Robots-Tag: noindex
+/status.html
+  X-Robots-Tag: noindex
+/status-data
+  X-Robots-Tag: noindex

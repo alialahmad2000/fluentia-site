@@ -4,8 +4,12 @@ import { useEffect, useRef } from "react";
  * Starfield — one fixed 2D canvas behind the whole page.
  *
  * Two depth layers plus a handful of bright stars, drifting very slowly and
- * sliding at two speeds against the scroll. It redraws at ~30 fps at most, and
- * not at all in a background tab. `density` 0 renders nothing (low tier).
+ * sliding at two speeds against the scroll. It redraws at ~30 fps while the
+ * page scrolls and ~12 fps when it is still (the drift is 1–2 px/s, so the eye
+ * cannot tell), and not at all in a background tab. The loop starts only after
+ * the page's load event + idle, so it never competes with hydration (it cost
+ * ~0.8 s of main thread in a throttled mobile Lighthouse run when it started at
+ * once). Reduced motion: one still frame. `density` 0 renders nothing.
  */
 
 function rng(seed) {
@@ -60,17 +64,22 @@ export default function Starfield({ density = 1 }) {
 
     let raf = 0;
     let last = 0;
+    let lastSy = -1;
+    let started = false;
     let visible = document.visibilityState === "visible";
+    const still = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
     const t0 = performance.now();
 
     const draw = (now) => {
       raf = 0;
       if (!visible) return;
-      raf = requestAnimationFrame(draw);
-      if (now - last < 32) return;
-      last = now;
-      const t = (now - t0) / 1000;
       const sy = window.scrollY;
+      const scrolling = sy !== lastSy;
+      if (!still) raf = requestAnimationFrame(draw);
+      if (!still && now - last < (scrolling ? 32 : 80)) return;
+      last = now;
+      lastSy = sy;
+      const t = (now - t0) / 1000;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       ctx.clearRect(0, 0, w, h);
       for (let i = 0; i < stars.length; i += 1) {
@@ -85,10 +94,12 @@ export default function Starfield({ density = 1 }) {
         ctx.fillRect(x, y, s.r * 2, s.r * 2);
       }
       ctx.globalAlpha = 1;
+      if (canvas.style.opacity !== "1") canvas.style.opacity = "1";
     };
     const kick = () => {
-      if (!raf && visible) raf = requestAnimationFrame(draw);
+      if (started && !raf && visible) raf = requestAnimationFrame(draw);
     };
+    const onScrollStill = () => kick();
     const onVis = () => {
       visible = document.visibilityState === "visible";
       kick();
@@ -103,15 +114,40 @@ export default function Starfield({ density = 1 }) {
     };
     document.addEventListener("visibilitychange", onVis);
     window.addEventListener("resize", onResize, { passive: true });
-    kick();
+    if (still) window.addEventListener("scroll", onScrollStill, { passive: true });
+
+    // Start after load + idle: the first screen and hydration get the main thread first.
+    let idleId = 0;
+    let startT = 0;
+    const start = () => {
+      started = true;
+      kick();
+    };
+    const schedule = () => {
+      if ("requestIdleCallback" in window) idleId = window.requestIdleCallback(start, { timeout: 1500 });
+      else startT = setTimeout(start, 400);
+    };
+    if (document.readyState === "complete") schedule();
+    else window.addEventListener("load", schedule, { once: true });
 
     return () => {
       if (raf) cancelAnimationFrame(raf);
+      if (idleId) window.cancelIdleCallback?.(idleId);
+      clearTimeout(startT);
+      window.removeEventListener("load", schedule);
+      window.removeEventListener("scroll", onScrollStill);
       clearTimeout(resizeT);
       document.removeEventListener("visibilitychange", onVis);
       window.removeEventListener("resize", onResize);
     };
   }, [density]);
 
-  return <canvas ref={ref} className="fx-stars" aria-hidden="true" />;
+  return (
+    <canvas
+      ref={ref}
+      className="fx-stars"
+      aria-hidden="true"
+      style={{ opacity: 0, transition: "opacity 900ms ease-out" }}
+    />
+  );
 }

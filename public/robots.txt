@@ -1,5 +1,5 @@
 # robots.txt for fluentia.academy
-# Updated: 2026-10-27
+# Updated: 2026-11-14
 #
 # ONE group for every crawler. A crawler obeys only the most specific group
 # that names it, so the old separate "User-agent: GPTBot / Allow: /" groups
@@ -33,12 +33,9 @@ Disallow: /partners/submitted
 Disallow: /api/
 # /w fires ad-platform Lead events on load — a JS-rendering crawler must never hit it
 Disallow: /w
-# design candidates and superseded homepages (served noindex, kept reachable)
-Disallow: /v1
-Disallow: /v2
-Disallow: /v4
-Disallow: /v5
-Disallow: /aurora
+# Design candidates and superseded homepages (/v1 /v2 /v4 /v5 /aurora /cine…) are
+# NOT disallowed on purpose: they answer noindex (raw HTML + X-Robots-Tag), and a
+# crawler blocked here could never read that, so the bare URL could still get indexed.
 
 # AI-readable summaries: https://fluentia.academy/llms.txt · https://fluentia.academy/llms-full.txt
 Sitemap: https://fluentia.academy/sitemap.xml

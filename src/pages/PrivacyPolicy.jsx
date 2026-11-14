@@ -56,13 +56,13 @@ const Ul = (props) => (
 
 export default function PrivacyPolicy() {
   return (
-    <LegalLayout updated={{ iso: '2026-11-03', display: '3 نوفمبر 2026' }}>
+    <LegalLayout updated={{ iso: '2026-11-14', display: '14 نوفمبر 2026' }}>
       <Seo path="/privacy" />
 
       <H1>سياسة الخصوصية</H1>
       <div style={{ fontSize: '0.875rem', color: '#7e8a9a', marginBottom: '2rem' }}>
         تاريخ السريان: <time dateTime="2026-03-23">23 مارس 2026</time> · آخر تحديث:{' '}
-        <time dateTime="2026-11-03">3 نوفمبر 2026</time>
+        <time dateTime="2026-11-14">14 نوفمبر 2026</time>
       </div>
 
       <H2>1. مقدمة</H2>
@@ -81,7 +81,7 @@ export default function PrivacyPolicy() {
           <strong>معلومات الطالب:</strong> مستواك اللغوي، أهدافك، ملاحظات الأداء، سجل الحضور، نتائج الاختبارات.
         </li>
         <li>
-          <strong>بيانات استخدام الموقع:</strong> IP، نوع المتصفح، الصفحات التي زرتها، مصدر الإحالة — عبر Google Analytics 4 و TikTok Pixel.
+          <strong>بيانات استخدام الموقع:</strong> IP، نوع المتصفح، الصفحات التي زرتها، مصدر الإحالة — عبر Google Analytics 4 و TikTok Pixel، وفقط بعد موافقتك في شريط الموافقة. قبل موافقتك لا تُضبط أي كوكيز تحليلية أو إعلانية، ويصل إلى Google Analytics قياس مجهول للزيارة فقط (بلا كوكيز وبلا معرّف).
         </li>
         <li>
           <strong>تسجيلات صوتية:</strong> عند إرسالك تسجيلات تدريب داخل منصة LMS فقط، وبإذنك الصريح. لا نسجّل كلاساتك الحية إلا بإخطار مسبق.
@@ -118,13 +118,13 @@ export default function PrivacyPolicy() {
           <strong>ElevenLabs</strong> — توليد الصوت لتدريب النطق داخل LMS.
         </li>
         <li>
-          <strong>Anthropic Claude API</strong> — المساعد التعليمي داخل LMS.
+          <strong>Anthropic Claude API</strong> — المساعد التعليمي داخل LMS، و«مستشار طلاقة» (محادثة حجز اللقاء المبدئي في الموقع): نص رسائلك فيها يُعالَج لتوليد الرد.
         </li>
         <li>
           <strong>Resend</strong> — إرسال البريد الإلكتروني المعاملاتي.
         </li>
         <li>
-          <strong>Google Ads و TikTok Ads</strong> — تتبّع الإعلانات (بموافقتك عبر الكوكيز).
+          <strong>Google Ads و TikTok Ads</strong> — قياس أداء الإعلانات، بموافقتك على الكوكيز التسويقية فقط. عند إرسالك نموذج تواصل بعد هذه الموافقة، تُرسَل نسخة مُشفَّرة تشفيراً أحادياً (SHA-256) من رقمك وبريدك إلى TikTok لمطابقة الإعلان الذي أوصلك إلينا، ولا يمكن استرجاع الرقم منها.
         </li>
       </Ul>
       <P>
@@ -175,7 +175,20 @@ export default function PrivacyPolicy() {
           <strong>تسويقية:</strong> TikTok Pixel و Google Ads لقياس أداء الإعلانات. اختيارية.
         </li>
       </Ul>
-      <P>يمكنك التحكم في تفضيلاتك عبر شريط الموافقة الذي يظهر عند أول زيارة.</P>
+      <P>
+        يمكنك التحكم في تفضيلاتك عبر شريط الموافقة الذي يظهر عند أول زيارة، وتغيير اختيارك في أي وقت من هنا:{' '}
+        <button
+          type="button"
+          onClick={() => window.dispatchEvent(new Event('fluentia-open-cookie-settings'))}
+          style={{
+            font: 'inherit', fontWeight: 700, color: '#38bdf8', background: 'rgba(56,189,248,0.08)',
+            border: '1px solid rgba(56,189,248,0.3)', borderRadius: '0.5rem', padding: '0.5rem 0.875rem',
+            minHeight: 44, cursor: 'pointer', marginBlockStart: '0.25rem',
+          }}
+        >
+          إعدادات ملفات تعريف الارتباط
+        </button>
+      </P>
 
       <H2>7. أمن البيانات</H2>
       <P>
@@ -284,7 +297,7 @@ export default function PrivacyPolicy() {
         >
           <h3 style={{ color: '#f8fafc', fontSize: '1.25rem' }}>Privacy Policy — Fluentia Academy</h3>
           <p>
-            <strong>Effective:</strong> March 23, 2026 · <strong>Updated:</strong> November 3, 2026
+            <strong>Effective:</strong> March 23, 2026 · <strong>Updated:</strong> November 14, 2026
           </p>
           <p>
             Fluentia Academy ("we", "us") respects your privacy. This policy explains what personal
@@ -293,7 +306,8 @@ export default function PrivacyPolicy() {
           <p>
             <strong>Data we collect:</strong> name, email, phone, language level and goals,
             performance notes, voice recordings (LMS only, with consent), site analytics (GA4,
-            TikTok Pixel). We do not store payment card data.
+            TikTok Pixel — only after you accept them in the consent banner; before that GA4 gets
+            cookieless, anonymous pings only). We do not store payment card data.
           </p>
           <p>
             <strong>How we use it:</strong> to deliver lessons, communicate with you, improve our
@@ -301,7 +315,9 @@ export default function PrivacyPolicy() {
           </p>
           <p>
             <strong>We share data with:</strong> Google Workspace, Supabase, Cloudflare, ElevenLabs,
-            Anthropic, Resend, Google Ads, TikTok Ads. We do not sell your data.
+            Anthropic (the LMS assistant and the «مستشار طلاقة» booking chat on this site), Resend,
+            Google Ads, TikTok Ads (with marketing consent only; a one-way SHA-256 hash of the phone
+            and email you submit is used to match the ad that brought you). We do not sell your data.
           </p>
           <p>
             <strong>Your rights (aligned with Saudi PDPL):</strong> access, correct, delete, object,
@@ -313,7 +329,8 @@ export default function PrivacyPolicy() {
           </p>
           <p>
             <strong>Cookies:</strong> essential (always on), analytics (optional), marketing
-            (optional). Manage via the consent banner.
+            (optional). Nothing optional runs until you accept it in the consent banner; change your
+            choice any time with the «إعدادات ملفات تعريف الارتباط» button above.
           </p>
           <p>
             <strong>Security:</strong> TLS 1.3 in transit, AES-256 at rest. <strong>Retention:</strong>{' '}

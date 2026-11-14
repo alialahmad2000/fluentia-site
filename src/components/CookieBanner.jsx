@@ -7,9 +7,13 @@ import { useLocation } from 'react-router-dom';
  * Dispatches window event "fluentia-consent-updated" with { essential, analytics, marketing }
  * so the app (or future refactor) can conditionally load GA4 / TikTok Pixel.
  *
- * NOTE: current build already hard-loads GA4 + TikTok Pixel in index.html.
- * This component only records user intent; actual conditional loading will be
- * wired in a future pass per the audit roadmap.
+ * index.html (and tour.html) read the stored choice BEFORE any tag runs and set
+ * Google Consent Mode v2 defaults + TikTok holdConsent()/grantConsent() from it;
+ * index.html also listens for "fluentia-consent-updated" and applies a new
+ * choice at once. No choice yet = analytics and marketing denied.
+ *
+ * Re-open: dispatch window event "fluentia-open-cookie-settings" (the button on
+ * /privacy does) to show the banner again with the toggles open.
  */
 
 const STORAGE_KEY = 'fluentia_cookie_consent_v1';
@@ -66,6 +70,18 @@ export default function CookieBanner() {
     if (existing) return; // user already chose
     const t = setTimeout(() => setVisible(true), 1000);
     return () => clearTimeout(t);
+  }, []);
+
+  // «إعدادات ملفات تعريف الارتباط» (on /privacy): change a choice already made.
+  useEffect(() => {
+    const open = () => {
+      const existing = readConsent();
+      if (existing) setChoices({ ...defaultConsent, ...existing, essential: true });
+      setShowCustomize(true);
+      setVisible(true);
+    };
+    window.addEventListener('fluentia-open-cookie-settings', open);
+    return () => window.removeEventListener('fluentia-open-cookie-settings', open);
   }, []);
 
   useEffect(() => {
@@ -255,7 +271,7 @@ export default function CookieBanner() {
                 التحليلية
               </div>
               <div style={{ fontSize: '0.8125rem', color: '#7e8a9a' }}>
-                Google Analytics و Vercel Analytics
+                Google Analytics
               </div>
             </div>
             <input

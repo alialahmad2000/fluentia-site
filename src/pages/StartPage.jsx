@@ -492,7 +492,7 @@ export default function StartPage() {
             </h1>
 
             <p style={{ fontSize: 16, color: T.text, lineHeight: 1.8, marginBottom: 22 }}>
-              مدربون سعوديون · مجموعات صغيرة (7 طلاب) · متابعة يومية · 5 باقات تناسبك
+              مدربون متخصصون · مجموعات صغيرة (7 طلاب) · متابعة يومية · 5 باقات تناسبك
             </p>
 
             <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 20px', display: 'grid', gap: 10 }}>
@@ -509,11 +509,13 @@ export default function StartPage() {
             </ul>
 
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 18, fontSize: 13, color: T.muted, alignItems: 'center' }}>
-              <span>⭐ 4.9</span>
+              {/* Verifiable facts only: the old «⭐ 4.9 · +50 طالب · معتمدون رسمياً» had no
+                  source (docs/seo/NEEDS-ALI.md #22, #26). Put a rating back only with real reviews. */}
+              <span>لقاء مبدئي مجاني</span>
               <span style={{ opacity: 0.4 }}>·</span>
-              <span>+50 طالب</span>
+              <span>بدون التزام</span>
               <span style={{ opacity: 0.4 }}>·</span>
-              <span>معتمدون رسمياً</span>
+              <span>مجموعات حتى 7 طلاب</span>
             </div>
           </div>
 
@@ -760,12 +762,12 @@ export default function StartPage() {
       </section>
 
       {/* ─── 3. WHY FLUENTIA ─── */}
-      <Section title="ليش Fluentia مختلفة؟">
+      <Section title="ليش طلاقة مختلفة؟">
         <div className="sp-why-grid">
           {[
             { icon: '👥', title: '7 طلاب فقط بالكلاس',        desc: 'لضمان متابعة فردية لكل طالب' },
             { icon: '📅', title: 'متابعة يومية مع المدرب',   desc: 'مو فقط في الكلاس — يومياً عبر تيليجرام' },
-            { icon: '🇸🇦', title: 'مدربون سعوديون متخصصون', desc: 'يفهمون لهجتك وثقافتك ومشاكلك' },
+            { icon: '🎓', title: 'مدربون متخصصون', desc: 'يعرفون أين يتعثّر المتعلّم العربي ويفهمون أهدافك' },
           ].map(c => (
             <div
               key={c.title}

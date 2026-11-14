@@ -10,8 +10,8 @@
          Every tag carries data-rh so react-helmet-async ADOPTS it on hydration
          (see <Seo>) instead of appending a duplicate. Social crawlers (WhatsApp,
          X, Telegram) never run JS, so these static tags are what they read. -->
-    <title>أكاديمية طلاقة | دورات إنجليزي أونلاين للكبار مع مدربين سعوديين</title>
-    <meta data-rh="true" name="description" content="دورات إنجليزي أونلاين للكبار في السعودية: مجموعات صغيرة (7 طلاب) أو حصص فردية مع مدربين سعوديين، متابعة يومية، واختبار تحديد مستوى مجاني. باقات تبدأ من 500 ريال." />
+    <title>أكاديمية طلاقة | دورات إنجليزي أونلاين للكبار في السعودية</title>
+    <meta data-rh="true" name="description" content="دورات إنجليزي أونلاين للكبار في السعودية: مجموعات صغيرة (7 طلاب) أو حصص فردية مع مدربين متخصصين، متابعة يومية، واختبار تحديد مستوى مجاني. باقات تبدأ من 500 ريال." />
     <link data-rh="true" rel="canonical" href="https://fluentia.academy/" />
     <meta data-rh="true" property="og:type" content="website" />
     <meta data-rh="true" property="og:url" content="https://fluentia.academy/" />
@@ -22,7 +22,7 @@
     <meta data-rh="true" name="twitter:description" content="أكاديمية أونلاين للراشدين السعوديين — منهج علمي ومتابعة شخصية حقيقية." />
     <!-- SOCIAL_META:END -->
 
-    <meta name="keywords" content="تعلم الإنجليزي, دورات إنجليزي أونلاين, IELTS السعودية, أكاديمية إنجليزي, كورس إنجليزي, مدرب إنجليزي سعودي, تعلم إنجليزي أونلاين" />
+    <meta name="keywords" content="تعلم الإنجليزي, دورات إنجليزي أونلاين, IELTS السعودية, أكاديمية إنجليزي, كورس إنجليزي, مدرب إنجليزي أونلاين, تعلم إنجليزي أونلاين" />
     <meta name="author" content="Dr. Ali Alahmad — Fluentia Academy" />
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
 
@@ -84,12 +84,43 @@
       }
     </style>
 
+    <!-- Consent first (Consent Mode v2 + TikTok holdConsent). Nothing measures or
+         sets an ad/analytics cookie until the visitor says yes in the cookie banner
+         (src/components/CookieBanner.jsx, localStorage "fluentia_cookie_consent_v1",
+         event "fluentia-consent-updated"). This is what /privacy promises. With
+         analytics denied GA4 still receives cookieless, anonymous pings (no cookie,
+         no identifier), which keeps visit counts modelled instead of blank. -->
+    <script>
+      window.__consent = (function () {
+        try {
+          var c = JSON.parse(localStorage.getItem('fluentia_cookie_consent_v1') || 'null');
+          return c && typeof c === 'object' ? c : null;
+        } catch (e) { return null; }
+      })();
+    </script>
+
     <!-- Google tag (gtag.js). The library (~190 KB) loads after the page's own load
          event so it never competes with the first screen; calls made before then
          wait in dataLayer and are sent when it arrives. -->
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
+      (function () {
+        var c = window.__consent || {};
+        var a = c.analytics ? 'granted' : 'denied';
+        var m = c.marketing ? 'granted' : 'denied';
+        gtag('consent', 'default', {
+          analytics_storage: a,
+          ad_storage: m,
+          ad_user_data: m,
+          ad_personalization: m,
+          functionality_storage: 'granted',
+          security_storage: 'granted',
+          wait_for_update: 500
+        });
+        gtag('set', 'ads_data_redaction', m !== 'granted');
+        gtag('set', 'url_passthrough', true);
+      })();
       gtag('js', new Date());
       gtag('config', 'G-19G2SJ1WYL');
       gtag('config', 'AW-9314838750');
@@ -110,12 +141,40 @@
     !function (w, d, t) {
       w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js",o=n&&n.partner;ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};n=document.createElement("script");n.type="text/javascript",n.async=!0,n.src=r+"?sdkid="+e+"&lib="+t;e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(n,e)};
 
-      // Same as gtag: the pixel script loads after the page's load event; calls queue until then.
-      w.__afterLoad(function () {
+      // Without marketing consent the pixel's script (~160 KB) is not even
+      // downloaded: calls made meanwhile wait in the ttq queue, and are sent only
+      // if the visitor accepts (grantConsent + load below); otherwise they die
+      // with the page.
+      var c = w.__consent || {};
+      if (c.marketing) ttq.grantConsent(); else ttq.holdConsent();
+      w.__loadTikTok = function () {
+        if (w.__tiktokLoaded) return;
+        w.__tiktokLoaded = true;
         ttq.load('D79DFR3C77UA3HU6E70G');
         ttq.page();
-      });
+      };
+
+      // Same as gtag: the pixel script loads after the page's load event; calls queue until then.
+      if (c.marketing) w.__afterLoad(w.__loadTikTok);
     }(window, document, 'ttq');
+
+    // The banner's choice, applied the moment it is made (and on later visits via __consent above).
+    window.addEventListener('fluentia-consent-updated', function (e) {
+      var d = (e && e.detail) || {};
+      window.__consent = d;
+      var m = d.marketing ? 'granted' : 'denied';
+      gtag('consent', 'update', {
+        analytics_storage: d.analytics ? 'granted' : 'denied',
+        ad_storage: m,
+        ad_user_data: m,
+        ad_personalization: m
+      });
+      gtag('set', 'ads_data_redaction', m !== 'granted');
+      if (window.ttq) {
+        if (d.marketing) { window.ttq.grantConsent(); window.__afterLoad(window.__loadTikTok); }
+        else window.ttq.revokeConsent();
+      }
+    });
     </script>
     <!-- TikTok Pixel Code End -->
 
