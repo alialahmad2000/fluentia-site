@@ -201,7 +201,8 @@ export default function DawnHero() {
                 width="600"
                 height="1298"
                 alt="خطة اليوم في منصّة طلاقة: وقت كل مهارة وما تبقّى منها"
-                decoding="async"
+                // the LCP element on phones: fetched with the HTML, not after layout
+                fetchpriority="high"
               />
             </picture>
           </figure>
