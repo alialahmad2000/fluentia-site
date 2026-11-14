@@ -1,0 +1,99 @@
+{
+  "id": "15",
+  "title": "لما ما نعرف الجواب",
+  "folder": "لما ما نعرف الجواب",
+  "article": "first-ten-minutes",
+  "format": "phrases",
+  "base": "paper",
+  "slides": [
+    {
+      "type": "cover",
+      "variant": "type",
+      "tone": "ink",
+      "kicker": "جمل للاجتماع",
+      "hook": "سؤال مباشر.. ==والجواب مب عندك.==",
+      "hs": 120
+    },
+    {
+      "type": "text",
+      "big": "الحل مب إننا نخترع جواب، ولا إننا نسكت.",
+      "body": "الحل ==جملة صادقة فيها التزام.=="
+    },
+    {
+      "type": "phrases",
+      "label": "لما الجواب مب عندنا",
+      "items": [
+        [
+          "That's a good question. Let me check and get back to you.",
+          "سؤال حلو. خلّني أتأكد وأرجع لك."
+        ],
+        [
+          "I don't have the numbers with me, but I'll send them over today.",
+          "الأرقام مب عندي الحين، بس برسلها اليوم."
+        ],
+        [
+          "To be honest, I'm not sure. Can I come back to you on that?",
+          "بصراحة ما عندي جواب أكيد. أقدر أرجع لك فيها؟"
+        ]
+      ],
+      "es": 46
+    },
+    {
+      "type": "text",
+      "big": "اللي يقول «ما أعرف، بس برجع لك اليوم» ثم يرجع فعلاً..",
+      "body": "يكسب ثقة أكثر من اللي ==يجاوب أي جواب== عشان ما يسكت.",
+      "bs": 72
+    },
+    {
+      "type": "text",
+      "label": "وإذا ما اتفقنا؟",
+      "big": "الاعتراض في بيئة العمل غالباً يجي ملطّف.",
+      "body": "مب خوف من الخلاف. الجملة الملطّفة تخلي النقاش ==على الفكرة، مب على الشخص.=="
+    },
+    {
+      "type": "phrases",
+      "label": "اعتراض محترم",
+      "items": [
+        [
+          "I see your point, but I'm not sure that works for us.",
+          "فاهمين وجهة نظرك، بس ما أظنها تناسبنا."
+        ],
+        [
+          "I'd see it a bit differently.",
+          "أنا أشوفها بشكل مختلف شوي."
+        ],
+        [
+          "That could work. My only concern is the budget.",
+          "ممكن تمشي. قلقي الوحيد الميزانية."
+        ]
+      ],
+      "es": 48
+    },
+    {
+      "type": "punch",
+      "text": "ولا جملة فيها {{No}} ولا {{You're wrong}}.",
+      "after": "الرسالة واضحة، والنبرة محترمة."
+    },
+    {
+      "type": "cta",
+      "save": "احفظوها لأصعب سؤال في اجتماعكم الجاي."
+    }
+  ],
+  "caption": {
+    "hook": "سؤال مباشر في الاجتماع.. والجواب مب عندك.",
+    "tiktok": "سألوك في الاجتماع والجواب مب عندك؟ لا تخترع ولا تسكت. قل هذي 👇",
+    "lines": [
+      "That's a good question. Let me check and get back to you. جملة صادقة فيها التزام، وترجع فعلاً.",
+      "واللي يرجع بالجواب اليوم يكسب ثقة أكثر من اللي يجاوب أي جواب عشان ما يسكت.",
+      "ولو ما اتفقت: I see your point, but I'm not sure that works for us. ولا جملة فيها No."
+    ],
+    "tags": [
+      "#انجليزي_العمل",
+      "#اجتماعات",
+      "#تعلم_الانجليزي",
+      "#English",
+      "#BusinessEnglish",
+      "#طلاقة"
+    ]
+  }
+}

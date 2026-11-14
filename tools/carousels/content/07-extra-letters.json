@@ -1,0 +1,103 @@
+{
+  "id": "07",
+  "title": "حروف زدناها",
+  "folder": "حروف زدناها",
+  "article": "words-that-betrayed-us",
+  "format": "mistake",
+  "base": "paper",
+  "slides": [
+    {
+      "type": "cover",
+      "variant": "type",
+      "tone": "lime",
+      "kicker": "أخطاء حروف الجر",
+      "pre": "We discussed about the budget.",
+      "strike": true,
+      "hook": "حروف زدناها.. وحروف نسيناها."
+    },
+    {
+      "type": "text",
+      "big": "حروف الجر هي أكثر مكان ==يتسلل منه العربي== لجملنا الإنجليزية.",
+      "body": "نقول «نتناقش في الميزانية»، فتطلع {{discuss about}}. ونقول «اشرح لي»، فتطلع {{explain me}}."
+    },
+    {
+      "type": "swap",
+      "label": "زدناها",
+      "pairs": [
+        {
+          "no": "We discussed about the budget.",
+          "yes": "We discussed the budget."
+        },
+        {
+          "no": "Explain me the plan.",
+          "yes": "Could you explain the plan to me?"
+        }
+      ],
+      "why": "الفعل {{discuss}} ما يحتاج حرف بعده."
+    },
+    {
+      "type": "swap",
+      "label": "نسيناها",
+      "pairs": [
+        {
+          "no": "I'm waiting your reply.",
+          "yes": "I'm looking forward to your reply."
+        },
+        {
+          "no": "She's married with an engineer.",
+          "yes": "She's married to an engineer."
+        }
+      ]
+    },
+    {
+      "type": "swap",
+      "label": "من «اتصل عليّ» و«على الإيميل»",
+      "pairs": [
+        {
+          "no": "Call on me when you're free.",
+          "yes": "Give me a call when you're free."
+        },
+        {
+          "no": "I'll send it on email.",
+          "yes": "I'll send it to you by email."
+        },
+        {
+          "no": "Congratulations for your promotion!",
+          "yes": "Congratulations on your promotion!"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "label": "هل تفرق فعلاً؟",
+      "big": "في الكلام، الناس تركّز على المعنى وتتجاوز.",
+      "body": "لكن الإيميل يُقرأ على مهل، وأحياناً يوصل لناس ما يعرفوننا. هناك {{discuss about}} ==تبان أكثر.=="
+    },
+    {
+      "type": "punch",
+      "text": "المعرفة موجودة، بس العادة أقوى منها.",
+      "after": "والحل مب معلومة جديدة. الحل عادة جديدة."
+    },
+    {
+      "type": "cta",
+      "save": "احفظوها، وراجعوها قبل ما ترسلون إيميلكم الجاي."
+    }
+  ],
+  "caption": {
+    "hook": "حروف زدناها.. وحروف نسيناها. أخطاء حروف الجر اللي ينقلها المخ من العربي.",
+    "tiktok": "discuss about؟ explain me؟ حروف زدناها وحروف نسيناها 👇",
+    "lines": [
+      "حروف الجر أكثر مكان يتسلل منه العربي: «نتناقش في» تطلع discuss about، والصح We discussed the budget.",
+      "و«اشرح لي» تطلع explain me، والصح Could you explain the plan to me?",
+      "في الكلام الناس تتجاوز، بس الإيميل يُقرأ على مهل. صلّحوا الجمل اللي تتكرر كل يوم."
+    ],
+    "tags": [
+      "#تعلم_الانجليزي",
+      "#أخطاء_شائعة",
+      "#ايميلات_العمل",
+      "#English",
+      "#BusinessEnglish",
+      "#طلاقة"
+    ]
+  }
+}

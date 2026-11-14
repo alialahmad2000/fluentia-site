@@ -1,0 +1,116 @@
+{
+  "id": "04",
+  "title": "تدخل النقاش بلباقة",
+  "folder": "تدخل النقاش بلباقة",
+  "article": "first-ten-minutes",
+  "format": "phrases",
+  "base": "paper",
+  "slides": [
+    {
+      "type": "cover",
+      "variant": "frame",
+      "image": "scene-clock",
+      "kicker": "جمل للاجتماع",
+      "hook": "«الفرصة المناسبة» عشان نتكلم.. ==ما تجي.==",
+      "hs": 104,
+      "hs916": 84
+    },
+    {
+      "type": "text",
+      "label": "القاعدة",
+      "big": "في بيئة العمل بالإنجليزي، المقاطعة اللطيفة شي طبيعي جداً.",
+      "body": "بشرط تكون بجملة دخول واضحة، تقول: «عندي شي، وبكون مختصر»."
+    },
+    {
+      "type": "phrases",
+      "label": "جمل الدخول",
+      "items": [
+        [
+          "Sorry to jump in, but can I add one thing here?",
+          "المعذرة على المقاطعة، أقدر أضيف نقطة؟"
+        ],
+        [
+          "Can I just come in on that?",
+          "ممكن أعلّق على هالنقطة؟"
+        ],
+        [
+          "Just to build on what Omar said...",
+          "عشان أكمّل على كلام عمر..."
+        ]
+      ]
+    },
+    {
+      "type": "phrases",
+      "label": "ولو قاطعونا في نص الفكرة",
+      "items": [
+        [
+          "Sorry, if I could just finish my point...",
+          "عذراً، خلّني أكمّل فكرتي بس..."
+        ]
+      ],
+      "note": "كثير منّا يسكت ويترك الفكرة تروح. هذي جملة محترمة جداً، ==ومحد بيزعل منها.==",
+      "es": 62
+    },
+    {
+      "type": "text",
+      "big": "وطلب التوضيح مب ضعف. اللي يطلبه يبيّن إنه ==منتبه ومهتم بالدقة.==",
+      "bs": 72
+    },
+    {
+      "type": "phrases",
+      "label": "نعيد اللي فهمناه بكلماتنا",
+      "items": [
+        [
+          "Just to make sure I've got it: you mean we move the launch to March?",
+          "خلّني أتأكد: المقصود نأجّل الإطلاق لمارس؟"
+        ],
+        [
+          "When you say \"soon\", do you mean this week?",
+          "«قريب» يعني هالأسبوع؟"
+        ]
+      ],
+      "es": 50
+    },
+    {
+      "type": "swap",
+      "label": "صحيحة.. بس حادة",
+      "pairs": [
+        {
+          "no": "What?",
+          "yes": "Sorry, I didn't quite catch that."
+        },
+        {
+          "no": "Repeat, please.",
+          "yes": "Could you say that again?"
+        }
+      ],
+      "why": "ما فيها غلط قواعد، لكن فيها ==غلط نبرة==."
+    },
+    {
+      "type": "punch",
+      "text": "المقاطعة اللطيفة مب قلة أدب. الصمت الطويل هو اللي يُقرأ غياب.",
+      "bs": 88
+    },
+    {
+      "type": "cta",
+      "save": "احفظوها، وجرّبوا جملة وحدة منها في اجتماعكم الجاي."
+    }
+  ],
+  "caption": {
+    "hook": "ننتظر الفرصة المناسبة عشان نتكلم في الاجتماع.. والفرصة ما تجي.",
+    "tiktok": "كيف تدخل النقاش بالإنجليزي بدون ما تطلع وقح؟ جمل جاهزة للاجتماع 👇",
+    "lines": [
+      "المقاطعة اللطيفة طبيعية جداً في بيئة العمل، بشرط جملة دخول واضحة: Sorry to jump in, but can I add one thing here?",
+      "ولو قاطعوك في نص الفكرة: Sorry, if I could just finish my point...",
+      "و What? لحالها أو Repeat, please ما فيها غلط قواعد، بس فيها غلط نبرة. Could you say that again? أهدى بكثير."
+    ],
+    "tags": [
+      "#انجليزي_العمل",
+      "#اجتماعات",
+      "#تعلم_الانجليزي",
+      "#English",
+      "#BusinessEnglish",
+      "#طلاقة"
+    ]
+  }
+}

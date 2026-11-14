@@ -1,0 +1,13 @@
+{
+  "name": "fluentia-journal-carousels",
+  "private": true,
+  "type": "module",
+  "description": "Renders «مجلة طلاقة» carousels to PNG. Standalone; not part of the site build.",
+  "scripts": {
+    "render": "node render.mjs",
+    "check": "node render.mjs --check"
+  },
+  "dependencies": {
+    "playwright-core": "1.56.1"
+  }
+}

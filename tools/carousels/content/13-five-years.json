@@ -1,0 +1,120 @@
+{
+  "id": "13",
+  "title": "خمس سنين في الشركة",
+  "folder": "خمس سنين في الشركة",
+  "article": "words-that-betrayed-us",
+  "format": "mistake",
+  "base": "paper",
+  "slides": [
+    {
+      "type": "cover",
+      "variant": "type",
+      "tone": "ink",
+      "kicker": "الوقت بالعربي",
+      "pre": "I have five years in this company.",
+      "strike": true,
+      "hook": "نقولها بكل ثقة.. ==والقالب عربي.=="
+    },
+    {
+      "type": "text",
+      "big": "العربي يقول «من» لكل شي: «أشتغل هنا من خمس سنين».",
+      "body": "الإنجليزي يفرّق بين ==نقطة البداية== و==طول المدة==، ويغيّر الزمن نفسه."
+    },
+    {
+      "type": "swap",
+      "label": "المدة",
+      "pairs": [
+        {
+          "no": "I have five years in this company.",
+          "yes": "I've worked here for five years."
+        },
+        {
+          "yes": "I've been with the company since 2021.",
+          "tag": "أو"
+        }
+      ],
+      "why": "{{since}} مع نقطة البداية، و{{for}} مع طول المدة."
+    },
+    {
+      "type": "swap",
+      "label": "«بعد ساعة» من الحين",
+      "pairs": [
+        {
+          "no": "I'll call you back after one hour.",
+          "yes": "I'll call you back in an hour."
+        }
+      ],
+      "why": "{{after an hour}} نستخدمها غالباً لشي صار: {{After an hour, the meeting ended.}}"
+    },
+    {
+      "type": "swap",
+      "label": "الاعتذار",
+      "pairs": [
+        {
+          "no": "Sorry for late.",
+          "yes": "Sorry I'm late."
+        },
+        {
+          "yes": "Sorry for the delay in getting back to you.",
+          "tag": "للإيميل"
+        }
+      ]
+    },
+    {
+      "type": "swap",
+      "label": "أزواج نخلطها",
+      "pairs": [
+        {
+          "no": "He said me the deadline moved.",
+          "yes": "He told me the deadline moved."
+        },
+        {
+          "no": "Could you borrow me your charger?",
+          "yes": "Could you lend me your charger?"
+        }
+      ],
+      "why": "اللي يعطي {{lends}}، واللي يأخذ {{borrows}}."
+    },
+    {
+      "type": "swap",
+      "label": "وأشهرها",
+      "pairs": [
+        {
+          "no": "I am agree.",
+          "yes": "I agree."
+        }
+      ],
+      "why": "في العربي «موافق» صفة. في الإنجليزي {{agree}} ==فعل.==",
+      "ys": 72,
+      "ws": 60
+    },
+    {
+      "type": "step",
+      "n": 1,
+      "label": "الحل",
+      "title": "دفتر «كلمات خانتني».",
+      "body": "كل ما انصلحت لنا جملة، نكتب الجملتين جنب بعض: اللي قلناها، والطبيعية. بعد شهر يصير عندنا قاموس أخطائنا نحن."
+    },
+    {
+      "type": "cta",
+      "save": "احفظوها قبل مقابلتكم أو إيميلكم الجاي."
+    }
+  ],
+  "caption": {
+    "hook": "«I have five years in this company». نقولها بكل ثقة.. والقالب عربي.",
+    "tiktok": "I have five years in this company ❌ كيف نقولها صح؟ وأخطاء وقت ثانية نقولها كل يوم 👇",
+    "lines": [
+      "العربي يقول «من» لكل شي. الإنجليزي يفرّق: I've worked here for five years، و I've been with the company since 2021.",
+      "و«بعد ساعة» من الحين = in an hour، مب after one hour. و Sorry I'm late، مب Sorry for late.",
+      "وأشهرها: I agree، مب I am agree. في الإنجليزي agree فعل."
+    ],
+    "tags": [
+      "#تعلم_الانجليزي",
+      "#أخطاء_شائعة",
+      "#انجليزي_العمل",
+      "#English",
+      "#BusinessEnglish",
+      "#طلاقة"
+    ]
+  }
+}

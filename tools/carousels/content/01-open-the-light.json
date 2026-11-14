@@ -1,0 +1,81 @@
+{
+  "id": "01",
+  "title": "افتح النور",
+  "folder": "افتح النور",
+  "article": "words-that-betrayed-us",
+  "format": "mistake",
+  "base": "paper",
+  "slides": [
+    {
+      "type": "cover",
+      "variant": "type",
+      "kicker": "غلط نقوله كل يوم",
+      "pre": "Can you open the light?",
+      "strike": true,
+      "hook": "كل كلماتها إنجليزية.. ==والجملة غلط.=="
+    },
+    {
+      "type": "text",
+      "label": "المشهد",
+      "big": "موظف يدخل غرفة الاجتماعات المظلمة، ويقول لزميله الأجنبي بكل ثقة: {{Can you open the light?}}",
+      "body": "الزميل يفهم، ويشغّل النور، ويبتسم ابتسامة صغيرة. وصاحبنا ما يدري ليش ابتسم.",
+      "bs": 64
+    },
+    {
+      "type": "text",
+      "big": "الغلط مب في الكلمة. الغلط في ==الهيكل== اللي تحت الكلمة.",
+      "body": "المخ ياخذ الفكرة بالعربي «افتح النور»، ويركّبها على قالب عربي، ثم يحط فوقها كلمات إنجليزية."
+    },
+    {
+      "type": "swap",
+      "label": "في العربي نفتح كل شي",
+      "pairs": [
+        { "no": "Can you open the light?", "yes": "Can you turn on the light?" },
+        { "no": "Please close the projector.", "yes": "Please turn off the projector." }
+      ],
+      "why": "الباب ينفتح. أما النور والأجهزة فتشتغل وتنطفي."
+    },
+    {
+      "type": "swap",
+      "label": "في الاجتماع الأونلاين",
+      "pairs": [
+        { "no": "Open your mic.", "yes": "Can you unmute yourself?" },
+        { "no": "Open your camera.", "yes": "Could you turn on your camera?" },
+        { "no": "I'll close the line.", "yes": "I'll hang up and call you back." }
+      ],
+      "rs": 50,
+      "ws": 42
+    },
+    {
+      "type": "swap",
+      "label": "و«نسوّي» كل شي",
+      "pairs": [
+        { "no": "Can we make a meeting?", "yes": "Can we set up a meeting for Sunday?" },
+        { "no": "I did a mistake.", "yes": "I made a mistake." },
+        { "no": "I'll enter the call.", "yes": "I'll join the call in five minutes." }
+      ],
+      "rs": 50,
+      "ws": 42,
+      "why": "ما فيه قاعدة وحدة تكفي. نحفظها قطع جاهزة."
+    },
+    {
+      "type": "punch",
+      "text": "الكلمة الصحيحة في القالب الغلط، تبقى غلط.",
+      "after": "والحل: نتعلم القالب مع الكلمة."
+    },
+    {
+      "type": "cta",
+      "save": "احفظوها، وأرسلوها لزميل يقول {{open the light}} كل صباح."
+    }
+  ],
+  "caption": {
+    "hook": "«Can you open the light?» كل كلماتها إنجليزية.. والجملة غلط.",
+    "tiktok": "«Can you open the light?» كل كلماتها صح.. والجملة غلط. ليش؟ 👇",
+    "lines": [
+      "الغلط مب في الكلمة. الغلط في القالب العربي اللي تحتها: «افتح النور».",
+      "في الإنجليزي الباب ينفتح، لكن النور والأجهزة تشتغل وتنطفي: turn on / turn off. والمايك؟ unmute.",
+      "ما فيه قاعدة وحدة تكفي، عشان كذا نحفظها قطع جاهزة. احفظوا الكاروسيل وراجعوه قبل اجتماع بكرة."
+    ],
+    "tags": ["#تعلم_الانجليزي", "#انجليزي_العمل", "#أخطاء_شائعة", "#English", "#BusinessEnglish", "#طلاقة"]
+  }
+}
