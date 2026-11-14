@@ -24,10 +24,10 @@ export default function LandingV2() {
   return (
     <div className="lp-scope">
       <Helmet>
-        <title>أكاديمية طلاقة | تعلَّم الإنجليزي مع مدربين سعوديين محترفين</title>
+        <title>أكاديمية طلاقة | تعلَّم الإنجليزي مع مدربين متخصصين</title>
         <meta
           name="description"
-          content="أكاديمية طلاقة — دورات إنجليزي أونلاين بمجموعات صغيرة (7 طلاب) مع مدربين سعوديين. متابعة يومية، حصص فردية، تقنيات ذكاء اصطناعي. باقات تبدأ من 500 ريال."
+          content="أكاديمية طلاقة — دورات إنجليزي أونلاين بمجموعات صغيرة (7 طلاب) مع مدربين متخصصين. متابعة يومية، حصص فردية، تقنيات ذكاء اصطناعي. باقات تبدأ من 500 ريال."
         />
         <link rel="canonical" href="https://fluentia.academy/" />
         <meta property="og:type" content="website" />
@@ -35,13 +35,13 @@ export default function LandingV2() {
         <meta property="og:title" content="أكاديمية طلاقة | تعلَّم الإنجليزي بثقة" />
         <meta
           property="og:description"
-          content="دورات إنجليزي أونلاين بمجموعات صغيرة مع مدربين سعوديين محترفين. متابعة يومية. حصص فردية. باقات من 500 ريال."
+          content="دورات إنجليزي أونلاين بمجموعات صغيرة مع مدربين متخصصين. متابعة يومية. حصص فردية. باقات من 500 ريال."
         />
         <meta name="twitter:url" content="https://fluentia.academy/" />
         <meta name="twitter:title" content="أكاديمية طلاقة | تعلَّم الإنجليزي بثقة" />
         <meta
           name="twitter:description"
-          content="دورات إنجليزي أونلاين بمجموعات صغيرة مع مدربين سعوديين محترفين."
+          content="دورات إنجليزي أونلاين بمجموعات صغيرة مع مدربين متخصصين."
         />
       </Helmet>
       <RegistrationStatusBanner />

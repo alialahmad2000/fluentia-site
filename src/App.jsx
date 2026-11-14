@@ -731,7 +731,7 @@ section+section::before{content:'';display:block;height:1px;background:linear-gr
     <div style={{maxWidth:"700px"}}>
       <Reveal><div style={{display:"inline-block",padding:"6px 18px",marginBottom:"28px",border:"1px solid var(--sky-b)",borderRadius:"100px",color:SKY,fontSize:"0.875rem",fontWeight:700}}>أكاديمية سعودية متخصصة</div></Reveal>
       <Reveal d={0.1} y={80}><h1 style={{fontSize:"clamp(2.625rem,8vw,4.75rem)",fontWeight:900,lineHeight:1.05,marginBottom:"24px",color:"var(--t1)",letterSpacing:"-2px",textShadow:dark?"0 0 80px rgba(56,189,248,0.2)":"none"}}>تكلّم<br/><span style={{background:`linear-gradient(135deg,${SKY},${SKY_L},#fff,${SKY})`,backgroundSize:"300% 100%",animation:"textShine 4s linear infinite",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",filter:dark?"drop-shadow(0 0 30px rgba(56,189,248,0.3))":"none"}}>إنجليزي</span><br/>بطلاقة<span style={{color:SKY}}>.</span></h1></Reveal>
-      <Reveal d={0.2}><p style={{fontSize:"1.125rem",color:"var(--t2)",lineHeight:2,marginBottom:"36px",maxWidth:"460px",fontWeight:300}}>مدربون سعوديون · كلاسات لايف · حد أقصى <span style={{color:SKY,fontWeight:700}}>٧</span> طلاب<br/>3 مسارات: تأسيس · تطوير · IELTS</p></Reveal>
+      <Reveal d={0.2}><p style={{fontSize:"1.125rem",color:"var(--t2)",lineHeight:2,marginBottom:"36px",maxWidth:"460px",fontWeight:300}}>مدربون متخصصون · كلاسات لايف · حد أقصى <span style={{color:SKY,fontWeight:700}}>٧</span> طلاب<br/>3 مسارات: تأسيس · تطوير · IELTS</p></Reveal>
       <Reveal d={0.3}><div style={{display:"flex",gap:"10px",flexWrap:"wrap"}}>
         <button onClick={goPrice} style={{display:"inline-flex",alignItems:"center",gap:"8px",background:SKY,color:"#060e1c",padding:"16px 32px",borderRadius:"60px",fontSize:"1.0625rem",fontWeight:800,border:"none",cursor:"pointer",boxShadow:"0 0 40px rgba(56,189,248,0.15)",fontFamily:"'Tajawal',sans-serif"}}>احجز لقاءك المجاني ←</button>
         <button onClick={()=>setShowQuiz(true)} style={{display:"inline-flex",alignItems:"center",border:"1px solid var(--sky-b)",background:"var(--sky-bg)",color:SKY,padding:"16px 24px",borderRadius:"60px",fontSize:"1rem",fontWeight:600,cursor:"pointer",fontFamily:"'Tajawal',sans-serif"}}>📊 اكتشف مستواك بـ 2 دقيقة</button>
@@ -1115,7 +1115,7 @@ section+section::before{content:'';display:block;height:1px;background:linear-gr
           <span style={{color:SKY}}>F</span>luentia
         </div>
         <p style={{fontSize:"0.875rem",color:"var(--t3)",lineHeight:1.7,maxWidth:"260px",fontFamily:"'Tajawal',sans-serif",margin:0}}>
-          أكاديمية طلاقة — تعلَّم الإنجليزي مع مدربين سعوديين محترفين في مجموعات صغيرة.
+          أكاديمية طلاقة — تعلَّم الإنجليزي مع مدربين متخصصين في مجموعات صغيرة.
         </p>
       </div>
       <div>
