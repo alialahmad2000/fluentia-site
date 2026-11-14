@@ -25,6 +25,8 @@ source of truth the homepage renders through `V1Pricing.jsx`);
 | Country | Saudi Arabia (area served: SA) | index.html JSON-LD `areaServed`, `geo.region=SA`; terms §10 (Saudi law, Riyadh courts) |
 | Delivery | 100% online; live classes via **Google Meet** | terms §2 (line 78), `src/pages/AboutPage.jsx:345` |
 | Founder | د. علي الأحمد (Dr. Ali Alahmad) | `/about`, index.html JSON-LD `founder` |
+| Founded | **2021** («منذ 2021» / «تأسست عام 2021») — Ali, 2026-11-14 | `/about`, JSON-LD `foundingDate` |
+| Trainers | **Saudi — all of them** («مدربون سعوديون») — Ali, 2026-11-14 | homepage meta, /start/form |
 | Audience | adults («للكبار»، «للراشدين») — employees and professionals are the main 1:1 audience («للمهنيين ومن يريد منهجاً على مقاسه») | seo.js `/` description; content.js `vipTier.audienceLabel` |
 | Minimum age in the terms | 13+, or with a guardian's consent below that | terms §3 (line 87) |
 | Not affiliated with | any other organisation named "Fluentia" (e.g. fluentia.us) — **disambiguation statement, ours to make** | mission brief |
@@ -147,8 +149,7 @@ Pricing rules:
 ## 10. Claims we will NOT repeat (published somewhere, but unverified or contradicted)
 
 - «4.9★ تقييم الأكاديمية», «+14 طالب نشط», «+100 شهادة نجاح» (/about) and «⭐ 4.9 · +50 طالب · معتمدون رسمياً» (/start) — no source for ratings, counts or accreditation. See AUDIT.md.
-- Founding date: /about says «تأسست 23 مارس 2026», the JSON-LD says `foundingDate: 2021`, the hero trust line said «منذ 2021». Contradictory → not stated.
-- «مدربون سعوديون» — on /start and in the homepage meta, but /private says the mentor is usually a native English speaker. Not repeated in new copy until Ali confirms the wording.
+- Note: the group and 1:1 trainers are Saudi (§1); the intensive's practice-session **mentor** is usually a native English speaker (/private). Don't write «all sessions with Saudi trainers» for the intensive.
 - «≈ 3 شهور من كورس تقليدي في شهر واحد» (/private) — a marketing estimate; may be quoted only as the academy's own description of the intensive rhythm, never as a measured result.
 - Laila AI voice conversation («المحادثة مع ليلى») — still on the homepage, but hidden from students since 2026-10-06. Not mentioned.
 - Number of trainers, trainer names, trainer credentials — not stated.

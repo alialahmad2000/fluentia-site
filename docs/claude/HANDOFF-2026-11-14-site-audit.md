@@ -22,3 +22,10 @@
 
 ## Tradeoff to know
 TikTok and Google Ads signals now need opt-in, so reported conversions will drop for visitors who decline. That is the legal setup (PDPL), and Consent Mode modelling recovers part of it on Google's side.
+
+## Follow-up 14 Nov (Ali's answers)
+- **Founding year 2021:** /about «تأسست عام 2021» (+ English «Founded in 2021»), `foundingDate: "2021"` in index.html and scripts/guide/org.mjs (the build compares them). /terms and /privacy keep «تاريخ السريان: 23 مارس 2026» — the policies' effective date, not a founding/CR date. `AboutPage` JSON-LD `datePublished` 2026-03-23 is the page's own date, kept.
+- **«مدربون سعوديون» restored** in every place 7c856d3 + a311b8a removed it. Title (all four homepage-meta copies): «أكاديمية طلاقة | دورات إنجليزي أونلاين مع مدربين سعوديين» (56 chars). Description: «دورات إنجليزي أونلاين للكبار في السعودية مع مدربين سعوديين: …» (150). Keyword «مدرب إنجليزي سعودي». 4.9★ / +50 / معتمدون رسمياً / +14 / +100 / وصول فوري stay removed.
+- **`book_meeting`:** wired since 2026-11-11 to one moment only — admissions-bot answering a slot pick in the /start chat with a booking. Zero GA4 hits = zero real bookings (bot_conversations: 31 real, 0 numbers, 0 booked). Now `method: chat_booking`, `source_page` = the `src` tag, `page_path`, and once per booking id (localStorage `fl_abot_booked`), because a re-pick returns the same booking. Leads booked by Badriyah in the CRM never touch the site, so they never send it.
+- **Gov logo band:** keep as is — do not flag again.
+- **Search Console + GA4↔Ads:** done by Ali; see docs/seo/NEEDS-ALI.md «Status».

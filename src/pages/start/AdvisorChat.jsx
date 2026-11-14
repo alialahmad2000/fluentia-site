@@ -70,6 +70,24 @@ async function call(body) {
   return j;
 }
 
+/* GA4 key event for «احجز لقاءك المبدئي»: sent once per booking, at the only on-site moment
+ * that confirms one — admissions-bot answered a slot pick with a booking. A re-pick after the
+ * slot is already held returns the same booking (r.already, not exposed to the page), and a
+ * resumed thread carries it too; the id kept in localStorage stops either from counting twice.
+ * Consent Mode decides what the hit may carry (cookieless ping when denied); Ads gets it by
+ * importing the GA4 key event, not from a tag here. TikTok gets nothing from this event. */
+const BOOKED_KEY = 'fl_abot_booked';
+function trackBooked(b) {
+  let seen = [];
+  try { seen = JSON.parse(window.localStorage.getItem(BOOKED_KEY) || '[]'); } catch { seen = []; }
+  if (!Array.isArray(seen)) seen = [];
+  if (b?.id && seen.includes(b.id)) return;
+  track('book_meeting', { method: 'chat_booking', source_page: context().src || 'direct', page_path: window.location.pathname });
+  if (b?.id) {
+    try { window.localStorage.setItem(BOOKED_KEY, JSON.stringify([...seen, b.id].slice(-10))); } catch { /* best-effort dedupe */ }
+  }
+}
+
 /* ── calendar ─────────────────────────────────────────────────────────────── */
 const icsDate = (iso) => new Date(iso).toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
 const NOTE = 'لقاء مبدئي مجاني مع المدرب على Google Meet — يكفي فيه الصوت. يوصلك رابط اللقاء على واتساب.';
@@ -278,7 +296,7 @@ export default function AdvisorChat() {
         if (r.error === 'invalid_phone' || r.card === 'contact') setPhoneErr(true);
         else { track('generate_lead', { method: 'admissions_bot' }); fireTikTokContact({ contentId: 'admissions_bot', contentName: 'Admissions chat' }); }
       }
-      if (req.action === 'book' && r.booking) track('book_meeting', { method: 'admissions_bot' });
+      if (req.action === 'book' && r.booking) trackBooked(r.booking);
       if (!r.ok && !r.messages?.length) throw new Error(r.error || 'failed');
       if (!r.ok && r.error !== 'invalid_phone') {
         reveal(r.messages || [], () => { setRetry({ req }); setBusy(false); });
