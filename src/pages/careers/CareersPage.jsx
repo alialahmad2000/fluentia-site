@@ -11,6 +11,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Seo from "../../components/Seo";
 import BrandMark from "../../components/BrandMark";
+import DawnSun from "../next/DawnSun";
 import { startWavRecording } from "../../lib/wavRecorder";
 import { getAttribution } from "../../lib/attribution";
 import css from "./careers.css?inline";
@@ -25,6 +26,7 @@ const ROLES = {
     title: "مستشار/ة قبول ومبيعات",
     short: "مستشار القبول",
     line: "التواصل مع المهتمين الجدد بالأكاديمية بالمكالمات، وتقديم لقاء مبدئي مجاني لهم على Google Meet، ومساعدتهم في التسجيل، بالتعاون مع منسّقة الأكاديمية.",
+    meta: ["السيرة الذاتية اختيارية", "تسجيل صوتي قصير بالعربي"],
     cvRequired: false,
   },
   trainer: {
@@ -32,12 +34,35 @@ const ROLES = {
     title: "مدرّب/ة لغة إنجليزية",
     short: "مدرّب اللغة",
     line: "تدريب متعلمين سعوديين بالغين أونلاين، في مجموعات وبشكل فردي، على منهج طلاقة وكتابة تقرير بعد كل لقاء.",
+    meta: ["السيرة الذاتية مطلوبة", "تسجيل صوتي بالإنجليزي وآخر قصير بالعربي"],
     cvRequired: true,
   },
 };
 
 /** Pick the masculine/feminine form once gender is known; show both before. */
 const g = (gender, both, m, f) => (gender === "m" ? m : gender === "f" ? f : both);
+
+/** Forward in RTL = pointing left. */
+const Arrow = ({ size = 18 }) => (
+  <svg viewBox="0 0 24 24" width={size} height={size} aria-hidden="true" focusable="false">
+    <path d="M19 12H5m0 0 6-6m-6 6 6 6" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+);
+
+/** The bot's progress: the dawn rises with it (--rise on .cr-root). */
+const STEPS = ["بياناتك", "المحادثة", "التسجيل", "النتيجة"];
+const STEP_OF = { landing: 0, chat: 1, voice: 2, finishing: 3, outcome: 3 };
+const RISE_OF = { landing: 0, chat: 0.2, voice: 0.45, finishing: 0.7, outcome: 1 };
+function Steps({ stage }) {
+  const at = STEP_OF[stage] ?? 0;
+  return (
+    <ol className="cr-steps" aria-label="مراحل التقديم">
+      {STEPS.map((l, i) => (
+        <li key={l} className={i < at ? "done" : i === at ? "now" : ""} aria-current={i === at ? "step" : undefined}><span>{l}</span></li>
+      ))}
+    </ol>
+  );
+}
 
 function BotBubbleText({ children }) {
   return <span className="cr-bubble-text" dir="auto">{children}</span>;
@@ -189,8 +214,9 @@ function ApplyForm({ role, saved, onSubmit, busy, error, fieldError }) {
 
   return (
     <form className="cr-form cr-card" onSubmit={submit} noValidate aria-labelledby="cr-form-h">
-      <h2 id="cr-form-h">{g(gd, "قدّم/ي على", "قدّم على", "قدّمي على")} وظيفة {r.title}</h2>
-      <p className="cr-sub">{g(gd, "عبّ/ي بياناتك الأساسية، وبعدها محادثة قصيرة مع مساعد التوظيف. تاخذ منك حوالي 10 دقائق.", "عبّ بياناتك الأساسية، وبعدها محادثة قصيرة مع مساعد التوظيف. تاخذ منك حوالي 10 دقائق.", "عبّي بياناتك الأساسية، وبعدها محادثة قصيرة مع مساعد التوظيف. تاخذ منك حوالي 10 دقائق.")}</p>
+      <p className="cr-form-k">الخطوة الأولى من أربع</p>
+      <h2 id="cr-form-h">التقديم على وظيفة {r.title}</h2>
+      <p className="cr-sub">بياناتك الأساسية، ثم محادثة قصيرة مع مساعد التوظيف وتسجيل صوتي. كل الخطوات تاخذ حوالي 10 دقائق.</p>
 
       {field("name", "الاسم الكامل", { autoComplete: "name", enterKeyHint: "next" })}
       {field("phone", "رقم الواتساب", { type: "tel", inputMode: "tel", autoComplete: "tel", dir: "ltr", placeholder: "05xxxxxxxx", enterKeyHint: "next" })}
@@ -235,7 +261,7 @@ function ApplyForm({ role, saved, onSubmit, busy, error, fieldError }) {
       {error ? <p className="cr-err cr-err-box" role="alert">{error}</p> : null}
 
       <button type="submit" className="cr-btn cr-btn-primary" disabled={busy || (!!TURNSTILE_SITEKEY && !token)}>
-        {busy ? "لحظات…" : g(gd, "ابدأ/ي المحادثة", "ابدأ المحادثة", "ابدئي المحادثة")}
+        {busy ? "لحظات…" : <>{g(gd, "بدء المحادثة", "ابدأ المحادثة", "ابدئي المحادثة")} <Arrow /></>}
       </button>
       <p className="cr-fine">بياناتك تُستخدم فقط لمراجعة طلب التوظيف، وتبقى سرّية.</p>
     </form>
@@ -299,13 +325,19 @@ function Chat({ messages, typing, onSend, error, gender, disabled }) {
   return (
     <>
       <div className="cr-chat" role="log" aria-live="polite" aria-label="المحادثة">
-        {messages.map((m, i) => (
-          <div key={i} className={`cr-msg ${m.role === "bot" ? "bot" : "me"}`}>
-            <div className="cr-bubble"><BotBubbleText>{m.content}</BotBubbleText></div>
-          </div>
-        ))}
+        {messages.map((m, i) => {
+          const bot = m.role === "bot";
+          // one avatar per run of bot messages: on the last bubble of the run
+          const lastOfRun = bot && (i === messages.length - 1 ? !typing : messages[i + 1]?.role !== "bot");
+          return (
+            <div key={i} className={`cr-msg ${bot ? "bot" : "me"}`}>
+              {bot ? <span className={`cr-ava${lastOfRun ? "" : " ghost"}`} aria-hidden="true"><BrandMark size={16} /></span> : null}
+              <div className="cr-bubble"><BotBubbleText>{m.content}</BotBubbleText></div>
+            </div>
+          );
+        })}
         {typing ? (
-          <div className="cr-msg bot"><div className="cr-bubble cr-typing" role="status" aria-label="يكتب"><i /><i /><i /></div></div>
+          <div className="cr-msg bot"><span className="cr-ava" aria-hidden="true"><BrandMark size={16} /></span><div className="cr-bubble cr-typing" role="status" aria-label="يكتب"><i /><i /><i /></div></div>
         ) : null}
         <div ref={endRef} />
       </div>
@@ -465,12 +497,11 @@ function VoiceCard({ task, app, gender, onTasks }) {
 function BookedCard({ booking, title, body }) {
   return (
     <div className="cr-card cr-done" role="status">
-      <div className="cr-check" aria-hidden="true">✓</div>
       <h2>{title || "تم تأكيد موعدك"}</h2>
       {body ? <p className="cr-lead">{body}</p> : null}
-      <p className="cr-when">{booking.when_ar}</p>
+      <p className="cr-when"><small>موعد اللقاء</small><b>{booking.when_ar}</b></p>
       <div className="cr-actions">
-        {booking.gcal ? <a className="cr-btn cr-btn-primary" href={booking.gcal} target="_blank" rel="noopener noreferrer">أضف للتقويم</a> : null}
+        {booking.gcal ? <a className="cr-btn cr-btn-primary" href={booking.gcal} target="_blank" rel="noopener noreferrer">أضف للتقويم <Arrow /></a> : null}
         {booking.meet_link ? <a className="cr-btn cr-btn-ghost" href={booking.meet_link} target="_blank" rel="noopener noreferrer">رابط اللقاء (Google Meet)</a> : null}
         {booking.wa_link ? <a className="cr-btn cr-btn-ghost" href={booking.wa_link} target="_blank" rel="noopener noreferrer">تغيير الموعد عبر واتساب</a> : null}
       </div>
@@ -505,7 +536,7 @@ function SlotPicker({ outcome, slots, loading, onBook, busy, error, gender }) {
             </div>
           ))}
           {error ? <p className="cr-err cr-err-box" role="alert">{error}</p> : null}
-          <button type="button" className="cr-btn cr-btn-primary" disabled={!sel || busy} onClick={() => onBook(sel)}>{busy ? "لحظات…" : "أكّد الموعد"}</button>
+          <button type="button" className="cr-btn cr-btn-primary" disabled={!sel || busy} onClick={() => onBook(sel)}>{busy ? "لحظات…" : <>تأكيد الموعد <Arrow /></>}</button>
         </div>
       )}
     </div>
@@ -692,38 +723,46 @@ export default function CareersPage() {
   const r = ROLES[role] || null;
 
   return (
-    <div className="cr-root" dir="rtl" lang="ar">
+    <div className="cr-root" dir="rtl" lang="ar" style={{ "--rise": RISE_OF[stage] ?? 0 }}>
       <style>{css}</style>
       <Seo path="/careers" />
+      <div className="cr-sky" aria-hidden="true" />
 
-      <header className="cr-top">
+      <header className={`cr-top${inFlow ? "" : " wide"}`}>
         <a href="/" className="cr-brand" aria-label="أكاديمية طلاقة">
           <BrandMark size={26} /><span>طلاقة</span>
         </a>
         {inFlow && r ? <span className="cr-top-role">{r.title}</span> : null}
       </header>
+      {inFlow ? <Steps stage={stage} /> : null}
 
       {!inFlow && (
-        <main>
+        <main className="cr-land">
           <section className="cr-hero">
             <p className="cr-eyebrow">وظائف في أكاديمية طلاقة</p>
-            <h1>انضم لفريق طلاقة</h1>
+            <h1>انضم لفريق <span className="cr-grad">طلاقة</span></h1>
             <p className="cr-lead">أكاديمية إنجليزي أونلاين للبالغين في السعودية، مدرّبونا حقيقيون ونشتغل على منصّتنا الخاصة.</p>
-            <ul className="cr-perks">
+            <ul className="cr-facts">
               <li>عن بُعد بالكامل</li>
               <li>ساعات مرنة</li>
               <li>أثر حقيقي على المتعلمين</li>
             </ul>
           </section>
+          <div className="cr-horizon" aria-hidden="true"><DawnSun id="cr-sun" /></div>
 
-          <section className="cr-roles" aria-label="الوظائف المتاحة">
-            {Object.values(ROLES).map((x) => (
-              <article key={x.id} className={`cr-card cr-role${role === x.id ? " on" : ""}`}>
-                <h2>{x.title}</h2>
+          <h2 className="cr-sec-h" id="cr-roles-h">الوظائف المتاحة</h2>
+          <section className="cr-roles" aria-labelledby="cr-roles-h">
+            {Object.values(ROLES).map((x, i) => (
+              <article key={x.id} className={`cr-role${role === x.id ? " on" : ""}`}>
+                <span className="cr-role-n" aria-hidden="true">0{i + 1}</span>
+                <h3>{x.title}</h3>
                 <p>{x.line}</p>
-                {saved[x.id] ? <p className="cr-hint">عندك طلب غير مكتمل لهذه الوظيفة.</p> : null}
-                <button type="button" className="cr-btn cr-btn-primary" onClick={() => choose(x.id)} aria-expanded={role === x.id}>قدّم/ي الآن</button>
-                {saved[x.id] ? <button type="button" className="cr-btn cr-btn-ghost" disabled={busy} onClick={() => { setRole(x.id); resume(x.id); }}>أكمل/ي طلبك</button> : null}
+                <ul className="cr-role-meta">{x.meta.map((m) => <li key={m}>{m}</li>)}</ul>
+                {saved[x.id] ? <p className="cr-role-saved">عندك طلب غير مكتمل لهذه الوظيفة.</p> : null}
+                <button type="button" className="cr-role-go" onClick={() => choose(x.id)} aria-expanded={role === x.id}>
+                  <span>التقديم على الوظيفة</span><span className="cr-arrow"><Arrow /></span>
+                </button>
+                {saved[x.id] ? <button type="button" className="cr-role-resume" disabled={busy} onClick={() => { setRole(x.id); resume(x.id); }}>إكمال الطلب السابق</button> : null}
               </article>
             ))}
           </section>
@@ -734,6 +773,17 @@ export default function CareersPage() {
           <div ref={formRef} className="cr-formwrap">
             {role ? <ApplyForm key={role} role={role} saved={saved[role]} onSubmit={startFlow} busy={busy} error={error} fieldError={fieldError} /> : null}
           </div>
+
+          <section className="cr-how" aria-labelledby="cr-how-h">
+            <h2 className="cr-sec-h" id="cr-how-h">كيف يتم التقديم</h2>
+            <ol>
+              <li><b>اختيار الوظيفة والبيانات</b><span>الاسم ورقم الواتساب والمدينة، والسيرة الذاتية للمدرّبين.</span></li>
+              <li><b>محادثة قصيرة</b><span>أسئلة عن خبرتك مع مساعد التوظيف، بالكتابة.</span></li>
+              <li><b>تسجيل صوتي</b><span>تسجيل قصير بصوتك، نسمع فيه طريقة كلامك.</span></li>
+              <li><b>موعد لقاء</b><span>إذا ناسب ملفك الوظيفة، يظهر لك حجز موعد لقاء قصير مباشرة.</span></li>
+            </ol>
+            <p className="cr-how-total">كل الخطوات تاخذ حوالي 10 دقائق، وبياناتك تبقى سرّية.</p>
+          </section>
         </main>
       )}
 
@@ -753,7 +803,7 @@ export default function CareersPage() {
               {tasks.map((t) => <VoiceCard key={t.kind} task={t} app={app} gender={gender} onTasks={onTasks} />)}
               {needsCv ? <CvCard app={app} gender={gender} required={cvRequired} onDone={() => setNeedsCv(false)} /> : null}
               {error ? <p className="cr-err cr-err-box" role="alert">{error}</p> : null}
-              <button type="button" className="cr-btn cr-btn-primary cr-submit" disabled={!allDone || (cvRequired && needsCv)} onClick={finish}>إرسال الطلب</button>
+              <button type="button" className="cr-btn cr-btn-primary cr-submit" disabled={!allDone || (cvRequired && needsCv)} onClick={finish}>إرسال الطلب <Arrow /></button>
               {!allDone ? <p className="cr-hint cr-center">{g(gender, "اعتمد/ي كل التسجيلات عشان يفتح الإرسال.", "اعتمد كل التسجيلات عشان يفتح الإرسال.", "اعتمدي كل التسجيلات عشان يفتح الإرسال.")}</p> : null}
             </div>
           )}
@@ -767,16 +817,18 @@ export default function CareersPage() {
           )}
 
           {stage === "outcome" && outcome && (
-            booking ? <BookedCard booking={booking} title={outcome.kind === "booked" ? outcome.title_ar : "تم تأكيد موعدك"} body={outcome.kind === "booked" ? outcome.body_ar : ""} />
+            <div className="cr-outcome">
+            <div className="cr-horizon" aria-hidden="true"><DawnSun id="cr-sun-out" /></div>
+            {booking ? <BookedCard booking={booking} title={outcome.kind === "booked" ? outcome.title_ar : "تم تأكيد موعدك"} body={outcome.kind === "booked" ? outcome.body_ar : ""} />
               : outcome.kind === "book" ? <SlotPicker outcome={outcome} slots={slots} loading={slotsLoading} onBook={book} busy={busy} error={error} gender={gender} />
                 : (
                   <div className="cr-card cr-done" role="status">
-                    <div className="cr-check" aria-hidden="true">✓</div>
                     <h2>{outcome.title_ar}</h2>
                     <p className="cr-lead">{outcome.body_ar}</p>
                     <a className="cr-btn cr-btn-ghost" href="/">العودة للرئيسية</a>
                   </div>
-                )
+                )}
+            </div>
           )}
         </main>
       )}
