@@ -23,10 +23,10 @@ import {
 const ROLES = {
   sales: {
     id: "sales",
-    title: "مستشار/ة قبول ومبيعات",
+    title: "مستشار/ة قبول",
     short: "مستشار القبول",
-    line: "التواصل مع المهتمين الجدد بالأكاديمية بالمكالمات، وتقديم لقاء مبدئي مجاني لهم على Google Meet، ومساعدتهم في التسجيل، بالتعاون مع منسّقة الأكاديمية.",
-    meta: ["السيرة الذاتية اختيارية", "تسجيل صوتي قصير بالعربي"],
+    line: "مكالمات مع المهتمين بتعلم الإنجليزي، تعرّف على أهدافهم، وتسجيلهم في البرنامج المناسب — عن بُعد.",
+    meta: ["دوام مسائي من 4 إلى 10، السبت إلى الخميس", "السيرة الذاتية اختيارية", "تسجيل صوتي قصير بالعربي"],
     cvRequired: false,
   },
   trainer: {
@@ -87,7 +87,7 @@ function Turnstile({ onToken, resetKey }) {
       try {
         widget.current = window.turnstile.render(box.current, {
           sitekey: TURNSTILE_SITEKEY,
-          theme: "dark",
+          theme: "light",
           language: "ar",
           "refresh-expired": "auto",
           callback: (t) => onToken(t),
@@ -296,7 +296,7 @@ function CvCard({ app, gender, required, onDone }) {
 }
 
 /* ───────────────────────── Chat ───────────────────────── */
-function Chat({ messages, typing, onSend, error, gender, disabled }) {
+function Chat({ messages, typing, onSend, error, gender, disabled, options }) {
   const [text, setText] = useState("");
   const endRef = useRef(null);
   const taRef = useRef(null);
@@ -343,6 +343,13 @@ function Chat({ messages, typing, onSend, error, gender, disabled }) {
       </div>
       <div className="cr-composer">
         {error ? <p className="cr-err cr-err-box" role="alert">{error}</p> : null}
+        {options?.length ? (
+          <div className="cr-opts" role="group" aria-label="اختر إجابة">
+            {options.map((o) => (
+              <button key={o.id} type="button" className="cr-opt" disabled={typing || disabled} onClick={() => onSend(o.label, () => {}, o.id)}>{o.label}</button>
+            ))}
+          </div>
+        ) : (
         <div className="cr-composer-row">
           <label htmlFor="cr-msg" className="cr-sr">{g(gender, "اكتب/ي ردّك", "اكتب ردّك", "اكتبي ردّك")}</label>
           <textarea
@@ -354,6 +361,7 @@ function Chat({ messages, typing, onSend, error, gender, disabled }) {
             <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M3.4 11.2 20 3.6c.8-.4 1.6.4 1.2 1.2l-7.6 16.6c-.4.8-1.5.7-1.8-.1l-2-5.7-5.7-2c-.8-.3-.9-1.4-.1-1.8l-.6-.6Z" fill="currentColor" /></svg>
           </button>
         </div>
+        )}
       </div>
     </>
   );
@@ -551,6 +559,7 @@ export default function CareersPage() {
   const [app, setApp] = useState(null); // { id, token, role, basics }
   const [messages, setMessages] = useState([]);
   const [typing, setTyping] = useState(false);
+  const [options, setOptions] = useState(null);
   const [tasks, setTasks] = useState([]);
   const [needsCv, setNeedsCv] = useState(false);
   const [busy, setBusy] = useState(false);
@@ -574,7 +583,7 @@ export default function CareersPage() {
   const reset = useCallback((r, msg) => {
     if (r) clearSaved(r);
     setSaved((s) => ({ ...s, ...(r ? { [r]: null } : {}) }));
-    setApp(null); setMessages([]); setTasks([]); setOutcome(null); setSlots([]); setBooking(null);
+    setApp(null); setMessages([]); setOptions(null); setTasks([]); setOutcome(null); setSlots([]); setBooking(null);
     setStage("landing"); setRole(r || null); setError(""); setNotice(msg || "");
     window.scrollTo?.(0, 0);
   }, []);
@@ -601,6 +610,7 @@ export default function CareersPage() {
 
   const enter = useCallback(async (res, a) => {
     setMessages(res.messages || []);
+    setOptions(res.options || null);
     setTasks(res.voice_tasks || []);
     setNeedsCv(!!res.needs_cv && !res.has_cv);
     if (res.outcome) return showOutcome(res.outcome, a);
@@ -625,6 +635,7 @@ export default function CareersPage() {
       source: {
         utm_source: att.utm_source || qs.get("utm_source") || "", utm_medium: att.utm_medium || qs.get("utm_medium") || "",
         utm_campaign: att.utm_campaign || qs.get("utm_campaign") || "", ref: qs.get("ref") || att.referrer || "",
+        src: qs.get("src") || "",
         landing: `${window.location.pathname}${window.location.search}`,
       },
     };
@@ -675,21 +686,23 @@ export default function CareersPage() {
   };
 
   /* chat */
-  const send = useCallback(async (text, clear) => {
+  const send = useCallback(async (text, clear, choice) => {
     setError("");
     setMessages((m) => [...m, { role: "applicant", content: text }]);
     clear();
     setTyping(true);
     try {
-      const res = await guard(() => call("message", { application_id: app.id, token: app.token, text }), role);
+      const res = await guard(() => call("message", { application_id: app.id, token: app.token, text, ...(choice ? { choice } : {}) }), role);
       if (!res) return;
       setMessages((m) => [...m, { role: "bot", content: res.reply }]);
+      setOptions(res.options || null);
+      if (res.outcome) { clearSaved(role); await showOutcome(res.outcome, app); return; }
       if (res.step === "voice") { setTasks(res.voice_tasks || []); setStage("voice"); window.scrollTo?.(0, 0); }
     } catch (x) {
       setMessages((m) => m.slice(0, -1));
       setError(x.messageAr || "ما وصلت رسالتك. نرجو المحاولة مرة ثانية.");
     } finally { setTyping(false); }
-  }, [app, role, guard]);
+  }, [app, role, guard, showOutcome]);
 
   /* voice */
   const onTasks = (next, authErr) => {
@@ -741,10 +754,10 @@ export default function CareersPage() {
           <section className="cr-hero">
             <p className="cr-eyebrow">وظائف في أكاديمية طلاقة</p>
             <h1>انضم لفريق <span className="cr-grad">طلاقة</span></h1>
-            <p className="cr-lead">أكاديمية إنجليزي أونلاين للبالغين في السعودية، مدرّبونا حقيقيون ونشتغل على منصّتنا الخاصة.</p>
+            <p className="cr-lead">أكاديمية طلاقة تعلّم البالغين في السعودية الإنجليزي أونلاين، على منصّتها الخاصة.</p>
             <ul className="cr-facts">
               <li>عن بُعد بالكامل</li>
-              <li>ساعات مرنة</li>
+              <li>فريق صغير وقريب</li>
               <li>أثر حقيقي على المتعلمين</li>
             </ul>
           </section>
@@ -792,7 +805,7 @@ export default function CareersPage() {
           {stage === "chat" && (
             <>
               {needsCv ? <CvCard app={app} gender={gender} required={cvRequired} onDone={() => setNeedsCv(false)} /> : null}
-              <Chat messages={messages} typing={typing} onSend={send} error={error} gender={gender} />
+              <Chat messages={messages} typing={typing} onSend={send} error={error} gender={gender} options={options} />
             </>
           )}
 
