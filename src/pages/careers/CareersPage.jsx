@@ -51,6 +51,12 @@ const Arrow = ({ size = 18 }) => (
 
 /** The bot's progress: the dawn rises with it (--rise on .cr-root). */
 const STEPS = ["بياناتك", "المحادثة", "التسجيل", "النتيجة"];
+// PDPL consent (2026-11-15). Bump the version whenever the wording below changes.
+const CONSENT_VERSION = "careers-2026-11";
+const ACADEMY_WA_DISPLAY = "+966 55 866 9974";
+const MIN_BIRTH = 1960;
+const maxBirthYear = () => new Date().getFullYear() - 18;
+const ageFrom = (y) => (y ? new Date().getFullYear() - Number(y) : null);
 const STEP_OF = { landing: 0, chat: 1, voice: 2, finishing: 3, outcome: 3 };
 const RISE_OF = { landing: 0, chat: 0.2, voice: 0.45, finishing: 0.7, outcome: 1 };
 function Steps({ stage }) {
@@ -155,6 +161,8 @@ function ApplyForm({ role, saved, onSubmit, busy, error, fieldError }) {
     country: saved?.basics?.country || "السعودية", nationality: saved?.basics?.nationality || "",
     gender: saved?.basics?.gender || "", email: saved?.basics?.email || "",
   }));
+  const [birth, setBirth] = useState(() => (saved?.birth_year ? String(saved.birth_year) : ""));
+  const [agree, setAgree] = useState(false);
   const [file, setFile] = useState(null);
   const [fileErr, setFileErr] = useState("");
   const [hp, setHp] = useState("");
@@ -188,6 +196,8 @@ function ApplyForm({ role, saved, onSubmit, busy, error, fieldError }) {
     if (!f.nationality.trim()) x.nationality = "الجنسية مطلوبة";
     if (!f.gender) x.gender = "نحتاجه عشان نخاطبك بالشكل الصحيح";
     if (f.email.trim() && !/^\S+@\S+\.\S+$/.test(f.email.trim())) x.email = "البريد الإلكتروني غير صحيح";
+    if (!birth) x.birth_year = g(gd, "اختر/ي سنة ميلادك", "اختر سنة ميلادك", "اختاري سنة ميلادك");
+    if (!agree) x.consent = "نحتاج موافقتك على شروط التقديم للمتابعة";
     if (r.cvRequired && !file) x.cv = g(gd, "ارفق/ي سيرتك الذاتية", "ارفق سيرتك الذاتية", "أرفقي سيرتك الذاتية");
     if (TURNSTILE_SITEKEY && !token) x.captcha = "أكّد أنك لست روبوت";
     setErrs(x);
@@ -197,6 +207,7 @@ function ApplyForm({ role, saved, onSubmit, busy, error, fieldError }) {
     }
     onSubmit({
       basics: { ...f, name: f.name.trim(), phone: toAscii(f.phone).trim(), city: f.city.trim(), country: f.country.trim(), nationality: f.nationality.trim(), email: f.email.trim() },
+      birth_year: Number(birth), consent: { accepted: true, version: CONSENT_VERSION },
       file, hp, elapsed_ms: Date.now() - shownAt.current, turnstile_token: TURNSTILE_SITEKEY ? token : null,
     });
   };
@@ -216,7 +227,15 @@ function ApplyForm({ role, saved, onSubmit, busy, error, fieldError }) {
     <form className="cr-form cr-card" onSubmit={submit} noValidate aria-labelledby="cr-form-h">
       <p className="cr-form-k">الخطوة الأولى من أربع</p>
       <h2 id="cr-form-h">التقديم على وظيفة {r.title}</h2>
-      <p className="cr-sub">بياناتك الأساسية، ثم محادثة قصيرة مع مساعد التوظيف وتسجيل صوتي. كل الخطوات تاخذ حوالي 10 دقائق.</p>
+      <div className="cr-plan" role="group" aria-labelledby="cr-plan-h">
+        <p className="cr-plan-h" id="cr-plan-h">الخطوات والوقت المتوقع <span>حوالي 10 دقائق</span></p>
+        <ol>
+          <li><b>بياناتك</b><span>دقيقة</span></li>
+          <li><b>محادثة كتابية</b><span>5 إلى 7 دقائق</span></li>
+          <li><b>{role === "sales" ? "مكالمتان تمثيليتان بصوتك" : "تسجيلان صوتيان"}</b><span>دقيقتان</span></li>
+          <li><b>النتيجة</b><span>فورًا بعد الإرسال</span></li>
+        </ol>
+      </div>
 
       {field("name", "الاسم الكامل", { autoComplete: "name", enterKeyHint: "next" })}
       {field("phone", "رقم الواتساب", { type: "tel", inputMode: "tel", autoComplete: "tel", dir: "ltr", placeholder: "05xxxxxxxx", enterKeyHint: "next" })}
@@ -225,6 +244,17 @@ function ApplyForm({ role, saved, onSubmit, busy, error, fieldError }) {
         {field("country", "الدولة", { autoComplete: "country-name", enterKeyHint: "next" })}
       </div>
       {field("nationality", "الجنسية", { enterKeyHint: "next" })}
+
+      <div className="cr-field">
+        <label htmlFor="cr-birth_year">سنة الميلاد</label>
+        <select id="cr-birth_year" value={birth} dir="ltr" onChange={(e) => { setBirth(e.target.value); setErrs((p) => ({ ...p, birth_year: "" })); }}
+          aria-invalid={errs.birth_year ? "true" : "false"} aria-describedby={errs.birth_year ? "cr-birth_year-e" : "cr-birth_year-h"}>
+          <option value="">اختيار السنة</option>
+          {Array.from({ length: maxBirthYear() - MIN_BIRTH + 1 }, (_, i) => maxBirthYear() - i).map((y) => <option key={y} value={y}>{y}</option>)}
+        </select>
+        <p className="cr-hint" id="cr-birth_year-h">{birth ? <>العمر: <b>{ageFrom(birth)} سنة</b></> : "بالتاريخ الميلادي، مثال: 1998."}</p>
+        {errs.birth_year ? <p className="cr-err" id="cr-birth_year-e" role="alert">{errs.birth_year}</p> : null}
+      </div>
 
       <fieldset className="cr-field cr-gender" aria-describedby={errs.gender ? "cr-gender-e" : undefined}>
         <legend>الجنس</legend>
@@ -254,6 +284,18 @@ function ApplyForm({ role, saved, onSubmit, busy, error, fieldError }) {
       {/* honeypot: real people never see or fill this */}
       <div className="cr-hp" aria-hidden="true">
         <label>الموقع<input tabIndex={-1} autoComplete="off" name="website" value={hp} onChange={(e) => setHp(e.target.value)} /></label>
+      </div>
+
+      <div className="cr-field">
+        <label className={`cr-consent${errs.consent ? " bad" : ""}`}>
+          <input type="checkbox" checked={agree} onChange={(e) => { setAgree(e.target.checked); setErrs((p) => ({ ...p, consent: "" })); }}
+            aria-invalid={errs.consent ? "true" : "false"} aria-describedby={errs.consent ? "cr-consent-e" : undefined} />
+          <span>
+            أوافق على أن يحلّل الذكاء الاصطناعي إجاباتي المكتوبة والصوتية لترتيب الطلبات، وأن <b>القرار النهائي يتخذه شخص من فريق التوظيف</b>،
+            وأن تُحفظ بياناتي 12 شهرًا ثم تُحذف. أقدر أطلب حذفها قبل ذلك في أي وقت عبر واتساب <bdi dir="ltr">{ACADEMY_WA_DISPLAY}</bdi>.
+          </span>
+        </label>
+        {errs.consent ? <p className="cr-err" id="cr-consent-e" role="alert">{errs.consent}</p> : null}
       </div>
 
       <Turnstile onToken={setToken} resetKey={resetKey} />
@@ -296,10 +338,25 @@ function CvCard({ app, gender, required, onDone }) {
 }
 
 /* ───────────────────────── Chat ───────────────────────── */
+// How each written answer was produced (integrity signals, never scored): first keystroke → send,
+// pasted characters, times the page lost focus. Reset after every send.
+const freshSig = () => ({ first: 0, pasteChars: 0, paste: false, blur: 0, lastBlur: 0 });
 function Chat({ messages, typing, onSend, error, gender, disabled, options }) {
   const [text, setText] = useState("");
   const endRef = useRef(null);
   const taRef = useRef(null);
+  const sig = useRef(freshSig());
+  useEffect(() => {
+    const away = () => {
+      const now = Date.now();
+      if (now - sig.current.lastBlur > 1000) sig.current.blur += 1; // blur + visibilitychange fire together
+      sig.current.lastBlur = now;
+    };
+    const vis = () => { if (document.visibilityState === "hidden") away(); };
+    window.addEventListener("blur", away);
+    document.addEventListener("visibilitychange", vis);
+    return () => { window.removeEventListener("blur", away); document.removeEventListener("visibilitychange", vis); };
+  }, []);
   useEffect(() => {
     const reduce = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
     endRef.current?.scrollIntoView({ block: "end", behavior: reduce ? "auto" : "smooth" });
@@ -314,7 +371,11 @@ function Chat({ messages, typing, onSend, error, gender, disabled, options }) {
   const send = () => {
     const v = text.trim();
     if (!v || typing || disabled) return;
-    onSend(v, () => setText(""));
+    const s = sig.current;
+    onSend(v, () => setText(""), undefined, {
+      typing_ms: s.first ? Date.now() - s.first : 0, paste: s.paste, paste_chars: s.pasteChars, blur_count: s.blur, chars: v.length,
+    });
+    sig.current = freshSig();
     requestAnimationFrame(() => { if (taRef.current) taRef.current.style.height = "auto"; });
   };
   const onKey = (e) => {
@@ -355,7 +416,8 @@ function Chat({ messages, typing, onSend, error, gender, disabled, options }) {
           <textarea
             id="cr-msg" ref={taRef} rows={1} dir="auto" value={text} maxLength={1500}
             placeholder={g(gender, "اكتب/ي ردّك هنا…", "اكتب ردّك هنا…", "اكتبي ردّك هنا…")}
-            onChange={(e) => { setText(e.target.value); grow(); }} onKeyDown={onKey} disabled={disabled}
+            onChange={(e) => { if (!sig.current.first) sig.current.first = Date.now(); setText(e.target.value); grow(); }} onKeyDown={onKey} disabled={disabled}
+            onPaste={(e) => { const n = (e.clipboardData?.getData("text") || "").length; if (n) { sig.current.paste = true; sig.current.pasteChars += n; } }}
           />
           <button type="button" className="cr-send" onClick={send} disabled={!text.trim() || typing || disabled} aria-label="إرسال">
             <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M3.4 11.2 20 3.6c.8-.4 1.6.4 1.2 1.2l-7.6 16.6c-.4.8-1.5.7-1.8-.1l-2-5.7-5.7-2c-.8-.3-.9-1.4-.1-1.8l-.6-.6Z" fill="currentColor" /></svg>
@@ -364,6 +426,22 @@ function Chat({ messages, typing, onSend, error, gender, disabled, options }) {
         )}
       </div>
     </>
+  );
+}
+
+/* ───────────────────────── What next (every outcome) ───────────────────────── */
+function WhatNext({ kind, gender }) {
+  return (
+    <section className="cr-card cr-next" aria-labelledby="cr-next-h">
+      <h3 id="cr-next-h">ماذا بعد؟</h3>
+      <ul>
+        {kind === "booked" || kind === "book"
+          ? <li>في اللقاء القصير {g(gender, "نتعرّف عليك", "نتعرّف عليك", "نتعرّف عليكِ")} ونشرح تفاصيل العمل والراتب.</li>
+          : <li>إذا ناسب ملفك فرصة عندنا، {g(gender, "نتواصل معك", "نتواصل معك", "نتواصل معكِ")} على واتساب.</li>}
+        <li>المساعد الآلي يرتّب الطلبات فقط — <b>القرار النهائي يتخذه شخص من فريق التوظيف</b>.</li>
+        <li>بياناتك محفوظة 12 شهرًا ثم تُحذف. لطلب حذفها قبل ذلك راسلنا على واتساب <bdi dir="ltr">{ACADEMY_WA_DISPLAY}</bdi>.</li>
+      </ul>
+    </section>
   );
 }
 
@@ -457,6 +535,12 @@ function VoiceCard({ task, app, gender, onTasks }) {
         {task.done ? <span className="cr-badge">تم الإرسال</span> : null}
       </div>
       <p className="cr-voice-prompt" dir="auto">{task.prompt_ar}</p>
+      {task.lead_ar ? (
+        <figure className="cr-leadline">
+          <figcaption>العميل يقول:</figcaption>
+          <blockquote>«{task.lead_ar}»</blockquote>
+        </figure>
+      ) : null}
       <p className="cr-hint">المدة: من {task.min_s} إلى {task.max_s} ثانية{isEn ? " (بالإنجليزية)" : ""}.</p>
 
       {mode === "idle" && (
@@ -624,13 +708,13 @@ export default function CareersPage() {
     return undefined;
   }, [showOutcome]);
 
-  const startFlow = useCallback(async ({ basics, file, hp, elapsed_ms, turnstile_token }) => {
+  const startFlow = useCallback(async ({ basics, birth_year, consent, file, hp, elapsed_ms, turnstile_token }) => {
     setBusy(true); setError(""); setFieldError(""); setNotice("");
     const prev = loadSaved(role);
     const att = (() => { try { return getAttribution(); } catch { return {}; } })();
     const qs = new URLSearchParams(window.location.search);
     const body = {
-      role, turnstile_token, hp, elapsed_ms,
+      role, turnstile_token, hp, elapsed_ms, birth_year, consent,
       basics: { name: basics.name, phone: basics.phone, city: basics.city, country: basics.country, nationality: basics.nationality, gender: basics.gender, email: basics.email },
       source: {
         utm_source: att.utm_source || qs.get("utm_source") || "", utm_medium: att.utm_medium || qs.get("utm_medium") || "",
@@ -643,7 +727,7 @@ export default function CareersPage() {
     try {
       const res = await call("start", body);
       const a = { id: res.application_id, token: res.token, role, basics };
-      saveApp(role, { application_id: a.id, token: a.token, basics });
+      saveApp(role, { application_id: a.id, token: a.token, basics, birth_year });
       setApp(a);
       let hasCv = res.has_cv;
       if (file && !hasCv) {
@@ -669,9 +753,9 @@ export default function CareersPage() {
     if (TURNSTILE_SITEKEY || !s.basics) { setRole(role); requestAnimationFrame(() => formRef.current?.scrollIntoView({ behavior: "smooth" })); return; }
     setBusy(true); setError("");
     try {
-      const res = await call("start", { role, turnstile_token: null, hp: "", elapsed_ms: 60000, basics: s.basics, source: { landing: "/careers" }, resume: { application_id: s.application_id, token: s.token } });
+      const res = await call("start", { role, turnstile_token: null, hp: "", elapsed_ms: 60000, basics: s.basics, ...(s.birth_year ? { birth_year: s.birth_year } : {}), source: { landing: "/careers" }, resume: { application_id: s.application_id, token: s.token } });
       const a = { id: res.application_id, token: res.token, role, basics: s.basics };
-      saveApp(role, { application_id: a.id, token: a.token, basics: s.basics });
+      saveApp(role, { application_id: a.id, token: a.token, basics: s.basics, birth_year: s.birth_year });
       setApp(a);
       await enter(res, a);
     } catch (x) {
@@ -686,13 +770,13 @@ export default function CareersPage() {
   };
 
   /* chat */
-  const send = useCallback(async (text, clear, choice) => {
+  const send = useCallback(async (text, clear, choice, signals) => {
     setError("");
     setMessages((m) => [...m, { role: "applicant", content: text }]);
     clear();
     setTyping(true);
     try {
-      const res = await guard(() => call("message", { application_id: app.id, token: app.token, text, ...(choice ? { choice } : {}) }), role);
+      const res = await guard(() => call("message", { application_id: app.id, token: app.token, text, ...(choice ? { choice } : {}), ...(signals ? { signals } : {}) }), role);
       if (!res) return;
       setMessages((m) => [...m, { role: "bot", content: res.reply }]);
       setOptions(res.options || null);
@@ -792,7 +876,7 @@ export default function CareersPage() {
             <ol>
               <li><b>اختيار الوظيفة والبيانات</b><span>الاسم ورقم الواتساب والمدينة، والسيرة الذاتية للمدرّبين.</span></li>
               <li><b>محادثة قصيرة</b><span>أسئلة عن خبرتك مع مساعد التوظيف، بالكتابة.</span></li>
-              <li><b>تسجيل صوتي</b><span>تسجيل قصير بصوتك، نسمع فيه طريقة كلامك.</span></li>
+              <li><b>تسجيل صوتي</b><span>تسجيل قصير بصوتك، نسمع فيه طريقة كلامك. لمستشاري القبول: ردّ على عميل متردد كأنك في مكالمة.</span></li>
               <li><b>موعد لقاء</b><span>إذا ناسب ملفك الوظيفة، يظهر لك حجز موعد لقاء قصير مباشرة.</span></li>
             </ol>
             <p className="cr-how-total">كل الخطوات تاخذ حوالي 10 دقائق، وبياناتك تبقى سرّية.</p>
@@ -841,6 +925,7 @@ export default function CareersPage() {
                     <a className="cr-btn cr-btn-ghost" href="/">العودة للرئيسية</a>
                   </div>
                 )}
+            <WhatNext kind={booking ? "booked" : outcome.kind} gender={gender} />
             </div>
           )}
         </main>
