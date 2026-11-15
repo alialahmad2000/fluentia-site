@@ -20,15 +20,15 @@ const KEY = process.env.ELEVENLABS_API_KEY;
 if (!KEY) { console.error('ELEVENLABS_API_KEY missing'); process.exit(1); }
 const force = process.argv.includes('--force');
 
-// Premade voices on the account. There is no Indian-English voice, so
-// in_female falls back to a second American female (noted in SPEC.md).
+// Premade voices on the account, plus one Indian-English voice added from
+// the ElevenLabs voice library (2026-11-15).
 const VOICES = {
   us_male: 'iP95p4xoKVk53GoZ742B',   // Chris
   us_female: 'EXAVITQu4vr4xnSDxMaL', // Sarah
   uk_male: 'JBFqnCBsd6RMkjVDRZzb',   // George
   uk_female: 'Xb7hH8MSUJpSbSDYk0k2', // Alice
   au_male: 'IKne3meq5aSn9XLyUdCD',   // Charlie
-  in_female: 'XrExE9yKIg1WjnnlVkGX', // Matilda (fallback)
+  in_female: '90ipbRoKi4CpHXvKVtl0', // Anika (Indian English, library voice)
 };
 // Slower, steadier delivery for the lower levels.
 const settingsFor = (lvl) => ({ stability: 0.55, similarity_boost: 0.75, style: 0.1, use_speaker_boost: true, speed: lvl <= 1 ? 0.88 : lvl <= 3 ? 0.95 : 1.0 });
