@@ -27,7 +27,7 @@
  *
  * Run: npm run build  (wired as the postbuild half of the build script)
  */
-import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { mkdir, readFile, rm, writeFile } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
@@ -237,6 +237,44 @@ const unescapeStyles = (markup) =>
       .replace(/&#x27;/g, "'")
       .replace(/&amp;/g, "&")}</style>`);
 
+/** A route whose page component is lazy() would first paint its prerendered
+ *  markup with none of its own CSS, then restyle (and re-measure LCP) when the
+ *  chunk arrives. For these routes the chunk's CSS goes in the head as a real
+ *  stylesheet and its JS as a modulepreload. Vite's preload helper finds the
+ *  same <link> already present and does not add it twice. */
+// Route → the lazy chunk's name (the imported file's basename). Vite keys some
+// dynamic entries by source path and some by "_<name>-<hash>.js", so match by name.
+const ROUTE_CHUNKS = {
+  "/level-test": "LevelTestV2",
+};
+// Kept in dist-ssr (never deployed) so a bare `npm run prerender` re-run still has it.
+const manifestSaved = join(ROOT, "dist-ssr", "client-manifest.json");
+if (existsSync(join(DIST, ".vite", "manifest.json"))) {
+  await writeFile(manifestSaved, await readFile(join(DIST, ".vite", "manifest.json"), "utf8"), "utf8");
+}
+const manifest = existsSync(manifestSaved) ? JSON.parse(await readFile(manifestSaved, "utf8")) : null;
+function chunkHead(html, path) {
+  const name = ROUTE_CHUNKS[path];
+  if (!name) return html;
+  const key = Object.keys(manifest || {}).find((k) => manifest[k].isDynamicEntry && manifest[k].name === name);
+  if (!key) throw new Error(`no lazy chunk named ${name} for ${path} in the build manifest — renamed, or no longer lazy?`);
+  const css = new Set(), js = new Set(), seen = new Set();
+  (function walk(k) {
+    if (seen.has(k) || !manifest[k]) return;
+    seen.add(k);
+    const c = manifest[k];
+    if (c.isEntry) return; // main / tour are already in the page
+    js.add(`/${c.file}`);
+    (c.css || []).forEach((f) => css.add(`/${f}`));
+    (c.imports || []).forEach(walk);
+  })(key);
+  const tags = [
+    ...[...css].filter((h) => !html.includes(`href="${h}"`)).map((h) => `<link rel="stylesheet" crossorigin href="${h}">`),
+    ...[...js].filter((h) => !html.includes(`href="${h}"`)).map((h) => `<link rel="modulepreload" crossorigin href="${h}">`),
+  ];
+  return tags.length ? html.replace("</head>", `    ${tags.join("\n    ")}\n  </head>`) : html;
+}
+
 /** Render the route and put its markup + Helmet JSON-LD into the page. */
 async function withBody(html, path) {
   const { html: rawBody, helmet } = await render(path);
@@ -260,10 +298,11 @@ let written = 0;
 for (const seo of targets) {
   const file = outFile(seo.path);
   await mkdir(dirname(file), { recursive: true });
-  const page = await withBody(inject(template, seo), seo.path);
+  const page = chunkHead(await withBody(inject(template, seo), seo.path), seo.path);
   await writeFile(file, page, "utf8");
   written += 1;
   console.log(`  ✓ ${seo.path.padEnd(28)} → ${file.replace(`${ROOT}/`, "")}  (${Math.round(page.length / 1024)} kB)`);
 }
 
+await rm(join(DIST, ".vite"), { recursive: true, force: true });
 console.log(`prerender-meta: ${written} route${written === 1 ? "" : "s"} written`);

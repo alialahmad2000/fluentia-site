@@ -124,10 +124,29 @@
       gtag('js', new Date());
       gtag('config', 'G-19G2SJ1WYL');
       gtag('config', 'AW-9314838750');
-      window.__afterLoad = function (fn) {
-        if (document.readyState === 'complete') setTimeout(fn, 0);
-        else window.addEventListener('load', function () { setTimeout(fn, 0); }, { once: true });
-      };
+      // On the level test the tags wait one step longer: until the visitor first
+      // touches, scrolls or types (every test step starts with a tap), or 7 s after
+      // load at the latest. Their ~350 KB of script would otherwise run while the
+      // first question is becoming tappable. Queued calls are sent unchanged.
+      window.__afterLoad = (function () {
+        var lazy = /^\/(level-test|test)(\/|$)/.test(location.pathname);
+        var queue = [], ready = false;
+        function go() {
+          if (ready) return;
+          ready = true;
+          ['pointerdown', 'keydown', 'scroll', 'touchstart'].forEach(function (t) { removeEventListener(t, go, true); });
+          queue.forEach(function (fn) { setTimeout(fn, 0); });
+          queue = [];
+        }
+        function onLoad() {
+          if (!lazy) return go();
+          ['pointerdown', 'keydown', 'scroll', 'touchstart'].forEach(function (t) { addEventListener(t, go, { capture: true, passive: true }); });
+          setTimeout(go, 7000);
+        }
+        if (document.readyState === 'complete') onLoad();
+        else addEventListener('load', onLoad, { once: true });
+        return function (fn) { if (ready) setTimeout(fn, 0); else queue.push(fn); };
+      })();
       window.__afterLoad(function () {
         var s = document.createElement('script');
         s.async = true;

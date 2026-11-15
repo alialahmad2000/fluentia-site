@@ -131,7 +131,7 @@ export default function LevelTestV2() {
         </section>
 
         <section className="lt2-wrap lt2-wide lt2-section" aria-labelledby="lt2-levels">
-          <h2 id="lt2-levels" className="lt2-h2">المستويات من ما قبل A1 إلى C1</h2>
+          <h2 id="lt2-levels" className="lt2-h2">المستويات من ما قبل <span className="lt2-h2-code">A1</span> <span className="lt2-nowrap">إلى <span className="lt2-h2-code">C1</span></span></h2>
           <ul className="lt2-levels">
             {LEVEL_DESCRIPTORS.map(([code, , d]) => (
               <li key={code}>

@@ -26,6 +26,10 @@ function tourEntryInDev() {
 export default defineConfig({
   plugins: [react(), tailwindcss(), tourEntryInDev()],
   build: {
+    // dist/.vite/manifest.json: scripts/prerender-meta.mjs reads it to put a
+    // prerendered route's lazy chunk (its CSS + JS) in that page's <head>, then
+    // deletes it so it is never deployed.
+    manifest: true,
     rollupOptions: {
       input: {
         main: root('./index.html'),
