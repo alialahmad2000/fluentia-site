@@ -80,7 +80,12 @@
   background: radial-gradient(60% 55% at 50% 100%, rgba(255, 138, 76, 0.22), rgba(255, 181, 71, 0.07) 55%, transparent 75%);
 }
 .lt2-h1 { font-family: var(--ar-display); font-weight: 800; font-size: clamp(30px, 8.4vw, 50px); line-height: 1.32; margin: 10px 0 12px; letter-spacing: 0; text-wrap: balance; }
-.lt2-lede { color: var(--text-2); font-size: 17.5px; margin: 0 0 22px; max-width: 36ch; }
+/* The hero text is wider in its web fonts than in the fallback, so it can gain a
+   line when the fonts arrive and push the CTA down. Reserve the final height:
+   the lede is always 3 lines (the width is in em, not ch: ch is the width of "0"
+   in whichever font is showing, so the box itself changed on the swap). */
+.lt2-lede { color: var(--text-2); font-size: 17.5px; margin: 0 0 22px; max-width: 21.8em; min-height: 5.1em; min-height: 3lh; }
+@media (max-width: 340px) { .lt2-h1 { min-height: 3.96em; min-height: 3lh; } }
 .lt2-trust { list-style: none; display: flex; flex-wrap: wrap; gap: 8px 18px; padding: 0; margin: 18px 0 0; color: var(--text-2); font-size: 15px; }
 .lt2-trust li { display: inline-flex; align-items: center; gap: 8px; }
 .lt2-trust li::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--dawn-400); box-shadow: 0 0 10px rgba(255, 181, 71, 0.8); }
@@ -89,7 +94,7 @@
 .lt2-hero-grid { display: grid; gap: 28px; align-items: center; }
 @media (min-width: 900px) {
   .lt2-hero-grid { grid-template-columns: 1.1fr 0.9fr; gap: 56px; padding-block: 36px 24px; }
-  .lt2-h1 { font-size: 54px; }
+  .lt2-h1 { font-size: 54px; min-height: 3.96em; min-height: 3lh; }
 }
 
 /* ── The sun meter card ──────────────────────────────────────────────────── */

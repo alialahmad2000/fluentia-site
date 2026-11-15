@@ -68,8 +68,18 @@ export default function CookieBanner() {
   useEffect(() => {
     const existing = readConsent();
     if (existing) return; // user already chose
-    const t = setTimeout(() => setVisible(true), 1000);
-    return () => clearTimeout(t);
+    // Show it with its own fonts already loaded: a fixed banner whose text
+    // reflows when Tajawal arrives counts as a layout shift (it was the
+    // largest one on the level test). Capped, so a slow font never hides it.
+    let alive = true;
+    const t = setTimeout(() => {
+      const sample = 'ملفات الارتباط Cookies';
+      const fonts = document.fonts && document.fonts.load
+        ? Promise.all(['400', '700', '800'].map((w) => document.fonts.load(`${w} 15px Tajawal`, sample))).catch(() => {})
+        : Promise.resolve();
+      Promise.race([fonts, new Promise((r) => setTimeout(r, 2500))]).then(() => { if (alive) setVisible(true); });
+    }, 1000);
+    return () => { alive = false; clearTimeout(t); };
   }, []);
 
   // «إعدادات ملفات تعريف الارتباط» (on /privacy): change a choice already made.
