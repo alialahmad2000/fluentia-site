@@ -321,3 +321,15 @@
 .cr-next h3{font-weight:700;font-size:1.05rem}
 .cr-next ul{margin:8px 0 0;padding-inline-start:18px;display:grid;gap:6px;color:var(--ink-2);font-size:.92rem;line-height:1.85}
 .cr-next b{color:var(--ink);font-weight:600}
+/* 2026-11-15 voice step: «الأهم» badge, key note, role-play countdown, date-of-birth selects */
+.cr-key{font-style:normal;margin-inline-start:6px;padding:1px 7px;border-radius:999px;background:var(--dawn-400);color:var(--ink);font-size:.7rem;font-weight:700;vertical-align:1px}
+.cr-keynote{display:flex;gap:10px;align-items:flex-start;margin:0;padding:14px 16px;border-radius:16px;background:var(--me);border-inline-start:3px solid var(--dawn-400);color:var(--ink);line-height:1.85}
+.cr-keynote b{flex:none;padding:1px 9px;border-radius:999px;background:var(--dawn-400);font-size:.78rem;line-height:1.9}
+.cr-scenario{border-inline-start-color:var(--dawn-400)}
+.cr-countdown{align-items:center;text-align:center}
+.cr-count{font-family:var(--display);font-size:3.2rem;font-weight:800;line-height:1.1;color:var(--accent-text);font-variant-numeric:tabular-nums}
+.cr-dob{border:0;padding:0;margin:0;min-width:0}
+.cr-dob legend{margin-block-end:8px}
+.cr-dob-row{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.4fr) minmax(0,1fr);gap:8px}
+.cr-dob-row select{width:100%;min-width:0;min-height:52px;padding:12px 10px;border-radius:14px;border:1px solid var(--line-2);background:var(--field);color:var(--ink);font:inherit;font-size:16px;text-align:start;appearance:auto}
+.cr-dob-row select[aria-invalid="true"]{border-color:var(--ember)}

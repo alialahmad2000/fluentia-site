@@ -16,7 +16,7 @@ const TARGET_RATE = 16000;
 /**
  * Start recording. Must be called from a user gesture.
  * @param {{ onLevel?: (level: number) => void, maxMs?: number, onAutoStop?: () => void }} opts
- * @returns {Promise<{ stop: () => Promise<{ blob: Blob, seconds: number }>, cancel: () => void }>}
+ * @returns {Promise<{ stop: () => Promise<{ blob: Blob, seconds: number }>, restart: () => void, cancel: () => void }>}
  */
 export async function startWavRecording({ onLevel, maxMs = 15000, onAutoStop } = {}) {
   const Ctx = window.AudioContext || window.webkitAudioContext;
@@ -65,7 +65,7 @@ export async function startWavRecording({ onLevel, maxMs = 15000, onAutoStop } =
   };
   raf = requestAnimationFrame(tick);
 
-  const startedAt = performance.now();
+  let startedAt = performance.now();
   let finished = false;
   const teardown = () => {
     cancelAnimationFrame(raf);
@@ -88,6 +88,16 @@ export async function startWavRecording({ onLevel, maxMs = 15000, onAutoStop } =
       let o = 0;
       for (const c of chunks) { merged.set(c, o); o += c.length; }
       return { blob: encodeWav(downsample(merged, rate, TARGET_RATE), TARGET_RATE), seconds };
+    },
+    /** Drop everything captured so far and start the clock again (mic stays open). Used after a countdown:
+     *  the mic must be opened inside the tap on iOS, but the take only starts when the countdown ends. */
+    restart() {
+      if (finished) return;
+      chunks.length = 0;
+      samples = 0;
+      startedAt = performance.now();
+      clearTimeout(autoTimer);
+      autoTimer = setTimeout(() => onAutoStop?.(), maxMs);
     },
     cancel() {
       if (finished) return;

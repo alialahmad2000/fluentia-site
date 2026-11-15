@@ -26,7 +26,7 @@ const ROLES = {
     title: "مستشار/ة قبول",
     short: "مستشار القبول",
     line: "مكالمات مع المهتمين بتعلم الإنجليزي، تعرّف على أهدافهم، وتسجيلهم في البرنامج المناسب — عن بُعد.",
-    meta: ["دوام مسائي من 4 إلى 10، السبت إلى الخميس", "السيرة الذاتية اختيارية", "تسجيل صوتي قصير بالعربي"],
+    meta: ["دوام مسائي من 4 إلى 10، السبت إلى الخميس", "السيرة الذاتية اختيارية", "تسجيلات صوتية قصيرة بالعربي — أهم خطوة"],
     cvRequired: false,
   },
   trainer: {
@@ -54,17 +54,40 @@ const STEPS = ["بياناتك", "المحادثة", "التسجيل", "النت
 // PDPL consent (2026-11-15). Bump the version whenever the wording below changes.
 const CONSENT_VERSION = "careers-2026-11";
 const ACADEMY_WA_DISPLAY = "+966 55 866 9974";
-const MIN_BIRTH = 1960;
-const maxBirthYear = () => new Date().getFullYear() - 18;
-const ageFrom = (y) => (y ? new Date().getFullYear() - Number(y) : null);
+const MIN_BIRTH = 1956;
+// up to 15 years back: the under-18 rule is the server's (it answers politely), the form only blocks typos
+const maxBirthYear = () => new Date().getFullYear() - 15;
+const MONTHS_AR = ["يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو", "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"];
+const pad2 = (n) => String(n).padStart(2, "0");
+/** "YYYY-MM-DD" from three selects, or null when incomplete / not a real date (31 Feb). */
+function dobOf({ d, m, y }) {
+  if (!d || !m || !y) return null;
+  const dt = new Date(Date.UTC(Number(y), Number(m) - 1, Number(d)));
+  if (dt.getUTCMonth() !== Number(m) - 1) return null;
+  return `${y}-${pad2(m)}-${pad2(d)}`;
+}
+function ageFromDob(iso) {
+  if (!iso) return null;
+  const [y, m, d] = iso.split("-").map(Number);
+  const now = new Date();
+  let a = now.getFullYear() - y;
+  if (now.getMonth() + 1 < m || (now.getMonth() + 1 === m && now.getDate() < d)) a -= 1;
+  return a;
+}
+const splitDob = (iso) => {
+  const [y, m, d] = String(iso || "").split("-");
+  return { y: y || "", m: m ? String(Number(m)) : "", d: d ? String(Number(d)) : "" };
+};
 const STEP_OF = { landing: 0, chat: 1, voice: 2, finishing: 3, outcome: 3 };
 const RISE_OF = { landing: 0, chat: 0.2, voice: 0.45, finishing: 0.7, outcome: 1 };
-function Steps({ stage }) {
+function Steps({ stage, keyVoice }) {
   const at = STEP_OF[stage] ?? 0;
   return (
-    <ol className="cr-steps" aria-label="مراحل التقديم">
+    <ol className="cr-steps" aria-label="الخطوات">
       {STEPS.map((l, i) => (
-        <li key={l} className={i < at ? "done" : i === at ? "now" : ""} aria-current={i === at ? "step" : undefined}><span>{l}</span></li>
+        <li key={l} className={i < at ? "done" : i === at ? "now" : ""} aria-current={i === at ? "step" : undefined}>
+          <span>{l}{keyVoice && i === 2 ? <em className="cr-key">الأهم</em> : null}</span>
+        </li>
       ))}
     </ol>
   );
@@ -161,7 +184,7 @@ function ApplyForm({ role, saved, onSubmit, busy, error, fieldError }) {
     country: saved?.basics?.country || "السعودية", nationality: saved?.basics?.nationality || "",
     gender: saved?.basics?.gender || "", email: saved?.basics?.email || "",
   }));
-  const [birth, setBirth] = useState(() => (saved?.birth_year ? String(saved.birth_year) : ""));
+  const [dob, setDob] = useState(() => splitDob(saved?.birth_date));
   const [agree, setAgree] = useState(false);
   const [file, setFile] = useState(null);
   const [fileErr, setFileErr] = useState("");
@@ -196,7 +219,7 @@ function ApplyForm({ role, saved, onSubmit, busy, error, fieldError }) {
     if (!f.nationality.trim()) x.nationality = "الجنسية مطلوبة";
     if (!f.gender) x.gender = "نحتاجه عشان نخاطبك بالشكل الصحيح";
     if (f.email.trim() && !/^\S+@\S+\.\S+$/.test(f.email.trim())) x.email = "البريد الإلكتروني غير صحيح";
-    if (!birth) x.birth_year = g(gd, "اختر/ي سنة ميلادك", "اختر سنة ميلادك", "اختاري سنة ميلادك");
+    if (!dobOf(dob)) x.birth_date = dob.d && dob.m && dob.y ? "التاريخ غير صحيح، نرجو مراجعته" : g(gd, "اختر/ي يوم وشهر وسنة ميلادك", "اختر يوم وشهر وسنة ميلادك", "اختاري يوم وشهر وسنة ميلادك");
     if (!agree) x.consent = "نحتاج موافقتك على شروط التقديم للمتابعة";
     if (r.cvRequired && !file) x.cv = g(gd, "ارفق/ي سيرتك الذاتية", "ارفق سيرتك الذاتية", "أرفقي سيرتك الذاتية");
     if (TURNSTILE_SITEKEY && !token) x.captcha = "أكّد أنك لست روبوت";
@@ -207,7 +230,7 @@ function ApplyForm({ role, saved, onSubmit, busy, error, fieldError }) {
     }
     onSubmit({
       basics: { ...f, name: f.name.trim(), phone: toAscii(f.phone).trim(), city: f.city.trim(), country: f.country.trim(), nationality: f.nationality.trim(), email: f.email.trim() },
-      birth_year: Number(birth), consent: { accepted: true, version: CONSENT_VERSION },
+      birth_date: dobOf(dob), consent: { accepted: true, version: CONSENT_VERSION },
       file, hp, elapsed_ms: Date.now() - shownAt.current, turnstile_token: TURNSTILE_SITEKEY ? token : null,
     });
   };
@@ -232,7 +255,7 @@ function ApplyForm({ role, saved, onSubmit, busy, error, fieldError }) {
         <ol>
           <li><b>بياناتك</b><span>دقيقة</span></li>
           <li><b>محادثة كتابية</b><span>5 إلى 7 دقائق</span></li>
-          <li><b>{role === "sales" ? "مكالمتان تمثيليتان بصوتك" : "تسجيلان صوتيان"}</b><span>دقيقتان</span></li>
+          <li><b>{role === "sales" ? <>ثلاث تسجيلات صوتية <em className="cr-key">الأهم</em></> : "تسجيلان صوتيان"}</b><span>{role === "sales" ? "3 دقائق" : "دقيقتان"}</span></li>
           <li><b>النتيجة</b><span>فورًا بعد الإرسال</span></li>
         </ol>
       </div>
@@ -245,16 +268,25 @@ function ApplyForm({ role, saved, onSubmit, busy, error, fieldError }) {
       </div>
       {field("nationality", "الجنسية", { enterKeyHint: "next" })}
 
-      <div className="cr-field">
-        <label htmlFor="cr-birth_year">سنة الميلاد</label>
-        <select id="cr-birth_year" value={birth} dir="ltr" onChange={(e) => { setBirth(e.target.value); setErrs((p) => ({ ...p, birth_year: "" })); }}
-          aria-invalid={errs.birth_year ? "true" : "false"} aria-describedby={errs.birth_year ? "cr-birth_year-e" : "cr-birth_year-h"}>
-          <option value="">اختيار السنة</option>
-          {Array.from({ length: maxBirthYear() - MIN_BIRTH + 1 }, (_, i) => maxBirthYear() - i).map((y) => <option key={y} value={y}>{y}</option>)}
-        </select>
-        <p className="cr-hint" id="cr-birth_year-h">{birth ? <>العمر: <b>{ageFrom(birth)} سنة</b></> : "بالتاريخ الميلادي، مثال: 1998."}</p>
-        {errs.birth_year ? <p className="cr-err" id="cr-birth_year-e" role="alert">{errs.birth_year}</p> : null}
-      </div>
+      <fieldset className="cr-field cr-dob" aria-describedby={errs.birth_date ? "cr-birth_date-e" : "cr-birth_date-h"}>
+        <legend>تاريخ الميلاد</legend>
+        <div className="cr-dob-row">
+          {[
+            ["d", "اليوم", Array.from({ length: 31 }, (_, i) => [String(i + 1), String(i + 1)])],
+            ["m", "الشهر", MONTHS_AR.map((n, i) => [String(i + 1), `${i + 1} · ${n}`])],
+            ["y", "السنة", Array.from({ length: maxBirthYear() - MIN_BIRTH + 1 }, (_, i) => String(maxBirthYear() - i)).map((y) => [y, y])],
+          ].map(([k, label, opts]) => (
+            <select key={k} id={`cr-dob-${k}`} aria-label={label} value={dob[k]} dir="auto"
+              aria-invalid={errs.birth_date ? "true" : "false"}
+              onChange={(e) => { const v = e.target.value; setDob((p) => ({ ...p, [k]: v })); setErrs((p) => ({ ...p, birth_date: "" })); }}>
+              <option value="">{label}</option>
+              {opts.map(([v, l]) => <option key={v} value={v}>{l}</option>)}
+            </select>
+          ))}
+        </div>
+        <p className="cr-hint" id="cr-birth_date-h">{dobOf(dob) ? <>العمر: <b>{ageFromDob(dobOf(dob))} سنة</b></> : "بالتاريخ الميلادي."}</p>
+        {errs.birth_date ? <p className="cr-err" id="cr-birth_date-e" role="alert">{errs.birth_date}</p> : null}
+      </fieldset>
 
       <fieldset className="cr-field cr-gender" aria-describedby={errs.gender ? "cr-gender-e" : undefined}>
         <legend>الجنس</legend>
@@ -449,16 +481,24 @@ function WhatNext({ kind, gender }) {
 const fmt = (s) => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, "0")}`;
 
 function VoiceCard({ task, app, gender, onTasks }) {
-  const [mode, setMode] = useState("idle"); // idle | recording | recorded | uploading
+  const [mode, setMode] = useState("idle"); // idle | opening | countdown | recording | recorded | uploading
   const [elapsed, setElapsed] = useState(0);
   const [rec, setRec] = useState(null); // { blob, seconds, url, mime, ext }
   const [err, setErr] = useState("");
+  const [note, setNote] = useState(""); // server asked for a re-take (too short / unclear)
   const [noMic, setNoMic] = useState(false);
+  const [scenario, setScenario] = useState(""); // role-play situation, revealed only after «ابدأ التسجيل»
+  const [count, setCount] = useState(0);
+  const [tries, setTries] = useState(task.attempts || 0);
   const recorder = useRef(null);
   const timer = useRef(null);
+  const cd = useRef(null);
   const startedAt = useRef(0);
+  const isRp = !!task.scenario;
+  const maxTries = task.max_attempts || 2;
 
-  useEffect(() => () => { clearInterval(timer.current); recorder.current?.cancel(); }, []);
+  useEffect(() => { setTries((t) => Math.max(t, task.attempts || 0)); }, [task.attempts]);
+  useEffect(() => () => { clearInterval(timer.current); clearInterval(cd.current); recorder.current?.cancel(); }, []);
   useEffect(() => () => { if (rec?.url) URL.revokeObjectURL(rec.url); }, [rec]);
 
   const finishRecording = useCallback(async () => {
@@ -473,28 +513,58 @@ function VoiceCard({ task, app, gender, onTasks }) {
     } catch { setErr("ما قدرنا نحفظ التسجيل. نرجو المحاولة مرة ثانية."); setMode("idle"); }
   }, []);
 
+  const beginClock = () => {
+    startedAt.current = performance.now();
+    setElapsed(0);
+    setMode("recording");
+    timer.current = setInterval(() => setElapsed((performance.now() - startedAt.current) / 1000), 200);
+  };
+
+  const micError = (x) => {
+    setNoMic(true);
+    setErr(x?.name === "NotAllowedError" || x?.name === "SecurityError"
+      ? "ما قدرنا نوصل للمايك. يمكن السماح له من إعدادات المتصفح، أو رفع ملف صوتي بدلًا منه."
+      : "التسجيل غير متاح في هذا المتصفح. يمكن رفع ملف صوتي بدلًا منه.");
+  };
+
   const start = async () => {
-    setErr("");
+    setErr(""); setNote("");
+    // the mic is opened first, inside the tap (iOS needs that) — so a blocked mic never costs an attempt
+    let r;
     try {
-      const r = await startWavRecording({ maxMs: task.max_s * 1000, onAutoStop: () => finishRecording() });
-      recorder.current = r;
-      startedAt.current = performance.now();
-      setElapsed(0);
-      setMode("recording");
-      timer.current = setInterval(() => setElapsed((performance.now() - startedAt.current) / 1000), 200);
+      r = await startWavRecording({ maxMs: task.max_s * 1000, onAutoStop: () => finishRecording() });
+    } catch (x) { micError(x); return; }
+    if (!isRp) { recorder.current = r; beginClock(); return; }
+    setMode("opening");
+    let res;
+    try {
+      res = await call("voice_begin", { application_id: app.id, token: app.token, kind: task.kind });
     } catch (x) {
-      setNoMic(true);
-      setErr(x?.name === "NotAllowedError" || x?.name === "SecurityError"
-        ? "ما قدرنا نوصل للمايك. يمكن السماح له من إعدادات المتصفح، أو رفع ملف صوتي بدلًا منه."
-        : "التسجيل غير متاح في هذا المتصفح. يمكن رفع ملف صوتي بدلًا منه.");
+      r.cancel(); setMode("idle");
+      if (x instanceof ApiError && x.code === "AUTH") onTasks(null, x);
+      else setErr(x.messageAr || "صار خلل. نرجو المحاولة مرة ثانية.");
+      return;
     }
+    recorder.current = r;
+    setScenario(res.scenario_ar || "");
+    setTries(res.attempts || tries + 1);
+    let n = res.countdown_s || 3;
+    setCount(n); setMode("countdown");
+    cd.current = setInterval(() => {
+      n -= 1;
+      if (n > 0) { setCount(n); return; }
+      clearInterval(cd.current);
+      if (!recorder.current) return;
+      recorder.current.restart(); // the take starts now; the countdown seconds are dropped
+      beginClock();
+    }, 1000);
   };
 
   const pickAudio = (e) => {
     const file = e.target.files?.[0];
     e.target.value = "";
     if (!file) return;
-    setErr("");
+    setErr(""); setNote("");
     const mime = (file.type || "").split(";")[0].toLowerCase();
     const ext = AUDIO_MIME_EXT[mime] || extOf(file.name);
     if (!["wav", "webm", "mp4", "m4a", "mp3", "ogg", "aac"].includes(ext)) { setErr("صيغة الملف الصوتي غير مدعومة."); return; }
@@ -511,15 +581,20 @@ function VoiceCard({ task, app, gender, onTasks }) {
     a.src = url;
   };
 
+  const left = Math.max(0, maxTries - tries);
+  // a role-play re-take means a fresh reveal + countdown, so it is only offered while attempts remain
+  const canRedo = !isRp || left > 0;
   const redo = () => { setRec(null); setMode("idle"); setErr(""); };
-  const tooShort = rec && rec.seconds < task.min_s;
+  // on the last role-play attempt a short take is still sent (nothing else is left to send)
+  const tooShort = !!rec && rec.seconds < task.min_s && canRedo;
 
   const submit = async () => {
     if (!rec || tooShort) return;
-    setMode("uploading"); setErr("");
+    setMode("uploading"); setErr(""); setNote("");
     try {
       const res = await uploadAndAttach(app, { kind: task.kind, blob: rec.blob, mime: rec.mime, ext: rec.ext, seconds: Math.min(rec.seconds, task.max_s) });
-      setRec(null); setMode("idle");
+      setRec(null); setMode("idle"); setScenario("");
+      if (res.retry) { setNote(res.message_ar || ""); if (res.attempts != null) setTries(res.attempts); }
       onTasks(res.voice_tasks);
     } catch (x) {
       setMode("recorded");
@@ -528,6 +603,11 @@ function VoiceCard({ task, app, gender, onTasks }) {
   };
 
   const isEn = task.kind === "voice_en";
+  const startLabel = task.done
+    ? g(gender, "أعد/ي التسجيل", "أعد التسجيل", "أعيدي التسجيل")
+    : tries > 0 && isRp ? g(gender, "سجّل/ي مرة ثانية", "سجّل مرة ثانية", "سجّلي مرة ثانية")
+      : g(gender, "ابدأ/ي التسجيل", "ابدأ التسجيل", "ابدئي التسجيل");
+  const showStart = !noMic && (!isRp || (task.done ? task.can_retry && left > 0 : left > 0));
   return (
     <section className={`cr-card cr-voice${task.done && mode === "idle" ? " done" : ""}`} aria-labelledby={`cr-v-${task.kind}`}>
       <div className="cr-voice-head">
@@ -541,19 +621,41 @@ function VoiceCard({ task, app, gender, onTasks }) {
           <blockquote>«{task.lead_ar}»</blockquote>
         </figure>
       ) : null}
-      <p className="cr-hint">المدة: من {task.min_s} إلى {task.max_s} ثانية{isEn ? " (بالإنجليزية)" : ""}.</p>
+      {isRp && scenario && mode !== "idle" ? (
+        <figure className="cr-leadline cr-scenario" aria-live="polite">
+          <figcaption>الموقف:</figcaption>
+          <blockquote dir="auto">{scenario}</blockquote>
+        </figure>
+      ) : null}
+      <p className="cr-hint">
+        المدة: من {task.min_s} إلى {task.max_s} ثانية{isEn ? " (بالإنجليزية)" : ""}.
+        {isRp ? <> المحاولات: <b>{Math.min(tries, maxTries)} من {maxTries}</b>.</> : null}
+      </p>
+      {note ? <p className="cr-err cr-err-box" role="alert">{note}</p> : null}
 
       {mode === "idle" && (
         <div className="cr-voice-actions">
-          {!noMic && (
+          {showStart ? (
             <button type="button" className="cr-btn cr-btn-primary" onClick={start}>
-              <span className="cr-dot" aria-hidden="true" /> {task.done ? g(gender, "أعد/ي التسجيل", "أعد التسجيل", "أعيدي التسجيل") : g(gender, "ابدأ/ي التسجيل", "ابدأ التسجيل", "ابدئي التسجيل")}
+              <span className="cr-dot" aria-hidden="true" /> {startLabel}
             </button>
+          ) : null}
+          {isRp && !noMic && !showStart && !task.done ? <p className="cr-hint">انتهت المحاولات لهذا التسجيل.</p> : null}
+          {(!isRp || noMic) && (
+            <label className="cr-btn cr-btn-ghost cr-filebtn">
+              {noMic ? "رفع ملف صوتي" : "أو رفع ملف صوتي"}
+              <input type="file" accept="audio/*" onChange={pickAudio} />
+            </label>
           )}
-          <label className="cr-btn cr-btn-ghost cr-filebtn">
-            {noMic ? "رفع ملف صوتي" : "أو رفع ملف صوتي"}
-            <input type="file" accept="audio/*" onChange={pickAudio} />
-          </label>
+        </div>
+      )}
+
+      {mode === "opening" && <p className="cr-hint" role="status">لحظات…</p>}
+
+      {mode === "countdown" && (
+        <div className="cr-voice-rec cr-countdown" role="timer" aria-live="assertive">
+          <b className="cr-count">{count}</b>
+          <p className="cr-hint">{g(gender, "اقرأ/ي الموقف — التسجيل يبدأ بعد العدّ.", "اقرأ الموقف — التسجيل يبدأ بعد العدّ.", "اقرئي الموقف — التسجيل يبدأ بعد العدّ.")}</p>
         </div>
       )}
 
@@ -576,8 +678,13 @@ function VoiceCard({ task, app, gender, onTasks }) {
           {tooShort ? <p className="cr-err" role="alert">التسجيل أقصر من {task.min_s} ثانية. {g(gender, "أعد/ي", "أعد", "أعيدي")} المحاولة.</p> : null}
           <div className="cr-voice-actions">
             <button type="button" className="cr-btn cr-btn-primary" onClick={submit} disabled={tooShort || mode === "uploading"}>{mode === "uploading" ? "جاري الرفع…" : "اعتمد هذا التسجيل"}</button>
-            <button type="button" className="cr-btn cr-btn-ghost" onClick={redo} disabled={mode === "uploading"}>إعادة التسجيل</button>
+            {canRedo ? (
+              <button type="button" className="cr-btn cr-btn-ghost" onClick={redo} disabled={mode === "uploading"}>
+                {isRp ? `${g(gender, "سجّل/ي مرة ثانية", "سجّل مرة ثانية", "سجّلي مرة ثانية")} (${left === 1 ? "آخر محاولة" : `باقي ${left}`})` : "إعادة التسجيل"}
+              </button>
+            ) : null}
           </div>
+          {isRp && !canRedo ? <p className="cr-hint">هذه آخر محاولة — نعتمد هذا التسجيل.</p> : null}
         </div>
       )}
       {err ? <p className="cr-err" role="alert">{err}</p> : null}
@@ -708,13 +815,13 @@ export default function CareersPage() {
     return undefined;
   }, [showOutcome]);
 
-  const startFlow = useCallback(async ({ basics, birth_year, consent, file, hp, elapsed_ms, turnstile_token }) => {
+  const startFlow = useCallback(async ({ basics, birth_date, consent, file, hp, elapsed_ms, turnstile_token }) => {
     setBusy(true); setError(""); setFieldError(""); setNotice("");
     const prev = loadSaved(role);
     const att = (() => { try { return getAttribution(); } catch { return {}; } })();
     const qs = new URLSearchParams(window.location.search);
     const body = {
-      role, turnstile_token, hp, elapsed_ms, birth_year, consent,
+      role, turnstile_token, hp, elapsed_ms, birth_date, consent,
       basics: { name: basics.name, phone: basics.phone, city: basics.city, country: basics.country, nationality: basics.nationality, gender: basics.gender, email: basics.email },
       source: {
         utm_source: att.utm_source || qs.get("utm_source") || "", utm_medium: att.utm_medium || qs.get("utm_medium") || "",
@@ -727,7 +834,7 @@ export default function CareersPage() {
     try {
       const res = await call("start", body);
       const a = { id: res.application_id, token: res.token, role, basics };
-      saveApp(role, { application_id: a.id, token: a.token, basics, birth_year });
+      saveApp(role, { application_id: a.id, token: a.token, basics, birth_date });
       setApp(a);
       let hasCv = res.has_cv;
       if (file && !hasCv) {
@@ -753,9 +860,9 @@ export default function CareersPage() {
     if (TURNSTILE_SITEKEY || !s.basics) { setRole(role); requestAnimationFrame(() => formRef.current?.scrollIntoView({ behavior: "smooth" })); return; }
     setBusy(true); setError("");
     try {
-      const res = await call("start", { role, turnstile_token: null, hp: "", elapsed_ms: 60000, basics: s.basics, ...(s.birth_year ? { birth_year: s.birth_year } : {}), source: { landing: "/careers" }, resume: { application_id: s.application_id, token: s.token } });
+      const res = await call("start", { role, turnstile_token: null, hp: "", elapsed_ms: 60000, basics: s.basics, ...(s.birth_date ? { birth_date: s.birth_date } : s.birth_year ? { birth_year: s.birth_year } : {}), source: { landing: "/careers" }, resume: { application_id: s.application_id, token: s.token } });
       const a = { id: res.application_id, token: res.token, role, basics: s.basics };
-      saveApp(role, { application_id: a.id, token: a.token, basics: s.basics, birth_year: s.birth_year });
+      saveApp(role, { application_id: a.id, token: a.token, basics: s.basics, birth_date: s.birth_date, birth_year: s.birth_year });
       setApp(a);
       await enter(res, a);
     } catch (x) {
@@ -794,6 +901,7 @@ export default function CareersPage() {
     setTasks(next || []);
   };
   const allDone = tasks.length > 0 && tasks.every((t) => t.done);
+  const keyNote = tasks.find((t) => t.note_ar)?.note_ar || "";
   const cvRequired = ROLES[role]?.cvRequired;
 
   const finish = async () => {
@@ -831,7 +939,7 @@ export default function CareersPage() {
         </a>
         {inFlow && r ? <span className="cr-top-role">{r.title}</span> : null}
       </header>
-      {inFlow ? <Steps stage={stage} /> : null}
+      {inFlow ? <Steps stage={stage} keyVoice={role === "sales"} /> : null}
 
       {!inFlow && (
         <main className="cr-land">
@@ -897,6 +1005,7 @@ export default function CareersPage() {
             <div className="cr-voicewrap">
               <h1 className="cr-flow-h">{g(gender, "خطوة أخيرة: سجّل/ي صوتك", "خطوة أخيرة: سجّل صوتك", "خطوة أخيرة: سجّلي صوتك")}</h1>
               {messages.length ? <div className="cr-card cr-intro" dir="auto">{messages[messages.length - 1].content}</div> : null}
+              {keyNote ? <p className="cr-keynote" role="note"><b>الأهم</b><span dir="auto">{keyNote}</span></p> : null}
               {tasks.map((t) => <VoiceCard key={t.kind} task={t} app={app} gender={gender} onTasks={onTasks} />)}
               {needsCv ? <CvCard app={app} gender={gender} required={cvRequired} onDone={() => setNeedsCv(false)} /> : null}
               {error ? <p className="cr-err cr-err-box" role="alert">{error}</p> : null}
