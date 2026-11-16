@@ -971,7 +971,7 @@ export default function CareersPage() {
       </header>
       {preview ? (
         <div className="cr-pv" role="note">
-          <b>وضع المعاينة</b><span>لا يُحفظ شيء، ولا شيء مطلوب.</span>
+          <b>وضع المعاينة</b><span>لا يُحفظ شيء</span>
           {inFlow ? <button type="button" className="cr-pv-btn" onClick={() => reset(null)}>من البداية</button> : null}
         </div>
       ) : null}
