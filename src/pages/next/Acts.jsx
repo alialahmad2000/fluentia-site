@@ -1,5 +1,4 @@
 import { useEffect, useRef } from "react";
-import { SOCIAL_PROOF } from "../landing-v2/content";
 import Giant from "./Giant";
 import { track } from "./scroll";
 import { BARRIER_HEADS, BARRIER_ROWS, BARRIER_TITLE, CTA_LABEL, TITLES, STEPS, STEPS_LEDE } from "./copy";
@@ -61,15 +60,32 @@ export function Barrier() {
   );
 }
 
-/* ── الأرقام كما هي — each stat a row: a giant number counting up once. No bars:
-   none of these numbers has an honest maximum to draw against. ── */
-function parseStat(v) {
-  const m = String(v).match(/^(\+?)(\d+)(K?)$/);
-  if (!m) return null;
-  return { prefix: m[1], to: Number(m[2]) * (m[3] ? 1000 : 1) };
-}
+/* ── الأرقام كما هي — real impact numbers from the platform, 2×2, each one
+   counting up once when it scrolls in. No bars: none of these numbers has an
+   honest maximum to draw against. ── */
+
+/**
+ * IMPACT_STATS — computed 2026-11-16 (read-only) from the Fluentia LMS DB, all
+ * time, real students only (role student, not is_test_account / AI assistant,
+ * no `records+` archive rows). Rounded DOWN, never up. Refresh by re-running:
+ *  - minutes:    sum(student_daily_activity.learning_seconds) / 60 = 12,214
+ *  - answers:    graded answers in student_curriculum_progress (reading,
+ *                grammar, listening, vocab exercises) + verb, spelling,
+ *                library, homework, study-sheet and skill attempts = 8,756
+ *  - words:      vocabulary_word_mastery rows mastered (all 3 exercises) = 7,930
+ *  - recordings: speaking_recordings + voice turns in speaking conversations
+ *                (142 + 379) = 521
+ */
+export const IMPACT_STATS = [
+  { to: 12000, label: "دقيقة مذاكرة على المنصّة" },
+  { to: 8700, label: "سؤال أجاب عليه طلابنا" },
+  { to: 7900, label: "كلمة تعلّمها طلابنا" },
+  { to: 500, label: "تسجيل صوتي من طلابنا" },
+];
+export const IMPACT_NOTE = "أرقام حقيقية من منصّة طلاقة — تُحدَّث دورياً";
+
 const fmt = (n) => n.toLocaleString("en-US");
-const COUNT_MS = 1600;
+const COUNT_MS = 1500;
 
 export function Stats({ still = false, bars = false }) {
   const listRef = useRef(null);
@@ -129,15 +145,15 @@ export function Stats({ still = false, bars = false }) {
   }, [still]);
 
   return (
-    <Act id="fx-stats" title={TITLES.stats} className="fx-act--stats">
-      <ul ref={listRef} className="fx-stats">
-        {SOCIAL_PROOF.stats.map((s) => {
-          const p = parseStat(s.value);
-          return (
-            <li key={s.label} className="fx-stat fx-rv" data-to={p ? p.to : undefined}>
+    <section id="fx-stats" className="fx-act fx-act--stats fx-impact" aria-labelledby="fx-stats-h">
+      <div className="fx-impact-wrap">
+        <Giant id="fx-stats-h" lines={TITLES.stats} className="fx-impact-title" />
+        <ul ref={listRef} className="fx-stats fx-impact-grid">
+          {IMPACT_STATS.map((s, i) => (
+            <li key={s.label} className="fx-stat fx-impact-cell fx-rv" data-to={s.to} style={{ "--d": `${i * 120}ms` }}>
               <span className="fx-stat-num" dir="ltr">
-                {p?.prefix ? <span className="fx-stat-pre">{p.prefix}</span> : null}
-                <span className="fx-stat-n">{p ? fmt(p.to) : s.value}</span>
+                <span className="fx-stat-pre">+</span>
+                <span className="fx-stat-n">{fmt(s.to)}</span>
               </span>
               <span className="fx-stat-label">{s.label}</span>
               {/* /join keeps its launch layout (bars) until it is switched to the showcase */}
@@ -147,10 +163,11 @@ export function Stats({ still = false, bars = false }) {
                 </span>
               ) : null}
             </li>
-          );
-        })}
-      </ul>
-    </Act>
+          ))}
+        </ul>
+        <p className="fx-impact-note fx-rv fx-fade">{IMPACT_NOTE}</p>
+      </div>
+    </section>
   );
 }
 

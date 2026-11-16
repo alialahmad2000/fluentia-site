@@ -27,6 +27,7 @@ import DawnHero from "./DawnHero";
 import PhoneSection from "./PhoneSection";
 import { Barrier, Stats, Steps } from "./Acts";
 import BARRIER_CSS from "./barrier.css?inline";
+import IMPACT_CSS from "./impact.css?inline";
 import Stage from "./Stage";
 // /join (paid TikTok traffic) keeps the stylesheet it launched with, frozen as of
 // 2026-09-27; the homepage gets the real-footage showcase. (StageClassic.jsx, its
@@ -391,7 +392,7 @@ export default function NextLanding({ seoPath = "/next", campaign = false, dawn:
         {/* The client and server bundles may stringify boot() differently; the
             script has already run by the time React hydrates it. */}
         <script suppressHydrationWarning dangerouslySetInnerHTML={{ __html: BOOT }} />
-        <style dangerouslySetInnerHTML={{ __html: (campaign ? NEXT_CLASSIC_CSS : dawn ? NEXT_CSS + DAWN_TOKENS + DAWN_CSS : NEXT_CSS) + BARRIER_CSS }} />
+        <style dangerouslySetInnerHTML={{ __html: (campaign ? NEXT_CLASSIC_CSS : dawn ? NEXT_CSS + DAWN_TOKENS + DAWN_CSS : NEXT_CSS) + BARRIER_CSS + IMPACT_CSS }} />
         {/* Kufam is the display face: fetched while the HTML parses, before the
             giant type needs it (Kufam chosen by Ali, 2026-09-27). */}
         <link rel="preload" as="font" type="font/woff2" href="/fonts/kufam-800-arabic.woff2" crossOrigin="" />
