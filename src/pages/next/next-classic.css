@@ -770,78 +770,7 @@ html.fx-js .fx-act-title.fx-rv.is-in { transform: none; }
   color: var(--fx-cream);
 }
 .fx-pain-body { margin: 12px 0 0; font-size: 16px; line-height: 2; max-width: 60ch; }
-.fx-bridge {
-  margin: 44px 0 0;
-  font-family: var(--fx-display);
-  font-weight: 600;
-  font-size: clamp(18px, 4.8vw, 22px);
-  line-height: 1.8;
-  color: var(--fx-ice);
-}
 
-/* Rows that open */
-.fx-rows { list-style: none; margin: 0; padding: 0; border-bottom: 1px solid var(--fx-rule); }
-.fx-row { border-top: 1px solid var(--fx-rule); }
-.fx-row-head {
-  width: 100%;
-  min-height: 72px;
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto;
-  align-items: center;
-  gap: 16px;
-  padding: 22px 0;
-  border: 0;
-  background: none;
-  color: inherit;
-  font: inherit;
-  text-align: start;
-  cursor: pointer;
-}
-.fx-row-titles { display: grid; gap: 6px; }
-.fx-row-essence {
-  font-family: var(--fx-display);
-  font-weight: 800;
-  font-size: clamp(38px, 10.5vw, 72px);
-  line-height: 1.12;
-  color: var(--fx-cream);
-  transition: color 500ms var(--fx-ease-soft);
-}
-.fx-row[data-open] .fx-row-essence { color: var(--fx-sky); }
-.fx-row-title { font-size: 15px; line-height: 1.7; color: var(--fx-faint); }
-.fx-row-plus {
-  position: relative;
-  width: 44px;
-  height: 44px;
-  border: 1px solid rgba(243, 237, 226, 0.2);
-  border-radius: 50%;
-}
-.fx-row-plus::before,
-.fx-row-plus::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 14px;
-  height: 1.5px;
-  background: var(--fx-cream);
-  transform: translate(-50%, -50%);
-  transition: transform 600ms var(--fx-ease-soft);
-}
-.fx-row-plus::after { transform: translate(-50%, -50%) rotate(90deg); }
-.fx-row[data-open] .fx-row-plus::after { transform: translate(-50%, -50%) rotate(0deg); }
-.fx-row-body {
-  display: grid;
-  grid-template-rows: 0fr;
-  visibility: hidden;
-  transition: grid-template-rows 700ms var(--fx-ease-soft), visibility 0s linear 700ms;
-}
-.fx-row[data-open] .fx-row-body {
-  grid-template-rows: 1fr;
-  visibility: visible;
-  transition-delay: 0s;
-}
-.fx-row-body > div { overflow: hidden; min-height: 0; }
-.fx-row-body p { margin: 0; padding: 0 0 28px; font-size: 16px; line-height: 2; max-width: 62ch; }
 
 /* Stats as rows */
 .fx-stats { list-style: none; margin: 0; padding: 0; display: grid; gap: clamp(30px, 5.5vh, 52px); }
@@ -1109,7 +1038,6 @@ html.fx-js .fx-stat.is-in .fx-bar i { transform: none; }
 .fx-final-actions { display: flex; flex-direction: column; align-items: center; gap: 10px; }
 .fx-final-test { font-size: 15px; color: var(--fx-text); padding-inline: var(--fx-gut, 20px); text-align: center; }
 /* «كيف نُزيله»: one plain line on how classes happen (Google Meet). */
-.fx-act-note { margin: 16px 0 0; font-size: 15px; line-height: 1.9; color: var(--fx-faint); }
 
 /* ─── Footer + performance mode ─── */
 .fx-footer { background: var(--fx-void); }

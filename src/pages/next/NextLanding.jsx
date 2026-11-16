@@ -25,7 +25,8 @@ import Header from "./Header";
 import Hero from "./Hero";
 import DawnHero from "./DawnHero";
 import PhoneSection from "./PhoneSection";
-import { Pains, How, Stats, Steps } from "./Acts";
+import { Barrier, Stats, Steps } from "./Acts";
+import BARRIER_CSS from "./barrier.css?inline";
 import Stage from "./Stage";
 // /join (paid TikTok traffic) keeps the stylesheet it launched with, frozen as of
 // 2026-09-27; the homepage gets the real-footage showcase. (StageClassic.jsx, its
@@ -147,8 +148,7 @@ html.fx-js .fx-next[data-campaign] .fx-hero-sub.fx-hero-after { animation: none;
 // The sections that take no props are memoised: the page re-renders when the
 // tier resolves (and the intro finishes), and re-rendering the whole tree on a
 // phone was a ~1 s long task during load.
-const MemoPains = memo(Pains);
-const MemoHow = memo(How);
+const MemoBarrier = memo(Barrier);
 const MemoPricing = memo(Pricing);
 const MemoStories = memo(Stories);
 const MemoFitFaq = memo(FitFaq);
@@ -391,7 +391,7 @@ export default function NextLanding({ seoPath = "/next", campaign = false, dawn:
         {/* The client and server bundles may stringify boot() differently; the
             script has already run by the time React hydrates it. */}
         <script suppressHydrationWarning dangerouslySetInnerHTML={{ __html: BOOT }} />
-        <style dangerouslySetInnerHTML={{ __html: campaign ? NEXT_CLASSIC_CSS : dawn ? NEXT_CSS + DAWN_TOKENS + DAWN_CSS : NEXT_CSS }} />
+        <style dangerouslySetInnerHTML={{ __html: (campaign ? NEXT_CLASSIC_CSS : dawn ? NEXT_CSS + DAWN_TOKENS + DAWN_CSS : NEXT_CSS) + BARRIER_CSS }} />
         {/* Kufam is the display face: fetched while the HTML parses, before the
             giant type needs it (Kufam chosen by Ali, 2026-09-27). */}
         <link rel="preload" as="font" type="font/woff2" href="/fonts/kufam-800-arabic.woff2" crossOrigin="" />
@@ -428,8 +428,7 @@ export default function NextLanding({ seoPath = "/next", campaign = false, dawn:
             </section>
           ) : null}
           <PhoneSection tilt={Boolean(cfg && cfg.tilt)} />
-          <MemoPains />
-          <MemoHow />
+          <MemoBarrier />
           <Stats still={tier === "low"} bars={campaign} />
           {/* /join drops the between-classes stage: ~4,900 px of pinned scroll
               between a paid visitor and the price, for detail the phone above

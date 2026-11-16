@@ -1,8 +1,8 @@
-import { useEffect, useId, useRef, useState } from "react";
-import { PROBLEM, WORTH, SOCIAL_PROOF } from "../landing-v2/content";
+import { useEffect, useRef } from "react";
+import { SOCIAL_PROOF } from "../landing-v2/content";
 import Giant from "./Giant";
 import { track } from "./scroll";
-import { CTA_LABEL, LIVE_NOTE, TITLES, STEPS, STEPS_LEDE } from "./copy";
+import { BARRIER_HEADS, BARRIER_ROWS, BARRIER_TITLE, CTA_LABEL, TITLES, STEPS, STEPS_LEDE } from "./copy";
 
 /**
  * The three "acts": a two-line giant title that slides in from the right edge
@@ -25,72 +25,39 @@ function Act({ id, title, lede, children, className = "" }) {
   );
 }
 
-/* ── العائق ليس أنت — the four pains, one by one, along a progress line ── */
-export function Pains() {
-  const listRef = useRef(null);
-  useEffect(() => track(listRef.current, { mode: "through" }), []);
+/* ── العائق ليس أنت — each old pain paired with our answer, all visible.
+   Desktop: pain → connector → answer on one line; a phone stacks them. ── */
+export function Barrier() {
   return (
-    <Act id="fx-pains" title={TITLES.pains} lede={PROBLEM.intro}>
-      <ol ref={listRef} className="fx-pains">
-        {PROBLEM.cards.map((c, i) => (
-          <li key={c.title} className="fx-pain fx-rv fx-fade">
-            <span className="fx-num" aria-hidden="true">
-              {String(i + 1).padStart(2, "0")}
-            </span>
-            <h3 className="fx-pain-title">{c.title}</h3>
-            <p className="fx-pain-body">{c.body}</p>
-          </li>
-        ))}
-      </ol>
-      <p className="fx-bridge fx-rv fx-fade">{PROBLEM.bridge.replace("←", "↓")}</p>
-    </Act>
-  );
-}
-
-/* ── كيف نُزيله — the homepage's four pillars as rows that open on tap ── */
-function PillarRow({ p, open, onToggle }) {
-  const uid = useId();
-  return (
-    <li className="fx-row fx-rv fx-fade" data-open={open ? "" : undefined}>
-      <button
-        type="button"
-        className="fx-row-head"
-        aria-expanded={open}
-        aria-controls={`${uid}-body`}
-        onClick={onToggle}
-      >
-        <span className="fx-num" aria-hidden="true">
-          {p.num}
-        </span>
-        <span className="fx-row-titles">
-          <span className="fx-row-essence">{p.essence}</span>
-          <span className="fx-row-title">{p.title}</span>
-        </span>
-        <span className="fx-row-plus" aria-hidden="true" />
-      </button>
-      {/* Closed rows are visibility:hidden (out of the tab order and the a11y tree);
-          the height opens on a 0fr → 1fr grid row, so nothing is measured. */}
-      <div id={`${uid}-body`} className="fx-row-body">
-        <div>
-          <p>{p.body}</p>
+    <section id="fx-barrier" className="fx-act fx-barrier" aria-labelledby="fx-barrier-h">
+      <div className="fx-barrier-wrap">
+        <Giant id="fx-barrier-h" lines={BARRIER_TITLE} className="fx-barrier-title" />
+        <div className="fx-barrier-heads fx-rv fx-fade" aria-hidden="true">
+          <span>{BARRIER_HEADS.pain}</span>
+          <span>{BARRIER_HEADS.answer}</span>
         </div>
+        <ol className="fx-barrier-rows">
+          {BARRIER_ROWS.map((r, i) => (
+            <li key={r.key} className="fx-brow fx-rv fx-fade" style={{ "--d": `${i * 140}ms` }}>
+              <span className="fx-num fx-brow-num" aria-hidden="true">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <p className="fx-brow-pain">
+                <span className="fx-sr">{BARRIER_HEADS.pain}: </span>
+                {r.pain}
+              </p>
+              <span className="fx-brow-link" aria-hidden="true">
+                <i />
+              </span>
+              <p className="fx-brow-answer">
+                <span className="fx-sr">{BARRIER_HEADS.answer}: </span>
+                <strong>{r.key}</strong> — {r.answer}
+              </p>
+            </li>
+          ))}
+        </ol>
       </div>
-    </li>
-  );
-}
-
-export function How() {
-  const [open, setOpen] = useState(0);
-  return (
-    <Act id="fx-how" title={TITLES.how} lede={WORTH.deck}>
-      <ul className="fx-rows">
-        {WORTH.pillars.map((p, i) => (
-          <PillarRow key={p.num} p={p} open={open === i} onToggle={() => setOpen(open === i ? -1 : i)} />
-        ))}
-      </ul>
-      <p className="fx-bridge fx-rv fx-fade">{WORTH.closing.lead}</p>
-      <p className="fx-act-note fx-rv fx-fade">{LIVE_NOTE}</p>
-    </Act>
+    </section>
   );
 }
 

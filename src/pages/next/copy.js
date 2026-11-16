@@ -63,6 +63,19 @@ export const TITLES = {
   ],
 };
 
+/* «العائق ليس أنت» (2026-11-16): one problem → answer section replaces the old
+   pains list + «كيف نُزيله» accordion on the homepage. Ali's copy, verbatim. */
+export const BARRIER_TITLE = [
+  { text: "العائق", tone: "cream" },
+  { text: "ليس أنت", tone: "ice" },
+];
+export const BARRIER_HEADS = { pain: "اللي صار معك قبل", answer: "اللي يصير عندنا" };
+export const BARRIER_ROWS = [
+  { pain: "حفظت قواعد… وما تكلّمت", key: "الحاجز", answer: "نعالج الخوف والتوتر قبل القواعد، وتتكلّم من أول حصة" },
+  { pain: "كلاس واحد لـ 20 طالب", key: "المسار", answer: "أنت مشروع مستقل، لا مقعد في قاعة" },
+  { pain: "بدون متابعة… تنسى وترجع تبدأ", key: "المدرّب", answer: "مدرّب سعودي مختار بعناية يتابع معك بشكل دائم" },
+];
+
 export const STORIES_SUB = "تجارب حقيقية من طلاب طلاقة، بكلامهم.";
 
 // Under the final call: the free placement test (/level-test) — the meta
