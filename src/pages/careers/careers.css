@@ -228,6 +228,15 @@
 @media(hover:hover){.cr-opt:not(:disabled):hover{border-color:var(--ink-3)}}
 .cr-opt:active{transform:scale(.98)}
 .cr-opt:disabled{opacity:.5;cursor:wait}
+/* «غير ذلك / أكتب»: quieter, so it never reads as the expected answer */
+.cr-opt-other{font-weight:500;color:var(--ink-2);border-style:dashed}
+/* multi-select chips (call times): tick + filled when picked, then «تم» */
+.cr-opt.on{border-color:var(--dawn-400);background:rgba(255,181,71,.14)}
+.cr-opt-tick{display:inline-grid;place-items:center;width:18px;height:18px;margin-inline-end:8px;border-radius:50%;border:1px solid var(--line-2);font-size:.75rem;line-height:1;vertical-align:-3px}
+.cr-opt.on .cr-opt-tick{background:var(--dawn-400);border-color:var(--dawn-400);color:var(--ink)}
+.cr-opts-done{flex-basis:100%;min-height:48px;margin-block-start:4px}
+.cr-link{align-self:flex-start;min-height:44px;padding:8px 4px;border:0;background:none;color:var(--ink-2);font:inherit;font-size:.92rem;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.cr-link:disabled{opacity:.5;cursor:wait}
 .cr-cvcard{margin-block:8px;display:flex;flex-direction:column;gap:10px;border-color:rgba(255,181,71,.4)}
 
 /* ─── voice ─── */

@@ -19,7 +19,7 @@ import {
   call, ApiError, uploadAndAttach, loadSaved, saveApp, clearSaved,
   toAscii, phoneLooksValid, CV_EXT, AUDIO_MIME_EXT, extOf, TURNSTILE_SITEKEY, isPreview,
 } from "./careersApi";
-import { previewOutcome, previewSample } from "./careersPreview";
+import { previewOutcome, previewSample, previewTag } from "./careersPreview";
 
 const ROLES = {
   sales: {
@@ -79,8 +79,9 @@ const splitDob = (iso) => {
   const [y, m, d] = String(iso || "").split("-");
   return { y: y || "", m: m ? String(Number(m)) : "", d: d ? String(Number(d)) : "" };
 };
-const STEP_OF = { landing: 0, chat: 1, voice: 2, finishing: 3, outcome: 3 };
-const RISE_OF = { landing: 0, chat: 0.2, voice: 0.45, finishing: 0.7, outcome: 1 };
+// «pay» = the short pay questions after the recordings (sales): still the last stage before «النتيجة»
+const STEP_OF = { landing: 0, chat: 1, voice: 2, pay: 2, finishing: 3, outcome: 3 };
+const RISE_OF = { landing: 0, chat: 0.2, voice: 0.45, pay: 0.6, finishing: 0.7, outcome: 1 };
 function Steps({ stage, keyVoice }) {
   const at = STEP_OF[stage] ?? 0;
   return (
@@ -383,8 +384,16 @@ function CvCard({ app, gender, required, onDone }) {
 // How each written answer was produced (integrity signals, never scored): first keystroke → send,
 // pasted characters, times the page lost focus. Reset after every send.
 const freshSig = () => ({ first: 0, pasteChars: 0, paste: false, blur: 0, lastBlur: 0 });
-function Chat({ messages, typing, onSend, error, gender, disabled, options, onSkip, onSkipAll }) {
+function Chat({ messages, typing, onSend, error, gender, disabled, options, multi, onSkip, onSkipAll, hint }) {
   const [text, setText] = useState("");
+  // «غير ذلك / أكتب» opens the text box instead of the buttons; multi = chips picked, then «تم»
+  const [free, setFree] = useState(false);
+  const [picked, setPicked] = useState([]);
+  useEffect(() => { setFree(false); setPicked([]); }, [options]);
+  const opts = options || [];
+  const skipOpt = opts.length && opts.every((o) => o.id === "skip") ? opts[0] : null; // optional free-text question
+  const showOpts = opts.length > 0 && !skipOpt && !(free && !multi);
+  const showText = !opts.length || !!skipOpt || free;
   const endRef = useRef(null);
   const taRef = useRef(null);
   const sig = useRef(freshSig());
@@ -414,11 +423,29 @@ function Chat({ messages, typing, onSend, error, gender, disabled, options, onSk
     const v = text.trim();
     if (!v || typing || disabled) return;
     const s = sig.current;
-    onSend(v, () => setText(""), undefined, {
+    if (multi && picked.length) { sendPicked(v); return; }
+    onSend(v, () => setText(""), free ? "other" : undefined, {
       typing_ms: s.first ? Date.now() - s.first : 0, paste: s.paste, paste_chars: s.pasteChars, blur_count: s.blur, chars: v.length,
     });
     sig.current = freshSig();
     requestAnimationFrame(() => { if (taRef.current) taRef.current.style.height = "auto"; });
+  };
+  const labelOf = (id) => opts.find((o) => o.id === id)?.label || id;
+  const sendPicked = (typed = "") => {
+    const named = picked.filter((id) => id !== "other").map(labelOf).join("، ");
+    const t = typed || text.trim();
+    const label = [named, picked.includes("other") ? t : ""].filter(Boolean).join(" — ");
+    if (!label || typing || disabled) return;
+    onSend(label, () => setText(""), picked.join(","));
+  };
+  const tap = (o) => {
+    if (multi) {
+      setPicked((p) => (p.includes(o.id) ? p.filter((x) => x !== o.id) : [...p, o.id]));
+      if (o.id === "other") setFree((f) => !f);
+      return;
+    }
+    if (o.id === "other") { setFree(true); requestAnimationFrame(() => taRef.current?.focus()); return; }
+    onSend(o.label, () => {}, o.id);
   };
   const onKey = (e) => {
     const fine = window.matchMedia?.("(pointer: fine)").matches;
@@ -446,13 +473,22 @@ function Chat({ messages, typing, onSend, error, gender, disabled, options, onSk
       </div>
       <div className="cr-composer">
         {error ? <p className="cr-err cr-err-box" role="alert">{error}</p> : null}
-        {options?.length ? (
-          <div className="cr-opts" role="group" aria-label="اختر إجابة">
-            {options.map((o) => (
-              <button key={o.id} type="button" className="cr-opt" disabled={typing || disabled} onClick={() => onSend(o.label, () => {}, o.id)}>{o.label}</button>
+        {showOpts ? (
+          <div className={`cr-opts${multi ? " cr-opts-multi" : ""}`} role="group" aria-label={multi ? "اختر وقت أو أكثر" : "اختر إجابة"}>
+            {opts.map((o) => (
+              <button key={o.id} type="button" className={`cr-opt${o.id === "other" ? " cr-opt-other" : ""}${picked.includes(o.id) ? " on" : ""}`}
+                aria-pressed={multi ? picked.includes(o.id) : undefined} disabled={typing || disabled} onClick={() => tap(o)}>
+                {multi && o.id !== "other" ? <span className="cr-opt-tick" aria-hidden="true">{picked.includes(o.id) ? "✓" : ""}</span> : null}{o.label}
+              </button>
             ))}
+            {multi ? (
+              <button type="button" className="cr-btn cr-btn-primary cr-opts-done" disabled={!picked.length || typing || disabled || (picked.includes("other") && picked.length === 1 && !text.trim())}
+                onClick={() => sendPicked()}>تم</button>
+            ) : null}
           </div>
-        ) : (
+        ) : null}
+        {free && !multi ? <button type="button" className="cr-link cr-back-opts" onClick={() => setFree(false)}>رجوع للخيارات</button> : null}
+        {showText ? (
         <div className="cr-composer-row">
           <label htmlFor="cr-msg" className="cr-sr">{g(gender, "اكتب/ي ردّك", "اكتب ردّك", "اكتبي ردّك")}</label>
           <textarea
@@ -465,12 +501,13 @@ function Chat({ messages, typing, onSend, error, gender, disabled, options, onSk
             <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M3.4 11.2 20 3.6c.8-.4 1.6.4 1.2 1.2l-7.6 16.6c-.4.8-1.5.7-1.8-.1l-2-5.7-5.7-2c-.8-.3-.9-1.4-.1-1.8l-.6-.6Z" fill="currentColor" /></svg>
           </button>
         </div>
-        )}
+        ) : null}
+        {skipOpt ? <button type="button" className="cr-link cr-skip-q" disabled={typing || disabled} onClick={() => onSend(skipOpt.label, () => {}, skipOpt.id)}>{skipOpt.label}</button> : null}
         {onSkip ? (
           <div className="cr-pv-tools" role="group" aria-label="أدوات المعاينة">
-            <p className="cr-pv-hint">بعد أسئلة الراتب والدوام، الأسئلة هنا نموذج — في الحقيقة يكتبها المساعد حسب إجابات المتقدم.</p>
+            <p className="cr-pv-hint">{hint || "بعد سؤالي الوضع والأوقات، الأسئلة هنا نموذج — في الحقيقة يكتبها المساعد حسب إجابات المتقدم."}</p>
             <button type="button" className="cr-pv-btn" disabled={typing} onClick={onSkip}>تخطي هذا السؤال</button>
-            <button type="button" className="cr-pv-btn" disabled={typing} onClick={onSkipAll}>تخطي المحادثة كلها</button>
+            {onSkipAll ? <button type="button" className="cr-pv-btn" disabled={typing} onClick={onSkipAll}>تخطي المحادثة كلها</button> : null}
           </div>
         ) : null}
       </div>
@@ -763,12 +800,14 @@ function SlotPicker({ outcome, slots, loading, onBook, busy, error, gender }) {
 /* ───────────────────────── Page ───────────────────────── */
 export default function CareersPage() {
   const [role, setRole] = useState(null);
-  const [stage, setStage] = useState("landing"); // landing | chat | voice | finishing | outcome
+  const [stage, setStage] = useState("landing"); // landing | chat | voice | pay | finishing | outcome
   const [saved, setSaved] = useState({ sales: null, trainer: null });
   const [app, setApp] = useState(null); // { id, token, role, basics }
   const [messages, setMessages] = useState([]);
   const [typing, setTyping] = useState(false);
   const [options, setOptions] = useState(null);
+  const [multi, setMulti] = useState(false);
+  const finishRef = useRef(null); // send() → finish() once the last pay answer is in
   const [tasks, setTasks] = useState([]);
   const [needsCv, setNeedsCv] = useState(false);
   const [busy, setBusy] = useState(false);
@@ -822,6 +861,7 @@ export default function CareersPage() {
   const enter = useCallback(async (res, a) => {
     setMessages(res.messages || []);
     setOptions(res.options || null);
+    setMulti(!!res.multi);
     setTasks(res.voice_tasks || []);
     setNeedsCv(!!res.needs_cv && !res.has_cv);
     if (res.outcome) return showOutcome(res.outcome, a);
@@ -830,7 +870,7 @@ export default function CareersPage() {
       try { const f = await call("finish", { application_id: a.id, token: a.token }); return showOutcome(f.outcome, a); }
       catch (x) { setStage("voice"); setError(x.messageAr || ""); return undefined; }
     }
-    setStage(res.step === "voice" ? "voice" : "chat");
+    setStage(res.step === "voice" ? "voice" : res.step === "pay" ? "pay" : "chat");
     window.scrollTo?.(0, 0);
     return undefined;
   }, [showOutcome]);
@@ -907,8 +947,10 @@ export default function CareersPage() {
       if (!res) return;
       setMessages((m) => [...m, { role: "bot", content: res.reply }]);
       setOptions(res.options || null);
+      setMulti(!!res.multi);
       if (res.outcome) { clearSaved(role); await showOutcome(res.outcome, app); return; }
       if (res.step === "voice") { setTasks(res.voice_tasks || []); setStage("voice"); window.scrollTo?.(0, 0); }
+      if (res.step === "finish") { finishRef.current?.(); }
     } catch (x) {
       setMessages((m) => m.slice(0, -1));
       setError(x.messageAr || "ما وصلت رسالتك. نرجو المحاولة مرة ثانية.");
@@ -925,12 +967,25 @@ export default function CareersPage() {
   const cvRequired = ROLES[role]?.cvRequired;
 
   const finish = async () => {
-    setError(""); setStage("finishing");
+    const from = stage;
+    setError("");
+    // sales: «إرسال الطلب» first opens the pay questions (fast); show the review spinner only if it takes a while
+    const slow = role === "sales" && from === "voice" ? setTimeout(() => setStage("finishing"), 1200) : null;
+    if (!slow) setStage("finishing");
+    else setTyping(true);
     try {
-      const res = await guard(() => call("finish", { application_id: app.id, token: app.token }), role);
-      if (res) await showOutcome(res.outcome, app);
-    } catch (x) { setStage("voice"); setError(x.messageAr || "ما قدرنا نرسل الطلب. نرجو المحاولة مرة ثانية."); }
+      const res = await guard(() => call("finish", { application_id: app.id, token: app.token }), role).finally(() => { if (slow) { clearTimeout(slow); setTyping(false); } });
+      if (!res) return;
+      // sales: a few pay questions come last, right before the result
+      if (res.step === "pay") {
+        if (res.reply) setMessages((m) => (m[m.length - 1]?.content === res.reply ? m : [...m, { role: "bot", content: res.reply }]));
+        setOptions(res.options || null); setMulti(!!res.multi); setStage("pay"); window.scrollTo?.(0, 0);
+        return;
+      }
+      await showOutcome(res.outcome, app);
+    } catch (x) { setStage(from === "pay" ? "pay" : "voice"); setError(x.messageAr || "ما قدرنا نرسل الطلب. نرجو المحاولة مرة ثانية."); }
   };
+  finishRef.current = finish;
 
   /* «وضع المعاينة» shortcuts */
   const skipQuestion = () => { const x = previewSample(); send(x.text, () => {}, x.choice); };
@@ -1030,11 +1085,12 @@ export default function CareersPage() {
 
       {inFlow && (
         <main className={`cr-flow cr-flow-${stage}`}>
-          {stage === "chat" && (
+          {(stage === "chat" || stage === "pay") && (
             <>
-              {needsCv ? <CvCard app={app} gender={gender} required={cvRequired} onDone={() => setNeedsCv(false)} /> : null}
-              <Chat messages={messages} typing={typing} onSend={send} error={error} gender={gender} options={options}
-                onSkip={preview ? skipQuestion : undefined} onSkipAll={preview ? skipChat : undefined} />
+              {needsCv && stage === "chat" ? <CvCard app={app} gender={gender} required={cvRequired} onDone={() => setNeedsCv(false)} /> : null}
+              <Chat messages={messages} typing={typing} onSend={send} error={error} gender={gender} options={options} multi={multi}
+                onSkip={preview ? skipQuestion : undefined} onSkipAll={preview && stage === "chat" ? skipChat : undefined}
+                hint={stage === "pay" ? "أسئلة الراتب ثابتة بنصها — هذا بالضبط اللي يشوفه المتقدم." : undefined} />
             </>
           )}
 
@@ -1075,8 +1131,9 @@ export default function CareersPage() {
             {preview ? (
               <section className="cr-card cr-pv-out" aria-labelledby="cr-pv-out-h">
                 <h3 id="cr-pv-out-h">معاينة: كل الشاشات اللي ممكن تظهر في النهاية</h3>
+                {previewTag() ? <p className="cr-pv-note" role="note">«شهية العمولة» من إجاباتك في المعاينة: <b>{previewTag()}</b> (تظهر للإدارة فقط)</p> : null}
                 <div className="cr-pv-tools">
-                  {[["book", "مؤهل: اختيار موعد"], ["booked", "بعد حجز الموعد"], ["thanks", "شكرًا (بعد المراجعة)"], ["ko", "شكرًا (توقف عند الراتب أو الدوام)"], ["under18", "أقل من 18 سنة"]].map(([k, l]) => (
+                  {[["book", "مؤهل: اختيار موعد"], ["booked", "بعد حجز الموعد"], ["thanks", "شكرًا (بعد المراجعة)"], ["ko", "شكرًا (الأوقات ما تشمل المساء)"], ["under18", "أقل من 18 سنة"]].map(([k, l]) => (
                     <button key={k} type="button" className="cr-pv-btn" onClick={() => viewOutcome(k)}>{l}</button>
                   ))}
                 </div>

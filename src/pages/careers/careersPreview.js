@@ -3,8 +3,9 @@
  * locally, with the same wording the edge function uses (fluentia-lms
  * supabase/functions/hiring-interview/index.ts), so the whole applicant journey
  * can be walked through without saving anything or calling the server.
- * The screening steps are the real ones; the free chat questions are a fixed
- * sample (the real assistant writes them from the applicant's answers).
+ * The screening steps and the end-of-interview pay block are the real ones
+ * (verbatim); the free chat questions are a fixed sample (the real assistant
+ * writes them from the applicant's answers).
  */
 
 const ACADEMY_WA = "966558669974";
@@ -14,25 +15,30 @@ const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 const VOICE_KEY_LINE = (g) => G(g,
   "ترى التسجيلات الصوتية هي أهم جزء في طلبك، وعليها نعتمد بشكل أساسي في الاختيار — خذ وقتك، اختار مكان هادي، وتكلم بطبيعتك كأنك في مكالمة حقيقية.",
   "ترى التسجيلات الصوتية هي أهم جزء في طلبك، وعليها نعتمد بشكل أساسي في الاختيار — خذي وقتك، اختاري مكان هادي، وتكلمي بطبيعتك كأنك في مكالمة حقيقية.");
-const PAY_Q = "نظام الراتب: ثابت + عمولة على كل تسجيل + بونص شهري، ومعه فترة تجربة أسبوعين مدفوعة. يناسبك هالنظام؟";
-const HOURS_Q = "الدوام من 4 العصر إلى 10 المساء، السبت إلى الخميس. يناسبك؟";
-const PAY_OPTS = [{ id: "yes", label: "نعم، يناسبني" }, { id: "fixed_only", label: "أفضّل راتب ثابت فقط" }, { id: "question", label: "عندي سؤال" }];
-const HOURS_OPTS = [{ id: "yes", label: "نعم، يناسبني" }, { id: "partly", label: "يناسبني جزئيًا" }, { id: "no", label: "ما يناسبني" }];
-const COMM_OPTS = (g) => [{ id: "high", label: G(g, "مرتاح له", "مرتاحة له") }, { id: "medium", label: "يعتمد" }, { id: "low", label: "ما أرتاح له" }];
-const JOB_OPTS = (g) => [{ id: "none", label: G(g, "لا، مو موظف", "لا، مو موظفة") },
-  { id: "ok", label: G(g, "موظف ودوامي ما يتعارض", "موظفة ودوامي ما يتعارض") }, { id: "conflict", label: G(g, "موظف ودوامي يتعارض", "موظفة ودوامي يتعارض") }];
-const PAY_STEP_Q = {
-  pay_last: (g) => G(g, "سؤال تنظيمي بسيط: كم كان آخر راتب شهري لك تقريبًا (بالريال)؟ ولو ما اشتغلت قبل، قل «أول وظيفة».",
-    "سؤال تنظيمي بسيط: كم كان آخر راتب شهري لكِ تقريبًا (بالريال)؟ ولو ما اشتغلتي قبل، قولي «أول وظيفة»."),
-  pay_fixed: (g) => G(g, "كم الراتب الثابت الشهري اللي تتوقعه من هالوظيفة (بدون العمولة)؟", "كم الراتب الثابت الشهري اللي تتوقعينه من هالوظيفة (بدون العمولة)؟"),
-  pay_total: (g) => G(g, "وكم تتوقع يكون دخلك الشهري كامل، الثابت مع العمولة؟", "وكم تتوقعين يكون دخلك الشهري كامل، الثابت مع العمولة؟"),
-  pay_min: (g) => G(g, "وأقل راتب ثابت تقبل فيه؟", "وأقل راتب ثابت تقبلين فيه؟"),
-  pay_comm: (g) => G(g, "لو كان جزء كبير من دخلك من العمولة على كل تسجيل (يعني كل ما سجّلت أكثر زاد دخلك)، قد إيش ترتاح لهالنظام؟",
-    "لو كان جزء كبير من دخلك من العمولة على كل تسجيل (يعني كل ما سجّلتي أكثر زاد دخلك)، قد إيش ترتاحين لهالنظام؟"),
-  pay_comm_why: () => "ليش؟ بكلمتين.",
-};
-const JOB_Q = (g) => G(g, "هل أنت موظف حاليًا؟ ولو نعم، هل دوامك يتعارض مع الدوام من 4 العصر إلى 10 المساء؟",
-  "هل أنتِ موظفة حاليًا؟ ولو نعم، هل دوامك يتعارض مع الدوام من 4 العصر إلى 10 المساء؟");
+// Sales screening since 2026-11-16 (flow 4): nothing about pay at the start, our hours are never named.
+const OTHER = { id: "other", label: "غير ذلك / أكتب" };
+const EMP_Q = "وش وضعك الحين؟";
+const EMP_OPTS = (g) => [{ id: "full_time", label: G(g, "موظف دوام كامل", "موظفة دوام كامل") }, { id: "part_time", label: G(g, "موظف دوام جزئي", "موظفة دوام جزئي") },
+  { id: "student", label: G(g, "طالب", "طالبة") }, { id: "not_working", label: "ما أشتغل حاليًا" }, OTHER];
+const SLOTS_Q = (g) => G(g, "وش الأوقات اللي تقدر تتفرغ فيها للمكالمات؟ (تقدر تختار أكثر من وقت)", "وش الأوقات اللي تقدرين تتفرغين فيها للمكالمات؟ (تقدرين تختارين أكثر من وقت)");
+const SLOT_OPTS = [{ id: "morning", label: "الصبح" }, { id: "noon", label: "الظهر" }, { id: "afternoon", label: "العصر" },
+  { id: "evening", label: "المغرب والليل" }, { id: "flexible", label: "أوقاتي مرنة" }, OTHER];
+const eveningFit = (ids) => ids.includes("flexible") || (ids.includes("afternoon") && ids.includes("evening"));
+// The pay block: the LAST thing before the result, sent verbatim (gender adaptation only)
+const PP_INTRO = "آخر شي، كم سؤال سريع عن الراتب عشان نعرف وش يناسبك.";
+const PP_Q1 = (g) => G(g, 'آخر راتب استلمته كم كان تقريبًا؟ وكم تتوقع راتبك معنا؟ (لو ما اشتغلت قبل، اكتب "أول وظيفة")',
+  'آخر راتب استلمتيه كم كان تقريبًا؟ وكم تتوقعين راتبك معنا؟ (لو ما اشتغلتي قبل، اكتبي "أول وظيفة")');
+const PP_Q2 = "خلنا نفترض إن الوظيفة هذي نظامها عمولة فقط على كل تسجيل، بدون أي راتب ثابت. تناسبك؟";
+const PP_Q2_OPTS = [{ id: "yes", label: "إيه، تناسبني" }, { id: "conditional", label: "تناسبني لو العمولة مجزية" }, { id: "no", label: "لا، لازم يكون فيه راتب ثابت" }, OTHER];
+const PP_Q3A = (g) => G(g, "حلو. لو دخلك كله عمولة، كم تسجيل تتوقع تجيب في الشهر؟", "حلو. لو دخلك كله عمولة، كم تسجيل تتوقعين تجيبين في الشهر؟");
+const PP_Q3B = "طيب لو كان فيه ثابت بسيط + عمولة على كل تسجيل، تناسبك؟";
+const PP_Q3B_OPTS = [{ id: "yes", label: "إيه تناسبني" }, { id: "no", label: "لا، أبي راتب ثابت كامل" }, OTHER];
+const PP_Q4 = "ليش؟ بكلمتين.";
+const PP_SKIP = { id: "skip", label: "أتخطى" };
+const PP_DONE = (g) => G(g, "شكرًا لك! خلصنا كل الأسئلة — لحظات ونطلع لك النتيجة.", "شكرًا لكِ! خلصنا كل الأسئلة — لحظات ونطلع لكِ النتيجة.");
+const APPETITE_AR = { commission_only: "عمولة فقط ✅", commission_conditional: "عمولة فقط (بشرط)", hybrid: "هجين", fixed_only: "ثابت فقط" };
+const appetiteOf = (q2, q3b) => (q2 === "yes" ? "commission_only" : q2 === "conditional" ? "commission_conditional"
+  : q2 === "no" ? (q3b === "yes" ? "hybrid" : q3b === "no" ? "fixed_only" : null) : null);
 const FIRST_SALES_Q = "أول سؤال عن خبرتك: وش خبرتك في المكالمات؟ سواء مبيعات بالهاتف، كول سنتر، قبول وتسجيل، أو خدمة عملاء.";
 
 /** A sample of what the assistant asks after the screening (it adapts these to each answer). */
@@ -167,62 +173,70 @@ const ageOf = (iso) => {
   if (now.getMonth() + 1 < Number(m[2]) || (now.getMonth() + 1 === Number(m[2]) && now.getDate() < Number(m[3]))) a -= 1;
   return a;
 };
-const optionsFor = (s) => (s.role !== "sales" ? null
-  : s.pending === "pay" ? PAY_OPTS : s.pending === "hours" ? HOURS_OPTS : s.pending === "pay_comm" ? COMM_OPTS(s.g) : s.pending === "job" ? JOB_OPTS(s.g) : null);
+const optionsFor = (s) => {
+  if (s.role !== "sales") return null;
+  if (s.step === "pay") return s.pending === "pp_q2" ? PP_Q2_OPTS : s.pending === "pp_q3b" ? PP_Q3B_OPTS : s.pending === "pp_q4" ? [PP_SKIP] : null;
+  return s.pending === "emp" ? EMP_OPTS(s.g) : s.pending === "slots" ? SLOT_OPTS : null;
+};
+const multiFor = (s) => s.role === "sales" && s.step === "chat" && s.pending === "slots";
 const toVoice = (s, line) => { s.step = "voice"; return { reply: line ? `${line}\n\n${handoff(s)}` : handoff(s), step: "voice", voice_tasks: voiceTasks(s), options: null }; };
 
 function screening(s, choice, text) {
-  const pick = (opts) => opts.find((o) => o.id === choice) || opts.find((o) => o.label === text) || opts[0];
   const g = s.g;
-  const ask = (k) => { s.pending = k; return PAY_STEP_Q[k](g); };
+  if (s.pending === "emp") {
+    s.pending = "slots";
+    return { reply: `تمام.\n\n${SLOTS_Q(g)}`, step: "chat", options: optionsFor(s), multi: true };
+  }
+  // slots: comma-joined ids from the chips
+  const ids = String(choice || "").split(",").filter((x) => x && x !== "other");
+  s.pending = null;
+  if (!eveningFit(ids)) { s.step = "done"; return { reply: koLine(g), step: "done", options: null, outcome: previewOutcome("ko", g) }; }
+  return { reply: `ممتاز.\n\n${FIRST_SALES_Q}`, step: "chat", options: null, multi: false };
+}
+
+/** The end-of-interview pay block (same order and wording as the edge function). */
+function pulse(s, choice, text) {
+  const g = s.g;
+  const p = s.pulse;
   let reply = "";
   switch (s.pending) {
-    case "pay": {
-      const o = pick(PAY_OPTS);
-      if (o.id === "fixed_only") { s.pending = null; s.step = "done"; return { reply: koLine(g), step: "done", options: null, outcome: previewOutcome("ko", g) }; }
-      reply = o.id === "question"
-        ? `سؤالك في محله. تفاصيل الراتب والعمولة والبونص ${G(g, "يشرحها لك", "يشرحها لكِ")} الفريق كاملة في المقابلة.\n\n${ask("pay_last")}`
-        : `تمام.\n\n${ask("pay_last")}`;
+    case "pp_q1": s.pending = "pp_q2"; reply = PP_Q2; break;
+    case "pp_q2": {
+      p.q2 = PP_Q2_OPTS.find((o) => o.id === choice)?.id || "other";
+      if (p.q2 === "yes" || p.q2 === "conditional") { s.pending = "pp_q3a"; reply = PP_Q3A(g); } else { s.pending = "pp_q3b"; reply = PP_Q3B; }
       break;
     }
-    case "pay_last": reply = `تمام.\n\n${ask("pay_fixed")}`; break;
-    case "pay_fixed": reply = ask("pay_total"); break;
-    case "pay_total": reply = ask("pay_min"); break;
-    case "pay_min": reply = ask("pay_comm"); break;
-    case "pay_comm": pick(COMM_OPTS(g)); reply = ask("pay_comm_why"); break;
-    case "pay_comm_why": s.pending = "hours"; reply = `${G(g, "شكرًا لك.", "شكرًا لكِ.")}\n\n${HOURS_Q}`; break;
-    case "hours": {
-      const o = pick(HOURS_OPTS);
-      if (o.id === "no") { s.pending = null; s.step = "done"; return { reply: koLine(g), step: "done", options: null, outcome: previewOutcome("ko", g) }; }
-      if (o.id === "partly") { s.pending = "hours_detail"; reply = G(g, "تمام. أي ساعات وأيام بالضبط تقدر تشتغل فيها من هالفترة؟", "تمام. أي ساعات وأيام بالضبط تقدرين تشتغلين فيها من هالفترة؟"); }
-      else { s.pending = "job"; reply = `ممتاز.\n\n${JOB_Q(g)}`; }
-      break;
-    }
-    case "hours_detail": s.pending = "job"; reply = `${G(g, "سجّلتها، شكرًا لك.", "سجّلتها، شكرًا لكِ.")}\n\n${JOB_Q(g)}`; break;
-    default: { // job
-      const o = pick(JOB_OPTS(g));
-      s.pending = null;
-      reply = `${o.id === "conflict" ? "تمام، سجّلتها." : "تمام."}\n\n${FIRST_SALES_Q}`;
-    }
+    case "pp_q3a": s.pending = "pp_q4"; reply = PP_Q4; break;
+    case "pp_q3b": p.q3b = PP_Q3B_OPTS.find((o) => o.id === choice)?.id || "other"; s.pending = "pp_q4"; reply = PP_Q4; break;
+    default: // pp_q4
+      s.pending = null; p.done = true; p.tag = appetiteOf(p.q2, p.q3b);
+      return { reply: PP_DONE(g), step: "finish", options: null };
   }
-  return { reply, step: "chat", options: optionsFor(s) };
+  return { reply, step: "pay", options: optionsFor(s), multi: false };
+}
+
+/** «شهية العمولة» the preview walk produced (shown on the result screen, preview only). */
+export function previewTag() {
+  if (!S?.pulse?.done) return null;
+  return S.pulse.tag ? APPETITE_AR[S.pulse.tag] : "غير محدد (إجابة مكتوبة)";
 }
 
 /** A believable answer for «تخطي هذا السؤال». */
 export function previewSample() {
   if (!S) return { text: "تمام" };
+  if (S.pending === "slots") return { text: "العصر، المغرب والليل", choice: "afternoon,evening" };
   const opts = optionsFor(S);
-  if (opts) return { text: opts[0].label, choice: opts[0].id };
-  const byStep = { pay_last: "4000", pay_fixed: "5000", pay_total: "7000", pay_min: "4500", pay_comm_why: "لأن الدخل يزيد مع الجهد", hours_detail: "من 6 إلى 10 كل الأيام" };
+  if (opts && S.pending !== "pp_q4") return { text: opts[0].label, choice: opts[0].id };
+  const byStep = { pp_q1: "آخر راتب 4000، وأتوقع 6000", pp_q3a: "تقريبًا 20 تسجيل", pp_q4: "لأن الدخل يزيد مع الجهد" };
   return { text: byStep[S.pending] || "إجابة نموذجية للمعاينة." };
 }
 
 export async function mockCall(action, p = {}) {
-  await wait(action === "finish" ? 2500 : action === "message" ? 700 : 350);
+  await wait(action === "finish" ? (S?.role === "sales" && !S.pulse?.done ? 400 : 2500) : action === "message" ? 700 : 350);
   if (action === "start") {
     const role = p.role === "trainer" ? "trainer" : "sales";
     const g = p.basics?.gender === "f" ? "f" : "m";
-    S = { role, g, name: p.basics?.name || "", step: "chat", pending: role === "sales" ? "pay" : null, turn: 0, done: {}, attempts: {} };
+    S = { role, g, name: p.basics?.name || "", step: "chat", pending: role === "sales" ? "emp" : null, turn: 0, done: {}, attempts: {}, pulse: {} };
     const base = { application_id: "preview", token: "preview", resumed: false, needs_cv: false, has_cv: false };
     const age = ageOf(p.birth_date);
     if (age !== null && age < 18) { S.step = "done"; return { ...base, step: "done", messages: [], voice_tasks: [], outcome: previewOutcome("under18", g) }; }
@@ -230,13 +244,14 @@ export async function mockCall(action, p = {}) {
     const hi = `أهلًا ${first}! أنا مساعد التوظيف في أكاديمية طلاقة.`.replace("أهلًا !", "أهلًا!");
     const how = G(g, " بسألك كم سؤال قصير، جاوب براحتك وبأسلوبك.", " بسألك كم سؤال قصير، جاوبي براحتك وبأسلوبك.");
     const open = role === "sales"
-      ? `${hi}${how}\n\n${VOICE_KEY_LINE(g)}\n\nنبدأ بكم سؤال سريع عن نظام العمل.\n\n${PAY_Q}`
+      ? `${hi}${how}\n\n${VOICE_KEY_LINE(g)}\n\nنبدأ بسؤالين سريعين.\n\n${EMP_Q}`
       : `${hi}${how}\n\n${G(g, "أول سؤال: حدّثني عن خبرتك في تدريس الإنجليزي — درّست كبار؟ أونلاين؟ وكم سنة تقريبًا؟", "أول سؤال: حدّثيني عن خبرتك في تدريس الإنجليزي — درّستي كبار؟ أونلاين؟ وكم سنة تقريبًا؟")}`;
-    return { ...base, step: "chat", messages: [{ role: "bot", content: open }], options: optionsFor(S), voice_tasks: voiceTasks(S) };
+    return { ...base, step: "chat", messages: [{ role: "bot", content: open }], options: optionsFor(S), multi: multiFor(S), voice_tasks: voiceTasks(S) };
   }
   if (!S) throw Object.assign(new Error("preview"), { code: "AUTH", messageAr: "ابدأ المعاينة من جديد." });
   switch (action) {
     case "message": {
+      if (S.role === "sales" && S.step === "pay") return pulse(S, p.choice, p.text);
       if (S.role === "sales" && S.pending) return screening(S, p.choice, p.text);
       const qs = (S.role === "sales" ? SALES_CHAT : TRAINER_CHAT)(S.g);
       const q = qs[S.turn];
@@ -251,7 +266,13 @@ export async function mockCall(action, p = {}) {
       S.attempts[p.kind] = (S.attempts[p.kind] || 0) + 1;
       return { kind: p.kind, scenario_ar: r ? G(S.g, r.m, r.f) : "", attempts: S.attempts[p.kind], max_attempts: 2, countdown_s: 3, min_s: 30, max_s: 45 };
     }
-    case "finish": S.step = "done"; return { outcome: previewOutcome("book", S.g, S.name) };
+    case "finish":
+      // sales: the pay block comes after the recordings, right before the result
+      if (S.role === "sales" && !S.pulse.done) {
+        if (S.step !== "pay") { S.step = "pay"; S.pending = "pp_q1"; }
+        return { step: "pay", reply: `${PP_INTRO}\n\n${PP_Q1(S.g)}`, options: null, multi: false };
+      }
+      S.step = "done"; return { outcome: previewOutcome("book", S.g, S.name) };
     case "slots": return { slots: sampleSlots() };
     case "book": return { booking: sampleBooking(S.name, p.start) };
     default: return {};
