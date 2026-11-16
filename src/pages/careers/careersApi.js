@@ -4,6 +4,8 @@
  * executes at import time, so the prerender can import the page safely.
  */
 
+import { mockCall, mockAttach } from "./careersPreview";
+
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 const SUPABASE_ANON = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
@@ -21,7 +23,15 @@ export class ApiError extends Error {
 const NETWORK_MSG = "تعذّر الاتصال. نرجو التأكد من الإنترنت والمحاولة مرة ثانية.";
 const RATE_MSG = "كثرت المحاولات خلال وقت قصير. نرجو المحاولة بعد قليل.";
 
+/** /careers?preview=1 — «وضع المعاينة»: every call is answered locally, nothing is saved. Browser only. */
+export function isPreview() {
+  try { return new URLSearchParams(window.location.search).get("preview") === "1"; } catch { return false; }
+}
+
 export async function call(action, payload = {}) {
+  if (isPreview()) {
+    try { return await mockCall(action, payload); } catch (x) { throw new ApiError(x.code || "SERVER", x.messageAr || "صار خلل في المعاينة."); }
+  }
   let res;
   try {
     res = await fetch(`${SUPABASE_URL}/functions/v1/hiring-interview`, {
@@ -58,6 +68,7 @@ async function storage() {
 
 /** upload_url → uploadToSignedUrl → attach. Returns the attach response. */
 export async function uploadAndAttach(app, { kind, blob, mime, ext, seconds }) {
+  if (isPreview()) return mockAttach({ kind });
   const base = { application_id: app.id, token: app.token };
   const up = await call("upload_url", { ...base, kind, mime, size: blob.size, ext });
   const bucket = await storage();
@@ -71,15 +82,18 @@ export async function uploadAndAttach(app, { kind, blob, mime, ext, seconds }) {
 /* ── localStorage (never trust it to exist) ── */
 const key = (role) => `flu_careers:${role}`;
 export function loadSaved(role) {
+  if (isPreview()) return null; // the preview never resumes (or overwrites) a real application
   try {
     const v = JSON.parse(window.localStorage.getItem(key(role)) || "null");
     return v && v.application_id && v.token ? v : null;
   } catch { return null; }
 }
 export function saveApp(role, data) {
+  if (isPreview()) return;
   try { window.localStorage.setItem(key(role), JSON.stringify(data)); } catch { /* private mode */ }
 }
 export function clearSaved(role) {
+  if (isPreview()) return;
   try { window.localStorage.removeItem(key(role)); } catch { /* ignore */ }
 }
 

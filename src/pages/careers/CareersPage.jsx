@@ -17,8 +17,9 @@ import { getAttribution } from "../../lib/attribution";
 import css from "./careers.css?inline";
 import {
   call, ApiError, uploadAndAttach, loadSaved, saveApp, clearSaved,
-  toAscii, phoneLooksValid, CV_EXT, AUDIO_MIME_EXT, extOf, TURNSTILE_SITEKEY,
+  toAscii, phoneLooksValid, CV_EXT, AUDIO_MIME_EXT, extOf, TURNSTILE_SITEKEY, isPreview,
 } from "./careersApi";
+import { previewOutcome, previewSample } from "./careersPreview";
 
 const ROLES = {
   sales: {
@@ -177,7 +178,7 @@ function Turnstile({ onToken, resetKey }) {
 }
 
 /* ───────────────────────── Basics form ───────────────────────── */
-function ApplyForm({ role, saved, onSubmit, busy, error, fieldError }) {
+function ApplyForm({ role, saved, onSubmit, busy, error, fieldError, preview }) {
   const r = ROLES[role];
   const [f, setF] = useState(() => ({
     name: saved?.basics?.name || "", phone: saved?.basics?.phone || "", city: saved?.basics?.city || "",
@@ -211,6 +212,14 @@ function ApplyForm({ role, saved, onSubmit, busy, error, fieldError }) {
 
   const submit = (e) => {
     e.preventDefault();
+    if (preview) { // «وضع المعاينة»: nothing is required, empty fields get sample values
+      onSubmit({
+        basics: { name: f.name.trim() || "ضيف المعاينة", phone: toAscii(f.phone).trim() || "0500000000", city: f.city.trim() || "الرياض",
+          country: f.country.trim() || "السعودية", nationality: f.nationality.trim() || "سعودي", gender: f.gender || "m", email: "" },
+        birth_date: dobOf(dob), consent: { accepted: true, version: CONSENT_VERSION }, file, hp: "", elapsed_ms: 60000, turnstile_token: null,
+      });
+      return;
+    }
     const x = {};
     if (f.name.trim().length < 3) x.name = g(gd, "اكتب/ي اسمك الكامل", "اكتب اسمك الكامل", "اكتبي اسمك الكامل");
     if (!phoneLooksValid(f.phone)) x.phone = "رقم الواتساب غير مكتمل. مثال: 05xxxxxxxx أو +9665xxxxxxxx";
@@ -249,6 +258,7 @@ function ApplyForm({ role, saved, onSubmit, busy, error, fieldError }) {
   return (
     <form className="cr-form cr-card" onSubmit={submit} noValidate aria-labelledby="cr-form-h">
       <p className="cr-form-k">الخطوة الأولى من أربع</p>
+      {preview ? <p className="cr-pv-note" role="note">معاينة: كل الحقول اختيارية هنا — تقدر تضغط «ابدأ المحادثة» مباشرة.</p> : null}
       <h2 id="cr-form-h">التقديم على وظيفة {r.title}</h2>
       <div className="cr-plan" role="group" aria-labelledby="cr-plan-h">
         <p className="cr-plan-h" id="cr-plan-h">الخطوات والوقت المتوقع <span>حوالي 10 دقائق</span></p>
@@ -330,11 +340,11 @@ function ApplyForm({ role, saved, onSubmit, busy, error, fieldError }) {
         {errs.consent ? <p className="cr-err" id="cr-consent-e" role="alert">{errs.consent}</p> : null}
       </div>
 
-      <Turnstile onToken={setToken} resetKey={resetKey} />
+      {preview ? null : <Turnstile onToken={setToken} resetKey={resetKey} />}
       {errs.captcha ? <p className="cr-err" role="alert">{errs.captcha}</p> : null}
       {error ? <p className="cr-err cr-err-box" role="alert">{error}</p> : null}
 
-      <button type="submit" className="cr-btn cr-btn-primary" disabled={busy || (!!TURNSTILE_SITEKEY && !token)}>
+      <button type="submit" className="cr-btn cr-btn-primary" disabled={busy || (!preview && !!TURNSTILE_SITEKEY && !token)}>
         {busy ? "لحظات…" : <>{g(gd, "بدء المحادثة", "ابدأ المحادثة", "ابدئي المحادثة")} <Arrow /></>}
       </button>
       <p className="cr-fine">بياناتك تُستخدم فقط لمراجعة طلب التوظيف، وتبقى سرّية.</p>
@@ -373,7 +383,7 @@ function CvCard({ app, gender, required, onDone }) {
 // How each written answer was produced (integrity signals, never scored): first keystroke → send,
 // pasted characters, times the page lost focus. Reset after every send.
 const freshSig = () => ({ first: 0, pasteChars: 0, paste: false, blur: 0, lastBlur: 0 });
-function Chat({ messages, typing, onSend, error, gender, disabled, options }) {
+function Chat({ messages, typing, onSend, error, gender, disabled, options, onSkip, onSkipAll }) {
   const [text, setText] = useState("");
   const endRef = useRef(null);
   const taRef = useRef(null);
@@ -456,6 +466,12 @@ function Chat({ messages, typing, onSend, error, gender, disabled, options }) {
           </button>
         </div>
         )}
+        {onSkip ? (
+          <div className="cr-pv-tools" role="group" aria-label="أدوات المعاينة">
+            <button type="button" className="cr-pv-btn" disabled={typing} onClick={onSkip}>تخطي هذا السؤال</button>
+            <button type="button" className="cr-pv-btn" disabled={typing} onClick={onSkipAll}>تخطي المحادثة كلها</button>
+          </div>
+        ) : null}
       </div>
     </>
   );
@@ -480,7 +496,7 @@ function WhatNext({ kind, gender }) {
 /* ───────────────────────── Voice ───────────────────────── */
 const fmt = (s) => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, "0")}`;
 
-function VoiceCard({ task, app, gender, onTasks }) {
+function VoiceCard({ task, app, gender, onTasks, onSkip }) {
   const [mode, setMode] = useState("idle"); // idle | opening | countdown | recording | recorded | uploading
   const [elapsed, setElapsed] = useState(0);
   const [rec, setRec] = useState(null); // { blob, seconds, url, mime, ext }
@@ -647,6 +663,7 @@ function VoiceCard({ task, app, gender, onTasks }) {
               <input type="file" accept="audio/*" onChange={pickAudio} />
             </label>
           )}
+          {onSkip && !task.done ? <button type="button" className="cr-pv-btn" onClick={() => onSkip(task.kind)}>تخطي هذا التسجيل</button> : null}
         </div>
       )}
 
@@ -761,10 +778,12 @@ export default function CareersPage() {
   const [slots, setSlots] = useState([]);
   const [slotsLoading, setSlotsLoading] = useState(false);
   const [booking, setBooking] = useState(null);
+  const [preview, setPreview] = useState(false); // read after hydration: the prerendered HTML has no query string
   const formRef = useRef(null);
   const gender = app?.basics?.gender || "";
 
   useEffect(() => {
+    setPreview(isPreview());
     setSaved({ sales: loadSaved("sales"), trainer: loadSaved("trainer") });
     const want = new URLSearchParams(window.location.search).get("role");
     if (want && ROLES[want]) choose(want);
@@ -912,6 +931,16 @@ export default function CareersPage() {
     } catch (x) { setStage("voice"); setError(x.messageAr || "ما قدرنا نرسل الطلب. نرجو المحاولة مرة ثانية."); }
   };
 
+  /* «وضع المعاينة» shortcuts */
+  const skipQuestion = () => { const x = previewSample(); send(x.text, () => {}, x.choice); };
+  const skipChat = async () => {
+    const res = await call("preview_skip_chat");
+    setMessages((m) => [...m, { role: "bot", content: res.reply }]);
+    setOptions(null); setTasks(res.voice_tasks || []); setStage("voice"); window.scrollTo?.(0, 0);
+  };
+  const skipVoice = async (kind) => { const res = await call("preview_skip_voice", { kind }); setTasks(res.voice_tasks || []); };
+  const viewOutcome = (kind) => { setBooking(null); setSlots([]); showOutcome(previewOutcome(kind, gender, app?.basics?.name), app); };
+
   /* booking */
   const book = async (start) => {
     setBusy(true); setError("");
@@ -939,6 +968,12 @@ export default function CareersPage() {
         </a>
         {inFlow && r ? <span className="cr-top-role">{r.title}</span> : null}
       </header>
+      {preview ? (
+        <div className="cr-pv" role="note">
+          <b>وضع المعاينة</b><span>لا يُحفظ شيء، وكل خطوة فيها «تخطي». أسئلة المحادثة الحرة هنا نموذج — في الحقيقة يكتبها المساعد حسب إجابات المتقدم.</span>
+          {inFlow ? <button type="button" className="cr-pv-btn" onClick={() => reset(null)}>من البداية</button> : null}
+        </div>
+      ) : null}
       {inFlow ? <Steps stage={stage} keyVoice={role === "sales"} /> : null}
 
       {!inFlow && (
@@ -976,7 +1011,7 @@ export default function CareersPage() {
           {error && !role ? <p className="cr-err cr-err-box" role="alert">{error}</p> : null}
 
           <div ref={formRef} className="cr-formwrap">
-            {role ? <ApplyForm key={role} role={role} saved={saved[role]} onSubmit={startFlow} busy={busy} error={error} fieldError={fieldError} /> : null}
+            {role ? <ApplyForm key={role} role={role} saved={saved[role]} onSubmit={startFlow} busy={busy} error={error} fieldError={fieldError} preview={preview} /> : null}
           </div>
 
           <section className="cr-how" aria-labelledby="cr-how-h">
@@ -984,7 +1019,7 @@ export default function CareersPage() {
             <ol>
               <li><b>اختيار الوظيفة والبيانات</b><span>الاسم ورقم الواتساب والمدينة، والسيرة الذاتية للمدرّبين.</span></li>
               <li><b>محادثة قصيرة</b><span>أسئلة عن خبرتك مع مساعد التوظيف، بالكتابة.</span></li>
-              <li><b>تسجيل صوتي</b><span>تسجيل قصير بصوتك، نسمع فيه طريقة كلامك. لمستشاري القبول: ردّ على عميل متردد كأنك في مكالمة.</span></li>
+              <li><b>تسجيل صوتي</b><span>تسجيلات قصيرة بصوتك، نسمع فيها طريقة كلامك. لمستشاري القبول: تعريف بنفسك ومكالمتين تمثيليتين قصيرتين.</span></li>
               <li><b>موعد لقاء</b><span>إذا ناسب ملفك الوظيفة، يظهر لك حجز موعد لقاء قصير مباشرة.</span></li>
             </ol>
             <p className="cr-how-total">كل الخطوات تاخذ حوالي 10 دقائق، وبياناتك تبقى سرّية.</p>
@@ -997,7 +1032,8 @@ export default function CareersPage() {
           {stage === "chat" && (
             <>
               {needsCv ? <CvCard app={app} gender={gender} required={cvRequired} onDone={() => setNeedsCv(false)} /> : null}
-              <Chat messages={messages} typing={typing} onSend={send} error={error} gender={gender} options={options} />
+              <Chat messages={messages} typing={typing} onSend={send} error={error} gender={gender} options={options}
+                onSkip={preview ? skipQuestion : undefined} onSkipAll={preview ? skipChat : undefined} />
             </>
           )}
 
@@ -1006,7 +1042,7 @@ export default function CareersPage() {
               <h1 className="cr-flow-h">{g(gender, "خطوة أخيرة: سجّل/ي صوتك", "خطوة أخيرة: سجّل صوتك", "خطوة أخيرة: سجّلي صوتك")}</h1>
               {messages.length ? <div className="cr-card cr-intro" dir="auto">{messages[messages.length - 1].content}</div> : null}
               {keyNote ? <p className="cr-keynote" role="note"><b>الأهم</b><span dir="auto">{keyNote}</span></p> : null}
-              {tasks.map((t) => <VoiceCard key={t.kind} task={t} app={app} gender={gender} onTasks={onTasks} />)}
+              {tasks.map((t) => <VoiceCard key={t.kind} task={t} app={app} gender={gender} onTasks={onTasks} onSkip={preview ? skipVoice : undefined} />)}
               {needsCv ? <CvCard app={app} gender={gender} required={cvRequired} onDone={() => setNeedsCv(false)} /> : null}
               {error ? <p className="cr-err cr-err-box" role="alert">{error}</p> : null}
               <button type="button" className="cr-btn cr-btn-primary cr-submit" disabled={!allDone || (cvRequired && needsCv)} onClick={finish}>إرسال الطلب <Arrow /></button>
@@ -1035,6 +1071,17 @@ export default function CareersPage() {
                   </div>
                 )}
             <WhatNext kind={booking ? "booked" : outcome.kind} gender={gender} />
+            {preview ? (
+              <section className="cr-card cr-pv-out" aria-labelledby="cr-pv-out-h">
+                <h3 id="cr-pv-out-h">معاينة: كل الشاشات اللي ممكن تظهر في النهاية</h3>
+                <div className="cr-pv-tools">
+                  {[["book", "مؤهل: اختيار موعد"], ["booked", "بعد حجز الموعد"], ["thanks", "شكرًا (بعد المراجعة)"], ["ko", "شكرًا (توقف عند الراتب أو الدوام)"], ["under18", "أقل من 18 سنة"]].map(([k, l]) => (
+                    <button key={k} type="button" className="cr-pv-btn" onClick={() => viewOutcome(k)}>{l}</button>
+                  ))}
+                </div>
+                <button type="button" className="cr-btn cr-btn-ghost" onClick={() => reset(null)}>بدء معاينة جديدة</button>
+              </section>
+            ) : null}
             </div>
           )}
         </main>

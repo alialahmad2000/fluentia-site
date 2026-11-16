@@ -333,3 +333,13 @@
 .cr-dob-row{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.4fr) minmax(0,1fr);gap:8px}
 .cr-dob-row select{width:100%;min-width:0;min-height:52px;padding:12px 10px;border-radius:14px;border:1px solid var(--line-2);background:var(--field);color:var(--ink);font:inherit;font-size:16px;text-align:start;appearance:auto}
 .cr-dob-row select[aria-invalid="true"]{border-color:var(--ember)}
+/* «وضع المعاينة» (/careers?preview=1) */
+.cr-pv{position:sticky;top:0;z-index:5;max-width:760px;margin:8px auto 10px;display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;padding:10px 14px;border-radius:14px;background:var(--me);border:1px dashed var(--dawn-500);color:var(--ink);font-size:.86rem;line-height:1.7;box-shadow:var(--shadow)}
+.cr-pv b{flex:none;padding:1px 10px;border-radius:999px;background:var(--dawn-400);font-size:.78rem}
+.cr-pv span{flex:1 1 220px;min-width:0}
+.cr-pv-note{margin:0 0 10px;padding:8px 12px;border-radius:12px;background:var(--me);color:var(--ink-2);font-size:.88rem}
+.cr-pv-tools{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.cr-pv-btn{min-height:40px;padding:6px 14px;border-radius:999px;border:1px dashed var(--dawn-500);background:var(--panel);color:var(--accent-text);font:inherit;font-size:.86rem;font-weight:600;cursor:pointer}
+.cr-pv-btn:disabled{opacity:.5;cursor:default}
+.cr-pv-out{display:flex;flex-direction:column;gap:12px;border:1px dashed var(--dawn-500)}
+.cr-pv-out h3{margin:0;font-size:1rem}
