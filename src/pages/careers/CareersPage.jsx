@@ -468,6 +468,7 @@ function Chat({ messages, typing, onSend, error, gender, disabled, options, onSk
         )}
         {onSkip ? (
           <div className="cr-pv-tools" role="group" aria-label="أدوات المعاينة">
+            <p className="cr-pv-hint">بعد أسئلة الراتب والدوام، الأسئلة هنا نموذج — في الحقيقة يكتبها المساعد حسب إجابات المتقدم.</p>
             <button type="button" className="cr-pv-btn" disabled={typing} onClick={onSkip}>تخطي هذا السؤال</button>
             <button type="button" className="cr-pv-btn" disabled={typing} onClick={onSkipAll}>تخطي المحادثة كلها</button>
           </div>
@@ -970,7 +971,7 @@ export default function CareersPage() {
       </header>
       {preview ? (
         <div className="cr-pv" role="note">
-          <b>وضع المعاينة</b><span>لا يُحفظ شيء، وكل خطوة فيها «تخطي». أسئلة المحادثة الحرة هنا نموذج — في الحقيقة يكتبها المساعد حسب إجابات المتقدم.</span>
+          <b>وضع المعاينة</b><span>لا يُحفظ شيء، ولا شيء مطلوب.</span>
           {inFlow ? <button type="button" className="cr-pv-btn" onClick={() => reset(null)}>من البداية</button> : null}
         </div>
       ) : null}
