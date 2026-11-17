@@ -18,6 +18,19 @@ import { useLocation } from 'react-router-dom';
 
 const STORAGE_KEY = 'fluentia_cookie_consent_v1';
 
+// English pages (/en/…, e.g. /en/careers): same banner in English, LTR. Arabic text below is unchanged.
+const TXT = {
+  ar: { title: 'نحن نقدّر خصوصيتك', slim: 'نستخدم ملفات تعريف الارتباط للتشغيل والتحليلات والإعلانات. ',
+    policy: 'سياسة الخصوصية', ess: 'الضرورية', essSub: 'لتشغيل الموقع — لا يمكن تعطيلها', on: 'مفعّلة', ana: 'التحليلية',
+    mkt: 'التسويقية', mktSub: 'TikTok Pixel و Google Ads', save: 'حفظ الخيارات', back: 'رجوع', all: 'قبول الكل',
+    essOnly: 'الضروري فقط', custom: 'تخصيص' },
+  en: { title: 'We value your privacy', slim: 'We use cookies to run the site, for analytics and for ads. ',
+    body: 'We use essential cookies to run the site, and optional ones for analytics and ads. Choose what you allow, or read our',
+    policy: 'privacy policy', ess: 'Essential', essSub: 'Needed to run the site — always on', on: 'On', ana: 'Analytics',
+    mkt: 'Marketing', mktSub: 'TikTok Pixel and Google Ads', save: 'Save choices', back: 'Back', all: 'Accept all',
+    essOnly: 'Essential only', custom: 'Customise' },
+};
+
 const defaultConsent = {
   essential: true,     // always on
   analytics: false,
@@ -57,8 +70,12 @@ export default function CookieBanner() {
   // /start («مستشار طلاقة» chat): the composer and the contact card live at the
   // bottom of a full-screen chat, so the slim bar sits at the TOP there instead.
   const { pathname } = useLocation();
+  const onEn = /^\/en(\/|$)/.test(pathname);
+  const t = onEn ? TXT.en : TXT.ar;
+  // /en/careers: the hiring chat's composer sits at the bottom too → slim bar that steps aside while typing.
+  const onCareersEn = /^\/en\/careers\/?$/.test(pathname);
   const onChat = /^\/start\/?$/.test(pathname);
-  const compact = onChat || /^\/join\/?$/.test(pathname);
+  const compact = onChat || onCareersEn || /^\/join\/?$/.test(pathname);
   // …and steps aside while a lead form is on screen or being filled, so it
   // never sits over the submit button. Hidden, not dismissed: nothing is written.
   const [overForm, setOverForm] = useState(false);
@@ -101,8 +118,8 @@ export default function CookieBanner() {
       raf = 0;
       const vh = window.innerHeight;
       // The chat's input is always on screen, so there only focus counts (typing → keyboard up).
-      const forms = document.querySelectorAll(onChat ? '.adv-compose, .adv-card' : '#join-form, #join-form-bottom');
-      const inView = !onChat && [...forms].some((f) => {
+      const forms = document.querySelectorAll(onChat ? '.adv-compose, .adv-card' : onCareersEn ? '.cr-composer, .cr-form, .cr-card' : '#join-form, #join-form-bottom');
+      const inView = !onChat && !onCareersEn && [...forms].some((f) => {
         const r = f.getBoundingClientRect();
         return r.top < vh && r.bottom > 0;
       });
@@ -122,7 +139,7 @@ export default function CookieBanner() {
       document.removeEventListener('focusin', later);
       document.removeEventListener('focusout', later);
     };
-  }, [compact, onChat, visible]);
+  }, [compact, onChat, onCareersEn, visible]);
 
   // Keyboard: Escape = reject all
   useEffect(() => {
@@ -159,7 +176,8 @@ export default function CookieBanner() {
       role="dialog"
       aria-labelledby="fluentia-cookie-title"
       aria-describedby="fluentia-cookie-body"
-      dir="rtl"
+      dir={onEn ? 'ltr' : 'rtl'}
+      lang={onEn ? 'en' : undefined}
       style={{
         position: 'fixed',
         insetInlineStart: '1rem',
@@ -177,7 +195,7 @@ export default function CookieBanner() {
         borderRadius: '1rem',
         padding: slim ? '0.75rem 0.875rem' : '1.25rem',
         boxShadow: '0 20px 60px rgba(0,0,0,0.5)',
-        fontFamily: "'Tajawal', 'Segoe UI', sans-serif",
+        fontFamily: onEn ? "'Inter', 'Segoe UI', system-ui, sans-serif" : "'Tajawal', 'Segoe UI', sans-serif",
         color: '#e2e8f0',
         animation: 'fluentiaCookieIn 0.4s ease-out',
       }}
@@ -235,7 +253,7 @@ export default function CookieBanner() {
           margin: '0 0 0.5rem',
         }}
       >
-        نحن نقدّر خصوصيتك
+        {t.title}
       </h2>
       <p
         id="fluentia-cookie-body"
@@ -246,7 +264,7 @@ export default function CookieBanner() {
           margin: slim ? '0 0 0.5rem' : '0 0 1rem',
         }}
       >
-        {slim ? 'نستخدم ملفات تعريف الارتباط للتشغيل والتحليلات والإعلانات. ' : <>
+        {slim ? t.slim : onEn ? <>{t.body}{' '}</> : <>
         نستخدم ملفات تعريف الارتباط الضرورية لتشغيل الموقع، وملفات اختيارية للتحليلات والإعلانات.
         تحكّم في خياراتك، أو اقرأ{' '}
         </>}
@@ -254,7 +272,7 @@ export default function CookieBanner() {
           href="/privacy"
           style={{ color: '#38bdf8', textDecoration: 'underline' }}
         >
-          سياسة الخصوصية
+          {t.policy}
         </a>
         .
       </p>
@@ -264,21 +282,21 @@ export default function CookieBanner() {
           <div className="flu-cookie-toggle">
             <div>
               <div style={{ fontSize: '0.9375rem', fontWeight: 700, color: '#f8fafc' }}>
-                الضرورية
+                {t.ess}
               </div>
               <div style={{ fontSize: '0.8125rem', color: '#7e8a9a' }}>
-                لتشغيل الموقع — لا يمكن تعطيلها
+                {t.essSub}
               </div>
             </div>
             <span style={{ fontSize: '0.8125rem', color: '#38bdf8', fontWeight: 700 }}>
-              مفعّلة
+              {t.on}
             </span>
           </div>
 
           <label className="flu-cookie-toggle" style={{ cursor: 'pointer' }}>
             <div>
               <div style={{ fontSize: '0.9375rem', fontWeight: 700, color: '#f8fafc' }}>
-                التحليلية
+                {t.ana}
               </div>
               <div style={{ fontSize: '0.8125rem', color: '#7e8a9a' }}>
                 Google Analytics
@@ -297,10 +315,10 @@ export default function CookieBanner() {
           <label className="flu-cookie-toggle" style={{ cursor: 'pointer' }}>
             <div>
               <div style={{ fontSize: '0.9375rem', fontWeight: 700, color: '#f8fafc' }}>
-                التسويقية
+                {t.mkt}
               </div>
               <div style={{ fontSize: '0.8125rem', color: '#7e8a9a' }}>
-                TikTok Pixel و Google Ads
+                {t.mktSub}
               </div>
             </div>
             <input
@@ -327,31 +345,31 @@ export default function CookieBanner() {
         {showCustomize ? (
           <>
             <button className="flu-cookie-btn flu-cookie-btn-primary" onClick={handleSaveCustom}>
-              حفظ الخيارات
+              {t.save}
             </button>
             <button
               className="flu-cookie-btn flu-cookie-btn-ghost"
               onClick={() => setShowCustomize(false)}
             >
-              رجوع
+              {t.back}
             </button>
           </>
         ) : (
           <>
             <button className="flu-cookie-btn flu-cookie-btn-primary" onClick={handleAcceptAll}>
-              قبول الكل
+              {t.all}
             </button>
             <button
               className="flu-cookie-btn flu-cookie-btn-secondary"
               onClick={handleEssentialOnly}
             >
-              الضروري فقط
+              {t.essOnly}
             </button>
             <button
               className="flu-cookie-btn flu-cookie-btn-ghost"
               onClick={() => setShowCustomize(true)}
             >
-              تخصيص
+              {t.custom}
             </button>
           </>
         )}
