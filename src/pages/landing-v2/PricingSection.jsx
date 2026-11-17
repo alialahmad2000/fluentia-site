@@ -160,7 +160,6 @@ export default function PricingSection() {
             <VipCard
               tier={{
                 ...PRICING.intensiveTier,
-                priceLow: PRICING.intensiveTier.price,
                 features: [...PRICING.intensiveTier.glance.map((g) => `${g.value} ${g.label} (${g.sub})`), ...PRICING.intensiveTier.features],
               }}
               availability={REGISTRATION.tiers[PRICING.intensiveTier.id]}
@@ -928,7 +927,7 @@ function VipCard({ tier, availability, regStatus }) {
           <AvailabilityBadge availability={availability} regStatus={regStatus} />
         </div>
 
-        {/* Price RANGE */}
+        {/* Price */}
         <div
           style={{
             display: "flex",
@@ -949,7 +948,7 @@ function VipCard({ tier, availability, regStatus }) {
               fontVariantNumeric: "tabular-nums",
             }}
           >
-            {tier.priceLow.toLocaleString("en")}
+            {tier.price.toLocaleString("en")}
           </span>
           {tier.priceHigh ? (
             <>

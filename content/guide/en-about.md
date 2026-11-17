@@ -57,12 +57,12 @@ All prices are monthly, in Saudi riyals (SAR). There are five packages:
 | Package | Monthly price | What is included |
 |---|---|---|
 | Self-study (التعلم الذاتي) | SAR 500 | full platform, access starts after a short call with the academy, no live classes, no trainer follow-up |
-| Asas (أساس) | SAR 750 | 8 group classes a month (max 7 students), full platform, monthly assessment and trainer follow-up, Telegram community |
+| Asas (أساس) | SAR 750 | 8 group classes a month (max 7 students), full platform, monthly assessment and trainer follow-up, a supportive student community inside the Fluentia platform and app |
 | Tamayuz (تميّز), the package the academy recommends | SAR 1,500 | everything in Asas, plus 4 private classes a month (one a week), intensive daily follow-up, weekly assessment and a personal development plan, exclusive question bank, full lesson library, recorded content |
-| Private training (التدريب الفردي) | from SAR 2,000 | private classes only; the number of weekly classes is agreed in the free initial meeting and sets the price; custom curriculum; direct daily follow-up with unlimited writing and pronunciation correction; job-interview, presentation and public-speaking training; priority replies |
+| Private training (التدريب الفردي) | SAR 2,000 (fixed) | 2 private classes a week plus 1 practice session a week with the academic mentor (lighter mentor involvement than the intensive); custom curriculum; direct daily follow-up with unlimited writing and pronunciation correction; job-interview, presentation and public-speaking training; priority replies |
 | Intensive private training (التدريب الفردي المكثّف) | SAR 3,000 | 12 private classes a month (3 a week) with a dedicated teacher, plus 8 practice sessions a month (2 a week) with an academic mentor, i.e. 5 meetings a week; extended diagnostic session; curriculum designed for the learner's field; full platform; everything in Private training |
 
-The academic mentor in the intensive programme is usually a native English speaker and is a different person from the teacher. The SAR 2,000 programme includes no mentor and no practice sessions. Private packages are priced monthly only. More detail in Arabic: [pricing](/guide/pricing) and [private training](/guide/private-training).
+The academic mentor in the intensive programme is usually a native English speaker and is a different person from the teacher. The SAR 2,000 programme includes one weekly practice session with the mentor, with lighter mentor involvement than the intensive. Private packages are priced monthly only. More detail in Arabic: [pricing](/guide/pricing) and [private training](/guide/private-training).
 
 ## What are the payment and cancellation rules?
 
@@ -81,11 +81,11 @@ Full text (Arabic): [terms of use](/terms) and [privacy policy](/privacy).
 ## How do you start at Fluentia Academy?
 
 1. **Register a name and phone number** on the website (about 30 seconds). The academy replies on WhatsApp within hours. For the one-to-one programmes, a consultation is booked on [the private training page](/private).
-2. **Free initial meeting** with the trainer, before any payment and with no commitment.
+2. **Free initial meeting** with a trainer (the academy's trainers are Saudi, men and women), before any payment and with no commitment.
 3. **Level, goal and schedule** are identified in that meeting. The free [placement test](/level-test) is optional and its result can be sent on WhatsApp to get a plan.
-4. **Track and package** are recommended. For Private training, the number of weekly classes and therefore the price is agreed here.
+4. **Track and package** are recommended. For Private training, the fixed SAR 2,000 plan (2 private classes and 1 practice session a week) is confirmed here.
 5. **Monthly payment, first classes and platform access.** Classes start at the beginning of each Gregorian month; learners can join any time and the trainer makes up what was missed. The platform is open from day one.
-6. **Follow-up and progress.** Daily follow-up outside class happens on Telegram; assessments are monthly in Asas and weekly in Tamayuz.
+6. **Follow-up and progress.** Follow-up, communication and the student community all happen inside the Fluentia platform and app; assessments are monthly in Asas and weekly in Tamayuz.
 
 The academy expects 3 to 5 hours a week of learner time (in and outside class), and at least 3 months to see a real difference.
 
@@ -124,7 +124,7 @@ Tools include instant AI assessment of pronunciation and writing; spaced repetit
 Fully online. Live classes run on Google Meet, and the learning platform is at app.fluentia.academy.
 
 ### How much does Fluentia Academy cost per month?
-Self-study SAR 500, Asas SAR 750, Tamayuz SAR 1,500, Private training from SAR 2,000, and Intensive private training SAR 3,000 per month.
+Self-study SAR 500, Asas SAR 750, Tamayuz SAR 1,500, Private training SAR 2,000, and Intensive private training SAR 3,000 per month.
 
 ### How many students are in a group class?
 A maximum of 7, all at the same level.

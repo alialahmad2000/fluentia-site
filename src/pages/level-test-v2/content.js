@@ -4,7 +4,7 @@
  * plural, nouns). After, `g(gender, m, f)` picks the form.
  * Banned anywhere (scripts/level-test-v2/lint-copy.mjs checks):
  *   معهد · دورة/دورات · مذهل · مميز · استثنائي · الأفضل · حبيبتي · كلاس تجريبي
- * Trainers are men: never promise a female trainer. No prices, no refunds,
+ * Trainers are Saudi, men and women: never promise a specific gender. No prices,
  * no claim of official STEP/IELTS equivalence.
  * ========================================================================== */
 

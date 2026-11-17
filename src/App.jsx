@@ -166,7 +166,7 @@ const pkgs = [
     {t:"وصول كامل للمنصة التعليمية",ok:1,hl:1},{t:"جميع التسجيلات والدروس المسجلة",ok:1,hl:1},{t:"المنهج الكامل + المواد التعليمية",ok:1},{t:"التمارين والأنشطة التفاعلية",ok:1},{t:"اختبارات قياس المستوى",ok:1},{t:"كلاسات لايف جماعية",ok:0},{t:"متابعة مع مدرب",ok:0},{t:"حصص فردية",ok:0}
   ], cta:"اشترك الآن", note:"يبدأ الوصول بعد مكالمة قصيرة"},
   { id:2, section:"starter", nm:"أساس", sub:"للبداية مع الكلاسات الجماعية", pr:750, pop:false, prem:false, seats:5, f:[
-    {t:"8 كلاسات جماعية شهرياً",sub:"ساعة - ساعتين لكل كلاس",ok:1,hl:1},{t:"وصول كامل للمنصة التعليمية",ok:1},{t:"7 طلاب كحد أقصى",ok:1},{t:"التمارين والأنشطة التفاعلية",ok:1},{t:"مجتمع تيليجرام داعم",ok:1},{t:"تقييم شهري",ok:1},{t:"متابعة يومية مع المدرب",ok:0},{t:"حصص فردية",ok:0}
+    {t:"8 كلاسات جماعية شهرياً",sub:"ساعة - ساعتين لكل كلاس",ok:1,hl:1},{t:"وصول كامل للمنصة التعليمية",ok:1},{t:"7 طلاب كحد أقصى",ok:1},{t:"التمارين والأنشطة التفاعلية",ok:1},{t:"مجتمع طلاب داعم داخل المنصة والتطبيق",ok:1},{t:"تقييم شهري",ok:1},{t:"متابعة يومية مع المدرب",ok:0},{t:"حصص فردية",ok:0}
   ], cta:"ابدأ مجاناً", note:"لقاء مبدئي مجاني"},
   // ═══ القسم 2: للجدية والتمكّن ═══
   { id:3, section:"serious", nm:"طلاقة", sub:"نتائج حقيقية بتكلفة معقولة", pr:1100, pop:false, prem:false, seats:3, f:[
@@ -175,8 +175,8 @@ const pkgs = [
   { id:4, section:"serious", nm:"تميّز", sub:"نتائج مكثفة وسريعة", pr:1500, pop:true, prem:false, seats:2, f:[
     {t:"8 كلاسات جماعية شهرياً",ok:1},{t:"7 طلاب كحد أقصى",ok:1},{t:"مواد حصرية + بنك أسئلة كامل",ok:1},{t:"تقييم أسبوعي",sub:"4× أسرع تقدماً",ok:1,hl:1},{t:"متابعة مكثفة + ملاحظات شخصية يومياً",ok:1,hl:1},{t:"مكتبة دروس مسجلة غير محدودة",ok:1,hl:1},{t:"4 حصص فردية شهرياً",sub:"حصة كل أسبوع",ok:1,hl:1},{t:"تقرير أسبوعي + خطة تطوير شخصية",ok:1,hl:1}
   ], cta:"ابدأ مجاناً", note:"لقاء مبدئي مجاني"},
-  { id:5, section:"serious", nm:"التدريب الشخصي المباشر", sub:"الأفضل إطلاقاً — VIP", pr:"1,800 - 2,000", priceNote:"حسب المدرب المختار", pop:false, prem:true, seats:1, f:[
-    {t:"كل مميزات باقة تميّز",ok:1},{t:"حصص فردية غير محدودة",sub:"المدرب يعطيك حسب حاجتك",ok:1,hl:1},{t:"مدرب شخصي مخصص لك",ok:1,hl:1},{t:"تواصل مباشر مع مدربك 24/7",ok:1,hl:1},{t:"تدريب على مقابلات العمل بالإنجليزي",ok:1,hl:1},{t:"تدريب على العروض التقديمية",ok:1,hl:1},{t:"تدريب على التحدث أمام الجمهور",ok:1,hl:1},{t:"خطة دراسية شخصية حسب هدفك",ok:1,hl:1}
+  { id:5, section:"serious", nm:"التدريب الشخصي المباشر", sub:"الأفضل إطلاقاً — VIP", pr:"2,000", priceNote:"حصتان فرديتان + جلسة ممارسة أسبوعياً", pop:false, prem:true, seats:1, f:[
+    {t:"كل مميزات باقة تميّز",ok:1},{t:"حصتان فرديتان + جلسة ممارسة أسبوعياً",sub:"الجلسة مع المرشد الأكاديمي",ok:1,hl:1},{t:"مدرب شخصي مخصص لك",ok:1,hl:1},{t:"تواصل مباشر مع مدربك 24/7",ok:1,hl:1},{t:"تدريب على مقابلات العمل بالإنجليزي",ok:1,hl:1},{t:"تدريب على العروض التقديمية",ok:1,hl:1},{t:"تدريب على التحدث أمام الجمهور",ok:1,hl:1},{t:"خطة دراسية شخصية حسب هدفك",ok:1,hl:1}
   ], cta:"ابدأ مجاناً", note:"لقاء مبدئي مجاني"},
 ];
 const fqs = [
@@ -445,7 +445,7 @@ function RegForm({pkg:initPkg,path:initPath,onClose}){
     {nm:"أساس",pr:"750",desc:"8 كلاسات + منصة",color:"#64748b"},
     {nm:"طلاقة",pr:"1,100",desc:"+ متابعة يومية + حصة فردية شهرية",color:SKY},
     {nm:"تميّز",pr:"1,500",desc:"+ 4 حصص فردية شهرياً",color:GOLD,pop:true,badge:"⭐ الأكثر طلباً"},
-    {nm:"التدريب الشخصي المباشر",pr:"1,800-2,000",desc:"VIP · حصص غير محدودة",color:"#a855f7",badge2:"💎 VIP"},
+    {nm:"التدريب الشخصي المباشر",pr:"2,000",desc:"VIP · حصتان فرديتان + جلسة ممارسة أسبوعياً",color:"#a855f7",badge2:"💎 VIP"},
   ];
   return(
     <div style={{position:"fixed",inset:0,zIndex:2000,background:"rgba(6,14,28,0.95)",backdropFilter:"blur(20px)",display:"flex",alignItems:"center",justifyContent:"center",padding:"20px"}} onClick={onClose}>
@@ -744,7 +744,7 @@ section+section::before{content:'';display:block;height:1px;background:linear-gr
     <div style={{maxWidth:"700px"}}>
       <Reveal><div style={{display:"inline-block",padding:"6px 18px",marginBottom:"28px",border:"1px solid var(--sky-b)",borderRadius:"100px",color:SKY,fontSize:"0.875rem",fontWeight:700}}>أكاديمية سعودية متخصصة</div></Reveal>
       <Reveal d={0.1} y={80}><h1 style={{fontSize:"clamp(2.625rem,8vw,4.75rem)",fontWeight:900,lineHeight:1.05,marginBottom:"24px",color:"var(--t1)",letterSpacing:"-2px",textShadow:dark?"0 0 80px rgba(56,189,248,0.2)":"none"}}>تكلّم<br/><span style={{background:`linear-gradient(135deg,${SKY},${SKY_L},#fff,${SKY})`,backgroundSize:"300% 100%",animation:"textShine 4s linear infinite",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",filter:dark?"drop-shadow(0 0 30px rgba(56,189,248,0.3))":"none"}}>إنجليزي</span><br/>بطلاقة<span style={{color:SKY}}>.</span></h1></Reveal>
-      <Reveal d={0.2}><p style={{fontSize:"1.125rem",color:"var(--t2)",lineHeight:2,marginBottom:"36px",maxWidth:"460px",fontWeight:300}}>مدربون سعوديون · كلاسات لايف · حد أقصى <span style={{color:SKY,fontWeight:700}}>٧</span> طلاب<br/>3 مسارات: تأسيس · تطوير · IELTS</p></Reveal>
+      <Reveal d={0.2}><p style={{fontSize:"1.125rem",color:"var(--t2)",lineHeight:2,marginBottom:"36px",maxWidth:"460px",fontWeight:300}}>مدربون ومدربات سعوديون · كلاسات لايف · حد أقصى <span style={{color:SKY,fontWeight:700}}>٧</span> طلاب<br/>3 مسارات: تأسيس · تطوير · IELTS</p></Reveal>
       <Reveal d={0.3}><div style={{display:"flex",gap:"10px",flexWrap:"wrap"}}>
         <button onClick={goPrice} style={{display:"inline-flex",alignItems:"center",gap:"8px",background:SKY,color:"#060e1c",padding:"16px 32px",borderRadius:"60px",fontSize:"1.0625rem",fontWeight:800,border:"none",cursor:"pointer",boxShadow:"0 0 40px rgba(56,189,248,0.15)",fontFamily:"'Tajawal',sans-serif"}}>احجز لقاءك المجاني ←</button>
         <button onClick={()=>setShowQuiz(true)} style={{display:"inline-flex",alignItems:"center",border:"1px solid var(--sky-b)",background:"var(--sky-bg)",color:SKY,padding:"16px 24px",borderRadius:"60px",fontSize:"1rem",fontWeight:600,cursor:"pointer",fontFamily:"'Tajawal',sans-serif"}}>📊 اكتشف مستواك بـ 2 دقيقة</button>
@@ -1128,7 +1128,7 @@ section+section::before{content:'';display:block;height:1px;background:linear-gr
           <span style={{color:SKY}}>F</span>luentia
         </div>
         <p style={{fontSize:"0.875rem",color:"var(--t3)",lineHeight:1.7,maxWidth:"260px",fontFamily:"'Tajawal',sans-serif",margin:0}}>
-          أكاديمية طلاقة — تعلَّم الإنجليزي مع مدربين سعوديين محترفين في مجموعات صغيرة.
+          أكاديمية طلاقة — تعلَّم الإنجليزي مع مدربين ومدربات سعوديين محترفين في مجموعات صغيرة.
         </p>
       </div>
       <div>

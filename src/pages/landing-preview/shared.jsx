@@ -305,8 +305,7 @@ export function Pricing({ title }) {
               <h3 className="pv-tier-name">{t.name}</h3>
               <p className="pv-vip-aud">{t.audienceLabel}</p>
               <p className="pv-price">
-                {t.priceLow ? <span className="pv-price-from">من</span> : null}
-                <span className="pv-price-n" dir="ltr">{fmt(t.priceLow || t.price)}</span>
+                <span className="pv-price-n" dir="ltr">{fmt(t.price)}</span>
                 <span className="pv-price-s">{t.priceSuffix}</span>
               </p>
               <p className="pv-tier-tag">{t.promise}</p>

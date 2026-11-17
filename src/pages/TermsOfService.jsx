@@ -96,7 +96,6 @@ export default function TermsOfService() {
         <li>
           <strong>لا يوجد التزام طويل الأمد</strong> — يمكنك إيقاف اشتراكك في نهاية أي شهر.
         </li>
-        <li>المبالغ المدفوعة غير قابلة للاسترداد.</li>
         <li>
           <strong>تغيير الباقة:</strong> يمكنك الترقية أو التخفيض في بداية الشهر التالي. لا يُعدَّل
           السعر في منتصف الشهر.
@@ -199,7 +198,7 @@ export default function TermsOfService() {
           </p>
           <p>
             <strong>Payment:</strong> monthly in advance, in Saudi Riyals (SAR). No long-term
-            commitment; cancel at the end of any month. Amounts paid are non-refundable.
+            commitment; cancel at the end of any month.
           </p>
           <p>
             <strong>Conduct:</strong> respect trainers and peers, attend on time, do not record or

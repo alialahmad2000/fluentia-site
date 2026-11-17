@@ -18,7 +18,7 @@ const intensive = PRICING.intensiveTier;
 export const TIERS = [
   { id: self.id, name: self.name, price: self.price },
   ...PRICING.tiers.map((t) => ({ id: t.id, name: t.name, price: t.price })),
-  { id: vip.id, name: vip.name, price: vip.priceLow, priceFrom: true },
+  { id: vip.id, name: vip.name, price: vip.price, priceFrom: false },
   { id: intensive.id, name: intensive.name, price: intensive.price },
 ];
 

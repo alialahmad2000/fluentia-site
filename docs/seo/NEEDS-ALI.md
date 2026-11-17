@@ -16,6 +16,12 @@ AI assistants cannot quote what is not published.
 - ✅ **Search Console:** verified; sitemap.xml resubmitted 2026-11-14, read with no errors (66 pages).
 - ✅ **GA4 ↔ Google Ads:** GA4 property 529704836 (account 388672751) linked to Ads 931-483-8750; `generate_lead` imported as a primary conversion.
 
+**Resolved (Ali, 2026-11-17 — site facts correction, `FACTS.md` updated):**
+- ✅ **Refunds → none stated anywhere.** The refund clause was removed from the terms page and every other mention (guides, FAQ, JSON-LD, FACTS). No replacement wording. Cancellation stays «monthly, stop at the end of any month».
+- ✅ **Follow-up channel (#9) → Telegram is not used.** Follow-up, communication and the student community all happen **inside the Fluentia platform and app**. Every Telegram mention was removed.
+- ✅ **التدريب الفردي (#13) → fixed 2,000 SAR / month, not «from».** 2 private classes + 1 practice session with the academic mentor per week; the mentor's involvement is lighter than in the intensive. (The «extra weekly class / above 3,000» question no longer applies.) The intensive stays 3,000 SAR: 12 private + 8 practice sessions a month.
+- ✅ **Trainers (#11, #5 partly) → Saudi, men and women.** Wording is now «مدربون ومدربات سعوديون»; no male-only wording remains. (Whether groups are mixed or separate, and whether a learner may request a female/male trainer, is still open — #5.)
+
 **Still open:**
 1. Homepage direction: choose /preview/a, b or c.
 2. Founder photo for /about.
@@ -27,19 +33,19 @@ AI assistants cannot quote what is not published.
 ## A. Classes and schedule
 1. **Class length** in minutes (group class / 1:1 class / intensive practice session)? → faq, pricing, private-training, about, en/about
 2. **Group times:** which days and hours do أساس / تميّز groups run (evenings? weekends? several slots to choose from)? Can a learner move to another group later? → faq, group-vs-private, how-it-works
-3. **1:1 times (2,000 plan):** freely agreed with the learner like the intensive («المواعيد نتفق عليها معك»)? → english-for-work, how-to-choose, faq
+3. **1:1 times (2,000 plan, now 2 classes + 1 practice a week):** freely agreed with the learner like the intensive («المواعيد نتفق عليها معك»)? → english-for-work, how-to-choose, faq
 4. **Missed class** (absence, not lateness): make-up class, or the recording only? → faq
 5. **Mixed or separate** groups for women and men? Can a learner request a female/male trainer? → faq, group-vs-private
 6. **Camera** required on Google Meet, or audio-only accepted? → faq (الأمور التقنية)
 7. **Language of explanation** for beginners: Arabic support at low levels, English-only higher up? → faq, about, english-from-zero
 8. Is a **Pre-A1 group** open every month, or does a true beginner sometimes wait / go 1:1? Does Pre-A1 start from the alphabet? → english-from-zero
-9. **Follow-up channel:** daily follow-up via Telegram for every package that has it (تميّز, 1:1, intensive)? /start says «يومياً عبر تيليجرام» for all, but أساس is listed as **monthly** follow-up — which is right for أساس? → faq, speaking-fluency, private-training
+9. ✅ *(Ali 2026-11-17: no Telegram — follow-up, communication and community are inside the Fluentia platform and app)* **Follow-up channel.** Open remainder: أساس is listed as **monthly** follow-up while /start says daily follow-up — which is right for أساس? → faq, speaking-fluency, private-training
 10. Is **«تسجيل الحصة»** (class recording in each unit) in every package with live classes? → faq, speaking-fluency, english-for-work
-11. ✅ *(Saudi: yes, Ali 2026-11-14 — credentials still open)* Who teaches the **group classes** — may we write «مدربون سعوديون» (homepage meta and /start say it; /private says the mentor is usually a native speaker)? Any trainer credentials we can publish? → about, faq, is-fluentia-legit
+11. ✅ *(Saudi, men and women — Ali 2026-11-14 / 2026-11-17; credentials still open)* Who teaches the **group classes** — may we write «مدربون سعوديون» (homepage meta and /start say it; /private says the mentor is usually a native speaker)? Any trainer credentials we can publish? → about, faq, is-fluentia-legit
 
 ## B. Packages and payment
 12. **Payment methods** (mada, Apple Pay, card, bank transfer, STC Pay, instalments)? → pricing, faq, how-it-works
-13. **التدريب الفردي (from 2,000):** how many weekly classes does 2,000 buy, what does each extra weekly class add, and can it go above 3,000? → pricing, private-training, faq
+13. ✅ *(Ali 2026-11-17)* **التدريب الفردي:** fixed 2,000 SAR / month = 2 private classes + 1 practice session with the academic mentor per week (mentor involvement lighter than the intensive). → pricing, private-training, faq
 14. Does the **2,000 plan include the full platform**? (stated for every other package, not for this one) → pricing, private-training, faq
 15. **Joining mid-month:** is the first month prorated, and what exactly does «المدرب يعوّضك» mean? → pricing, how-it-works, english-from-zero
 16. **Self-study (500):** bought directly with instant access, or also through an initial meeting? Where is it bought? Is its «مساعد AI للمحادثة والنطق» still live now that «المحادثة مع ليلى» is hidden? → pricing, how-it-works

@@ -80,7 +80,7 @@ export function packages() {
       from: false,
       desc: `${t.tagline} يشمل: ${list(t.features)}.`,
     })),
-    { id: v.id, name: v.name, en: "1-on-1 training", price: v.priceLow, from: true, desc: `${v.tagline} ${v.priceNote} يشمل: ${list(v.features)}.` },
+    { id: v.id, name: v.name, en: "1-on-1 training", price: v.price, from: false, desc: `${v.tagline} ${v.priceNote} يشمل: ${list(v.features)}.` },
     { id: i.id, name: i.name, en: "Intensive 1-on-1 (12 classes + 8 practice sessions / month)", price: i.price, from: false, desc: `${i.tagline} ${i.priceNote} يشمل: ${list(i.features)}.` },
   ];
 }

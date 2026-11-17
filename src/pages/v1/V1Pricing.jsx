@@ -179,7 +179,7 @@ export default function V1Pricing({ embedded = false } = {}) {
         <Reveal delay={0.05}>
           <div className="v1p-solo">
             {[
-              { t: vip, id: "vip", from: true, price: vip.priceLow, note: vip.priceNote },
+              { t: vip, id: "vip", from: false, price: vip.price, note: vip.priceNote },
               { t: intensive, id: "int", from: false, price: intensive.price, note: null, strong: true },
             ].map(({ t, id, from, price, note, strong }) => (
               <article key={t.id} className={`v1-card v1p-vip${strong ? " is-intensive" : ""}`} aria-labelledby={`v1p-${id}-name`}>

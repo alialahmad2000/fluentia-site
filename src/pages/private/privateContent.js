@@ -22,7 +22,7 @@ export const fmt = (n) => n.toLocaleString("en-US");
 /** The two packages the form and the comparison offer. Intensive first: it is the default. */
 export const PACKAGES = [
   { id: intensive.id, name: intensive.name, short: "الفردي المكثّف", price: intensive.price, priceFrom: false },
-  { id: vip.id, name: vip.name, short: "الفردي", price: vip.priceLow, priceFrom: true },
+  { id: vip.id, name: vip.name, short: "الفردي", price: vip.price, priceFrom: false },
 ];
 export const DEFAULT_PKG = intensive.id;
 
@@ -116,10 +116,9 @@ export const WEEK = {
 
 /**
  * Comparison rows. `vip` / `int`: a string, or true (included) / false (not
- * included). Every false is sourced: the 2,000 plan's own note sends anyone who
- * wants practice sessions to the intensive plan.
- * Dropped (not stated for the 2,000 plan anywhere): «المرشد الأكاديمي» and
- * «المنصّة التعليمية كاملة» as rows.
+ * included). The 2,000 plan = 2 private classes + 1 practice session a week with
+ * the academic mentor (lighter mentor involvement than the intensive) — Ali, 2026-11-17.
+ * Dropped (not stated for the 2,000 plan anywhere): «المنصّة التعليمية كاملة» as a row.
  */
 export const COMPARE = {
   label: "قارن",
@@ -127,13 +126,13 @@ export const COMPARE = {
   intro: "الباقتين فرديتين بالكامل. الفرق في الإيقاع، وفي جلسات الممارسة مع المرشد الأكاديمي.",
   rows: [
     // no-break spaces keep «3,000 ر.س» and «/ شهرياً» whole when a phone column wraps
-    { label: "السعر الشهري", vip: `من\u00a0${fmt(vip.priceLow)}\u00a0ر.س /\u00a0شهرياً`, int: `${fmt(intensive.price)}\u00a0ر.س /\u00a0شهرياً`, strong: true },
-    { label: "حصص فردية مع معلمك", vip: "حسب ما نتفق عليه معك", int: "12 في الشهر · 3 أسبوعياً" },
-    { label: "جلسات ممارسة مع المرشد الأكاديمي", vip: false, int: "8 في الشهر · 2 أسبوعياً" },
+    { label: "السعر الشهري", vip: `${fmt(vip.price)}\u00a0ر.س /\u00a0شهرياً`, int: `${fmt(intensive.price)}\u00a0ر.س /\u00a0شهرياً`, strong: true },
+    { label: "حصص فردية مع معلمك", vip: "حصتان أسبوعياً", int: "12 في الشهر · 3 أسبوعياً" },
+    { label: "جلسات ممارسة مع المرشد الأكاديمي", vip: "جلسة واحدة أسبوعياً · متابعة أخف",  int: "8 في الشهر · 2 أسبوعياً" },
     { label: "المنهج", vip: "منهج مخصّص يتكيّف معك ومع هدفك", int: "جلسة تشخيص مطوّلة + منهج مصمم لمجالك" },
     { label: "متابعة يومية + تصحيح كتابي ونطق", vip: true, int: true },
     { label: "تدريب على المقابلات والعروض والإلقاء", vip: true, int: true },
-    { label: "الإيقاع الأسبوعي", vip: "نتفق عليه في اللقاء المبدئي", int: "5 لقاءات كل أسبوع" },
+    { label: "الإيقاع الأسبوعي", vip: "3 لقاءات كل أسبوع", int: "5 لقاءات كل أسبوع" },
   ],
   vipNote: vip.priceNote,
 };
@@ -179,7 +178,7 @@ export const FAQ_PRIVATE = {
   items: [
     {
       q: "وش الفرق بين المعلم والمرشد الأكاديمي؟",
-      a: "معلمك الخاص يعطيك الحصص الفردية على منهجك. مرشدك الأكاديمي شخص ثاني: يوجّهك ويتابع تقدمك، ويعطيك جلسات ممارسة خاصة تستهدف نقاط ضعفك بالذات. في الفردي المكثّف يشتغل عليك الاثنين، كل واحد بدوره.",
+      a: "معلمك الخاص يعطيك الحصص الفردية على منهجك. مرشدك الأكاديمي شخص ثاني: يوجّهك ويتابع تقدمك، ويعطيك جلسات ممارسة خاصة تستهدف نقاط ضعفك بالذات. في الفردي عندك جلسة ممارسة أسبوعية مع المرشد، وفي الفردي المكثّف يشتغل عليك الاثنين بإيقاع أوسع: 3 حصص وجلستين ممارسة كل أسبوع.",
     },
     {
       q: "هل المرشد متحدث أصلي؟",

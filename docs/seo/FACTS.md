@@ -26,7 +26,7 @@ source of truth the homepage renders through `V1Pricing.jsx`);
 | Delivery | 100% online; live classes via **Google Meet** | terms §2 (line 78), `src/pages/AboutPage.jsx:345` |
 | Founder | د. علي الأحمد (Dr. Ali Alahmad) | `/about`, index.html JSON-LD `founder` |
 | Founded | **2021** («منذ 2021» / «تأسست عام 2021») — Ali, 2026-11-14 | `/about`, JSON-LD `foundingDate` |
-| Trainers | **Saudi — all of them** («مدربون سعوديون») — Ali, 2026-11-14 | homepage meta, /start/form |
+| Trainers | **Saudi, men and women** («مدربون ومدربات سعوديون») — Ali, 2026-11-14 / 2026-11-17. Never write male-only wording | homepage meta, /start/form, guides |
 | Audience | adults («للكبار»، «للراشدين») — employees and professionals are the main 1:1 audience («للمهنيين ومن يريد منهجاً على مقاسه») | seo.js `/` description; content.js `vipTier.audienceLabel` |
 | Minimum age in the terms | 13+, or with a guardian's consent below that | terms §3 (line 87) |
 | Not affiliated with | any other organisation named "Fluentia" (e.g. fluentia.us) — **disambiguation statement, ours to make** | mission brief |
@@ -63,10 +63,10 @@ on 2026-10-04** (content.js `hiddenTiers`) — never list it.
 | Package | Price / month | What is included (verbatim facts) | Source |
 |---|---|---|---|
 | **التعلم الذاتي** (self-study) | **500 ر.س** | the full smart platform, at the learner's own pace, **no live classes, no trainer follow-up**; access starts after a short call with the academy (the button opens the advisor chat, not instant checkout); 6 levels Pre-A1 → C1 · 72 units · 12,000+ words; grammar + vocabulary + reading + listening exercises; AI assistant for conversation and pronunciation practice; points & rewards | content.js:249-270 `entryTier` |
-| **أساس** | **750 ر.س** | **8 group classes / month**; max **7 students** per class; everything in self-study (full platform); monthly assessment + trainer follow-up (follow-up cadence: monthly); supportive Telegram community | content.js:276-294 |
+| **أساس** | **750 ر.س** | **8 group classes / month**; max **7 students** per class; everything in self-study (full platform); monthly assessment + trainer follow-up (follow-up cadence: monthly); supportive student community inside the Fluentia platform and app | content.js:276-294 |
 | **تميّز** (recommended — «ننصح بها») | **1,500 ر.س** | everything in أساس; **8 group classes + 4 private classes / month (one a week)**; intensive daily follow-up; weekly assessment + personal development plan; exclusive question bank + full lesson library; recorded content to go back to anytime | content.js:296-315 |
-| **التدريب الفردي** (1:1, «VIP · مرن») | **from 2,000 ر.س** | private classes only (learner + trainer); number of weekly classes agreed in the free initial meeting, and the price follows from it; custom curriculum that adapts to the learner's goal; direct daily follow-up + unlimited written and pronunciation correction; training for job interviews, presentations and public speaking; priority replies + direct contact with the trainer | content.js:338-372 `vipTier` |
-| **التدريب الفردي المكثّف** (intensive 1:1, «VIP · مكثّف») | **3,000 ر.س** | **12 private classes / month (3 a week) with a dedicated teacher + 8 practice sessions / month (2 a week) with an academic mentor** → 5 meetings a week; practice sessions usually with a native English speaker; each practice session targets the learner's weak points; the mentor is a different person from the teacher; curriculum designed for the learner's field, starting with an extended diagnostic session; full platform access for the whole subscription; everything in التدريب الفردي | content.js:375-398 `intensiveTier`; `private` |
+| **التدريب الفردي** (1:1, «VIP · مرن») | **2,000 ر.س — fixed, never «from»** (Ali, 2026-11-17) | **2 private classes + 1 practice session with the academic mentor, per week**; the mentor's involvement is lighter than in the intensive; custom curriculum that adapts to the learner's goal; direct daily follow-up + unlimited written and pronunciation correction; training for job interviews, presentations and public speaking; priority replies + direct contact with the trainer | content.js:338-372 `vipTier` |
+| **التدريب الفردي المكثّف** (intensive 1:1, «VIP · مكثّف») | **3,000 ر.س** | **12 private classes / month (3 a week) with a dedicated teacher + 8 practice sessions / month (2 a week) with an academic mentor** → 5 meetings a week; practice sessions usually with a native English speaker; each practice session targets the learner's weak points; the mentor is a different person from the teacher; curriculum designed for the learner's field, starting with an extended diagnostic session; full platform access for the whole subscription; everything in التدريب الفردي, with more practice sessions and wider mentor involvement | content.js:375-398 `intensiveTier`; `private` |
 
 Also published on /private (`private`), usable verbatim:
 - The diagnostic session establishes where the learner needs English, where they stumble today, and the result they want; the curriculum is then built on their field and real situations.
@@ -78,10 +78,10 @@ Pricing rules:
 - **Private packages never show a per-day price** (Ali, 2026-09-27). Monthly only. Do not
   add per-day/per-week framing to group tiers either (removed 2026-09-27, pending Ali).
 - No strikethrough / «before» prices (content.js comment, 2026-09-14).
-- The 2,000 plan has **no** academic mentor and **no** practice sessions (`private` line 121, comparison table «غير مشمول»).
+- The 2,000 plan has **one practice session a week** with the academic mentor (2 private classes + 1 practice, i.e. 3 meetings a week), with lighter mentor involvement than the intensive (Ali, 2026-11-17). It is a **fixed** price — never «من 2,000» / «from 2,000» / minPrice.
 - Days in the sample intensive week (Sun–Thu) are illustrative; times are agreed with the learner («الأيام توضيحية، والمواعيد نتفق عليها معك»).
 
-## 5. Payment, cancellation, refund (terms §4, homepage FAQ)
+## 5. Payment and cancellation (terms §4, homepage FAQ)
 
 | Fact | Source |
 |---|---|
@@ -89,7 +89,7 @@ Pricing rules:
 | Prices in SAR and include everything in the chosen package | terms §4 |
 | **No long-term commitment** — stop at the end of any month | terms §4 |
 | Cancel any time: next month is not charged; the current month counts («لأن المدرّب فعلياً خصّص وقته لك») | content.js:657 (homepage FAQ) |
-| **Refund:** full refund within **7 days** from the start of the month, **only if no class was attended**; after any class, no refund | terms:100 |
+| **No money-back / reimbursement policy is stated anywhere on the site** (Ali, 2026-11-17: removed completely, no replacement text). Cancellation wording is only the line above | terms §4 |
 | Package change: upgrade or downgrade at the **start of the next month**; no mid-month price change | terms §4 |
 | Card data is not stored by the academy; processed by payment providers | privacy §2 |
 | Courses start at the beginning of each Gregorian month; a learner can join any time and the trainer compensates | `src/pages/StartPage.jsx:188` (FAQ) |
@@ -102,7 +102,7 @@ Pricing rules:
 |---|---|
 | Group classes: max **7 students** per class | content.js, terms §2, /about |
 | Learners are placed in a small group **at their level** | copy.js STEPS[2] |
-| Daily follow-up happens **outside class too — daily via Telegram** | `src/pages/StartPage.jsx` («مو فقط في الكلاس — يومياً عبر تيليجرام») |
+| Follow-up, communication and the student community all happen **inside the Fluentia platform and app** — Telegram is **not** used (Ali, 2026-11-17) | `src/pages/StartPage.jsx` («مو فقط في الكلاس — داخل منصة طلاقة وتطبيقها») |
 | Trainer selection: tested on teaching ability, understanding adult learners, patience, building confidence — not English alone; trained on the Fluentia curriculum before the first class | homepage «كيف نُزيله» 01 (content.js, rendered on /) |
 | Approach: start from the learner (where they are, where they stumbled), build a personal path, adjust it on the way; treat the inner barrier («الإنجليزي مو لي», fear of mistakes) as part of the curriculum; content + practice + community + daily follow-up | homepage «كيف نُزيله» 02–04 |
 | Class recording is available inside each unit on the platform («تسجيل حصتك المباشرة داخل كل وحدة، يتذكّر أين توقفت») | showcase:86 |

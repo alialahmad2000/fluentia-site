@@ -36,7 +36,7 @@ changed, and what is left for Ali. Facts live in `FACTS.md`; open questions in
 | bingbot | 200 | 138,861 | 1 | no |
 | Googlebot | 200 | 138,861 | 1 | no |
 
-The homepage HTML already carries prices (500 / 750 / 1,500 / from 2,000 / 3,000)
+The homepage HTML already carries prices (500 / 750 / 1,500 / 2,000 / 3,000)
 and the package contents. Live `robots.txt` is byte-identical to the repo's — Cloudflare's
 "managed robots.txt" is **not** injecting AI disallows. A UA-spoofed curl cannot prove
 Cloudflare's *verified-bot* rules (Block AI bots / Bot Fight Mode match on the real bot's

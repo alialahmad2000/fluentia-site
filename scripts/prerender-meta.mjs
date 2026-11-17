@@ -2,7 +2,7 @@
  * prerender-meta — bake per-route social/SEO meta into static HTML files.
  *
  * WHY: fluentia-site is a client-rendered Vite SPA. react-helmet-async sets the
- * head correctly for humans, but WhatsApp / X / Telegram / LinkedIn crawlers do
+ * head correctly for humans, but WhatsApp / X / LinkedIn crawlers do
  * not execute JavaScript — they only ever saw index.html, which carried no
  * description at all, so WhatsApp scraped a stray HTML comment and printed it
  * as the link preview.

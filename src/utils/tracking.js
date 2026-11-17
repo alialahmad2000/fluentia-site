@@ -15,7 +15,6 @@ export const UTM_MAP = {
   snapchat:  'سناب شات',
   facebook:  'فيسبوك',
   whatsapp:  'واتساب',
-  telegram:  'تيليجرام',
   organic:   'بحث مباشر',
   bing:      'إعلان Bing',
 };

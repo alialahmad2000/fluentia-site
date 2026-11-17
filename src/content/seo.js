@@ -6,7 +6,7 @@
  *   2. scripts/prerender-meta.mjs → bakes the same tags into a static
  *      dist/<route>.html at build time.
  *
- * (2) exists because this is a client-rendered SPA: WhatsApp, X, Telegram,
+ * (2) exists because this is a client-rendered SPA: WhatsApp, X,
  * LinkedIn and friends do NOT run JavaScript. Without the static copy they see
  * a head with no description at all and invent one from the page source —
  * which is how an HTML comment ended up as the WhatsApp link preview.
@@ -31,9 +31,9 @@ const CAREERS_ALTERNATES = [
 
 export const PAGE_SEO = {
   "/": {
-    title: "أكاديمية طلاقة | دورات إنجليزي أونلاين مع مدربين سعوديين",
+    title: "أكاديمية طلاقة | دورات إنجليزي أونلاين مع مدربين ومدربات سعوديين",
     description:
-      "دورات إنجليزي أونلاين للكبار في السعودية مع مدربين سعوديين: مجموعات صغيرة (7 طلاب) أو حصص فردية، متابعة يومية، واختبار مستوى مجاني. باقات من 500 ريال.",
+      "دورات إنجليزي أونلاين للكبار في السعودية مع مدربين ومدربات سعوديين: مجموعات صغيرة (7 طلاب) أو حصص فردية، متابعة يومية، واختبار مستوى مجاني. باقات من 500 ريال.",
     ogTitle: "أكاديمية طلاقة | تعلّم إنجليزي تتكلّمه — لا تحفظه",
     ogDescription:
       "أكاديمية أونلاين للراشدين السعوديين — منهج علمي، مدرّبون أكاديميون، متابعة يومية، تقييم AI. باقات من 500 ريال.",
@@ -195,9 +195,9 @@ export const PAGE_SEO = {
     noindex: true,
   },
   "/classic": {
-    title: "أكاديمية طلاقة | دورات إنجليزي أونلاين مع مدربين سعوديين",
+    title: "أكاديمية طلاقة | دورات إنجليزي أونلاين مع مدربين ومدربات سعوديين",
     description:
-      "دورات إنجليزي أونلاين للكبار في السعودية مع مدربين سعوديين: مجموعات صغيرة (7 طلاب) أو حصص فردية، متابعة يومية، واختبار مستوى مجاني. باقات من 500 ريال.",
+      "دورات إنجليزي أونلاين للكبار في السعودية مع مدربين ومدربات سعوديين: مجموعات صغيرة (7 طلاب) أو حصص فردية، متابعة يومية، واختبار مستوى مجاني. باقات من 500 ريال.",
     noindex: true,
   },
   "/join-classic": {
@@ -210,9 +210,9 @@ export const PAGE_SEO = {
   // «الصعود» — scroll-driven mountain ascent preview. Prerendered (the hero is
   // in the first paint) but noindex, unlinked, and absent from the sitemap.
   "/ascent": {
-    title: "أكاديمية طلاقة | دورات إنجليزي أونلاين مع مدربين سعوديين",
+    title: "أكاديمية طلاقة | دورات إنجليزي أونلاين مع مدربين ومدربات سعوديين",
     description:
-      "دورات إنجليزي أونلاين للكبار في السعودية مع مدربين سعوديين: مجموعات صغيرة (7 طلاب) أو حصص فردية، متابعة يومية، واختبار مستوى مجاني. باقات من 500 ريال.",
+      "دورات إنجليزي أونلاين للكبار في السعودية مع مدربين ومدربات سعوديين: مجموعات صغيرة (7 طلاب) أو حصص فردية، متابعة يومية، واختبار مستوى مجاني. باقات من 500 ريال.",
     noindex: true,
   },
 
@@ -220,9 +220,9 @@ export const PAGE_SEO = {
   // paint) but noindex, unlinked, and deliberately absent from the sitemap.
   // It carries the homepage's own title and description.
   "/journey": {
-    title: "أكاديمية طلاقة | دورات إنجليزي أونلاين مع مدربين سعوديين",
+    title: "أكاديمية طلاقة | دورات إنجليزي أونلاين مع مدربين ومدربات سعوديين",
     description:
-      "دورات إنجليزي أونلاين للكبار في السعودية مع مدربين سعوديين: مجموعات صغيرة (7 طلاب) أو حصص فردية، متابعة يومية، واختبار مستوى مجاني. باقات من 500 ريال.",
+      "دورات إنجليزي أونلاين للكبار في السعودية مع مدربين ومدربات سعوديين: مجموعات صغيرة (7 طلاب) أو حصص فردية، متابعة يومية، واختبار مستوى مجاني. باقات من 500 ريال.",
     noindex: true,
   },
 

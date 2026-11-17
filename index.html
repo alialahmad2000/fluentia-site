@@ -10,8 +10,8 @@
          Every tag carries data-rh so react-helmet-async ADOPTS it on hydration
          (see <Seo>) instead of appending a duplicate. Social crawlers (WhatsApp,
          X, Telegram) never run JS, so these static tags are what they read. -->
-    <title>أكاديمية طلاقة | دورات إنجليزي أونلاين مع مدربين سعوديين</title>
-    <meta data-rh="true" name="description" content="دورات إنجليزي أونلاين للكبار في السعودية مع مدربين سعوديين: مجموعات صغيرة (7 طلاب) أو حصص فردية، متابعة يومية، واختبار مستوى مجاني. باقات من 500 ريال." />
+    <title>أكاديمية طلاقة | دورات إنجليزي أونلاين مع مدربين ومدربات سعوديين</title>
+    <meta data-rh="true" name="description" content="دورات إنجليزي أونلاين للكبار في السعودية مع مدربين ومدربات سعوديين: مجموعات صغيرة (7 طلاب) أو حصص فردية، متابعة يومية، واختبار مستوى مجاني. باقات من 500 ريال." />
     <link data-rh="true" rel="canonical" href="https://fluentia.academy/" />
     <meta data-rh="true" property="og:type" content="website" />
     <meta data-rh="true" property="og:url" content="https://fluentia.academy/" />
@@ -317,7 +317,7 @@
       "@type": "Course",
       "name": "أساس — أكاديمية طلاقة",
       "alternateName": "Asas — small-group classes — Fluentia Academy",
-      "description": "ابدأ مع مجموعة صغيرة وكلاسات مباشرة. يشمل: 8 حصص جماعية شهرياً، حد أقصى 7 طلاب في الكلاس، كل مزايا التعلم الذاتي (المنصة كاملة)، تقييم شهري + متابعة من المدرّب، مجتمع تيليجرام داعم.",
+      "description": "ابدأ مع مجموعة صغيرة وكلاسات مباشرة. يشمل: 8 حصص جماعية شهرياً، حد أقصى 7 طلاب في الكلاس، كل مزايا التعلم الذاتي (المنصة كاملة)، تقييم شهري + متابعة من المدرّب، مجتمع طلاب داعم داخل المنصة والتطبيق.",
       "provider": {
         "@id": "https://fluentia.academy/#organization"
       },
@@ -371,7 +371,7 @@
       "@type": "Course",
       "name": "التدريب الفردي — أكاديمية طلاقة",
       "alternateName": "1-on-1 training — Fluentia Academy",
-      "description": "حصص فردية كاملة — أنت ومدربك فقط. منهج مخصّص، وتركيز كامل على هدفك. السعر حسب عدد الحصص الأسبوعية التي نتفق عليها معك في اللقاء المبدئي. يشمل: حصص فردية فقط (أنت ومدربك)، منهج مخصّص يتكيّف معك ومع هدفك، متابعة يومية مباشرة + تصحيح كتابي ونطق غير محدود، تدريب على مقابلات العمل والعروض التقديمية والإلقاء، أولوية في الرد + تواصل مباشر مع مدربك.",
+      "description": "حصص فردية كاملة — أنت ومدربك فقط. منهج مخصّص، وتركيز كامل على هدفك. 2,000 ر.س شهرياً ثابتة: حصتان فرديتان + جلسة ممارسة واحدة مع المرشد الأكاديمي أسبوعياً. يشمل: حصتان فرديتان أسبوعياً (أنت ومدربك)، جلسة ممارسة أسبوعية مع المرشد الأكاديمي (متابعة أخف من المكثّف)، منهج مخصّص يتكيّف معك ومع هدفك، متابعة يومية مباشرة + تصحيح كتابي ونطق غير محدود، تدريب على مقابلات العمل والعروض التقديمية والإلقاء، أولوية في الرد + تواصل مباشر مع مدربك.",
       "provider": {
         "@id": "https://fluentia.academy/#organization"
       },
@@ -386,12 +386,7 @@
         "@type": "Offer",
         "category": "Subscription",
         "priceCurrency": "SAR",
-        "priceSpecification": {
-          "@type": "UnitPriceSpecification",
-          "minPrice": 2000,
-          "priceCurrency": "SAR",
-          "unitText": "MONTH"
-        },
+        "price": 2000,
         "availability": "https://schema.org/InStock",
         "url": "https://fluentia.academy/"
       }
@@ -461,13 +456,8 @@
           {
             "@type": "Offer",
             "name": "التدريب الفردي (1-on-1 training)",
-            "priceCurrency": "SAR",
-            "priceSpecification": {
-              "@type": "UnitPriceSpecification",
-              "minPrice": 2000,
-              "priceCurrency": "SAR",
-              "unitText": "MONTH"
-            }
+            "price": 2000,
+            "priceCurrency": "SAR"
           },
           {
             "@type": "Offer",
