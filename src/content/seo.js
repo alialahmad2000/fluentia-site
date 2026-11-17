@@ -130,6 +130,10 @@ export const PAGE_SEO = {
     description:
       "نبحث عن مستشاري قبول ومدرّبي لغة إنجليزية للعمل عن بُعد مع أكاديمية طلاقة. قدّم بياناتك وتحدّث مع مساعد التوظيف في دقائق.",
     ogTitle: "انضم لفريق طلاقة",
+    // Hiring share card (scripts/og/careers-og.html → npm run og:careers).
+    // Bump ?v= whenever the image changes — WhatsApp caches previews per URL.
+    ogImage: `${SITE}/og/careers.png?v=1`,
+    ogImageAlt: "انضم لفريق طلاقة — نبحث عن مستشار قبول ومدرّب لغة إنجليزية، عمل عن بُعد",
   },
 
   // The 1:1 programmes (التدريب الفردي + المكثّف). Indexable, in the sitemap;

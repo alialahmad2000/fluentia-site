@@ -1,0 +1,152 @@
+<!doctype html>
+<!--
+  careers-og.html — source of public/og/careers.png, the share card for /careers
+  (WhatsApp / X / Telegram / LinkedIn / iMessage previews).
+  Render: npm run og:careers  (scripts/og/render-careers-og.mjs → 1200×630 PNG).
+  Fonts are the careers page's own: Kufam 800 (--display) + Alexandria (fallback
+  display / body). After changing this file, bump ?v= on ogImage in src/content/seo.js.
+  Copy rules: no salary / pay / numbers about money; no معهد، دورة، مذهل، مميز، الأفضل.
+-->
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<style>
+  @font-face { font-family: "Kufam"; font-weight: 800; src: url("../../public/fonts/kufam-800-arabic.woff2") format("woff2"); }
+  @font-face { font-family: "Kufam"; font-weight: 800; src: url("../../public/fonts/kufam-800-latin.woff2") format("woff2"); unicode-range: U+0000-00FF; }
+  @font-face { font-family: "Alexandria"; font-weight: 100 900; src: url("../../public/fonts/alexandria-var-arabic.woff2") format("woff2"); }
+  @font-face { font-family: "Alexandria"; font-weight: 100 900; src: url("../../public/fonts/alexandria-var-latin.woff2") format("woff2"); unicode-range: U+0000-00FF, U+2010-2027; }
+
+  :root {
+    --bg: #050a14;
+    --ink: #f4f8ff;
+    --mute: #a9b6cc;
+    --sky: #4cc9f7;
+    --sky-2: #00b5e8;
+    --deep: #0a7cc0;
+    --line: rgba(124, 170, 230, .16);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1200px; height: 630px; overflow: hidden; background: var(--bg); }
+  body { font-family: "Alexandria", system-ui, sans-serif; color: var(--ink); -webkit-font-smoothing: antialiased; }
+
+  .card { position: relative; width: 1200px; height: 630px; overflow: hidden;
+    background:
+      radial-gradient(620px 460px at 270px 330px, rgba(0, 150, 230, .26), transparent 70%),
+      linear-gradient(180deg, #071022 0%, #050a14 100%); }
+  .dots { position: absolute; inset: 0;
+    background-image: radial-gradient(rgba(150, 190, 255, .13) 1.2px, transparent 1.3px);
+    background-size: 34px 34px;
+    -webkit-mask-image: radial-gradient(900px 520px at 70% 45%, #000 30%, transparent 85%); }
+  .ring { position: absolute; border-radius: 50%; border: 1px solid var(--line); }
+
+  /* ── text column (RTL start = right) ── */
+  .text { position: absolute; top: 106px; right: 76px; width: 700px; }
+  .eyebrow { display: flex; align-items: center; gap: 14px; margin-bottom: 26px; }
+  .eyebrow .ar { font-family: "Kufam"; font-weight: 800; font-size: 30px; color: var(--ink); }
+  .eyebrow .en { font-family: "Alexandria"; font-weight: 600; font-size: 17px; letter-spacing: .32em; color: var(--sky); direction: ltr; }
+  .eyebrow .sep { color: var(--mute); font-size: 20px; }
+  h1 { font-family: "Kufam"; font-weight: 800; font-size: 70px; white-space: nowrap; line-height: 1.12; letter-spacing: -.005em; }
+  .sub { margin-top: 18px; font-family: "Alexandria"; font-weight: 600; font-size: 32px; line-height: 1.45; color: #dfe8f6; }
+  .sub b { font-weight: 700; color: var(--sky); }
+
+  .chips { display: flex; gap: 12px; margin-top: 30px; }
+  .chip { display: flex; align-items: center; gap: 10px; height: 54px; padding: 0 20px 0 22px;
+    border-radius: 999px; background: rgba(76, 201, 247, .09); border: 1.5px solid rgba(76, 201, 247, .34);
+    font-weight: 600; font-size: 22px; color: #eaf4ff; white-space: nowrap; }
+  .chip svg { width: 24px; height: 24px; flex: none; stroke: var(--sky); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+  .url { position: absolute; right: 76px; bottom: 82px; display: flex; align-items: center; gap: 12px;
+    font-family: "Alexandria"; font-weight: 600; font-size: 22px; color: var(--sky); direction: ltr; }
+  .url i { width: 11px; height: 11px; border-radius: 50%; background: #3ee08f; box-shadow: 0 0 12px rgba(62, 224, 143, .8); }
+
+  /* ── visual (left) ── */
+  .visual { position: absolute; left: 48px; top: 130px; width: 370px; height: 370px; }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="dots"></div>
+  <div class="ring" style="left:-10px;top:65px;width:500px;height:500px"></div>
+  <div class="ring" style="left:-80px;top:-5px;width:640px;height:640px;opacity:.6"></div>
+
+  <!-- Team + the open seat: three members around a glowing empty «+» place = your seat. -->
+  <svg class="visual" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="av" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#1d4f86"/><stop offset="1" stop-color="#0f2c52"/>
+      </linearGradient>
+      <linearGradient id="avs" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#5fb6ee"/><stop offset="1" stop-color="#2d6fae"/>
+      </linearGradient>
+      <radialGradient id="glow" cx=".5" cy=".5" r=".5">
+        <stop offset="0" stop-color="#00c8ff" stop-opacity=".55"/>
+        <stop offset=".55" stop-color="#00a6e6" stop-opacity=".16"/>
+        <stop offset="1" stop-color="#00a6e6" stop-opacity="0"/>
+      </radialGradient>
+      <clipPath id="c1"><circle cx="0" cy="0" r="62"/></clipPath>
+    </defs>
+
+    <!-- connecting arc -->
+    <path d="M 70 300 Q 200 360 330 300" fill="none" stroke="rgba(124,170,230,.22)" stroke-width="1.5" stroke-dasharray="3 7"/>
+
+    <!-- member: left -->
+    <g transform="translate(92 236)">
+      <circle r="64" fill="url(#av)" stroke="#2b6aa8" stroke-width="2"/>
+      <g clip-path="url(#c1)">
+        <circle cx="0" cy="-14" r="21" fill="url(#avs)" opacity=".85"/>
+        <ellipse cx="0" cy="44" rx="40" ry="32" fill="url(#avs)" opacity=".85"/>
+      </g>
+    </g>
+    <!-- member: right -->
+    <g transform="translate(308 236)">
+      <circle r="64" fill="url(#av)" stroke="#2b6aa8" stroke-width="2"/>
+      <g clip-path="url(#c1)">
+        <circle cx="0" cy="-14" r="21" fill="url(#avs)" opacity=".85"/>
+        <ellipse cx="0" cy="44" rx="40" ry="32" fill="url(#avs)" opacity=".85"/>
+      </g>
+    </g>
+    <!-- member: back -->
+    <g transform="translate(200 130) scale(.86)">
+      <circle r="64" fill="url(#av)" stroke="#2b6aa8" stroke-width="2"/>
+      <g clip-path="url(#c1)">
+        <circle cx="0" cy="-14" r="21" fill="url(#avs)" opacity=".85"/>
+        <ellipse cx="0" cy="44" rx="40" ry="32" fill="url(#avs)" opacity=".85"/>
+      </g>
+    </g>
+
+    <!-- the open seat (front, centre) -->
+    <circle cx="200" cy="282" r="118" fill="url(#glow)"/>
+    <circle cx="200" cy="282" r="72" fill="#06182e" stroke="#4cc9f7" stroke-width="3" stroke-dasharray="10 8"/>
+    <circle cx="200" cy="282" r="54" fill="rgba(0,181,232,.14)"/>
+    <path d="M200 254 V310 M172 282 H228" stroke="#7fdcff" stroke-width="9" stroke-linecap="round"/>
+  </svg>
+
+  <!-- the F mark, small, above the team -->
+  <img src="../../public/brand/fluentia-mark.svg" alt="" style="position:absolute;left:78px;top:100px;width:46px;height:58px">
+
+  <div class="text">
+    <div class="eyebrow">
+      <span class="ar">طلاقة</span><span class="sep">·</span><span class="en">FLUENTIA ACADEMY</span>
+    </div>
+    <h1>انضم لفريق طلاقة</h1>
+    <p class="sub">نبحث عن <b>مستشار قبول</b><br>و<b>مدرّب لغة إنجليزية</b></p>
+    <div class="chips">
+      <span class="chip">
+        <svg viewBox="0 0 24 24"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 9.5V20h13V9.5"/><path d="M10 20v-5h4v5"/></svg>
+        عمل عن بُعد
+      </span>
+      <span class="chip">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>
+        أوقات مرنة
+      </span>
+      <span class="chip">
+        <svg viewBox="0 0 24 24"><path d="M13 3 5 13.5h6L10 21l8.5-11h-6L13 3z"/></svg>
+        التقديم خلال 10 دقائق
+      </span>
+    </div>
+  </div>
+
+  <div class="url"><i></i>fluentia.academy/careers</div>
+</div>
+</body>
+</html>
