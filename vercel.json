@@ -155,6 +155,10 @@
       "destination": "/careers.html"
     },
     {
+      "source": "/en/careers",
+      "destination": "/en/careers.html"
+    },
+    {
       "source": "/private",
       "destination": "/private.html"
     },

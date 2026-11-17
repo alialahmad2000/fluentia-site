@@ -47,6 +47,7 @@ export default function Seo({ path, entry, noindex = false }) {
       <meta name="twitter:url" content={seo.url} />
       <meta name="twitter:title" content={seo.twTitle} />
       <meta name="twitter:description" content={seo.twDescription} />
+      {(seo.alternates || []).map((a) => <link key={a.hreflang} rel="alternate" hrefLang={a.hreflang} href={a.href} />)}
     </Helmet>
   );
 }

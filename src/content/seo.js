@@ -22,6 +22,13 @@ export const SITE = "https://fluentia.academy";
 /** Absolute, always-present fallbacks (also hard-coded in index.html). */
 export const OG_IMAGE = `${SITE}/og-image.png`;
 
+/** hreflang pair for the two careers pages (each page lists both + x-default). */
+const CAREERS_ALTERNATES = [
+  { hreflang: "ar", href: `${SITE}/careers` },
+  { hreflang: "en", href: `${SITE}/en/careers` },
+  { hreflang: "x-default", href: `${SITE}/careers` },
+];
+
 export const PAGE_SEO = {
   "/": {
     title: "أكاديمية طلاقة | دورات إنجليزي أونلاين مع مدربين سعوديين",
@@ -134,6 +141,21 @@ export const PAGE_SEO = {
     // Bump ?v= whenever the image changes — WhatsApp caches previews per URL.
     ogImage: `${SITE}/og/careers.png?v=1`,
     ogImageAlt: "انضم لفريق طلاقة — نبحث عن مستشار قبول ومدرّب لغة إنجليزية، عمل عن بُعد",
+    alternates: CAREERS_ALTERNATES,
+  },
+
+  // English careers page (2026-11-17) — same page in English, LTR. Indexable, in the sitemap.
+  // lang "en" → the prerender writes <html lang="en" dir="ltr"> and og:locale en_US.
+  "/en/careers": {
+    lang: "en",
+    title: "Join the Fluentia team | Remote jobs | Fluentia Academy",
+    description:
+      "We're hiring English trainers and admissions advisors to work remotely with Fluentia Academy. Apply and chat with our hiring assistant in minutes.",
+    ogTitle: "Join the Fluentia team",
+    // scripts/og/careers-og-en.html → npm run og:careers:en. Bump ?v= when the image changes.
+    ogImage: `${SITE}/og/careers-en.png?v=1`,
+    ogImageAlt: "Join the Fluentia team — we're hiring English trainers and admissions advisors, fully remote",
+    alternates: CAREERS_ALTERNATES,
   },
 
   // The 1:1 programmes (التدريب الفردي + المكثّف). Indexable, in the sitemap;
@@ -258,6 +280,8 @@ export function normalizeSeo(entry) {
     noindex: entry.noindex === true,
     ogImage: entry.ogImage || null,
     ogImageAlt: entry.ogImageAlt || null,
+    lang: entry.lang || "ar",
+    alternates: entry.alternates || null,
   };
 }
 

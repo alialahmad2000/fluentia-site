@@ -1251,6 +1251,7 @@ function AppRoutes(){
         : <Suspense fallback={JOIN_CLASSIC_FALLBACK}><JoinPage /></Suspense>} />
       <Route path="/join-classic" element={<Suspense fallback={JOIN_CLASSIC_FALLBACK}><JoinPage /></Suspense>} />
       <Route path="/careers" element={<Suspense fallback={<div style={{minHeight:'100dvh',background:'#060914'}} />}><CareersPage /></Suspense>} />
+      <Route path="/en/careers" element={<Suspense fallback={<div style={{minHeight:'100dvh',background:'#060914'}} />}><CareersPage lang="en" /></Suspense>} />
       <Route path="/private" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#060e1c'}} />}><PrivatePage /></Suspense>} />
       {/* «قصص طلابنا» — every story (src/data/stories.js); ?s=<id> opens the viewer. */}
       <Route path="/stories" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#050b16'}} />}><StoriesPage /></Suspense>} />

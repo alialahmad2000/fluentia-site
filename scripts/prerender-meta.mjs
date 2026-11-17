@@ -77,6 +77,7 @@ function metaBlock(seo) {
     `<meta data-rh="true" name="twitter:url" content="${attr(seo.url)}" />`,
     `<meta data-rh="true" name="twitter:title" content="${attr(seo.twTitle)}" />`,
     `<meta data-rh="true" name="twitter:description" content="${attr(seo.twDescription)}" />`,
+    ...(seo.alternates || []).map((a) => `<link data-rh="true" rel="alternate" hreflang="${attr(a.hreflang)}" href="${attr(a.href)}" />`),
     END,
   );
   // First line inherits the indentation already sitting before the marker.
@@ -115,7 +116,24 @@ function inject(html, seo) {
     if (!robots.test(withMeta)) throw new Error("index.html's robots tag changed — update prerender-meta.mjs");
     withMeta = withMeta.replace(robots, "");
   }
-  return scopeHomeJsonLd(withOgImage(withMeta, seo), seo.path);
+  return scopeHomeJsonLd(withLang(withOgImage(withMeta, seo), seo), seo.path);
+}
+
+/** An English page (seo.lang "en", e.g. /en/careers): <html lang="en" dir="ltr"> and og:locale en_US,
+ *  so crawlers and the first paint see an LTR English document. Arabic routes are untouched. */
+function withLang(html, seo) {
+  if (seo.lang !== "en") return html;
+  const swaps = [
+    [/<html lang="ar" dir="rtl">/, '<html lang="en" dir="ltr">'],
+    [/<meta property="og:locale" content="ar_SA" \/>/, '<meta property="og:locale" content="en_US" />'],
+    [/<meta property="og:locale:alternate" content="en_US" \/>/, '<meta property="og:locale:alternate" content="ar_SA" />'],
+  ];
+  let out = html;
+  for (const [re, value] of swaps) {
+    if (!re.test(out)) throw new Error(`index.html changed (${re}) — update withLang in prerender-meta.mjs`);
+    out = out.replace(re, value);
+  }
+  return out;
 }
 
 /** og:image / twitter:image are invariant tags in index.html (Helmet never

@@ -23,6 +23,18 @@ export class ApiError extends Error {
 const NETWORK_MSG = "تعذّر الاتصال. نرجو التأكد من الإنترنت والمحاولة مرة ثانية.";
 const RATE_MSG = "كثرت المحاولات خلال وقت قصير. نرجو المحاولة بعد قليل.";
 
+/* /en/careers: every call carries lang "en", and the edge answers errors in English (`message`).
+ * `ApiError.messageAr` keeps its name but holds the text to SHOW, in the page's language. */
+let LANG = "ar";
+export function setApiLang(l) { LANG = l === "en" ? "en" : "ar"; }
+const EN = {
+  network: "We couldn't connect. Please check your internet connection and try again.",
+  rate: "Too many attempts in a short time. Please try again in a little while.",
+  server: "Something went wrong on our side. Please try again in a little while.",
+  upload: "We couldn't upload the file. Please try again.",
+  preview: "Something went wrong in the preview.",
+};
+
 /** /careers?preview=1 — «وضع المعاينة»: every call is answered locally, nothing is saved. Browser only. */
 export function isPreview() {
   try { return new URLSearchParams(window.location.search).get("preview") === "1"; } catch { return false; }
@@ -30,7 +42,7 @@ export function isPreview() {
 
 export async function call(action, payload = {}) {
   if (isPreview()) {
-    try { return await mockCall(action, payload); } catch (x) { throw new ApiError(x.code || "SERVER", x.messageAr || "صار خلل في المعاينة."); }
+    try { return await mockCall(action, payload); } catch (x) { throw new ApiError(x.code || "SERVER", x.messageAr || (LANG === "en" ? EN.preview : "صار خلل في المعاينة.")); }
   }
   let res;
   try {
@@ -41,16 +53,18 @@ export async function call(action, payload = {}) {
         apikey: SUPABASE_ANON,
         Authorization: `Bearer ${SUPABASE_ANON}`,
       },
-      body: JSON.stringify({ action, ...payload }),
+      body: JSON.stringify({ action, ...payload, ...(LANG === "en" ? { lang: "en" } : {}) }),
     });
   } catch {
-    throw new ApiError("NETWORK", NETWORK_MSG);
+    throw new ApiError("NETWORK", LANG === "en" ? EN.network : NETWORK_MSG);
   }
   let json = null;
   try { json = await res.json(); } catch { /* non-JSON */ }
   if (!json || json.ok !== true) {
     const code = json?.error || (res.status === 429 ? "RATE_LIMITED" : "SERVER");
-    const msg = code === "RATE_LIMITED" ? RATE_MSG : json?.message_ar || "صار خلل بسيط من عندنا. نرجو المحاولة بعد قليل.";
+    const msg = LANG === "en"
+      ? (code === "RATE_LIMITED" ? EN.rate : json?.message || EN.server)
+      : code === "RATE_LIMITED" ? RATE_MSG : json?.message_ar || "صار خلل بسيط من عندنا. نرجو المحاولة بعد قليل.";
     throw new ApiError(code, msg, json?.field);
   }
   return json;
@@ -73,7 +87,7 @@ export async function uploadAndAttach(app, { kind, blob, mime, ext, seconds }) {
   const up = await call("upload_url", { ...base, kind, mime, size: blob.size, ext });
   const bucket = await storage();
   const { error } = await bucket.uploadToSignedUrl(up.path, up.upload_token, blob, { contentType: mime });
-  if (error) throw new ApiError("UPLOAD", "ما قدرنا نرفع الملف. نرجو المحاولة مرة ثانية.");
+  if (error) throw new ApiError("UPLOAD", LANG === "en" ? EN.upload : "ما قدرنا نرفع الملف. نرجو المحاولة مرة ثانية.");
   const payload = { ...base, kind, path: up.path };
   if (seconds != null) payload.seconds = Math.round(seconds * 10) / 10;
   return call("attach", payload);
