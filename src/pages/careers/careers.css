@@ -335,6 +335,7 @@
 .cr-key{font-style:normal;margin-inline-start:6px;padding:1px 7px;border-radius:999px;background:var(--dawn-400);color:var(--ink);font-size:.7rem;font-weight:700;vertical-align:1px}
 .cr-keynote{display:flex;gap:10px;align-items:flex-start;margin:0;padding:14px 16px;border-radius:16px;background:var(--me);border-inline-start:3px solid var(--dawn-400);color:var(--ink);line-height:1.85}
 .cr-keynote b{flex:none;padding:1px 9px;border-radius:999px;background:var(--dawn-400);font-size:.78rem;line-height:1.9}
+.cr-saved{margin:0;padding:0 4px;line-height:1.8}
 .cr-scenario{border-inline-start-color:var(--dawn-400)}
 .cr-countdown{align-items:center;text-align:center}
 .cr-count{font-family:var(--display);font-size:3.2rem;font-weight:800;line-height:1.1;color:var(--accent-text);font-variant-numeric:tabular-nums}

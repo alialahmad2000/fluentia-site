@@ -17,7 +17,7 @@ import { startWavRecording } from "../../lib/wavRecorder";
 import { getAttribution } from "../../lib/attribution";
 import css from "./careers.css?inline";
 import {
-  call, ApiError, uploadAndAttach, loadSaved, saveApp, clearSaved,
+  call, ApiError, uploadAndAttach, loadSaved, saveApp, clearSaved, track,
   toAscii, phoneLooksValid, CV_EXT, AUDIO_MIME_EXT, extOf, TURNSTILE_SITEKEY, isPreview, setApiLang,
 } from "./careersApi";
 import { previewOutcome, previewSample, previewTag } from "./careersPreview";
@@ -674,6 +674,7 @@ function VoiceCard({ task, app, gender, onTasks, onSkip }) {
   const micError = (x) => {
     setNoMic(true);
     const blocked = x?.name === "NotAllowedError" || x?.name === "SecurityError";
+    track(app, blocked ? "mic_denied" : "mic_error", x?.name || "unknown");
     if (en) {
       setErr(blocked ? "We couldn't reach your microphone. You can allow it in your browser settings, or upload an audio file instead."
         : "Recording isn't available in this browser. You can upload an audio file instead.");
@@ -691,6 +692,7 @@ function VoiceCard({ task, app, gender, onTasks, onSkip }) {
     try {
       r = await startWavRecording({ maxMs: task.max_s * 1000, onAutoStop: () => finishRecording() });
     } catch (x) { micError(x); return; }
+    track(app, "rec_start", task.kind);
     if (!isRp) { recorder.current = r; beginClock(); return; }
     setMode("opening");
     let res;
@@ -722,6 +724,7 @@ function VoiceCard({ task, app, gender, onTasks, onSkip }) {
     e.target.value = "";
     if (!file) return;
     setErr(""); setNote("");
+    track(app, "file_pick", task.kind);
     const mime = (file.type || "").split(";")[0].toLowerCase();
     const ext = AUDIO_MIME_EXT[mime] || extOf(file.name);
     if (!["wav", "webm", "mp4", "m4a", "mp3", "ogg", "aac"].includes(ext)) { setErr(en ? "This audio format isn't supported." : "صيغة الملف الصوتي غير مدعومة."); return; }
@@ -751,10 +754,12 @@ function VoiceCard({ task, app, gender, onTasks, onSkip }) {
     try {
       const res = await uploadAndAttach(app, { kind: task.kind, blob: rec.blob, mime: rec.mime, ext: rec.ext, seconds: Math.min(rec.seconds, task.max_s) });
       setRec(null); setMode("idle"); setScenario("");
+      track(app, "rec_done", task.kind);
       if (res.retry) { setNote(res.message_ar || ""); if (res.attempts != null) setTries(res.attempts); }
       onTasks(res.voice_tasks);
     } catch (x) {
       setMode("recorded");
+      track(app, "upload_fail", x?.code || "unknown");
       if (x instanceof ApiError && x.code === "AUTH") onTasks(null, x); else setErr(x.messageAr || (en ? "The recording didn't upload. Please try again." : "ما انرفع التسجيل. نرجو المحاولة مرة ثانية."));
     }
   };
@@ -948,6 +953,8 @@ export default function CareersPage({ lang = "ar" }) {
     setPreview(isPreview());
     setSaved({ sales: loadSaved("sales"), trainer: loadSaved("trainer") });
     const params = new URLSearchParams(window.location.search);
+    const rz = params.get("resume");
+    if (rz && /^[0-9a-f-]{36}\.[0-9a-f]{20,}$/i.test(rz)) { params.delete("resume"); resumeLink(rz); }
     const want = params.get("role");
     if (want && ROLES[want]) choose(want);
     // the switch keeps every param (src, i, role, utm…); «lang» is the page's own choice, so it is not carried
@@ -1066,6 +1073,33 @@ export default function CareersPage({ lang = "ar" }) {
     } finally { setBusy(false); }
   }, [saved, enter, reset, en]);
 
+  /** The «كمّل طلبك» email link: ?resume=<id>.<token> → the draft exactly where it stopped, on this device. */
+  const resumeLink = async (rz) => {
+    const [id, rt] = rz.split(".");
+    try { const u = new URL(window.location.href); u.searchParams.delete("resume"); window.history.replaceState(null, "", u.pathname + u.search + u.hash); } catch { /* old browser */ }
+    setBusy(true); setError(""); setNotice("");
+    try {
+      const res = await call("resume", { application_id: id, resume_token: rt });
+      const r = ROLES[res.role] ? res.role : "sales";
+      const a = { id: res.application_id, token: res.token, role: r, basics: res.basics };
+      const keep = { application_id: a.id, token: a.token, basics: res.basics, ...(res.birth_date ? { birth_date: res.birth_date } : res.birth_year ? { birth_year: res.birth_year } : {}) };
+      saveApp(r, keep);
+      setSaved((s) => ({ ...s, [r]: keep }));
+      setRole(r); setApp(a);
+      await enter(res, a);
+    } catch (x) {
+      if (x.code === "ALREADY_APPLIED") {
+        setOutcome(en
+          ? { kind: "thanks", title_ar: "We already have your application — thank you", body_ar: "Your application reached us and we have it. If we need anything, we'll contact you on WhatsApp." }
+          : { kind: "thanks", title_ar: "وصلنا طلبك، شكرًا لك", body_ar: "طلبك وصلنا وهو عندنا. إذا احتجنا شيئًا نتواصل معك على واتساب." });
+        setStage("outcome");
+      } else if (x.code === "AUTH") {
+        setNotice(en ? "This link no longer works. Enter your details with the same phone number and you'll continue where you left off."
+          : "الرابط ما عاد يشتغل. اكتب بياناتك بنفس رقم الجوال وتكمّل من حيث وقفت.");
+      } else setError(x.messageAr || (en ? "Something went wrong. Please try again." : "صار خلل. نرجو المحاولة مرة ثانية."));
+    } finally { setBusy(false); }
+  };
+
   const choose = (id) => {
     setRole(id); setError(""); setNotice("");
     requestAnimationFrame(() => formRef.current?.scrollIntoView({ behavior: window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" }));
@@ -1098,6 +1132,12 @@ export default function CareersPage({ lang = "ar" }) {
     setTasks(next || []);
   };
   const allDone = tasks.length > 0 && tasks.every((t) => t.done);
+  const viewed = useRef("");
+  useEffect(() => {
+    if (stage !== "voice" || !app?.id || viewed.current === app.id) return;
+    viewed.current = app.id;
+    track(app, "view", typeof navigator !== "undefined" && /iPhone|iPad|iPod/.test(navigator.userAgent || "") ? "ios" : /Android/.test(navigator.userAgent || "") ? "android" : "desktop");
+  }, [stage, app]);
   const keyNote = tasks.find((t) => t.note_ar)?.note_ar || "";
   const cvRequired = R[role]?.cvRequired;
 
@@ -1303,6 +1343,11 @@ export default function CareersPage({ lang = "ar" }) {
               <h1 className="cr-flow-h">{en ? "Last step: record your voice" : g(gender, "خطوة أخيرة: سجّل/ي صوتك", "خطوة أخيرة: سجّل صوتك", "خطوة أخيرة: سجّلي صوتك")}</h1>
               {messages.length ? <div className="cr-card cr-intro" dir="auto">{messages[messages.length - 1].content}</div> : null}
               {keyNote ? <p className="cr-keynote" role="note"><b>{en ? "Key step" : "الأهم"}</b><span dir="auto">{keyNote}</span></p> : null}
+              <p className="cr-hint cr-saved" role="note">{en
+                ? "Your application is saved. If you need to stop, come back to this page on the same device and continue where you left off — and if you gave your email, we'll send you a link that works on any device."
+                : g(gender, "طلبك محفوظ: لو احتجت/ي توقف/ين، ارجع/ي لهالصفحة من نفس الجهاز وكمّل/ي من نفس النقطة — ولو كتبت/ي إيميلك نرسل لك رابط يرجّعك لها من أي جهاز.",
+                  "طلبك محفوظ: لو احتجت توقف، ارجع لهالصفحة من نفس الجهاز وكمّل من نفس النقطة — ولو كتبت إيميلك نرسل لك رابط يرجّعك لها من أي جهاز.",
+                  "طلبك محفوظ: لو احتجتي توقفين، ارجعي لهالصفحة من نفس الجهاز وكمّلي من نفس النقطة — ولو كتبتي إيميلك نرسل لك رابط يرجّعك لها من أي جهاز.")}</p>
               {tasks.map((t) => <VoiceCard key={t.kind} task={t} app={app} gender={gender} onTasks={onTasks} onSkip={preview ? skipVoice : undefined} />)}
               {needsCv ? <CvCard app={app} gender={gender} required={cvRequired} onDone={() => setNeedsCv(false)} /> : null}
               {error ? <p className="cr-err cr-err-box" role="alert">{error}</p> : null}

@@ -70,6 +70,12 @@ export async function call(action, payload = {}) {
   return json;
 }
 
+/** Voice-step telemetry (2026-11-22): fire-and-forget, never throws, never runs in the preview. */
+export function track(app, event, detail) {
+  if (isPreview() || !app?.id || !app?.token) return;
+  call("voice_event", { application_id: app.id, token: app.token, event, ...(detail ? { detail: String(detail).slice(0, 40) } : {}) }).catch(() => {});
+}
+
 let clientPromise = null;
 async function storage() {
   if (!clientPromise) {
