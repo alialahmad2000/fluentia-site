@@ -45,6 +45,15 @@
 /stories/*
   Cache-Control: public, max-age=604800
 
+# Apple universal links (v1.4 P8): iOS fetches this file with no extension and needs JSON.
+/.well-known/apple-app-site-association
+  Content-Type: application/json
+  Cache-Control: public, max-age=3600
+
+# Personal invite links /i/<code> (v1.4 P8): one URL per person, never indexed.
+/i/*
+  X-Robots-Tag: noindex, nofollow
+
 # Homepage visual-direction previews (/preview, /preview/a|b|c): never indexed.
 /preview
   X-Robots-Tag: noindex, nofollow

@@ -71,6 +71,19 @@ export function captureRefFromUrl() {
   return cleanRef;
 }
 
+/**
+ * v1.4 P8 — a personal invite link fluentia.academy/i/<code>. Opening a friend's link is an explicit choice,
+ * so it replaces an older stored ref (unlike ?ref=, which keeps the first click). The lead form then carries
+ * the code as ref_code and the CRM tags the lead source=referral with the inviter (DB trigger on leads).
+ */
+export function rememberInviteRef(code) {
+  const clean = String(code || '').trim().toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 12);
+  if (!clean) return null;
+  setCookie(REF_COOKIE, clean, COOKIE_DAYS);
+  lsSet(REF_COOKIE, JSON.stringify({ code: clean, at: Date.now() }));
+  return clean;
+}
+
 async function fireClickTracker(refCode) {
   try {
     const p = new URLSearchParams(window.location.search);

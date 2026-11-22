@@ -85,6 +85,9 @@ export const REDIRECTS = [
   // (Gallery) became the journal's design. Old shared links land on /journal.
   { from: "/journal/preview", to: "/journal", status: 301 },
   { from: "/journal/preview/*", to: "/journal", status: 301 },
+  // v1.4 P8: fluentia.academy/invite is a universal link into the iPhone app (the signed-in person's own invite
+  // page). Without the app it goes to the same page on the web platform. 302: the target is a signed-in page.
+  { from: "/invite", to: "https://app.fluentia.academy/invite", status: 302 },
 ];
 
 /**
@@ -100,6 +103,14 @@ export const UNPORTABLE_HOST_REDIRECTS = [
   { host: "fluentia.online", to: "https://fluentia.academy" },
   { host: "fluentia-site.vercel.app", to: "https://fluentia.academy" },
 ];
+
+/**
+ * Client-only routes with a :param. assertRouterClassified() lets every :param route through (most are covered
+ * by prerendered twins); these have none, so without a rule they would answer 404 with the shell — fine for a
+ * person, wrong for WhatsApp's link preview and for anyone checking the link. One splat rewrite each.
+ *   /i/:code — v1.4 P8 personal invite links (src/pages/invite/InvitePage.jsx).
+ */
+export const CLIENT_ONLY_PARAM_ROUTES = ["/i/*"];
 
 export function cloudflareRedirectsFile() {
   const lines = [
@@ -118,6 +129,7 @@ export function cloudflareRedirectsFile() {
     "# /app-shell and the router then saw /app-shell instead of /w. Extension-less",
     "# resolves to app-shell.html and serves it at the original URL with 200.",
     ...CLIENT_ONLY_ROUTES.map((p) => `${p}  /app-shell  200`),
+    ...CLIENT_ONLY_PARAM_ROUTES.map((p) => `${p}  /app-shell  200`),
     "",
   ];
   return `${lines.join("\n")}\n`;

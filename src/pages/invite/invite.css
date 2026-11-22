@@ -1,0 +1,113 @@
+/* /i/<code> — a friend's invite (v1.4 P8). Flat navy + azure, no gradients, no glow, no motion. */
+.inv {
+  --inv-bg: #0b1024;
+  --inv-card: #141b3a;
+  --inv-line: #263066;
+  --inv-text: #f6f1e8;
+  --inv-muted: #b9c0dc;
+  --inv-azure: #38bdf8;
+  --inv-azure-ink: #06223a;
+  --inv-bad: #ff8f80;
+  position: relative;
+  overflow-x: clip;
+  min-height: 100dvh;
+  background: var(--inv-bg);
+  color: var(--inv-text);
+  font-family: inherit;
+}
+.inv-wrap {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 20px 16px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.inv-top { display: flex; align-items: center; justify-content: space-between; }
+.inv-brand { color: var(--inv-azure); font-weight: 800; font-size: 1.25rem; text-decoration: none; }
+.inv-lang {
+  background: transparent;
+  color: var(--inv-muted);
+  border: 1px solid var(--inv-line);
+  border-radius: 999px;
+  padding: 6px 14px;
+  font: inherit;
+  font-size: 0.875rem;
+  cursor: pointer;
+  min-height: 36px;
+}
+.inv-hero { padding: 12px 0 4px; min-height: 120px; }
+.inv-skel { height: 96px; border-radius: 14px; background: var(--inv-card); }
+.inv-title { font-size: clamp(1.6rem, 6vw, 2.1rem); line-height: 1.3; margin: 0 0 10px; font-weight: 800; }
+.inv-sub { color: var(--inv-muted); line-height: 1.8; margin: 0; }
+.inv-note { color: var(--inv-muted); margin: 10px 0 0; font-size: 0.9rem; }
+.inv-card {
+  background: var(--inv-card);
+  border: 1px solid var(--inv-line);
+  border-radius: 16px;
+  padding: 18px 16px;
+}
+.inv-card form, .inv-done { display: flex; flex-direction: column; gap: 14px; }
+.inv-h2 { font-size: 1.15rem; margin: 0; font-weight: 700; }
+.inv-muted { color: var(--inv-muted); margin: 0; line-height: 1.7; }
+.inv-small { font-size: 0.8rem; }
+.inv-field { display: flex; flex-direction: column; gap: 6px; font-size: 0.9rem; }
+.inv-input {
+  width: 100%;
+  min-height: 48px;
+  border-radius: 12px;
+  border: 1px solid var(--inv-line);
+  background: var(--inv-bg);
+  color: var(--inv-text);
+  padding: 0 14px;
+  font: inherit;
+  font-size: 16px; /* no iOS zoom on focus */
+  box-sizing: border-box;
+}
+.inv-input:focus-visible, .inv-btn:focus-visible, .inv-lang:focus-visible { outline: 2px solid var(--inv-azure); outline-offset: 2px; }
+.inv-input[aria-invalid="true"] { border-color: var(--inv-bad); }
+.inv-phone { display: flex; gap: 8px; align-items: stretch; }
+.inv-cc {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 12px;
+  border-radius: 12px;
+  border: 1px solid var(--inv-line);
+  color: var(--inv-muted);
+  font-variant-numeric: tabular-nums;
+}
+.inv-err { color: var(--inv-bad); font-size: 0.85rem; margin: 0; }
+/* Honeypot: off-screen offsets overflow an RTL document sideways (the page scrolled 10k px wide in English),
+   so it is clipped in place instead. */
+.inv-hp {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+}
+.inv-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0 20px;
+  border-radius: 12px;
+  border: 1px solid var(--inv-azure);
+  background: transparent;
+  color: var(--inv-azure);
+  font: inherit;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+}
+.inv-btn--primary { background: var(--inv-azure); color: var(--inv-azure-ink); }
+.inv-btn[disabled] { opacity: 0.6; cursor: default; }
+.inv-app { display: flex; flex-direction: column; gap: 14px; }
+.inv-foot { text-align: center; }
+.inv-foot a { color: var(--inv-muted); }

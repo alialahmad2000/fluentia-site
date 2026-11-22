@@ -1,0 +1,21 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": [
+          "WP6TLCTG38.academy.fluentia.ios"
+        ],
+        "components": [
+          {
+            "/": "/i/*",
+            "comment": "v1.4 P8 personal invite links"
+          },
+          {
+            "/": "/invite",
+            "comment": "v1.4 P8 the signed-in person's own invite page"
+          }
+        ]
+      }
+    ]
+  }
+}
