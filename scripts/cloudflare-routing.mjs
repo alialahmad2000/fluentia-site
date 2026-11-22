@@ -109,8 +109,9 @@ export const UNPORTABLE_HOST_REDIRECTS = [
  * by prerendered twins); these have none, so without a rule they would answer 404 with the shell — fine for a
  * person, wrong for WhatsApp's link preview and for anyone checking the link. One splat rewrite each.
  *   /i/:code — v1.4 P8 personal invite links (src/pages/invite/InvitePage.jsx).
+ *   /careers/pledge/:token, /en/careers/pledge/:token — the trial-commitment pledge link (CareersPledgePage.jsx).
  */
-export const CLIENT_ONLY_PARAM_ROUTES = ["/i/*"];
+export const CLIENT_ONLY_PARAM_ROUTES = ["/i/*", "/careers/pledge/*", "/en/careers/pledge/*"];
 
 export function cloudflareRedirectsFile() {
   const lines = [

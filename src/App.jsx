@@ -13,6 +13,7 @@ const StartPage = lazy(() => import('./pages/StartPage'));
 const AdvisorChat = lazy(() => import('./pages/start/AdvisorChat'));
 const JoinPage = lazy(() => import('./pages/join/JoinPage'));
 const CareersPage = lazy(() => import('./pages/careers/CareersPage'));
+const CareersPledgePage = lazy(() => import('./pages/careers/CareersPledgePage'));
 const InvitePage = lazy(() => import('./pages/invite/InvitePage'));
 const PrivatePage = lazy(() => import('./pages/private/PrivatePage'));
 const StoriesPage = lazy(() => import('./pages/stories/StoriesPage'));
@@ -1253,6 +1254,9 @@ function AppRoutes(){
       <Route path="/join-classic" element={<Suspense fallback={JOIN_CLASSIC_FALLBACK}><JoinPage /></Suspense>} />
       <Route path="/careers" element={<Suspense fallback={<div style={{minHeight:'100dvh',background:'#060914'}} />}><CareersPage /></Suspense>} />
       <Route path="/en/careers" element={<Suspense fallback={<div style={{minHeight:'100dvh',background:'#060914'}} />}><CareersPage lang="en" /></Suspense>} />
+      {/* «تعهّد الالتزام بالفترة التجريبية» behind a link (2026-11-22): sign it, or the applicant's read-only copy. noindex. */}
+      <Route path="/careers/pledge/:token" element={<Suspense fallback={<div style={{minHeight:'100dvh',background:'#fbf6ee'}} />}><CareersPledgePage /></Suspense>} />
+      <Route path="/en/careers/pledge/:token" element={<Suspense fallback={<div style={{minHeight:'100dvh',background:'#fbf6ee'}} />}><CareersPledgePage lang="en" /></Suspense>} />
       {/* v1.4 P8 — a personal invite link (fluentia.academy/i/<code>). With the iPhone app installed iOS opens
           the app (public/.well-known/apple-app-site-association); everyone else lands here. noindex. */}
       <Route path="/i/:code" element={<Suspense fallback={<div style={{minHeight:'100dvh',background:'#0b1024'}} />}><InvitePage /></Suspense>} />

@@ -21,6 +21,7 @@ import {
   toAscii, phoneLooksValid, CV_EXT, AUDIO_MIME_EXT, extOf, TURNSTILE_SITEKEY, isPreview, setApiLang,
 } from "./careersApi";
 import { previewOutcome, previewSample, previewTag } from "./careersPreview";
+import PledgeCard from "./PledgeCard";
 
 const ROLES = {
   sales: {
@@ -125,8 +126,8 @@ const splitDob = (iso) => {
   return { y: y || "", m: m ? String(Number(m)) : "", d: d ? String(Number(d)) : "" };
 };
 // «pay» = the short pay questions after the recordings (sales): still the last stage before «النتيجة»
-const STEP_OF = { landing: 0, chat: 1, voice: 2, pay: 2, finishing: 3, outcome: 3 };
-const RISE_OF = { landing: 0, chat: 0.2, voice: 0.45, pay: 0.6, finishing: 0.7, outcome: 1 };
+const STEP_OF = { landing: 0, chat: 1, voice: 2, pay: 2, pledge: 3, finishing: 3, outcome: 3 };
+const RISE_OF = { landing: 0, chat: 0.2, voice: 0.45, pay: 0.6, pledge: 0.7, finishing: 0.75, outcome: 1 };
 function Steps({ stage, keyVoice }) {
   const en = useEn();
   const at = STEP_OF[stage] ?? 0;
@@ -599,6 +600,7 @@ function Chat({ messages, typing, onSend, error, gender, disabled, options, mult
 /* ───────────────────────── What next (every outcome) ───────────────────────── */
 function WhatNext({ kind, gender }) {
   const en = useEn();
+  if (kind === "withdrew") return null;
   if (en) {
     return (
       <section className="cr-card cr-next" aria-labelledby="cr-next-h">
@@ -863,6 +865,17 @@ function VoiceCard({ task, app, gender, onTasks, onSkip }) {
 }
 
 /* ───────────────────────── Outcome screens ───────────────────────── */
+/** After submitting: the signed pledge's reference number + the applicant's read-only copy. */
+function PledgeRef({ p }) {
+  const en = useEn();
+  return (
+    <section className="cr-card pl-ref" aria-label={en ? "Your signed pledge" : "تعهّدك الموقّع"}>
+      <p><small>{en ? "Pledge reference" : "رقم مرجع التعهّد"}</small><b dir="ltr">{p.ref}</b></p>
+      {p.copy_url ? <a className="cr-btn cr-btn-ghost" href={p.copy_url} target="_blank" rel="noopener">{en ? "A copy of your pledge" : "نسخة من تعهّدك"}</a> : null}
+    </section>
+  );
+}
+
 function BookedCard({ booking, title, body }) {
   const en = useEn();
   const [mine, setMine] = useState(""); // the applicant's own time, read after hydration
@@ -945,6 +958,8 @@ export default function CareersPage({ lang = "ar" }) {
   const [slots, setSlots] = useState([]);
   const [slotsLoading, setSlotsLoading] = useState(false);
   const [booking, setBooking] = useState(null);
+  const [pledge, setPledge] = useState(null); // the trial-commitment pledge: the last step before submitting
+  const [pledgeMsg, setPledgeMsg] = useState(""); // set after «ما أقدر ألتزم»
   const [preview, setPreview] = useState(false); // read after hydration: the prerendered HTML has no query string
   const formRef = useRef(null);
   const gender = app?.basics?.gender || "";
@@ -973,7 +988,7 @@ export default function CareersPage({ lang = "ar" }) {
   const reset = useCallback((r, msg) => {
     if (r) clearSaved(r);
     setSaved((s) => ({ ...s, ...(r ? { [r]: null } : {}) }));
-    setApp(null); setMessages([]); setOptions(null); setTasks([]); setOutcome(null); setSlots([]); setBooking(null);
+    setApp(null); setMessages([]); setOptions(null); setTasks([]); setOutcome(null); setSlots([]); setBooking(null); setPledge(null); setPledgeMsg("");
     setStage("landing"); setRole(r || null); setError(""); setNotice(msg || "");
     window.scrollTo?.(0, 0);
   }, []);
@@ -1157,10 +1172,34 @@ export default function CareersPage({ lang = "ar" }) {
         setOptions(res.options || null); setMulti(!!res.multi); setStage("pay"); window.scrollTo?.(0, 0);
         return;
       }
+      // every application: the formal pledge is signed last, then the same «finish» submits it
+      if (res.step === "pledge") { setPledge(res.pledge); setPledgeMsg(""); setStage("pledge"); window.scrollTo?.(0, 0); return; }
+      clearSaved(role);
       await showOutcome(res.outcome, app);
-    } catch (x) { setStage(from === "pay" ? "pay" : "voice"); setError(x.messageAr || (en ? "We couldn't submit your application. Please try again." : "ما قدرنا نرسل الطلب. نرجو المحاولة مرة ثانية.")); }
+    } catch (x) { setStage(from === "pay" ? "pay" : from === "pledge" ? "pledge" : "voice"); setError(x.messageAr || (en ? "We couldn't submit your application. Please try again." : "ما قدرنا نرسل الطلب. نرجو المحاولة مرة ثانية.")); }
   };
   finishRef.current = finish;
+
+  /* the pledge */
+  const signPledge = async (name) => {
+    setBusy(true); setError(""); setFieldError("");
+    try {
+      const res = await guard(() => call("pledge_sign", { application_id: app.id, token: app.token, agree: true, name }), role);
+      if (!res) return;
+      setPledge(res.pledge);
+      await finish();
+    } catch (x) {
+      setError(x.messageAr || (en ? "We couldn't record your signature. Please try again." : "ما قدرنا نسجّل توقيعك. نرجو المحاولة مرة ثانية."));
+      if (x.field) setFieldError(x.field);
+    } finally { setBusy(false); }
+  };
+  const declinePledge = async () => {
+    setBusy(true); setError("");
+    try {
+      const res = await guard(() => call("pledge_decline", { application_id: app.id, token: app.token }), role);
+      if (res) { setPledgeMsg(res.message || (en ? "We appreciate your honesty. Committing to the trial is a basic requirement for applying with us." : "نقدّر صراحتك، الالتزام بالتجربة شرط أساسي للتقديم عندنا.")); window.scrollTo?.(0, 0); }
+    } catch (x) { setError(x.messageAr || ""); } finally { setBusy(false); }
+  };
 
   /* «وضع المعاينة» shortcuts */
   const skipQuestion = () => { const x = previewSample(); send(x.text, () => {}, x.choice); };
@@ -1356,6 +1395,18 @@ export default function CareersPage({ lang = "ar" }) {
             </div>
           )}
 
+          {stage === "pledge" && pledge && (
+            <div className="pl-wrap">
+              <h1 className="cr-flow-h">{en ? "Last step: the trial commitment" : "آخر خطوة: تعهّد الالتزام بالتجربة"}</h1>
+              <p className="cr-hint">{en
+                ? "Your answers are saved. Before we receive your application, please read this pledge and sign it with your full name."
+                : g(gender, "إجاباتك محفوظة. قبل ما يوصلنا طلبك، اقرأ/ي التعهّد ووقّع/ي باسمك الكامل.", "إجاباتك محفوظة. قبل ما يوصلنا طلبك، اقرأ التعهّد ووقّع باسمك الكامل.", "إجاباتك محفوظة. قبل ما يوصلنا طلبك، اقرئي التعهّد ووقّعي باسمك الكامل.")}</p>
+              <PledgeCard pledge={pledge} en={en} mode="flow" busy={busy} error={error} fieldError={fieldError}
+                onSign={signPledge} onDecline={declinePledge} declinedMsg={pledgeMsg} onBack={() => { setPledgeMsg(""); setError(""); }} />
+              {pledgeMsg ? <a className="cr-btn cr-btn-ghost cr-center" href={en ? "/en" : "/"}>{en ? "Back to the home page" : "العودة للرئيسية"}</a> : null}
+            </div>
+          )}
+
           {stage === "finishing" && (
             <div className="cr-card cr-wait" role="status" aria-live="polite">
               <div className="cr-spinner" aria-hidden="true" />
@@ -1377,13 +1428,14 @@ export default function CareersPage({ lang = "ar" }) {
                     <a className="cr-btn cr-btn-ghost" href="/">{en ? "Back to the home page" : "العودة للرئيسية"}</a>
                   </div>
                 )}
+            {outcome.pledge ? <PledgeRef p={outcome.pledge} /> : null}
             <WhatNext kind={booking ? "booked" : outcome.kind} gender={gender} />
             {preview ? (
               <section className="cr-card cr-pv-out" aria-labelledby="cr-pv-out-h">
                 <h3 id="cr-pv-out-h">معاينة: كل الشاشات اللي ممكن تظهر في النهاية</h3>
                 {previewTag() ? <p className="cr-pv-note" role="note">«شهية العمولة» من إجاباتك في المعاينة: <b>{previewTag()}</b> (تظهر للإدارة فقط)</p> : null}
                 <div className="cr-pv-tools">
-                  {[["book", "مؤهل: اختيار موعد"], ["booked", "بعد حجز الموعد"], ["thanks", "شكرًا (بعد المراجعة)"], ["ko", "شكرًا (الأوقات ما تشمل المساء)"], ["under18", "أقل من 18 سنة"]].map(([k, l]) => (
+                  {[["book", "مؤهل: اختيار موعد"], ["booked", "بعد حجز الموعد"], ["thanks", "شكرًا (بعد المراجعة)"], ["ko", "شكرًا (الأوقات ما تشمل المساء)"], ["under18", "أقل من 18 سنة"], ["withdrew", "انسحب بعد معرفة طبيعة الوظيفة"]].map(([k, l]) => (
                     <button key={k} type="button" className="cr-pv-btn" onClick={() => viewOutcome(k)}>{l}</button>
                   ))}
                 </div>

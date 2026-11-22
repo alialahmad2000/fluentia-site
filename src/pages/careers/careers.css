@@ -369,3 +369,41 @@
 .cr-root[dir="ltr"] .cr-send svg{transform:none}
 .cr-root[dir="ltr"] .cr-role.on .cr-arrow{transform:rotate(90deg)}
 @media(hover:hover){.cr-root[dir="ltr"] .cr-role-go:hover .cr-arrow{transform:translateX(4px)}.cr-root[dir="ltr"] .cr-role.on .cr-role-go:hover .cr-arrow{transform:rotate(90deg)}}
+
+/* ─── 2026-11-22: «تعهّد الالتزام بالفترة التجريبية» — a flat, official document card (no glow, no gradient) ─── */
+.pl-wrap{display:flex;flex-direction:column;gap:16px;padding-block:18px 48px}
+.pl-card{background:#fff;border:1px solid var(--line-2);border-block-start:6px solid var(--ink);border-radius:10px;padding:clamp(18px,5vw,34px);display:flex;flex-direction:column;gap:18px;color:var(--ink)}
+.pl-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-block-end:14px;border-block-end:1px solid var(--line-2)}
+.pl-brand{display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:800;font-size:1.05rem}
+.pl-badge{display:inline-block;padding:5px 14px;border:1.5px solid var(--ink);border-radius:6px;font-weight:700;font-size:.9rem;letter-spacing:.02em}
+.pl-title{font-family:var(--display);font-weight:800;font-size:clamp(1.25rem,5.4vw,1.6rem);line-height:1.6;text-align:center}
+.pl-meta{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;margin:0;background:var(--line-2);border:1px solid var(--line-2);border-radius:8px;overflow:hidden}
+.pl-meta>div{background:#f7f5f1;padding:10px 14px;min-width:0}
+.pl-meta dt{font-size:.78rem;color:var(--ink-3)}
+.pl-meta dd{margin:0;font-weight:700;word-break:break-word}
+.pl-text{display:flex;flex-direction:column;gap:10px;font-size:1rem;line-height:2}
+.pl-text p{margin:0}
+.pl-item{padding-inline-start:12px;border-inline-start:3px solid var(--dawn-400)}
+.pl-form{display:flex;flex-direction:column;gap:14px;padding-block-start:16px;border-block-start:1px solid var(--line-2)}
+.pl-go{width:100%}
+.pl-no{align-self:center}
+.pl-signed{display:flex;flex-direction:column;gap:12px;padding-block-start:16px;border-block-start:1px solid var(--line-2)}
+.pl-sigline{display:flex;flex-direction:column;align-items:flex-start;gap:4px;max-width:340px}
+.pl-sig{font-size:1.35rem;font-weight:700;padding-inline:4px;padding-block-end:4px;border-block-end:1.5px solid var(--ink);min-width:220px}
+.pl-siglbl{font-size:.8rem;color:var(--ink-3)}
+.pl-ok{font-size:.88rem;color:var(--ok);font-weight:600}
+.pl-actions{display:flex;flex-wrap:wrap;gap:10px}
+.pl-declined{display:flex;flex-direction:column;gap:12px;padding:16px;border-radius:8px;background:#f7f5f1;border:1px solid var(--line-2)}
+.pl-declined p{font-weight:600}
+.pl-ref{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.pl-ref p{display:flex;flex-direction:column}
+.pl-ref small{color:var(--ink-3);font-size:.8rem}
+.pl-ref b{font-family:var(--latin);font-size:1.15rem;letter-spacing:.04em}
+.cr-center{align-self:center}
+@media(max-width:420px){.pl-meta{grid-template-columns:1fr}}
+@media print{
+  .cr-root{background:#fff;padding:0}
+  .cr-root .cr-sky,.cr-root .cr-top,.cr-root .cr-steps,.cr-root .cr-pv,.cr-root .pl-actions,.cr-root .cr-hint,.cr-root .cr-notice,.cr-root .cr-flow-h,.cr-root .cr-btn{display:none!important}
+  .pl-card{border:1px solid #000;border-block-start:6px solid #000;box-shadow:none}
+  @page{size:A4;margin:16mm}
+}

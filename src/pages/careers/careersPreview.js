@@ -156,11 +156,63 @@ export function previewOutcome(kind, gender, name) {
     return { kind: "book", title_ar: G(g, "ممتاز! اختر وقت مكالمة قصيرة مع الفريق", "ممتاز! اختاري وقت مكالمة قصيرة مع الفريق"),
       body_ar: G(g, "مكالمة 15 دقيقة نتعرّف فيها عليك أكثر. اختر الوقت اللي يناسبك:", "مكالمة 15 دقيقة نتعرّف فيها عليكِ أكثر. اختاري الوقت اللي يناسبك:") };
   }
+  if (kind === "withdrew") { const c = JP_CLOSE(g); return { kind: "withdrew", title_ar: c.title, body_ar: c.body }; }
   if (kind === "ko") return { kind: "thanks", title_ar: "شكرًا على وضوحك", body_ar: "حفظنا طلبك، وبنتواصل معك إذا فتحنا فرصة تناسبك." };
   if (kind === "under18") return { kind: "thanks", title_ar: "شكرًا لاهتمامك", body_ar: "حاليًا نستقبل طلبات من عمرهم 18 سنة وفوق. حفظنا طلبك، وبنتواصل معك إذا فتحنا فرصة تناسبك." };
   if (kind === "already") return { kind: "thanks", title_ar: "وصلنا طلبك، شكرًا لك", body_ar: "وصلنا طلبك، وبنتواصل معك إذا فتحنا فرصة تناسبك." };
   return { kind: "thanks", title_ar: "شكرًا لك", body_ar: "وصلنا طلبك، وبنتواصل معك إذا فتحنا فرصة تناسبك." };
 }
+
+/* ── v5 (2026-11-22): the honest job preview + seriousness + strengths, and the formal pledge last.
+ * Same wording as hiring-interview previewText / JP_OPTS / STR_Q / pledgeText, with the default trial config. ── */
+const TRIAL = { days: 3, pay: 100, min: 30, stretch: 50 };
+function previewText(role, g) {
+  if (role === "trainer") return [
+    G(g, "قبل ما نبدأ، خلني أكون صريح معك عن الوظيفة:", "قبل ما نبدأ، خليني أكون صريح معك عن الوظيفة:"),
+    "• التدريس عندنا التزام حقيقي: مواعيد ثابتة وطلاب ينتظرونك.",
+    G(g, "• فيه فترة تجريبية قبل القبول النهائي، ولازم تلتزم فيها كاملة إذا قدّمت.", "• فيه فترة تجريبية قبل القبول النهائي، ولازم تلتزمين فيها كاملة إذا قدّمتي."),
+  ].join("\n");
+  return [
+    G(g, "قبل ما نبدأ، خلني أكون صريح معك عن الوظيفة:", "قبل ما نبدأ، خليني أكون صريح معك عن الوظيفة:"),
+    "• الوظيفة مو سهلة: اتصالات مباشرة كثيرة كل يوم مع عملاء مهتمين بتعلّم الإنجليزي.",
+    G(g, "• فيها ضغط، وفيها رفض كثير — بتسمع «لا» كثير وتكمّل عادي.", "• فيها ضغط، وفيها رفض كثير — بتسمعين «لا» كثير وتكمّلين عادي."),
+    G(g, "• تحتاج شخص صبور وقوي، ما ياخذ الرفض بشكل شخصي، ويحب يقنع ويتابع.", "• تحتاج شخصية صبورة وقوية، ما تاخذ الرفض بشكل شخصي، وتحب تقنع وتتابع."),
+    `• قبل أي قبول نهائي فيه فترة تجريبية ${TRIAL.days} أيام، مدفوعة (${TRIAL.pay} ريال لليوم).`,
+    G(g, `• خلال التجربة: ${TRIAL.min} اتصال يوميًا كحد أدنى (والطموح توصل ${TRIAL.stretch})، وكل عميل لازم تحدّث وضعه بدقة: وش صار معه بالضبط.`,
+      `• خلال التجربة: ${TRIAL.min} اتصال يوميًا كحد أدنى (والطموح توصلين ${TRIAL.stretch})، وكل عميل لازم تحدّثين وضعه بدقة: وش صار معه بالضبط.`),
+    "• بعد التجربة نشوف نتيجتك ونتفق معك على التفاصيل بناءً على أدائك.",
+  ].join("\n");
+}
+const JP_OPTS = (g) => [{ id: "yes", label: G(g, "فاهم طبيعة الوظيفة وجاد إني أكمل", "فاهمة طبيعة الوظيفة وجادة إني أكمل") }, { id: "no", label: "لا، مو مناسبة لي" }];
+const STR_Q = (role, g) => (role === "sales"
+  ? G(g, "إيش نقاط قوتك اللي تخليك تتحمّل ضغط الوظيفة والرفض؟ اذكر أمثلة من حياتك أو شغلك.", "إيش نقاط قوتك اللي تخليك تتحمّلين ضغط الوظيفة والرفض؟ اذكري أمثلة من حياتك أو شغلك.")
+  : G(g, "إيش نقاط قوتك اللي تخليك تتحمّل ضغط الوظيفة وتلتزم بمواعيدها؟ اذكر أمثلة من حياتك أو شغلك.", "إيش نقاط قوتك اللي تخليك تتحمّلين ضغط الوظيفة وتلتزمين بمواعيدها؟ اذكري أمثلة من حياتك أو شغلك."));
+const JP_CLOSE = (g) => ({ title: "شكرًا على صراحتك", body: G(g, "وهذا بالضبط ليش نوضّح طبيعة الوظيفة من البداية — هي فعلًا ما تناسب الكل. حفظنا بياناتك، وإذا تغيّر وضعك مستقبلًا، حيّاك تقدّم من جديد.",
+  "وهذا بالضبط ليش نوضّح طبيعة الوظيفة من البداية — هي فعلًا ما تناسب الكل. حفظنا بياناتك، وإذا تغيّر وضعك مستقبلًا، حيّاكِ تقدّمين من جديد.") });
+function pledgeText(role, g, name) {
+  const roleAr = role === "sales" ? G(g, "مستشار قبول", "مستشارة قبول") : G(g, "مدرّب لغة إنجليزية", "مدرّبة لغة إنجليزية");
+  const items = role === "sales" ? [
+    `1. إكمال الفترة التجريبية كاملة (${TRIAL.days} أيام) دون انسحاب أو اعتذار، إلا لظرف طارئ حقيقي مع إبلاغ الأكاديمية فورًا.`,
+    `2. إجراء ${TRIAL.min} اتصالًا يوميًا كحدّ أدنى، وتسجيل حالة كل عميل بدقة وأمانة.`,
+    "3. الالتزام بتعليمات الفريق، والمحافظة على سرّية بيانات العملاء.",
+  ] : [
+    "1. إكمال الفترة التجريبية كاملة حسب ما تحدده الأكاديمية، دون انسحاب أو اعتذار، إلا لظرف طارئ حقيقي مع إبلاغ الأكاديمية فورًا.",
+    "2. الالتزام بمواعيد الحصص والتحضير لها.",
+    "3. الالتزام بتعليمات الفريق، والمحافظة على سرّية بيانات الطلاب.",
+  ];
+  return [`أنا ${name}، ${G(g, "المتقدّم", "المتقدّمة")} لوظيفة «${roleAr}» في أكاديمية طلاقة، أقرّ بأني اطّلعت على طبيعة الوظيفة و${role === "sales" ? "تحدياتها" : "متطلباتها"}، وأتعهّد في حال قبولي للفترة التجريبية بما يلي:`,
+    ...items, "وأعلم أن هذا التعهّد يُعدّ التزامًا رسميًا لدى الأكاديمية، وأن الإخلال به يُسجَّل في ملفي."].join("\n");
+}
+const todayAr = () => new Intl.DateTimeFormat("ar-SA-u-ca-gregory-nu-latn", { timeZone: "Asia/Riyadh", day: "numeric", month: "long", year: "numeric" }).format(new Date());
+function pledgeView(s) {
+  const signed = s.pledge === "signed";
+  return { ref: "FL-P-0000", status: s.pledge || "pending", title: "تعهّد الالتزام بالفترة التجريبية", text: pledgeText(s.role, s.g, s.name),
+    name: s.name, applicant_code: "A-0000", date: todayAr(), version: "v1", lang: "ar", role: s.role, gender: s.g,
+    signed_name: signed ? s.signedName : null, signed_at: signed ? new Date().toISOString() : null, signed, declined: s.pledge === "declined" };
+}
+const normName = (x) => String(x || "").toLowerCase().replace(/[\u064B-\u065F\u0670\u0640]/g, "")
+  .replace(/[أإآٱ]/g, "ا").replace(/ة/g, "ه").replace(/ى/g, "ي").replace(/ؤ/g, "و").replace(/ئ/g, "ي")
+  .replace(/[^\p{L}\p{N}\s]/gu, " ").replace(/\s+/g, " ").trim();
 
 /* ── the session (memory only; a reload starts over) ── */
 let S = null;
@@ -173,6 +225,7 @@ const ageOf = (iso) => {
   return a;
 };
 const optionsFor = (s) => {
+  if (s.step === "chat" && s.pending === "jp_ok") return JP_OPTS(s.g);
   if (s.role !== "sales") return null;
   if (s.step === "pay") return s.pending === "pp_q2" ? PP_Q2_OPTS : s.pending === "pp_q3b" ? PP_Q3B_OPTS : s.pending === "pp_q4" ? [PP_SKIP] : null;
   return s.pending === "emp" ? EMP_OPTS(s.g) : s.pending === "slots" ? SLOT_OPTS : null;
@@ -191,6 +244,27 @@ function screening(s, choice, text) {
   s.pending = null;
   if (!eveningFit(ids)) { s.step = "done"; return { reply: koLine(g), step: "done", options: null, outcome: previewOutcome("ko", g) }; }
   return { reply: `ممتاز.\n\n${FIRST_SALES_Q}`, step: "chat", options: null, multi: false };
+}
+
+/** v5: the seriousness buttons, then the strengths answer, then the existing flow from its first step. */
+function previewStep(s, choice, text) {
+  const g = s.g;
+  if (s.pending === "jp_ok") {
+    if (choice === "no" || /^لا/.test(String(text || "").trim())) {
+      s.step = "done"; s.pending = null;
+      const c = JP_CLOSE(g);
+      return { reply: c.body, step: "done", options: null, outcome: { kind: "withdrew", title_ar: c.title, body_ar: c.body } };
+    }
+    s.pending = "jp_str";
+    return { reply: STR_Q(s.role, g), step: "chat", options: null, multi: false };
+  }
+  const ack = G(g, "شكرًا لك.", "شكرًا لكِ.");
+  if (s.role === "sales") {
+    s.pending = "emp";
+    return { reply: `${ack}\n\n${G(g, "بسألك كم سؤال قصير، جاوب براحتك وبأسلوبك.", "بسألك كم سؤال قصير، جاوبي براحتك وبأسلوبك.")}\n\n${VOICE_KEY_LINE(g)}\n\nنبدأ بسؤالين سريعين.\n\n${EMP_Q}`, step: "chat", options: optionsFor(s), multi: false };
+  }
+  s.pending = null;
+  return { reply: `${ack}${G(g, " بسألك كم سؤال قصير، جاوب براحتك وبأسلوبك.", " بسألك كم سؤال قصير، جاوبي براحتك وبأسلوبك.")}\n\n${G(g, "أول سؤال: حدّثني عن خبرتك في تدريس الإنجليزي — درّست كبار؟ أونلاين؟ وكم سنة تقريبًا؟", "أول سؤال: حدّثيني عن خبرتك في تدريس الإنجليزي — درّستي كبار؟ أونلاين؟ وكم سنة تقريبًا؟")}`, step: "chat", options: null, multi: false };
 }
 
 /** The end-of-interview pay block (same order and wording as the edge function). */
@@ -226,6 +300,7 @@ export function previewSample() {
   if (S.pending === "slots") return { text: "العصر، المغرب والليل", choice: "afternoon,evening" };
   const opts = optionsFor(S);
   if (opts && S.pending !== "pp_q4") return { text: opts[0].label, choice: opts[0].id };
+  if (S.pending === "jp_str") return { text: "صبور، واشتغلت سنة في خدمة عملاء بالهاتف وتعودت أسمع «لا» وأكمل." };
   const byStep = { pp_q1: "آخر راتب 4000، وأتوقع 6000", pp_q3a: "تقريبًا 20 تسجيل", pp_q4: "لأن الدخل يزيد مع الجهد" };
   return { text: byStep[S.pending] || "إجابة نموذجية للمعاينة." };
 }
@@ -235,21 +310,19 @@ export async function mockCall(action, p = {}) {
   if (action === "start") {
     const role = p.role === "trainer" ? "trainer" : "sales";
     const g = p.basics?.gender === "f" ? "f" : "m";
-    S = { role, g, name: p.basics?.name || "", step: "chat", pending: role === "sales" ? "emp" : null, turn: 0, done: {}, attempts: {}, pulse: {} };
+    S = { role, g, name: p.basics?.name || "", step: "chat", pending: "jp_ok", turn: 0, done: {}, attempts: {}, pulse: {}, pledge: null };
     const base = { application_id: "preview", token: "preview", resumed: false, needs_cv: false, has_cv: false };
     const age = ageOf(p.birth_date);
     if (age !== null && age < 18) { S.step = "done"; return { ...base, step: "done", messages: [], voice_tasks: [], outcome: previewOutcome("under18", g) }; }
     const first = String(S.name).trim().split(/\s+/)[0] || "";
     const hi = `أهلًا ${first}! أنا مساعد التوظيف في أكاديمية طلاقة.`.replace("أهلًا !", "أهلًا!");
-    const how = G(g, " بسألك كم سؤال قصير، جاوب براحتك وبأسلوبك.", " بسألك كم سؤال قصير، جاوبي براحتك وبأسلوبك.");
-    const open = role === "sales"
-      ? `${hi}${how}\n\n${VOICE_KEY_LINE(g)}\n\nنبدأ بسؤالين سريعين.\n\n${EMP_Q}`
-      : `${hi}${how}\n\n${G(g, "أول سؤال: حدّثني عن خبرتك في تدريس الإنجليزي — درّست كبار؟ أونلاين؟ وكم سنة تقريبًا؟", "أول سؤال: حدّثيني عن خبرتك في تدريس الإنجليزي — درّستي كبار؟ أونلاين؟ وكم سنة تقريبًا؟")}`;
+    const open = `${hi}\n\n${previewText(role, g)}\n\nوش قرارك؟`;
     return { ...base, step: "chat", messages: [{ role: "bot", content: open }], options: optionsFor(S), multi: multiFor(S), voice_tasks: voiceTasks(S) };
   }
   if (!S) throw Object.assign(new Error("preview"), { code: "AUTH", messageAr: "ابدأ المعاينة من جديد." });
   switch (action) {
     case "message": {
+      if (S.pending === "jp_ok" || S.pending === "jp_str") return previewStep(S, p.choice, p.text);
       if (S.role === "sales" && S.step === "pay") return pulse(S, p.choice, p.text);
       if (S.role === "sales" && S.pending) return screening(S, p.choice, p.text);
       const qs = (S.role === "sales" ? SALES_CHAT : TRAINER_CHAT)(S.g);
@@ -271,7 +344,14 @@ export async function mockCall(action, p = {}) {
         if (S.step !== "pay") { S.step = "pay"; S.pending = "pp_q1"; }
         return { step: "pay", reply: `${PP_INTRO}\n\n${PP_Q1(S.g)}`, options: null, multi: false };
       }
-      S.step = "done"; return { outcome: previewOutcome("book", S.g, S.name) };
+      if (S.pledge !== "signed") return { step: "pledge", pledge: pledgeView(S) };
+      S.step = "done"; return { outcome: { ...previewOutcome("book", S.g, S.name), pledge: { ref: "FL-P-0000", copy_url: null } } };
+    case "pledge_get": return { pledge: pledgeView(S), copy_url: null };
+    case "pledge_sign": {
+      if (normName(p.name) !== normName(S.name)) throw Object.assign(new Error("name"), { code: "NAME_MISMATCH", messageAr: "الاسم ما يطابق الاسم المكتوب في طلبك. نرجو كتابته مرة ثانية بنفس الشكل." });
+      S.pledge = "signed"; S.signedName = p.name; return { pledge: pledgeView(S), copy_url: null };
+    }
+    case "pledge_decline": S.pledge = "declined"; return { message: "نقدّر صراحتك، الالتزام بالتجربة شرط أساسي للتقديم عندنا.", pledge: pledgeView(S) };
     case "slots": return { slots: sampleSlots() };
     case "book": return { booking: sampleBooking(S.name, p.start) };
     default: return {};

@@ -54,6 +54,12 @@
 /i/*
   X-Robots-Tag: noindex, nofollow
 
+# Trial-commitment pledge links /careers/pledge/<token> (2026-11-22): personal, never indexed.
+/careers/pledge/*
+  X-Robots-Tag: noindex, nofollow
+/en/careers/pledge/*
+  X-Robots-Tag: noindex, nofollow
+
 # Homepage visual-direction previews (/preview, /preview/a|b|c): never indexed.
 /preview
   X-Robots-Tag: noindex, nofollow
