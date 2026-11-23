@@ -60,7 +60,7 @@
 /en/careers/pledge/*
   X-Robots-Tag: noindex, nofollow
 
-# Homepage visual-direction previews (/preview, /preview/a|b|c): never indexed.
+# Homepage candidates: /preview (cinematic, prerendered), /preview/directions + /preview/a|b|c: never indexed.
 /preview
   X-Robots-Tag: noindex, nofollow
 /preview/*

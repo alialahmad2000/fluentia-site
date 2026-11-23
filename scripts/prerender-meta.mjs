@@ -264,6 +264,7 @@ const unescapeStyles = (markup) =>
 // dynamic entries by source path and some by "_<name>-<hash>.js", so match by name.
 const ROUTE_CHUNKS = {
   "/level-test": "LevelTestV2",
+  "/preview": "CinemaPreview",
 };
 // Kept in dist-ssr (never deployed) so a bare `npm run prerender` re-run still has it.
 const manifestSaved = join(ROOT, "dist-ssr", "client-manifest.json");
@@ -272,7 +273,9 @@ if (existsSync(join(DIST, ".vite", "manifest.json"))) {
 }
 const manifest = existsSync(manifestSaved) ? JSON.parse(await readFile(manifestSaved, "utf8")) : null;
 function chunkHead(html, path) {
-  const name = ROUTE_CHUNKS[path];
+  // A page can also name its own chunk (data-route-chunk on its root), so a page
+  // that moves to another URL — /preview → / on a swap — keeps its CSS in the head.
+  const name = ROUTE_CHUNKS[path] || (html.match(/data-route-chunk="([A-Za-z0-9_]+)"/) || [])[1];
   if (!name) return html;
   const key = Object.keys(manifest || {}).find((k) => manifest[k].isDynamicEntry && manifest[k].name === name);
   if (!key) throw new Error(`no lazy chunk named ${name} for ${path} in the build manifest — renamed, or no longer lazy?`);

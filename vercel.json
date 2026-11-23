@@ -151,6 +151,10 @@
       "destination": "/join.html"
     },
     {
+      "source": "/preview",
+      "destination": "/preview.html"
+    },
+    {
       "source": "/careers",
       "destination": "/careers.html"
     },

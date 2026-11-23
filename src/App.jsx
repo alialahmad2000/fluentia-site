@@ -20,6 +20,7 @@ const StoriesPage = lazy(() => import('./pages/stories/StoriesPage'));
 const JournalIndex = lazy(() => import('./pages/journal/JournalIndex'));
 const JournalArticle = lazy(() => import('./pages/journal/JournalArticle'));
 const HomePreviewChooser = lazy(() => import('./pages/landing-preview/Chooser'));
+const CinemaPreview = lazy(() => import('./pages/cinema-preview/CinemaPreview'));
 const HomePreviewA = lazy(() => import('./pages/landing-preview/a/PreviewA'));
 const HomePreviewB = lazy(() => import('./pages/landing-preview/b/PreviewB'));
 const HomePreviewC = lazy(() => import('./pages/landing-preview/c/PreviewC'));
@@ -58,6 +59,8 @@ const HOME_VARIANT = "next";
  * HOMEPAGE_VERSION (2026-11-14): "dawn" = the «الفجر» colour system + first screen.
  * Rollback is this one line: set "v1" and push. The page as it was before stays
  * at /home-v1 (noindex, not in the sitemap) either way.
+ * "cinema" (prepared 2026-11-24, NOT live): `/` renders the Higgsfield page that is
+ * reviewed at /preview — docs/higgsfield-rebuild/SWAP.md. /join never changes.
  */
 const HOMEPAGE_VERSION = "dawn";
 const JOIN_VARIANT = "next";
@@ -1237,7 +1240,9 @@ function AppRoutes(){
       <Route path="/legacy" element={<HomePage />} />
       {/* Homepage = the cinematic landing (HOME_VARIANT). The V5 "Dawn Stage"
           homepage it replaced stays at /classic (noindex) for rollback. */}
-      <Route path="/" element={HOME_VARIANT === "next"
+      <Route path="/" element={HOMEPAGE_VERSION === "cinema"
+        ? <Suspense fallback={<div style={{minHeight:'100vh',background:'#060e1c'}} />}><CinemaPreview seoPath="/" /></Suspense>
+        : HOME_VARIANT === "next"
         ? <Suspense fallback={NEXT_FALLBACK}><NextLanding seoPath="/" dawn={HOMEPAGE_VERSION === "dawn"} /></Suspense>
         : <Suspense fallback={VFallback}><V5Landing /></Suspense>} />
       {/* The homepage as it was before «الفجر» (2026-11-14), frozen for comparison and rollback. */}
@@ -1282,7 +1287,9 @@ function AppRoutes(){
       {/* «مجلة طلاقة» — art-directed long-form articles (src/content/journal/). */}
       <Route path="/journal" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#f4f4f4'}} />}><JournalIndex /></Suspense>} />
       {/* Homepage visual-direction previews — noindex, client-rendered (src/pages/landing-preview/routes.js). / is unchanged. */}
-      <Route path="/preview" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#0a0d16'}} />}><HomePreviewChooser /></Suspense>} />
+      {/* /preview = the cinematic homepage candidate (Higgsfield footage; noindex, prerendered; docs/higgsfield-rebuild/). */}
+      <Route path="/preview" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#060e1c'}} />}><CinemaPreview /></Suspense>} />
+      <Route path="/preview/directions" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#0a0d16'}} />}><HomePreviewChooser /></Suspense>} />
       <Route path="/preview/a" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#060a1c'}} />}><HomePreviewA /></Suspense>} />
       <Route path="/preview/b" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#f6f1e7'}} />}><HomePreviewB /></Suspense>} />
       <Route path="/preview/c" element={<Suspense fallback={<div style={{minHeight:'100vh',background:'#080b14'}} />}><HomePreviewC /></Suspense>} />

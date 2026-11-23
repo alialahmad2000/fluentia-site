@@ -131,6 +131,15 @@ export const PAGE_SEO = {
     noindex: true,
   },
 
+  // The cinematic homepage candidate (src/pages/cinema-preview/). Prerendered so the
+  // hero poster is in the HTML (LCP), noindex until it replaces `/`. Not in the sitemap.
+  "/preview": {
+    title: "معاينة: الصفحة الرئيسية الجديدة | أكاديمية طلاقة",
+    description:
+      "حصص مباشرة مع مدرّب حقيقي، ومنصّة تتدرّبون عليها كل يوم، ومرشد أكاديمي يتابعكم. ابدأوا بلقاء مبدئي مجاني.",
+    noindex: true,
+  },
+
   // Public careers page (admissions/sales + trainers). Indexable, in the sitemap.
   "/careers": {
     title: "انضم لفريق طلاقة | وظائف أونلاين | أكاديمية طلاقة",
