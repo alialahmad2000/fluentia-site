@@ -134,7 +134,7 @@ export function Footage({ m, alt = "", priority = false, className = "", fit = "
           decoding={priority ? "sync" : "async"}
         />
       </picture>
-      {m.video && <video ref={vid} muted playsInline loop preload="none" aria-hidden="true" tabIndex={-1} />}
+      {m.video && <video ref={vid} muted playsInline loop={m.loop !== false} preload="none" aria-hidden="true" tabIndex={-1} />}
     </div>
   );
 }
