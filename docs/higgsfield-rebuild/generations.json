@@ -1,6 +1,6 @@
 {
   "about": "Every Higgsfield job behind /preview (docs/higgsfield-rebuild/). Credits are never spent: generation runs on the free-trial unlimited allowance only (ends 2026-11-26 19:56 UTC). Claude Code cannot request unlimited generations (MCP/CLI refuse use_unlim), so the pack ~/Downloads/FLUENTIA-HIGGSFIELD-GENERATION-PACK.md is run in claude.ai chat and results are pulled here with `higgsfield generate list --json`.",
-  "encode": "docs/higgsfield-rebuild/encode.sh (CRF 22 / VP9 33, posters AVIF crf 32 + WebP q78)",
+  "encode": "docs/higgsfield-rebuild/encode.sh (CRF 22 / VP9 33, hero reel CRF 24; posters AVIF crf 32 + WebP q78; LOOP=xfade|pingpong|once, reel mode for the hero)",
   "jobs": [
     {
       "id": "d4be326a-6533-4998-b94e-ac2d0a7926cd",
@@ -19,7 +19,8 @@
       "verdict": "used",
       "cut": "0.2s +6.4s, 720x1280 loop",
       "out": "public/media/higgsfield/hero/hero-p.*",
-      "notes": "Bare-head thobe, airport abroad, no text, face stable. Portrait only: no 16:9 cut exists yet (pack H1_* adds it)."
+      "notes": "Bare-head thobe, airport abroad, no text, face stable. Portrait only: no 16:9 cut exists yet (pack H1_* adds it).",
+      "verdict_now": "retired 2026-11-24: replaced by the pack footage (not on the page)"
     },
     {
       "id": "037d5488-cb63-479f-8f61-5ff02345b84b",
@@ -38,7 +39,8 @@
       "verdict": "partly used",
       "cut": "0.1s +5.6s (shot 1 only)",
       "out": "public/media/higgsfield/before-after/before-p.*",
-      "notes": "Shot 1 (hesitation close-up, ghutra + igal) used. Shot 2 REJECTED: Burj Khalifa in the window."
+      "notes": "Shot 1 (hesitation close-up, ghutra + igal) used. Shot 2 REJECTED: Burj Khalifa in the window.",
+      "verdict_now": "retired 2026-11-24: replaced by the pack footage (not on the page)"
     },
     {
       "id": "4593da1b-7d42-4623-a8e5-d5ffd322ff80",
@@ -57,7 +59,8 @@
       "verdict": "used — interim, flagged",
       "cut": "6.3s +5.6s (shot 2 only)",
       "out": "public/media/higgsfield/before-after/after-p.*",
-      "notes": "Shot 2 boardroom: ghutra + igal correct; skyline shows a Kingdom-Centre-like tower plus a generic curved tower, no Dubai landmark identified. Replace with pack BA_AFTER (explicit Kingdom Centre / KAFD)."
+      "notes": "Shot 2 boardroom: ghutra + igal correct; skyline shows a Kingdom-Centre-like tower plus a generic curved tower, no Dubai landmark identified. Replace with pack BA_AFTER (explicit Kingdom Centre / KAFD).",
+      "verdict_now": "retired 2026-11-24: replaced by the pack footage (not on the page)"
     },
     {
       "id": "1f2a78be-3844-4985-bad2-5388d89af79c",
@@ -76,34 +79,722 @@
       "verdict": "used",
       "cut": "0.2s +7.4s",
       "out": "public/media/higgsfield/classes/class-p.*",
-      "notes": "Black abaya + hijab, live class on laptop, no text, hands clean."
+      "notes": "Black abaya + hijab, live class on laptop, no text, hands clean.",
+      "verdict_now": "retired 2026-11-24: replaced by the pack footage (not on the page)"
     }
   ],
-  "pending_pack": [
-    "CAST_FAISAL",
-    "CAST_NOURA",
-    "CAST_ABDULLAH",
-    "CAST_KHALID",
-    "H1_MEETING_W/T",
-    "H2_CAFE",
-    "H3_AIRPORT",
-    "BA_BEFORE",
-    "BA_AFTER",
-    "CLASS",
-    "PRIVATE",
-    "NOVEL",
-    "PODCAST",
-    "SCENES",
-    "AI_PARTNER",
-    "WHO_EMPLOYEE",
-    "WHO_OWNER",
-    "WHO_STUDENT",
-    "CAREER",
-    "COACH",
-    "FINAL_W/T",
-    "DETAIL_NOTEBOOK",
-    "DETAIL_EARBUDS",
-    "DETAIL_COFFEE",
-    "+ V_* video for each"
-  ]
+  "pack": {
+    "project": "Fluentia Site Rebuild (bdc0f250-5870-4342-a4be-c778b1beef97)",
+    "credits_spent": 0,
+    "pulled": "2026-11-24",
+    "table": "~/Downloads/FLUENTIA-HIGGSFIELD-RESULTS.md",
+    "jobs": [
+      {
+        "key": "CAST_FAISAL",
+        "id": "39dff61d-80d8-440b-9015-4e98ac677395",
+        "kind": "image",
+        "chat_verdict": "✅ ok",
+        "model": "nano_banana_pro",
+        "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JgnHYnvwIJqb3GarKh5KJNtdFs/hf_20261123_221706_39dff61d-80d8-440b-9015-4e98ac677395.png",
+        "created_at": "2026-11-23T22:17:06.660102Z",
+        "used": null,
+        "claude_code_verdict": "not placed (no slot / alternate take / reference sheet)"
+      },
+      {
+        "key": "CAST_NOURA",
+        "id": "34a97e88-3a85-47d1-ab8e-fa8114d87f36",
+        "kind": "image",
+        "chat_verdict": "✅ ok",
+        "model": "nano_banana_pro",
+        "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JgnHYnvwIJqb3GarKh5KJNtdFs/hf_20261123_221706_34a97e88-3a85-47d1-ab8e-fa8114d87f36.png",
+        "created_at": "2026-11-23T22:17:06.135692Z",
+        "used": null,
+        "claude_code_verdict": "not placed (no slot / alternate take / reference sheet)"
+      },
+      {
+        "key": "CAST_ABDULLAH",
+        "id": "de099052-ed18-42da-8da8-0c583b1f6aea",
+        "kind": "image",
+        "chat_verdict": "✅ ok",
+        "model": "nano_banana_pro",
+        "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JgnHYnvwIJqb3GarKh5KJNtdFs/hf_20261123_221706_de099052-ed18-42da-8da8-0c583b1f6aea.png",
+        "created_at": "2026-11-23T22:17:06.978732Z",
+        "used": "who/student-p (still: replaces rejected V_WHO_STUDENT)"
+      },
+      {
+        "key": "CAST_KHALID",
+        "id": "61710983-dc3a-4e07-8a09-2ae4d259b090",
+        "kind": "image",
+        "chat_verdict": "✅ ok",
+        "model": "nano_banana_pro",
+        "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JgnHYnvwIJqb3GarKh5KJNtdFs/hf_20261123_221705_61710983-dc3a-4e07-8a09-2ae4d259b090.png",
+        "created_at": "2026-11-23T22:17:05.668637Z",
+        "used": null,
+        "claude_code_verdict": "not placed (no slot / alternate take / reference sheet)"
+      },
+      {
+        "key": "H1_MEETING_W",
+        "id": "707eb0c0-c036-4cea-8e4f-790df58eaf69",
+        "kind": "image",
+        "chat_verdict": "✅ ok",
+        "model": "nano_banana_pro",
+        "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JgnHYnvwIJqb3GarKh5KJNtdFs/hf_20261123_221826_707eb0c0-c036-4cea-8e4f-790df58eaf69.png",
+        "created_at": "2026-11-23T22:18:26.289669Z",
+        "used": null,
+        "claude_code_verdict": "not placed (no slot / alternate take / reference sheet)"
+      },
+      {
+        "key": "H1_MEETING_T",
+        "id": "b791dfd0-9b8c-4f9c-96c9-54038d9f5c96",
+        "kind": "image",
+        "chat_verdict": "✅ ok",
+        "model": "nano_banana_pro",
+        "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JgnHYnvwIJqb3GarKh5KJNtdFs/hf_20261123_221927_b791dfd0-9b8c-4f9c-96c9-54038d9f5c96.png",
+        "created_at": "2026-11-23T22:19:27.602289Z",
+        "used": null,
+        "claude_code_verdict": "not placed (no slot / alternate take / reference sheet)"
+      },
+      {
+        "key": "H2_CAFE_W",
+        "id": "133a6706-e609-4a86-87b3-e673d6bff1a9",
+        "kind": "image",
+        "chat_verdict": "✅ ok",
+        "model": "nano_banana_pro",
+        "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JgnHYnvwIJqb3GarKh5KJNtdFs/hf_20261123_221828_133a6706-e609-4a86-87b3-e673d6bff1a9.png",
+        "created_at": "2026-11-23T22:18:28.456823Z",
+        "used": null,
+        "claude_code_verdict": "not placed (no slot / alternate take / reference sheet)"
+      },
+      {
+        "key": "H2_CAFE_T",
+        "id": "7123201d-8217-4668-b27f-43f1c3e8e369",
+        "kind": "image",
+        "chat_verdict": "✅ ok",
+        "model": "nano_banana_pro",
+        "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JgnHYnvwIJqb3GarKh5KJNtdFs/hf_20261123_221829_7123201d-8217-4668-b27f-43f1c3e8e369.png",
+        "created_at": "2026-11-23T22:18:29.825801Z",
+        "used": null,
+        "claude_code_verdict": "not placed (no slot / alternate take / reference sheet)"
+      },
+      {
+        "key": "H3_AIRPORT_W",
+        "id": "581f7caa-d879-40ee-b886-1430bc62b5f6",
+        "kind": "image",
+        "chat_verdict": "✅ ok",
+        "model": "nano_banana_pro",
+        "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JgnHYnvwIJqb3GarKh5KJNtdFs/hf_20261123_221827_581f7caa-d879-40ee-b886-1430bc62b5f6.png",
+        "created_at": "2026-11-23T22:18:27.730001Z",
+        "used": null,
+        "claude_code_verdict": "not placed (no slot / alternate take / reference sheet)"
+      },
+      {
+        "key": "H3_AIRPORT_T",
+        "id": "867e57bd-7709-4441-b7ba-ec7544f43a73",
+        "kind": "image",
+        "chat_verdict": "✅ ok",
+        "model": "nano_banana_pro",
+        "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JgnHYnvwIJqb3GarKh5KJNtdFs/hf_20261123_221827_867e57bd-7709-4441-b7ba-ec7544f43a73.png",
+        "created_at": "2026-11-23T22:18:27.320158Z",
+        "used": null,
+        "claude_code_verdict": "not placed (no slot / alternate take / reference sheet)"
+      },
+      {
+        "key": "BA_BEFORE_W",
+        "id": "dacfb109-c4c5-4cb3-bc8d-0765c1e5fa60",
+        "kind": "image",
+        "chat_verdict": "✅ ok",
+        "model": "nano_banana_pro",
+        "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JgnHYnvwIJqb3GarKh5KJNtdFs/hf_20261123_221825_dacfb109-c4c5-4cb3-bc8d-0765c1e5fa60.png",
+        "created_at": "2026-11-23T22:18:25.962698Z",
+        "used": null,
+        "claude_code_verdict": "not placed (no slot / alternate take / reference sheet)"
+      },
+      {
+        "key": "BA_BEFORE_T",
+        "id": "9eb3e667-19aa-4c3b-9f82-4f860b915619",
+        "kind": "image",
+        "chat_verdict": "✅ ok",
+        "model": "nano_banana_pro",
+        "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JgnHYnvwIJqb3GarKh5KJNtdFs/hf_20261123_221924_9eb3e667-19aa-4c3b-9f82-4f860b915619.png",
+        "created_at": "2026-11-23T22:19:24.569514Z",
+        "used": null,
+        "claude_code_verdict": "not placed (no slot / alternate take / reference sheet)"
+      },
+      {
+        "key": "BA_AFTER_W",
+        "id": "8d2da155-8308-44af-a858-4a19b84ce92a",
+        "kind": "image",
+        "chat_verdict": "✅ ok",
+        "model": "nano_banana_pro",
+        "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JgnHYnvwIJqb3GarKh5KJNtdFs/hf_20261123_221924_8d2da155-8308-44af-a858-4a19b84ce92a.png",
+        "created_at": "2026-11-23T22:19:24.235263Z",
+        "used": null,
+        "claude_code_verdict": "not placed (no slot / alternate take / reference sheet)"
+      },
+      {
+        "key": "BA_AFTER_T",
+        "id": "84edb2ac-1de7-4bb7-a628-c09b6ac2b403",
+        "kind": "image",
+        "chat_verdict": "✅ ok",
+        "model": "nano_banana_pro",
+        "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JgnHYnvwIJqb3GarKh5KJNtdFs/hf_20261123_221829_84edb2ac-1de7-4bb7-a628-c09b6ac2b403.png",
+        "created_at": "2026-11-23T22:18:29.015802Z",
+        "used": null,
+        "claude_code_verdict": "not placed (no slot / alternate take / reference sheet)"
+      },
+      {
+        "key": "CLASS_W",
+        "id": "689a9b16-6d5d-451d-81b7-687f078ba5d1",
+        "kind": "image",
+        "chat_verdict": "✅ ok",
+        "model": "nano_banana_pro",
+        "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JgnHYnvwIJqb3GarKh5KJNtdFs/hf_20261123_221926_689a9b16-6d5d-451d-81b7-687f078ba5d1.png",
+        "created_at": "2026-11-23T22:19:26.001646Z",
+        "used": null,
+        "claude_code_verdict": "not placed (no slot / alternate take / reference sheet)"
+      },
+      {
+        "key": "CLASS_T",
+        "id": "f5232bfa-6c39-4044-9305-cd8ac7a90750",
+        "kind": "image",
+        "chat_verdict": "✅ ok",
+        "model": "nano_banana_pro",
+        "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JgnHYnvwIJqb3GarKh5KJNtdFs/hf_20261123_221828_f5232bfa-6c39-4044-9305-cd8ac7a90750.png",
+        "created_at": "2026-11-23T22:18:28.117586Z",
+        "used": null,
+        "claude_code_verdict": "not placed (no slot / alternate take / reference sheet)"
+      },
+      {
+        "key": "PRIVATE_W",
+        "id": "2f0a3893-acf3-43f4-9693-73a33832eee0",
+        "kind": "image",
+        "chat_verdict": "✅ ok",
+        "model": "nano_banana_pro",
+        "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JgnHYnvwIJqb3GarKh5KJNtdFs/hf_20261123_222003_2f0a3893-acf3-43f4-9693-73a33832eee0.png",
+        "created_at": "2026-11-23T22:20:03.868828Z",
+        "used": null,
+        "claude_code_verdict": "not placed (no slot / alternate take / reference sheet)"
+      },
+      {
+        "key": "PRIVATE_T",
+        "id": "3b5953c4-1387-4bf6-a8cb-49f597c70523",
+        "kind": "image",
+        "chat_verdict": "✅ ok",
+        "model": "nano_banana_pro",
+        "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JgnHYnvwIJqb3GarKh5KJNtdFs/hf_20261123_222002_3b5953c4-1387-4bf6-a8cb-49f597c70523.png",
+        "created_at": "2026-11-23T22:20:02.689529Z",
+        "used": null,
+        "claude_code_verdict": "not placed (no slot / alternate take / reference sheet)"
+      },
+      {
+        "key": "NOVEL",
+        "id": "015c4dc1-4851-4a00-8ca1-4281be9e042a",
+        "kind": "image",
+        "chat_verdict": "✅ ok",
+        "model": "nano_banana_pro",
+        "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JgnHYnvwIJqb3GarKh5KJNtdFs/hf_20261123_222001_015c4dc1-4851-4a00-8ca1-4281be9e042a.png",
+        "created_at": "2026-11-23T22:20:01.831987Z",
+        "used": null,
+        "claude_code_verdict": "not placed (no slot / alternate take / reference sheet)"
+      },
+      {
+        "key": "PODCAST",
+        "id": "92d5c556-0a1b-4f91-9052-afb86a43d430",
+        "kind": "image",
+        "chat_verdict": "✅ ok",
+        "model": "nano_banana_pro",
+        "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JgnHYnvwIJqb3GarKh5KJNtdFs/hf_20261123_222005_92d5c556-0a1b-4f91-9052-afb86a43d430.png",
+        "created_at": "2026-11-23T22:20:05.569038Z",
+        "used": null,
+        "claude_code_verdict": "not placed (no slot / alternate take / reference sheet)"
+      },
+      {
+        "key": "SCENES",
+        "id": "935606b8-1dae-442f-b80b-0a7bb1754788",
+        "kind": "image",
+        "chat_verdict": "✅ ok",
+        "model": "nano_banana_pro",
+        "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JgnHYnvwIJqb3GarKh5KJNtdFs/hf_20261123_222100_935606b8-1dae-442f-b80b-0a7bb1754788.png",
+        "created_at": "2026-11-23T22:21:00.762889Z",
+        "used": null,
+        "claude_code_verdict": "not placed (no slot / alternate take / reference sheet)"
+      },
+      {
+        "key": "AI_PARTNER",
+        "id": "6a3c610b-8a7d-405d-bf9e-5d84692bf382",
+        "kind": "image",
+        "chat_verdict": "✅ ok",
+        "model": "nano_banana_pro",
+        "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JgnHYnvwIJqb3GarKh5KJNtdFs/hf_20261123_222102_6a3c610b-8a7d-405d-bf9e-5d84692bf382.png",
+        "created_at": "2026-11-23T22:21:02.645859Z",
+        "used": null,
+        "claude_code_verdict": "not placed (no slot / alternate take / reference sheet)"
+      },
+      {
+        "key": "WHO_EMPLOYEE",
+        "id": "6d188fa4-6129-4101-ac5a-6c230a40adcb",
+        "kind": "image",
+        "chat_verdict": "✅ ok",
+        "model": "nano_banana_pro",
+        "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JgnHYnvwIJqb3GarKh5KJNtdFs/hf_20261123_222101_6d188fa4-6129-4101-ac5a-6c230a40adcb.png",
+        "created_at": "2026-11-23T22:21:01.984359Z",
+        "used": null,
+        "claude_code_verdict": "not placed (no slot / alternate take / reference sheet)"
+      },
+      {
+        "key": "WHO_OWNER",
+        "id": "c6541c5b-b3f7-4caa-aa8c-4c8359caa2e5",
+        "kind": "image",
+        "chat_verdict": "✅ ok",
+        "model": "nano_banana_pro",
+        "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JgnHYnvwIJqb3GarKh5KJNtdFs/hf_20261123_222100_c6541c5b-b3f7-4caa-aa8c-4c8359caa2e5.png",
+        "created_at": "2026-11-23T22:21:00.21734Z",
+        "used": null,
+        "claude_code_verdict": "not placed (no slot / alternate take / reference sheet)"
+      },
+      {
+        "key": "WHO_STUDENT",
+        "id": "44dab244-7d8a-48a8-ae72-ada84d49d458",
+        "kind": "image",
+        "chat_verdict": "✅ ok",
+        "model": "nano_banana_pro",
+        "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JgnHYnvwIJqb3GarKh5KJNtdFs/hf_20261123_222101_44dab244-7d8a-48a8-ae72-ada84d49d458.png",
+        "created_at": "2026-11-23T22:21:01.556658Z",
+        "used": null,
+        "claude_code_verdict": "not placed (no slot / alternate take / reference sheet)"
+      },
+      {
+        "key": "CAREER",
+        "id": "468f33f6-b8a5-41d7-89ef-f3cdb48fba59",
+        "kind": "image",
+        "chat_verdict": "✅ ok",
+        "model": "nano_banana_pro",
+        "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JgnHYnvwIJqb3GarKh5KJNtdFs/hf_20261123_222346_468f33f6-b8a5-41d7-89ef-f3cdb48fba59.png",
+        "created_at": "2026-11-23T22:23:46.231992Z",
+        "used": null,
+        "claude_code_verdict": "not placed (no slot / alternate take / reference sheet)"
+      },
+      {
+        "key": "COACH",
+        "id": "a0c4a3ea-a3b8-4595-b898-44d87de48662",
+        "kind": "image",
+        "chat_verdict": "✅ ok",
+        "model": "nano_banana_pro",
+        "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JgnHYnvwIJqb3GarKh5KJNtdFs/hf_20261123_222316_a0c4a3ea-a3b8-4595-b898-44d87de48662.png",
+        "created_at": "2026-11-23T22:23:16.277899Z",
+        "used": "how/coach-p (still, 3:4 crop)"
+      },
+      {
+        "key": "FINAL_W",
+        "id": "43a4433c-d188-48c9-98b3-0b733c262e05",
+        "kind": "image",
+        "chat_verdict": "✅ ok",
+        "model": "nano_banana_pro",
+        "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JgnHYnvwIJqb3GarKh5KJNtdFs/hf_20261123_222141_43a4433c-d188-48c9-98b3-0b733c262e05.png",
+        "created_at": "2026-11-23T22:21:41.831798Z",
+        "used": null,
+        "claude_code_verdict": "not placed (no slot / alternate take / reference sheet)"
+      },
+      {
+        "key": "FINAL_T",
+        "id": "0b57c2fd-6877-435b-95dc-5598512a6549",
+        "kind": "image",
+        "chat_verdict": "✅ ok",
+        "model": "nano_banana_pro",
+        "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JgnHYnvwIJqb3GarKh5KJNtdFs/hf_20261123_222230_0b57c2fd-6877-435b-95dc-5598512a6549.png",
+        "created_at": "2026-11-23T22:22:30.43208Z",
+        "used": null,
+        "claude_code_verdict": "not placed (no slot / alternate take / reference sheet)"
+      },
+      {
+        "key": "DETAIL_NOTEBOOK",
+        "id": "99d37549-da7e-40b0-942b-648c21624743",
+        "kind": "image",
+        "chat_verdict": "✅ ok",
+        "model": "nano_banana_pro",
+        "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JgnHYnvwIJqb3GarKh5KJNtdFs/hf_20261123_222326_99d37549-da7e-40b0-942b-648c21624743.png",
+        "created_at": "2026-11-23T22:23:26.4958Z",
+        "used": "platform/plan-p (still)"
+      },
+      {
+        "key": "DETAIL_EARBUDS",
+        "id": "6c8ea425-dea8-4d87-9ae2-09ec1d7b6703",
+        "kind": "image",
+        "chat_verdict": "✅ ok",
+        "model": "nano_banana_pro",
+        "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JgnHYnvwIJqb3GarKh5KJNtdFs/hf_20261123_222229_6c8ea425-dea8-4d87-9ae2-09ec1d7b6703.png",
+        "created_at": "2026-11-23T22:22:29.242144Z",
+        "used": "platform/recordings-p (still)"
+      },
+      {
+        "key": "DETAIL_COFFEE",
+        "id": "cda62725-d13e-4058-b743-0f7de56853f1",
+        "kind": "image",
+        "chat_verdict": "✅ ok but the phone back shows a small logo — crop the phone out (2 retries were falsely safety-flagged)",
+        "model": "nano_banana_pro",
+        "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JgnHYnvwIJqb3GarKh5KJNtdFs/hf_20261123_222346_cda62725-d13e-4058-b743-0f7de56853f1.png",
+        "created_at": "2026-11-23T22:23:46.007119Z",
+        "used": "how/daily-p (still, cropped 1065x1420+790+0: phone with logo removed)"
+      },
+      {
+        "key": "V_H1_MEETING_W_a",
+        "id": "6cc73d21-9dc6-4de1-9a31-57144bdab038",
+        "kind": "video",
+        "chat_verdict": "✅ ok — hero pick",
+        "model": "seedance_2_5",
+        "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JgnHYnvwIJqb3GarKh5KJNtdFs/hf_20261123_222425_6cc73d21-9dc6-4de1-9a31-57144bdab038.mp4",
+        "created_at": "2026-11-23T22:24:25.118268Z",
+        "used": "hero/hero-l (reel 1/3)"
+      },
+      {
+        "key": "V_H1_MEETING_W_b",
+        "id": "9d75a5bc-661c-4317-8a8c-1ffcde5161f8",
+        "kind": "video",
+        "chat_verdict": "✅ ok",
+        "model": "seedance_2_5",
+        "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JgnHYnvwIJqb3GarKh5KJNtdFs/hf_20261123_222425_9d75a5bc-661c-4317-8a8c-1ffcde5161f8.mp4",
+        "created_at": "2026-11-23T22:24:25.817939Z",
+        "used": null,
+        "claude_code_verdict": "not placed (no slot / alternate take / reference sheet)"
+      },
+      {
+        "key": "V_H1_MEETING_T_a",
+        "id": "66ce590f-4f67-4fe3-beae-24ff5c07e102",
+        "kind": "video",
+        "chat_verdict": "✅ ok — hero pick",
+        "model": "seedance_2_5",
+        "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JgnHYnvwIJqb3GarKh5KJNtdFs/hf_20261123_222423_66ce590f-4f67-4fe3-beae-24ff5c07e102.mp4",
+        "created_at": "2026-11-23T22:24:23.930426Z",
+        "used": "hero/hero-p (reel 1/3)"
+      },
+      {
+        "key": "V_H1_MEETING_T_b",
+        "id": "bb3c0265-5760-473b-83ee-e00b8bfe0a13",
+        "kind": "video",
+        "chat_verdict": "✅ ok",
+        "model": "seedance_2_5",
+        "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JgnHYnvwIJqb3GarKh5KJNtdFs/hf_20261123_222424_bb3c0265-5760-473b-83ee-e00b8bfe0a13.mp4",
+        "created_at": "2026-11-23T22:24:24.478252Z",
+        "used": null,
+        "claude_code_verdict": "not placed (no slot / alternate take / reference sheet)"
+      },
+      {
+        "key": "V_H2_CAFE_W_a",
+        "id": "47406c11-4b7b-4c74-8c7e-06f50cd85d74",
+        "kind": "video",
+        "chat_verdict": "❌ REJECT: drifts far, no loop; bar-like bottle shelf appears at end",
+        "used": null,
+        "claude_code_verdict": "rejected in chat"
+      },
+      {
+        "key": "V_H2_CAFE_W_b",
+        "id": "37a28fbc-4108-4e9f-8038-2887671219a9",
+        "kind": "video",
+        "chat_verdict": "✅ ok (keeper)",
+        "model": "seedance_2_5",
+        "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JgnHYnvwIJqb3GarKh5KJNtdFs/hf_20261123_222509_37a28fbc-4108-4e9f-8038-2887671219a9.mp4",
+        "created_at": "2026-11-23T22:25:09.208722Z",
+        "used": null,
+        "claude_code_verdict": "not placed (no slot / alternate take / reference sheet)"
+      },
+      {
+        "key": "V_H2_CAFE_T_a",
+        "id": "46a2d12e-ea24-4fbe-9e27-5ab310b1c0cf",
+        "kind": "video",
+        "chat_verdict": "✅ ok (keeper) — hero pick",
+        "model": "seedance_2_5",
+        "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JgnHYnvwIJqb3GarKh5KJNtdFs/hf_20261123_222509_46a2d12e-ea24-4fbe-9e27-5ab310b1c0cf.mp4",
+        "created_at": "2026-11-23T22:25:09.639589Z",
+        "used": "hero/hero-p (reel 2/3)"
+      },
+      {
+        "key": "V_H2_CAFE_T_b",
+        "id": "c03599e1-909d-48d4-bf07-1bf1886d9a74",
+        "kind": "video",
+        "chat_verdict": "✅ ok",
+        "model": "seedance_2_5",
+        "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JgnHYnvwIJqb3GarKh5KJNtdFs/hf_20261123_222723_c03599e1-909d-48d4-bf07-1bf1886d9a74.mp4",
+        "created_at": "2026-11-23T22:27:23.774226Z",
+        "used": null,
+        "claude_code_verdict": "not placed (no slot / alternate take / reference sheet)"
+      },
+      {
+        "key": "V_H3_AIRPORT_W_a",
+        "id": "a859a89d-1d1c-4f80-9c64-9dfacb2a8ef7",
+        "kind": "video",
+        "chat_verdict": "✅ ok but camera drifts, weaker loop",
+        "model": "seedance_2_5",
+        "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JgnHYnvwIJqb3GarKh5KJNtdFs/hf_20261123_222935_a859a89d-1d1c-4f80-9c64-9dfacb2a8ef7.mp4",
+        "created_at": "2026-11-23T22:29:35.340566Z",
+        "used": null,
+        "claude_code_verdict": "not placed (no slot / alternate take / reference sheet)"
+      },
+      {
+        "key": "V_H3_AIRPORT_W_b",
+        "id": "c3510052-fba7-4e17-bb71-08c44b206d39",
+        "kind": "video",
+        "chat_verdict": "✅ ok (keeper) — hero pick",
+        "model": "seedance_2_5",
+        "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JgnHYnvwIJqb3GarKh5KJNtdFs/hf_20261123_222935_c3510052-fba7-4e17-bb71-08c44b206d39.mp4",
+        "created_at": "2026-11-23T22:29:35.043828Z",
+        "used": "hero/hero-l (reel 3/3)"
+      },
+      {
+        "key": "V_H3_AIRPORT_T_a",
+        "id": "9e5b3616-92c8-488c-b5df-7403b9d85c02",
+        "kind": "video",
+        "chat_verdict": "✅ ok (keeper) — hero pick",
+        "model": "seedance_2_5",
+        "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JgnHYnvwIJqb3GarKh5KJNtdFs/hf_20261123_222934_9e5b3616-92c8-488c-b5df-7403b9d85c02.mp4",
+        "created_at": "2026-11-23T22:29:34.585871Z",
+        "used": "hero/hero-p (reel 3/3)"
+      },
+      {
+        "key": "V_H3_AIRPORT_T_b",
+        "id": "9098bb78-3f98-4cb8-a351-e2b17326710a",
+        "kind": "video",
+        "chat_verdict": "✅ ok",
+        "model": "seedance_2_5",
+        "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JgnHYnvwIJqb3GarKh5KJNtdFs/hf_20261123_223144_9098bb78-3f98-4cb8-a351-e2b17326710a.mp4",
+        "created_at": "2026-11-23T22:31:44.835688Z",
+        "used": null,
+        "claude_code_verdict": "not placed (no slot / alternate take / reference sheet)"
+      },
+      {
+        "key": "V_BA_BEFORE_W",
+        "id": "1f1198a6-cd91-4d8d-8e95-6a0e504ae57c",
+        "kind": "video",
+        "chat_verdict": "✅ ok; push-in ends tight, does not return - ping-pong or trim",
+        "model": "seedance_2_5",
+        "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JgnHYnvwIJqb3GarKh5KJNtdFs/hf_20261123_223147_1f1198a6-cd91-4d8d-8e95-6a0e504ae57c.mp4",
+        "created_at": "2026-11-23T22:31:47.528221Z",
+        "used": "before-after/before-l (0-5 s ping-pong)"
+      },
+      {
+        "key": "V_BA_BEFORE_T",
+        "id": "2e81d8d8-c294-4a31-8af0-4b4966a76bec",
+        "kind": "video",
+        "chat_verdict": "✅ ok; push-in ends tight on face and does not return to start - use ping-pong or trim",
+        "model": "seedance_2_5",
+        "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JgnHYnvwIJqb3GarKh5KJNtdFs/hf_20261123_223146_2e81d8d8-c294-4a31-8af0-4b4966a76bec.mp4",
+        "created_at": "2026-11-23T22:31:46.544991Z",
+        "used": "before-after/before-p (0-5 s ping-pong)"
+      },
+      {
+        "key": "V_BA_AFTER_W",
+        "id": "43f42f52-e605-4e50-96ff-1b684e66f0a3",
+        "kind": "video",
+        "chat_verdict": "✅ ok (Kingdom Centre visible); camera drifts, weak loop",
+        "model": "seedance_2_5",
+        "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JgnHYnvwIJqb3GarKh5KJNtdFs/hf_20261123_223406_43f42f52-e605-4e50-96ff-1b684e66f0a3.mp4",
+        "created_at": "2026-11-23T22:34:06.268466Z",
+        "used": "before-after/after-l (1 s crossfade loop)"
+      },
+      {
+        "key": "V_BA_AFTER_T",
+        "id": "c8a3e8c1-cb49-43b0-a993-a38f97627743",
+        "kind": "video",
+        "chat_verdict": "✅ ok (Kingdom Centre)",
+        "model": "seedance_2_5",
+        "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JgnHYnvwIJqb3GarKh5KJNtdFs/hf_20261123_223404_c8a3e8c1-cb49-43b0-a993-a38f97627743.mp4",
+        "created_at": "2026-11-23T22:34:04.832118Z",
+        "used": "before-after/after-p (1 s crossfade loop)"
+      },
+      {
+        "key": "V_CLASS_W",
+        "id": "75dfde4a-f0f7-4923-9e99-ba9b02bd3591",
+        "kind": "video",
+        "chat_verdict": "✅ ok",
+        "model": "seedance_2_5",
+        "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JgnHYnvwIJqb3GarKh5KJNtdFs/hf_20261123_223403_75dfde4a-f0f7-4923-9e99-ba9b02bd3591.mp4",
+        "created_at": "2026-11-23T22:34:03.878109Z",
+        "used": null,
+        "claude_code_verdict": "not placed (no slot / alternate take / reference sheet)"
+      },
+      {
+        "key": "V_CLASS_T",
+        "id": "eb927417-b5ef-441f-9815-7d594861cc11",
+        "kind": "video",
+        "chat_verdict": "✅ ok; camera drifts, weaker loop",
+        "model": "seedance_2_5",
+        "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JgnHYnvwIJqb3GarKh5KJNtdFs/hf_20261123_223403_eb927417-b5ef-441f-9815-7d594861cc11.mp4",
+        "created_at": "2026-11-23T22:34:03.266739Z",
+        "used": "how/class-p (3:4 crop, crossfade)"
+      },
+      {
+        "key": "V_PRIVATE_W",
+        "id": "57810d3b-4b36-495a-b5bf-3f7f495cfc62",
+        "kind": "video",
+        "chat_verdict": "✅ ok",
+        "model": "seedance_2_5",
+        "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JgnHYnvwIJqb3GarKh5KJNtdFs/hf_20261123_223635_57810d3b-4b36-495a-b5bf-3f7f495cfc62.mp4",
+        "created_at": "2026-11-23T22:36:35.071581Z",
+        "used": null,
+        "claude_code_verdict": "not placed (no slot / alternate take / reference sheet)"
+      },
+      {
+        "key": "V_PRIVATE_T",
+        "id": "bd5f9478-069f-46cd-92d8-9e1c9c57a621",
+        "kind": "video",
+        "chat_verdict": "✅ ok",
+        "model": "seedance_2_5",
+        "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JgnHYnvwIJqb3GarKh5KJNtdFs/hf_20261123_223633_bd5f9478-069f-46cd-92d8-9e1c9c57a621.mp4",
+        "created_at": "2026-11-23T22:36:33.992046Z",
+        "used": null,
+        "claude_code_verdict": "not placed (no slot / alternate take / reference sheet)"
+      },
+      {
+        "key": "V_NOVEL",
+        "id": "a867461f-7b4a-4456-b616-0af411b09217",
+        "kind": "video",
+        "chat_verdict": "✅ ok",
+        "model": "seedance_2_5",
+        "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JgnHYnvwIJqb3GarKh5KJNtdFs/hf_20261123_223903_a867461f-7b4a-4456-b616-0af411b09217.mp4",
+        "created_at": "2026-11-23T22:39:03.319358Z",
+        "used": "platform/novel-p"
+      },
+      {
+        "key": "V_PODCAST",
+        "id": "dcae839c-f83a-4753-bf14-d40ec41f0a41",
+        "kind": "video",
+        "chat_verdict": "✅ ok; bag in his hand fades out near the end - trim last second",
+        "model": "seedance_2_5",
+        "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JgnHYnvwIJqb3GarKh5KJNtdFs/hf_20261123_223900_dcae839c-f83a-4753-bf14-d40ec41f0a41.mp4",
+        "created_at": "2026-11-23T22:39:00.804622Z",
+        "used": "platform/podcast-p (0-7 s: last second trimmed, crossfade)"
+      },
+      {
+        "key": "V_SCENES",
+        "id": "5d35f2b3-b533-4fde-8576-b2d8b076f407",
+        "kind": "video",
+        "chat_verdict": "✅ ok",
+        "model": "seedance_2_5",
+        "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JgnHYnvwIJqb3GarKh5KJNtdFs/hf_20261123_223901_5d35f2b3-b533-4fde-8576-b2d8b076f407.mp4",
+        "created_at": "2026-11-23T22:39:01.347126Z",
+        "used": "platform/scenes-p"
+      },
+      {
+        "key": "V_AI_PARTNER",
+        "id": "4946a544-4e58-46f9-895f-029033122824",
+        "kind": "video",
+        "chat_verdict": "✅ ok",
+        "model": "seedance_2_5",
+        "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JgnHYnvwIJqb3GarKh5KJNtdFs/hf_20261123_224149_4946a544-4e58-46f9-895f-029033122824.mp4",
+        "created_at": "2026-11-23T22:41:49.291598Z",
+        "used": "platform/speak-p"
+      },
+      {
+        "key": "V_WHO_EMPLOYEE",
+        "id": "f79856d4-4698-432b-9edc-a59b7a98ce95",
+        "kind": "video",
+        "chat_verdict": "✅ usable; first frame is a close shot and he ends far away - does not loop, use one-way or ping-pong",
+        "model": "seedance_2_5",
+        "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JgnHYnvwIJqb3GarKh5KJNtdFs/hf_20261123_224148_f79856d4-4698-432b-9edc-a59b7a98ce95.mp4",
+        "created_at": "2026-11-23T22:41:48.234966Z",
+        "used": "who/employee-p (plays once and holds: no clean loop, reverse = walking backwards)"
+      },
+      {
+        "key": "V_WHO_OWNER",
+        "id": "b417bc89-819b-4564-adb1-3971f3b9dee8",
+        "kind": "video",
+        "chat_verdict": "✅ ok",
+        "model": "seedance_2_5",
+        "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JgnHYnvwIJqb3GarKh5KJNtdFs/hf_20261123_224150_b417bc89-819b-4564-adb1-3971f3b9dee8.mp4",
+        "created_at": "2026-11-23T22:41:50.65221Z",
+        "used": "who/owner-p"
+      },
+      {
+        "key": "V_WHO_STUDENT",
+        "id": "ce2ce22f-cf16-4583-a0e3-84170c0e9d27",
+        "kind": "video",
+        "chat_verdict": "✅ ok",
+        "model": "seedance_2_5",
+        "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JgnHYnvwIJqb3GarKh5KJNtdFs/hf_20261123_224149_ce2ce22f-cf16-4583-a0e3-84170c0e9d27.mp4",
+        "created_at": "2026-11-23T22:41:49.762556Z",
+        "used": null,
+        "claude_code_verdict": "REJECTED in Claude Code QA: the classmate wears jeans + navy hijab (no black abaya) and a woman without hijab walks behind Abdullah; cannot be cropped out. Student slot uses CAST_ABDULLAH still."
+      },
+      {
+        "key": "V_CAREER",
+        "id": "1c6b4996-d1e3-4fe9-84fe-73287f9e598b",
+        "kind": "video",
+        "chat_verdict": "✅ ok",
+        "model": "seedance_2_5",
+        "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JgnHYnvwIJqb3GarKh5KJNtdFs/hf_20261123_224148_1c6b4996-d1e3-4fe9-84fe-73287f9e598b.mp4",
+        "created_at": "2026-11-23T22:41:48.774263Z",
+        "used": null,
+        "claude_code_verdict": "not placed (no slot / alternate take / reference sheet)"
+      },
+      {
+        "key": "V_FINAL_W",
+        "id": "6b59ea1f-6aa1-4e9d-ab34-9874af663253",
+        "kind": "video",
+        "chat_verdict": "✅ ok; push-in loses part of the windowsill by the end",
+        "model": "seedance_2_5",
+        "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JgnHYnvwIJqb3GarKh5KJNtdFs/hf_20261123_224524_6b59ea1f-6aa1-4e9d-ab34-9874af663253.mp4",
+        "created_at": "2026-11-23T22:45:24.730284Z",
+        "used": "final/final-l (0-5 s ping-pong: windowsill lost later)"
+      },
+      {
+        "key": "V_FINAL_T",
+        "id": "9a7a2cc8-4c63-4665-aea4-465848b64fce",
+        "kind": "video",
+        "chat_verdict": "✅ ok",
+        "model": "seedance_2_5",
+        "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JgnHYnvwIJqb3GarKh5KJNtdFs/hf_20261123_224514_9a7a2cc8-4c63-4665-aea4-465848b64fce.mp4",
+        "created_at": "2026-11-23T22:45:14.876491Z",
+        "used": "final/final-p"
+      },
+      {
+        "key": "V_H2_CAFE_W_a_retry",
+        "id": "badb162a-c518-46ed-a974-14b265210953",
+        "kind": "video",
+        "chat_verdict": "✅ ok, locked-off camera, loops cleanly — hero pick",
+        "model": "seedance_2_5",
+        "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JgnHYnvwIJqb3GarKh5KJNtdFs/hf_20261123_224758_badb162a-c518-46ed-a974-14b265210953.mp4",
+        "created_at": "2026-11-23T22:47:58.512369Z",
+        "used": "hero/hero-l (reel 2/3)"
+      },
+      {
+        "key": "COACH_v1",
+        "id": "400fd3bd-d7d8-4fea-a318-5721ed827b0c",
+        "kind": "image",
+        "chat_verdict": "❌ (tiny readable text on plan/laptop)",
+        "used": null,
+        "claude_code_verdict": "rejected in chat"
+      },
+      {
+        "key": "DETAIL_NOTEBOOK_v1",
+        "id": "dbe2b969-18e1-430d-8c43-8047efefbdf7",
+        "kind": "image",
+        "chat_verdict": "❌ (false safety flag)",
+        "used": null,
+        "claude_code_verdict": "rejected in chat"
+      },
+      {
+        "key": "CAREER_v1",
+        "id": "c5fa46fb-87a4-496c-8b1e-9021f1e46211",
+        "kind": "image",
+        "chat_verdict": "❌ (handshake with a woman; swapped to male manager for Saudi audience)",
+        "used": null,
+        "claude_code_verdict": "rejected in chat"
+      },
+      {
+        "key": "DETAIL_COFFEE_v1",
+        "id": "c1ce1760-7a43-43f5-a98e-956fc0e1719b",
+        "kind": "image",
+        "chat_verdict": "❌ (Apple logo on laptop)",
+        "used": null,
+        "claude_code_verdict": "rejected in chat"
+      },
+      {
+        "key": "DETAIL_COFFEE_v3",
+        "id": "e072e1da-8509-45a5-8b31-f609f9f6452d",
+        "kind": "image",
+        "chat_verdict": "❌ (false safety flag); keeper is v2 cda62725 with small phone logo -> crop the phone out",
+        "used": null,
+        "claude_code_verdict": "rejected in chat"
+      }
+    ]
+  }
 }

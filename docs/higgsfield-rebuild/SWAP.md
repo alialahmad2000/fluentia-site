@@ -29,9 +29,8 @@ Push to `main`, and Cloudflare Pages deploys it. Rollback is the same line back 
 
 ## Before flipping it
 
-1. Fill every footage slot from the Higgsfield pack: `MEDIA` in
-   `src/pages/cinema-preview/media.js` must have no `null` left. Set `l: true` for
-   hero / before / after / final once the 16:9 cuts exist.
+1. ~~Fill every footage slot from the Higgsfield pack~~. Done 2026-11-24: `MEDIA` has
+   no `null`, and hero / before / after / final have 16:9 cuts.
 2. Fill the two proof slots with real, approved student stories, or remove them.
    Never invent one.
 3. Get Ali's approval on `/preview`, on a phone and a laptop.

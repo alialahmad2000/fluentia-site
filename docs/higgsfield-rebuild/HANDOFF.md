@@ -16,18 +16,23 @@
 - CLS (local): 0 phone, 0.0003 tablet, 0.0004 desktop.
 - The swap is prepared as one line, but not applied: `SWAP.md`.
 
+## Pack placed (2026-11-24)
+- Every slot on /preview has footage (`media.js` has no `null`). 24 pack assets are used, and the job → slot map is in `generations.json` → `pack`.
+- Hero = one 21 s reel per orientation: meeting → café → airport, with 1 s dissolves. It loops seamlessly. mp4 2.1–2.3 MB, webm 1.6–1.8 MB.
+- «بعد» = V_BA_AFTER_W/T (the real Kingdom Centre and KAFD), replacing the interim 4593da1b.
+- Loop edits:
+  - Ping-pong: BA_BEFORE W/T (first 5 s) and FINAL_W (first 5 s).
+  - Crossfade: the rest.
+  - V_PODCAST: trimmed to 7 s.
+  - V_WHO_EMPLOYEE: plays once and holds the last frame (`loop:false`).
+- DETAIL_COFFEE was cropped to remove the phone, which showed a logo.
+- Rejected in Claude Code QA: V_WHO_STUDENT. The classmate wears jeans and a navy hijab, and a woman without hijab is behind him. «طلاب» uses the CAST_ABDULLAH still instead.
+- Not placed: PRIVATE, CAREER, the alternate hero takes, and the cast sheets except Abdullah's.
+
 ## Next
-1. Ali runs `~/Downloads/FLUENTIA-HIGGSFIELD-GENERATION-PACK.md` in claude.ai chat
-   (free-trial unlimited only; trial ends **2026-11-26 22:56 Riyadh**) and replies «خلصت».
-2. Pull the results: `higgsfield generate list --size 80 --json`.
-   - QA each one: dress (thobe + bare head, or ghutra + black igal; abaya + hijab),
-     no Dubai / Burj Khalifa, no text, no warping, consistent cast.
-   - Log every job in `generations.json` with its verdict.
-3. Encode: `docs/higgsfield-rebuild/encode.sh video <in> public/media/higgsfield/<section>/<name>-p 720x1280 <start> <dur>`,
-   plus `-l 1280x720` for hero, before/after and final. Then fill the `null` slots in
-   `media.js` and set `l: true` where a 16:9 cut exists.
-4. Replace the interim `after` clip (4593da1b: skyline only Kingdom-Centre-like) with `BA_AFTER`.
-5. Re-shoot at 3 viewports with `scratchpad/qa/shots.mjs`, push, and verify production content.
+1. Ali reviews /preview on a phone and a laptop.
+2. The two proof slots still need real, approved student stories (or removal) before the swap.
+3. The swap is one line, and only when Ali says so: `SWAP.md`.
 
 ## Key files
 - `src/pages/cinema-preview/{CinemaPreview.jsx,cinema.css,copy.js,media.js,Footage.jsx}`
