@@ -28,7 +28,7 @@
  * Run: npm run build  (wired as the postbuild half of the build script)
  */
 import { mkdir, readFile, rm, writeFile } from "node:fs/promises";
-import { existsSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
@@ -275,7 +275,8 @@ const manifest = existsSync(manifestSaved) ? JSON.parse(await readFile(manifestS
 function chunkHead(html, path) {
   // A page can also name its own chunk (data-route-chunk on its root), so a page
   // that moves to another URL — /preview → / on a swap — keeps its CSS in the head.
-  const name = ROUTE_CHUNKS[path] || (html.match(/data-route-chunk="([A-Za-z0-9_]+)"/) || [])[1];
+  const selfNamed = (html.match(/data-route-chunk="([A-Za-z0-9_]+)"/) || [])[1];
+  const name = ROUTE_CHUNKS[path] || selfNamed;
   if (!name) return html;
   const key = Object.keys(manifest || {}).find((k) => manifest[k].isDynamicEntry && manifest[k].name === name);
   if (!key) throw new Error(`no lazy chunk named ${name} for ${path} in the build manifest — renamed, or no longer lazy?`);
@@ -289,8 +290,16 @@ function chunkHead(html, path) {
     (c.css || []).forEach((f) => css.add(`/${f}`));
     (c.imports || []).forEach(walk);
   })(key);
+  // A self-named page (data-route-chunk) gets its small CSS inlined: one render-blocking
+  // request fewer before the LCP poster can paint. The non-blocking <link> (print → all)
+  // is still there so Vite's preload helper finds it and does not fetch the CSS again.
+  const inline = (h) => selfNamed && readFileSync(join(DIST, h.slice(1)), "utf8").length < 24000;
+  const cssTag = (h) =>
+    inline(h)
+      ? `<style data-chunk-css="${h}">${readFileSync(join(DIST, h.slice(1)), "utf8")}</style>\n    <link rel="stylesheet" crossorigin href="${h}" media="print" onload="this.media='all'">`
+      : `<link rel="stylesheet" crossorigin href="${h}">`;
   const tags = [
-    ...[...css].filter((h) => !html.includes(`href="${h}"`)).map((h) => `<link rel="stylesheet" crossorigin href="${h}">`),
+    ...[...css].filter((h) => !html.includes(`href="${h}"`)).map(cssTag),
     ...[...js].filter((h) => !html.includes(`href="${h}"`)).map((h) => `<link rel="modulepreload" crossorigin href="${h}">`),
   ];
   return tags.length ? html.replace("</head>", `    ${tags.join("\n    ")}\n  </head>`) : html;
