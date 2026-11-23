@@ -1,0 +1,109 @@
+{
+  "about": "Every Higgsfield job behind /preview (docs/higgsfield-rebuild/). Credits are never spent: generation runs on the free-trial unlimited allowance only (ends 2026-11-26 19:56 UTC). Claude Code cannot request unlimited generations (MCP/CLI refuse use_unlim), so the pack ~/Downloads/FLUENTIA-HIGGSFIELD-GENERATION-PACK.md is run in claude.ai chat and results are pulled here with `higgsfield generate list --json`.",
+  "encode": "docs/higgsfield-rebuild/encode.sh (CRF 22 / VP9 33, posters AVIF crf 32 + WebP q78)",
+  "jobs": [
+    {
+      "id": "d4be326a-6533-4998-b94e-ac2d0a7926cd",
+      "created_at": "2026-11-23T20:05:55.988704Z",
+      "model": "seedance_2_5",
+      "params": {
+        "aspect_ratio": "9:16",
+        "duration": 10,
+        "resolution": "720p",
+        "model": "default"
+      },
+      "prompt": "Cinematic vertical shot, young Saudi man in white thobe with bare head at an international airport check-in counter abroad, keep his face and outfit identical. The foreign airline agent says in English 'Unfortunately your flight has been changed.' The Saudi man stays calm, smiles and replies fluently in English 'No problem, can you put me on the next flight with a window seat?' the agent laughs and nods 'Of course, sir.' she hands him a boarding pass, he walks away confidently toward the gate, camera tracks with him, bright airport light, uplifting subtle music, shot on ARRI Alexa 35mm, film grain, no on-screen text, no subtitles.",
+      "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JgnHYnvwIJqb3GarKh5KJNtdFs/hf_20261123_200555_d4be326a-6533-4998-b94e-ac2d0a7926cd.mp4",
+      "billing": "free trial allowance (no credits spent)",
+      "slot": "hero",
+      "verdict": "used",
+      "cut": "0.2s +6.4s, 720x1280 loop",
+      "out": "public/media/higgsfield/hero/hero-p.*",
+      "notes": "Bare-head thobe, airport abroad, no text, face stable. Portrait only: no 16:9 cut exists yet (pack H1_* adds it)."
+    },
+    {
+      "id": "037d5488-cb63-479f-8f61-5ff02345b84b",
+      "created_at": "2026-11-23T20:02:21.414163Z",
+      "model": "seedance_2_5",
+      "params": {
+        "aspect_ratio": "9:16",
+        "duration": 12,
+        "resolution": "720p",
+        "model": "default"
+      },
+      "prompt": "Cinematic vertical micro-drama, two shots, same Saudi man in white thobe, white ghutra and black igal throughout, keep his face identical. Shot 1 (0-6s): tense job interview, the foreign interviewer leans forward and asks in clear English 'So, tell me about your biggest achievement.' The Saudi man freezes, swallows, eyes drop, he says hesitantly 'I... um... my...' and stops, awkward silence, slow push-in on his anxious face, ticking clock sound. Hard cut. Shot 2 (6-12s): months later, the same man stands confidently in a bright glass boardroom in Riyadh presenting to international colleagues, he smiles and says fluently in English 'And that's how we grew revenue by forty percent.' colleagues nod and smile, warm golden light, slow dolly-in, uplifting subtle music swell. Shot on ARRI Alexa, 35mm, shallow depth of field, film grain, no on-screen text, no subtitles.",
+      "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JgnHYnvwIJqb3GarKh5KJNtdFs/hf_20261123_200221_037d5488-cb63-479f-8f61-5ff02345b84b.mp4",
+      "billing": "free trial allowance (no credits spent)",
+      "slot": "before",
+      "verdict": "partly used",
+      "cut": "0.1s +5.6s (shot 1 only)",
+      "out": "public/media/higgsfield/before-after/before-p.*",
+      "notes": "Shot 1 (hesitation close-up, ghutra + igal) used. Shot 2 REJECTED: Burj Khalifa in the window."
+    },
+    {
+      "id": "4593da1b-7d42-4623-a8e5-d5ffd322ff80",
+      "created_at": "2026-11-23T20:08:30.880714Z",
+      "model": "seedance_2_5",
+      "params": {
+        "aspect_ratio": "9:16",
+        "duration": 12,
+        "resolution": "720p",
+        "model": "default"
+      },
+      "prompt": "Cinematic vertical micro-drama, two shots, same Saudi man in white thobe, white ghutra and black igal throughout, keep his face identical. Shot 1 (0-6s): tense job interview, the foreign interviewer leans forward and asks in clear English 'So, tell me about your biggest achievement.' The Saudi man freezes, swallows, eyes drop, he says hesitantly 'I... um... my...' and stops, awkward silence, slow push-in on his anxious face, ticking clock sound. Hard cut. Shot 2 (6-12s): months later, the same man stands confidently in a bright modern boardroom presenting to international colleagues, behind him through the glass is the Riyadh skyline with the Kingdom Centre tower (the tall tower with the arched opening at the top) and the KAFD towers, absolutely no Burj Khalifa, no Dubai. He smiles and says fluently in English 'And that's how we grew revenue by forty percent.' colleagues nod and smile, warm golden light, slow dolly-in, uplifting subtle music swell. Shot on ARRI Alexa, 35mm, shallow depth of field, film grain, no on-screen text, no subtitles.",
+      "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JgnHYnvwIJqb3GarKh5KJNtdFs/hf_20261123_200830_4593da1b-7d42-4623-a8e5-d5ffd322ff80.mp4",
+      "billing": "free trial allowance (no credits spent)",
+      "slot": "after",
+      "verdict": "used — interim, flagged",
+      "cut": "6.3s +5.6s (shot 2 only)",
+      "out": "public/media/higgsfield/before-after/after-p.*",
+      "notes": "Shot 2 boardroom: ghutra + igal correct; skyline shows a Kingdom-Centre-like tower plus a generic curved tower, no Dubai landmark identified. Replace with pack BA_AFTER (explicit Kingdom Centre / KAFD)."
+    },
+    {
+      "id": "1f2a78be-3844-4985-bad2-5388d89af79c",
+      "created_at": "2026-11-23T20:02:22.162081Z",
+      "model": "seedance_2_5",
+      "params": {
+        "aspect_ratio": "9:16",
+        "duration": 10,
+        "resolution": "720p",
+        "model": "default"
+      },
+      "prompt": "Cinematic vertical shot, Saudi woman in black abaya and black hijab at her desk at night in a live online English class on her laptop, keep her face and outfit identical. She listens, then answers her tutor in clear confident English: 'I used to be scared to speak. Now I actually enjoy it.' she laughs softly, the tutor on screen claps, she writes a new word in her notebook, warm lamp light, slow gentle push-in, soft piano music, cozy hopeful mood, shot on ARRI Alexa 50mm, film grain, no on-screen text, no subtitles.",
+      "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JgnHYnvwIJqb3GarKh5KJNtdFs/hf_20261123_200222_1f2a78be-3844-4985-bad2-5388d89af79c.mp4",
+      "billing": "free trial allowance (no credits spent)",
+      "slot": "class",
+      "verdict": "used",
+      "cut": "0.2s +7.4s",
+      "out": "public/media/higgsfield/classes/class-p.*",
+      "notes": "Black abaya + hijab, live class on laptop, no text, hands clean."
+    }
+  ],
+  "pending_pack": [
+    "CAST_FAISAL",
+    "CAST_NOURA",
+    "CAST_ABDULLAH",
+    "CAST_KHALID",
+    "H1_MEETING_W/T",
+    "H2_CAFE",
+    "H3_AIRPORT",
+    "BA_BEFORE",
+    "BA_AFTER",
+    "CLASS",
+    "PRIVATE",
+    "NOVEL",
+    "PODCAST",
+    "SCENES",
+    "AI_PARTNER",
+    "WHO_EMPLOYEE",
+    "WHO_OWNER",
+    "WHO_STUDENT",
+    "CAREER",
+    "COACH",
+    "FINAL_W/T",
+    "DETAIL_NOTEBOOK",
+    "DETAIL_EARBUDS",
+    "DETAIL_COFFEE",
+    "+ V_* video for each"
+  ]
+}
