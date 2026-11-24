@@ -20,7 +20,7 @@ import { VERB_COUNT } from "./irregularVerbs.js";
 export const SITE = "https://fluentia.academy";
 
 /** Absolute, always-present fallbacks (also hard-coded in index.html). */
-export const OG_IMAGE = `${SITE}/og-image.png`;
+export const OG_IMAGE = `${SITE}/og/home-v2.png`; // flat (scripts/og/home-og.html); new name = WhatsApp re-fetches
 
 /** hreflang pair for the two careers pages (each page lists both + x-default). */
 const CAREERS_ALTERNATES = [
@@ -46,7 +46,7 @@ export const PAGE_SEO = {
       "اختبار تحديد مستوى اللغة الإنجليزية مجاناً وبدون تسجيل: أسئلة تتكيّف مع إجاباتك في القواعد والمفردات والقراءة والاستماع، ونتيجة فورية على مقياس CEFR من ما قبل A1 إلى C1 مع تفصيل مهاراتك.",
     ogDescription:
       "عشر دقائق، أسئلة تتكيّف مع إجاباتك، ونتيجة فورية على مقياس CEFR توضّح نقطة البداية.",
-    ogImage: `${SITE}/og/level-test.png`,
+    ogImage: `${SITE}/og/level-test-v2.png`, // flat (scripts/og/level-test-og.html)
     ogImageAlt: "اختبار تحديد مستوى اللغة الإنجليزية مجاناً من طلاقة",
   },
   "/level-test-v1": {
@@ -148,7 +148,7 @@ export const PAGE_SEO = {
     ogTitle: "انضم لفريق طلاقة",
     // Hiring share card (scripts/og/careers-og.html → npm run og:careers).
     // Bump ?v= whenever the image changes — WhatsApp caches previews per URL.
-    ogImage: `${SITE}/og/careers.png?v=1`,
+    ogImage: `${SITE}/og/careers.png?v=2`,
     ogImageAlt: "انضم لفريق طلاقة — نبحث عن مستشار قبول ومدرّب لغة إنجليزية، عمل عن بُعد",
     alternates: CAREERS_ALTERNATES,
   },
@@ -162,7 +162,7 @@ export const PAGE_SEO = {
       "We're hiring English trainers and admissions advisors to work remotely with Fluentia Academy. Apply and chat with our hiring assistant in minutes.",
     ogTitle: "Join the Fluentia team",
     // scripts/og/careers-og-en.html → npm run og:careers:en. Bump ?v= when the image changes.
-    ogImage: `${SITE}/og/careers-en.png?v=1`,
+    ogImage: `${SITE}/og/careers-en.png?v=2`,
     ogImageAlt: "Join the Fluentia team — we're hiring English trainers and admissions advisors, fully remote",
     alternates: CAREERS_ALTERNATES,
   },

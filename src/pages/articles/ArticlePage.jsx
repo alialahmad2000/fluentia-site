@@ -242,7 +242,7 @@ export default function ArticlePage() {
       name: "أكاديمية طلاقة",
       logo: { "@type": "ImageObject", url: `${SITE}/logo.png` },
     },
-    image: `${SITE}/og-image.png`,
+    image: `${SITE}/og/home-v2.png`,
     mainEntityOfPage: { "@type": "WebPage", "@id": url },
     keywords: (article.keywords || []).join(", "),
   };

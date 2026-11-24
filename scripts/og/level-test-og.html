@@ -1,0 +1,98 @@
+<!doctype html>
+<!--
+  level-test-og.html — source of public/og/level-test-v2.png, the share card for
+  /level-test (WhatsApp / X / Telegram / iMessage previews).
+  Render: npm run og:level-test  (scripts/og/render-careers-og.mjs level-test → 1200×630 PNG).
+  FLAT ONLY (Ali's standing rule): solid colours, no gradients, no glow, no halo,
+  no blur, no shadows. The B1 sun = a solid amber disc in a thin solid ring.
+  The path geometry is sunPoint() from src/pages/level-test-v2/SunMeter.jsx.
+  WhatsApp caches previews per image URL: after a change, save under a NEW
+  filename (level-test-v3.png …) and point ogImage in src/content/seo.js at it.
+-->
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<style>
+  @font-face { font-family: "Kufam"; font-weight: 800; src: url("../../public/fonts/kufam-800-arabic.woff2") format("woff2"); }
+  @font-face { font-family: "Kufam"; font-weight: 800; src: url("../../public/fonts/kufam-800-latin.woff2") format("woff2"); unicode-range: U+0021-00FF; }
+  @font-face { font-family: "Barlow Condensed"; font-weight: 800; src: url("../../public/fonts/barlow-condensed-800-latin.woff2") format("woff2"); unicode-range: U+0000-00FF; }
+  @font-face { font-family: "Alexandria"; font-weight: 100 900; src: url("../../public/fonts/alexandria-var-arabic.woff2") format("woff2"); }
+  @font-face { font-family: "Alexandria"; font-weight: 100 900; src: url("../../public/fonts/alexandria-var-latin.woff2") format("woff2"); unicode-range: U+0000-00FF, U+2010-2027; }
+
+  :root {
+    --night: #0b1024;   /* flat background */
+    --strip: #18204a;   /* flat bottom strip (indigo-800) */
+    --amber: #ffb547;   /* dawn-400 */
+    --cream: #f6f1e8;
+    --mute: #c9c3b8;
+    --sky: #7dd3fc;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1200px; height: 630px; overflow: hidden; background: var(--night); }
+  body { font-family: "Alexandria", system-ui, sans-serif; color: var(--cream); -webkit-font-smoothing: antialiased; }
+  .card { position: relative; width: 1200px; height: 630px; overflow: hidden; background: var(--night); }
+
+  .text { position: absolute; top: 92px; right: 80px; width: 560px; }
+  h1 { font-family: "Kufam"; font-weight: 800; font-size: 66px; line-height: 1.22; letter-spacing: 0; }
+  .sub { margin-top: 26px; font-family: "Alexandria"; font-weight: 700; font-size: 29px; line-height: 1.4; color: var(--mute); white-space: nowrap; }
+  .sub b { font-family: "Barlow Condensed"; font-weight: 800; font-size: 34px; color: var(--amber); }
+
+  .meter { position: absolute; left: 40px; top: 60px; width: 600px; height: 565px; overflow: visible; }
+
+  .strip { position: absolute; left: 0; right: 0; bottom: 0; height: 118px; background: var(--strip); border-top: 2px solid var(--amber); }
+  .url { position: absolute; left: 80px; bottom: 43px; font-family: "Alexandria"; font-weight: 600; font-size: 26px; color: var(--mute); direction: ltr; }
+  .brand { position: absolute; right: 80px; bottom: 30px; display: flex; align-items: center; gap: 14px; color: var(--sky); }
+  .brand span { font-family: "Kufam"; font-weight: 800; font-size: 44px; line-height: 1; }
+  .mark { width: 44px; height: 55px; color: var(--sky); display: block; }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="text">
+    <h1>اختبار تحديد مستوى اللغة الإنجليزية مجاناً</h1>
+    <p class="sub">من ما قبل <b>A1</b> إلى <b>C1</b>، والنتيجة فوراً</p>
+  </div>
+
+  <svg class="meter" id="meter" viewBox="0 0 600 565" xmlns="http://www.w3.org/2000/svg"></svg>
+
+  <div class="strip"></div>
+  <div class="url">fluentia.academy/level-test</div>
+  <div class="brand"><svg class="mark" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="215.68 182.32 154.72 194.56">
+<path fill-rule="nonzero" fill="currentColor" fill-opacity="1" d="M 218.617188 265.15625 C 218.617188 263.039062 218.578125 261.113281 218.625 259.1875 C 218.871094 248.734375 218.179688 238.148438 219.605469 227.855469 C 222.34375 208.070312 232.96875 193.613281 252.167969 186.613281 C 256.507812 185.03125 261.457031 184.5625 266.132812 184.539062 C 299.335938 184.375 332.542969 184.453125 365.746094 184.46875 C 366.320312 184.46875 366.890625 184.585938 367.671875 184.675781 C 369.621094 191.519531 367.367188 197.925781 365.203125 204.089844 C 360.074219 218.703125 350.152344 229.015625 334.761719 231.996094 C 325.46875 233.796875 315.699219 233.421875 306.140625 233.484375 C 291.308594 233.578125 276.410156 232.292969 261.652344 233.265625 C 241.390625 234.601562 226.527344 244.496094 219.859375 264.636719 C 219.808594 264.796875 219.402344 264.839844 218.617188 265.15625 "/>
+<path fill-rule="nonzero" fill="currentColor" fill-opacity="1" d="M 320.90625 240.421875 C 302.550781 240.429688 284.191406 240.320312 265.835938 240.484375 C 264.132812 240.5 262.402344 240.609375 260.683594 240.8125 L 260.683594 289.316406 C 262.023438 289.265625 263.382812 289.246094 264.773438 289.296875 C 276.019531 289.691406 287.410156 289.910156 298.175781 285.503906 C 315.289062 278.5 323.78125 259.789062 324.613281 243.25 C 324.761719 240.328125 322.902344 240.421875 320.90625 240.421875 "/>
+<path fill-rule="nonzero" fill="currentColor" fill-opacity="1" d="M 218.472656 375.054688 C 218.472656 365.78125 218.421875 356.511719 218.484375 347.242188 C 218.597656 330.410156 225.027344 316.386719 237.917969 305.617188 C 243.933594 300.59375 250.996094 297.296875 259.0625 297.058594 C 259.929688 297.03125 261.621094 298.476562 261.609375 299.214844 C 261.4375 310.222656 261.621094 321.285156 260.507812 332.214844 C 259.710938 340.015625 253.851562 344.730469 246.660156 347.261719 C 232.933594 352.09375 224.273438 361.769531 218.472656 375.054688 "/>
+<path fill-rule="nonzero" fill="currentColor" fill-opacity="1" d="M 255.324219 185.691406 L 255.324219 234.003906 C 257.019531 233.71875 258.753906 233.503906 260.535156 233.355469 L 260.535156 184.820312 C 258.769531 184.996094 257.023438 185.285156 255.324219 185.691406 "/>
+<path fill-rule="nonzero" fill="currentColor" fill-opacity="1" d="M 255.324219 241.773438 L 255.324219 289.804688 C 257.019531 289.558594 258.753906 289.398438 260.535156 289.324219 L 260.535156 240.828125 C 258.777344 241.039062 257.027344 241.355469 255.324219 241.773438 "/>
+<path fill-rule="nonzero" fill="currentColor" fill-opacity="1" d="M 260.535156 297.75 C 260.03125 297.351562 259.460938 297.046875 259.0625 297.058594 C 250.996094 297.296875 243.933594 300.59375 237.917969 305.617188 C 225.027344 316.386719 218.597656 330.410156 218.484375 347.242188 C 218.421875 356.511719 218.472656 365.78125 218.472656 375.054688 C 224.273438 361.769531 232.933594 352.09375 246.660156 347.261719 C 253.851562 344.730469 259.710938 340.015625 260.507812 332.214844 C 260.515625 332.105469 260.523438 331.996094 260.535156 331.890625 Z M 260.535156 297.75 "/>
+<path fill-rule="nonzero" fill="currentColor" fill-opacity="1" d="M 255.621094 185.617188 C 254.441406 185.890625 253.28125 186.207031 252.167969 186.613281 C 232.96875 193.613281 222.34375 208.066406 219.605469 227.855469 C 218.179688 238.148438 218.871094 248.734375 218.625 259.1875 C 218.578125 261.113281 218.617188 263.039062 218.617188 265.15625 C 219.402344 264.839844 219.808594 264.796875 219.859375 264.636719 C 225.84375 246.554688 238.445312 236.738281 255.621094 233.953125 Z M 255.621094 185.617188 "/>
+<path fill-rule="nonzero" fill="currentColor" fill-opacity="1" d="M 255.621094 241.695312 C 255.066406 241.828125 254.519531 241.96875 253.976562 242.121094 C 234.320312 247.703125 223.265625 261.832031 219.863281 280.964844 C 217.476562 294.375 218.386719 308.375 217.777344 323.160156 C 221.066406 317.011719 223.09375 311.636719 226.441406 307.273438 C 234.113281 297.269531 243.816406 291.414062 255.621094 289.765625 Z M 255.621094 241.695312 "/>
+<path fill-rule="nonzero" fill="currentColor" fill-opacity="1" d="M 255.621094 301.894531 C 255.179688 301.519531 254.675781 301.238281 254.320312 301.246094 C 247.199219 301.472656 240.960938 304.550781 235.648438 309.246094 C 224.257812 319.308594 218.582031 332.414062 218.480469 348.140625 C 218.425781 356.804688 218.46875 365.46875 218.46875 374.132812 C 223.59375 361.71875 231.242188 352.679688 243.367188 348.160156 C 249.71875 345.796875 254.894531 341.390625 255.597656 334.097656 C 255.605469 334 255.613281 333.898438 255.621094 333.796875 Z M 255.621094 301.894531 "/>
+<path fill-rule="nonzero" fill="currentColor" fill-opacity="1" d="M 363.371094 188.578125 C 362.625 188.5 362.078125 188.390625 361.53125 188.390625 C 329.789062 188.378906 298.050781 188.304688 266.3125 188.457031 C 264.410156 188.464844 262.464844 188.554688 260.535156 188.761719 L 260.535156 233.398438 C 261.027344 233.355469 261.527344 233.316406 262.027344 233.28125 C 276.136719 232.386719 290.378906 233.570312 304.554688 233.484375 C 313.691406 233.429688 323.03125 233.769531 331.914062 232.113281 C 346.621094 229.375 356.109375 219.886719 361.011719 206.441406 C 363.082031 200.769531 365.234375 194.875 363.371094 188.578125 "/>
+<path fill-rule="nonzero" fill="currentColor" fill-opacity="1" d="M 317.890625 243.613281 C 300.453125 243.617188 283.015625 243.519531 265.578125 243.671875 C 263.957031 243.683594 262.316406 243.789062 260.683594 243.976562 L 260.683594 289.328125 C 261.957031 289.28125 263.246094 289.261719 264.566406 289.308594 C 275.25 289.679688 286.070312 289.882812 296.296875 285.761719 C 312.550781 279.214844 320.621094 261.71875 321.40625 246.257812 C 321.546875 243.527344 319.785156 243.609375 317.890625 243.613281 "/>
+</svg>
+<span>طلاقة</span></div>
+</div>
+<script>
+  // sunPoint() from SunMeter.jsx, same curve; lvl 3 = B1 (the example level).
+  const W = 600, H = 565, horizon = H * 0.8, LVL = 3, AMBER = "#ffb547";
+  const CEFR = ["Pre-A1", "A1", "A2", "B1", "B2", "C1"];
+  const pt = (i) => { const t = i / 5; return [W * 0.86 - W * 0.7 * t, H * 0.8 - H * 0.62 * Math.sin((t * Math.PI) / 2)]; };
+  const ns = "http://www.w3.org/2000/svg";
+  const svg = document.getElementById("meter");
+  const el = (tag, attrs, text) => { const e = document.createElementNS(ns, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (text) e.textContent = text; svg.appendChild(e); return e; };
+  const d = Array.from({ length: 41 }, (_, k) => pt(k / 8)).map(([x, y], k) => `${k ? "L" : "M"}${x.toFixed(1)} ${y.toFixed(1)}`).join(" ");
+  el("path", { d, fill: "none", stroke: "#5f6a86", "stroke-width": 2.5, "stroke-dasharray": "3 9", "stroke-linecap": "round" });
+  CEFR.forEach((c, i) => {
+    const [x, y] = pt(i);
+    if (i === LVL) return;
+    const on = i < LVL;
+    el("circle", { cx: x, cy: y, r: 7, fill: on ? AMBER : "#5f6a86" });
+    el("text", { x, y: y - 20, "text-anchor": "middle", "font-family": "Barlow Condensed", "font-weight": 800, "font-size": 24, fill: on ? "#d8cfbf" : "#8a93a8", direction: "ltr" }, c);
+  });
+  const [sx, sy] = pt(LVL);
+  el("circle", { cx: sx, cy: sy, r: 27, fill: "#0b1024", stroke: AMBER, "stroke-width": 3.5 });
+  el("circle", { cx: sx, cy: sy, r: 17, fill: AMBER });
+  el("text", { x: sx, y: sy + 64, "text-anchor": "middle", "font-family": "Barlow Condensed", "font-weight": 800, "font-size": 34, fill: AMBER, direction: "ltr" }, "B1");
+</script>
+</body>
+</html>

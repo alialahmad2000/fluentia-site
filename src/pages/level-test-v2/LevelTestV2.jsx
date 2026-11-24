@@ -109,7 +109,7 @@ export default function LevelTestV2() {
                 {MOCK_BARS.map((b) => (
                   <li key={b.ar}>
                     <span>{b.ar}</span>
-                    <span className="lt2-track"><span style={{ width: `${b.rel}%` }} /></span>
+                    <span className={`lt2-track${b.v === 'أقوى' ? ' is-strong' : ''}`}><span style={{ width: `${b.rel}%` }} /></span>
                     <span className={`lt2-verdict ${b.v === 'أقوى' ? 'is-strong' : b.v ? 'is-weak' : ''}`}>{b.v || 'متوازنة'}</span>
                   </li>
                 ))}

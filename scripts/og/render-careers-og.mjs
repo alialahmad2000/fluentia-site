@@ -5,7 +5,7 @@
  * (no Playwright/sharp in package.json, nothing added to the build). Then checks
  * the PNG is exactly 1200×630 and under WhatsApp's ~300 KB preview ceiling.
  *
- * Run: npm run og:careers  (English: npm run og:careers:en)  (CHROME=/path/to/chrome to override the binary)
+ * Run: npm run og:careers  (English: npm run og:careers:en · level test: npm run og:level-test)  (CHROME=/path/to/chrome to override the binary)
  * After a change: bump ?v= on the /careers ogImage in src/content/seo.js —
  * WhatsApp caches previews per image URL.
  */
@@ -16,10 +16,21 @@ import { dirname, join } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..", "..");
-const EN = process.argv[2] === "en"; // `node scripts/og/render-careers-og.mjs en` → English card
-const NAME = EN ? "careers-en" : "careers";
-const SRC = join(ROOT, "scripts", "og", EN ? "careers-og-en.html" : "careers-og.html");
-const OUT = join(ROOT, "public", "og", `${NAME}.png`);
+// target → [source html in scripts/og/, output png in public/og/]. No argument = careers.
+// Other share cards render through the same pipe: `node scripts/og/render-careers-og.mjs level-test`.
+const TARGETS = {
+  careers: ["careers-og.html", "careers.png"],
+  en: ["careers-og-en.html", "careers-en.png"],
+  "level-test": ["level-test-og.html", "level-test-v2.png"],
+  home: ["home-og.html", "home-v2.png"],
+  guide: ["guide-og.html", "guide-v2.png"],
+};
+const target = process.argv[2] || "careers";
+if (!TARGETS[target]) throw new Error(`unknown target "${target}" — one of: ${Object.keys(TARGETS).join(", ")}`);
+const [SRC_FILE, OUT_FILE] = TARGETS[target];
+const NAME = OUT_FILE.replace(/\.png$/, "");
+const SRC = join(ROOT, "scripts", "og", SRC_FILE);
+const OUT = join(ROOT, "public", "og", OUT_FILE);
 const MAX_BYTES = 300 * 1024;
 
 const CANDIDATES = [

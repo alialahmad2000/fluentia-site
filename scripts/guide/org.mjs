@@ -34,7 +34,7 @@ export const ORG_LD = {
   alternateName: ["Fluentia Academy", "Fluentia", "طلاقة", "أكاديمية طلاقة للغة الإنجليزية"],
   url: `${SITE}/`,
   logo: { "@type": "ImageObject", url: `${SITE}/logo.png`, width: 512, height: 512 },
-  image: `${SITE}/og-image.png`,
+  image: `${SITE}/og/home-v2.png`,
   description:
     "أكاديمية طلاقة (Fluentia Academy): أكاديمية سعودية لتعليم اللغة الإنجليزية أونلاين للبالغين — حصص مباشرة في مجموعات صغيرة (7 طلاب كحد أقصى) أو تدريب فردي، متابعة يومية، ومنصّة تعلّم من Pre-A1 إلى C1. الباقات من 500 ر.س شهرياً، والبداية بلقاء مبدئي مجاني.",
   disambiguatingDescription: DISAMBIGUATION_AR,

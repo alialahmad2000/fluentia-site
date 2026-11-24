@@ -1,7 +1,8 @@
 /* ============================================================================
  * The 1080×1920 share card (stories size), drawn on a canvas so it works
  * offline and needs no server. Same composition as the result card: the sun
- * on the learner's level over a dawn horizon. No name, no phone, no score —
+ * on the learner's level over the horizon. FLAT ONLY: solid fills, no
+ * gradients, no glow, no halo (Ali's standing design rule). No name, no phone, no score —
  * only the level, so nobody shares more than they meant to.
  * ========================================================================== */
 import { sunPoint } from './SunMeter';
@@ -21,20 +22,14 @@ export async function drawShareCard({ level, name, life }) {
     ]);
   } catch { /* system fallback */ }
 
-  // night → dawn
-  const bg = x.createLinearGradient(0, 0, 0, H);
-  bg.addColorStop(0, '#060914'); bg.addColorStop(0.55, '#0b1024'); bg.addColorStop(1, '#18204a');
-  x.fillStyle = bg; x.fillRect(0, 0, W, H);
+  // one flat night background
+  x.fillStyle = '#0b1024'; x.fillRect(0, 0, W, H);
 
   // the meter, scaled into the middle band
   const MW = 960; const MH = 600; const ox = 60; const oy = 640;
   const horizon = oy + MH * 0.8;
   const [sx0, sy0] = sunPoint(level.i, MW, MH); const sx = ox + sx0; const sy = oy + sy0;
-  const glow = x.createRadialGradient(sx, sy, 10, sx, sy, 900);
-  const w = 0.25 + level.i * 0.13;
-  glow.addColorStop(0, `rgba(255,181,71,${w})`); glow.addColorStop(0.35, `rgba(255,138,76,${w * 0.45})`); glow.addColorStop(1, 'rgba(11,16,36,0)');
   x.save(); x.beginPath(); x.rect(0, 0, W, horizon); x.clip();
-  x.fillStyle = glow; x.fillRect(0, 0, W, horizon);
   // dotted path
   x.strokeStyle = 'rgba(186,230,253,.25)'; x.lineWidth = 4; x.setLineDash([6, 16]); x.lineCap = 'round';
   x.beginPath();
@@ -46,14 +41,12 @@ export async function drawShareCard({ level, name, life }) {
     x.beginPath(); x.arc(ox + px, oy + py, 10, 0, Math.PI * 2); x.fill();
     x.font = '800 38px "Barlow Condensed", "Arial Narrow", sans-serif'; x.textAlign = 'center'; x.direction = 'ltr';
     x.fillStyle = i === level.i ? '#ffb547' : 'rgba(246,241,232,.5)';
-    x.fillText(code, ox + px, i === level.i ? oy + py + 92 : oy + py - 30);
+    x.fillText(code, ox + px, i === level.i ? oy + py + 84 : oy + py - 30);
   });
-  const halo = x.createRadialGradient(sx, sy, 0, sx, sy, 130);
-  halo.addColorStop(0, 'rgba(255,181,71,.6)'); halo.addColorStop(1, 'rgba(255,181,71,0)');
-  x.fillStyle = halo; x.beginPath(); x.arc(sx, sy, 130, 0, Math.PI * 2); x.fill();
-  const sun = x.createRadialGradient(sx, sy, 0, sx, sy, 46);
-  sun.addColorStop(0, '#fff4dc'); sun.addColorStop(0.45, '#ffd08a'); sun.addColorStop(1, '#ffb547');
-  x.fillStyle = sun; x.beginPath(); x.arc(sx, sy, 46, 0, Math.PI * 2); x.fill();
+  // the sun: a solid amber disc inside a thin solid ring
+  x.fillStyle = '#0b1024'; x.strokeStyle = '#ffb547'; x.lineWidth = 5;
+  x.beginPath(); x.arc(sx, sy, 36, 0, Math.PI * 2); x.fill(); x.stroke();
+  x.fillStyle = '#ffb547'; x.beginPath(); x.arc(sx, sy, 22, 0, Math.PI * 2); x.fill();
   x.restore();
   x.strokeStyle = 'rgba(255,181,71,.6)'; x.lineWidth = 4; x.beginPath(); x.moveTo(0, horizon); x.lineTo(W, horizon); x.stroke();
 

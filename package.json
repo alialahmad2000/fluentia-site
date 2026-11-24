@@ -11,7 +11,10 @@
     "prerender": "node scripts/prerender-meta.mjs",
     "sync:rewrites": "node scripts/sync-vercel-rewrites.mjs",
     "og:careers": "node scripts/og/render-careers-og.mjs",
-    "og:careers:en": "node scripts/og/render-careers-og.mjs en"
+    "og:careers:en": "node scripts/og/render-careers-og.mjs en",
+    "og:level-test": "node scripts/og/render-careers-og.mjs level-test",
+    "og:home": "node scripts/og/render-careers-og.mjs home",
+    "og:guide": "node scripts/og/render-careers-og.mjs guide"
   },
   "dependencies": {
     "@fontsource/alexandria": "^5.2.8",

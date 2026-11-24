@@ -140,7 +140,7 @@ export default function ResultView({ run, setRun, ensureAtt, onRetake }) {
             {r.skills.map((s) => (
               <li key={s.skill}>
                 <span>{s.ar}</span>
-                <span className="lt2-track" role="img" aria-label={`${s.ar}: ${VERDICT[s.verdict]}`}><span style={{ width: `${s.rel}%` }} /></span>
+                <span className={`lt2-track${s.verdict === 'strong' ? ' is-strong' : ''}`} role="img" aria-label={`${s.ar}: ${VERDICT[s.verdict]}`}><span style={{ width: `${s.rel}%` }} /></span>
                 <span className={`lt2-verdict is-${s.verdict}`}>{VERDICT[s.verdict]}</span>
               </li>
             ))}

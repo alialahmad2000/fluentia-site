@@ -47,7 +47,7 @@ import {
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const SRC = join(ROOT, "content", "guide");
 const DIST = join(ROOT, "dist");
-const OG_GUIDE = `${SITE}/og/guide.jpg`;
+const OG_GUIDE = `${SITE}/og/guide-v2.png`; // flat (scripts/og/guide-og.html)
 
 const REQUIRED = ["slug", "order", "section", "title", "description", "h1", "crumb", "summary", "datePublished", "dateModified", "related"];
 const SECTIONS = {

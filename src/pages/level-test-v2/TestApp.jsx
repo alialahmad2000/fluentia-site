@@ -654,7 +654,7 @@ function Teaser({ run, onSubmit }) {
   return (
     <main className="lt2-wrap lt2-step lt2-enter">
       <div className="lt2-card lt2-teaser-card" aria-hidden="true">
-        <div className="lt2-blur">
+        <div className="lt2-muted">
           <SunMeter lvl={null} compact />
           <div className="lt2-level"><span className="lt2-level-name">مستواك</span><span className="lt2-level-code">··</span></div>
           <ul className="lt2-bars">{[62, 48, 40].map((w) => <li key={w}><span>مهارة</span><span className="lt2-track"><span style={{ width: `${w}%` }} /></span><span /></li>)}</ul>
