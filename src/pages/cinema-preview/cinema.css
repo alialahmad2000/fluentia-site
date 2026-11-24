@@ -47,6 +47,8 @@
   font-family: var(--display);
 }
 .cv-h2 { font-size: clamp(2.1rem, 7.6vw, 4.4rem); font-weight: 800; line-height: 1.16; letter-spacing: -0.01em; max-width: 16ch; }
+/* No orphan words on 390px: balance every multi-line heading (older Safari falls back to «\u00A0» glue in copy.js). */
+.cv-h2, .cv-h3, .cv-ba-line, .cv-final-t span, .cv-quote-head, .cv-who-title { text-wrap: balance; }
 .cv-h3 { font-size: 1.32rem; font-weight: 700; line-height: 1.4; }
 .cv-body { color: var(--fg-2); font-size: 1rem; line-height: 1.8; }
 .cv-lede { color: var(--fg-2); font-size: 1.12rem; margin-top: 14px; }

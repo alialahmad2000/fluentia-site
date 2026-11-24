@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import Seo from "../../components/Seo";
 import { HOME_BOOKING, isModifiedClick } from "../../lib/booking";
@@ -107,10 +107,11 @@ function Hero({ wa }) {
       <div className="cv-hero-copy">
         <p className="cv-eyebrow">{HERO.eyebrow}</p>
         <h1 id="cv-h1" className="cv-h1">
-          {HERO.lines.map((l) => (
-            <span key={l} className="cv-slab">
-              {l}
-            </span>
+          {HERO.lines.map((l, i) => (
+            <Fragment key={l}>
+              {i > 0 && " "}
+              <span className="cv-slab">{l}</span>
+            </Fragment>
           ))}
         </h1>
         <p className="cv-hero-sub">{HERO.sub}</p>
@@ -168,7 +169,7 @@ function BeforeAfter() {
           <h2 id="cv-ba-t" className="cv-ba-lines">
             <span className="cv-ba-line is-before">
               <em>{BEFORE_AFTER.before.tag}</em> {BEFORE_AFTER.before.line}
-            </span>
+            </span>{" "}
             <span className="cv-ba-line is-after">
               <em>{BEFORE_AFTER.after.tag}</em> {BEFORE_AFTER.after.line}
             </span>
@@ -377,8 +378,11 @@ function Final({ wa }) {
       )}
       <div className="cv-final-copy">
         <h2 id="cv-final-t" className="cv-final-t">
-          {FINAL.title.map((l) => (
-            <span key={l}>{l}</span>
+          {FINAL.title.map((l, i) => (
+            <Fragment key={l}>
+              {i > 0 && " "}
+              <span>{l}</span>
+            </Fragment>
           ))}
         </h2>
         <p className="cv-hero-sub">{FINAL.sub}</p>
