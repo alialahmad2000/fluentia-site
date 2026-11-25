@@ -104,7 +104,7 @@ const handoff = (s) => (s.role === "sales"
 
 const koLine = (g) => G(g, "شكرًا على وضوحك. حفظنا طلبك، وبنتواصل معك إذا فتحنا فرصة تناسبك.", "شكرًا على وضوحكِ. حفظنا طلبك، وبنتواصل معكِ إذا فتحنا فرصة تناسبك.");
 
-/* ── slots + booking (shape of _hr_careers_slots / _hr_careers_book) ── */
+/* ── a sample booked interview (the legacy «booked» screen; nobody books from the page since 2026-11-25) ── */
 function sampleSlots() {
   const dayFmt = new Intl.DateTimeFormat("ar-SA-u-ca-gregory-nu-latn", { timeZone: "Asia/Riyadh", weekday: "long", day: "numeric", month: "long" });
   const timeFmt = new Intl.DateTimeFormat("en-US", { timeZone: "Asia/Riyadh", hour: "numeric", minute: "2-digit", hour12: true });
@@ -152,15 +152,19 @@ export function previewOutcome(kind, gender, name) {
     return { kind: "booked", title_ar: "تم حجز موعدك", booking,
       body_ar: `موعد مكالمتك مع الفريق: ${booking.when_ar} بتوقيت الرياض (15 دقيقة). ${G(g, "بنرسل لك التفاصيل، وإذا احتجت تغيّر الموعد راسلنا على واتساب.", "بنرسل لك التفاصيل، وإذا احتجتي تغيّرين الموعد راسلينا على واتساب.")}` };
   }
-  if (kind === "book") {
-    return { kind: "book", title_ar: G(g, "ممتاز! اختر وقت مكالمة قصيرة مع الفريق", "ممتاز! اختاري وقت مكالمة قصيرة مع الفريق"),
-      body_ar: G(g, "مكالمة 15 دقيقة نتعرّف فيها عليك أكثر. اختر الوقت اللي يناسبك:", "مكالمة 15 دقيقة نتعرّف فيها عليكِ أكثر. اختاري الوقت اللي يناسبك:") };
-  }
+  if (kind === "received" || kind === "received_noemail" || kind === "thanks") return receivedOutcome(g, kind === "received_noemail");
   if (kind === "withdrew") { const c = JP_CLOSE(g); return { kind: "withdrew", title_ar: c.title, body_ar: c.body }; }
   if (kind === "ko") return { kind: "thanks", title_ar: "شكرًا على وضوحك", body_ar: "حفظنا طلبك، وبنتواصل معك إذا فتحنا فرصة تناسبك." };
   if (kind === "under18") return { kind: "thanks", title_ar: "شكرًا لاهتمامك", body_ar: "حاليًا نستقبل طلبات من عمرهم 18 سنة وفوق. حفظنا طلبك، وبنتواصل معك إذا فتحنا فرصة تناسبك." };
-  if (kind === "already") return { kind: "thanks", title_ar: "وصلنا طلبك، شكرًا لك", body_ar: "وصلنا طلبك، وبنتواصل معك إذا فتحنا فرصة تناسبك." };
-  return { kind: "thanks", title_ar: "شكرًا لك", body_ar: "وصلنا طلبك، وبنتواصل معك إذا فتحنا فرصة تناسبك." };
+  if (kind === "already") return { kind: "thanks", title_ar: "وصلنا طلبك، شكرًا لك", body_ar: "وصلنا طلبك ونراجعه بعناية. إذا تم ترشيحك للمقابلة بيوصلك إيميل فيه الدعوة والموعد." };
+  return receivedOutcome(g, false);
+}
+/** Same wording as hiring-interview receivedOutcome (2026-11-25: nobody books a time; Ali invites by email). */
+function receivedOutcome(g, noEmail) {
+  return { kind: "received", title_ar: "تم استلام طلبك بنجاح", need_email: !!noEmail, email_hint: noEmail ? "" : "pr•••••@example.com",
+    body_ar: G(g, "شكرًا لك! نراجع الطلبات بعناية.", "شكرًا لكِ! نراجع الطلبات بعناية."),
+    points: [G(g, "إذا تم ترشيحك للمقابلة بيوصلك إيميل فيه الدعوة والموعد.", "إذا تم ترشيحكِ للمقابلة بيوصلكِ إيميل فيه الدعوة والموعد."),
+      G(g, "لا داعي ترسل لنا على الواتساب للاستفسار عن الطلب.", "لا داعي ترسلين لنا على الواتساب للاستفسار عن الطلب.")] };
 }
 
 /* ── v5 (2026-11-22): the honest job preview + seriousness + strengths, and the formal pledge last.
@@ -345,15 +349,15 @@ export async function mockCall(action, p = {}) {
         return { step: "pay", reply: `${PP_INTRO}\n\n${PP_Q1(S.g)}`, options: null, multi: false };
       }
       if (S.pledge !== "signed") return { step: "pledge", pledge: pledgeView(S) };
-      S.step = "done"; return { outcome: { ...previewOutcome("book", S.g, S.name), pledge: { ref: "FL-P-0000", copy_url: null } } };
+      S.step = "done"; return { outcome: { ...previewOutcome("received", S.g, S.name), pledge: { ref: "FL-P-0000", copy_url: null } } };
     case "pledge_get": return { pledge: pledgeView(S), copy_url: null };
     case "pledge_sign": {
       if (normName(p.name) !== normName(S.name)) throw Object.assign(new Error("name"), { code: "NAME_MISMATCH", messageAr: "الاسم ما يطابق الاسم المكتوب في طلبك. نرجو كتابته مرة ثانية بنفس الشكل." });
       S.pledge = "signed"; S.signedName = p.name; return { pledge: pledgeView(S), copy_url: null };
     }
     case "pledge_decline": S.pledge = "declined"; return { message: "نقدّر صراحتك، الالتزام بالتجربة شرط أساسي للتقديم عندنا.", pledge: pledgeView(S) };
-    case "slots": return { slots: sampleSlots() };
-    case "book": return { booking: sampleBooking(S.name, p.start) };
+    case "slots": return { slots: [], closed: true };
+    case "set_email": return { ok: true, email_hint: "pr•••••@example.com" };
     default: return {};
   }
 }

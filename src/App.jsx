@@ -14,6 +14,7 @@ const AdvisorChat = lazy(() => import('./pages/start/AdvisorChat'));
 const JoinPage = lazy(() => import('./pages/join/JoinPage'));
 const CareersPage = lazy(() => import('./pages/careers/CareersPage'));
 const CareersPledgePage = lazy(() => import('./pages/careers/CareersPledgePage'));
+const CareersInvitePage = lazy(() => import('./pages/careers/CareersInvitePage'));
 const InvitePage = lazy(() => import('./pages/invite/InvitePage'));
 const PrivatePage = lazy(() => import('./pages/private/PrivatePage'));
 const StoriesPage = lazy(() => import('./pages/stories/StoriesPage'));
@@ -1262,6 +1263,9 @@ function AppRoutes(){
       {/* «تعهّد الالتزام بالفترة التجريبية» behind a link (2026-11-22): sign it, or the applicant's read-only copy. noindex. */}
       <Route path="/careers/pledge/:token" element={<Suspense fallback={<div style={{minHeight:'100dvh',background:'#fbf6ee'}} />}><CareersPledgePage /></Suspense>} />
       <Route path="/en/careers/pledge/:token" element={<Suspense fallback={<div style={{minHeight:'100dvh',background:'#fbf6ee'}} />}><CareersPledgePage lang="en" /></Suspense>} />
+      {/* Ali's interview invitation (2026-11-25): applicants never book themselves — they confirm one of Ali's times here. noindex. */}
+      <Route path="/careers/invite/:token" element={<Suspense fallback={<div style={{minHeight:'100dvh',background:'#fbf6ee'}} />}><CareersInvitePage /></Suspense>} />
+      <Route path="/en/careers/invite/:token" element={<Suspense fallback={<div style={{minHeight:'100dvh',background:'#fbf6ee'}} />}><CareersInvitePage lang="en" /></Suspense>} />
       {/* v1.4 P8 — a personal invite link (fluentia.academy/i/<code>). With the iPhone app installed iOS opens
           the app (public/.well-known/apple-app-site-association); everyone else lands here. noindex. */}
       <Route path="/i/:code" element={<Suspense fallback={<div style={{minHeight:'100dvh',background:'#0b1024'}} />}><InvitePage /></Suspense>} />

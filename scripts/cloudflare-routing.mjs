@@ -110,8 +110,9 @@ export const UNPORTABLE_HOST_REDIRECTS = [
  * person, wrong for WhatsApp's link preview and for anyone checking the link. One splat rewrite each.
  *   /i/:code — v1.4 P8 personal invite links (src/pages/invite/InvitePage.jsx).
  *   /careers/pledge/:token, /en/careers/pledge/:token — the trial-commitment pledge link (CareersPledgePage.jsx).
+ *   /careers/invite/:token, /en/careers/invite/:token — Ali's interview invitation (CareersInvitePage.jsx, 2026-11-25).
  */
-export const CLIENT_ONLY_PARAM_ROUTES = ["/i/*", "/careers/pledge/*", "/en/careers/pledge/*"];
+export const CLIENT_ONLY_PARAM_ROUTES = ["/i/*", "/careers/pledge/*", "/en/careers/pledge/*", "/careers/invite/*", "/en/careers/invite/*"];
 
 export function cloudflareRedirectsFile() {
   const lines = [

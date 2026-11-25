@@ -8,7 +8,7 @@
  * with its JS — the page would paint unstyled first. Everything stateful
  * (localStorage, Turnstile, the mic) runs in effects/handlers, never in render.
  */
-import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useRef, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import Seo from "../../components/Seo";
 import BrandMark from "../../components/BrandMark";
@@ -278,7 +278,8 @@ function ApplyForm({ role, saved, onSubmit, busy, error, fieldError, preview }) 
       if (!f.country.trim()) x.country = "Country is required";
       if (!f.nationality.trim()) x.nationality = "Nationality is required";
       if (!f.gender) x.gender = "Please choose one";
-      if (f.email.trim() && !/^\S+@\S+\.\S+$/.test(f.email.trim())) x.email = "This email address doesn't look right";
+      if (!f.email.trim()) x.email = "Please enter your email — any reply about your application is sent there";
+      else if (!emailLooksValid(f.email)) x.email = "This email address doesn't look right — please check it";
       if (!dobOf(dob)) x.birth_date = dob.d && dob.m && dob.y ? "That date doesn't exist — please check it" : "Please choose your day, month and year of birth";
       if (!agree) x.consent = "Please agree to the application terms to continue";
       if (r.cvRequired && !file) x.cv = "Please attach your CV";
@@ -290,7 +291,8 @@ function ApplyForm({ role, saved, onSubmit, busy, error, fieldError, preview }) 
     if (!f.country.trim()) x.country = "الدولة مطلوبة";
     if (!f.nationality.trim()) x.nationality = "الجنسية مطلوبة";
     if (!f.gender) x.gender = "نحتاجه عشان نخاطبك بالشكل الصحيح";
-    if (f.email.trim() && !/^\S+@\S+\.\S+$/.test(f.email.trim())) x.email = "البريد الإلكتروني غير صحيح";
+    if (!f.email.trim()) x.email = g(gd, "اكتب/ي بريدك الإلكتروني — عليه يوصلك أي رد على طلبك", "اكتب بريدك الإلكتروني — عليه يوصلك أي رد على طلبك", "اكتبي بريدك الإلكتروني — عليه يوصلك أي رد على طلبك");
+    else if (!emailLooksValid(f.email)) x.email = g(gd, "البريد الإلكتروني غير صحيح — راجعه/راجعيه", "البريد الإلكتروني غير صحيح — راجعه", "البريد الإلكتروني غير صحيح — راجعيه");
     if (!dobOf(dob)) x.birth_date = dob.d && dob.m && dob.y ? "التاريخ غير صحيح، نرجو مراجعته" : g(gd, "اختر/ي يوم وشهر وسنة ميلادك", "اختر يوم وشهر وسنة ميلادك", "اختاري يوم وشهر وسنة ميلادك");
     if (!agree) x.consent = "نحتاج موافقتك على شروط التقديم للمتابعة";
     if (r.cvRequired && !file) x.cv = g(gd, "ارفق/ي سيرتك الذاتية", "ارفق سيرتك الذاتية", "أرفقي سيرتك الذاتية");
@@ -386,7 +388,7 @@ function ApplyForm({ role, saved, onSubmit, busy, error, fieldError, preview }) 
         {errs.gender ? <p className="cr-err" id="cr-gender-e" role="alert">{errs.gender}</p> : null}
       </fieldset>
 
-      {field("email", en ? "Email (optional — we send your interview details here)" : "البريد الإلكتروني (اختياري)", { type: "email", inputMode: "email", autoComplete: "email", dir: "ltr", enterKeyHint: "done" })}
+      {field("email", en ? "Email — any reply about your application is sent here" : "البريد الإلكتروني — عليه يوصلك أي رد على طلبك", { type: "email", inputMode: "email", autoComplete: "email", dir: "ltr", enterKeyHint: "done", required: true })}
 
       <div className="cr-field">
         <span className="cr-lbl">{en ? `CV ${r.cvRequired ? "(required)" : "(optional)"}` : <>السيرة الذاتية {r.cvRequired ? "(مطلوبة)" : "(اختيارية)"}</>}</span>
@@ -606,9 +608,7 @@ function WhatNext({ kind, gender }) {
       <section className="cr-card cr-next" aria-labelledby="cr-next-h">
         <h3 id="cr-next-h">What happens next?</h3>
         <ul>
-          {kind === "booked" || kind === "book"
-            ? <li>In the short call we get to know you and explain how the work is organised.</li>
-            : <li>If your profile fits an opening, we'll contact you on WhatsApp.</li>}
+          {kind === "booked" ? <li>In the short interview we get to know you and explain how the work is organised.</li> : null}
           <li>The assistant only sorts applications — <b>the final decision is made by a person on the hiring team</b>.</li>
           <li>Your data is kept for 12 months and then deleted. To have it deleted sooner, message us on WhatsApp <bdi dir="ltr">{ACADEMY_WA_DISPLAY}</bdi>.</li>
         </ul>
@@ -619,9 +619,7 @@ function WhatNext({ kind, gender }) {
     <section className="cr-card cr-next" aria-labelledby="cr-next-h">
       <h3 id="cr-next-h">ماذا بعد؟</h3>
       <ul>
-        {kind === "booked" || kind === "book"
-          ? <li>في اللقاء القصير {g(gender, "نتعرّف عليك", "نتعرّف عليك", "نتعرّف عليكِ")} ونشرح تفاصيل العمل والراتب.</li>
-          : <li>إذا ناسب ملفك فرصة عندنا، {g(gender, "نتواصل معك", "نتواصل معك", "نتواصل معكِ")} على واتساب.</li>}
+        {kind === "booked" ? <li>في المقابلة القصيرة {g(gender, "نتعرّف عليك", "نتعرّف عليك", "نتعرّف عليكِ")} ونشرح تفاصيل العمل.</li> : null}
         <li>المساعد الآلي يرتّب الطلبات فقط — <b>القرار النهائي يتخذه شخص من فريق التوظيف</b>.</li>
         <li>بياناتك محفوظة 12 شهرًا ثم تُحذف. لطلب حذفها قبل ذلك راسلنا على واتساب <bdi dir="ltr">{ACADEMY_WA_DISPLAY}</bdi>.</li>
       </ul>
@@ -894,40 +892,38 @@ function BookedCard({ booking, title, body }) {
   );
 }
 
-function SlotPicker({ outcome, slots, loading, onBook, busy, error, gender }) {
+/* «تم استلام طلبك بنجاح» — every finished application (2026-11-25: nobody picks an interview time; Ali invites by email) */
+const EMAIL_TYPO = /@(gmial|gmal|gmai|gnail|gamil|gmaill|hotmial|hotmal|hotmai|outlok|outloo|yaho|yahooo)\.|@(gmail|hotmail|outlook|yahoo)\.(co|cm|om|con|comm)$|@icloud\.(co|cm|con)$/i;
+const emailLooksValid = (v) => { const e = String(v || "").trim(); return e.length <= 160 && /^[^@\s]+@[^@\s]+\.[^@\s]{2,}$/.test(e) && !EMAIL_TYPO.test(e); };
+
+function ReceivedCard({ outcome, gender, onEmail }) {
   const en = useEn();
-  const [sel, setSel] = useState(null);
-  const [tzOk, setTzOk] = useState(false); // local times only after hydration (the server has no timezone)
-  useEffect(() => { setTzOk(true); }, []);
-  const days = useMemo(() => {
-    const m = new Map();
-    for (const s of slots) { if (!m.has(s.day_ar)) m.set(s.day_ar, []); m.get(s.day_ar).push(s); }
-    return [...m.entries()];
-  }, [slots]);
+  const [email, setEmail] = useState("");
+  const [err, setErr] = useState("");
+  const [busy, setBusy] = useState(false);
+  const save = async (e) => {
+    e.preventDefault();
+    if (!emailLooksValid(email)) { setErr(en ? "This email address doesn't look right — please check it" : g(gender, "البريد الإلكتروني غير صحيح — راجعه", "البريد الإلكتروني غير صحيح — راجعه", "البريد الإلكتروني غير صحيح — راجعيه")); return; }
+    setBusy(true); setErr("");
+    try { await onEmail(email.trim()); } catch (x) { setErr(x.messageAr || (en ? "Something went wrong. Please try again." : "صار خطأ. نرجو المحاولة مرة ثانية.")); } finally { setBusy(false); }
+  };
   return (
-    <div className="cr-card cr-done">
+    <div className="cr-card cr-done" role="status">
       <h2>{outcome.title_ar}</h2>
       <p className="cr-lead">{outcome.body_ar}</p>
-      {loading ? <p className="cr-hint" role="status">{en ? "One moment, loading the available times…" : "لحظات، نجهّز المواعيد المتاحة…"}</p> : slots.length === 0 ? (
-        error ? <p className="cr-err cr-err-box" role="alert">{error}</p> : <p className="cr-hint">{en ? "No times are available right now. We'll contact you on WhatsApp to set a time." : "ما فيه مواعيد متاحة الآن. سنتواصل معك على واتساب لتحديد الموعد."}</p>
-      ) : (
-        <div className="cr-slots">
-          <h3>{en ? "Choose a time that suits you" : g(gender, "اختر/ي الوقت المناسب لك", "اختر الوقت المناسب لك", "اختاري الوقت المناسب لك")}</h3>
-          {en ? <p className="cr-hint">Times are shown in Riyadh time (GMT+3){tzOk && slots[0] && localTimeOf(slots[0].start) ? ", with your own time underneath" : ""}.</p> : null}
-          {days.map(([day, list]) => (
-            <div key={day} className="cr-day" role="group" aria-label={day}>
-              <div className="cr-day-l">{day}</div>
-              <div className="cr-chips">
-                {list.map((s) => (
-                  <button key={s.start} type="button" className={`cr-chip${sel === s.start ? " on" : ""}`} aria-pressed={sel === s.start} onClick={() => setSel(s.start)}>{s.time_ar}{en && tzOk && localTimeOf(s.start) ? <span className="cr-local">{localTimeOf(s.start)} your time</span> : null}</button>
-                ))}
-              </div>
-            </div>
-          ))}
-          {error ? <p className="cr-err cr-err-box" role="alert">{error}</p> : null}
-          <button type="button" className="cr-btn cr-btn-primary" disabled={!sel || busy} onClick={() => onBook(sel)}>{busy ? (en ? "One moment…" : "لحظات…") : <>{en ? "Confirm this time" : "تأكيد الموعد"} <Arrow /></>}</button>
-        </div>
-      )}
+      {outcome.points?.length ? <ul className="cr-points">{outcome.points.map((p) => <li key={p}>{p}</li>)}</ul> : null}
+      {outcome.need_email ? (
+        <form className="cr-email-ask" onSubmit={save} noValidate>
+          <label htmlFor="cr-out-email">{en ? "We don't have your email yet — invitations are sent by email only:" : g(gender, "ما عندنا بريدك الإلكتروني — الدعوات توصل بالإيميل فقط:", "ما عندنا بريدك الإلكتروني — الدعوات توصل بالإيميل فقط:", "ما عندنا بريدكِ الإلكتروني — الدعوات توصل بالإيميل فقط:")}</label>
+          <input id="cr-out-email" type="email" inputMode="email" autoComplete="email" dir="ltr" value={email} onChange={(e) => setEmail(e.target.value)}
+            aria-invalid={err ? "true" : "false"} aria-describedby={err ? "cr-out-email-e" : undefined} />
+          {err ? <p className="cr-err" id="cr-out-email-e" role="alert">{err}</p> : null}
+          <button type="submit" className="cr-btn cr-btn-primary" disabled={busy}>{busy ? (en ? "One moment…" : "لحظات…") : en ? "Save my email" : g(gender, "احفظ بريدي", "احفظ بريدي", "احفظي بريدي")}</button>
+        </form>
+      ) : outcome.email_hint ? (
+        <p className="cr-hint">{en ? "We'll write to " : "نراسلك على "}<bdi dir="ltr">{outcome.email_hint}</bdi></p>
+      ) : null}
+      <a className="cr-btn cr-btn-ghost" href="/">{en ? "Back to the home page" : "العودة للرئيسية"}</a>
     </div>
   );
 }
@@ -955,9 +951,7 @@ export default function CareersPage({ lang = "ar" }) {
   const [fieldError, setFieldError] = useState("");
   const [notice, setNotice] = useState("");
   const [outcome, setOutcome] = useState(null);
-  const [slots, setSlots] = useState([]);
-  const [slotsLoading, setSlotsLoading] = useState(false);
-  const [booking, setBooking] = useState(null);
+  const [booking, setBooking] = useState(null); // legacy: interviews booked before self-booking closed (2026-11-25)
   const [pledge, setPledge] = useState(null); // the trial-commitment pledge: the last step before submitting
   const [pledgeMsg, setPledgeMsg] = useState(""); // set after «ما أقدر ألتزم»
   const [preview, setPreview] = useState(false); // read after hydration: the prerendered HTML has no query string
@@ -988,7 +982,7 @@ export default function CareersPage({ lang = "ar" }) {
   const reset = useCallback((r, msg) => {
     if (r) clearSaved(r);
     setSaved((s) => ({ ...s, ...(r ? { [r]: null } : {}) }));
-    setApp(null); setMessages([]); setOptions(null); setTasks([]); setOutcome(null); setSlots([]); setBooking(null); setPledge(null); setPledgeMsg("");
+    setApp(null); setMessages([]); setOptions(null); setTasks([]); setOutcome(null); setBooking(null); setPledge(null); setPledgeMsg("");
     setStage("landing"); setRole(r || null); setError(""); setNotice(msg || "");
     window.scrollTo?.(0, 0);
   }, []);
@@ -1004,12 +998,6 @@ export default function CareersPage({ lang = "ar" }) {
   const showOutcome = useCallback(async (o, a) => {
     setOutcome(o); setStage("outcome"); setError("");
     if (o.kind === "booked" && o.booking) setBooking(o.booking);
-    if (o.kind === "book") {
-      setSlotsLoading(true);
-      try { const r = await call("slots", { application_id: a.id, token: a.token }); setSlots(r.slots || []); }
-      catch (x) { setSlots([]); setError(x.messageAr || ""); }
-      finally { setSlotsLoading(false); }
-    }
     window.scrollTo?.(0, 0);
   }, []);
 
@@ -1209,18 +1197,13 @@ export default function CareersPage({ lang = "ar" }) {
     setOptions(null); setTasks(res.voice_tasks || []); setStage("voice"); window.scrollTo?.(0, 0);
   };
   const skipVoice = async (kind) => { const res = await call("preview_skip_voice", { kind }); setTasks(res.voice_tasks || []); };
-  const viewOutcome = (kind) => { setBooking(null); setSlots([]); showOutcome(previewOutcome(kind, gender, app?.basics?.name), app); };
+  const viewOutcome = (kind) => { setBooking(null); showOutcome(previewOutcome(kind, gender, app?.basics?.name), app); };
 
-  /* booking */
-  const book = async (start) => {
-    setBusy(true); setError("");
-    try {
-      const res = await guard(() => call("book", { application_id: app.id, token: app.token, start }), role);
-      if (res) { setBooking(res.booking); window.scrollTo?.(0, 0); }
-    } catch (x) {
-      setError(x.messageAr || "");
-      if (x.code === "SLOT_TAKEN") { try { const r = await call("slots", { application_id: app.id, token: app.token }); setSlots(r.slots || []); } catch { /* keep list */ } }
-    } finally { setBusy(false); }
+  /* «تم استلام طلبك» without an email (older drafts): one more chance to give one — email is the only invite channel */
+  const saveEmail = async (email) => {
+    const res = await guard(() => call("set_email", { application_id: app.id, token: app.token, email }), role);
+    if (res) setOutcome((o) => (o ? { ...o, need_email: false, email_hint: res.email_hint || "" } : o));
+    return res;
   };
 
   const inFlow = stage !== "landing";
@@ -1308,7 +1291,7 @@ export default function CareersPage({ lang = "ar" }) {
             <ol>
               <li><b>Share your details</b><span>Your name, WhatsApp number and city — plus your CV for trainer roles.</span></li>
               <li><b>Chat with our hiring assistant</b><span>A few written questions about your experience, then a short voice recording.</span></li>
-              <li><b>Book your interview directly</b><span>If your profile fits the role, you pick a time for a short call right away.</span></li>
+              <li><b>We review every application</b><span>If you are shortlisted, you receive an email inviting you to a short interview.</span></li>
             </ol>
             <p className="cr-how-total">It all takes about 10 minutes, and your details stay confidential.</p>
           </section>
@@ -1359,7 +1342,7 @@ export default function CareersPage({ lang = "ar" }) {
               <li><b>اختيار الوظيفة والبيانات</b><span>الاسم ورقم الواتساب والمدينة، والسيرة الذاتية للمدرّبين.</span></li>
               <li><b>محادثة قصيرة</b><span>أسئلة عن خبرتك مع مساعد التوظيف، بالكتابة.</span></li>
               <li><b>تسجيل صوتي</b><span>تسجيلات قصيرة بصوتك، نسمع فيها طريقة كلامك. لمستشاري القبول: تعريف بنفسك ومكالمتين تمثيليتين قصيرتين.</span></li>
-              <li><b>موعد لقاء</b><span>إذا ناسب ملفك الوظيفة، يظهر لك حجز موعد لقاء قصير مباشرة.</span></li>
+              <li><b>المراجعة</b><span>الفريق يراجع كل طلب بعناية، واللي يترشّح للمقابلة يوصله إيميل فيه الدعوة.</span></li>
             </ol>
             <p className="cr-how-total">كل الخطوات تاخذ حوالي 10 دقائق، وبياناتك تبقى سرّية.</p>
           </section>
@@ -1419,7 +1402,7 @@ export default function CareersPage({ lang = "ar" }) {
             <div className="cr-outcome">
             <div className="cr-horizon" aria-hidden="true"><DawnSun id="cr-sun-out" /></div>
             {booking ? <BookedCard booking={booking} title={outcome.kind === "booked" ? outcome.title_ar : en ? "Your interview is booked" : "تم تأكيد موعدك"} body={outcome.kind === "booked" ? outcome.body_ar : ""} />
-              : outcome.kind === "book" ? <SlotPicker outcome={outcome} slots={slots} loading={slotsLoading} onBook={book} busy={busy} error={error} gender={gender} />
+              : outcome.kind === "received" ? <ReceivedCard outcome={outcome} gender={gender} onEmail={saveEmail} />
                 : (
                   <div className="cr-card cr-done" role="status">
                     <h2>{outcome.title_ar}</h2>
@@ -1435,7 +1418,7 @@ export default function CareersPage({ lang = "ar" }) {
                 <h3 id="cr-pv-out-h">معاينة: كل الشاشات اللي ممكن تظهر في النهاية</h3>
                 {previewTag() ? <p className="cr-pv-note" role="note">«شهية العمولة» من إجاباتك في المعاينة: <b>{previewTag()}</b> (تظهر للإدارة فقط)</p> : null}
                 <div className="cr-pv-tools">
-                  {[["book", "مؤهل: اختيار موعد"], ["booked", "بعد حجز الموعد"], ["thanks", "شكرًا (بعد المراجعة)"], ["ko", "شكرًا (الأوقات ما تشمل المساء)"], ["under18", "أقل من 18 سنة"], ["withdrew", "انسحب بعد معرفة طبيعة الوظيفة"]].map(([k, l]) => (
+                  {[["received", "تم استلام طلبك (كل من يكمل)"], ["received_noemail", "تم استلام طلبك — بدون إيميل"], ["booked", "مقابلة محجوزة سابقًا"], ["ko", "شكرًا (الأوقات ما تشمل المساء)"], ["under18", "أقل من 18 سنة"], ["withdrew", "انسحب بعد معرفة طبيعة الوظيفة"]].map(([k, l]) => (
                     <button key={k} type="button" className="cr-pv-btn" onClick={() => viewOutcome(k)}>{l}</button>
                   ))}
                 </div>
