@@ -35,11 +35,11 @@ export function getUTM() {
 export function buildWAMessage({ name, phoneLocal, path, pkgName, pkgPrice, goal, utm }) {
   const sourceLabel = getSource();
   return (
-    `السلام عليكم، أبي أحجز لقاء مبدئي مجاني\n` +
+    `السلام عليكم، أبي أعرف تفاصيل الاشتراك\n` +
     `الاسم: ${name}\n` +
     `الجوال: ${phoneLocal}\n` +
     `المسار: ${path}\n` +
-    // No price when the visitor left the package to the first meeting (/join).
+    // No price when the visitor left the package to the team's first contact (/join).
     `الباقة: ${pkgName}${pkgPrice ? ` (${pkgPrice} ر.س)` : ''}\n` +
     (goal ? `الهدف: ${goal}\n` : '') +
     `المصدر: ${sourceLabel}` +

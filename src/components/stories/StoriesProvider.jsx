@@ -353,7 +353,7 @@ export default function StoriesProvider({ stories, children }) {
       </div>
       <div className="st-viewer-bottom">
         <button type="button" className="st-viewer-cta" onClick={onCta}>
-          احجز لقاء مبدئي مجاني
+          ابدأ الآن
         </button>
         <span className="st-viewer-note">مجاني وبدون التزام</span>
       </div>

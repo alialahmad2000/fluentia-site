@@ -5,25 +5,25 @@
  *  - Saudi spoken Arabic, SINGULAR address (Ali, 2026-11-24): the reader is «أنت», masculine as the
  *    generic Saudi form, gender-neutral where it reads naturally, never «احجز/ي». «نحن» = طلاقة.
  *    Every line passes «would a Saudi say this out loud?». Line-by-line log: docs/higgsfield-rebuild/COPY-REVIEW.md
- *  - One term per thing: «اللقاء المبدئي المجاني», «المدرّب», «المرشد الأكاديمي», «المنصّة»,
+ *  - One term per thing: «نتواصل معك» (no meetings, 2026-11-25), «المدرّب», «المرشد الأكاديمي», «المنصّة»,
  *    «مكتبة طلاقة», «بودكاست طلاقة», «مشاهد», «المحادثة مع ليلى». One CTA string per action.
  *  - Multi-line headings are arrays rendered as block spans; CinemaPreview.jsx puts a real space
  *    between them so extracted text never glues words. «\u00A0» glues a last word to its neighbour (no orphans).
  *  - No prices, no refunds, no guarantees, no Telegram, no invented numbers or quotes.
  *  - Feature claims are taken from the live platform copy (next/showcase.js,
  *    landing-v2/content.js); nothing here describes a feature that does not exist.
- *  - The one action is the free initial meeting. WhatsApp is the quiet alternative.
+ *  - The one action is «ابدأ الآن» (send your details; the team replies on WhatsApp). WhatsApp is the quiet alternative.
  */
 
-export const CTA = "احجز لقاءك المبدئي المجاني";
-export const CTA_SHORT = "احجز لقاءك المجاني";
+export const CTA = "ابدأ الآن";
+export const CTA_SHORT = "ابدأ الآن";
 export const WA_LABEL = "أو كلّمنا على واتساب";
 
 export const HERO = {
   eyebrow: "أكاديمية طلاقة · أونلاين من السعودية",
   lines: ["تكلّم إنجليزي", "بدون ما تركّب", "الجملة في راسك."],
   sub: "حصص مباشرة مع مدرّب يسمعك ويصحّح لك، وتمرين يومي على المنصّة، ومرشد أكاديمي يتابعك أول بأول.",
-  note: "اللقاء المبدئي مجاني، وبدون أي التزام.",
+  note: "بدون أي التزام.",
 };
 
 export const BEFORE_AFTER = {
@@ -108,14 +108,14 @@ export const STEPS = {
   kicker: "06",
   title: "كيف تبدأ؟",
   items: [
-    { n: "1", title: "احجز اللقاء المبدئي", body: "محادثة قصيرة مع «مستشار طلاقة»، ويرتّب لك موعد\u00A0يناسبك." },
-    { n: "2", title: "اللقاء المبدئي المجاني", body: "نسمعك فيه، ونعرف مستواك وهدفك." },
+    { n: "1", title: "ابدأ الآن", body: "محادثة قصيرة مع «مستشار طلاقة»، تعطينا فيها هدفك وبياناتك." },
+    { n: "2", title: "نتواصل معك", body: "فريقنا يتواصل معك على واتساب، يعرف هدفك ومستواك ووقتك، ويرشّح لك المسار والباقة المناسبة." },
     { n: "3", title: "قرّر براحتك", body: "بدون أي التزام. وإذا ناسبتك طلاقة، تبدأ بخطة على مقاسك." },
   ],
 };
 
 export const FINAL = {
-  title: ["أول خطوة؟", "لقاء\u00A0مبدئي مجاني."],
+  title: ["أول خطوة؟", "ابدأ\u00A0الآن."],
   sub: "نسمعك، ونقول لك بصراحة وين واقف إنجليزيك وإيش\u00A0يحتاج.",
 };
 

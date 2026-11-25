@@ -58,6 +58,14 @@ export const CLIENT_ONLY_ROUTES = [
   "/v4",
   "/v5",
   "/w",
+  // 2026-11-25 «لا حجز ذاتي»: old booking-style URLs → the neutral note (RequestReceivedPage.jsx). noindex.
+  "/book",
+  "/booking",
+  "/meeting",
+  "/meetings",
+  "/interview",
+  "/schedule",
+  "/appointment",
   // Homepage visual-direction previews (/preview, /preview/a|b|c): client-rendered,
   // noindex (meta + the X-Robots-Tag in public/_headers), never in the sitemap.
   ...HOME_PREVIEW_ROUTES,
@@ -111,8 +119,11 @@ export const UNPORTABLE_HOST_REDIRECTS = [
  *   /i/:code — v1.4 P8 personal invite links (src/pages/invite/InvitePage.jsx).
  *   /careers/pledge/:token, /en/careers/pledge/:token — the trial-commitment pledge link (CareersPledgePage.jsx).
  *   /careers/invite/:token, /en/careers/invite/:token — Ali's interview invitation (CareersInvitePage.jsx, 2026-11-25).
+ *   /m/:token — confirm the one time Ali proposed to a lead (MeetingConfirmPage.jsx, 2026-11-25).
+ *   /book/*, /booking/*, /meeting/*, /interview/*, /schedule/* — old booking-style URLs → neutral note (RequestReceivedPage.jsx).
  */
-export const CLIENT_ONLY_PARAM_ROUTES = ["/i/*", "/careers/pledge/*", "/en/careers/pledge/*", "/careers/invite/*", "/en/careers/invite/*"];
+export const CLIENT_ONLY_PARAM_ROUTES = ["/i/*", "/careers/pledge/*", "/en/careers/pledge/*", "/careers/invite/*", "/en/careers/invite/*", "/m/*",
+  "/book/*", "/booking/*", "/meeting/*", "/interview/*", "/schedule/*"];
 
 export function cloudflareRedirectsFile() {
   const lines = [

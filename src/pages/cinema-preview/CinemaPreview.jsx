@@ -32,7 +32,7 @@ import "./cinema.css";
  * imports from src/pages/next/ and nothing there changes.
  *
  * Tracking is the homepage's, through the same global paths:
- *  - every «احجز لقاءك المبدئي» is `<a data-open-form href=HOME_BOOKING>` → /start?src=site_home,
+ *  - every «ابدأ الآن» CTA is `<a data-open-form href=HOME_BOOKING>` → /start?src=site_home,
  *    exactly where a plain click on `/` lands (NextLanding's capture listener, mirrored below);
  *  - every WhatsApp link is a wa.me URL from buildWhatsAppUrl(WA_MESSAGES.general), so the
  *    global listener (installWhatsAppClickTracking) sends GA4 whatsapp_click + TikTok Contact,

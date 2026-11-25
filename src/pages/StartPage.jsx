@@ -147,7 +147,7 @@ const PACKAGES = [
       'تصحيح كتابي ونطق غير محدود',
       'أولوية في الرد + تواصل مباشر مع مدربك',
     ],
-    cta: 'احجز VIP',
+    cta: 'ابدأ VIP',
   },
   {
     id: 'fardi_intensive',
@@ -166,7 +166,7 @@ const PACKAGES = [
       'كل جلسة ممارسة لتقوية نقاط ضعفك',
       'كل مزايا التدريب الفردي',
     ],
-    cta: 'احجز المكثّف',
+    cta: 'ابدأ المكثّف',
   },
 ];
 
@@ -179,8 +179,8 @@ const TESTIMONIALS = [
 ];
 
 const FAQS = [
-  { q: 'وش اللقاء المبدئي المجاني؟',
-    a: 'لقاء مباشر مع المدرب — نفهم مستواك وأهدافك. وأنت تتعرف على أسلوب المدرب. بناءً عليه نقرر مع بعض إذا Fluentia المكان الصح لك.' },
+  { q: 'وش يصير بعد ما أسجّل بياناتي؟',
+    a: 'فريقنا يتواصل معك على واتساب — نفهم مستواك وأهدافك ووقتك، ونرشّح لك المسار والباقة المناسبة. بدون التزام.' },
   { q: 'كم عدد الطلاب بالكلاس؟',
     a: 'حد أقصى 7 طلاب فقط. مو 20 أو 30 مثل المعاهد الثانية.' },
   { q: 'هل أقدر أغير الباقة لاحقاً؟',
@@ -320,7 +320,7 @@ export default function StartPage() {
       try { window.gtag('event', 'conversion', { send_to: 'AW-9314838750', value: 1.0, currency: 'SAR' }); } catch (e) {}
     }
     const src = getSource();
-    const msg = `السلام عليكم، أبي أحجز لقاء مبدئي مجاني\nالمصدر: ${src}`;
+    const msg = `السلام عليكم، أبي أعرف تفاصيل الاشتراك\nالمصدر: ${src}`;
     window.open(buildWhatsAppUrl(msg), '_blank');
   };
 
@@ -463,7 +463,7 @@ export default function StartPage() {
                 marginBottom: 18,
               }}
             >
-              احجز لقاءك المبدئي المجاني
+              ابدأ الآن
             </div>
 
             <h1
@@ -512,7 +512,7 @@ export default function StartPage() {
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 18, fontSize: 13, color: T.muted, alignItems: 'center' }}>
               {/* Verifiable facts only: the old «⭐ 4.9 · +50 طالب · معتمدون رسمياً» had no
                   source (docs/seo/NEEDS-ALI.md #22, #26). Put a rating back only with real reviews. */}
-              <span>لقاء مبدئي مجاني</span>
+              <span>دفع شهري</span>
               <span style={{ opacity: 0.4 }}>·</span>
               <span>بدون التزام</span>
               <span style={{ opacity: 0.4 }}>·</span>
@@ -738,7 +738,7 @@ export default function StartPage() {
                         جاري الإرسال...
                       </>
                     ) : (
-                      <>احجز لقاءك المجاني ←</>
+                      <>سجّل بياناتك ←</>
                     )}
                   </button>
 
@@ -814,7 +814,7 @@ export default function StartPage() {
             <span style={{ fontFamily: FONTS.ar }}>باقات — اختر اللي يناسبك</span>
           </h2>
           <p style={{ fontSize: 14, color: T.muted, marginTop: 10 }}>
-            لقاء مبدئي مجاني · دفع شهري · بدون التزام
+            بدون التزام · دفع شهري
           </p>
         </div>
 
@@ -974,7 +974,7 @@ export default function StartPage() {
           جاهز تبدأ؟
         </h2>
         <p style={{ fontSize: 15, color: T.muted, marginBottom: 28 }}>
-          احجز لقاءك المبدئي المجاني الآن — بدون أي التزام
+          ابدأ الآن — بدون أي التزام
         </p>
         {/* Not ready to talk yet? The exam is the lower-commitment first step. */}
         <p style={{ fontSize: 14, color: T.muted, marginBottom: 24, lineHeight: 1.9 }}>
@@ -1002,7 +1002,7 @@ export default function StartPage() {
               cursor: 'pointer',
             }}
           >
-            احجز لقاءك المجاني ←
+            ابدأ الآن ←
           </button>
           <button
             onClick={handleFloatingWA}

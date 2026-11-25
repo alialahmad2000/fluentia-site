@@ -336,7 +336,7 @@ export default function Header({ page = "home", solidAt = 80 }) {
             <div className="fxm-foot">
               {/* Closes the menu, then hands off to the page's [data-open-form] flow. */}
               <button type="button" className="fxm-cta" onClick={() => closeMenu({ focusToggle: false, then: triggerOpenForm })}>
-                احجز لقاء مبدئي مجاني
+                ابدأ الآن
               </button>
               {campaign ? null : (
                 <div className="fxm-minor">

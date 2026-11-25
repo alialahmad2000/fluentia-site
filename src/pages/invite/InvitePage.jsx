@@ -45,8 +45,8 @@ function copyFor(en, info) {
   if (en) {
     return {
       title: name ? <><bdi>{name}</bdi> invited you to Fluentia</> : "You're invited to Fluentia",
-      sub: "Fluentia is an online English academy for adults: live classes with trainers, and a platform that keeps track of your progress. Leave your name and number and we will book you a free intro meeting.",
-      formTitle: "Book a free intro meeting",
+      sub: "Fluentia is an online English academy for adults: live classes with trainers, and a platform that keeps track of your progress. Leave your name and number and our team will message you on WhatsApp.",
+      formTitle: "Send your details",
       name: "Your name", phone: "Mobile number", send: "Send", sending: "Sending…",
       nameErr: "Write your name.", phoneErr: "A Saudi mobile number, starting with 5.",
       consent: "By sending, you agree that the Fluentia team contacts you on WhatsApp.",
@@ -55,7 +55,7 @@ function copyFor(en, info) {
       doneTitle: (n) => `Thanks, ${n}`,
       doneSub: "The Fluentia team will message you on WhatsApp soon. Want to start the chat now?",
       wa: "Open WhatsApp",
-      waMsg: (n, p) => `Hello, I came through an invite link and would like a free intro meeting\nName: ${n}\nMobile: ${p}`,
+      waMsg: (n, p) => `Hello, I came through an invite link and would like to know the subscription details\nName: ${n}\nMobile: ${p}`,
       appTitle: "The Fluentia app",
       appSub: "Classes, homework and your progress, on your iPhone.",
       app: "Download on the App Store",
@@ -66,8 +66,8 @@ function copyFor(en, info) {
   }
   return {
     title: name ? <><bdi>{name}</bdi> {female ? "تدعوك" : "يدعوك"} إلى طلاقة</> : "دعوة خاصة إلى طلاقة",
-    sub: "أكاديمية طلاقة لتعلّم الإنجليزية أونلاين للكبار: حصص مباشرة مع مدرّبين، ومنصّة تتابع تقدّمك. اترك اسمك ورقمك ونرتّب لك لقاءً مبدئيًا مجانيًا.",
-    formTitle: "احجز لقاءً مبدئيًا مجانيًا",
+    sub: "أكاديمية طلاقة لتعلّم الإنجليزية أونلاين للكبار: حصص مباشرة مع مدرّبين، ومنصّة تتابع تقدّمك. اترك اسمك ورقمك ونتواصل معك على واتساب.",
+    formTitle: "سجّل بياناتك",
     name: "الاسم", phone: "رقم الجوال", send: "إرسال", sending: "يُرسَل…",
     nameErr: "اكتب اسمك.", phoneErr: "رقم جوال سعودي يبدأ بـ 5.",
     consent: "بالإرسال توافق على تواصل فريق طلاقة معك على واتساب.",
@@ -76,7 +76,7 @@ function copyFor(en, info) {
     doneTitle: (n) => `وصلنا طلبك يا ${n}`,
     doneSub: "فريق طلاقة يتواصل معك على واتساب قريبًا. تبي تبدأ المحادثة الحين؟",
     wa: "افتح واتساب",
-    waMsg: (n, p) => `السلام عليكم، جيت عن طريق رابط دعوة وأبي أحجز لقاء مبدئي مجاني\nالاسم: ${n}\nالجوال: ${p}`,
+    waMsg: (n, p) => `السلام عليكم، جيت عن طريق رابط دعوة وأبي أعرف تفاصيل الاشتراك\nالاسم: ${n}\nالجوال: ${p}`,
     appTitle: "تطبيق طلاقة",
     appSub: "حصصك وواجباتك وتقدّمك، على جوالك.",
     app: "حمّل التطبيق من App Store",

@@ -32,7 +32,7 @@ function readUtm() {
 }
 
 function fallbackWaUrl() {
-  return buildWhatsAppUrl(`السلام عليكم، أبي أحجز استشارة للتدريب الفردي\nالمصدر: ${getSource()}`);
+  return buildWhatsAppUrl(`السلام عليكم، أبي أعرف تفاصيل التدريب الفردي\nالمصدر: ${getSource()}`);
 }
 
 export default function PrivateLeadForm({ pkgId, setPkgId, nameRef, onDone }) {

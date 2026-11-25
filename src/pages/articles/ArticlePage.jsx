@@ -336,7 +336,7 @@ export default function ArticlePage() {
                   marginBottom: "var(--lp-space-sm)",
                 }}
               >
-                الخطوة الأولى: لقاء مبدئي مجاني
+                الخطوة الأولى: نتواصل معك
               </h2>
               <p
                 style={{
@@ -351,7 +351,7 @@ export default function ArticlePage() {
               </p>
               {/* Plain <a>: the prerendered page must work before hydration. */}
               <PrimaryCTA href={`/start?src=article_${encodeURIComponent(article.slug)}`} data-cta="article_book">
-                احجز لقاءك المبدئي المجاني
+                ابدأ الآن
                 <span aria-hidden style={{ fontSize: "1.1em" }}>
                   ←
                 </span>

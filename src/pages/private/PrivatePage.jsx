@@ -5,7 +5,7 @@
  * dividers, Reveal, card surfaces, the gold VIP accent. Homepage components are
  * reused where one fits (header, «لكل مهنة إنجليزيتها الخاصة», fit/not-fit,
  * FAQ, final CTA, footer), rendered under a CtaContext so every primary button
- * reads «احجز استشارتك» and lands on this page's form instead of leaving it.
+ * reads «اطلب التفاصيل» and lands on this page's form instead of leaving it.
  * Only the hero orbit, team cards, week strip, comparison and form are this
  * page's own.
  *
@@ -371,12 +371,12 @@ export default function PrivatePage() {
                           <td className="p-cmp-corner" />
                           <td className="is-int">
                             <button type="button" data-open-form data-tier={intensive.id} className="v1-cta v1-cta-gold p-cmp-cta">
-                              احجز استشارة {intensive.short}
+                              ابدأ {intensive.short}
                             </button>
                           </td>
                           <td className="is-vip">
                             <button type="button" data-open-form data-tier={vip.id} className="v1-cta v1-cta-ghost p-ghost-gold p-cmp-cta">
-                              احجز استشارة {vip.short}
+                              ابدأ {vip.short}
                             </button>
                           </td>
                         </tr>

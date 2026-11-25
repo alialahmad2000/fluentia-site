@@ -32,7 +32,7 @@ export default function NotFound() {
             href="/start?src=404"
             style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", minHeight: 52, padding: "0 32px", borderRadius: 999, background: "#38bdf8", color: "#03101e", fontWeight: 700, textDecoration: "none" }}
           >
-            احجز لقاءك المبدئي
+            ابدأ الآن
           </a>
           <Link to="/level-test" style={{ display: "inline-flex", alignItems: "center", minHeight: 44, color: "var(--lp-amber-bright)", textDecoration: "none", fontWeight: 600 }}>
             أو اختبر مستواك مجاناً

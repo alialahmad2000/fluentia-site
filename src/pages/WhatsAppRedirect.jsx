@@ -47,7 +47,7 @@ function buildWhatsAppURL() {
   const message =
     `السلام عليكم 🌟\n` +
     `شفت إعلانكم وحبيت أعرف أكثر عن أكاديمية Fluentia\n` +
-    `أبي أحجز لقاء مبدئي مجاني\n\n` +
+    `أبي أعرف تفاصيل الاشتراك\n\n` +
     `📌 المصدر: ${source}`;
   return `https://wa.me/${WA_PHONE}?text=${encodeURIComponent(message)}`;
 }

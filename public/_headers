@@ -66,6 +66,34 @@
 /en/careers/invite/*
   X-Robots-Tag: noindex, nofollow
 
+# 2026-11-25 «لا حجز ذاتي»: /m/<token> (confirm Ali's proposed time) + old booking URLs: never indexed.
+/m/*
+  X-Robots-Tag: noindex, nofollow
+/book
+  X-Robots-Tag: noindex, nofollow
+/book/*
+  X-Robots-Tag: noindex, nofollow
+/booking
+  X-Robots-Tag: noindex, nofollow
+/booking/*
+  X-Robots-Tag: noindex, nofollow
+/meeting
+  X-Robots-Tag: noindex, nofollow
+/meeting/*
+  X-Robots-Tag: noindex, nofollow
+/meetings
+  X-Robots-Tag: noindex, nofollow
+/interview
+  X-Robots-Tag: noindex, nofollow
+/interview/*
+  X-Robots-Tag: noindex, nofollow
+/schedule
+  X-Robots-Tag: noindex, nofollow
+/schedule/*
+  X-Robots-Tag: noindex, nofollow
+/appointment
+  X-Robots-Tag: noindex, nofollow
+
 # Homepage candidates: /preview (cinematic, prerendered), /preview/directions + /preview/a|b|c: never indexed.
 /preview
   X-Robots-Tag: noindex, nofollow

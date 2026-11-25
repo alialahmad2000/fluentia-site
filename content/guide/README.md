@@ -27,7 +27,7 @@ summary: one line for llms.txt and the hub list (≤ 140 chars)
 datePublished: 2026-10-27
 dateModified: 2026-10-27
 related: about, faq, private-training   # ≥ 3 guide slugs
-cta: home                          # home | private  (where the booking button goes)
+cta: home                          # home | private  (where the start button goes)
 howto: false                       # true → the «## خطوات …» section becomes HowTo schema
 lang: ar                           # ar | en
 ---
@@ -54,7 +54,7 @@ starts with «خطوات» become the HowTo steps.
 
 - First mention per page: «أكاديمية طلاقة (Fluentia Academy)». Never «فلونشيا» or any
   Arabic spelling of "Fluentia"; in Arabic it is «طلاقة».
-- Our words: أكاديمية، منصّة، لقاء مبدئي. **Never in our voice:** معهد، دورة/دورات،
+- Our words: أكاديمية، منصّة، تواصل الفريق. **Never in our voice:** معهد، دورة/دورات،
   مذهل، مميز/مميزات، استثنائية، الأفضل، حبيبتي، كلاس تجريبي. «معهد» and «دورة» are
   allowed only inside an `h2`/`h3`/FAQ question that quotes how people search.
 - Mixed audience: impersonal or plural address (المتعلّم، من يريد، تبدأ الرحلة بـ…),

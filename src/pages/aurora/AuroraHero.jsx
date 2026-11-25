@@ -125,8 +125,8 @@ export default function AuroraHero() {
             </div>
 
             <div style={{ marginTop: "42px", display: "flex", alignItems: "center", gap: "16px" }}>
-              <a className="aurora-cta" style={{ display: "inline-flex", alignItems: "center", gap: "10px", background: "#38bdf8", color: "#0b1322", fontSize: "16.5px", fontWeight: 600, padding: "17px 36px", borderRadius: "13px", textDecoration: "none", cursor: "pointer", boxShadow: "0 12px 40px rgba(56,189,248,0.4)", transition: "all .3s cubic-bezier(.2,.7,.2,1)" }}>احجز لقاءً مبدئيًا مجانيًا</a>
-              <span style={{ fontSize: "13.5px", color: "rgba(234,243,255,0.42)", fontWeight: 300 }}>دون التزام · ١٥ دقيقة</span>
+              <a className="aurora-cta" style={{ display: "inline-flex", alignItems: "center", gap: "10px", background: "#38bdf8", color: "#0b1322", fontSize: "16.5px", fontWeight: 600, padding: "17px 36px", borderRadius: "13px", textDecoration: "none", cursor: "pointer", boxShadow: "0 12px 40px rgba(56,189,248,0.4)", transition: "all .3s cubic-bezier(.2,.7,.2,1)" }}>ابدأ الآن</a>
+              <span style={{ fontSize: "13.5px", color: "rgba(234,243,255,0.42)", fontWeight: 300 }}>دون التزام</span>
             </div>
           </div>
 

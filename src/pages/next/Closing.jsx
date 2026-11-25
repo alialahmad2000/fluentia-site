@@ -129,7 +129,7 @@ export function Footer({ mode, onMode }) {
           <p style={{ maxWidth: 760, margin: "0 auto", padding: "0 var(--fx-gut)", textAlign: "center", fontSize: 14, lineHeight: 2, color: "var(--fx-faint)" }}>
             <strong style={{ fontWeight: 600 }}>باختصار:</strong> أكاديمية طلاقة (Fluentia Academy) أكاديمية سعودية لتعليم
             الإنجليزي أونلاين للبالغين — حصص مباشرة عبر Google Meet في مجموعات صغيرة (7 طلاب كحد أقصى) أو تدريب فردي،
-            ومنصّة تعلّم من Pre-A1 إلى C1. الباقات من 500 ر.س شهرياً، وكل باقة تبدأ بلقاء مبدئي مجاني قبل أي دفع.
+            ومنصّة تعلّم من Pre-A1 إلى C1. الباقات من 500 ر.س شهرياً، وقبل أي دفع، فريقنا يتواصل معك ويوضح لك كل التفاصيل.
           </p>
           {/* «دليل طلاقة» — the static fact pages at /guide/ (scripts/build-guide.mjs).
               Plain <a>: they are not router routes, so a full load is required. */}

@@ -12,7 +12,7 @@ import { getAttribution } from "../../../lib/attribution";
 import { buildWhatsAppUrl } from "../../../lib/whatsapp";
 import { TIERS, GOALS, CTA, formatPrice } from "../joinContent";
 
-const UNDECIDED_LABEL = "ساعدوني أختار في اللقاء";
+const UNDECIDED_LABEL = "ساعدوني أختار";
 
 /** URL first (as /start reads it), then the touch captured at landing. */
 function readUtm() {
@@ -26,7 +26,7 @@ function readUtm() {
 }
 
 function fallbackWaUrl() {
-  return buildWhatsAppUrl(`السلام عليكم، أبي أحجز لقاء مبدئي مجاني\nالمصدر: ${getSource()}`);
+  return buildWhatsAppUrl(`السلام عليكم، أبي أعرف تفاصيل الاشتراك\nالمصدر: ${getSource()}`);
 }
 
 export default function LeadForm({ pkgId, setPkgId, nameRef, onDone, onBack, idPrefix = "join", tierIds = null, sub = null }) {
@@ -125,7 +125,7 @@ export default function LeadForm({ pkgId, setPkgId, nameRef, onDone, onBack, idP
 
   return (
     <form className="j-form-inner" onSubmit={onSubmit} noValidate>
-      <h2 className="j-form-title">احجز لقاءك المبدئي</h2>
+      <h2 className="j-form-title">سجّل بياناتك</h2>
       <p className="j-form-sub">{sub || "30 ثانية، ونتواصل معك على واتساب خلال ساعات."}</p>
 
       <div className="j-field">

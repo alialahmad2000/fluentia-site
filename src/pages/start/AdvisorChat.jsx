@@ -14,8 +14,9 @@ import './advisor.css';
 /* «مستشار طلاقة» — fluentia.academy/start.
  *
  * The page never reads the database. Every turn is one POST to the admissions-bot
- * edge function, which owns the conversation, the CRM lead, the booking and the
- * human hand-off. The browser keeps only a random client id (localStorage) so a
+ * edge function, which owns the conversation, the CRM lead and the human hand-off.
+ * 2026-11-25 (Ali): nobody books a time here — the visitor leaves their info, sees a
+ * thank-you, and Ali proposes a time from «طلبات بانتظار قرارك» in the admin. The browser keeps only a random client id (localStorage) so a
  * returning visitor resumes the same thread; the server stores its sha256.
  * The old form lives on at /start/form (linked at the bottom).
  * SSR-safe: the prerendered HTML is the shell + typing indicator; the first
@@ -68,57 +69,6 @@ async function call(body) {
   const j = await res.json().catch(() => null);
   if (!j) throw new Error('bad_response');
   return j;
-}
-
-/* GA4 key event for «احجز لقاءك المبدئي»: sent once per booking, at the only on-site moment
- * that confirms one — admissions-bot answered a slot pick with a booking. A re-pick after the
- * slot is already held returns the same booking (r.already, not exposed to the page), and a
- * resumed thread carries it too; the id kept in localStorage stops either from counting twice.
- * Consent Mode decides what the hit may carry (cookieless ping when denied); Ads gets it by
- * importing the GA4 key event, not from a tag here. TikTok gets nothing from this event. */
-const BOOKED_KEY = 'fl_abot_booked';
-function trackBooked(b) {
-  let seen = [];
-  try { seen = JSON.parse(window.localStorage.getItem(BOOKED_KEY) || '[]'); } catch { seen = []; }
-  if (!Array.isArray(seen)) seen = [];
-  if (b?.id && seen.includes(b.id)) return;
-  track('book_meeting', { method: 'chat_booking', source_page: context().src || 'direct', page_path: window.location.pathname });
-  if (b?.id) {
-    try { window.localStorage.setItem(BOOKED_KEY, JSON.stringify([...seen, b.id].slice(-10))); } catch { /* best-effort dedupe */ }
-  }
-}
-
-/* ── calendar ─────────────────────────────────────────────────────────────── */
-const icsDate = (iso) => new Date(iso).toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
-const NOTE = 'لقاء مبدئي مجاني مع المدرب على Google Meet — يكفي فيه الصوت. يوصلك رابط اللقاء على واتساب.';
-function googleCalUrl(b) {
-  const q = new URLSearchParams({
-    action: 'TEMPLATE', text: b.title || 'اللقاء المبدئي — أكاديمية طلاقة',
-    dates: `${icsDate(b.start)}/${icsDate(b.end)}`,
-    details: b.meet_url ? `${NOTE}\n${b.meet_url}` : NOTE,
-    location: b.meet_url || 'Google Meet',
-  });
-  return `https://calendar.google.com/calendar/render?${q}`;
-}
-function downloadIcs(b) {
-  const esc = (s) => String(s).replace(/([,;\\])/g, '\\$1').replace(/\n/g, '\\n');
-  const ics = [
-    'BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Fluentia//Admissions//AR', 'CALSCALE:GREGORIAN', 'METHOD:PUBLISH',
-    'BEGIN:VEVENT', `UID:${b.id}@fluentia.academy`, `DTSTAMP:${icsDate(new Date().toISOString())}`,
-    `DTSTART:${icsDate(b.start)}`, `DTEND:${icsDate(b.end)}`,
-    `SUMMARY:${esc(b.title || 'اللقاء المبدئي — أكاديمية طلاقة')}`,
-    `DESCRIPTION:${esc(b.meet_url ? `${NOTE}\n${b.meet_url}` : NOTE)}`,
-    `LOCATION:${esc(b.meet_url || 'Google Meet')}`,
-    'BEGIN:VALARM', 'TRIGGER:-PT10M', 'ACTION:DISPLAY', 'DESCRIPTION:اللقاء المبدئي بعد 10 دقائق', 'END:VALARM',
-    'END:VEVENT', 'END:VCALENDAR',
-  ].join('\r\n');
-  try {
-    const url = URL.createObjectURL(new Blob([ics], { type: 'text/calendar;charset=utf-8' }));
-    const a = document.createElement('a');
-    a.href = url; a.download = 'fluentia-meeting.ics';
-    document.body.appendChild(a); a.click(); a.remove();
-    setTimeout(() => URL.revokeObjectURL(url), 4000);
-  } catch { window.open(googleCalUrl(b), '_blank', 'noopener'); }
 }
 
 /* No WebGL sky: small screens, coarse pointers, in-app browsers, reduced motion (see the tier effect). */
@@ -179,34 +129,8 @@ function ContactCard({ busy, onSubmit, error }) {
       </label>
       <input className="adv-hp" tabIndex={-1} autoComplete="off" value={hp} onChange={(e) => setHp(e.target.value)} aria-hidden="true" name="company" />
       <button type="submit" className="adv-primary" disabled={!ok || busy}>{busy ? 'لحظة…' : 'تمام، كمّل'}</button>
-      <p className="adv-fine">نستخدم رقمك للتواصل معك بخصوص اللقاء فقط. ما نرسل لك إعلانات.</p>
+      <p className="adv-fine">نستخدم رقمك للتواصل معك بخصوص طلبك فقط. ما نرسل لك إعلانات.</p>
     </form>
-  );
-}
-
-function BookingCard({ b }) {
-  return (
-    <div className="adv-booked" role="status">
-      <div className="adv-booked-top">
-        <span className="adv-check" aria-hidden="true">
-          <svg viewBox="0 0 24 24" width="18" height="18"><path d="M5 12.5l4.2 4.2L19 7" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" /></svg>
-        </span>
-        <div>
-          <div className="adv-booked-k">تم حجز لقائك المبدئي المجاني</div>
-          <div className="adv-booked-when">{b.when}</div>
-        </div>
-      </div>
-      <ul className="adv-booked-facts">
-        <li>على Google Meet — يكفي الصوت بدون كاميرا</li>
-        <li>مدته تقريباً {b.minutes || 30} دقيقة</li>
-        <li>{b.meet_url ? 'رابط اللقاء جاهز تحت' : 'يوصلك رابط اللقاء على واتساب'}</li>
-      </ul>
-      <div className="adv-booked-actions">
-        <a className="adv-primary" href={googleCalUrl(b)} target="_blank" rel="noopener noreferrer">أضف للتقويم (Google)</a>
-        <button type="button" className="adv-ghost" onClick={() => downloadIcs(b)}>تقويم iPhone / Outlook</button>
-        {b.meet_url && <a className="adv-ghost" href={b.meet_url} target="_blank" rel="noopener noreferrer">رابط اللقاء</a>}
-      </div>
-    </div>
   );
 }
 
@@ -230,7 +154,6 @@ export default function AdvisorChat() {
   const planetGl = space && space.webgl ? { webgl: true, fps: Math.min(space.fps, 30), dpr: Math.min(space.dpr, 1.5) } : null;
   const [chips, setChips] = useState([]);
   const [card, setCard] = useState(null);
-  const [booking, setBooking] = useState(null);
   const [busy, setBusy] = useState(true);
   const [typing, setTyping] = useState(true);
   const [text, setText] = useState('');
@@ -274,14 +197,12 @@ export default function AdvisorChat() {
       setMsgs(r.transcript.map((m, i) => ({ role: m.role === 'user' ? 'user' : 'bot', body: m.body, id: `t${i}` })));
       setTyping(false);
       setChips(r.chips || []); setCard(r.card || null);
-      if (r.booking) setBooking(r.booking);
       setBusy(false);
       return;
     }
     reveal(r.messages || [], () => {
       setChips(r.chips || []);
       setCard(r.card || null);
-      if (r.booking) setBooking(r.booking);
       setBusy(false);
     });
   }, [reveal]);
@@ -296,7 +217,6 @@ export default function AdvisorChat() {
         if (r.error === 'invalid_phone' || r.card === 'contact') setPhoneErr(true);
         else { track('generate_lead', { method: 'admissions_bot' }); fireTikTokContact({ contentId: 'admissions_bot', contentName: 'Admissions chat' }); }
       }
-      if (req.action === 'book' && r.booking) trackBooked(r.booking);
       if (!r.ok && !r.messages?.length) throw new Error(r.error || 'failed');
       if (!r.ok && r.error !== 'invalid_phone') {
         reveal(r.messages || [], () => { setRetry({ req }); setBusy(false); });
@@ -322,12 +242,11 @@ export default function AdvisorChat() {
   useEffect(() => {
     const el = logRef.current;
     if (el) el.scrollTo({ top: el.scrollHeight, behavior: msgs.length > 2 ? 'smooth' : 'auto' });
-  }, [msgs, typing, chips, card, booking]);
+  }, [msgs, typing, chips, card]);
 
   const onChip = (c) => {
     if (busy) return;
-    if (c.kind === 'slot' && c.value) send({ action: 'book', start: c.value, label: c.label }, c.label);
-    else send({ action: 'message', text: c.value || c.label }, c.label);
+    send({ action: 'message', text: c.value || c.label }, c.label);
   };
   const onSend = (e) => {
     e?.preventDefault();
@@ -341,7 +260,6 @@ export default function AdvisorChat() {
     if (e.key === 'Enter' && !e.shiftKey && !e.nativeEvent.isComposing) onSend(e);
   };
 
-  const slots = chips.filter((c) => c.kind === 'slot' || c.kind === 'no_slot');
   const replies = chips.filter((c) => c.kind !== 'slot' && c.kind !== 'no_slot' && c.kind !== 'contact');
 
   return (
@@ -361,8 +279,8 @@ export default function AdvisorChat() {
           <a className="adv-home" href="/" aria-label="الصفحة الرئيسية لأكاديمية طلاقة">طلاقة</a>
         </header>
 
-        <ul className="adv-trust" aria-label="عن اللقاء">
-          <li>لقاء مبدئي مجاني</li><li>أونلاين مباشر</li><li>منهج على هدفك</li>
+        <ul className="adv-trust" aria-label="عن طلاقة">
+          <li>مدرب مباشر</li><li>أونلاين</li><li>منهج على هدفك</li>
         </ul>
         <a className="adv-wa" href={waHref} target="_blank" rel="noopener noreferrer" data-cta="start_wa_fallback">
           <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.2.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3Z" /></svg>
@@ -381,19 +299,9 @@ export default function AdvisorChat() {
           })}
           {typing && <Typing />}
 
-          {!typing && booking && <BookingCard b={booking} />}
-
           {!typing && card === 'contact' && (
             <ContactCard busy={busy} error={phoneErr}
               onSubmit={({ name, phone, hp }) => send({ action: 'contact', name, phone, hp }, `${name} · ${phone}`)} />
-          )}
-
-          {!typing && !!slots.length && (
-            <div className="adv-slots" role="group" aria-label="المواعيد المتاحة">
-              {slots.map((c, i) => (
-                <button key={i} type="button" className={`adv-slot${c.kind === 'no_slot' ? ' none' : ''}`} disabled={busy} onClick={() => onChip(c)}>{c.label}</button>
-              ))}
-            </div>
           )}
 
           {!typing && !!replies.length && (

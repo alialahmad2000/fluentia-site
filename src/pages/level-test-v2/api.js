@@ -65,8 +65,8 @@ export function startAttempt(bankVersion) {
 
 export const saveProgress = (att, step, patch = {}, opts) => call('v2_progress', { id: att.id, token: att.token, step, ...patch }, opts);
 export const submitContact = (att, payload) => call('v2_contact', { id: att.id, token: att.token, ...payload });
-export const getSlots = (att) => call('v2_slots', { id: att.id, token: att.token });
-export const bookSlot = (att, start) => call('v2_book', { id: att.id, token: att.token, start });
+// 2026-11-25 (Ali): no slots, no booking. v2_request hands the attempt to «طلبات بانتظار قرارك».
+export const requestReview = (att) => call('v2_request', { id: att.id, token: att.token });
 
 /** Optional voice note: signed upload URL → PUT the blob → confirm. */
 export async function uploadVoice(att, blob, seconds) {

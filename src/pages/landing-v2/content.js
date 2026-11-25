@@ -10,11 +10,11 @@ export const HERO = {
   // below is still read in full by the older heroes, /private and /ascent.
   lead: "انجلش يبيض وجهك. أكاديمية سعودية بمنهج علمي ومنصة تعلّم بمعايير عالمية.",
   sub: "أكاديمية أونلاين للراشدين السعوديين، مبنية على منهج علمي ومنصة تعلّم بحجم منتج عالمي. مدرّبون أكاديميون · متابعة شخصية · لن نعدك بنتائج معجزة، لكن سنعطيك كل ما يلزم.",
-  primaryCTA: "ابدأ بمحادثة",
+  primaryCTA: "ابدأ الآن",
   secondaryCTA: "جرّب درساً عن شغلك",
   trustRow: [
     "منذ 2021",
-    "محادثة أولى مجانية",
+    "نتواصل معك على واتساب",
     "إلغاء بأي وقت",
     "بدون التزام طويل",
   ],
@@ -166,7 +166,7 @@ export const PRODUCT = {
       size: "small",
       icon: "curriculum",
       title: "منهجك الشخصي",
-      tagline: "بعد لقائك المبدئي، نحدّد لك مساراً يخصّك أنت.",
+      tagline: "بعد ما نتعرّف على هدفك، نحدّد لك مساراً يخصّك أنت.",
     },
   ],
 };
@@ -242,8 +242,8 @@ export const WORTH = {
 export const PRICING = {
   eyebrow: "الباقات",
   headline: "خمس باقات. ابدأ من حيث يناسبك.", // the five on sale («طلاقة» sits in hiddenTiers)
-  intro: "ابدأ بلقاء مبدئي مجاني مع المدرّب، ولن تدفع شيئاً قبل أن تتأكد أن الباقة تناسبك.",
-  trust: "لقاء مبدئي مجاني · إلغاء بأي وقت · لا التزام طويل",
+  intro: "ابدأ الآن، ولن تدفع شيئاً قبل أن يتواصل معك فريقنا وتتأكد أن الباقة تناسبك.",
+  trust: "بدون التزام · دفع شهري · إلغاء بأي وقت",
 
   // Wide entry card (sits ABOVE the 3-tier grid) — platform only; access starts after a short call (the button opens the advisor chat).
   entryTier: {
@@ -344,7 +344,7 @@ export const PRICING = {
 
   // 1:1 programmes (sit BELOW the grid) — two cards side by side (2026-09-15):
   // the regular programme is priced by the weekly classes agreed in the first
-  // meeting; the intensive one is a fixed monthly schedule. Counts are MONTHLY,
+  // contact with the team; the intensive one is a fixed monthly schedule. Counts are MONTHLY,
   // like every other package (3 classes + 2 practice sessions a week).
   vipTier: {
     id: "fardi",
@@ -368,7 +368,7 @@ export const PRICING = {
       body: "2,000 ر.س شهرياً، ثابتة: حصتان فرديتان وجلسة ممارسة واحدة مع المرشد الأكاديمي كل أسبوع.",
       note: "تبي برنامجاً أكثف بجلسات ممارسة أكثر ومتابعة أوسع من المرشد؟ اختر التدريب الفردي المكثّف.",
     },
-    ctaLabel: "احجز استشارة VIP",
+    ctaLabel: "اطلب التفاصيل",
     // Homepage 1:1 card (2026-09-27): one-line promise + «داخل الباقة» rows,
     // every row restating a feature above — nothing the list doesn't already say.
     promise: "حصص فردية كاملة — أنت ومدربك فقط. منهج مخصّص، وتركيز كامل على هدفك.",
@@ -398,7 +398,7 @@ export const PRICING = {
       "كل جلسة ممارسة مخصّصة لتقوية نقاط ضعفك",
     ],
     priceNote: "12 حصة فردية + 8 جلسات ممارسة كل شهر.",
-    ctaLabel: "احجز استشارة المكثّف",
+    ctaLabel: "اطلب التفاصيل",
     // Homepage 1:1 card (2026-09-27) — facts from Ali's package spec.
     promise: "أسرع تقدّم ممكن — تتكلم إنجليزي تقريباً كل يوم.",
     inside: [
@@ -462,7 +462,7 @@ export const NAV = {
     { label: "الباقات", href: "#pricing" },
   ],
   studentLogin: { label: "دخول الطلاب", href: "https://app.fluentia.academy" },
-  primaryCTA: { label: "ابدأ بمحادثة" },
+  primaryCTA: { label: "ابدأ الآن" },
 };
 
 export const FOUNDER = {
@@ -472,7 +472,7 @@ export const FOUNDER = {
     "أنا د. علي الأحمد. طبيب ممارس، ومؤسس طلاقة منذ 2021.",
     "تعلّمت الإنجليزي مرّتين: مرة في المدرسة وفشلت، ومرة وأنا أدرس الطب وأحتاجها فعلياً للحياة. لم أغادر المملكة لاكتسابها — ما حصلت عليه كان نتيجة منهج علمي وممارسة منضبطة. هذي التجربة، ثم سنتان من تدريس الأصدقاء، تحوّلت إلى ملاحظات تراكمية: أين يعاني البالغ السعودي، وما الذي يجعل التعلّم يلتصق، ولماذا تفشل المعاهد التقليدية مع هذي الفئة. هذي الملاحظات صارت نواة طلاقة.",
     "في الطب تعلّمت أن الفهم يأتي من ثلاثة: نموذج واضح، ممارسة منظّمة، ومتابعة شخصية. هذي الثلاثة غائبة في معظم معاهد الإنجليزي. بنيت طلاقة لتعامل اللغة كما يعامل الطبّ الجسد: بمنهجية، بدقّة، وبشخصية.",
-    "إن قرّرت تجرّب، تواصل معي مباشرة في اللقاء المبدئي. لن أبيعك شيئاً. سأرى أين أنت، وأقول لك بأمانة هل طلاقة تناسبك أو لا.",
+    "إن قرّرت تجرّب، سجّل بياناتك ويتواصل معك فريقنا. لن نبيعك شيئاً. نفهم أين أنت، ونقول لك بأمانة هل طلاقة تناسبك أو لا.",
   ],
   signature: {
     name: "د. علي الأحمد",
@@ -482,14 +482,14 @@ export const FOUNDER = {
 
 export const FINAL_CTA = {
   eyebrow: "الخطوة التالية",
-  headline: "ابدأ بمحادثة. قرّر بعدها.",
-  sub: "محادثة أولى مجانية مع المدرّب · بدون التزام · بعد المحادثة، تقرر إن كانت طلاقة تناسبك أو لا.",
-  primaryCTA: "ابدأ بمحادثة",
+  headline: "ابدأ الآن. قرّر بعدها.",
+  sub: "فريقنا يتواصل معك على واتساب · بدون التزام · وبعدها تقرر إن كانت طلاقة تناسبك أو لا.",
+  primaryCTA: "ابدأ الآن",
 };
 
 export const FORM = {
-  title: "ابدأ بمحادثة مع المدرّب",
-  sub: "أكمل النموذج · سننتقل بك إلى محادثة WhatsApp مع المدرّب · بدون التزام.",
+  title: "سجّل بياناتك",
+  sub: "أكمل النموذج · سننتقل بك إلى محادثة WhatsApp مع فريقنا · بدون التزام.",
   fields: {
     name: { label: "اسمك", placeholder: "مثال: علي الأحمد" },
     phone: { label: "جوّالك", placeholder: "5XXXXXXXX", prefix: "+966" },
@@ -504,7 +504,7 @@ export const FORM = {
     { value: "tamayuz", label: "تميّز · 1,500 ر.س / شهر", price: 1500, recommended: true },
     { value: "fardi", label: "التدريب الفردي · 2,000 ر.س / شهر", price: 2000 },
     { value: "fardi_intensive", label: "التدريب الفردي المكثّف · 3,000 ر.س / شهر", price: 3000 },
-    { value: "unsure", label: "غير متأكد — أريد استشارة", price: 0 },
+    { value: "unsure", label: "غير متأكد — ساعدوني أختار", price: 0 },
   ],
   submitLabel: "أرسل وانتقل إلى WhatsApp ←",
   privacy: "نستخدم بياناتك للتواصل معك بخصوص طلبك فقط، ولا نبيعها لأحد.",
@@ -667,7 +667,7 @@ export const FAQ = {
     },
     {
       q: "ماذا لو لم يناسبني بعد الاشتراك؟",
-      a: "لهذا نبدأ دائماً بلقاء مبدئي مجاني قبل أي دفع: نفهم هدفك ومستواك، ونقول لك بصراحة إذا كان البرنامج يناسبك أو لا. وبعد الاشتراك، الاشتراك شهري بلا التزام طويل؛ إذا قررت التوقف، توقف في نهاية الشهر ولن يتجدد.",
+      a: "لهذا قبل أي دفع فريقنا يتواصل معك ويوضح لك كل التفاصيل: نفهم هدفك ومستواك، ونقول لك بصراحة إذا كان البرنامج يناسبك أو لا. وبعد الاشتراك، الاشتراك شهري بلا التزام طويل؛ إذا قررت التوقف، توقف في نهاية الشهر ولن يتجدد.",
     },
   ],
 };

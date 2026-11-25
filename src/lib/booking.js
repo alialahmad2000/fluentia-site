@@ -1,5 +1,5 @@
 /**
- * Where a «book your intro meeting» call to action goes when it is followed as
+ * Where a «ابدأ الآن» (get started) call to action goes when it is followed as
  * a plain link — no JavaScript yet, middle-click, «open in new tab», a crawler.
  *
  * With JavaScript on, the page's own `[data-open-form]` listener still takes a
@@ -12,7 +12,7 @@
  * self_study; there is no separate self-study checkout).
  */
 export const BOOKING_PATH = "/start";
-/** A general «احجز لقاءك المبدئي» on the site — same URL the JS click goes to. */
+/** A general «ابدأ الآن» on the site — same URL the JS click goes to. */
 export const HOME_BOOKING = `${BOOKING_PATH}?src=site_home`;
 
 export function bookingHref(tier) {

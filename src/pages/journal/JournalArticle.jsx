@@ -233,9 +233,9 @@ function ArticleView({ article }) {
                 <div className="g-end-b">
                   <div className="g-invite-s">
                     <p>
-                      إذا حسّيتوا إن المقال يتكلم عنكم، فالخطوة الجاية بسيطة: لقاء مبدئي، نسمع فيه وين يوقف الإنجليزي عندكم، ووين تبونه يوصل. وبعدها القرار لكم.
+                      إذا حسّيتوا إن المقال يتكلم عنكم، فالخطوة الجاية بسيطة: سجّلوا بياناتكم ويتواصل معكم فريقنا على واتساب، ونسمع وين يوقف الإنجليزي عندكم، ووين تبونه يوصل. وبعدها القرار لكم.
                     </p>
-                    <button type="button" data-open-form className="g-cta">احجز لقاءك المبدئي</button>
+                    <button type="button" data-open-form className="g-cta">ابدأ الآن</button>
                   </div>
                 </div>
               </div>

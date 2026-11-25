@@ -14,7 +14,7 @@ cta: home
 howto: false
 lang: en
 ---
-Fluentia Academy (أكاديمية طلاقة) is a Saudi online English academy for adults, with one-to-one programmes for employees and professionals. Classes are live on Google Meet, in a small group of up to 7 students at the same level or one-to-one. Five monthly packages start at SAR 500, and everything starts with a free initial meeting before payment.
+Fluentia Academy (أكاديمية طلاقة) is a Saudi online English academy for adults, with one-to-one programmes for employees and professionals. Classes are live on Google Meet, in a small group of up to 7 students at the same level or one-to-one. Five monthly packages start at SAR 500, and before any payment our team contacts you on WhatsApp and explains everything.
 
 ## What is Fluentia Academy?
 
@@ -29,7 +29,7 @@ Fluentia Academy (أكاديمية طلاقة) is a Saudi online English academy
 | Group size | maximum 7 students, all at the same level |
 | One-to-one | available in three packages |
 | Prices | five monthly packages, from SAR 500 |
-| First step | a free initial meeting, no commitment |
+| First step | send your details, then our team contacts you; no commitment |
 
 ## Is Fluentia Academy related to fluentia.us or other "Fluentia" brands?
 
@@ -80,8 +80,8 @@ Full text (Arabic): [terms of use](/terms) and [privacy policy](/privacy).
 
 ## How do you start at Fluentia Academy?
 
-1. **Register a name and phone number** on the website (about 30 seconds). The academy replies on WhatsApp within hours. For the one-to-one programmes, a consultation is booked on [the private training page](/private).
-2. **Free initial meeting** with a trainer (the academy's trainers are Saudi, men and women), before any payment and with no commitment.
+1. **Register a name and phone number** on the website (about 30 seconds). The academy replies on WhatsApp within hours. For the one-to-one programmes, request the details on [the private training page](/private).
+2. **Our team contacts you** on WhatsApp before any payment and with no commitment (the academy's trainers are Saudi, men and women).
 3. **Level, goal and schedule** are identified in that meeting. The free [placement test](/level-test) is optional and its result can be sent on WhatsApp to get a plan.
 4. **Track and package** are recommended. For Private training, the fixed SAR 2,000 plan (2 private classes and 1 practice session a week) is confirmed here.
 5. **Monthly payment, first classes and platform access.** Classes start at the beginning of each Gregorian month; learners can join any time and the trainer makes up what was missed. The platform is open from day one.
@@ -129,8 +129,8 @@ Self-study SAR 500, Asas SAR 750, Tamayuz SAR 1,500, Private training SAR 2,000,
 ### How many students are in a group class?
 A maximum of 7, all at the same level.
 
-### Do I have to pay before the first meeting?
-No. The initial meeting is free, comes before any payment, and carries no commitment.
+### Do I have to pay before the team contacts me?
+No. Our team contacts you before any payment, and there is no commitment.
 
 ### Is Fluentia Academy the same as fluentia.us?
 No. Fluentia Academy (fluentia.academy) is an independent Saudi academy with no connection to any other organisation named "Fluentia".

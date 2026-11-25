@@ -164,9 +164,9 @@ export default function JournalIndex() {
 
         <section className="g-ink g-invite" aria-label="دعوة">
           <div className="g-wrap">
-            <h2 className="g-rv">لقاء واحد، نسمع فيه وين يوقف إنجليزيكم.</h2>
-            <p className="g-rv">بدون وعود كبيرة. نسمعكم، ونقول لكم بصراحة وش الخطوة الجاية. وبعدها القرار لكم.</p>
-            <button type="button" data-open-form className="g-cta g-rv">احجز لقاءك المبدئي</button>
+            <h2 className="g-rv">خطوة وحدة، ونسمع وين يوقف إنجليزيكم.</h2>
+            <p className="g-rv">بدون وعود كبيرة. يتواصل معكم فريقنا، ونقول لكم بصراحة وش الخطوة الجاية. وبعدها القرار لكم.</p>
+            <button type="button" data-open-form className="g-cta g-rv">ابدأ الآن</button>
           </div>
         </section>
       </main>

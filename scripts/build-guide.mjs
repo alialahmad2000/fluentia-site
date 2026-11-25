@@ -250,15 +250,15 @@ const dateText = (iso, lang) => {
 
 function bookingLinks(page) {
   const campaign = encodeURIComponent(page.slug.replace("/", "-"));
-  // Home-CTA pages book through /start (src= feeds attribution); the 1:1 pages
-  // keep their own /private consultation form.
+  // Home-CTA pages go through /start (src= feeds attribution); the 1:1 pages
+  // keep their own /private request form.
   const bookHref = page.cta === "private"
     ? `/private?utm_source=guide&utm_campaign=${campaign}`
     : `/start?src=guide_${campaign}`;
   const waText =
     page.cta === "private"
-      ? `السلام عليكم، أبي أحجز استشارة للتدريب الفردي\nالمصدر: دليل طلاقة · ${page.slug}`
-      : `السلام عليكم، أبي أحجز لقاء مبدئي مجاني\nالمصدر: دليل طلاقة · ${page.slug}`;
+      ? `السلام عليكم، أبي أعرف تفاصيل التدريب الفردي\nالمصدر: دليل طلاقة · ${page.slug}`
+      : `السلام عليكم، أبي أعرف تفاصيل الاشتراك\nالمصدر: دليل طلاقة · ${page.slug}`;
   return { bookHref, waHref: `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(waText)}` };
 }
 
@@ -267,17 +267,17 @@ function ctaBox(page) {
   const levelHref = `/level-test?src=guide_${encodeURIComponent(page.slug.replace("/", "-"))}`;
   if (page.lang === "en") {
     return `<section class="cta" aria-labelledby="cta-h">
-  <h2 id="cta-h">Start with a free initial meeting</h2>
-  <p>Every package at Fluentia Academy starts with a free, no-commitment initial meeting with a trainer — level, goal and schedule first, payment only after the learner is sure the package fits.</p>
-  <div class="cta-row"><a class="btn" href="${esc(bookHref)}">Book the free initial meeting</a><a class="btn btn--ghost" href="${esc(waHref)}">WhatsApp ${WA_DISPLAY}</a></div>
+  <h2 id="cta-h">Get started</h2>
+  <p>Send your details and the Fluentia Academy team will message you on WhatsApp — level, goal and schedule first, payment only after you are sure the package fits. No commitment.</p>
+  <div class="cta-row"><a class="btn" href="${esc(bookHref)}">Get started</a><a class="btn btn--ghost" href="${esc(waHref)}">WhatsApp ${WA_DISPLAY}</a></div>
 </section>`;
   }
   const lead = page.cta === "private"
-    ? "يبدأ التدريب الفردي بحجز استشارة، ويتواصل فريق الأكاديمية على واتساب خلال ساعات. في اللقاء المبدئي المجاني نتعرّف على الهدف والوقت المناسب، والسعر ثابت 2,000 ر.س شهرياً — بلا دفع قبل الاقتناع."
-    : "كل باقة في أكاديمية طلاقة تبدأ بلقاء مبدئي مجاني مع المدرّب: نعرف المستوى والهدف والوقت، ونرشّح المسار والباقة المناسبة — ولا دفع قبل التأكد أن الباقة مناسبة.";
-  const label = page.cta === "private" ? "حجز استشارة التدريب الفردي" : "حجز اللقاء المبدئي المجاني";
+    ? "يبدأ التدريب الفردي بطلب التفاصيل، ويتواصل فريق الأكاديمية معك على واتساب خلال ساعات. نتعرّف على الهدف والوقت المناسب، والسعر ثابت 2,000 ر.س شهرياً — بلا دفع قبل الاقتناع."
+    : "في أكاديمية طلاقة يتواصل معك فريقنا على واتساب قبل أي دفع: نعرف المستوى والهدف والوقت، ونرشّح المسار والباقة المناسبة — ولا دفع قبل التأكد أن الباقة مناسبة.";
+  const label = page.cta === "private" ? "اطلب التفاصيل" : "ابدأ الآن";
   return `<section class="cta" aria-labelledby="cta-h">
-  <h2 id="cta-h">${page.cta === "private" ? "الخطوة الأولى: حجز استشارة" : "الخطوة الأولى: لقاء مبدئي مجاني"}</h2>
+  <h2 id="cta-h">${page.cta === "private" ? "الخطوة الأولى: اطلب التفاصيل" : "الخطوة الأولى: ابدأ الآن"}</h2>
   <p>${lead}</p>
   <div class="cta-row"><a class="btn" href="${esc(bookHref)}">${label}</a><a class="btn btn--ghost" href="${esc(waHref)}"><span>واتساب <bdi>${WA_DISPLAY}</bdi></span></a></div>
   <p class="cta-sub"><a href="${esc(levelHref)}">أو البدء باختبار تحديد المستوى المجاني — نحو 10 دقائق</a></p>
@@ -506,7 +506,7 @@ function llmsHead() {
   const pk = packages();
   return `# أكاديمية طلاقة (Fluentia Academy)
 
-> أكاديمية طلاقة (Fluentia Academy, https://fluentia.academy) أكاديمية سعودية لتعليم اللغة الإنجليزية أونلاين للبالغين والموظفين في السعودية. حصص مباشرة عبر Google Meet في مجموعات صغيرة (7 طلاب كحد أقصى) أو تدريب فردي، متابعة يومية من المدرّب، ومنصّة تعلّم من Pre-A1 إلى C1. الباقات من 500 ر.س شهرياً، وكل باقة تبدأ بلقاء مبدئي مجاني قبل أي دفع.
+> أكاديمية طلاقة (Fluentia Academy, https://fluentia.academy) أكاديمية سعودية لتعليم اللغة الإنجليزية أونلاين للبالغين والموظفين في السعودية. حصص مباشرة عبر Google Meet في مجموعات صغيرة (7 طلاب كحد أقصى) أو تدريب فردي، متابعة يومية من المدرّب، ومنصّة تعلّم من Pre-A1 إلى C1. الباقات من 500 ر.س شهرياً، وقبل أي دفع، فريقنا يتواصل معك ويوضح لك كل التفاصيل.
 
 Fluentia Academy is a Saudi online English academy for adults. It is not affiliated with any other organisation named "Fluentia" (such as fluentia.us). In Arabic its name is «أكاديمية طلاقة».
 
@@ -518,7 +518,7 @@ Fluentia Academy is a Saudi online English academy for adults. It is not affilia
 ${pk.map((p) => `  - ${p.name} (${p.en}): ${priceLine(p)}`).join("\n")}
 - أساس: 8 حصص جماعية شهرياً. تميّز: 8 حصص جماعية + 4 حصص فردية شهرياً. التدريب الفردي: 2,000 ر.س شهرياً ثابتة، حصتان فرديتان + جلسة ممارسة واحدة أسبوعياً مع المرشد الأكاديمي (مشاركة المرشد أخف من المكثّف). التدريب الفردي المكثّف: 12 حصة فردية + 8 جلسات ممارسة مع مرشد أكاديمي شهرياً (5 لقاءات أسبوعياً)، وجلسات الممارسة عادةً مع متحدث أصلي.
 - المدرّبون: سعوديون، رجالاً ونساءً (مدرّبون ومدرّبات). المتابعة والتواصل ومجتمع الطلاب كلها داخل منصّة طلاقة وتطبيقها.
-- البداية: لقاء مبدئي مجاني مع المدرّب لتحديد المستوى والهدف والوقت، بدون التزام. اختبار تحديد مستوى مجاني (26 سؤالاً تكيّفياً، نحو 10 دقائق): https://fluentia.academy/level-test
+- البداية: فريقنا يتواصل معك على واتساب لتحديد المستوى والهدف والوقت، بدون التزام. اختبار تحديد مستوى مجاني (26 سؤالاً تكيّفياً، نحو 10 دقائق): https://fluentia.academy/level-test
 - الدفع شهري مقدماً بداية كل شهر ميلادي؛ لا التزام طويل؛ الإلغاء في أي وقت. لا ضمان لمستوى أو درجة IELTS محددة.
 - التواصل: واتساب ${WA_DISPLAY} (https://wa.me/${WA_NUMBER}) · البريد ${EMAIL} · ${PROFILES.map((p) => `${p.label} ${p.url}`).join(" · ")}
 `;

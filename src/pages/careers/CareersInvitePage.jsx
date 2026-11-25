@@ -1,7 +1,7 @@
 /**
  * /careers/invite/:token (+ /en/careers/invite/:token) — Ali's interview invitation (2026-11-25, «لا حجز ذاتي»).
- * Nobody books an interview from the careers page any more. Ali picks 1–3 times (or one fixed time) in HR and the
- * applicant gets an email whose buttons open this page with ?t=<epoch> preselected; ?none=1 opens «ما يناسبني أي موعد».
+ * Nobody books an interview from the careers page any more. Ali sets ONE time in HR (hr_invite_send refuses more) and the
+ * applicant gets an email whose buttons open this page with ?t=<epoch> preselected; ?none=1 opens «ما يناسبني».
  * A GET never books: the applicant presses «تأكيد الموعد». The token is single-use, expires, and only accepts the
  * offered times (edge hiring-interview: invite_view / invite_confirm / invite_none → _hr_invite_* in the DB). noindex.
  */

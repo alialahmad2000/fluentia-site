@@ -303,7 +303,7 @@ export function Rope() {
           </ul>
           <div className="as-actions">
             <button type="button" data-open-form data-tier={vip.id} className="as-btn">
-              احجز استشارة
+              اطلب التفاصيل
             </button>
             <a href={`/private?${q.toString()}`} className="as-link" data-cta={`ascent_private_${vip.id}`}>
               اكتشف التجربة كاملة <span aria-hidden="true">←</span>

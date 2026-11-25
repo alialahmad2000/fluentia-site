@@ -7,7 +7,7 @@
 import { HERO, PRICING } from "../landing-v2/content";
 
 export const CTA_LABEL = HERO.primaryCTA; // «ابدأ بمحادثة»
-export const TRUST_LINE = PRICING.trust; // «لقاء مبدئي مجاني · إلغاء بأي وقت · لا التزام طويل»
+export const TRUST_LINE = PRICING.trust; // «بدون التزام · دفع شهري · إلغاء بأي وقت»
 
 /** The homepage promise, split into its two lines (the dash stays for readers). */
 export const HEADLINE = (() => {
@@ -21,7 +21,7 @@ export const TITLES = {
   hero: ["معك في كل مرحلة", "من أول كلمة إلى الطلاقة"],
   firstWord: ["أول كلمة", "تُقال بثقة"],
   path: ["طريق واضح", "خطوة بعد خطوة"],
-  arrival: ["رحلتك", "تبدأ بلقاء"],
+  arrival: ["رحلتك", "تبدأ الآن"],
   pricing: "اختر مسارك",
   faq: "قبل أن تبدأ",
 };

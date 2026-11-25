@@ -217,7 +217,7 @@ export default function V1Pricing({ embedded = false } = {}) {
                 </div>
                 <div className="v1p-vip-actions">
                   <a href={bookingHref(t.id)} data-open-form data-tier={t.id} className="v1-cta v1-cta-ghost v1p-cta v1p-vip-cta">
-                    احجز استشارة
+                    اطلب التفاصيل
                   </a>
                   {/* A campaign page (useCta) keeps the visitor on the page. */}
                   {!cta && (

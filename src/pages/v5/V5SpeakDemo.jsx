@@ -475,7 +475,7 @@ export default function V5SpeakDemo() {
                   <motion.div variants={staggerItem} className="sd-actions">
                     <button type="button" className="v1-cta v1-cta-primary sd-cta" data-open-form data-tier="talaqa"
                       onClick={() => track("speak_demo_cta", { verdict: result.verdict })}>
-                      ابدأ بمحادثة مع مدرّب
+                      ابدأ الآن
                     </button>
                     <button type="button" className="sd-again" onClick={reset}>جملة أخرى</button>
                   </motion.div>

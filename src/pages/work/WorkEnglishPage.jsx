@@ -261,13 +261,13 @@ export default function WorkEnglishPage() {
         {/* Booking door for the reader who wants a plan, not just the glossary.
             Plain <a> so the prerendered page works before hydration. */}
         <aside className="we-cta">
-          <h2>الخطوة الأولى: لقاء مبدئي مجاني</h2>
+          <h2>الخطوة الأولى: نتواصل معك</h2>
           <p>
             يُحدَّد المستوى والهدف والوقت المتاح، ويُرشَّح المسار والباقة المناسبة — قبل أي دفع وبلا التزام.
           </p>
           <div className="links">
             <PrimaryCTA href={`/start?src=work_${page.slug}`} data-cta={`work_${page.slug}_book`}>
-              احجز لقاءك المبدئي المجاني ←
+              ابدأ الآن ←
             </PrimaryCTA>
             <a className="we-ghost" href="/level-test">اختبار تحديد المستوى</a>
           </div>

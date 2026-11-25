@@ -15,6 +15,8 @@ const JoinPage = lazy(() => import('./pages/join/JoinPage'));
 const CareersPage = lazy(() => import('./pages/careers/CareersPage'));
 const CareersPledgePage = lazy(() => import('./pages/careers/CareersPledgePage'));
 const CareersInvitePage = lazy(() => import('./pages/careers/CareersInvitePage'));
+const MeetingConfirmPage = lazy(() => import('./pages/meeting/MeetingConfirmPage'));
+const RequestReceivedPage = lazy(() => import('./pages/meeting/RequestReceivedPage'));
 const InvitePage = lazy(() => import('./pages/invite/InvitePage'));
 const PrivatePage = lazy(() => import('./pages/private/PrivatePage'));
 const StoriesPage = lazy(() => import('./pages/stories/StoriesPage'));
@@ -67,7 +69,7 @@ const HOMEPAGE_VERSION = "dawn";
 const JOIN_VARIANT = "next";
 /*
  * LEVEL_TEST_VERSION (2026-11-14): "v2" = the multistage level test with the
- * sun-meter result, CRM lead and intro-meeting booking. Rollback is this one
+ * sun-meter result, CRM lead and lead hand-off. Rollback is this one
  * line: set "v1" and push. v1 stays at /level-test-v1 (noindex) either way.
  */
 const LEVEL_TEST_VERSION = "v2";
@@ -88,11 +90,11 @@ const VFallback = (
   </div>
 );
 
-/* ─── UTM Source ─── shared with every other booking form (AI assistants, «دليل طلاقة», organic search) */
+/* ─── UTM Source ─── shared with every other lead form (AI assistants, «دليل طلاقة», organic search) */
 
 /* ─── WhatsApp ─── */
 const buildWA = (data) => buildWhatsAppUrl(
-  `السلام عليكم، أبي أحجز لقاء مبدئي مجاني\n` +
+  `السلام عليكم، أبي أعرف تفاصيل الاشتراك\n` +
   `الاسم: ${data.name || "—"}\n` +
   `العمر: ${data.age || "—"}\n` +
   `المسار: ${data.path || "—"}\n` +
@@ -170,23 +172,23 @@ const pkgs = [
   // ═══ القسم 1: للبداية والمرونة ═══
   { id:1, section:"starter", nm:"التعلم الذاتي", sub:"للتعلم بوتيرتك الخاصة", pr:500, pop:false, prem:false, seats:null, f:[
     {t:"وصول كامل للمنصة التعليمية",ok:1,hl:1},{t:"جميع التسجيلات والدروس المسجلة",ok:1,hl:1},{t:"المنهج الكامل + المواد التعليمية",ok:1},{t:"التمارين والأنشطة التفاعلية",ok:1},{t:"اختبارات قياس المستوى",ok:1},{t:"كلاسات لايف جماعية",ok:0},{t:"متابعة مع مدرب",ok:0},{t:"حصص فردية",ok:0}
-  ], cta:"اشترك الآن", note:"يبدأ الوصول بعد مكالمة قصيرة"},
+  ], cta:"اشترك الآن", note:"بدون التزام · دفع شهري"},
   { id:2, section:"starter", nm:"أساس", sub:"للبداية مع الكلاسات الجماعية", pr:750, pop:false, prem:false, seats:5, f:[
     {t:"8 كلاسات جماعية شهرياً",sub:"ساعة - ساعتين لكل كلاس",ok:1,hl:1},{t:"وصول كامل للمنصة التعليمية",ok:1},{t:"7 طلاب كحد أقصى",ok:1},{t:"التمارين والأنشطة التفاعلية",ok:1},{t:"مجتمع طلاب داعم داخل المنصة والتطبيق",ok:1},{t:"تقييم شهري",ok:1},{t:"متابعة يومية مع المدرب",ok:0},{t:"حصص فردية",ok:0}
-  ], cta:"ابدأ مجاناً", note:"لقاء مبدئي مجاني"},
+  ], cta:"ابدأ الآن", note:"بدون التزام · دفع شهري"},
   // ═══ القسم 2: للجدية والتمكّن ═══
   { id:3, section:"serious", nm:"طلاقة", sub:"نتائج حقيقية بتكلفة معقولة", pr:1100, pop:false, prem:false, seats:3, f:[
     {t:"8 كلاسات جماعية شهرياً",ok:1},{t:"7 طلاب كحد أقصى",ok:1},{t:"مواد شاملة + تمارين تفاعلية",ok:1},{t:"تقييم كل أسبوعين",sub:"ضعف التقدم",ok:1,hl:1},{t:"مدربك يصحح أخطاءك يومياً",ok:1,hl:1},{t:"دروس مسجلة ترجعلها أي وقت",ok:1,hl:1},{t:"حصة فردية شهرية مع مدربك",ok:1,hl:1},{t:"تقرير شهري — تشوف تطورك بالأرقام",ok:1,hl:1}
-  ], cta:"ابدأ مجاناً", note:"لقاء مبدئي مجاني"},
+  ], cta:"ابدأ الآن", note:"بدون التزام · دفع شهري"},
   { id:4, section:"serious", nm:"تميّز", sub:"نتائج مكثفة وسريعة", pr:1500, pop:true, prem:false, seats:2, f:[
     {t:"8 كلاسات جماعية شهرياً",ok:1},{t:"7 طلاب كحد أقصى",ok:1},{t:"مواد حصرية + بنك أسئلة كامل",ok:1},{t:"تقييم أسبوعي",sub:"4× أسرع تقدماً",ok:1,hl:1},{t:"متابعة مكثفة + ملاحظات شخصية يومياً",ok:1,hl:1},{t:"مكتبة دروس مسجلة غير محدودة",ok:1,hl:1},{t:"4 حصص فردية شهرياً",sub:"حصة كل أسبوع",ok:1,hl:1},{t:"تقرير أسبوعي + خطة تطوير شخصية",ok:1,hl:1}
-  ], cta:"ابدأ مجاناً", note:"لقاء مبدئي مجاني"},
+  ], cta:"ابدأ الآن", note:"بدون التزام · دفع شهري"},
   { id:5, section:"serious", nm:"التدريب الشخصي المباشر", sub:"الأفضل إطلاقاً — VIP", pr:"2,000", priceNote:"حصتان فرديتان + جلسة ممارسة أسبوعياً", pop:false, prem:true, seats:1, f:[
     {t:"كل مميزات باقة تميّز",ok:1},{t:"حصتان فرديتان + جلسة ممارسة أسبوعياً",sub:"الجلسة مع المرشد الأكاديمي",ok:1,hl:1},{t:"مدرب شخصي مخصص لك",ok:1,hl:1},{t:"تواصل مباشر مع مدربك 24/7",ok:1,hl:1},{t:"تدريب على مقابلات العمل بالإنجليزي",ok:1,hl:1},{t:"تدريب على العروض التقديمية",ok:1,hl:1},{t:"تدريب على التحدث أمام الجمهور",ok:1,hl:1},{t:"خطة دراسية شخصية حسب هدفك",ok:1,hl:1}
-  ], cta:"ابدأ مجاناً", note:"لقاء مبدئي مجاني"},
+  ], cta:"ابدأ الآن", note:"بدون التزام · دفع شهري"},
 ];
 const fqs = [
-  {q:"وش اللقاء المبدئي المجاني؟",a:"لقاء مباشر مع المدرب — نفهم مستواك وأهدافك وشخصيتك. وأنت تتعرف على أسلوب المدرب. بناءً عليه نقرر مع بعض إذا Fluentia المكان الصح لك."},
+  {q:"وش يصير بعد ما أسجّل بياناتي؟",a:"فريقنا يتواصل معك على واتساب — نفهم مستواك وأهدافك ووقتك، ونرشّح لك المسار والباقة المناسبة. بدون التزام."},
   {q:"متى تبدأ الدورات؟",a:"نعتمد الأشهر الميلادية — الكورسات تبدأ مع بداية كل شهر. ومع ذلك تقدر تنضم بأي وقت والمدرب يعوّضك."},
   {q:"هل أقدر أدخل IELTS مباشرة؟",a:"دورة IELTS مصممة لمن عنده أساس متين. إذا مستواك مبتدئ ننصحك تبدأ بالتأسيس أو التطوير أولاً — وبعدها تنتقل لـ IELTS بجاهزية كاملة."},
   {q:"كم عدد الطلاب بالكلاس؟",a:"حد أقصى 7 طلاب فقط. مو 20 أو 30 مثل المعاهد الثانية."},
@@ -345,7 +347,7 @@ function Quiz({ onClose }) {
       `• المسار: ${f.track}\n` +
       `• نقاط القوة: ${strengthsText}\n` +
       `• يحتاج تحسين في: ${weaknessesText}\n\n` +
-      `أبي أحجز لقاء مبدئي مجاني`;
+      `أبي أعرف تفاصيل الاشتراك`;
     return buildWhatsAppUrl(msg);
   };
 
@@ -397,10 +399,10 @@ function Quiz({ onClose }) {
             </div>
 
             <div style={{padding:"14px",borderRadius:"12px",background:"rgba(56,189,248,0.04)",border:"1px solid rgba(56,189,248,0.1)",marginBottom:"20px"}}>
-              <p style={{fontSize:"0.875rem",color:"#aab",lineHeight:1.8,margin:0}}>هذا تقييم مبدئي بناءً على {result.totalQuestions} أسئلة. في لقائك المجاني مع المدرب بنحدد مستواك بدقة أكبر ونرسم لك خطة واضحة.</p>
+              <p style={{fontSize:"0.875rem",color:"#aab",lineHeight:1.8,margin:0}}>هذا تقييم مبدئي بناءً على {result.totalQuestions} أسئلة. فريقنا يراجع نتيجتك ويتواصل معك قريب إن شاء الله لتحديد مستواك بدقة أكبر ورسم خطة واضحة.</p>
             </div>
 
-            <a href={buildResultWA()} target="_blank" rel="noopener noreferrer" onClick={()=>{if(window.gtag)window.gtag('event','conversion',{'send_to':'AW-9314838750','value':1.0,'currency':'SAR'})}} style={{display:"inline-block",background:SKY,color:"#060e1c",padding:"14px 32px",borderRadius:"60px",fontSize:"1.0625rem",fontWeight:800,fontFamily:"'Tajawal',sans-serif"}}>احجز لقاءك المجاني ←</a>
+            <a href={buildResultWA()} target="_blank" rel="noopener noreferrer" onClick={()=>{if(window.gtag)window.gtag('event','conversion',{'send_to':'AW-9314838750','value':1.0,'currency':'SAR'})}} style={{display:"inline-block",background:SKY,color:"#060e1c",padding:"14px 32px",borderRadius:"60px",fontSize:"1.0625rem",fontWeight:800,fontFamily:"'Tajawal',sans-serif"}}>ابدأ الآن ←</a>
           </div>
         )}
       </div>
@@ -554,7 +556,7 @@ function HomePage(){
   useEffect(()=>{const c=sRef.current;if(!c||!c.children[tI])return;const ch=c.children[tI];c.scrollTo({left:ch.offsetLeft-c.offsetWidth/2+ch.offsetWidth/2,behavior:"smooth"})},[tI]);
   useEffect(()=>{const t1=setTimeout(()=>{setSpShow(true);setTimeout(()=>setSpShow(false),5000)},30000);const iv=setInterval(()=>{setSpIdx(p=>(p+1)%spData.length);setSpShow(true);setTimeout(()=>setSpShow(false),5000)},50000);return()=>{clearTimeout(t1);clearInterval(iv)}},[]);
   const mx={maxWidth:"1200px",margin:"0 auto",padding:"0 28px"};
-  const smartCTA = scrollY < 1500 ? "احجز لقاءك المجاني ←" : scrollY < 3000 ? "اختر باقتك وابدأ ←" : "لسا متردد؟ اللقاء مجاني ←";
+  const smartCTA = scrollY < 1500 ? "ابدأ الآن ←" : scrollY < 3000 ? "اختر باقتك وابدأ ←" : "لسا متردد؟ بدون التزام ←";
   const openReg=(pkg,path)=>setShowReg({pkg,path});
   const goPrice=()=>{const el=document.getElementById("pricing");if(el)el.scrollIntoView({behavior:"smooth"})};
   // Section navigation
@@ -690,7 +692,7 @@ section+section::before{content:'';display:block;height:1px;background:linear-gr
 
 {/* STICKY CTA */}
 {scr&&<div style={{position:"fixed",top:"56px",left:0,right:0,zIndex:998,background:"var(--sticky-bg)",backdropFilter:"var(--glass-blur) saturate(1.5)",borderBottom:"1px solid var(--glass-b)",padding:"8px 20px",animation:"stickyIn 0.3s",display:"flex",alignItems:"center",justifyContent:"center",gap:"16px",flexWrap:"wrap"}}>
-  <span style={{fontSize:"1rem",color:"var(--t2)",fontWeight:600}}>لقاء مبدئي مجاني · 5 باقات تبدأ من 500 ر.س</span>
+  <span style={{fontSize:"1rem",color:"var(--t2)",fontWeight:600}}>بدون التزام · دفع شهري · 5 باقات تبدأ من 500 ر.س</span>
   <button onClick={goPrice} style={{background:SKY,color:"#060e1c",padding:"6px 18px",borderRadius:"100px",fontSize:"0.875rem",fontWeight:800,border:"none",cursor:"pointer",fontFamily:"'Tajawal',sans-serif",transition:"all 0.3s"}}>{smartCTA}</button>
 </div>}
 
@@ -712,7 +714,7 @@ section+section::before{content:'';display:block;height:1px;background:linear-gr
       <a href="/partners" style={{display:"flex",alignItems:"center",gap:"6px",color:"#D4AF37",fontSize:"1rem",fontWeight:600,fontFamily:"'Tajawal',sans-serif"}}>🤝 كن شريكاً <span style={{fontSize:"0.75rem",background:"rgba(212,175,55,0.15)",color:"#D4AF37",padding:"2px 8px",borderRadius:"100px"}}>جديد</span></a>
       <button onClick={()=>setDark(!dark)} style={{background:"var(--card)",border:"1px solid var(--card-b)",borderRadius:"50%",width:"32px",height:"32px",cursor:"pointer",fontSize:"1.0625rem",display:"flex",alignItems:"center",justifyContent:"center",transition:"all 0.3s"}}>{dark?"☀️":"🌙"}</button>
       <a href="https://app.fluentia.academy" target="_blank" rel="noopener noreferrer" style={{color:"var(--t2)",fontSize:"1rem",fontWeight:500,padding:"6px 14px",borderRadius:"100px",border:"1px solid var(--card-b)",transition:"all 0.3s"}}>دخول الطلاب</a>
-      <button onClick={goPrice} style={{background:SKY,color:"#060e1c",padding:"8px 20px",borderRadius:"100px",fontSize:"1rem",fontWeight:800,border:"none",cursor:"pointer",fontFamily:"'Tajawal',sans-serif"}}>احجز لقاءك المجاني</button>
+      <button onClick={goPrice} style={{background:SKY,color:"#060e1c",padding:"8px 20px",borderRadius:"100px",fontSize:"1rem",fontWeight:800,border:"none",cursor:"pointer",fontFamily:"'Tajawal',sans-serif"}}>ابدأ الآن</button>
     </div>
     {/* Mobile hamburger */}
     <div className="mobile-burger" style={{display:"none",alignItems:"center",gap:"10px"}}>
@@ -726,7 +728,7 @@ section+section::before{content:'';display:block;height:1px;background:linear-gr
     <button onClick={()=>{setShowQuiz(true);setMobileMenu(false)}} style={{color:"var(--t2)",fontSize:"1.0625rem",fontWeight:600,background:"none",border:"none",cursor:"pointer",fontFamily:"'Tajawal',sans-serif",padding:"8px 0",borderBottom:"1px solid var(--card-b)",textAlign:"right"}}>📊 اختبر مستواك</button>
     <a href="https://app.fluentia.academy" target="_blank" rel="noopener noreferrer" style={{color:"var(--t2)",fontSize:"1.0625rem",fontWeight:500,padding:"8px 0",borderBottom:"1px solid var(--card-b)",textAlign:"right",display:"block"}}>دخول الطلاب</a>
     <a href="/partners" onClick={()=>setMobileMenu(false)} style={{display:"flex",alignItems:"center",gap:"8px",color:"#D4AF37",fontSize:"1.0625rem",fontWeight:600,padding:"8px 0",borderBottom:"1px solid var(--card-b)",fontFamily:"'Tajawal',sans-serif"}}>🤝 كن شريكاً <span style={{fontSize:"0.75rem",background:"rgba(212,175,55,0.15)",color:"#D4AF37",padding:"2px 8px",borderRadius:"100px"}}>جديد</span></a>
-    <button onClick={()=>{goPrice();setMobileMenu(false)}} style={{background:SKY,color:"#060e1c",padding:"12px 20px",borderRadius:"14px",fontSize:"1.0625rem",fontWeight:800,border:"none",cursor:"pointer",fontFamily:"'Tajawal',sans-serif",marginTop:"4px"}}>احجز لقاءك المجاني ←</button>
+    <button onClick={()=>{goPrice();setMobileMenu(false)}} style={{background:SKY,color:"#060e1c",padding:"12px 20px",borderRadius:"14px",fontSize:"1.0625rem",fontWeight:800,border:"none",cursor:"pointer",fontFamily:"'Tajawal',sans-serif",marginTop:"4px"}}>ابدأ الآن ←</button>
   </div>
 </nav>
 
@@ -752,7 +754,7 @@ section+section::before{content:'';display:block;height:1px;background:linear-gr
       <Reveal d={0.1} y={80}><h1 style={{fontSize:"clamp(2.625rem,8vw,4.75rem)",fontWeight:900,lineHeight:1.05,marginBottom:"24px",color:"var(--t1)",letterSpacing:"-2px",textShadow:dark?"0 0 80px rgba(56,189,248,0.2)":"none"}}>تكلّم<br/><span style={{background:`linear-gradient(135deg,${SKY},${SKY_L},#fff,${SKY})`,backgroundSize:"300% 100%",animation:"textShine 4s linear infinite",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",filter:dark?"drop-shadow(0 0 30px rgba(56,189,248,0.3))":"none"}}>إنجليزي</span><br/>بطلاقة<span style={{color:SKY}}>.</span></h1></Reveal>
       <Reveal d={0.2}><p style={{fontSize:"1.125rem",color:"var(--t2)",lineHeight:2,marginBottom:"36px",maxWidth:"460px",fontWeight:300}}>مدربون ومدربات سعوديون · كلاسات لايف · حد أقصى <span style={{color:SKY,fontWeight:700}}>٧</span> طلاب<br/>3 مسارات: تأسيس · تطوير · IELTS</p></Reveal>
       <Reveal d={0.3}><div style={{display:"flex",gap:"10px",flexWrap:"wrap"}}>
-        <button onClick={goPrice} style={{display:"inline-flex",alignItems:"center",gap:"8px",background:SKY,color:"#060e1c",padding:"16px 32px",borderRadius:"60px",fontSize:"1.0625rem",fontWeight:800,border:"none",cursor:"pointer",boxShadow:"0 0 40px rgba(56,189,248,0.15)",fontFamily:"'Tajawal',sans-serif"}}>احجز لقاءك المجاني ←</button>
+        <button onClick={goPrice} style={{display:"inline-flex",alignItems:"center",gap:"8px",background:SKY,color:"#060e1c",padding:"16px 32px",borderRadius:"60px",fontSize:"1.0625rem",fontWeight:800,border:"none",cursor:"pointer",boxShadow:"0 0 40px rgba(56,189,248,0.15)",fontFamily:"'Tajawal',sans-serif"}}>ابدأ الآن ←</button>
         <button onClick={()=>setShowQuiz(true)} style={{display:"inline-flex",alignItems:"center",border:"1px solid var(--sky-b)",background:"var(--sky-bg)",color:SKY,padding:"16px 24px",borderRadius:"60px",fontSize:"1rem",fontWeight:600,cursor:"pointer",fontFamily:"'Tajawal',sans-serif"}}>📊 اكتشف مستواك بـ 2 دقيقة</button>
       </div></Reveal>
       <Reveal d={0.5}><div style={{display:"flex",gap:"40px",marginTop:"56px"}}>
@@ -947,7 +949,7 @@ section+section::before{content:'';display:block;height:1px;background:linear-gr
   <Reveal><div style={{textAlign:"center",marginBottom:"40px"}}><span style={{fontFamily:"'Playfair Display',serif",fontSize:"clamp(1.75rem,4vw,2.5rem)",fontWeight:900,color:"var(--t1)"}}>رحلتك <span style={{color:GREEN}}>معنا</span></span></div></Reveal>
   <div style={{position:"relative",paddingRight:"36px"}}>
     <div style={{position:"absolute",right:"14px",top:0,bottom:0,width:"2px",background:`linear-gradient(180deg,${SKY},transparent)`}}/>
-    {[{s:"اليوم",t:"لقاء مبدئي مجاني",d:"نفهم مستواك وشخصيتك. بدون التزام.",i:"🤝",c:SKY},{s:"أسبوع 1",t:"تنضم لقروبك",d:"7 طلاب مختارين بعناية.",i:"🚀",c:SKY_L},{s:"شهر 1",t:"تحس بالفرق",d:"القرامر يتوضح. تبدأ تكوّن جمل.",i:"💡",c:"#a78bfa"},{s:"شهر 3",t:"تتكلم بثقة",d:"محادثات حقيقية وقراءة وكتابة.",i:"💪",c:GOLD},{s:"شهر 6+",t:"طلاقة حقيقية",d:"جاهز لـ IELTS أو الوظيفة.",i:"🎯",c:GREEN}].map((item,i)=>(
+    {[{s:"اليوم",t:"نتواصل معك",d:"فريقنا يتواصل معك على واتساب، يعرف هدفك ومستواك ووقتك، ويرشّح لك المسار والباقة المناسبة.",i:"🤝",c:SKY},{s:"أسبوع 1",t:"تنضم لقروبك",d:"7 طلاب مختارين بعناية.",i:"🚀",c:SKY_L},{s:"شهر 1",t:"تحس بالفرق",d:"القرامر يتوضح. تبدأ تكوّن جمل.",i:"💡",c:"#a78bfa"},{s:"شهر 3",t:"تتكلم بثقة",d:"محادثات حقيقية وقراءة وكتابة.",i:"💪",c:GOLD},{s:"شهر 6+",t:"طلاقة حقيقية",d:"جاهز لـ IELTS أو الوظيفة.",i:"🎯",c:GREEN}].map((item,i)=>(
       <Reveal key={i} d={i*0.08}><div style={{position:"relative",marginBottom:"28px",paddingRight:"28px"}}>
         <div style={{position:"absolute",right:"-36px",top:"2px",width:"26px",height:"26px",borderRadius:"50%",background:"var(--bg)",border:"2px solid "+item.c,display:"flex",alignItems:"center",justifyContent:"center",fontSize:"0.875rem",zIndex:1}}>{item.i}</div>
         <div style={{fontSize:"0.75rem",color:item.c,fontWeight:700}}>{item.s}</div>
@@ -1068,7 +1070,7 @@ section+section::before{content:'';display:block;height:1px;background:linear-gr
             </div>
             <div style={{flex:1,marginBottom:"18px"}}>{["تدريب مباشر على المهارات الأربع","استراتيجيات حل الأسئلة وإدارة الوقت","اختبارات تجريبية مكثفة","حصص فردية + متابعة يومية","تقارير أسبوعية بتقدمك"].map((ft,i)=>(<div key={i} style={{display:"flex",alignItems:"center",gap:"8px",marginBottom:"8px"}}><span style={{fontSize:"0.875rem",color:GOLD}}>✓</span><span style={{fontSize:"0.875rem",color:"var(--t2)",fontWeight:600}}>{ft}</span></div>))}</div>
             <div style={{padding:"10px",borderRadius:"10px",background:"rgba(251,191,36,0.04)",border:"1px solid rgba(251,191,36,0.1)",marginBottom:"14px"}}><p style={{fontSize:"0.75rem",color:GOLD,lineHeight:1.7}}>⚠️ يُنصح بأساس متين قبل الدخول.</p></div>
-            <button onClick={()=>openReg("IELTS","IELTS")} style={{display:"block",textAlign:"center",width:"100%",padding:"13px",borderRadius:"14px",fontSize:"1rem",fontWeight:800,background:`linear-gradient(135deg,${RED},#dc2626)`,color:"#fff",border:"none",cursor:"pointer",fontFamily:"'Tajawal',sans-serif"}}>احجز لقاءك المجاني — IELTS ←</button>
+            <button onClick={()=>openReg("IELTS","IELTS")} style={{display:"block",textAlign:"center",width:"100%",padding:"13px",borderRadius:"14px",fontSize:"1rem",fontWeight:800,background:`linear-gradient(135deg,${RED},#dc2626)`,color:"#fff",border:"none",cursor:"pointer",fontFamily:"'Tajawal',sans-serif"}}>ابدأ الآن — IELTS ←</button>
           </div>
         </div>
       </Reveal>
@@ -1263,9 +1265,24 @@ function AppRoutes(){
       {/* «تعهّد الالتزام بالفترة التجريبية» behind a link (2026-11-22): sign it, or the applicant's read-only copy. noindex. */}
       <Route path="/careers/pledge/:token" element={<Suspense fallback={<div style={{minHeight:'100dvh',background:'#fbf6ee'}} />}><CareersPledgePage /></Suspense>} />
       <Route path="/en/careers/pledge/:token" element={<Suspense fallback={<div style={{minHeight:'100dvh',background:'#fbf6ee'}} />}><CareersPledgePage lang="en" /></Suspense>} />
-      {/* Ali's interview invitation (2026-11-25): applicants never book themselves — they confirm one of Ali's times here. noindex. */}
+      {/* Ali's interview invitation (2026-11-25): applicants never book themselves — they confirm the ONE time Ali set. noindex. */}
       <Route path="/careers/invite/:token" element={<Suspense fallback={<div style={{minHeight:'100dvh',background:'#fbf6ee'}} />}><CareersInvitePage /></Suspense>} />
       <Route path="/en/careers/invite/:token" element={<Suspense fallback={<div style={{minHeight:'100dvh',background:'#fbf6ee'}} />}><CareersInvitePage lang="en" /></Suspense>} />
+      {/* 2026-11-25 «لا حجز ذاتي»: confirm the ONE time Ali proposed (single-use token). noindex. */}
+      <Route path="/m/:token" element={<Suspense fallback={<div style={{minHeight:'100dvh',background:'#fbf6ee'}} />}><MeetingConfirmPage /></Suspense>} />
+      {/* Old booking-style URLs never show slots or a 404 — just the neutral note. */}
+      <Route path="/book" element={<Suspense fallback={<div style={{minHeight:'100dvh',background:'#fbf6ee'}} />}><RequestReceivedPage /></Suspense>} />
+      <Route path="/book/:rest" element={<Suspense fallback={<div style={{minHeight:'100dvh',background:'#fbf6ee'}} />}><RequestReceivedPage /></Suspense>} />
+      <Route path="/booking" element={<Suspense fallback={<div style={{minHeight:'100dvh',background:'#fbf6ee'}} />}><RequestReceivedPage /></Suspense>} />
+      <Route path="/booking/:rest" element={<Suspense fallback={<div style={{minHeight:'100dvh',background:'#fbf6ee'}} />}><RequestReceivedPage /></Suspense>} />
+      <Route path="/meeting" element={<Suspense fallback={<div style={{minHeight:'100dvh',background:'#fbf6ee'}} />}><RequestReceivedPage /></Suspense>} />
+      <Route path="/meeting/:rest" element={<Suspense fallback={<div style={{minHeight:'100dvh',background:'#fbf6ee'}} />}><RequestReceivedPage /></Suspense>} />
+      <Route path="/meetings" element={<Suspense fallback={<div style={{minHeight:'100dvh',background:'#fbf6ee'}} />}><RequestReceivedPage /></Suspense>} />
+      <Route path="/interview" element={<Suspense fallback={<div style={{minHeight:'100dvh',background:'#fbf6ee'}} />}><RequestReceivedPage /></Suspense>} />
+      <Route path="/interview/:rest" element={<Suspense fallback={<div style={{minHeight:'100dvh',background:'#fbf6ee'}} />}><RequestReceivedPage /></Suspense>} />
+      <Route path="/schedule" element={<Suspense fallback={<div style={{minHeight:'100dvh',background:'#fbf6ee'}} />}><RequestReceivedPage /></Suspense>} />
+      <Route path="/schedule/:rest" element={<Suspense fallback={<div style={{minHeight:'100dvh',background:'#fbf6ee'}} />}><RequestReceivedPage /></Suspense>} />
+      <Route path="/appointment" element={<Suspense fallback={<div style={{minHeight:'100dvh',background:'#fbf6ee'}} />}><RequestReceivedPage /></Suspense>} />
       {/* v1.4 P8 — a personal invite link (fluentia.academy/i/<code>). With the iPhone app installed iOS opens
           the app (public/.well-known/apple-app-site-association); everyone else lands here. noindex. */}
       <Route path="/i/:code" element={<Suspense fallback={<div style={{minHeight:'100dvh',background:'#0b1024'}} />}><InvitePage /></Suspense>} />

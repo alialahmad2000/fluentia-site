@@ -16,7 +16,7 @@ import { STORIES } from "../../data/stories";
 /**
  * /stories — every student story, a grid of 9:16 cards. A card opens the
  * full-screen viewer; /stories?s=<id> opens it on arrival (StoriesProvider).
- * Every «احجز» here is the homepage's own [data-open-form] → V1LeadModal.
+ * Every «ابدأ الآن» here is the homepage's own [data-open-form] → V1LeadModal.
  * Content comes only from src/data/stories.js.
  */
 export default function StoriesPage() {
@@ -42,7 +42,7 @@ export default function StoriesPage() {
           </section>
           <section className="st-page-cta" aria-label="ابدأ">
             <button type="button" data-open-form className="fx-btn fx-btn--primary fx-btn--lg">
-              احجز لقاء مبدئي مجاني
+              ابدأ الآن
             </button>
             <p>مجاني وبدون التزام</p>
           </section>

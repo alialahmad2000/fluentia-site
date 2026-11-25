@@ -118,7 +118,7 @@ export default function PrivacyPolicy() {
           <strong>ElevenLabs</strong> — توليد الصوت لتدريب النطق داخل LMS.
         </li>
         <li>
-          <strong>Anthropic Claude API</strong> — المساعد التعليمي داخل LMS، و«مستشار طلاقة» (محادثة حجز اللقاء المبدئي في الموقع): نص رسائلك فيها يُعالَج لتوليد الرد.
+          <strong>Anthropic Claude API</strong> — المساعد التعليمي داخل LMS، و«مستشار طلاقة» (محادثة القبول في الموقع): نص رسائلك فيها يُعالَج لتوليد الرد.
         </li>
         <li>
           <strong>Resend</strong> — إرسال البريد الإلكتروني المعاملاتي.
@@ -315,7 +315,7 @@ export default function PrivacyPolicy() {
           </p>
           <p>
             <strong>We share data with:</strong> Google Workspace, Supabase, Cloudflare, ElevenLabs,
-            Anthropic (the LMS assistant and the «مستشار طلاقة» booking chat on this site), Resend,
+            Anthropic (the LMS assistant and the «مستشار طلاقة» admissions chat on this site), Resend,
             Google Ads, TikTok Ads (with marketing consent only; a one-way SHA-256 hash of the phone
             and email you submit is used to match the ad that brought you). We do not sell your data.
           </p>

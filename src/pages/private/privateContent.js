@@ -26,7 +26,7 @@ export const PACKAGES = [
 ];
 export const DEFAULT_PKG = intensive.id;
 
-export const CTA = "احجز استشارتك";
+export const CTA = "اطلب التفاصيل";
 export const INTENSIVE_TAG = "في الفردي المكثّف";
 
 export const HERO = {
@@ -138,7 +138,7 @@ export const COMPARE = {
 };
 
 export const FIT = {
-  eyebrow: "قبل ما تحجز",
+  eyebrow: "قبل ما تبدأ",
   headline: "لمن هذا البرنامج",
   intro: "برنامج مكثّف، ويطلب منك التزام. نقولها بوضوح من البداية.",
   forYou: {
@@ -160,7 +160,7 @@ export const FIT = {
 };
 
 export const FORM = {
-  title: "احجز استشارتك",
+  title: "اطلب التفاصيل",
   sub: "نراجع طلبك ونتواصل معك على واتساب خلال ساعات.",
   fieldPlaceholder: "مثال: تمريض، هندسة مدنية، مبيعات",
   goals: [
@@ -201,8 +201,8 @@ export const FAQ_PRIVATE = {
 
 export const FINAL = {
   eyebrow: "الخطوة الأولى",
-  headline: "ابدأ بجلسة تشخيص، ونبني برنامجك عليك.",
-  sub: "احجز استشارتك، ونتواصل معك على واتساب خلال ساعات.",
+  headline: "ابدأ الآن، ونبني برنامجك عليك.",
+  sub: "اطلب التفاصيل، ونتواصل معك على واتساب خلال ساعات.",
 };
 
-export const STICKY = { title: "التدريب الفردي", sub: "لقاء مبدئي مجاني" };
+export const STICKY = { title: "التدريب الفردي", sub: "بدون التزام" };

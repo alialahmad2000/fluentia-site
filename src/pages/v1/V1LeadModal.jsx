@@ -44,7 +44,7 @@ function readUtm() {
 function buildWhatsAppMessage({ name, phone, tierLabel, goal, utm }) {
   const lines = [
     "السلام عليكم 👋",
-    "أريد حجز لقاء مبدئي مجاني.",
+    "أريد أعرف تفاصيل الاشتراك.",
     "",
     `الاسم: ${name}`,
     `الجوّال: ${phone}`,

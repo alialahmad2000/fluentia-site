@@ -6,7 +6,7 @@
  * phrase already runs on /join's form and /start. It opens the homepage's lead
  * modal through `[data-open-form]`, exactly like the homepage button.
  */
-export const CTA_LABEL = "احجز لقاءك المبدئي";
+export const CTA_LABEL = "ابدأ الآن";
 
 // `mbreak`: on a phone each line breaks after that many words. Fixed breaks, so
 // the layout never depends on which font has loaded (no re-wrap, no shift).
@@ -22,7 +22,7 @@ export const HERO_LINES_HOME = [
 export const SEE_INSIDE = "شاهد المنصة من الداخل";
 
 // The quiet line under the hero's call (2026-11-12): what the call costs — nothing.
-export const HERO_TRUST = "لقاء مبدئي مجاني · بدون التزام";
+export const HERO_TRUST = "بدون التزام · دفع شهري";
 
 export const TITLES = {
   pains: [
@@ -59,7 +59,7 @@ export const TITLES = {
   ],
   final: [
     { text: "لنبدأ", tone: "cream" },
-    { text: "بلقاء مبدئي", tone: "sky" },
+    { text: "الآن", tone: "sky" },
   ],
 };
 
@@ -97,13 +97,13 @@ export const PERF_OPTIONS = [
 // «كيف تبدأ» — Ali's locked copy from the /join brief (2026-09-26).
 export const STEPS = [
   { title: "سجّل بياناتك", body: "اسمك ورقمك، 30 ثانية." },
-  { title: "لقاء مبدئي مجاني", body: "نعرف مستواك وهدفك ووقتك، ونرشّح لك المسار والباقة المناسبة." },
+  { title: "نتواصل معك", body: "فريقنا يتواصل معك على واتساب، يعرف هدفك ومستواك ووقتك، ويرشّح لك المسار والباقة المناسبة." },
   { title: "تبدأ رحلتك", body: "في مجموعة صغيرة بمستواك أو حصص فردية مع مدرّبك، وتدخل المنصّة من أول يوم." },
 ];
-export const STEPS_LEDE = "لقاء مبدئي مجاني قبل أي دفع، وبدون التزام.";
+export const STEPS_LEDE = "وقبل أي دفع، فريقنا يتواصل معك ويوضح لك كل التفاصيل، وبدون التزام.";
 
 // The homepage's platform tagline ends in an English word; paid traffic reads Arabic.
 export const CAMPAIGN_PLATFORM_TAGLINE = "بُنيت من الصفر: تقييم فوري بالذكاء الاصطناعي، متابعة لتقدّمك، وتحديات تحمّسك.";
 // The homepage pricing footer names Dr. Ali, who no longer teaches (2026-09-21).
-export const CAMPAIGN_PRICING_FOOT = "محتار بين الباقات؟ نرشّح لك الأنسب في اللقاء المبدئي.";
+export const CAMPAIGN_PRICING_FOOT = "محتار بين الباقات؟ نرشّح لك الأنسب بعد ما نتواصل معك.";
 export const STICKY_NOTE = "مجاني وبدون التزام";

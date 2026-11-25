@@ -3,7 +3,7 @@
  *
  * v2: the page is the homepage, focused on one action. Every section except
  * the lead form, «كيف تبدأ» and the sticky bar is the homepage's own component,
- * rendered under a CtaContext: primary buttons read «احجز لقاءك المبدئي» and
+ * rendered under a CtaContext: primary buttons read «ابدأ الآن» and
  * links that would leave the page become `[data-open-form]` buttons (see
  * v1/ctaContext.js). The homepage's modal is not mounted here; this page's
  * delegated listener sends every `[data-open-form]` click to the form instead,

@@ -289,9 +289,9 @@ export default function NextLanding({ seoPath = "/next", campaign = false, dawn:
     window.scrollTo({ top, behavior: "smooth" });
   }, []);
 
-  // On `/`, a plain «احجز لقاءك المبدئي» (hero, header, menu, stories, final call)
-  // opens the «مستشار طلاقة» chat at /start, which qualifies and books the meeting
-  // itself. A pricing card's own button (data-tier) still opens V1LeadModal with
+  // On `/`, a plain «ابدأ الآن» (hero, header, menu, stories, final call)
+  // opens the «مستشار طلاقة» chat at /start, which qualifies the lead; the team
+  // then follows up on WhatsApp. A pricing card's own button (data-tier) still opens V1LeadModal with
   // that package preselected. Capture phase, so it runs before the modal's listener.
   useEffect(() => {
     if (campaign) return undefined;

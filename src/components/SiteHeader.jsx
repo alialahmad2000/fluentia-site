@@ -27,7 +27,7 @@ export default function SiteHeader({ src = "site" }) {
           <span>طلاقة</span>
         </a>
         <a href={`/start?src=${src}`} className="sh-cta">
-          احجز لقاءك المبدئي
+          ابدأ الآن
         </a>
       </div>
     </header>

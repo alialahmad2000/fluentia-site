@@ -39,7 +39,7 @@ export const PRICING_TITLE = "اختر مسار صعودك";
 export const FINAL_TITLE = "ابدأ صعودك";
 
 /* The header's small button — the brief's label for the same lead action. */
-export const HEADER_CTA = "احجز لقاءك المبدئي";
+export const HEADER_CTA = "ابدأ الآن";
 
 export const SOUND_ON = "الصوت";
 export const SOUND_OFF = "بدون صوت";

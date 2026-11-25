@@ -298,7 +298,7 @@ export default function AboutPage() {
       </div>
 
       <H2>تواصل معنا</H2>
-      <P>للاستفسار أو حجز لقاء مبدئي مجاني مع المدرب، تواصل معنا:</P>
+      <P>للاستفسار أو لمعرفة تفاصيل الاشتراك، تواصل معنا:</P>
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', marginBottom: '1rem' }}>
         <a
           href={buildWhatsAppUrl(WA_MESSAGES.general)}
